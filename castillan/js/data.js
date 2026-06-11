@@ -91,7 +91,7 @@ var LEVEL1_THEMES=[
     {q:'¿Qué significa "Negro"?',opts:['Blanc','Gris','Marron','Noir'],ans:3},
     {q:'¿Cómo se dice "Jaune" en español?',opts:['Naranja','Amarillo','Rosa','Morado'],ans:1},
     {q:'¿Qué significa "Rosa o rosado"?',opts:['Rouge','Orange','Rose','Violet'],ans:2},
-    {q:'¿Cómo se dice "Blanc" en español?',opts:['Blanco','Negro','Gris','Marrón'],ans:0},
+    {q:'¿Cómo se dice "Blanc" en español?',opts:['Blanco','Negro','Gris','Marrón'],ans:0}
    ]},
   {id:'nour',level:1,emoji:'🍽️',name:'La Comida',sub:'Pan, verduras, tapas… / La nourriture',
    words:[
@@ -316,7 +316,7 @@ var LEVEL1_THEMES=[
     {es:'Molar',fr:'Adorer (argot)',em:'😎',conj:{es:['Me mola','Te mola','Le mola','Nos mola','Os mola','Les mola'],fr:['J\'adore','Tu adores','Il/Elle adore','Nous adorons','Vous adorez','Ils/Elles adorent']}}
    ],
    quiz10:[
-    {q:'¿Qué significa "Me mola" en argot español?',opts:['Ça m'ennuie','Ça me fait peur','Ça me plaît / j'adore','Suis fatigué'],ans:2},
+    {q:'¿Qué significa "Me mola" en argot español?',opts:['Ça m\'ennuie','Ça me fait peur','Ça me plaît / j\'adore','Suis fatigué'],ans:2},
     {q:'¿Qué significa "Ella sonríe"?',opts:['Elle crie','Elle pleure','Elle sourit','Elle chante'],ans:2},
     {q:'¿Cómo se dice "Tu conduis" en español?',opts:['Corres','Caminas','Conduces','Te vas'],ans:2},
     {q:'¿Qué significa "Aprendo"?',opts:['Tu enseignes','Tu écoutes','Tu apprends','Tu lis'],ans:2},
