@@ -5,7 +5,7 @@
 ======================================== */
 
 var LEVEL1_THEMES=[
-  {id:'alpha',level:1,emoji:'🔤',name:'El Alfabeto',sub:'A, B, C… Z / El Alfabeto',type:'alpha',
+  {id:'alpha',level:1,emoji:'🔤',name:'El Alfabeto',sub:'A, B, C… Z / L\'alphabet',type:'alpha',
    words:[
     {es:'A',fr:'a',em:'✈️'},{es:'B',fr:'bé',em:'🎈'},
     {es:'C',fr:'cé (th devant e/i)',em:'☕'},{es:'D',fr:'dé',em:'💃'},

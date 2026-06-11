@@ -120,7 +120,7 @@ function renderFlash(){
     +'<div class="fc-wrap">'
     +'<div class="fc" id="fc" onclick="flipCard()">'
     +'<div class="fc-front">'+emFr+'<div class="fc-front-word">'+card.es+'</div><div class="fc-front-hint">👆 Toca para ver la traducción</div></div>'
-    +'<div class="fc-back">'+emBk+'<div class="fc-back-word">'+card.fr+'</div><div class="fc-back-hint">🇫🇷 Traduction française</div></div>'
+    +'<div class="fc-back">'+emBk+'<div class="fc-back-word">'+card.fr+'</div></div>'
     +'</div></div>'
     +'<div class="fc-nav">'
     +'<button onclick="prevCard()">← Anterior</button>'
