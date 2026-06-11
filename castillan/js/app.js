@@ -115,12 +115,25 @@ function renderFlash(){
   }
   var emFr=card.em?'<div class="fc-front-emoji">'+card.em+'</div>':'';
   var emBk=card.em?'<div class="fc-back-emoji">'+card.em+'</div>':'';
+  var hasConj=card.conj&&card.conj.es&&card.conj.fr;
+  var frontContent, backContent;
+  if(hasConj){
+    frontContent=emFr
+      +'<div class="fc-front-word">'+card.es+'</div>'
+      +'<div class="fc-conj">'+card.conj.es.map(function(l){return '<div class="fc-conj-line">'+l+'</div>';}).join('')+'</div>';
+    backContent=emBk
+      +'<div class="fc-back-word">'+card.fr+'</div>'
+      +'<div class="fc-conj">'+card.conj.fr.map(function(l){return '<div class="fc-conj-line">'+l+'</div>';}).join('')+'</div>';
+  } else {
+    frontContent=emFr+'<div class="fc-front-word">'+card.es+'</div><div class="fc-front-hint">👆 Toca para ver la traducción</div>';
+    backContent=emBk+'<div class="fc-back-word">'+card.fr+'</div>';
+  }
   document.getElementById('tabContent').innerHTML=
     '<div class="section-label">Recto: español 🇪🇸 — Verso: français 🇫🇷 · ¡Toca para voltear!</div>'
     +'<div class="fc-wrap">'
     +'<div class="fc" id="fc" onclick="flipCard()">'
-    +'<div class="fc-front">'+emFr+'<div class="fc-front-word">'+card.es+'</div><div class="fc-front-hint">👆 Toca para ver la traducción</div></div>'
-    +'<div class="fc-back">'+emBk+'<div class="fc-back-word">'+card.fr+'</div></div>'
+    +'<div class="fc-front">'+frontContent+'</div>'
+    +'<div class="fc-back">'+backContent+'</div>'
     +'</div></div>'
     +'<div class="fc-nav">'
     +'<button onclick="prevCard()">← Anterior</button>'
@@ -129,6 +142,7 @@ function renderFlash(){
     +'</div>'
     +'<button class="audio-btn-big" onclick="speak(\''+esc(card.es)+'\')">🔊 Escuchar en español</button>';
 }
+
 
 function buildAlphaDetail(c){
   return '<div style="font-size:2.5rem;font-weight:900;color:#AA151B">'+c.es+'</div>'
