@@ -19,7 +19,7 @@ var LEVEL1_THEMES=[
     {es:'R',fr:'erre',em:'🌹'},{es:'S',fr:'ese',em:'☀️'},
     {es:'T',fr:'té',em:'🚂'},{es:'U',fr:'u',em:'1️⃣'},
     {es:'V',fr:'uve',em:'🌆'},{es:'W',fr:'uve doble',em:'🚃'},
-    {es:'X',fr:'equis',em:'🎵'},{es:'Y',fr:'ye / i griega',em:'🥛'},
+    {es:'X',fr:'equis',em:'🎵'},{es:'Y',fr:'ye o i griega',em:'🥛'},
     {es:'Z',fr:'ceta (th en Espagne)',em:'0️⃣'}
    ],
    quiz10:[
@@ -38,9 +38,9 @@ var LEVEL1_THEMES=[
    words:[
     {es:'El apellido',fr:'Le nom de famille',em:'👨‍👩‍👧'},{es:'El nombre',fr:'Le prénom',em:'🏷️'},
     {es:'La nacionalidad',fr:'La nationalité',em:'🌍'},{es:'La edad',fr:'L\'âge',em:'🎂'},
-    {es:'La profesión / el oficio',fr:'La profession',em:'💼'},{es:'El país',fr:'Le pays',em:'🗺️'},
-    {es:'Francés / francesa',fr:'Français(e)',em:'🇫🇷'},{es:'Español / española',fr:'Espagnol(e)',em:'🇪🇸'},
-    {es:'Vivo en',fr:'J\'habite à',em:'🏠'},{es:'Soy / Estoy',fr:'Je suis',em:'🧑'},
+    {es:'La profesión o el oficio',fr:'La profession',em:'💼'},{es:'El país',fr:'Le pays',em:'🗺️'},
+    {es:'Francés o francesa',fr:'Français(e)',em:'🇫🇷'},{es:'Español o española',fr:'Espagnol(e)',em:'🇪🇸'},
+    {es:'Vivo en',fr:'J\'habite à',em:'🏠'},{es:'Soy o Estoy',fr:'Je suis',em:'🧑'},
     {es:'Tengo ... años',fr:'J\'ai ... ans',em:'🎈'},{es:'Me llamo',fr:'Je m\'appelle',em:'👋'},
     {es:'¿De dónde eres?',fr:'D\'où es-tu ?',em:'🌍'},{es:'Soy de Madrid',fr:'Je suis de Madrid',em:'🏙️'}
    ],
@@ -80,8 +80,8 @@ var LEVEL1_THEMES=[
    words:[
     {es:'Rojo',fr:'Rouge',em:'❤️'},{es:'Azul',fr:'Bleu',em:'💙'},{es:'Verde',fr:'Vert',em:'💚'},
     {es:'Amarillo',fr:'Jaune',em:'💛'},{es:'Naranja',fr:'Orange',em:'🧡'},{es:'Blanco',fr:'Blanc',em:'🤍'},
-    {es:'Negro',fr:'Noir',em:'🖤'},{es:'Rosa / rosado',fr:'Rose',em:'🩷'},
-    {es:'Morado / violeta',fr:'Violet',em:'💜'},{es:'Marrón / café',fr:'Marron',em:'🤎'},
+    {es:'Negro',fr:'Noir',em:'🖤'},{es:'Rosa o rosado',fr:'Rose',em:'🩷'},
+    {es:'Morado o violeta',fr:'Violet',em:'💜'},{es:'Marrón o café',fr:'Marron',em:'🤎'},
     {es:'Gris',fr:'Gris',em:'🩶'},{es:'Guay',fr:'Super / cool (argot)',em:'😎'}
    ],
    quiz10:[
@@ -90,7 +90,7 @@ var LEVEL1_THEMES=[
     {q:'¿Cómo se dice "Vert" en español?',opts:['Amarillo','Gris','Verde','Blanco'],ans:2},
     {q:'¿Qué significa "Negro"?',opts:['Blanc','Gris','Marrón','Noir'],ans:3},
     {q:'¿Cómo se dice "Jaune" en español?',opts:['Naranja','Amarillo','Rosa','Morado'],ans:1},
-    {q:'¿Qué significa "Rosa / rosado"?',opts:['Rouge','Orange','Rose','Violet'],ans:2},
+    {q:'¿Qué significa "Rosa o rosado"?',opts:['Rouge','Orange','Rose','Violet'],ans:2},
     {q:'¿Cómo se dice "Blanc" en español?',opts:['Blanco','Negro','Gris','Marrón'],ans:0},
     {q:'¿Qué significa "Guay" en el argot español?',opts:['Mauvais','Ennuyeux','Super / cool','Bizarre'],ans:2}
    ]},
@@ -99,17 +99,17 @@ var LEVEL1_THEMES=[
     {es:'El pan',fr:'Le pain',em:'🍞'},{es:'El arroz',fr:'Le riz',em:'🍚'},
     {es:'El queso',fr:'Le fromage',em:'🧀'},{es:'La carne',fr:'La viande',em:'🥩'},
     {es:'El pollo',fr:'Le poulet',em:'🍗'},{es:'El pescado',fr:'Le poisson',em:'🐟'},
-    {es:'La manzana',fr:'La pomme',em:'🍎'},{es:'El plátano / la banana',fr:'La banane',em:'🍌'},
+    {es:'La manzana',fr:'La pomme',em:'🍎'},{es:'El plátano o la banana',fr:'La banane',em:'🍌'},
     {es:'El tomate',fr:'La tomate',em:'🍅'},{es:'La zanahoria',fr:'La carotte',em:'🥕'},
     {es:'El huevo',fr:'L\'œuf',em:'🥚'},{es:'La mantequilla',fr:'Le beurre',em:'🧈'},
     {es:'Las frutas',fr:'Les fruits',em:'🍉'},{es:'Las verduras',fr:'Les légumes',em:'🥦'},
     {es:'El bocadillo',fr:'Le sandwich (baguette)',em:'🥖'},{es:'Las tapas',fr:'Les tapas',em:'🫒'},
     {es:'La tortilla (de patatas)',fr:'L\'omelette aux pommes de terre',em:'🍳'},
-    {es:'La paella',fr:'La paella',em:'🥘'},{es:'La patata / las patatas fritas',fr:'La pomme de terre / les frites',em:'🥔'},
-    {es:'El jamón (serrano / ibérico)',fr:'Le jambon (serrano / ibérique)',em:'🥩'},
+    {es:'La paella',fr:'La paella',em:'🥘'},{es:'La patata o las patatas fritas',fr:'La pomme de terre / les frites',em:'🥔'},
+    {es:'El jamón (serrano o ibérico)',fr:'Le jambon (serrano / ibérique)',em:'🥩'},
     {es:'El chorizo',fr:'Le chorizo',em:'🌭'},{es:'El aceite de oliva',fr:'L\'huile d\'olive',em:'🫒'},
     {es:'La sal',fr:'Le sel',em:'🧂'},{es:'La pimienta',fr:'Le poivre',em:'🌶️'},
-    {es:'Los macarrones / la pasta',fr:'Les pâtes',em:'🍝'},
+    {es:'Los macarrones o la pasta',fr:'Les pâtes',em:'🍝'},
     {es:'La naranja',fr:'L\'orange',em:'🍊'},{es:'El limón',fr:'Le citron',em:'🍋'},
     {es:'La fresa',fr:'La fraise',em:'🍓'},{es:'La sandía',fr:'La pastèque',em:'🍉'},
     {es:'La cebolla',fr:'L\'oignon',em:'🧅'},{es:'El ajo',fr:'L\'ail',em:'🧄'},
@@ -135,8 +135,8 @@ var LEVEL1_THEMES=[
     {es:'El agua',fr:'L\'eau',em:'💧'},{es:'El café (solo)',fr:'Le café noir',em:'☕'},
     {es:'El café con leche',fr:'Le café au lait',em:'☕'},{es:'El té',fr:'Le thé',em:'🍵'},
     {es:'El zumo (de naranja)',fr:'Le jus (d\'orange)',em:'🍊'},{es:'La leche',fr:'Le lait',em:'🥛'},
-    {es:'El vino (tinto / blanco)',fr:'Le vin (rouge / blanc)',em:'🍷'},
-    {es:'La cerveza',fr:'La bière',em:'🍺'},{es:'El refresco / la gaseosa',fr:'Le soda',em:'🥤'},
+    {es:'El vino (tinto o blanco)',fr:'Le vin (rouge / blanc)',em:'🍷'},
+    {es:'La cerveza',fr:'La bière',em:'🍺'},{es:'El refresco o la gaseosa',fr:'Le soda',em:'🥤'},
     {es:'La sangría',fr:'La sangria',em:'🍷'},{es:'El cortado',fr:'Le café avec un nuage de lait',em:'☕'},
     {es:'El agua con gas',fr:'L\'eau gazeuse',em:'🫧'}
    ],
@@ -152,113 +152,113 @@ var LEVEL1_THEMES=[
    ]},
   {id:'fam',level:1,emoji:'👨‍👩‍👧',name:'La Familia',sub:'Papá, mamá, hijo… / La famille',
    words:[
-    {es:'El padre / el papá',fr:'Le père',em:'👨'},{es:'La madre / la mamá',fr:'La mère',em:'👩'},
+    {es:'El padre o el papá',fr:'Le père',em:'👨'},{es:'La madre o la mamá',fr:'La mère',em:'👩'},
     {es:'El hijo',fr:'Le fils',em:'👦'},{es:'La hija',fr:'La fille',em:'👧'},
     {es:'El hermano',fr:'Le frère',em:'🧑'},{es:'La hermana',fr:'La sœur',em:'👧'},
     {es:'El abuelo',fr:'Le grand-père',em:'👴'},{es:'La abuela',fr:'La grand-mère',em:'👵'},
-    {es:'El marido / el esposo',fr:'Le mari',em:'💍'},{es:'La mujer / la esposa',fr:'La femme',em:'💑'},
-    {es:'El tío / la tía',fr:'L\'oncle / la tante (aussi : mec/nana en argot)',em:'😄'}
+    {es:'El marido o el esposo',fr:'Le mari',em:'💍'},{es:'La mujer o la esposa',fr:'La femme',em:'💑'},
+    {es:'El tío o la tía',fr:'L\'oncle / la tante (aussi : mec/nana en argot)',em:'😄'}
    ],
    quiz10:[
-    {q:'¿Cómo se dice "Le père" en español?',opts:['El marido','El hijo','El padre / el papá','El hermano'],ans:2},
-    {q:'¿Qué significa "La madre / la mamá"?',opts:['La fille','La sœur','La grand-mère','La mère'],ans:3},
+    {q:'¿Cómo se dice "Le père" en español?',opts:['El marido','El hijo','El padre o el papá','El hermano'],ans:2},
+    {q:'¿Qué significa "La madre o la mamá"?',opts:['La fille','La sœur','La grand-mère','La mère'],ans:3},
     {q:'¿Cómo se dice "Le frère" en español?',opts:['El hijo','El hermano','El papá','El marido'],ans:1},
     {q:'¿Qué significa "La hermana"?',opts:['La mère','La grand-mère','La sœur','La fille'],ans:2},
     {q:'¿Cómo se dice "Le grand-père" en español?',opts:['El papá','El marido','El hijo','El abuelo'],ans:3},
     {q:'¿Qué significa "La abuela"?',opts:['La mère','La grand-mère','La sœur','La fille'],ans:1},
     {q:'¿Cómo se dice "La fille" en español?',opts:['La hermana','La esposa','La hija','La mamá'],ans:2},
-    {q:'En argot español, "tío / tía" puede significar…',opts:['Père / mère','Mec / nana','Frère / sœur','Patron / patronne'],ans:1}
+    {q:'En argot español, "tío o tía" puede significar…',opts:['Père / mère','Mec / nana','Frère / sœur','Patron / patronne'],ans:1}
    ]},
   {id:'emot',level:1,emoji:'😄',name:'Las Emociones',sub:'Alegre, cansado… / Les émotions',
    words:[
-    {es:'Alegre / contento',fr:'Joyeux / Content',em:'😄'},{es:'Triste',fr:'Triste',em:'😢'},
-    {es:'Cansado / cansada',fr:'Fatigué(e)',em:'😴'},{es:'Enfadado / enojado',fr:'Fâché(e) / Énervé(e)',em:'😠'},
-    {es:'Estresado / agobiado',fr:'Stressé(e)',em:'😰'},{es:'Enfermo / malito',fr:'Malade',em:'🤒'},
-    {es:'Contento / feliz',fr:'Content(e) / Heureux(se)',em:'😊'},
-    {es:'Preocupado / angustiado',fr:'Inquiet / Inquiète',em:'😟'},
-    {es:'Enamorado / enamorada',fr:'Amoureux / Amoureuse',em:'😍'},
-    {es:'Decepcionado / frustrado',fr:'Déçu(e)',em:'😞'},
+    {es:'Alegre o contento',fr:'Joyeux / Content',em:'😄'},{es:'Triste',fr:'Triste',em:'😢'},
+    {es:'Cansado o cansada',fr:'Fatigué(e)',em:'😴'},{es:'Enfadado o enojado',fr:'Fâché(e) / Énervé(e)',em:'😠'},
+    {es:'Estresado o agobiado',fr:'Stressé(e)',em:'😰'},{es:'Enfermo o malito',fr:'Malade',em:'🤒'},
+    {es:'Contento o feliz',fr:'Content(e) / Heureux(se)',em:'😊'},
+    {es:'Preocupado o angustiado',fr:'Inquiet / Inquiète',em:'😟'},
+    {es:'Enamorado o enamorada',fr:'Amoureux / Amoureuse',em:'😍'},
+    {es:'Decepcionado o frustrado',fr:'Déçu(e)',em:'😞'},
     {es:'Tener miedo',fr:'Avoir peur',em:'😨'},
-    {es:'¡Qué guay! / ¡Mola!',fr:'C\'est super ! / C\'est cool !',em:'🌟'}
+    {es:'¡Qué guay! o ¡Mola!',fr:'C\'est super ! / C\'est cool !',em:'🌟'}
    ],
    quiz10:[
-    {q:'¿Cómo se dice "Joyeux" en español?',opts:['Triste','Cansado','Alegre / contento','Enfermo'],ans:2},
+    {q:'¿Cómo se dice "Joyeux" en español?',opts:['Triste','Cansado','Alegre o contento','Enfermo'],ans:2},
     {q:'¿Qué significa "Triste"?',opts:['Fatigué','Triste','Énervé','Malade'],ans:1},
-    {q:'¿Cómo se dice "Fatigué" en español?',opts:['Estresado','Enfermo','Preocupado','Cansado / cansada'],ans:3},
+    {q:'¿Cómo se dice "Fatigué" en español?',opts:['Estresado','Enfermo','Preocupado','Cansado o cansada'],ans:3},
     {q:'¿Qué significa "Enfadado" en España?',opts:['Fatigué','Content','Fâché / Énervé','Malade'],ans:2},
     {q:'¿Cómo se dice "Énervé" en español de España?',opts:['Decepcionado','Enfadado','Preocupado','Contento'],ans:1},
     {q:'¿Qué significa "¡Mola!" en argot español?',opts:['Ça m\'énerve !','C\'est nul !','C\'est super ! / C\'est cool !','J\'ai peur !'],ans:2},
-    {q:'¿Cómo se dice "Inquiet" en español?',opts:['Estresado','Enamorado','Preocupado / angustiado','Decepcionado'],ans:2},
+    {q:'¿Cómo se dice "Inquiet" en español?',opts:['Estresado','Enamorado','Preocupado o angustiado','Decepcionado'],ans:2},
     {q:'¿Qué significa "Tener miedo"?',opts:['Avoir faim','Avoir peur','Avoir froid','Avoir sommeil'],ans:1}
    ]},
   {id:'log',level:1,emoji:'🏠',name:'La Vivienda',sub:'Salón, cocina… / Le logement',
    words:[
-    {es:'El salón / el comedor',fr:'Le salon / la salle à manger',em:'🛋️'},{es:'La cocina',fr:'La cuisine',em:'🍳'},
-    {es:'La habitación / el cuarto',fr:'La chambre',em:'🛏️'},{es:'El cuarto de baño / el baño',fr:'La salle de bain',em:'🚿'},
-    {es:'El aseo / el váter',fr:'Les toilettes',em:'🚽'},{es:'La entrada / el recibidor',fr:'L\'entrée',em:'🚪'},
-    {es:'El garaje',fr:'Le garage',em:'🚗'},{es:'El piso / el apartamento',fr:'L\'appartement',em:'🏢'},
+    {es:'El salón o el comedor',fr:'Le salon / la salle à manger',em:'🛋️'},{es:'La cocina',fr:'La cuisine',em:'🍳'},
+    {es:'La habitación o el cuarto',fr:'La chambre',em:'🛏️'},{es:'El cuarto de baño / el baño',fr:'La salle de bain',em:'🚿'},
+    {es:'El aseo o el váter',fr:'Les toilettes',em:'🚽'},{es:'La entrada o el recibidor',fr:'L\'entrée',em:'🚪'},
+    {es:'El garaje',fr:'Le garage',em:'🚗'},{es:'El piso o el apartamento',fr:'L\'appartement',em:'🏢'},
     {es:'El ático',fr:'Le studio en duplex / le penthouse',em:'🌆'}
    ],
    quiz10:[
     {q:'¿Cómo se dice "Le salon" en español de España?',opts:['La cocina','La habitación','El salón','El garaje'],ans:2},
     {q:'¿Qué significa "La cocina"?',opts:['La salle à manger','La cuisine','La salle de bain','Le salon'],ans:1},
-    {q:'¿Cómo se dice "La chambre" en español?',opts:['El salón','La habitación / el cuarto','La entrada','El garaje'],ans:1},
-    {q:'¿Qué significa "El aseo / el váter" en España?',opts:['La salle de bain','Le garage','Les toilettes','La salle à manger'],ans:2},
-    {q:'¿Cómo se dice "L\'appartement" en España?',opts:['La casa','El ático','El piso / el apartamento','La habitación'],ans:2}
+    {q:'¿Cómo se dice "La chambre" en español?',opts:['El salón','La habitación o el cuarto','La entrada','El garaje'],ans:1},
+    {q:'¿Qué significa "El aseo o el váter" en España?',opts:['La salle de bain','Le garage','Les toilettes','La salle à manger'],ans:2},
+    {q:'¿Cómo se dice "L\'appartement" en España?',opts:['La casa','El ático','El piso o el apartamento','La habitación'],ans:2}
    ]},
   {id:'veth',level:1,emoji:'👗',name:'La Ropa',sub:'Camiseta, pantalón… / Les vêtements',
    words:[
-    {es:'La camiseta',fr:'Le t-shirt',em:'👕'},{es:'El pantalón (vaquero / tejano)',fr:'Le pantalon (jean)',em:'👖'},
+    {es:'La camiseta',fr:'Le t-shirt',em:'👕'},{es:'El pantalón (vaquero o tejano)',fr:'Le pantalon (jean)',em:'👖'},
     {es:'El vestido',fr:'La robe',em:'👗'},{es:'La chaqueta',fr:'La veste',em:'🧥'},
-    {es:'Los zapatos / las zapatillas',fr:'Les chaussures / les baskets',em:'👟'},
-    {es:'El sombrero / la gorra',fr:'Le chapeau / la casquette',em:'🎩'},
+    {es:'Los zapatos o las zapatillas',fr:'Les chaussures / les baskets',em:'👟'},
+    {es:'El sombrero o la gorra',fr:'Le chapeau / la casquette',em:'🎩'},
     {es:'El abrigo',fr:'Le manteau',em:'🧥'},{es:'La bufanda',fr:'L\'écharpe',em:'🧣'},
-    {es:'El bolso / el bolsillo',fr:'Le sac / la poche',em:'👜'},
+    {es:'El bolso o el bolsillo',fr:'Le sac / la poche',em:'👜'},
     {es:'La camisa',fr:'La chemise',em:'👔'},{es:'Los calcetines',fr:'Les chaussettes',em:'🧦'},
-    {es:'Los guantes',fr:'Les gants',em:'🧤'},{es:'El jersey / el suéter',fr:'Le pull',em:'🧥'},
-    {es:'El traje de baño / el bañador',fr:'Le maillot de bain',em:'🩱'},
+    {es:'Los guantes',fr:'Les gants',em:'🧤'},{es:'El jersey o el suéter',fr:'Le pull',em:'🧥'},
+    {es:'El traje de baño o el bañador',fr:'Le maillot de bain',em:'🩱'},
     {es:'La falda',fr:'La jupe',em:'👗'},{es:'El reloj (de pulsera)',fr:'La montre',em:'⌚'},
-    {es:'Los pantalones cortos / el short',fr:'Le short',em:'🩳'},
+    {es:'Los pantalones cortos o el short',fr:'Le short',em:'🩳'},
     {es:'El gorro',fr:'Le bonnet',em:'🎿'}
    ],
    quiz10:[
     {q:'¿Cómo se dice "Le t-shirt" en español?',opts:['El jersey','La camisa','La camiseta','La chaqueta'],ans:2},
-    {q:'¿Qué significa "El pantalón vaquero / tejano"?',opts:['Le short','Le jean','La jupe','Le survêtement'],ans:1},
-    {q:'¿Cómo se dice "Les chaussures" en español?',opts:['Los calcetines','Los guantes','Los zapatos / las zapatillas','El sombrero'],ans:2},
-    {q:'¿Cómo se dice "Le pull" en España?',opts:['La bufanda','La chaqueta','El jersey / el suéter','El abrigo'],ans:2},
-    {q:'¿Cómo se dice "Le maillot de bain" en España?',opts:['El bañador / el traje de baño','El gorro','El short','Los calcetines'],ans:0},
+    {q:'¿Qué significa "El pantalón vaquero o tejano"?',opts:['Le short','Le jean','La jupe','Le survêtement'],ans:1},
+    {q:'¿Cómo se dice "Les chaussures" en español?',opts:['Los calcetines','Los guantes','Los zapatos o las zapatillas','El sombrero'],ans:2},
+    {q:'¿Cómo se dice "Le pull" en España?',opts:['La bufanda','La chaqueta','El jersey o el suéter','El abrigo'],ans:2},
+    {q:'¿Cómo se dice "Le maillot de bain" en España?',opts:['El bañador o el traje de baño','El gorro','El short','Los calcetines'],ans:0},
     {q:'¿Qué significa "La bufanda"?',opts:['Les gants','Le manteau','L\'écharpe','Le bonnet'],ans:2},
     {q:'¿Cómo se dice "La robe" en español?',opts:['La falda','El vestido','La chaqueta','El jersey'],ans:1},
     {q:'¿Qué significa "Los calcetines"?',opts:['Les chaussures','Les gants','Les chaussettes','Le maillot de bain'],ans:2}
    ]},
   {id:'corps',level:1,emoji:'🧍',name:'El Cuerpo',sub:'Cabeza, brazo, pie… / Le corps',
    words:[
-    {es:'La cabeza',fr:'La tête',em:'🗣️'},{es:'El brazo / los brazos',fr:'Le bras',em:'💪'},
-    {es:'La mano / las manos',fr:'La main',em:'✋'},{es:'La pierna / las piernas',fr:'La jambe',em:'🦵'},
-    {es:'El pie / los pies',fr:'Le pied',em:'🦶'},{es:'El ojo / los ojos',fr:'L\'œil / les yeux',em:'👀'},
-    {es:'La espalda',fr:'Le dos',em:'🔙'},{es:'La barriga / el estómago',fr:'Le ventre',em:'🫃'},
-    {es:'El cerebro',fr:'Le cerveau',em:'🧠'},{es:'La oreja / las orejas',fr:'L\'oreille',em:'👂'},
+    {es:'La cabeza',fr:'La tête',em:'🗣️'},{es:'El brazo o los brazos',fr:'Le bras',em:'💪'},
+    {es:'La mano o las manos',fr:'La main',em:'✋'},{es:'La pierna o las piernas',fr:'La jambe',em:'🦵'},
+    {es:'El pie o los pies',fr:'Le pied',em:'🦶'},{es:'El ojo o los ojos',fr:'L\'œil / les yeux',em:'👀'},
+    {es:'La espalda',fr:'Le dos',em:'🔙'},{es:'La barriga o el estómago',fr:'Le ventre',em:'🫃'},
+    {es:'El cerebro',fr:'Le cerveau',em:'🧠'},{es:'La oreja o las orejas',fr:'L\'oreille',em:'👂'},
     {es:'La nariz',fr:'Le nez',em:'👃'},{es:'La boca',fr:'La bouche',em:'👄'},
-    {es:'El diente / los dientes',fr:'La dent',em:'🦷'},{es:'El hueso / los huesos',fr:'L\'os',em:'🦴'},
-    {es:'El corazón',fr:'Le cœur',em:'❤️'},{es:'El dedo / los dedos',fr:'Le doigt',em:'☝️'},
+    {es:'El diente o los dientes',fr:'La dent',em:'🦷'},{es:'El hueso o los huesos',fr:'L\'os',em:'🦴'},
+    {es:'El corazón',fr:'Le cœur',em:'❤️'},{es:'El dedo o los dedos',fr:'Le doigt',em:'☝️'},
     {es:'La lengua',fr:'La langue',em:'👅'},{es:'Los labios',fr:'Les lèvres',em:'💋'},
-    {es:'El pelo / el cabello',fr:'Les cheveux',em:'💇‍♂️'},{es:'El cuello',fr:'Le cou',em:'🧣'},
-    {es:'La uña / las uñas',fr:'L\'ongle',em:'💅'}
+    {es:'El pelo o el cabello',fr:'Les cheveux',em:'💇‍♂️'},{es:'El cuello',fr:'Le cou',em:'🧣'},
+    {es:'La uña o las uñas',fr:'L\'ongle',em:'💅'}
    ],
    quiz10:[
     {q:'¿Cómo se dice "La tête" en español?',opts:['La nariz','La boca','La cabeza','El cuello'],ans:2},
-    {q:'¿Qué significa "El ojo / los ojos"?',opts:['Les oreilles','Le nez','Les lèvres','Les yeux'],ans:3},
-    {q:'¿Cómo se dice "La main" en español?',opts:['El pie','La pierna','El brazo','La mano / las manos'],ans:3},
+    {q:'¿Qué significa "El ojo o los ojos"?',opts:['Les oreilles','Le nez','Les lèvres','Les yeux'],ans:3},
+    {q:'¿Cómo se dice "La main" en español?',opts:['El pie','La pierna','El brazo','La mano o las manos'],ans:3},
     {q:'¿Qué significa "La nariz"?',opts:['La bouche','Le nez','L\'oreille','Le cou'],ans:1},
     {q:'¿Cómo se dice "La jambe" en español?',opts:['El brazo','La pierna','El pie','La espalda'],ans:1},
     {q:'¿Qué significa "El cerebro"?',opts:['Le cœur','L\'estomac','Le cerveau','L\'os'],ans:2},
-    {q:'¿Cómo se dice "Les dents" en español?',opts:['Los labios','La lengua','El diente / los dientes','Las orejas'],ans:2},
+    {q:'¿Cómo se dice "Les dents" en español?',opts:['Los labios','La lengua','El diente o los dientes','Las orejas'],ans:2},
     {q:'¿Qué significa "El corazón"?',opts:['Le cerveau','Le cœur','L\'os','Le dos'],ans:1}
    ]},
   {id:'anim',level:1,emoji:'🐘',name:'Los Animales',sub:'Perro, gato, toro… / Les animaux',
    words:[
     {es:'El perro',fr:'Le chien',em:'🐶'},{es:'El gato',fr:'Le chat',em:'🐱'},
-    {es:'El pájaro / el ave',fr:'L\'oiseau',em:'🐦'},{es:'El pez / el pescado',fr:'Le poisson',em:'🐟'},
+    {es:'El pájaro o el ave',fr:'L\'oiseau',em:'🐦'},{es:'El pez o el pescado',fr:'Le poisson',em:'🐟'},
     {es:'El caballo',fr:'Le cheval',em:'🐴'},{es:'La vaca',fr:'La vache',em:'🐮'},
     {es:'La gallina',fr:'La poule',em:'🐔'},{es:'El conejo',fr:'Le lapin',em:'🐰'},
     {es:'El toro',fr:'Le taureau',em:'🐂'},{es:'El cerdo',fr:'Le cochon',em:'🐷'},
@@ -288,23 +288,23 @@ var LEVEL1_THEMES=[
    ]},
   {id:'verb',level:1,emoji:'📝',name:'Los Verbos',sub:'Ser, tener, ir… / Les verbes principaux',
    words:[
-    {es:'Soy / Estoy (ser/estar)',fr:'Je suis',em:'🧑'},{es:'Tengo (tener)',fr:'J\'ai',em:'🤲'},
+    {es:'Soy o Estoy (ser/estar)',fr:'Je suis',em:'🧑'},{es:'Tengo (tener)',fr:'J\'ai',em:'🤲'},
     {es:'Hablo (hablar)',fr:'Je parle',em:'🗣️'},{es:'Vivo (vivir)',fr:'J\'habite',em:'🏠'},
     {es:'Voy (ir)',fr:'Je vais',em:'🚶'},{es:'Como (comer)',fr:'Je mange',em:'🍽️'},
     {es:'Bebo (beber)',fr:'Je bois',em:'🥤'},{es:'Me gusta (gustar)',fr:'J\'aime',em:'❤️'},
     {es:'Corro (correr)',fr:'Je cours',em:'🏃‍♂️'},{es:'Duermo (dormir)',fr:'Je dors',em:'😴'},
     {es:'Camino (caminar)',fr:'Je marche',em:'🚶‍♂️'},{es:'Leo (leer)',fr:'Je lis',em:'📖'},
     {es:'Escribo (escribir)',fr:'J\'écris',em:'✍️'},{es:'Escucho (escuchar)',fr:'J\'écoute',em:'🎧'},
-    {es:'Miro / veo (mirar)',fr:'Je regarde',em:'👀'},{es:'Aprendo (aprender)',fr:'J\'apprends',em:'🧠'},
+    {es:'Miro o veo (mirar)',fr:'Je regarde',em:'👀'},{es:'Aprendo (aprender)',fr:'J\'apprends',em:'🧠'},
     {es:'Compro (comprar)',fr:'J\'achète',em:'🛒'},{es:'Vendo (vender)',fr:'Je vends',em:'💰'},
     {es:'Doy (dar)',fr:'Je donne',em:'🤲'},{es:'Llamo (llamar)',fr:'J\'appelle',em:'📞'},
     {es:'Cocino (cocinar)',fr:'Je cuisine',em:'🍳'},{es:'Limpio (limpiar)',fr:'Je nettoie',em:'🧹'},
-    {es:'Me ducho (ducharse)',fr:'Je me douche',em:'🧼'},{es:'Cojo / tomo (coger)',fr:'Je prends',em:'🤲'},
+    {es:'Me ducho (ducharse)',fr:'Je me douche',em:'🧼'},{es:'Cojo o tomo (coger)',fr:'Je prends',em:'🤲'},
     {es:'Pienso (pensar)',fr:'Je pense',em:'🤔'},{es:'Conduzco (conducir)',fr:'Je conduis',em:'🚗'},
     {es:'Sonrío (sonreír)',fr:'Je souris',em:'😊'},{es:'Me voy (irse)',fr:'Je pars',em:'🚪'},
     {es:'Pago (pagar)',fr:'Je paie',em:'💳'},{es:'Llego (llegar)',fr:'J\'arrive',em:'🛬'},
     {es:'Pregunto (preguntar)',fr:'Je demande',em:'🙋‍♂️'},{es:'Busco (buscar)',fr:'Je cherche',em:'🔍'},
-    {es:'Trabajo (trabajar)',fr:'Je travaille',em:'💼'},{es:'Molo / me mola (molar)',fr:'Je suis cool / j\'adore (argot)',em:'😎'}
+    {es:'Trabajo (trabajar)',fr:'Je travaille',em:'💼'},{es:'Molo o me mola (molar)',fr:'Je suis cool / j\'adore (argot)',em:'😎'}
    ],
    quiz10:[
     {q:'¿Cómo se dice "J\'ai" en español?',opts:['Soy','Voy','Tengo','Hablo'],ans:2},
@@ -326,7 +326,7 @@ var LEVEL1_THEMES=[
     {es:'Portugal',fr:'Le Portugal',em:'🇵🇹'},{es:'Italia',fr:'L\'Italie',em:'🇮🇹'},
     {es:'Alemania',fr:'L\'Allemagne',em:'🇩🇪'},{es:'Reino Unido',fr:'Le Royaume-Uni',em:'🇬🇧'},
     {es:'Bélgica',fr:'La Belgique',em:'🇧🇪'},{es:'Suiza',fr:'La Suisse',em:'🇨🇭'},
-    {es:'Países Bajos / Holanda',fr:'Les Pays-Bas',em:'🇳🇱'},{es:'Canadá',fr:'Le Canada',em:'🇨🇦'},
+    {es:'Países Bajos',fr:'Les Pays-Bas',em:'🇳🇱'},{es:'Canadá',fr:'Le Canada',em:'🇨🇦'},
     {es:'Brasil',fr:'Le Brésil',em:'🇧🇷'},{es:'Colombia',fr:'La Colombie',em:'🇨🇴'},
     {es:'Argentina',fr:'L\'Argentine',em:'🇦🇷'},{es:'México',fr:'Le Mexique',em:'🇲🇽'},
     {es:'Marruecos',fr:'Le Maroc',em:'🇲🇦'},{es:'China',fr:'La Chine',em:'🇨🇳'},
@@ -342,13 +342,13 @@ var LEVEL1_THEMES=[
     {q:'¿Qué significa "Reino Unido"?',opts:['Irlande','Royaume-Uni','Écosse','Danemark'],ans:1},
     {q:'¿Cómo se dice "Le Maroc" en español?',opts:['Egipto','Senegal','Marruecos','Sudáfrica'],ans:2},
     {q:'¿Cómo se dice "La Turquie" en español?',opts:['Túnez','Tailandia','Turquía','Tanzania'],ans:2},
-    {q:'¿Qué significa "Países Bajos / Holanda"?',opts:['Belgique','Danemark','Pays-Bas','Luxembourg'],ans:2},
+    {q:'¿Qué significa "Países Bajos"?',opts:['Belgique','Danemark','Pays-Bas','Luxembourg'],ans:2},
     {q:'¿Cómo se dice "La Grèce" en español?',opts:['Turquía','Grecia','Italia','Chipre'],ans:1}
    ]},
 {id:'plan',level:1,emoji:'🌿',name:'Las Plantas',sub:'Flor, árbol, bosque… / Les plantes',
    words:[
     {es:'La flor',fr:'La fleur',em:'🌸'},{es:'El árbol',fr:'L\'arbre',em:'🌳'},
-    {es:'El césped / la hierba',fr:'L\'herbe',em:'🌿'},{es:'La hoja',fr:'La feuille',em:'🍃'},
+    {es:'El césped o la hierba',fr:'L\'herbe',em:'🌿'},{es:'La hoja',fr:'La feuille',em:'🍃'},
     {es:'La rosa',fr:'La rose',em:'🌹'},{es:'El bosque',fr:'La forêt',em:'🌲'},
     {es:'El jardín',fr:'Le jardin',em:'🏡'}
    ],
@@ -361,21 +361,21 @@ var LEVEL1_THEMES=[
    ]},
   {id:'salut',level:1,emoji:'👋',name:'Los Saludos',sub:'Buenos días, gracias… / Les salutations',
    words:[
-    {es:'Buenos días / buen día',fr:'Bonjour (le matin)',em:'🌅'},{es:'Buenas tardes',fr:'Bonne après-midi',em:'🌆'},
+    {es:'Buenos días o buen día',fr:'Bonjour (le matin)',em:'🌅'},{es:'Buenas tardes',fr:'Bonne après-midi',em:'🌆'},
     {es:'Buenas noches',fr:'Bonsoir / Bonne nuit',em:'🌙'},{es:'¡Hola! (informal)',fr:'Salut !',em:'👋'},
-    {es:'Adiós / hasta luego',fr:'Au revoir / À bientôt',em:'👋'},{es:'Hasta pronto',fr:'À bientôt',em:'⏱️'},
-    {es:'Gracias / Muchas gracias',fr:'Merci / Merci beaucoup',em:'🙏'},
-    {es:'Por favor / De nada',fr:'S\'il vous plaît / De rien',em:'🤝'},
-    {es:'Perdona / Perdone',fr:'Pardon / Excusez-moi',em:'🙇'},
-    {es:'¡Venga! / ¡Vale!',fr:'Allez ! / D\'accord !',em:'👍'},
-    {es:'Sí / No',fr:'Oui / Non',em:'✅'},
-    {es:'¿Cómo estás? / ¿Qué tal?',fr:'Comment ça va ?',em:'🤗'},
+    {es:'Adiós o hasta luego',fr:'Au revoir / À bientôt',em:'👋'},{es:'Hasta pronto',fr:'À bientôt',em:'⏱️'},
+    {es:'Gracias o Muchas gracias',fr:'Merci / Merci beaucoup',em:'🙏'},
+    {es:'Por favor o De nada',fr:'S\'il vous plaît / De rien',em:'🤝'},
+    {es:'Perdona o Perdone',fr:'Pardon / Excusez-moi',em:'🙇'},
+    {es:'¡Venga! o ¡Vale!',fr:'Allez ! / D\'accord !',em:'👍'},
+    {es:'Sí o No',fr:'Oui / Non',em:'✅'},
+    {es:'¿Cómo estás? o ¿Qué tal?',fr:'Comment ça va ?',em:'🤗'},
     {es:'Estoy bien, gracias',fr:'Je vais bien, merci',em:'😊'},
-    {es:'¡Qué chulo! / ¡Guay!',fr:'C\'est cool ! / Super !',em:'🌟'}
+    {es:'¡Qué chulo! o ¡Guay!',fr:'C\'est cool ! / Super !',em:'🌟'}
    ],
    quiz10:[
     {q:'¿Cómo se dice "Bonjour (le matin)" en español?',opts:['Hola','Buenas tardes','Buenos días','Buenas noches'],ans:2},
-    {q:'¿Qué significa "Adiós / hasta luego"?',opts:['À tout à l\'heure','Au revoir / À bientôt','Bonjour','Bonne nuit'],ans:1},
+    {q:'¿Qué significa "Adiós o hasta luego"?',opts:['À tout à l\'heure','Au revoir / À bientôt','Bonjour','Bonne nuit'],ans:1},
     {q:'¿Cómo se dice "Merci" en español?',opts:['Por favor','Perdona','Gracias','Sí'],ans:2},
     {q:'¿Qué significa "¡Vale!" en España?',opts:['Adieu','Allons-y !','D\'accord !','Bonne nuit'],ans:2},
     {q:'¿Cómo se dice "S\'il vous plaît" en español?',opts:['Gracias','Perdona','Por favor','Sí'],ans:2},
@@ -385,95 +385,95 @@ var LEVEL1_THEMES=[
    ]},
   {id:'met',level:1,emoji:'💼',name:'Las Profesiones',sub:'Médico, profe… / Les professions',
    words:[
-    {es:'El/la profesor(a) / el/la profe',fr:'Le/la professeur(e)',em:'👩‍🏫'},
-    {es:'El/la médico / el doctor',fr:'Le médecin',em:'👨‍⚕️'},
+    {es:'El/la profesor(a) o el/la profe',fr:'Le/la professeur(e)',em:'👩‍🏫'},
+    {es:'El/la médico o el doctor',fr:'Le médecin',em:'👨‍⚕️'},
     {es:'El/la cocinero(a)',fr:'Le cuisinier / la cuisinière',em:'👨‍🍳'},
     {es:'El/la estudiante',fr:'L\'étudiant(e)',em:'🎓'},
     {es:'El/la vendedor(a)',fr:'Le vendeur / la vendeuse',em:'🏪'},
     {es:'El/la camarero(a)',fr:'Le serveur / la serveuse',em:'🍽️'},
-    {es:'El/la taxista / el conductor',fr:'Le chauffeur de taxi',em:'🚗'},
+    {es:'El/la taxista o el conductor',fr:'Le chauffeur de taxi',em:'🚗'},
     {es:'El/la enfermero(a)',fr:'L\'infirmier(ère)',em:'💉'},
     {es:'El/la fontanero(a)',fr:'Le/la plombier(ère)',em:'🔧'},
     {es:'El/la informático(a)',fr:'L\'informaticien(ne)',em:'💻'}
    ],
    quiz10:[
-    {q:'¿Cómo se dice "Le médecin" en español?',opts:['El profesor','El médico / el doctor','El enfermero','El cocinero'],ans:1},
+    {q:'¿Cómo se dice "Le médecin" en español?',opts:['El profesor','El médico o el doctor','El enfermero','El cocinero'],ans:1},
     {q:'¿Qué significa "El/la profe" en España?',opts:['L\'étudiant','Le directeur','Le professeur (familier)','Le concierge'],ans:2},
-    {q:'¿Cómo se dice "Le serveur / la serveuse" en España?',opts:['El mesero','El camarero / la camarera','El chofer','El vendedor'],ans:1},
+    {q:'¿Cómo se dice "Le serveur / la serveuse" en España?',opts:['El mesero','El camarero o la camarera','El chofer','El vendedor'],ans:1},
     {q:'¿Qué significa "El/la estudiante"?',opts:['Le professeur','L\'étudiant(e)','Le médecin','Le vendeur'],ans:1},
     {q:'¿Cómo se dice "L\'infirmier" en español?',opts:['El médico','El profesor','El/la enfermero(a)','El camarero'],ans:2}
    ]},
   {id:'trans',level:1,emoji:'🚌',name:'Los Transportes',sub:'Metro, tren, coche… / Les transports',
    words:[
-    {es:'El autobús / el bus',fr:'Le bus',em:'🚌'},{es:'El tren / el AVE',fr:'Le train / le TGV',em:'🚂'},
-    {es:'El coche / el carro',fr:'La voiture',em:'🚗'},{es:'La bicicleta / la bici',fr:'Le vélo',em:'🚴'},
+    {es:'El autobús o el bus',fr:'Le bus',em:'🚌'},{es:'El tren o el AVE',fr:'Le train / le TGV',em:'🚂'},
+    {es:'El coche o el carro',fr:'La voiture',em:'🚗'},{es:'La bicicleta o la bici',fr:'Le vélo',em:'🚴'},
     {es:'El metro',fr:'Le métro',em:'🚇'},{es:'El taxi',fr:'Le taxi',em:'🚕'},
-    {es:'El avión',fr:'L\'avion',em:'✈️'},{es:'El billete / el ticket',fr:'Le billet / le ticket',em:'🎫'},
+    {es:'El avión',fr:'L\'avion',em:'✈️'},{es:'El billete o el ticket',fr:'Le billet / le ticket',em:'🎫'},
     {es:'La moto',fr:'La moto',em:'🏍️'},{es:'El tranvía',fr:'Le tramway',em:'🚊'}
    ],
    quiz10:[
-    {q:'¿Cómo se dice "Le bus" en español?',opts:['El tren','El metro','El autobús / el bus','El taxi'],ans:2},
+    {q:'¿Cómo se dice "Le bus" en español?',opts:['El tren','El metro','El autobús o el bus','El taxi'],ans:2},
     {q:'¿Cómo se llama el tren de alta velocidad en España?',opts:['El metro','El tranvía','El AVE','El autobús'],ans:2},
-    {q:'¿Cómo se dice "La voiture" en España?',opts:['La moto','El coche / el carro','El tranvía','El camión'],ans:1},
+    {q:'¿Cómo se dice "La voiture" en España?',opts:['La moto','El coche o el carro','El tranvía','El camión'],ans:1},
     {q:'¿Cómo se dice "L\'avion" en español?',opts:['El barco','El avión','La bicicleta','El metro'],ans:1},
-    {q:'¿Cómo se dice "Le billet" en España?',opts:['El pasaje','El sencillo','El billete / el ticket','La tarjeta'],ans:2}
+    {q:'¿Cómo se dice "Le billet" en España?',opts:['El pasaje','El sencillo','El billete o el ticket','La tarjeta'],ans:2}
    ]},
   {id:'lieux',level:1,emoji:'🏙️',name:'Los Lugares',sub:'Mercado, plaza, bar… / Les lieux importants',
    words:[
-    {es:'El supermercado',fr:'Le supermarché',em:'🛒'},{es:'El cole / el colegio / el instituto',fr:'L\'école / le lycée',em:'🏫'},
-    {es:'El hospital',fr:'L\'hôpital',em:'🏥'},{es:'El parque / la plaza',fr:'Le parc / la place',em:'🌳'},
+    {es:'El supermercado',fr:'Le supermarché',em:'🛒'},{es:'El cole o el colegio o el instituto',fr:'L\'école / le lycée',em:'🏫'},
+    {es:'El hospital',fr:'L\'hôpital',em:'🏥'},{es:'El parque o la plaza',fr:'Le parc / la place',em:'🌳'},
     {es:'El banco',fr:'La banque',em:'🏦'},{es:'La farmacia',fr:'La pharmacie',em:'💊'},
     {es:'La iglesia',fr:'L\'église',em:'⛪'},{es:'El ayuntamiento',fr:'La mairie',em:'🏛️'},
-    {es:'El bar / el café',fr:'Le bar / le café',em:'☕'},{es:'El río / la playa',fr:'La rivière / la plage',em:'🏖️'},
-    {es:'La calle / la avenida',fr:'La rue / l\'avenue',em:'🛣️'},{es:'La ciudad / el pueblo',fr:'La ville / le village',em:'🏙️'},
-    {es:'La montaña / la sierra',fr:'La montagne / la sierra',em:'⛰️'},{es:'El mar / el océano',fr:'La mer / l\'océan',em:'🌊'},
-    {es:'La taberna / el mesón',fr:'La taverne / l\'auberge',em:'🍷'}
+    {es:'El bar o el café',fr:'Le bar / le café',em:'☕'},{es:'El río o la playa',fr:'La rivière / la plage',em:'🏖️'},
+    {es:'La calle o la avenida',fr:'La rue / l\'avenue',em:'🛣️'},{es:'La ciudad o el pueblo',fr:'La ville / le village',em:'🏙️'},
+    {es:'La montaña o la sierra',fr:'La montagne / la sierra',em:'⛰️'},{es:'El mar o el océano',fr:'La mer / l\'océan',em:'🌊'},
+    {es:'La taberna o el mesón',fr:'La taverne / l\'auberge',em:'🍷'}
    ],
    quiz10:[
     {q:'¿Cómo se dice "La pharmacie" en español?',opts:['El banco','El hospital','La farmacia','El supermercado'],ans:2},
     {q:'¿Cómo se dice "La mairie" en España?',opts:['La iglesia','El tribunal','El ayuntamiento','El mercado'],ans:2},
     {q:'¿Cómo se dice "L\'hôpital" en español?',opts:['La farmacia','El ayuntamiento','El hospital','El banco'],ans:2},
     {q:'¿Qué es típicamente español y se encuentra en cada barrio?',opts:['Le supermarché','Le bar / le café','La pharmacie','L\'école'],ans:1},
-    {q:'¿Cómo se dice "La mer" en español?',opts:['El río','La montaña','El mar / el océano','El lago'],ans:2},
+    {q:'¿Cómo se dice "La mer" en español?',opts:['El río','La montaña','El mar o el océano','El lago'],ans:2},
     {q:'¿Qué significa "El ayuntamiento"?',opts:['Le tribunal','La mairie','Le parlement','L\'université'],ans:1},
-    {q:'¿Cómo se dice "La ville" en español?',opts:['La calle','El campo','La ciudad / el pueblo','La montaña'],ans:2},
+    {q:'¿Cómo se dice "La ville" en español?',opts:['La calle','El campo','La ciudad o el pueblo','La montaña'],ans:2},
     {q:'¿Qué significa "El banco"?',opts:['La pharmacie','La banque','La caisse','Le bureau'],ans:1}
    ]},
   {id:'orient',level:1,emoji:'🧭',name:'Orientarse',sub:'Izquierda, derecha… / S\'orienter',
    words:[
     {es:'A la izquierda',fr:'À gauche',em:'⬅️'},{es:'A la derecha',fr:'À droite',em:'➡️'},
-    {es:'Todo recto / derecho',fr:'Tout droit',em:'⬆️'},{es:'Al lado',fr:'À côté',em:'↔️'},
-    {es:'Enfrente / frente a',fr:'En face',em:'🔄'},{es:'Lejos',fr:'Loin',em:'🌅'},
-    {es:'Cerca',fr:'Près / tout près',em:'📍'},{es:'El mapa / el plano',fr:'Le plan / la carte',em:'🗺️'},
-    {es:'La manzana / la cuadra',fr:'Le pâté de maisons',em:'🏘️'}
+    {es:'Todo recto o derecho',fr:'Tout droit',em:'⬆️'},{es:'Al lado',fr:'À côté',em:'↔️'},
+    {es:'Enfrente o frente a',fr:'En face',em:'🔄'},{es:'Lejos',fr:'Loin',em:'🌅'},
+    {es:'Cerca',fr:'Près / tout près',em:'📍'},{es:'El mapa o el plano',fr:'Le plan / la carte',em:'🗺️'},
+    {es:'La manzana o la cuadra',fr:'Le pâté de maisons',em:'🏘️'}
    ],
    quiz10:[
     {q:'¿Cómo se dice "À gauche" en español?',opts:['A la derecha','Todo recto','A la izquierda','Enfrente'],ans:2},
     {q:'¿Qué significa "A la derecha"?',opts:['À gauche','Tout droit','À côté','À droite'],ans:3},
-    {q:'¿Cómo se dice "Tout droit" en español?',opts:['A la izquierda','Todo recto / derecho','Enfrente','Al lado'],ans:1},
-    {q:'¿Qué significa "Enfrente / frente a"?',opts:['À côté','Derrière','En face','Près'],ans:2},
+    {q:'¿Cómo se dice "Tout droit" en español?',opts:['A la izquierda','Todo recto o derecho','Enfrente','Al lado'],ans:1},
+    {q:'¿Qué significa "Enfrente o frente a"?',opts:['À côté','Derrière','En face','Près'],ans:2},
     {q:'¿Cómo se dice "Près" en español?',opts:['Lejos','Al lado','Cerca','Enfrente'],ans:2}
    ]},
   {id:'sante',level:1,emoji:'🏥',name:'La Salud',sub:'Médico, farmacia… / La santé',
    words:[
-    {es:'El médico / el doctor',fr:'Le médecin',em:'👨‍⚕️'},{es:'El hospital',fr:'L\'hôpital',em:'🏥'},
-    {es:'El medicamento / el fármaco',fr:'Le médicament',em:'💊'},
+    {es:'El médico o el doctor',fr:'Le médecin',em:'👨‍⚕️'},{es:'El hospital',fr:'L\'hôpital',em:'🏥'},
+    {es:'El medicamento o el fármaco',fr:'Le médicament',em:'💊'},
     {es:'La receta médica',fr:'L\'ordonnance',em:'📋'},
-    {es:'Tener dolor / doler',fr:'Avoir mal',em:'🤕'},{es:'La fiebre',fr:'La fièvre',em:'🌡️'},
+    {es:'Tener dolor o doler',fr:'Avoir mal',em:'🤕'},{es:'La fiebre',fr:'La fièvre',em:'🌡️'},
     {es:'La tos',fr:'La toux',em:'😮‍💨'},{es:'La farmacia',fr:'La pharmacie',em:'🏪'},
     {es:'El/la enfermero(a)',fr:'L\'infirmier(ère)',em:'👨‍⚕️'},
-    {es:'La vacuna',fr:'Le vaccin',em:'💉'},{es:'La tirita / el vendaje',fr:'Le pansement',em:'🩹'},
+    {es:'La vacuna',fr:'Le vaccin',em:'💉'},{es:'La tirita o el vendaje',fr:'Le pansement',em:'🩹'},
     {es:'La ambulancia',fr:'L\'ambulance',em:'🚑'},
-    {es:'Las urgencias / el servicio de urgencias',fr:'Les urgences',em:'🆘'},
+    {es:'Las urgencias o el servicio de urgencias',fr:'Les urgences',em:'🆘'},
     {es:'El/la paciente',fr:'Le/la patient(e)',em:'🛏️'},
-    {es:'La consulta médica / la cita',fr:'La consultation / le rendez-vous',em:'📋'},
+    {es:'La consulta médica o la cita',fr:'La consultation / le rendez-vous',em:'📋'},
     {es:'El termómetro',fr:'Le thermomètre',em:'🌡️'}
    ],
    quiz10:[
     {q:'¿Cómo se dice "L\'hôpital" en español?',opts:['La farmacia','El hospital','Las urgencias','La consulta'],ans:1},
     {q:'¿Qué significa "La fiebre"?',opts:['La toux','La douleur','La fièvre','La grippe'],ans:2},
     {q:'¿Cómo se dice "Le vaccin" en español?',opts:['La tirita','La vacuna','El vendaje','El medicamento'],ans:1},
-    {q:'¿Cómo se dice "Le pansement" en España?',opts:['La inyección','La vacuna','La tirita / el vendaje','El medicamento'],ans:2},
+    {q:'¿Cómo se dice "Le pansement" en España?',opts:['La inyección','La vacuna','La tirita o el vendaje','El medicamento'],ans:2},
     {q:'¿Cómo se dice "L\'ordonnance" en español?',opts:['La consulta','El medicamento','La receta médica','La vacuna'],ans:2},
     {q:'¿Cómo se dice "Les urgences" en español?',opts:['El médico de guardia','La sala de espera','Las urgencias','La consulta'],ans:2},
     {q:'¿Cómo se dice "Le thermomètre" en español?',opts:['La presión','El termómetro','La fiebre','La inyección'],ans:1},
@@ -481,11 +481,11 @@ var LEVEL1_THEMES=[
    ]},
   {id:'objets',level:1,emoji:'🔑',name:'Objetos del Día',sub:'Teléfono, llaves… / Objets du quotidien',
    words:[
-    {es:'El teléfono / el móvil',fr:'Le téléphone / le portable',em:'📱'},
-    {es:'Las llaves',fr:'Les clés',em:'🔑'},{es:'La cartera / el monedero',fr:'Le portefeuille / le porte-monnaie',em:'👛'},
+    {es:'El teléfono o el móvil',fr:'Le téléphone / le portable',em:'📱'},
+    {es:'Las llaves',fr:'Les clés',em:'🔑'},{es:'La cartera o el monedero',fr:'Le portefeuille / le porte-monnaie',em:'👛'},
     {es:'La mochila',fr:'Le sac à dos',em:'🎒'},
     {es:'Las gafas',fr:'Les lunettes',em:'👓'},
-    {es:'El papel',fr:'Le papier',em:'📄'},{es:'El bolígrafo / el boli',fr:'Le stylo / le bic',em:'🖊️'},
+    {es:'El papel',fr:'Le papier',em:'📄'},{es:'El bolígrafo o el boli',fr:'Le stylo / le bic',em:'🖊️'},
     {es:'Las tijeras',fr:'Les ciseaux',em:'✂️'},{es:'El cargador',fr:'Le chargeur',em:'🔌'},
     {es:'La botella',fr:'La bouteille',em:'🍶'},{es:'El ordenador',fr:'L\'ordinateur',em:'💻'}
    ],
@@ -496,8 +496,8 @@ var LEVEL1_THEMES=[
     {q:'¿Cómo se dice "L\'ordinateur" en España?',opts:['El móvil','La tableta','El ordenador','La pantalla'],ans:2},
     {q:'¿Cómo se dice "Les lunettes" en España?',opts:['Los auriculares','Las gafas','Los guantes','Los relojes'],ans:1},
     {q:'¿Qué diferencia hay entre España y Latinoamérica para "Le portable"?',opts:['Celular en España, móvil en Latinoamérica','Móvil en España, celular en Latinoamérica','Se dice igual','Teléfono en España'],ans:1},
-    {q:'¿Cómo se dice "Le stylo" en España (familier)?',opts:['El lápiz','El papel','El bolígrafo / el boli','El libro'],ans:2},
-    {q:'¿Cómo se dice "Le portefeuille" en español?',opts:['La mochila','Las llaves','La cartera / el monedero','El teléfono'],ans:2}
+    {q:'¿Cómo se dice "Le stylo" en España (familier)?',opts:['El lápiz','El papel','El bolígrafo o el boli','El libro'],ans:2},
+    {q:'¿Cómo se dice "Le portefeuille" en español?',opts:['La mochila','Las llaves','La cartera o el monedero','El teléfono'],ans:2}
    ]}
 ];
 
@@ -562,7 +562,7 @@ var LEVEL2_THEMES=[
       {s:'Secretaria',fr:'¡Bienvenida al instituto! ¡Que tengas un buen día!',es:'¡Bienvenida al instituto! ¡Que tengas un buen día!',side:'right'}
      ]}
    ],
-   vocab:['Me llamo = Je m\'appelle','Tengo ... años = J\'ai ... ans','Vengo de = Je viens de','Vivo en = J\'habite à','¡Bienvenido/a! = Bienvenue !','Encantado/a = Enchanté(e)','¡Tío / tía! = Mec / nana (familier)'],
+   vocab:['Me llamo = Je m\'appelle','Tengo ... años = J\'ai ... ans','Vengo de = Je viens de','Vivo en = J\'habite à','¡Bienvenido/a! = Bienvenue !','Encantado/a = Enchanté(e)','¡Tío o tía! = Mec / nana (familier)'],
    quiz:[
     {q:'¿Qué significa "¡Bienvenido/a!"?',opts:['Au revoir','Bonjour','Bienvenue','Enchanté'],ans:2},
     {q:'¿Cómo se dice "J\'ai vingt ans" en español?',opts:['Soy veinte años','Tengo veinte años','Vengo veinte años','Vivo veinte'],ans:1},
@@ -631,7 +631,7 @@ var LEVEL2_THEMES=[
       {s:'Rosa',fr:'Un kilo de tomates y medio kilo de zanahorias.',es:'Un kilo de tomates y medio kilo de zanahorias.',side:'left'},
       {s:'Vendedor',fr:'Aquí tiene, son tres euros.',es:'Aquí tiene, son tres euros. ¡Muy fresquitos!',side:'right'}
     ]},
-    {label:'Sit. 2',title:'En el restaurante / el bar',img:'🍴',dialogue:[
+    {label:'Sit. 2',title:'En el restaurante o el bar',img:'🍴',dialogue:[
       {s:'Camarero',fr:'¡Buenas! ¿Qué vais a tomar?',es:'¡Buenas! ¿Qué vais a tomar?',side:'right'},
       {s:'Carlos',fr:'Para mí, el menú del día. ¿Qué hay de primero?',es:'Para mí, el menú del día. ¿Qué hay de primero?',side:'left'},
       {s:'Camarero',fr:'Hay sopa o ensalada.',es:'Hay sopa o ensalada.',side:'right'},
@@ -676,7 +676,7 @@ var LEVEL2_THEMES=[
       {s:'Empleado',fr:'Sí, está justo al lado del agua sin gas.',es:'Sí, está justo al lado del agua sin gas.',side:'right'}
      ]}
    ],
-   vocab:['¿Qué te pongo? = Qu\'est-ce que je te sers ?','¡Venga! = Allez-y ! / D\'accord !','El zumo = Le jus','Agua con gas / sin gas = Eau gazeuse / plate','El pasillo = Le rayon / l\'allée','Recién exprimido = Fraîchement pressé','¿Queréis? = Vous voulez ? (vosotros)'],
+   vocab:['¿Qué te pongo? = Qu\'est-ce que je te sers ?','¡Venga! = Allez-y ! / D\'accord !','El zumo = Le jus','Agua con gas o sin gas = Eau gazeuse / plate','El pasillo = Le rayon / l\'allée','Recién exprimido = Fraîchement pressé','¿Queréis? = Vous voulez ? (vosotros)'],
    quiz:[
     {q:'¿Qué significa "¿Qué te pongo?" en un bar español?',opts:['Qu\'est-ce que tu poses ?','Qu\'est-ce que je te sers ?','Qu\'est-ce que tu veux me dire ?','Qu\'est-ce que tu cherches ?'],ans:1},
     {q:'¿Cómo se dice "Eau gazeuse" en español?',opts:['Agua natural','Agua caliente','Agua con gas','Agua de manantial'],ans:2},
@@ -705,13 +705,13 @@ var LEVEL2_THEMES=[
       {s:'María',fr:'Tiene seis años. Y mi hijo tiene diez.',es:'Tiene seis años. Y mi hijo tiene diez.',side:'left'}
      ]}
    ],
-   vocab:['La familia = La famille','Mis hijos = Mes enfants','Mi marido = Mon mari','Mi madre / mi mamá = Ma mère','Mi padre / mi papá = Mon père','El mayor = L\'aîné','El pequeño / el menor = Le plus jeune','Vuestros = Vos (vosotros)'],
+   vocab:['La familia = La famille','Mis hijos = Mes enfants','Mi marido = Mon mari','Mi madre o mi mamá = Ma mère','Mi padre / mi papá = Mon père','El mayor = L\'aîné','El pequeño o el menor = Le plus jeune','Vuestros = Vos (vosotros)'],
    quiz:[
     {q:'¿Qué significa "Mis hijos"?',opts:['Mes parents','Mes frères','Mes enfants','Mes grands-parents'],ans:2},
     {q:'¿Cómo se dice "L\'aîné" en español?',opts:['El menor','El grande','El mayor','El viejo'],ans:2},
     {q:'¿Por qué se dice "¿Cuántos hijos tenéis?" y no "tienen"?',opts:['C\'est une erreur','Car on parle à vosotros (pluriel de tú)','Car c\'est le futur','Car c\'est formel'],ans:1}
    ]},
-  {id:'emot2',level:2,emoji:'😄',name:'Las Emociones',sub:'Tristeza, cansancio, alegría / Tristesse, fatigue, joie',type:'dialog',
+  {id:'emot2',level:2,emoji:'😄',name:'Las Emociones',sub:'Tristeza, cansancio, alegría o Tristesse, fatigue, joie',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Por qué un amigo está triste',img:'😢',dialogue:[
       {s:'Ana',fr:'Tío, no tienes buena cara. ¿Estás bien?',es:'Tío, no tienes buena cara. ¿Estás bien?',side:'right'},
@@ -763,7 +763,7 @@ var LEVEL2_THEMES=[
       {s:'Luisa',fr:'Hago la cama después.',es:'Hago la cama después.',side:'left'}
      ]}
    ],
-   vocab:['El alquiler = Le loyer','El salón = Le salon','El cuarto de baño = La salle de bain','El váter / el aseo = Les toilettes','La cocina = La cuisine','La habitación = La chambre','Fregar los platos = Faire la vaisselle','¡Anda! = Oh là là ! / Tiens ! (surprise)'],
+   vocab:['El alquiler = Le loyer','El salón = Le salon','El cuarto de baño = La salle de bain','El váter o el aseo = Les toilettes','La cocina = La cuisine','La habitación = La chambre','Fregar los platos = Faire la vaisselle','¡Anda! = Oh là là ! / Tiens ! (surprise)'],
    quiz:[
     {q:'¿Qué significa "El alquiler"?',opts:['L\'appartement','Le loyer','La chambre','Le contrat'],ans:1},
     {q:'¿Cómo se dice "Faire la vaisselle" en España?',opts:['Tender la cama','Pasar el aspirador','Fregar los platos','Limpiar'],ans:2},
@@ -825,7 +825,7 @@ var LEVEL2_THEMES=[
     {q:'¿Qué significa "Me he hecho daño"?',opts:['Je suis fatigué','J\'ai de la fièvre','Je me suis blessé','Je suis malade'],ans:2},
     {q:'¿Qué significa "¿Desde cuándo?"?',opts:['Combien de temps reste-t-il ?','Depuis combien de temps ?','Pendant combien de temps ?','À quelle heure ?'],ans:1}
    ]},
-  {id:'anim2',level:2,emoji:'🐘',name:'Los Animales',sub:'Mascota, campo, toro / Mascotte, campagne, taureau',type:'dialog',
+  {id:'anim2',level:2,emoji:'🐘',name:'Los Animales',sub:'Mascota, campo, toro / Animal de compagnie, campagne, taureau',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Hablar de tu mascota',img:'🐶',dialogue:[
       {s:'Vecino',fr:'¿Ese es tu perro? ¡Qué mono!',es:'¿Ese es tu perro? ¡Qué mono!',side:'right'},
@@ -840,7 +840,7 @@ var LEVEL2_THEMES=[
       {s:'Paseante',fr:'¿Lo puedo acariciar?',es:'¿Lo puedo acariciar?',side:'right'},
       {s:'Carlos',fr:'Sí, claro. ¡Le encanta!',es:'Sí, claro. ¡Le encanta!',side:'left'}
      ]},
-    {label:'Sit. 3',title:'Visita a la finca / al campo',img:'🐄',dialogue:[
+    {label:'Sit. 3',title:'Visita a la finca o al campo',img:'🐄',dialogue:[
       {s:'Granjero',fr:'¡Bienvenidos! Allí están las vacas.',es:'¡Bienvenidos! Allí están las vacas.',side:'right'},
       {s:'Niño',fr:'¡Oh! ¿Y las gallinas dónde están?',es:'¡Oh! ¿Y las gallinas dónde están?',side:'left'},
       {s:'Granjero',fr:'Las gallinas están en el gallinero. ¡Y ahí está el toro!',es:'Las gallinas están en el gallinero. ¡Y ahí está el toro!',side:'right'},
@@ -848,7 +848,7 @@ var LEVEL2_THEMES=[
       {s:'Granjero',fr:'Sí, con cuidado.',es:'Sí, con cuidado. ¡Que no te muerdan los dedos!',side:'right'}
      ]}
    ],
-   vocab:['El perro = Le chien','El gato = Le chat','La vaca = La vache','La gallina = La poule','El toro = Le taureau','Es muy bueno / dócil = Il est gentil / docile','¡Qué mono! = Comme c\'est mignon ! (argot)'],
+   vocab:['El perro = Le chien','El gato = Le chat','La vaca = La vache','La gallina = La poule','El toro = Le taureau','Es muy bueno o dócil = Il est gentil / docile','¡Qué mono! = Comme c\'est mignon ! (argot)'],
    quiz:[
     {q:'¿Qué significa "¡Qué mono!" en España?',opts:['Quel singe !','Comme c\'est mignon !','Comme c\'est bizarre !','Comme c\'est grand !'],ans:1},
     {q:'¿Cuál es el animal símbolo de las fiestas en España?',opts:['El caballo','El gato','El toro','El águila'],ans:2},
@@ -875,7 +875,7 @@ var LEVEL2_THEMES=[
       {s:'Carlos',fr:'Sí, vamos a la reunión. Estamos listos.',es:'Sí, vamos a la reunión. Estamos listos.',side:'left'}
      ]}
    ],
-   vocab:['Voy = Je vais','Como = Je mange','Hablo = Je parle','Me gusta = J\'aime','Bebo = Je bois','Vivo = J\'habite','Soy / estoy = Je suis','Tengo = J\'ai','El curro = Le boulot (argot)','Vais / vamos = Vous allez / nous allons','Os gusta = Vous aimez (vosotros)'],
+   vocab:['Voy = Je vais','Como = Je mange','Hablo = Je parle','Me gusta = J\'aime','Bebo = Je bois','Vivo = J\'habite','Soy o estoy = Je suis','Tengo = J\'ai','El curro = Le boulot (argot)','Vais / vamos = Vous allez / nous allons','Os gusta = Vous aimez (vosotros)'],
    quiz:[
     {q:'¿Qué significa "Voy al curro"?',opts:['Je cherche du travail','Je rentre du travail','Je vais au boulot','Je quitte le travail'],ans:2},
     {q:'¿Por qué se dice "¿Vais a la reunión?" y no "¿Vais a la reunión?"?',opts:['C\'est une erreur','Car c\'est le pluriel de tú (vosotros)','Car c\'est le futur','Car c\'est une question'],ans:1},
@@ -903,7 +903,7 @@ var LEVEL2_THEMES=[
       {s:'Luisa',fr:'¡Qué chulo! Ese país es precioso.',es:'¡Qué chulo! Ese país es precioso. También mola Italia.',side:'left'}
      ]}
    ],
-   vocab:['¿De dónde sois? = D\'où êtes-vous ? (vosotros)','Venimos de = Nous venons de','Las vacaciones = Les vacances','Estuvo / fue = C\'était','Nos iríamos = Nous irions','Sueño con = Je rêve de','Fuisteis = Vous êtes allés (vosotros)','Conocéis = Vous connaissez (vosotros)'],
+   vocab:['¿De dónde sois? = D\'où êtes-vous ? (vosotros)','Venimos de = Nous venons de','Las vacaciones = Les vacances','Estuvo o fue = C\'était','Nos iríamos = Nous irions','Sueño con = Je rêve de','Fuisteis = Vous êtes allés (vosotros)','Conocéis = Vous connaissez (vosotros)'],
    quiz:[
     {q:'¿Por qué se dice "¿De dónde sois?" y no "¿De dónde son?"?',opts:['C\'est une erreur','Car c\'est vosotros (pluriel de tú)','Car c\'est le futur','Car c\'est formel'],ans:1},
     {q:'¿Qué significa "Nos iríamos a Japón"?',opts:['Nous sommes allés au Japon','Nous vivons au Japon','Nous irions au Japon','Nous voulons aller au Japon'],ans:2},
@@ -957,7 +957,7 @@ var LEVEL2_THEMES=[
       {s:'Pedro',fr:'¡Buenas noches! ¡Cuídate!',es:'¡Buenas noches! ¡Cuídate mucho!',side:'right'}
      ]}
    ],
-   vocab:['Buenos días = Bonjour','Buenas tardes / noches = Bonsoir','Adiós / hasta luego = Au revoir','Hasta pronto = À bientôt','¡Que descanséis! = Bonne nuit / Bonne soirée (vosotros)','¡Venga! / ¡Vale! = Allez ! / D\'accord !','No dudéis = N\'hésitez pas (vosotros)'],
+   vocab:['Buenos días = Bonjour','Buenas tardes o noches = Bonsoir','Adiós o hasta luego = Au revoir','Hasta pronto = À bientôt','¡Que descanséis! = Bonne nuit / Bonne soirée (vosotros)','¡Venga! o ¡Vale! = Allez ! / D\'accord !','No dudéis = N\'hésitez pas (vosotros)'],
    quiz:[
     {q:'¿Qué significa "Hasta pronto"?',opts:['Adieu','À bientôt','Bonjour','Bonne nuit'],ans:1},
     {q:'¿Por qué se dice "¡Que descanséis!" y no "¡Que descansen!"?',opts:['C\'est une erreur','Car c\'est vosotros (pluriel de tú)','Car c\'est un souhait','Car c\'est le futur'],ans:1},
@@ -985,7 +985,7 @@ var LEVEL2_THEMES=[
       {s:'Profe',fr:'¡Excelente! ¡Hacen falta buenos profesores!',es:'¡Excelente! ¡Hacen falta buenos profes!',side:'right'}
      ]}
    ],
-   vocab:['¿A qué te dedicas? = À quoi tu te consacres ?','Soy... = Je suis...','El oficio / la profesión = Le métier','Trabajo = Je travaille','Quisiera ser = Je voudrais être','¡Me mola! = Ça me plaît ! (argot)','Vuestros = Votre / vos (vosotros)'],
+   vocab:['¿A qué te dedicas? = À quoi tu te consacres ?','Soy... = Je suis...','El oficio o la profesión = Le métier','Trabajo = Je travaille','Quisiera ser = Je voudrais être','¡Me mola! = Ça me plaît ! (argot)','Vuestros = Votre / vos (vosotros)'],
    quiz:[
     {q:'¿Cómo se pregunta la profesión de forma informal en España?',opts:['¿Trabajas?','¿A qué te dedicas?','¿Es tu trabajo?','¿Tienes un oficio?'],ans:1},
     {q:'¿Qué significa "Quisiera ser médico"?',opts:['Je suis médecin','Je suis allé chez le médecin','Je voudrais être médecin','Je cherche un médecin'],ans:2},
@@ -1014,7 +1014,7 @@ var LEVEL2_THEMES=[
       {s:'Empleado',fr:'Son ochenta y cinco euros.',es:'Son ochenta y cinco euros. ¿Prefiere ventana o pasillo?',side:'right'}
      ]}
    ],
-   vocab:['El billete (sencillo / de ida y vuelta) = Le billet (simple / aller-retour)','El AVE = Le TGV espagnol (Alta Velocidad Española)','El aeropuerto = L\'aéroport','La estación de tren / Renfe = La gare / la SNCF espagnole','Coger el metro / el taxi = Prendre le métro / le taxi','Ventana / pasillo = Fenêtre / couloir'],
+   vocab:['El billete (sencillo o de ida y vuelta) = Le billet (simple / aller-retour)','El AVE = Le TGV espagnol (Alta Velocidad Española)','El aeropuerto = L\'aéroport','La estación de tren o Renfe = La gare / la SNCF espagnole','Coger el metro o el taxi = Prendre le métro / le taxi','Ventana / pasillo = Fenêtre / couloir'],
    quiz:[
     {q:'¿Qué es el AVE en España?',opts:['Un bus touristique','Le TGV espagnol (Alta Velocidad)','Un tramway','Un taxi collectif'],ans:1},
     {q:'¿Qué significa "Un billete de ida y vuelta"?',opts:['Un billet simple','Un billet aller-retour','Un abonnement mensuel','Un billet premium'],ans:1},
@@ -1041,7 +1041,7 @@ var LEVEL2_THEMES=[
       {s:'Pedro',fr:'Sí, y fuimos a la fiesta mayor del pueblo.',es:'Sí, y fuimos a la fiesta mayor del pueblo. ¡Fue genial!',side:'left'}
      ]}
    ],
-   vocab:['La farmacia de guardia = La pharmacie de garde','El hospital = L\'hôpital','El supermercado / el súper = Le supermarché','El banco = La banque','El pueblo = Le village','La fiesta mayor = La fête du village','Vais = Vous allez (vosotros)'],
+   vocab:['La farmacia de guardia = La pharmacie de garde','El hospital = L\'hôpital','El supermercado o el súper = Le supermarché','El banco = La banque','El pueblo = Le village','La fiesta mayor = La fête du village','Vais = Vous allez (vosotros)'],
    quiz:[
     {q:'¿Qué es "La farmacia de guardia" en España?',opts:['La pharmacie principale','La pharmacie de garde (ouverte la nuit)','La pharmacie universitaire','La pharmacie de l\'hôpital'],ans:1},
     {q:'¿Qué significa "El pueblo" en España?',opts:['La ville','La plage','Le village','La montagne'],ans:2},
@@ -1068,7 +1068,7 @@ var LEVEL2_THEMES=[
       {s:'Luisa',fr:'Sigue todo recto y está a la derecha. Muy cerca, a dos minutos a pie.',es:'Sigue todo recto y está a la derecha. Muy cerca, a dos minutos a pie.',side:'left'}
      ]}
    ],
-   vocab:['A la izquierda = À gauche','A la derecha = À droite','Todo recto = Tout droit','Enfrente / frente a = En face','Al lado = À côté','Lejos = Loin','Cerca = Près','La manzana = Le pâté de maisons'],
+   vocab:['A la izquierda = À gauche','A la derecha = À droite','Todo recto = Tout droit','Enfrente o frente a = En face','Al lado = À côté','Lejos = Loin','Cerca = Près','La manzana = Le pâté de maisons'],
    quiz:[
     {q:'¿Cómo se dice "Tout droit" en español?',opts:['A la izquierda','A la derecha','Todo recto','Enfrente'],ans:2},
     {q:'¿Qué significa "Frente al parque"?',opts:['À côté du parc','Dans le parc','En face du parc','Derrière le parc'],ans:2},
@@ -1099,7 +1099,7 @@ var LEVEL2_THEMES=[
       {s:'Farmacéutico',fr:'Sí, aquí tiene un jarabe. Dos cucharadas tres veces al día.',es:'Sí, aquí tiene un jarabe. Dos cucharadas tres veces al día.',side:'right'}
      ]}
    ],
-   vocab:['Una cita médica = Un rendez-vous médical','El centro de salud = Le centre de santé','La receta médica = L\'ordonnance','El medicamento / el fármaco = Le médicament','Me duele... = J\'ai mal à...','La fiebre = La fièvre','La tos = La toux','El/la farmacéutico(a) = Le/la pharmacien(ne)'],
+   vocab:['Una cita médica = Un rendez-vous médical','El centro de salud = Le centre de santé','La receta médica = L\'ordonnance','El medicamento o el fármaco = Le médicament','Me duele... = J\'ai mal à...','La fiebre = La fièvre','La tos = La toux','El/la farmacéutico(a) = Le/la pharmacien(ne)'],
    quiz:[
     {q:'¿Cómo se llama el lugar donde se pide cita con el médico en España?',opts:['El hospital','El centro de salud','La clínica privada','La farmacia'],ans:1},
     {q:'¿Qué significa "Tengo fiebre"?',opts:['J\'ai de la toux','J\'ai mal à la tête','J\'ai de la fièvre','Je suis fatigué'],ans:2},
@@ -1130,7 +1130,7 @@ var LEVEL2_THEMES=[
       {s:'Pedro',fr:'¡Muchísimas gracias, me has salvado la vida!',es:'¡Muchísimas gracias, ¡me has salvado la vida!',side:'left'}
      ]}
    ],
-   vocab:['Las llaves = Les clés','La cartera / el monedero = Le portefeuille','La mochila = Le sac à dos','El bolígrafo / el boli = Le stylo / le bic','La hoja = La feuille','El cargador = Le chargeur','Las gafas = Les lunettes','El móvil = Le portable'],
+   vocab:['Las llaves = Les clés','La cartera o el monedero = Le portefeuille','La mochila = Le sac à dos','El bolígrafo o el boli = Le stylo / le bic','La hoja = La feuille','El cargador = Le chargeur','Las gafas = Les lunettes','El móvil = Le portable'],
    quiz:[
     {q:'¿Cómo se dice "Les clés" en español?',opts:['La cartera','Las llaves','El boli','La botella'],ans:1},
     {q:'¿Cómo se dice "Le portable" en España?',opts:['El ordenador','El boli','El móvil','La tableta'],ans:2},
