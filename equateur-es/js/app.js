@@ -1,16 +1,29 @@
 /* ========================================
-   Español Ecuador → Français 🇪🇨 – Logique applicative
+   Español Ecuatoriano → Français 🇪🇨 – Logique applicative
    Fonctions UI, état, navigation
-   © 2026 Sébastien Godet
+   © Juin 2026 Sébastien Godet
 ======================================== */
 
-// Synthèse vocale en espagnol équatorien
-function speak(txt){
-  if(!window.speechSynthesis)return;
+function speak(txt) {
+  if (!window.speechSynthesis) return;
   speechSynthesis.cancel();
-  var u=new SpeechSynthesisUtterance(txt);
-  u.lang='es-EC';u.rate=0.85;
-  speechSynthesis.speak(u);
+
+  var parts = (txt || '').split('/').map(function(p) { return p.trim(); }).filter(Boolean);
+
+  function speakPart(i) {
+    if (i >= parts.length) return;
+    var u = new SpeechSynthesisUtterance(parts[i]);
+    u.lang = 'es-EC';
+    u.rate = 0.85;
+    u.onend = function() {
+      if (i + 1 < parts.length) {
+        setTimeout(function() { speakPart(i + 1); }, 2000);
+      }
+    };
+    speechSynthesis.speak(u);
+  }
+
+  speakPart(0);
 }
 
 function getQuizTotal(theme){
@@ -25,10 +38,9 @@ function getQuizQuestions(theme){
   return qs.slice(0,total);
 }
 
-// NIVEAU 1 — mots inversés : es = mot à apprendre (recto), fr = traduction (verso)
-
 var done=[];
-function loadDone(){try{done=JSON.parse(localStorage.getItem('pe_ec_done_v1')||'[]');}catch(e){done=[];}}
+function loadDone(){try{done=JSON.parse(localStorage.getItem('pe_ec_done_v1')||'[]');}catch(e){done=[];}
+}
 function saveDone(){try{localStorage.setItem('pe_ec_done_v1',JSON.stringify(done));}catch(e){}}
 function markDone(id){if(!done.includes(id)){done.push(id);saveDone();}}
 function resetTheme(id){done=done.filter(function(d){return d!==id;});saveDone();renderSections();renderHome();}
@@ -56,7 +68,7 @@ function renderSections(){
   ['grid1','grid2'].forEach(function(gid){
     var lv=gid==='grid1'?1:2;
     document.getElementById(gid).innerHTML=ALL_THEMES.filter(function(t){return t.level===lv;}).map(function(t){
-      return '<div class="theme-card'+(isDone(t.id)?' done':'')+'" onclick="openTheme(\''+t.id+'\')">'
+      return '<div class="theme-card'+(isDone(t.id)?' done':'')+'\" onclick="openTheme(\''+t.id+'\')">'
         +'<div class="t-emoji">'+t.emoji+'</div>'
         +'<div class="t-name">'+t.name+'</div>'
         +'<div class="t-sub">'+t.sub+'</div>'
@@ -89,7 +101,7 @@ function openTheme(id){
     tabs=[{k:'flash',lbl:'🃏 Tarjetas'},{k:'quiz10',lbl:'❓ Quiz'}];
   }
   document.getElementById('lessonTabs').innerHTML=tabs.map(function(t,i){
-    return '<button class="tab'+(i===0?' active':'')+'" data-tab="'+t.k+'" onclick="switchTab(\''+t.k+'\')">'+t.lbl+'</button>';
+    return '<button class="tab'+(i===0?' active':'')+'\" data-tab="'+t.k+'" onclick="switchTab(\''+t.k+'\')">'+t.lbl+'</button>';
   }).join('');
   switchTab(tabs[0].k);
 }
@@ -118,12 +130,25 @@ function renderFlash(){
   }
   var emFr=card.em?'<div class="fc-front-emoji">'+card.em+'</div>':'';
   var emBk=card.em?'<div class="fc-back-emoji">'+card.em+'</div>':'';
+  var hasConj=card.conj&&card.conj.es&&card.conj.fr;
+  var frontContent, backContent;
+  if(hasConj){
+    frontContent=emFr
+      +'<div class="fc-front-word">'+card.es+'</div>'
+      +'<div class="fc-conj">'+card.conj.es.map(function(l){return '<div class="fc-conj-line">'+l+'</div>';}).join('')+'</div>';
+    backContent=emBk
+      +'<div class="fc-back-word">'+card.fr+'</div>'
+      +'<div class="fc-conj">'+card.conj.fr.map(function(l){return '<div class="fc-conj-line">'+l+'</div>';}).join('')+'</div>';
+  } else {
+    frontContent=emFr+'<div class="fc-front-word">'+card.es+'</div><div class="fc-front-hint">👆 Toca para ver la traducción</div>';
+    backContent=emBk+'<div class="fc-back-word">'+card.fr+'</div>';
+  }
   document.getElementById('tabContent').innerHTML=
     '<div class="section-label">Recto: español 🇪🇨 — Verso: français 🇫🇷 · ¡Toca para voltear!</div>'
     +'<div class="fc-wrap">'
     +'<div class="fc" id="fc" onclick="flipCard()">'
-    +'<div class="fc-front">'+emFr+'<div class="fc-front-word">'+card.es+'</div><div class="fc-front-hint">👆 Toca para ver la traducción</div></div>'
-    +'<div class="fc-back">'+emBk+'<div class="fc-back-word">'+card.fr+'</div><div class="fc-back-hint">🇫🇷 Traduction française</div></div>'
+    +'<div class="fc-front">'+frontContent+'</div>'
+    +'<div class="fc-back">'+backContent+'</div>'
     +'</div></div>'
     +'<div class="fc-nav">'
     +'<button onclick="prevCard()">← Anterior</button>'
@@ -133,10 +158,11 @@ function renderFlash(){
     +'<button class="audio-btn-big" onclick="speak(\''+esc(card.es)+'\')">🔊 Escuchar en español</button>';
 }
 
+
 function buildAlphaDetail(c){
-  return '<div style="font-size:2.5rem;font-weight:900;color:#002D62">'+c.es+'</div>'
+  return '<div style="font-size:2.5rem;font-weight:900;color:#0072C6">'+c.es+'</div>'
     +'<div style="color:#555;margin:4px 0;font-size:.85rem">'+c.fr+'</div>'
-    +'<button onclick="speak(\''+esc(c.es)+'\')" style="margin-top:10px;background:#c0392b;color:#fff;border:none;border-radius:50px;padding:9px 18px;cursor:pointer;font-weight:700;min-height:44px">🔊 Escuchar</button>';
+    +'<button onclick="speak(\''+esc(c.es)+'\')" style="margin-top:10px;background:#0072C6;color:#fff;border:none;border-radius:50px;padding:9px 18px;cursor:pointer;font-weight:700;min-height:44px">🔊 Escuchar</button>';
 }
 
 function pickAlpha(i){
@@ -237,7 +263,7 @@ function checkQ10(chosen,correct){
   if(chosen===correct)q10Score++;
   var correctWord=qs[q10Step].opts[correct];
   var fb=document.getElementById('q10fb');
-  fb.textContent=chosen===correct?'✅ ¡Correcto! ¡Qué bacán!':'❌ Respuesta correcta: '+correctWord;
+  fb.textContent=chosen===correct?'✅ ¡Correcto! ¡Qué chévere!':'❌ Respuesta correcta: '+correctWord;
   fb.style.color=chosen===correct?'#4CAF50':'#c0392b';
   if(isAlphaQuiz()){
     if(chosen!==correct)setTimeout(function(){speak(qs[q10Step].audio);},300);
@@ -253,7 +279,7 @@ function checkQ10(chosen,correct){
 function renderDialog(){
   var sits=CT.situations;
   var sitBtns=sits.map(function(s,i){
-    return '<button class="sit-btn'+(i===sitIdx?' active':'')+'" onclick="pickSit('+i+')">'+s.label+'</button>';
+    return '<button class="sit-btn'+(i===sitIdx?' active':'')+'\" onclick="pickSit('+i+')">'+s.label+'</button>';
   }).join('');
   var sit=sits[sitIdx];
   var bubbles=sit.dialogue.map(function(ln,i){
@@ -342,7 +368,7 @@ function checkDQ(chosen,correct){
   });
   if(chosen===correct)dqScore++;
   var fb=document.getElementById('dqfb');
-  fb.textContent=chosen===correct?'✅ ¡Correcto! ¡Qué bacán!':'❌ ¡Inténtalo de nuevo!';
+  fb.textContent=chosen===correct?'✅ ¡Correcto! ¡Qué chévere!':'❌ ¡Inténtalo de nuevo!';
   fb.style.color=chosen===correct?'#4CAF50':'#c0392b';
   setTimeout(function(){dqStep++;renderDialogQuiz();},1500);
 }
