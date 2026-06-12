@@ -630,641 +630,505 @@ var LEVEL1_THEMES=[
    ]}  
 ];
 
-var LEVEL2_THEMES=[
-  {id:'alpha2',level:2,emoji:'🔤',name:'El Alfabeto',sub:'Deletrear en situación / Épeler en situation',type:'dialog',
+
+/* ========================================
+   Español Castillan → Français 🇪🇸 – Niveau 2
+   14 situations de dialogues — Niveau A1
+   Français débutant en Espagne
+   © 2026 Sébastien Godet
+======================================== */
+ 
+var LEVEL2_THEMES = [
+ 
+  /* 1 ── Saluer et prendre des nouvelles */
+  {id:'salut2',level:2,emoji:'👋',name:'Saludos',sub:'Saluer quelqu\'un / Dire bonjour en Espagne',type:'dialog',
    situations:[
-    {label:'Sit. 1',title:'Nombre por teléfono',img:'📞',
-     dialogue:[
-      {s:'Agente',fr:'Buenos días, ¿cuál es su apellido?',es:'Buenos días, ¿cuál es su apellido?',side:'right'},
-      {s:'Cliente',fr:'Me llamo García.',es:'Me llamo García.',side:'left'},
-      {s:'Agente',fr:'¿Puede deletrearlo, por favor?',es:'¿Puede deletrearlo, por favor?',side:'right'},
-      {s:'Cliente',fr:'G-A-R-C-Í-A.',es:'G-A-R-C-Í-A.',side:'left'},
-      {s:'Agente',fr:'Perfecto, gracias.',es:'Perfecto, muchas gracias.',side:'right'}
-     ]},
-    {label:'Sit. 2',title:'Correo electrónico',img:'📧',
-     dialogue:[
-      {s:'Recepcionista',fr:'¿Cuál es su correo electrónico?',es:'¿Cuál es su correo electrónico?',side:'right'},
-      {s:'Luisa',fr:'Es luisa.ramos@gmail.com',es:'Es luisa punto ramos arroba gmail punto com.',side:'left'},
-      {s:'Recepcionista',fr:'¿Puede deletrear el nombre?',es:'¿Puede deletrear el nombre?',side:'right'},
-      {s:'Luisa',fr:'Claro: L-U-I-S-A. Punto. R-A-M-O-S.',es:'Claro que sí: L-U-I-S-A. Punto. R-A-M-O-S.',side:'left'},
-      {s:'Recepcionista',fr:'¡Perfecto, muchas gracias!',es:'¡Perfecto, muchas gracias!',side:'right'}
-     ]},
-    {label:'Sit. 3',title:'Nombre de la calle',img:'🏢',
-     dialogue:[
-      {s:'Empleada',fr:'¿Cuál es su dirección?',es:'¿Cuál es su dirección?',side:'right'},
-      {s:'María',fr:'Vivo en la calle Alcalá.',es:'Vivo en la calle Alcalá.',side:'left'},
-      {s:'Empleada',fr:'¿Cómo se escribe Alcalá?',es:'¿Cómo se escribe Alcalá?',side:'right'},
-      {s:'María',fr:'A-L-C-A-L-Á. Con tilde en la última a.',es:'A-L-C-A-L-Á. Con tilde en la última a.',side:'left'},
-      {s:'Empleada',fr:'Muy bien, gracias.',es:'Muy bien, gracias.',side:'right'}
-     ]}
-   ],
-   vocab:['Deletrear = Épeler','La letra = La lettre','¿Cómo se escribe? = Comment ça s\'écrit ?','¿Puede repetir? = Pouvez-vous répéter ?','Con tilde = Avec accent','¿Vale? = D\'accord ?'],
-   quiz:[
-    {q:'¿Qué significa "Deletrear"?',opts:['Épeler','Écrire','Parler','Lire'],ans:0},
-    {q:'¿Qué significa "¿Cómo se escribe?"?',opts:['Comment ça se prononce ?','Comment ça s\'appelle ?','Comment ça s\'écrit ?','Combien de lettres ?'],ans:2},
-    {q:'¿Qué significa "Con tilde"?',opts:['Avec un point','Avec une virgule','Avec un accent','Avec une majuscule'],ans:2}
-   ]},
-  {id:'pres2',level:2,emoji:'🙋',name:'Presentarse',sub:'En situación real / En situation réelle',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Encuentro entre amigos',img:'🤝',
-     dialogue:[
-      {s:'Ana',fr:'¡Hola! Me llamo Ana. ¿Y tú?',es:'¡Hola! Me llamo Ana. ¿Y tú?',side:'left'},
-      {s:'Pedro',fr:'Yo soy Pedro. Soy de Sevilla.',es:'Yo soy Pedro. Soy de Sevilla.',side:'right'},
-      {s:'Ana',fr:'¡Qué guay! ¿Vives aquí?',es:'¡Qué guay! ¿Vives aquí en Madrid?',side:'left'},
-      {s:'Pedro',fr:'Sí, desde hace seis meses. Tengo veintiocho años.',es:'Sí, desde hace seis meses. Tengo veintiocho años.',side:'right'},
-      {s:'Ana',fr:'¡Bienvenido! ¡Hablas muy bien el español, tío!',es:'¡Bienvenido! ¡Hablas muy bien el español, tío!',side:'left'}
-     ]},
-    {label:'Sit. 2',title:'Ambiente profesional',img:'💼',
-     dialogue:[
-      {s:'Directora',fr:'Buenos días, soy la señora Martín.',es:'Buenos días, soy la señora Martín.',side:'right'},
-      {s:'Carlos',fr:'Buenos días, señora. Me llamo Carlos Fernández.',es:'Buenos días, señora. Me llamo Carlos Fernández.',side:'left'},
-      {s:'Directora',fr:'¿Cuál es su profesión?',es:'¿Cuál es su profesión?',side:'right'},
-      {s:'Carlos',fr:'Soy ingeniero. Vengo de Barcelona.',es:'Soy ingeniero. Vengo de Barcelona.',side:'left'},
-      {s:'Directora',fr:'Encantada, señor Fernández.',es:'Encantada, señor Fernández.',side:'right'}
-     ]},
-    {label:'Sit. 3',title:'Llegada al instituto',img:'🏫',
-     dialogue:[
-      {s:'Secretaria',fr:'Buenos días, ¿eres nuevo aquí?',es:'Buenos días, ¿eres nuevo aquí?',side:'right'},
-      {s:'Luisa',fr:'Sí, me llamo Luisa Pérez.',es:'Sí, me llamo Luisa Pérez.',side:'left'},
-      {s:'Secretaria',fr:'¿Cuál es tu nacionalidad?',es:'¿Cuál es tu nacionalidad?',side:'right'},
-      {s:'Luisa',fr:'Soy francesa. Tengo treinta años.',es:'Soy francesa. Tengo treinta años.',side:'left'},
-      {s:'Secretaria',fr:'¡Bienvenida al instituto! ¡Que tengas un buen día!',es:'¡Bienvenida al instituto! ¡Que tengas un buen día!',side:'right'}
-     ]}
-   ],
-   vocab:['Me llamo = Je m\'appelle','Tengo ... años = J\'ai ... ans','Vengo de = Je viens de','Vivo en = J\'habite à','¡Bienvenido/a! = Bienvenue !','Encantado/a = Enchanté(e)','¡Tío o tía! = Mec / nana (familier)'],
-   quiz:[
-    {q:'¿Qué significa "¡Bienvenido/a!"?',opts:['Au revoir','Bonjour','Bienvenue','Enchanté'],ans:2},
-    {q:'¿Cómo se dice "J\'ai vingt ans" en español?',opts:['Soy veinte años','Tengo veinte años','Vengo veinte años','Vivo veinte'],ans:1},
-    {q:'¿Qué significa "¡Tío!" en argot español?',opts:['Mon oncle !','Monsieur !','Mec ! (familier)','Attention !'],ans:2}
-   ]},
-  {id:'num2',level:2,emoji:'🔢',name:'Los Números',sub:'En situación real / En situation réelle',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Preguntar la hora',img:'⏰',dialogue:[
-      {s:'Rosa',fr:'Oye, ¿qué hora es?',es:'Oye, ¿qué hora es?',side:'left'},
-      {s:'Paseante',fr:'Son las dos y media.',es:'Son las dos y media.',side:'right'},
-      {s:'Rosa',fr:'¡Muchas gracias!',es:'¡Muchas gracias!',side:'left'},
-      {s:'Paseante',fr:'¡De nada! Buenas tardes.',es:'¡De nada! Buenas tardes.',side:'right'}
+    {label:'Sit. 1',title:'Dans la rue',img:'🏘️',dialogue:[
+      {s:'Lucas',es:'¡Hola! ¿Qué tal?',fr:'Salut ! Ça va ?',side:'left'},
+      {s:'Ana',es:'¡Bien, gracias! ¿Y tú?',fr:'Bien, merci ! Et toi ?',side:'right'},
+      {s:'Lucas',es:'Más o menos. Estoy cansado.',fr:'Comme ci comme ça. Je suis fatigué.',side:'left'},
+      {s:'Ana',es:'¡Vaya! Lo siento.',fr:'Oh ! Je suis désolée.',side:'right'},
+      {s:'Lucas',es:'Gracias. ¡Hasta luego!',fr:'Merci. À plus !',side:'left'},
+      {s:'Ana',es:'¡Hasta pronto!',fr:'À bientôt !',side:'right'}
     ]},
-    {label:'Sit. 2',title:'Dar tu número de móvil',img:'📱',dialogue:[
-      {s:'Amiga',fr:'¿Cuál es tu número de móvil?',es:'¿Cuál es tu número de móvil?',side:'right'},
-      {s:'María',fr:'Es el 634 15 20 11.',es:'Es el seis, tres, cuatro — quince — veinte — once.',side:'left'},
-      {s:'Amiga',fr:'Seis, tres, cuatro... ¿puedes repetir?',es:'Seis, tres, cuatro... ¿puedes repetir?',side:'right'},
-      {s:'María',fr:'Claro: 6-3-4 / 15 / 20 / 11.',es:'¡Claro! 6-3-4 — quince — veinte — once.',side:'left'}
+    {label:'Sit. 2',title:'Au bureau le matin',img:'💼',dialogue:[
+      {s:'Pedro',es:'¡Buenos días! ¿Cómo estás?',fr:'Bonjour ! Comment tu vas ?',side:'left'},
+      {s:'María',es:'Bien, gracias. ¿Y tú?',fr:'Bien, merci. Et toi ?',side:'right'},
+      {s:'Pedro',es:'Un poco cansado. ¿Quieres café?',fr:'Un peu fatigué. Tu veux un café ?',side:'left'},
+      {s:'María',es:'Sí, por favor. ¡Gracias!',fr:'Oui, s\'il te plaît. Merci !',side:'right'},
+      {s:'Pedro',es:'De nada. ¡Aquí tienes!',fr:'De rien. Voilà !',side:'left'}
     ]},
-    {label:'Sit. 3',title:'Decir cuántos sois',img:'👥',dialogue:[
-      {s:'Anfitrión',fr:'¿Cuántos sois?',es:'¿Cuántos sois?',side:'right'},
-      {s:'Pedro',fr:'Somos cuatro: dos adultos y dos niños.',es:'Somos cuatro: dos adultos y dos niños.',side:'left'},
-      {s:'Anfitrión',fr:'Muy bien. ¿Tenéis reserva?',es:'Muy bien. ¿Tenéis reserva?',side:'right'},
-      {s:'Pedro',fr:'Sí, a nombre de Rodríguez. Para las ocho.',es:'Sí, a nombre de Rodríguez. Para las ocho de la noche.',side:'left'}
-     ]}
-   ],
-   vocab:['¿Qué hora es? = Quelle heure est-il ?','Son las ... = Il est ... heures','¿Cuántos sois? = Vous êtes combien ?','Somos = Nous sommes','El número de móvil = Le numéro de portable','Tenéis = Vous avez (vosotros)'],
-   quiz:[
-    {q:'¿Cómo se pregunta la hora en español?',opts:['¿Cuál es la hora?','¿Qué hora es?','¿Es la hora?','¿Cuánto tiempo?'],ans:1},
-    {q:'¿Qué significa "¿Cuántos sois?"?',opts:['Vous avez quoi ?','Vous êtes combien ?','Ils sont combien ?','Il y en a combien ?'],ans:1},
-    {q:'¿Por qué "¿Tenéis reserva?" usa "tenéis" y no "tienen"?',opts:['C\'est une erreur','Car c\'est le pluriel de "tú" (vosotros)','Car c\'est le futur','Car c\'est le passé'],ans:1}
-   ]},
-  {id:'col2',level:2,emoji:'🎨',name:'Los Colores',sub:'En situación real / En situation réelle',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Color de una prenda',img:'👗',dialogue:[
-      {s:'Amiga',fr:'¿Te gusta mi vestido?',es:'¿Te gusta mi vestido?',side:'right'},
-      {s:'Luisa',fr:'¡Sí! Es muy bonito. ¿De qué color es?',es:'¡Sí! Es muy bonito, tía. ¿De qué color es?',side:'left'},
-      {s:'Amiga',fr:'Es morado con flores rosas.',es:'Es morado con flores rosas.',side:'right'},
-      {s:'Luisa',fr:'¡Qué chulo! El rosa te queda muy bien.',es:'¡Qué chulo! El rosa te queda muy bien.',side:'left'}
-    ]},
-    {label:'Sit. 2',title:'Color de un coche perdido',img:'🚗',dialogue:[
-      {s:'Policía',fr:'¿Cómo es su coche?',es:'¿Cómo es su coche?',side:'right'},
-      {s:'Marco',fr:'Es un coche rojo, un Seat.',es:'Es un coche rojo, un Seat León.',side:'left'},
-      {s:'Policía',fr:'¿Rojo oscuro o rojo claro?',es:'¿Rojo oscuro o rojo claro?',side:'right'},
-      {s:'Marco',fr:'Rojo vivo, casi naranja.',es:'Rojo vivo, casi naranja.',side:'left'}
-    ]},
-    {label:'Sit. 3',title:'Elegir un color de pintura',img:'🖌️',dialogue:[
-      {s:'Vendedor',fr:'¿Qué color quiere para el salón?',es:'¿Qué color quiere para el salón?',side:'right'},
-      {s:'Ana',fr:'Quisiera algo claro. Quizás blanco roto.',es:'Quisiera algo claro. Quizás blanco roto.',side:'left'},
-      {s:'Vendedor',fr:'Aquí tiene el blanco, el beige y el gris claro.',es:'Aquí tiene el blanco, el beige y el gris claro.',side:'right'},
-      {s:'Ana',fr:'Me llevo el beige, es más cálido.',es:'Me llevo el beige, es más cálido. ¡Qué guay la muestra!',side:'left'}
-     ]}
-   ],
-   vocab:['El color = La couleur','¿De qué color es? = C\'est quelle couleur ?','Oscuro = Foncé','Claro = Clair','¡Qué chulo! = Comme c\'est cool !','¡Guay! = Super ! / Cool !'],
-   quiz:[
-    {q:'¿Cómo se pregunta el color de algo en español?',opts:['¿De qué color es?','¿Cuál es el color?','¿Qué color tiene?','Todas estas respuestas'],ans:3},
-    {q:'¿Qué significa "Rojo oscuro"?',opts:['Rouge clair','Rouge vif','Rouge foncé','Orange'],ans:2},
-    {q:'¿Qué significa "¡Qué chulo!" en España?',opts:['Comme c\'est bizarre !','Comme c\'est cool !','Comme c\'est grand !','Comme c\'est petit !'],ans:1}
-   ]},
-  {id:'nour2',level:2,emoji:'🍽️',name:'La Comida',sub:'Mercado, restaurante, tapas / Marché, resto, tapas',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'En el mercado',img:'🥦',dialogue:[
-      {s:'Vendedor',fr:'Buenos días, ¿qué va a querer?',es:'¡Buenos días! ¿Qué va a querer?',side:'right'},
-      {s:'Rosa',fr:'¡Buenos días! Quisiera tomates y zanahorias.',es:'¡Buenos días! Quisiera tomates y zanahorias.',side:'left'},
-      {s:'Vendedor',fr:'¿Cuántos kilos?',es:'¿Cuántos kilos?',side:'right'},
-      {s:'Rosa',fr:'Un kilo de tomates y medio kilo de zanahorias.',es:'Un kilo de tomates y medio kilo de zanahorias.',side:'left'},
-      {s:'Vendedor',fr:'Aquí tiene, son tres euros.',es:'Aquí tiene, son tres euros. ¡Muy fresquitos!',side:'right'}
-    ]},
-    {label:'Sit. 2',title:'En el restaurante o el bar',img:'🍴',dialogue:[
-      {s:'Camarero',fr:'¡Buenas! ¿Qué vais a tomar?',es:'¡Buenas! ¿Qué vais a tomar?',side:'right'},
-      {s:'Carlos',fr:'Para mí, el menú del día. ¿Qué hay de primero?',es:'Para mí, el menú del día. ¿Qué hay de primero?',side:'left'},
-      {s:'Camarero',fr:'Hay sopa o ensalada.',es:'Hay sopa o ensalada.',side:'right'},
-      {s:'Carlos',fr:'La ensalada, y de segundo el pollo con patatas.',es:'La ensalada, y de segundo el pollo con patatas.',side:'left'},
-      {s:'Camarero',fr:'¿Y para beber?',es:'¿Y para beber?',side:'right'},
-      {s:'Carlos',fr:'Una caña, por favor.',es:'Una caña, por favor.',side:'left'}
-    ]},
-    {label:'Sit. 3',title:'Pedir tapas',img:'🫒',dialogue:[
-      {s:'Camarero',fr:'¿Os pongo algo para picar?',es:'¿Os pongo algo para picar?',side:'right'},
-      {s:'Ana',fr:'Sí, ponednos una ración de patatas bravas y una de jamón.',es:'Sí, ponednos una ración de patatas bravas y una de jamón.',side:'left'},
-      {s:'Camarero',fr:'¿Ibérico o serrano?',es:'¿Ibérico o serrano?',side:'right'},
-      {s:'Ana',fr:'Ibérico, por favor. ¡Que aproveche!',es:'Ibérico, por favor. ¡Es que mola más!',side:'left'}
-     ]}
-   ],
-   vocab:['Quisiera = Je voudrais','¿Qué vais a tomar? = Qu\'est-ce que vous prenez ? (vosotros)','El menú del día = Le menu du jour','Una caña = Un demi (bière)','Las tapas = Les tapas','Las patatas bravas = Pommes de terre épicées','¿Os pongo algo? = Je vous mets quelque chose ? (vosotros)'],
-   quiz:[
-    {q:'¿Qué significa "Quisiera pollo"?',opts:['J\'ai du poulet','Je voudrais du poulet','Je vends du poulet','J\'aime le poulet'],ans:1},
-    {q:'¿Qué es "Una caña" en España?',opts:['Un verre de vin','Un café','Un demi (bière pression)','Un jus d\'orange'],ans:2},
-    {q:'¿Qué significa "¿Qué vais a tomar?"?',opts:['Avez-vous fini ?','Qu\'est-ce que vous prenez ? (vosotros)','Que voulez-vous ?','Êtes-vous prêts ?'],ans:1}
-   ]},
-  {id:'bois2',level:2,emoji:'🥤',name:'Las Bebidas',sub:'Bar, terraza, supermercado / Bar, terrasse, supermarché',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Pedir en el bar',img:'☕',dialogue:[
-      {s:'Camarero',fr:'¡Buenas! ¿Qué te pongo?',es:'¡Buenas! ¿Qué te pongo?',side:'right'},
-      {s:'María',fr:'Un café con leche, por favor.',es:'Un café con leche, por favor.',side:'left'},
-      {s:'Camarero',fr:'¿Largo o corto?',es:'¿Largo o corto?',side:'right'},
-      {s:'María',fr:'Largo, gracias.',es:'Largo, gracias.',side:'left'},
-      {s:'Camarero',fr:'¿Algo más? ¿Una tostada?',es:'¿Algo más? ¿Una tostada?',side:'right'},
-      {s:'María',fr:'¡Venga, una tostada con tomate!',es:'¡Venga, una tostada con tomate!',side:'right'}
-    ]},
-    {label:'Sit. 2',title:'Ofrecer bebida en casa',img:'🍹',dialogue:[
-      {s:'Anfitrión',fr:'¿Qué queréis beber?',es:'¿Qué queréis beber?',side:'right'},
-      {s:'Invitado',fr:'Agua, por favor.',es:'Agua, por favor.',side:'left'},
-      {s:'Anfitrión',fr:'¿Con gas o sin gas?',es:'¿Con gas o sin gas?',side:'right'},
-      {s:'Invitado',fr:'Sin gas, gracias. ¿Y tenéis zumo?',es:'Sin gas, gracias. ¿Y tenéis zumo?',side:'left'},
-      {s:'Anfitrión',fr:'¡Claro! Tengo zumo de naranja recién hecho.',es:'¡Claro que sí! Tengo zumo de naranja recién exprimido.',side:'right'}
-    ]},
-    {label:'Sit. 3',title:'Comprar agua en el súper',img:'🛍️',dialogue:[
-      {s:'Rosa',fr:'Perdona, ¿dónde está el agua?',es:'Perdona, ¿dónde está el agua embotellada?',side:'left'},
-      {s:'Empleado',fr:'En el pasillo tres, al fondo a la izquierda.',es:'En el pasillo tres, al fondo a la izquierda.',side:'right'},
-      {s:'Rosa',fr:'¿Y tenéis agua con gas?',es:'¿Y tenéis agua con gas?',side:'left'},
-      {s:'Empleado',fr:'Sí, está justo al lado del agua sin gas.',es:'Sí, está justo al lado del agua sin gas.',side:'right'}
-     ]}
-   ],
-   vocab:['¿Qué te pongo? = Qu\'est-ce que je te sers ?','¡Venga! = Allez-y ! / D\'accord !','El zumo = Le jus','Agua con gas o sin gas = Eau gazeuse / plate','El pasillo = Le rayon / l\'allée','Recién exprimido = Fraîchement pressé','¿Queréis? = Vous voulez ? (vosotros)'],
-   quiz:[
-    {q:'¿Qué significa "¿Qué te pongo?" en un bar español?',opts:['Qu\'est-ce que tu poses ?','Qu\'est-ce que je te sers ?','Qu\'est-ce que tu veux me dire ?','Qu\'est-ce que tu cherches ?'],ans:1},
-    {q:'¿Cómo se dice "Eau gazeuse" en español?',opts:['Agua natural','Agua caliente','Agua con gas','Agua de manantial'],ans:2},
-    {q:'¿Qué significa "¡Venga, una tostada!"?',opts:['Non, merci !','Allez, une tartine grillée !','Je veux une pizza !','C\'est trop cher !'],ans:1}
-   ]},
-  {id:'fam2',level:2,emoji:'👨‍👩‍👧',name:'La Familia',sub:'Fotos, hermanos, hijos / Photos, frères, enfants',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Presentar la familia en una foto',img:'📷',dialogue:[
-      {s:'Ana',fr:'¿Quién es esa persona en la foto?',es:'¿Quién es esa persona en la foto?',side:'right'},
-      {s:'Luisa',fr:'Ese es mi marido Carlos, y estos son mis hijos.',es:'Ese es mi marido Carlos, y estos son mis hijos.',side:'left'},
-      {s:'Ana',fr:'¡Son adorables! ¿Cuántos hijos tenéis?',es:'¡Son adorables! ¿Cuántos hijos tenéis?',side:'right'},
-      {s:'Luisa',fr:'Tres: dos chicos y una chica.',es:'Tres: dos chicos y una chica.',side:'left'},
-      {s:'Ana',fr:'¿Y vuestros padres, están en España?',es:'¿Y vuestros padres, están en España?',side:'right'},
-      {s:'Luisa',fr:'Sí, mi madre y mi padre viven en Sevilla.',es:'Sí, mi madre y mi padre viven en Sevilla.',side:'left'}
-     ]},
-    {label:'Sit. 2',title:'Hermanos y hermanas',img:'👫',dialogue:[
-      {s:'Vecina',fr:'¿Tienes hermanos?',es:'¿Tienes hermanos?',side:'right'},
-      {s:'Pedro',fr:'Sí, tengo dos hermanos y una hermana.',es:'Sí, tengo dos hermanos y una hermana.',side:'left'},
-      {s:'Vecina',fr:'¿Eres el mayor o el pequeño?',es:'¿Eres el mayor o el pequeño?',side:'right'},
-      {s:'Pedro',fr:'Soy el pequeño. Mi hermano mayor tiene treinta y cinco años.',es:'Soy el pequeño. Mi hermano mayor tiene treinta y cinco años.',side:'left'}
-     ]},
-    {label:'Sit. 3',title:'Preguntar por los hijos',img:'🧒',dialogue:[
-      {s:'Compañero',fr:'¿Cómo están tus hijos?',es:'¿Cómo están tus hijos?',side:'right'},
-      {s:'María',fr:'¡Muy bien! Mi hija empieza el cole este año.',es:'¡Muy bien, gracias! Mi hija empieza el cole este año.',side:'left'},
-      {s:'Compañero',fr:'¿Cuántos años tiene?',es:'¿Cuántos años tiene?',side:'right'},
-      {s:'María',fr:'Tiene seis años. Y mi hijo tiene diez.',es:'Tiene seis años. Y mi hijo tiene diez.',side:'left'}
-     ]}
-   ],
-   vocab:['La familia = La famille','Mis hijos = Mes enfants','Mi marido = Mon mari','Mi madre o mi mamá = Ma mère','Mi padre / mi papá = Mon père','El mayor = L\'aîné','El pequeño o el menor = Le plus jeune','Vuestros = Vos (vosotros)'],
-   quiz:[
-    {q:'¿Qué significa "Mis hijos"?',opts:['Mes parents','Mes frères','Mes enfants','Mes grands-parents'],ans:2},
-    {q:'¿Cómo se dice "L\'aîné" en español?',opts:['El menor','El grande','El mayor','El viejo'],ans:2},
-    {q:'¿Por qué se dice "¿Cuántos hijos tenéis?" y no "tienen"?',opts:['C\'est une erreur','Car on parle à vosotros (pluriel de tú)','Car c\'est le futur','Car c\'est formel'],ans:1}
-   ]},
-  {id:'emot2',level:2,emoji:'😄',name:'Las Emociones',sub:'Tristeza, cansancio, alegría o Tristesse, fatigue, joie',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Por qué un amigo está triste',img:'😢',dialogue:[
-      {s:'Ana',fr:'Tío, no tienes buena cara. ¿Estás bien?',es:'Tío, no tienes buena cara. ¿Estás bien?',side:'right'},
-      {s:'Carlos',fr:'No, estoy triste. Tengo noticias de mi familia.',es:'No, estoy triste. Tengo noticias de mi familia.',side:'left'},
-      {s:'Ana',fr:'¿Qué ha pasado?',es:'¿Qué ha pasado?',side:'right'},
-      {s:'Carlos',fr:'Mi abuela está enferma.',es:'Mi abuela está enferma.',side:'left'},
-      {s:'Ana',fr:'Lo siento mucho. Aquí estoy si me necesitas.',es:'Lo siento mucho. Aquí estoy si me necesitas.',side:'right'}
-    ]},
-    {label:'Sit. 2',title:'Expresar cansancio',img:'😴',dialogue:[
-      {s:'Pareja',fr:'¡Llegas tarde! ¿Estás cansado?',es:'¡Llegas tarde! ¿Estás cansado?',side:'right'},
-      {s:'Pedro',fr:'Sí, estoy agotado. Ha sido un día muy largo.',es:'Sí, estoy agotado. Ha sido un día muy largo.',side:'left'},
-      {s:'Pareja',fr:'¿Quieres comer algo?',es:'¿Quieres cenar algo?',side:'right'},
-      {s:'Pedro',fr:'Sí, también tengo hambre. Estoy cansado y estresado.',es:'Sí, también tengo hambre. Estoy hecho polvo.',side:'left'}
-     ]},
-    {label:'Sit. 3',title:'Alegría por una buena noticia',img:'🎉',dialogue:[
-      {s:'Luisa',fr:'¡Tengo una noticia genial!',es:'¡Tengo una noticia genial!',side:'left'},
-      {s:'Amiga',fr:'¡Dime! ¡Se te ve muy contenta!',es:'¡Dime! ¡Se te ve muy contenta!',side:'right'},
-      {s:'Luisa',fr:'¡He encontrado trabajo! ¡Estoy felicísima!',es:'¡He encontrado trabajo! ¡Estoy felicísima!',side:'left'},
-      {s:'Amiga',fr:'¡Qué guay! ¡Me alegro muchísimo por ti!',es:'¡Qué guay! ¡Me alegro muchísimo por ti!',side:'right'}
-     ]}
-   ],
-   vocab:['Triste = Triste','Cansado/a = Fatigué(e)','Alegre / contento/a = Joyeux/se','Lo siento = Je suis désolé(e)','Agotado/a = Épuisé(e)','Estoy hecho polvo = Je suis à plat (argot)','¡Qué guay! = Super ! / Génial !','¡Me alegro! = Je suis content(e) pour toi !'],
-   quiz:[
-    {q:'¿Qué significa "Estoy agotado"?',opts:['Je suis triste','Je suis malade','Je suis épuisé','Je suis stressé'],ans:2},
-    {q:'¿Qué significa "Estoy hecho polvo" en argot español?',opts:['Je suis en colère','Je suis à plat / épuisé','Je suis malade','Je suis stressé'],ans:1},
-    {q:'¿Cómo se dice "Je suis désolé" en español?',opts:['Estoy contento','Lo siento','Estoy cansado','Estoy enfermo'],ans:1}
-   ]},
-  {id:'log2',level:2,emoji:'🏠',name:'La Vivienda',sub:'Piso, objetos, tareas / Appartement, objets, ménage',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Visitar un piso',img:'🏢',dialogue:[
-      {s:'Propietario',fr:'Este es el piso. Tiene salón-cocina y baño.',es:'Este es el piso. Tiene salón-cocina y baño.',side:'right'},
-      {s:'María',fr:'¡Qué luminoso! ¿El aseo tiene váter aparte?',es:'¡Qué luminoso! ¿El aseo tiene váter aparte?',side:'left'},
-      {s:'Propietario',fr:'Sí, el váter está al lado del cuarto de baño.',es:'Sí, el váter está al lado del cuarto de baño.',side:'right'},
-      {s:'María',fr:'¿Cuánto es el alquiler mensual?',es:'¿Cuánto es el alquiler mensual?',side:'left'},
-      {s:'Propietario',fr:'Ochocientos euros, gastos incluidos.',es:'Ochocientos euros, gastos incluidos.',side:'right'}
-    ]},
-    {label:'Sit. 2',title:'Buscar un objeto perdido',img:'🔍',dialogue:[
-      {s:'Pedro',fr:'¿Has visto mis llaves?',es:'¿Has visto mis llaves?',side:'right'},
-      {s:'Ana',fr:'No... mira en el salón.',es:'No... mira en el salón.',side:'left'},
-      {s:'Pedro',fr:'No, no están ahí.',es:'No, no están ahí.',side:'right'},
-      {s:'Ana',fr:'Prueba en la cocina, o quizás en el cuarto.',es:'Prueba en la cocina, o quizás en el cuarto.',side:'left'},
-      {s:'Pedro',fr:'¡Estaban encima de la mesa de la cocina!',es:'¡Estaban encima de la mesa de la cocina! ¡Anda!',side:'right'}
-     ]},
-    {label:'Sit. 3',title:'Las tareas del hogar',img:'🧹',dialogue:[
-      {s:'Luisa',fr:'Te toca fregar los platos.',es:'Te toca fregar los platos.',side:'left'},
-      {s:'Carlos',fr:'Vale. ¿Y tú qué haces?',es:'Vale. ¿Y tú qué haces?',side:'right'},
-      {s:'Luisa',fr:'Paso el aspirador en el salón.',es:'Paso el aspirador en el salón.',side:'left'},
-      {s:'Carlos',fr:'¿Y la habitación?',es:'¿Y la habitación?',side:'right'},
-      {s:'Luisa',fr:'Hago la cama después.',es:'Hago la cama después.',side:'left'}
-     ]}
-   ],
-   vocab:['El alquiler = Le loyer','El salón = Le salon','El cuarto de baño = La salle de bain','El váter o el aseo = Les toilettes','La cocina = La cuisine','La habitación = La chambre','Fregar los platos = Faire la vaisselle','¡Anda! = Oh là là ! / Tiens ! (surprise)'],
-   quiz:[
-    {q:'¿Qué significa "El alquiler"?',opts:['L\'appartement','Le loyer','La chambre','Le contrat'],ans:1},
-    {q:'¿Cómo se dice "Faire la vaisselle" en España?',opts:['Tender la cama','Pasar el aspirador','Fregar los platos','Limpiar'],ans:2},
-    {q:'¿Qué significa "¡Anda!" en España?',opts:['Marche !','C\'est loin !','Oh là là ! / Tiens ! (surprise)','Dépêche-toi !'],ans:2}
-   ]},
-  {id:'veth2',level:2,emoji:'👗',name:'La Ropa',sub:'Por la mañana, talla, ropa perdida / Matin, taille, vêtement perdu',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Vestirse por la mañana',img:'🌅',dialogue:[
-      {s:'Niño',fr:'Mamá, ¿qué me pongo hoy?',es:'Mamá, ¿qué me pongo hoy?',side:'right'},
-      {s:'Mamá',fr:'Hace frío, ponte el abrigo y la bufanda.',es:'Hace frío, ponte el abrigo y la bufanda.',side:'left'},
-      {s:'Niño',fr:'¿Y mis zapatillas rojas?',es:'¿Y mis zapatillas rojas?',side:'right'},
-      {s:'Mamá',fr:'Sí, ¡y no te olvides el gorro!',es:'Sí, ¡y no te olvides el gorro!',side:'left'}
-    ]},
-    {label:'Sit. 2',title:'Comprar en la talla correcta',img:'🏪',dialogue:[
-      {s:'Vendedor',fr:'¡Buenas! ¿En qué te puedo ayudar?',es:'¡Buenas! ¿En qué te puedo ayudar?',side:'right'},
-      {s:'Luisa',fr:'Busco ese pantalón en la talla cuarenta.',es:'Busco ese pantalón en la talla cuarenta.',side:'left'},
-      {s:'Vendedor',fr:'Un momento... aquí tienes, talla cuarenta.',es:'Un momento... aquí tienes, talla cuarenta.',side:'right'},
-      {s:'Luisa',fr:'Gracias, ¿me lo puedo probar?',es:'Gracias, ¿me lo puedo probar?',side:'left'},
-      {s:'Vendedor',fr:'Claro, el probador está allí.',es:'Claro, el probador está allí.',side:'right'}
-     ]},
-    {label:'Sit. 3',title:'Buscar una chaqueta perdida',img:'🔍',dialogue:[
-      {s:'Carlos',fr:'Oye, me he dejado la chaqueta.',es:'Oye, me he dejado la chaqueta.',side:'left'},
-      {s:'Camarero',fr:'¿De qué color es?',es:'¿De qué color es?',side:'right'},
-      {s:'Carlos',fr:'Es negra, con cremallera.',es:'Es negra, con cremallera.',side:'left'},
-      {s:'Camarero',fr:'Espere... aquí hay una chaqueta negra.',es:'Espere... aquí hay una chaqueta negra.',side:'right'},
-      {s:'Carlos',fr:'¡Sí, esa es la mía! ¡Muchas gracias!',es:'¡Sí, esa es la mía! ¡Muchas gracias, tío!',side:'left'}
-     ]}
-   ],
-   vocab:['La chaqueta = La veste','El abrigo = Le manteau','La talla = La taille','Las zapatillas = Les baskets','El probador = La cabine d\'essayage','Hace frío = Il fait froid','La cremallera = La fermeture éclair','Me he dejado = J\'ai oublié (passé composé)'],
-   quiz:[
-    {q:'¿Qué significa "La talla" (para una prenda)?',opts:['La couleur','Le prix','La taille','Le modèle'],ans:2},
-    {q:'¿Cómo se dice "La cabine d\'essayage" en español?',opts:['El almacén','El probador','El mostrador','El pasillo'],ans:1},
-    {q:'¿Qué significa "Me he dejado la chaqueta"?',opts:['J\'ai perdu la veste','J\'ai oublié la veste','J\'ai trouvé la veste','J\'ai lavé la veste'],ans:1}
-   ]},
-  {id:'corps2',level:2,emoji:'🧍',name:'El Cuerpo',sub:'Médico, deporte, físico / Médecin, sport, physique',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Explicar al médico dónde duele',img:'🏥',dialogue:[
-      {s:'Médico',fr:'¿Qué le pasa?',es:'¿Qué le pasa?',side:'right'},
-      {s:'Pedro',fr:'Me duele la espalda y la cabeza.',es:'Me duele la espalda y la cabeza.',side:'left'},
-      {s:'Médico',fr:'¿Desde cuándo?',es:'¿Desde cuándo?',side:'right'},
-      {s:'Pedro',fr:'Desde hace dos días. También me duele la barriga.',es:'Desde hace dos días. También me duele la barriga.',side:'left'}
-    ]},
-    {label:'Sit. 2',title:'Lesión durante un deporte',img:'⚽',dialogue:[
-      {s:'Entrenador',fr:'¿Estás bien? ¡Cojeas!',es:'¿Estás bien? ¡Cojeas!',side:'right'},
-      {s:'Marco',fr:'Me duele la pierna. Me he hecho daño.',es:'Me duele la pierna. Me he hecho daño.',side:'left'},
-      {s:'Entrenador',fr:'¿Es la rodilla o el tobillo?',es:'¿Es la rodilla o el tobillo?',side:'right'},
-      {s:'Marco',fr:'El tobillo. No puedo apoyar el pie.',es:'El tobillo. No puedo apoyar el pie.',side:'left'}
-     ]},
-    {label:'Sit. 3',title:'Describir el físico de alguien',img:'👤',dialogue:[
-      {s:'Policía',fr:'Descríbame a la persona.',es:'Descríbame a la persona.',side:'right'},
-      {s:'Ana',fr:'Es un hombre alto, con los ojos azules.',es:'Es un hombre alto, con los ojos azules.',side:'left'},
-      {s:'Policía',fr:'¿De qué color tiene el pelo?',es:'¿De qué color tiene el pelo?',side:'right'},
-      {s:'Ana',fr:'Tiene el pelo negro, corto. Y tiene barba.',es:'Tiene el pelo negro, corto. Y lleva barba.',side:'left'}
-     ]}
-   ],
-   vocab:['Me duele... = J\'ai mal à...','La cabeza = La tête','La espalda = Le dos','La pierna = La jambe','El pie = Le pied','¿Desde cuándo? = Depuis combien de temps ?','Me he hecho daño = Je me suis blessé'],
-   quiz:[
-    {q:'¿Cómo se dice "J\'ai mal à la tête" en español?',opts:['Me duele la pierna','Me duele la cabeza','Me duele la espalda','Me duele la barriga'],ans:1},
-    {q:'¿Qué significa "Me he hecho daño"?',opts:['Je suis fatigué','J\'ai de la fièvre','Je me suis blessé','Je suis malade'],ans:2},
-    {q:'¿Qué significa "¿Desde cuándo?"?',opts:['Combien de temps reste-t-il ?','Depuis combien de temps ?','Pendant combien de temps ?','À quelle heure ?'],ans:1}
-   ]},
-  {id:'anim2',level:2,emoji:'🐘',name:'Los Animales',sub:'Mascota, campo, toro / Animal de compagnie, campagne, taureau',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Hablar de tu mascota',img:'🐶',dialogue:[
-      {s:'Vecino',fr:'¿Ese es tu perro? ¡Qué mono!',es:'¿Ese es tu perro? ¡Qué mono!',side:'right'},
-      {s:'Luisa',fr:'¡Gracias! Se llama Manchas. Es un labrador.',es:'¡Gracias! Se llama Manchas. Es un labrador.',side:'left'},
-      {s:'Vecino',fr:'¿Cuántos años tiene?',es:'¿Cuántos años tiene?',side:'right'},
-      {s:'Luisa',fr:'Tiene tres años. Es muy bueno.',es:'Tiene tres años. Es muy bueno y dócil.',side:'left'},
-      {s:'Vecino',fr:'Yo tengo un gato. ¡No se llevan muy bien!',es:'Yo tengo un gato. ¡No se llevan muy bien!',side:'right'}
-    ]},
-    {label:'Sit. 2',title:'Cruzarse con un perro en la calle',img:'🌳',dialogue:[
-      {s:'Paseante',fr:'¡Ojo! ¿Muerde?',es:'¡Ojo! ¿Muerde?',side:'right'},
-      {s:'Carlos',fr:'No, no se preocupe, es muy bueno.',es:'No, no se preocupe, es muy bueno.',side:'left'},
-      {s:'Paseante',fr:'¿Lo puedo acariciar?',es:'¿Lo puedo acariciar?',side:'right'},
-      {s:'Carlos',fr:'Sí, claro. ¡Le encanta!',es:'Sí, claro. ¡Le encanta!',side:'left'}
-     ]},
-    {label:'Sit. 3',title:'Visita a la finca o al campo',img:'🐄',dialogue:[
-      {s:'Granjero',fr:'¡Bienvenidos! Allí están las vacas.',es:'¡Bienvenidos! Allí están las vacas.',side:'right'},
-      {s:'Niño',fr:'¡Oh! ¿Y las gallinas dónde están?',es:'¡Oh! ¿Y las gallinas dónde están?',side:'left'},
-      {s:'Granjero',fr:'Las gallinas están en el gallinero. ¡Y ahí está el toro!',es:'Las gallinas están en el gallinero. ¡Y ahí está el toro!',side:'right'},
-      {s:'Niño',fr:'¡Qué grande! ¿Puedo dar de comer a los caballos?',es:'¡Qué grande! ¿Puedo dar de comer a los caballos?',side:'left'},
-      {s:'Granjero',fr:'Sí, con cuidado.',es:'Sí, con cuidado. ¡Que no te muerdan los dedos!',side:'right'}
-     ]}
-   ],
-   vocab:['El perro = Le chien','El gato = Le chat','La vaca = La vache','La gallina = La poule','El toro = Le taureau','Es muy bueno o dócil = Il est gentil / docile','¡Qué mono! = Comme c\'est mignon ! (argot)'],
-   quiz:[
-    {q:'¿Qué significa "¡Qué mono!" en España?',opts:['Quel singe !','Comme c\'est mignon !','Comme c\'est bizarre !','Comme c\'est grand !'],ans:1},
-    {q:'¿Cuál es el animal símbolo de las fiestas en España?',opts:['El caballo','El gato','El toro','El águila'],ans:2},
-    {q:'¿Qué significa "¿Lo puedo acariciar?"?',opts:['Puis-je l\'emmener ?','Puis-je le caresser ?','Puis-je le voir ?','Puis-je le garder ?'],ans:1}
-   ]},
-  {id:'verb2',level:2,emoji:'📝',name:'Los Verbos',sub:'Rutina, gustos, vosotros / Routine, goûts, vosotros',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Rutina diaria',img:'⏰',dialogue:[
-      {s:'Compañero',fr:'¿A qué hora te levantas?',es:'¿A qué hora te levantas?',side:'right'},
-      {s:'Pedro',fr:'Me levanto a las siete. Desayuno y me voy al curro.',es:'Me levanto a las siete. Desayuno y me voy al curro.',side:'left'},
-      {s:'Compañero',fr:'¿Y por la noche qué haces?',es:'¿Y por la noche qué haces?',side:'right'},
-      {s:'Pedro',fr:'Ceno, veo un poco la tele y me acuesto pronto.',es:'Ceno, veo un poco la tele y me acuesto pronto.',side:'left'}
-    ]},
-    {label:'Sit. 2',title:'Expresar gustos',img:'❤️',dialogue:[
-      {s:'Amiga',fr:'¿Os gusta la comida francesa?',es:'¿Os gusta la comida francesa?',side:'right'},
-      {s:'Luisa',fr:'¡Sí, nos encanta! Comemos queso con mucha frecuencia.',es:'¡Sí, nos encanta! Comemos queso con mucha frecuencia.',side:'left'},
-      {s:'Amiga',fr:'¿Y os gusta el vino?',es:'¿Y os gusta el vino?',side:'right'},
-      {s:'Luisa',fr:'Bebemos algo de vino, pero preferimos la cerveza.',es:'Bebemos algo de vino, pero preferimos la cerveza.',side:'left'}
-    ]},
-    {label:'Sit. 3',title:'Acciones del momento',img:'🏃',dialogue:[
-      {s:'Jefe',fr:'¿Qué estás haciendo ahora?',es:'¿Qué estás haciendo ahora?',side:'right'},
-      {s:'Carlos',fr:'Estoy hablando por teléfono. Tengo un cliente.',es:'Estoy hablando por teléfono. Tengo un cliente.',side:'left'},
-      {s:'Jefe',fr:'¿Vais a la reunión al mediodía?',es:'¿Vais a la reunión al mediodía?',side:'right'},
-      {s:'Carlos',fr:'Sí, vamos a la reunión. Estamos listos.',es:'Sí, vamos a la reunión. Estamos listos.',side:'left'}
-     ]}
-   ],
-   vocab:['Voy = Je vais','Como = Je mange','Hablo = Je parle','Me gusta = J\'aime','Bebo = Je bois','Vivo = J\'habite','Soy o estoy = Je suis','Tengo = J\'ai','El curro = Le boulot (argot)','Vais / vamos = Vous allez / nous allons','Os gusta = Vous aimez (vosotros)'],
-   quiz:[
-    {q:'¿Qué significa "Voy al curro"?',opts:['Je cherche du travail','Je rentre du travail','Je vais au boulot','Je quitte le travail'],ans:2},
-    {q:'¿Por qué se dice "¿Vais a la reunión?" y no "¿Vais a la reunión?"?',opts:['C\'est une erreur','Car c\'est le pluriel de tú (vosotros)','Car c\'est le futur','Car c\'est une question'],ans:1},
-    {q:'¿Qué significa "Os gusta" en España?',opts:['Tu aimes','Il aime','Vous aimez (vosotros)','J\'aime'],ans:2}
-   ]},
-  {id:'pays2',level:2,emoji:'🌍',name:'Los Países',sub:'Nacionalidad, vacaciones, sueños / Nationalité, vacances, rêves',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Preguntar la nacionalidad',img:'🗺️',dialogue:[
-      {s:'Vecina',fr:'¿De dónde sois?',es:'¿De dónde sois?',side:'right'},
-      {s:'Ana',fr:'Somos de Francia. ¿Y vosotros?',es:'Somos de Francia. ¿Y vosotros?',side:'left'},
-      {s:'Vecina',fr:'Somos españoles, de Valencia.',es:'Somos españoles, de Valencia.',side:'right'},
-      {s:'Ana',fr:'¡Qué guay! ¿Y conocéis el sur de Francia?',es:'¡Qué guay! ¿Y conocéis el sur de Francia?',side:'left'},
-      {s:'Vecina',fr:'¡Sí! Fuimos a Biarritz el año pasado.',es:'¡Sí! Fuimos a Biarritz el año pasado.',side:'right'}
-     ]},
-    {label:'Sit. 2',title:'Hablar de las últimas vacaciones',img:'🏖️',dialogue:[
-      {s:'Compañero',fr:'¿Adónde fuisteis de vacaciones?',es:'¿Adónde fuisteis de vacaciones?',side:'right'},
-      {s:'Pedro',fr:'Fuimos a Portugal, a Lisboa.',es:'Fuimos a Portugal, a Lisboa.',side:'left'},
-      {s:'Compañero',fr:'¿Qué tal estuvo?',es:'¿Qué tal estuvo?',side:'right'},
-      {s:'Pedro',fr:'¡Genial! La comida estaba buenísima.',es:'¡Genial! La comida estaba buenísima.',side:'left'}
-     ]},
-    {label:'Sit. 3',title:'Decir adónde te gustaría viajar',img:'✈️',dialogue:[
-      {s:'Amiga',fr:'Si pudierais viajar, ¿adónde iríais?',es:'Si pudierais viajar, ¿adónde iríais?',side:'right'},
-      {s:'Luisa',fr:'Nos iríamos a Japón. Nos encanta la cultura.',es:'Nos iríamos a Japón. Nos encanta la cultura.',side:'left'},
-      {s:'Amiga',fr:'Yo sueño con ir a la India.',es:'Yo sueño con ir a la India.',side:'right'},
-      {s:'Luisa',fr:'¡Qué chulo! Ese país es precioso.',es:'¡Qué chulo! Ese país es precioso. También mola Italia.',side:'left'}
-     ]}
-   ],
-   vocab:['¿De dónde sois? = D\'où êtes-vous ? (vosotros)','Venimos de = Nous venons de','Las vacaciones = Les vacances','Estuvo o fue = C\'était','Nos iríamos = Nous irions','Sueño con = Je rêve de','Fuisteis = Vous êtes allés (vosotros)','Conocéis = Vous connaissez (vosotros)'],
-   quiz:[
-    {q:'¿Por qué se dice "¿De dónde sois?" y no "¿De dónde son?"?',opts:['C\'est une erreur','Car c\'est vosotros (pluriel de tú)','Car c\'est le futur','Car c\'est formel'],ans:1},
-    {q:'¿Qué significa "Nos iríamos a Japón"?',opts:['Nous sommes allés au Japon','Nous vivons au Japon','Nous irions au Japon','Nous voulons aller au Japon'],ans:2},
-    {q:'¿Qué significa "Sueño con viajar"?',opts:['J\'ai voyagé hier','Je rêve de voyager','Je veux réserver','J\'ai déjà voyagé'],ans:1}
-   ]},
-{id:'plan2',level:2,emoji:'🌿',name:'Las Plantas',sub:'Floristería, casa, parque / Fleuriste, maison, parc',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Comprar flores en la floristería',img:'💐',dialogue:[
-      {s:'Fleuriste',fr:'Bonjour, qu\'est-ce que je vous sers ?',es:'Buenos días, ¿en qué puedo ayudarle?',side:'right'},
-      {s:'María',fr:'Je voudrais un bouquet de roses rouges.',es:'Quisiera un ramo de rosas rojas, por favor.',side:'left'},
-      {s:'Fleuriste',fr:'Pour une occasion spéciale ?',es:'¿Es para una ocasión especial?',side:'right'},
-      {s:'María',fr:'Oui, pour l\'anniversaire de ma mère.',es:'Sí, para el cumpleaños de mi madre.',side:'left'}
-    ]},
-    {label:'Sit. 2',title:'Regar las plantas de la casa',img:'🪴',dialogue:[
-      {s:'Voisine',fr:'Tu peux arroser mes plantes cette semaine ?',es:'¿Puedes regar mis plantas esta semana?',side:'right'},
-      {s:'Luisa',fr:'Bien sûr ! Combien de fois par jour ?',es:'¡Claro! ¿Cuántas veces al día?',side:'left'},
-      {s:'Voisine',fr:'Une fois par jour, le matin.',es:'Una vez al día, por la mañana.',side:'right'},
-      {s:'Luisa',fr:'D\'accord, je mets la plante près de la fenêtre.',es:'De acuerdo, pongo la planta cerca de la ventana.',side:'left'}
-    ]},
-    {label:'Sit. 3',title:'Paseo por el parque',img:'🌳',dialogue:[
-      {s:'Pedro',fr:'Regarde ces arbres, ils sont magnifiques !',es:'¡Mira esos árboles, son preciosos!',side:'right'},
-      {s:'Ana',fr:'Oui ! Et les fleurs dans le jardin sont belles.',es:'¡Sí! Y las flores del jardín también son bonitas.',side:'left'},
-      {s:'Pedro',fr:'C\'est quoi comme arbre ça ?',es:'¿Qué árbol es ese?',side:'right'},
-      {s:'Ana',fr:'C\'est un chêne. Et là c\'est une rose.',es:'Es un roble. Y esa es una rosa.',side:'left'}
+    {label:'Sit. 3',title:'Retrouver un ami en terrasse',img:'☀️',dialogue:[
+      {s:'Carlos',es:'¡Hola! ¿Qué tal estás?',fr:'Salut ! Comment tu vas ?',side:'left'},
+      {s:'Sofía',es:'¡Muy bien! ¿Y tú?',fr:'Très bien ! Et toi ?',side:'right'},
+      {s:'Carlos',es:'Bien. ¿Qué hay de nuevo?',fr:'Bien. Quoi de neuf ?',side:'left'},
+      {s:'Sofía',es:'Nada especial. ¿Tomamos algo?',fr:'Rien de spécial. On prend quelque chose ?',side:'right'},
+      {s:'Carlos',es:'¡Buena idea! Tengo sed.',fr:'Bonne idée ! J\'ai soif.',side:'left'},
+      {s:'Sofía',es:'¡Yo también!',fr:'Moi aussi !',side:'right'}
     ]}
    ],
-   vocab:['La flor = La fleur','El árbol = L\'arbre','La rosa = La rose','La hoja = La feuille','Regar = Arroser','El jardín = Le jardin','El ramo = Le bouquet'],
+   vocab:['¿Qué tal? = Ça va ?','Bien, gracias = Bien, merci','Más o menos = Comme ci comme ça','Estoy cansado = Je suis fatigué','Lo siento = Je suis désolé(e)','¡Hasta luego! = À plus !','¿Qué hay de nuevo? = Quoi de neuf ?'],
    quiz:[
-    {q:'¿Cómo se dice "Arroser les plantes" en español?',opts:['Plantar flores','Regar las plantas','Cortar árboles','Poner rosas'],ans:1},
-    {q:'¿Qué significa "El ramo"?',opts:['Le jardin','L\'arbre','Le bouquet','La fleur'],ans:2},
-    {q:'¿Qué significa "Une fois par jour"?',opts:['Deux fois par jour','Une fois par semaine','Une fois par jour','Chaque heure'],ans:2}
+    {q:'¿Qué significa "Más o menos"?',opts:['Très bien','Très mal','Comme ci comme ça','Je suis fatigué'],ans:2},
+    {q:'¿Cómo se dice "Je suis désolé" en español?',opts:['Gracias','Lo siento','De nada','Perdona'],ans:1},
+    {q:'¿Qué significa "¡Hasta luego!"?',opts:['Bonjour !','Merci !','À plus !','S\'il vous plaît !'],ans:2}
    ]},
-  {id:'salut2',level:2,emoji:'👋',name:'Los Saludos',sub:'Tienda, vecino, despedida / Magasin, voisin, départ',type:'dialog',
+ 
+  /* 2 ── Se présenter */
+  {id:'pres2',level:2,emoji:'🙋',name:'Presentarse',sub:'Dire son nom, son pays / Se présenter',type:'dialog',
    situations:[
-    {label:'Sit. 1',title:'Entrar a una tienda',img:'🏪',dialogue:[
-      {s:'Cliente',fr:'¡Buenos días!',es:'¡Buenos días!',side:'left'},
-      {s:'Vendedor',fr:'¡Hola! ¿En qué os puedo ayudar?',es:'¡Hola! ¿En qué os puedo ayudar?',side:'right'},
-      {s:'Cliente',fr:'No, gracias, solo estamos mirando.',es:'No, gracias, solo estamos mirando.',side:'left'},
-      {s:'Vendedor',fr:'Claro. No dudéis en pedirme si necesitáis algo.',es:'Claro. No dudéis en pedirme si necesitáis algo.',side:'right'}
+    {label:'Sit. 1',title:'Dans un cours d\'espagnol',img:'📚',dialogue:[
+      {s:'Profesora',es:'¡Hola! ¿Cómo te llamas?',fr:'Bonjour ! Tu t\'appelles comment ?',side:'right'},
+      {s:'Marc',es:'Me llamo Marc. ¿Y tú?',fr:'Je m\'appelle Marc. Et toi ?',side:'left'},
+      {s:'Profesora',es:'Yo soy Laura. ¿De dónde eres, Marc?',fr:'Je suis Laura. Tu es d\'où, Marc ?',side:'right'},
+      {s:'Marc',es:'Soy de Francia, de París. ¿Y tú?',fr:'Je suis de France, de Paris. Et toi ?',side:'left'},
+      {s:'Profesora',es:'Soy de Madrid. ¡Bienvenido!',fr:'Je suis de Madrid. Bienvenue !',side:'right'},
+      {s:'Marc',es:'¡Gracias!',fr:'Merci !',side:'left'}
     ]},
-    {label:'Sit. 2',title:'Cruzarse con el vecino en el ascensor',img:'🛗',dialogue:[
-      {s:'Vecino',fr:'¡Buenas noches! ¡Llegáis tarde!',es:'¡Buenas noches! ¡Llegáis tarde!',side:'right'},
-      {s:'Luisa',fr:'¡Buenas! Sí, estábamos en el trabajo.',es:'¡Buenas! Sí, estábamos trabajando hasta tarde.',side:'left'},
-      {s:'Vecino',fr:'¡Que descanséis!',es:'¡Que descanséis!',side:'right'},
-      {s:'Luisa',fr:'¡Gracias, igualmente! ¡Hasta luego!',es:'¡Gracias, igualmente! ¡Hasta luego!',side:'left'}
+    {label:'Sit. 2',title:'Rencontre dans le quartier',img:'🏙️',dialogue:[
+      {s:'Vecino',es:'¡Hola! ¿Eres nuevo aquí?',fr:'Bonjour ! Tu es nouveau ici ?',side:'right'},
+      {s:'Julie',es:'Sí. Me llamo Julie. Soy francesa.',fr:'Oui. Je m\'appelle Julie. Je suis française.',side:'left'},
+      {s:'Vecino',es:'Yo soy Antonio. ¿Hablas español?',fr:'Moi je suis Antonio. Tu parles espagnol ?',side:'right'},
+      {s:'Julie',es:'Un poco. Estoy aprendiendo.',fr:'Un peu. Je suis en train d\'apprendre.',side:'left'},
+      {s:'Vecino',es:'¡Muy bien! Tu español es bueno.',fr:'Très bien ! Ton espagnol est bon.',side:'right'},
+      {s:'Julie',es:'¡Gracias! Eres muy amable.',fr:'Merci ! Tu es très gentil.',side:'left'}
     ]},
-    {label:'Sit. 3',title:'Despedirse antes de irse',img:'🚪',dialogue:[
-      {s:'Ana',fr:'Bueno, me tengo que ir ya.',es:'Bueno, me tengo que ir ya.',side:'left'},
-      {s:'Pedro',fr:'¿Ya? ¡Que te vaya bien! ¡Con cuidado!',es:'¿Ya? ¡Que te vaya bien! ¡Con cuidado!',side:'right'},
-      {s:'Ana',fr:'¡Gracias! ¡Hasta pronto! ¡Saludos a tu familia!',es:'¡Gracias! ¡Hasta pronto! ¡Saludos a tu familia!',side:'left'},
-      {s:'Pedro',fr:'¡Buenas noches! ¡Cuídate!',es:'¡Buenas noches! ¡Cuídate mucho!',side:'right'}
-     ]}
+    {label:'Sit. 3',title:'À une fête',img:'🎉',dialogue:[
+      {s:'Chica',es:'¡Hola! ¿Cómo te llamas?',fr:'Salut ! Tu t\'appelles comment ?',side:'right'},
+      {s:'Thomas',es:'Thomas. ¿Y tú?',fr:'Thomas. Et toi ?',side:'left'},
+      {s:'Chica',es:'Yo soy Lucía. ¿Eres francés?',fr:'Moi je suis Lucía. Tu es français ?',side:'right'},
+      {s:'Thomas',es:'Sí, soy de Lyon. ¿Y tú eres de Madrid?',fr:'Oui, je suis de Lyon. Et toi tu es de Madrid ?',side:'left'},
+      {s:'Chica',es:'No, soy de Barcelona. ¡Encantada!',fr:'Non, je suis de Barcelone. Enchantée !',side:'right'},
+      {s:'Thomas',es:'¡Encantado!',fr:'Enchanté !',side:'left'}
+    ]}
    ],
-   vocab:['Buenos días = Bonjour','Buenas tardes o noches = Bonsoir','Adiós o hasta luego = Au revoir','Hasta pronto = À bientôt','¡Que descanséis! = Bonne nuit / Bonne soirée (vosotros)','¡Venga! o ¡Vale! = Allez ! / D\'accord !','No dudéis = N\'hésitez pas (vosotros)'],
+   vocab:['Me llamo = Je m\'appelle','¿De dónde eres? = Tu es d\'où ?','Soy de = Je suis de','Soy francés / francesa = Je suis français(e)','Estoy aprendiendo = Je suis en train d\'apprendre','¡Bienvenido! = Bienvenue !','¡Encantado(a)! = Enchanté(e) !'],
    quiz:[
-    {q:'¿Qué significa "Hasta pronto"?',opts:['Adieu','À bientôt','Bonjour','Bonne nuit'],ans:1},
-    {q:'¿Por qué se dice "¡Que descanséis!" y no "¡Que descansen!"?',opts:['C\'est une erreur','Car c\'est vosotros (pluriel de tú)','Car c\'est un souhait','Car c\'est le futur'],ans:1},
-    {q:'¿Qué significa "¡Que te vaya bien!"?',opts:['Bon repos','Bon appétit','Bonne continuation','Bon travail'],ans:2}
+    {q:'¿Cómo se dice "Je m\'appelle" en español?',opts:['Soy','Me llamo','Tengo','Vivo'],ans:1},
+    {q:'¿Qué significa "¿De dónde eres?"?',opts:['Comment tu t\'appelles ?','Quel âge tu as ?','Tu es d\'où ?','Tu habites où ?'],ans:2},
+    {q:'¿Cómo se dice "Enchanté" en español?',opts:['Gracias','Lo siento','Perdona','¡Encantado!'],ans:3}
    ]},
-  {id:'met2',level:2,emoji:'💼',name:'Las Profesiones',sub:'Preguntar, explicar, soñar / Demander, expliquer, rêver',type:'dialog',
+ 
+  /* 3 ── Demander son chemin */
+  {id:'chemin2',level:2,emoji:'🗺️',name:'Pedir camino',sub:'Demander son chemin / S\'orienter en ville',type:'dialog',
    situations:[
-    {label:'Sit. 1',title:'Preguntar la profesión',img:'🤝',dialogue:[
-      {s:'Vecina',fr:'¿A qué te dedicas?',es:'¿A qué te dedicas?',side:'right'},
-      {s:'Carlos',fr:'Soy cocinero en un restaurante.',es:'Soy cocinero en un restaurante.',side:'left'},
-      {s:'Vecina',fr:'¿Y trabajáis los fines de semana?',es:'¿Y trabajáis los fines de semana?',side:'right'},
-      {s:'Carlos',fr:'Sí, con frecuencia. Es mi oficio desde hace diez años.',es:'Sí, con frecuencia. Es mi oficio desde hace diez años.',side:'left'}
+    {label:'Sit. 1',title:'Trouver la gare',img:'🚉',dialogue:[
+      {s:'Turista',es:'Perdona, ¿dónde está la estación?',fr:'Pardon, où est la gare ?',side:'left'},
+      {s:'Señora',es:'Sigue todo recto y gira a la izquierda.',fr:'Continue tout droit et tourne à gauche.',side:'right'},
+      {s:'Turista',es:'¿Está lejos?',fr:'C\'est loin ?',side:'left'},
+      {s:'Señora',es:'No, está cerca. Son cinco minutos.',fr:'Non, c\'est près. C\'est cinq minutes.',side:'right'},
+      {s:'Turista',es:'Muchas gracias.',fr:'Merci beaucoup.',side:'left'},
+      {s:'Señora',es:'¡De nada!',fr:'De rien !',side:'right'}
     ]},
-    {label:'Sit. 2',title:'Hablar del trabajo actual',img:'💻',dialogue:[
-      {s:'Amiga',fr:'¿Dónde trabajas ahora?',es:'¿Dónde trabajas ahora?',side:'right'},
-      {s:'María',fr:'Soy enfermera en el hospital.',es:'Soy enfermera en el hospital La Paz.',side:'left'},
-      {s:'Amiga',fr:'¿Queda lejos de tu casa?',es:'¿Queda lejos de tu piso?',side:'right'},
-      {s:'María',fr:'No, veinte minutos en metro. Me encanta mi trabajo.',es:'No, veinte minutos en metro. ¡Me mola mucho mi trabajo!',side:'left'}
+    {label:'Sit. 2',title:'Trouver une pharmacie',img:'💊',dialogue:[
+      {s:'Marc',es:'Perdona, ¿hay una farmacia cerca?',fr:'Pardon, il y a une pharmacie près d\'ici ?',side:'left'},
+      {s:'Chico',es:'Sí. Baja esta calle y gira a la derecha.',fr:'Oui. Descends cette rue et tourne à droite.',side:'right'},
+      {s:'Marc',es:'¿Después del banco?',fr:'Après la banque ?',side:'left'},
+      {s:'Chico',es:'Sí, exacto. Es la puerta verde.',fr:'Oui, exactement. C\'est la porte verte.',side:'right'},
+      {s:'Marc',es:'¿Está abierta ahora?',fr:'Elle est ouverte maintenant ?',side:'left'},
+      {s:'Chico',es:'Sí, creo que sí.',fr:'Oui, je crois que oui.',side:'right'}
     ]},
-    {label:'Sit. 3',title:'El trabajo de tus sueños',img:'🌟',dialogue:[
-      {s:'Profe',fr:'¿Cuál es el trabajo de vuestros sueños?',es:'¿Cuál es el trabajo de vuestros sueños?',side:'right'},
-      {s:'Estudiante',fr:'Quisiera ser médico. Me gusta ayudar a la gente.',es:'Quisiera ser médico. Me gusta ayudar a la gente.',side:'left'},
-      {s:'Profe',fr:'¡Qué bonito! ¿Y tú, Luisa?',es:'¡Qué bonito! ¿Y tú, Luisa?',side:'right'},
-      {s:'Luisa',fr:'Yo quiero ser profesora de francés.',es:'Yo quiero ser profe de francés.',side:'left'},
-      {s:'Profe',fr:'¡Excelente! ¡Hacen falta buenos profesores!',es:'¡Excelente! ¡Hacen falta buenos profes!',side:'right'}
-     ]}
+    {label:'Sit. 3',title:'Trouver un supermarché',img:'🛒',dialogue:[
+      {s:'Julie',es:'Perdone, ¿hay un supermercado aquí?',fr:'Pardon, il y a un supermarché ici ?',side:'left'},
+      {s:'Señor',es:'Sí, está enfrente, al lado del bar.',fr:'Oui, il est en face, à côté du bar.',side:'right'},
+      {s:'Julie',es:'¿A la derecha o a la izquierda?',fr:'À droite ou à gauche ?',side:'left'},
+      {s:'Señor',es:'A la derecha. Es muy grande.',fr:'À droite. Il est très grand.',side:'right'},
+      {s:'Julie',es:'¡Perfecto! Gracias.',fr:'Parfait ! Merci.',side:'left'},
+      {s:'Señor',es:'¡De nada, que aproveche!',fr:'De rien, bonne journée !',side:'right'}
+    ]}
    ],
-   vocab:['¿A qué te dedicas? = À quoi tu te consacres ?','Soy... = Je suis...','El oficio o la profesión = Le métier','Trabajo = Je travaille','Quisiera ser = Je voudrais être','¡Me mola! = Ça me plaît ! (argot)','Vuestros = Votre / vos (vosotros)'],
+   vocab:['Perdona / Perdone = Pardon / Excusez-moi','¿Dónde está...? = Où est... ?','Todo recto = Tout droit','A la izquierda = À gauche','A la derecha = À droite','Cerca = Près','Lejos = Loin'],
    quiz:[
-    {q:'¿Cómo se pregunta la profesión de forma informal en España?',opts:['¿Trabajas?','¿A qué te dedicas?','¿Es tu trabajo?','¿Tienes un oficio?'],ans:1},
-    {q:'¿Qué significa "Quisiera ser médico"?',opts:['Je suis médecin','Je suis allé chez le médecin','Je voudrais être médecin','Je cherche un médecin'],ans:2},
-    {q:'¿Qué significa "¡Me mola mucho mi trabajo!" en argot español?',opts:['Je déteste mon travail','Mon travail m\'ennuie','J\'adore vraiment mon travail','Mon travail est difficile'],ans:2}
+    {q:'¿Cómo se dice "Tout droit" en español?',opts:['A la derecha','A la izquierda','Todo recto','Enfrente'],ans:2},
+    {q:'¿Qué significa "¿Hay una farmacia cerca?"?',opts:['La pharmacie est fermée','Il y a une pharmacie près d\'ici ?','Où est la pharmacie ?','La pharmacie est loin ?'],ans:1},
+    {q:'¿Cómo se dice "À gauche" en español?',opts:['Todo recto','A la derecha','Detrás','A la izquierda'],ans:3}
    ]},
-  {id:'trans2',level:2,emoji:'🚌',name:'Los Transportes',sub:'Metro, AVE, autobús / Métro, TGV, bus',type:'dialog',
+ 
+  /* 4 ── Au bar */
+  {id:'bar2',level:2,emoji:'☕',name:'En el bar',sub:'Commander au bar espagnol / Café et tapas',type:'dialog',
    situations:[
-    {label:'Sit. 1',title:'Comprar un billete de metro',img:'🚇',dialogue:[
-      {s:'Luisa',fr:'Perdona, ¿cómo se compra el billete de metro?',es:'Perdona, ¿cómo se compra el billete de metro?',side:'left'},
-      {s:'Empleado',fr:'En la máquina de allí. ¿Cuántos viajes necesitas?',es:'En la máquina de allí. ¿Cuántos viajes necesitáis?',side:'right'},
-      {s:'Luisa',fr:'Un billete sencillo, por favor.',es:'Un billete sencillo, por favor.',side:'left'},
-      {s:'Empleado',fr:'Son dos euros.',es:'Son dos euros.',side:'right'}
+    {label:'Sit. 1',title:'Commande simple',img:'☕',dialogue:[
+      {s:'Cliente',es:'¡Hola! Un café con leche, por favor.',fr:'Bonjour ! Un café au lait, s\'il vous plaît.',side:'left'},
+      {s:'Camarero',es:'¿Solo o con leche?',fr:'Noir ou au lait ?',side:'right'},
+      {s:'Cliente',es:'Con leche, por favor.',fr:'Au lait, s\'il vous plaît.',side:'left'},
+      {s:'Camarero',es:'¿Quiere azúcar?',fr:'Vous voulez du sucre ?',side:'right'},
+      {s:'Cliente',es:'Sí, uno. ¿Cuánto es?',fr:'Oui, un. C\'est combien ?',side:'left'},
+      {s:'Camarero',es:'Un euro cincuenta.',fr:'Un euro cinquante.',side:'right'}
     ]},
-    {label:'Sit. 2',title:'Coger un taxi',img:'🚕',dialogue:[
-      {s:'Pedro',fr:'¡Taxi! Al aeropuerto de Barajas, por favor.',es:'¡Taxi! Al aeropuerto de Barajas, por favor.',side:'left'},
-      {s:'Taxista',fr:'¿A qué terminal?',es:'¿A qué terminal?',side:'right'},
-      {s:'Pedro',fr:'A la T4, por favor.',es:'A la T4, por favor.',side:'left'},
-      {s:'Taxista',fr:'Perfecto. ¿Tiene prisa?',es:'Perfecto. ¿Tiene prisa?',side:'right'},
-      {s:'Pedro',fr:'Sí, salgo en dos horas.',es:'Sí, salgo en dos horas. ¡Venga!',side:'left'}
-     ]},
-    {label:'Sit. 3',title:'Sacar el billete del AVE',img:'🚂',dialogue:[
-      {s:'Empleado',fr:'¿Para dónde quiere el billete?',es:'¿Para dónde quiere el billete?',side:'right'},
-      {s:'Ana',fr:'Un billete para Barcelona, para el AVE de las diez.',es:'Un billete para Barcelona, para el AVE de las diez.',side:'left'},
-      {s:'Empleado',fr:'¿De ida o de ida y vuelta?',es:'¿De ida o de ida y vuelta?',side:'right'},
-      {s:'Ana',fr:'De ida y vuelta, por favor.',es:'De ida y vuelta, por favor.',side:'left'},
-      {s:'Empleado',fr:'Son ochenta y cinco euros.',es:'Son ochenta y cinco euros. ¿Prefiere ventana o pasillo?',side:'right'}
-     ]}
+    {label:'Sit. 2',title:'Commander des tapas',img:'🍢',dialogue:[
+      {s:'Camarero',es:'¿Qué van a tomar?',fr:'Qu\'est-ce que vous prenez ?',side:'right'},
+      {s:'Clara',es:'Una cerveza, por favor.',fr:'Une bière, s\'il vous plaît.',side:'left'},
+      {s:'Tomás',es:'Y yo, un agua. ¿Tienen tapas?',fr:'Et moi, une eau. Vous avez des tapas ?',side:'right'},
+      {s:'Camarero',es:'Sí. Hay patatas bravas y jamón.',fr:'Oui. Il y a des patatas bravas et du jambon.',side:'right'},
+      {s:'Clara',es:'¡Perfecto! Unas patatas bravas, por favor.',fr:'Parfait ! Des patatas bravas, s\'il vous plaît.',side:'left'},
+      {s:'Camarero',es:'¡En seguida!',fr:'Tout de suite !',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Payer l\'addition',img:'🧾',dialogue:[
+      {s:'Cliente',es:'La cuenta, por favor.',fr:'L\'addition, s\'il vous plaît.',side:'left'},
+      {s:'Camarero',es:'Son ocho euros.',fr:'C\'est huit euros.',side:'right'},
+      {s:'Cliente',es:'¿Se puede pagar con tarjeta?',fr:'On peut payer par carte ?',side:'left'},
+      {s:'Camarero',es:'Sí, claro.',fr:'Oui, bien sûr.',side:'right'},
+      {s:'Cliente',es:'Aquí tiene. Gracias.',fr:'Voilà. Merci.',side:'left'},
+      {s:'Camarero',es:'¡Gracias a usted! ¡Hasta pronto!',fr:'Merci à vous ! À bientôt !',side:'right'}
+    ]}
    ],
-   vocab:['El billete (sencillo o de ida y vuelta) = Le billet (simple / aller-retour)','El AVE = Le TGV espagnol (Alta Velocidad Española)','El aeropuerto = L\'aéroport','La estación de tren o Renfe = La gare / la SNCF espagnole','Coger el metro o el taxi = Prendre le métro / le taxi','Ventana / pasillo = Fenêtre / couloir'],
+   vocab:['Un café con leche = Un café au lait','Un café solo = Un café noir','¿Cuánto es? = C\'est combien ?','La cuenta = L\'addition','¿Se puede pagar con tarjeta? = On peut payer par carte ?','Las patatas bravas = Les patatas bravas','¡En seguida! = Tout de suite !'],
    quiz:[
-    {q:'¿Qué es el AVE en España?',opts:['Un bus touristique','Le TGV espagnol (Alta Velocidad)','Un tramway','Un taxi collectif'],ans:1},
-    {q:'¿Qué significa "Un billete de ida y vuelta"?',opts:['Un billet simple','Un billet aller-retour','Un abonnement mensuel','Un billet premium'],ans:1},
-    {q:'¿Qué significa "Coger el autobús" en España?',opts:['Rater le bus','Chercher le bus','Prendre le bus','Attendre le bus'],ans:2}
+    {q:'¿Cómo se dice "Un café noir" en España?',opts:['Un café con leche','Un cortado','Un café solo','Un café frío'],ans:2},
+    {q:'¿Qué significa "La cuenta, por favor"?',opts:['Le menu, s\'il vous plaît','L\'addition, s\'il vous plaît','Un café, s\'il vous plaît','L\'eau, s\'il vous plaît'],ans:1},
+    {q:'¿Cómo se dice "C\'est combien ?" en español?',opts:['¿Dónde está?','¿Qué es?','¿Cuánto es?','¿Cómo se llama?'],ans:2}
    ]},
-  {id:'lieux2',level:2,emoji:'🏙️',name:'Los Lugares',sub:'Urgencia, compras, pueblo / Urgence, courses, village',type:'dialog',
+ 
+  /* 5 ── Au restaurant */
+  {id:'resto2',level:2,emoji:'🍽️',name:'En el restaurante',sub:'Commander un repas / Au restaurant espagnol',type:'dialog',
    situations:[
-    {label:'Sit. 1',title:'Encontrar la farmacia de guardia',img:'🚨',dialogue:[
-      {s:'María',fr:'¡Perdona! ¿Dónde está la farmacia de guardia más cercana?',es:'¡Perdona! ¿Dónde está la farmacia de guardia más cercana?',side:'left'},
-      {s:'Paseante',fr:'¿La farmacia? Está a dos manzanas de aquí, a la izquierda.',es:'¿La farmacia? Está a dos manzanas de aquí, a la izquierda.',side:'right'},
-      {s:'María',fr:'¿Y el hospital, queda lejos?',es:'¿Y el hospital, queda lejos?',side:'left'},
-      {s:'Paseante',fr:'Sí, coge el metro, línea tres.',es:'Sí, coge el metro, línea tres.',side:'right'}
+    {label:'Sit. 1',title:'Avoir une table',img:'🪑',dialogue:[
+      {s:'Cliente',es:'Hola, ¿tiene una mesa para dos?',fr:'Bonjour, vous avez une table pour deux ?',side:'left'},
+      {s:'Camarera',es:'Sí, por aquí, por favor.',fr:'Oui, par ici, s\'il vous plaît.',side:'right'},
+      {s:'Cliente',es:'Gracias. ¿Tiene el menú del día?',fr:'Merci. Vous avez le menu du jour ?',side:'left'},
+      {s:'Camarera',es:'Sí. Hoy hay sopa, pollo y postre.',fr:'Oui. Aujourd\'hui il y a soupe, poulet et dessert.',side:'right'},
+      {s:'Cliente',es:'¿Cuánto cuesta el menú?',fr:'Le menu coûte combien ?',side:'left'},
+      {s:'Camarera',es:'Doce euros, bebida incluida.',fr:'Douze euros, boisson comprise.',side:'right'}
     ]},
-    {label:'Sit. 2',title:'Ir al mercado y al banco',img:'🛒',dialogue:[
-      {s:'Vecina',fr:'¿Vais al mercado esta mañana?',es:'¿Vais al mercado esta mañana?',side:'right'},
-      {s:'Luisa',fr:'Sí, vamos primero al supermercado y después al banco.',es:'Sí, vamos primero al supermercado y después al banco.',side:'left'},
-      {s:'Vecina',fr:'También hay una farmacia al lado del supermercado.',es:'También hay una farmacia al lado del súper.',side:'right'},
-      {s:'Luisa',fr:'¡Genial, también necesito ir ahí!',es:'¡Genial, también necesito ir ahí!',side:'left'}
+    {label:'Sit. 2',title:'Commander à table',img:'🥗',dialogue:[
+      {s:'Camarero',es:'¿Están listos para pedir?',fr:'Vous êtes prêts à commander ?',side:'right'},
+      {s:'Sophie',es:'Sí. De primero, una ensalada.',fr:'Oui. En entrée, une salade.',side:'left'},
+      {s:'Camarero',es:'¿Y de segundo?',fr:'Et en plat ?',side:'right'},
+      {s:'Sophie',es:'El pollo, por favor. ¿Tiene algo sin carne?',fr:'Le poulet, s\'il vous plaît. Vous avez quelque chose sans viande ?',side:'left'},
+      {s:'Camarero',es:'Sí, hay verduras a la plancha.',fr:'Oui, il y a des légumes grillés.',side:'right'},
+      {s:'Sophie',es:'Perfecto, eso quiero.',fr:'Parfait, c\'est ça que je veux.',side:'left'}
     ]},
-    {label:'Sit. 3',title:'Describir un fin de semana en el pueblo',img:'🌾',dialogue:[
-      {s:'Compañero',fr:'¿Qué tal el fin de semana?',es:'¿Qué tal el fin de semana?',side:'right'},
-      {s:'Pedro',fr:'¡Genial! Fuimos al pueblo de mis abuelos.',es:'¡Genial! Fuimos al pueblo de mis abuelos.',side:'left'},
-      {s:'Compañero',fr:'¡Qué bonito el campo en verano!',es:'¡Qué bonito el campo en verano!',side:'right'},
-      {s:'Pedro',fr:'Sí, y fuimos a la fiesta mayor del pueblo.',es:'Sí, y fuimos a la fiesta mayor del pueblo. ¡Fue genial!',side:'left'}
-     ]}
+    {label:'Sit. 3',title:'Un problème avec la commande',img:'🤔',dialogue:[
+      {s:'Cliente',es:'Perdona, esto no es lo que pedí.',fr:'Pardon, ce n\'est pas ce que j\'ai commandé.',side:'left'},
+      {s:'Camarero',es:'Lo siento. ¿Qué pidió usted?',fr:'Je suis désolé. Qu\'est-ce que vous avez commandé ?',side:'right'},
+      {s:'Cliente',es:'Pedí el pescado, no la carne.',fr:'J\'ai commandé le poisson, pas la viande.',side:'left'},
+      {s:'Camarero',es:'Disculpe, ahora mismo lo cambio.',fr:'Excusez-moi, je le change tout de suite.',side:'right'},
+      {s:'Cliente',es:'Gracias.',fr:'Merci.',side:'left'},
+      {s:'Camarero',es:'¡Lo siento mucho!',fr:'Je suis vraiment désolé !',side:'right'}
+    ]}
    ],
-   vocab:['La farmacia de guardia = La pharmacie de garde','El hospital = L\'hôpital','El supermercado o el súper = Le supermarché','El banco = La banque','El pueblo = Le village','La fiesta mayor = La fête du village','Vais = Vous allez (vosotros)'],
+   vocab:['¿Tiene mesa para dos? = Vous avez une table pour deux ?','El menú del día = Le menu du jour','De primero = En entrée','De segundo = En plat','Sin carne = Sans viande','Bebida incluida = Boisson comprise','Esto no es lo que pedí = Ce n\'est pas ce que j\'ai commandé'],
    quiz:[
-    {q:'¿Qué es "La farmacia de guardia" en España?',opts:['La pharmacie principale','La pharmacie de garde (ouverte la nuit)','La pharmacie universitaire','La pharmacie de l\'hôpital'],ans:1},
-    {q:'¿Qué significa "El pueblo" en España?',opts:['La ville','La plage','Le village','La montagne'],ans:2},
-    {q:'¿Qué significa "La fiesta mayor"?',opts:['Un grand bal','La fête nationale','La fête du village','Un concert'],ans:2}
+    {q:'¿Qué es "El menú del día" en España?',opts:['La carte du soir','Le menu du jour à prix fixe','Le plat du chef','Un menu gastronomique'],ans:1},
+    {q:'¿Cómo se dice "En entrée" en español?',opts:['De postre','De segundo','Para beber','De primero'],ans:3},
+    {q:'¿Qué significa "Sin carne"?',opts:['Avec de la viande','Sans poisson','Sans viande','Avec du poulet'],ans:2}
    ]},
-  {id:'orient2',level:2,emoji:'🧭',name:'Orientarse',sub:'Camino, taxi, barrio / Chemin, taxi, quartier',type:'dialog',
+ 
+  /* 6 ── Faire des courses */
+  {id:'compras2',level:2,emoji:'🛍️',name:'De compras',sub:'Acheter des choses / Faire ses courses',type:'dialog',
    situations:[
-    {label:'Sit. 1',title:'Preguntar cómo llegar a la estación',img:'🚉',dialogue:[
-      {s:'Ana',fr:'Perdona, ¿por dónde se va a la estación de Atocha?',es:'Perdona, ¿por dónde se va a la estación de Atocha?',side:'left'},
-      {s:'Paseante',fr:'Sigue todo recto y gira a la izquierda en el semáforo.',es:'Sigue todo recto y gira a la izquierda en el semáforo.',side:'right'},
-      {s:'Ana',fr:'¿Queda lejos a pie?',es:'¿Queda lejos a pie?',side:'left'},
-      {s:'Paseante',fr:'No, unos diez minutos. Está enfrente del parque.',es:'No, unos diez minutos. Está enfrente del parque.',side:'right'}
+    {label:'Sit. 1',title:'Au marché',img:'🧺',dialogue:[
+      {s:'Cliente',es:'Buenos días. ¿Cuánto cuestan los tomates?',fr:'Bonjour. Combien coûtent les tomates ?',side:'left'},
+      {s:'Vendedor',es:'Dos euros el kilo.',fr:'Deux euros le kilo.',side:'right'},
+      {s:'Cliente',es:'Quiero un kilo, por favor.',fr:'Je veux un kilo, s\'il vous plaît.',side:'left'},
+      {s:'Vendedor',es:'¿Algo más?',fr:'Autre chose ?',side:'right'},
+      {s:'Cliente',es:'Sí, ¿tiene naranjas?',fr:'Oui, vous avez des oranges ?',side:'left'},
+      {s:'Vendedor',es:'Sí. Son un euro el kilo.',fr:'Oui. C\'est un euro le kilo.',side:'right'}
     ]},
-    {label:'Sit. 2',title:'Guiar a un taxista',img:'🚕',dialogue:[
-      {s:'Taxista',fr:'¿A dónde vais?',es:'¿A dónde vais?',side:'right'},
-      {s:'Pedro',fr:'A la Gran Vía, número ocho, por favor.',es:'A la Gran Vía, número ocho, por favor.',side:'left'},
-      {s:'Taxista',fr:'¿Voy por el centro?',es:'¿Voy por el centro?',side:'right'},
-      {s:'Pedro',fr:'Sí. Y después del puente, girad a la derecha.',es:'Sí. Y después del puente, gira a la derecha.',side:'left'}
-     ]},
-    {label:'Sit. 3',title:'Indicar dónde está una tienda',img:'🏪',dialogue:[
-      {s:'Turista',fr:'¿Hay una panadería cerca de aquí?',es:'¿Hay una panadería cerca de aquí?',side:'right'},
-      {s:'Luisa',fr:'¡Sí! Está al lado de la farmacia, enfrente del parque.',es:'¡Sí! Está al lado de la farmacia, enfrente del parque.',side:'left'},
-      {s:'Turista',fr:'¿Queda a la derecha o a la izquierda?',es:'¿Queda a la derecha o a la izquierda?',side:'right'},
-      {s:'Luisa',fr:'Sigue todo recto y está a la derecha. Muy cerca, a dos minutos a pie.',es:'Sigue todo recto y está a la derecha. Muy cerca, a dos minutos a pie.',side:'left'}
-     ]}
+    {label:'Sit. 2',title:'Dans un magasin de vêtements',img:'👗',dialogue:[
+      {s:'Dependienta',es:'¡Hola! ¿Le puedo ayudar?',fr:'Bonjour ! Je peux vous aider ?',side:'right'},
+      {s:'Lucie',es:'Sí, busco una camiseta.',fr:'Oui, je cherche un t-shirt.',side:'left'},
+      {s:'Dependienta',es:'¿Qué talla tiene?',fr:'Vous faites quelle taille ?',side:'right'},
+      {s:'Lucie',es:'La talla mediana.',fr:'La taille moyenne.',side:'left'},
+      {s:'Dependienta',es:'¿Puede probársela? El probador está aquí.',fr:'Vous pouvez l\'essayer ? La cabine est là.',side:'right'},
+      {s:'Lucie',es:'¡Gracias! ¿Cuánto cuesta?',fr:'Merci ! Elle coûte combien ?',side:'left'}
+    ]},
+    {label:'Sit. 3',title:'À la caisse',img:'🛒',dialogue:[
+      {s:'Cajero',es:'¡Hola! ¿Todo bien?',fr:'Bonjour ! Tout va bien ?',side:'right'},
+      {s:'Cliente',es:'Sí, gracias. ¿Cuánto es todo?',fr:'Oui, merci. C\'est combien en tout ?',side:'left'},
+      {s:'Cajero',es:'Son quince euros con veinte.',fr:'C\'est quinze euros vingt.',side:'right'},
+      {s:'Cliente',es:'¿Puedo pagar con tarjeta?',fr:'Je peux payer par carte ?',side:'left'},
+      {s:'Cajero',es:'Sí, sin problema.',fr:'Oui, sans problème.',side:'right'},
+      {s:'Cliente',es:'Aquí tiene. ¡Gracias!',fr:'Voilà. Merci !',side:'left'}
+    ]}
    ],
-   vocab:['A la izquierda = À gauche','A la derecha = À droite','Todo recto = Tout droit','Enfrente o frente a = En face','Al lado = À côté','Lejos = Loin','Cerca = Près','La manzana = Le pâté de maisons'],
+   vocab:['¿Cuánto cuesta? = Combien ça coûte ?','Quiero = Je veux','¿Algo más? = Autre chose ?','Busco = Je cherche','La talla = La taille','El probador = La cabine d\'essayage','¿Cuánto es todo? = C\'est combien en tout ?'],
    quiz:[
-    {q:'¿Cómo se dice "Tout droit" en español?',opts:['A la izquierda','A la derecha','Todo recto','Enfrente'],ans:2},
-    {q:'¿Qué significa "Frente al parque"?',opts:['À côté du parc','Dans le parc','En face du parc','Derrière le parc'],ans:2},
-    {q:'¿Qué significa "Está muy cerca"?',opts:['C\'est très loin','C\'est très près','C\'est à droite','C\'est en face'],ans:1}
+    {q:'¿Cómo se dice "Je cherche" en español?',opts:['Tengo','Quiero','Busco','Compro'],ans:2},
+    {q:'¿Qué significa "¿Algo más?"',opts:['C\'est tout ?','Autre chose ?','Vous avez ça ?','C\'est combien ?'],ans:1},
+    {q:'¿Cómo se dice "La taille" (vêtement) en español?',opts:['El color','El precio','La talla','El número'],ans:2}
    ]},
-  {id:'sante2',level:2,emoji:'🏥',name:'La Salud',sub:'Médico, síntomas, farmacia / Médecin, symptômes, pharmacie',type:'dialog',
+ 
+  /* 7 ── Prendre les transports */
+  {id:'transp2',level:2,emoji:'🚌',name:'El transporte',sub:'Prendre le bus et le métro / Les transports',type:'dialog',
    situations:[
-    {label:'Sit. 1',title:'Pedir cita en el centro de salud',img:'📅',dialogue:[
-      {s:'Recepcionista',fr:'Centro de salud, buenos días.',es:'Centro de salud, buenos días.',side:'right'},
-      {s:'María',fr:'Buenos días, quisiera pedir cita con el médico.',es:'Buenos días, quisiera pedir cita con el médico.',side:'left'},
-      {s:'Recepcionista',fr:'¿Por qué motivo?',es:'¿Por qué motivo?',side:'right'},
-      {s:'María',fr:'Tengo fiebre y mucha tos desde hace tres días.',es:'Tengo fiebre y mucha tos desde hace tres días.',side:'left'},
-      {s:'Recepcionista',fr:'¿Puede venir mañana a las diez?',es:'¿Puede venir mañana a las diez?',side:'right'}
+    {label:'Sit. 1',title:'Dans le métro',img:'🚇',dialogue:[
+      {s:'Viajero',es:'Perdona, ¿este metro va al centro?',fr:'Pardon, ce métro va au centre ?',side:'left'},
+      {s:'Señora',es:'No. Tienes que coger la línea dos.',fr:'Non. Tu dois prendre la ligne deux.',side:'right'},
+      {s:'Viajero',es:'¿Dónde está la línea dos?',fr:'Où est la ligne deux ?',side:'left'},
+      {s:'Señora',es:'Allí, a la derecha.',fr:'Là-bas, à droite.',side:'right'},
+      {s:'Viajero',es:'¿Cuántas paradas son?',fr:'C\'est combien d\'arrêts ?',side:'left'},
+      {s:'Señora',es:'Cuatro paradas. Bajas en Sol.',fr:'Quatre arrêts. Tu descends à Sol.',side:'right'}
     ]},
-    {label:'Sit. 2',title:'Explicar síntomas al médico',img:'🩺',dialogue:[
-      {s:'Médico',fr:'Buenos días, ¿qué le pasa hoy?',es:'Buenos días, ¿qué le pasa hoy?',side:'right'},
-      {s:'Pedro',fr:'Me duele mucho la garganta y tengo fiebre.',es:'Me duele mucho la garganta y tengo fiebre.',side:'left'},
-      {s:'Médico',fr:'¿Desde cuántos días?',es:'¿Desde cuántos días?',side:'right'},
-      {s:'Pedro',fr:'Desde hace cuatro días.',es:'Desde hace cuatro días.',side:'left'},
-      {s:'Médico',fr:'Es una angina. Le hago una receta.',es:'Es una angina. Le hago una receta.',side:'right'}
-     ]},
-    {label:'Sit. 3',title:'Comprar medicamentos en la farmacia',img:'💊',dialogue:[
-      {s:'Luisa',fr:'Buenos días, traigo una receta.',es:'Buenos días, traigo una receta.',side:'left'},
-      {s:'Farmacéutico',fr:'Tome uno por la mañana y uno por la noche.',es:'Tome uno por la mañana y uno por la noche.',side:'right'},
-      {s:'Luisa',fr:'¿Con o sin comida?',es:'¿Con o sin comida?',side:'left'},
-      {s:'Farmacéutico',fr:'Con comida, preferiblemente.',es:'Con comida, preferiblemente.',side:'right'},
-      {s:'Luisa',fr:'¿Y tiene algo para la tos también?',es:'¿Y tiene algo para la tos también?',side:'left'},
-      {s:'Farmacéutico',fr:'Sí, aquí tiene un jarabe. Dos cucharadas tres veces al día.',es:'Sí, aquí tiene un jarabe. Dos cucharadas tres veces al día.',side:'right'}
-     ]}
+    {label:'Sit. 2',title:'Acheter un billet',img:'🎫',dialogue:[
+      {s:'Viajero',es:'Hola, quiero un billete, por favor.',fr:'Bonjour, je veux un billet, s\'il vous plaît.',side:'left'},
+      {s:'Empleada',es:'¿Sencillo o de diez viajes?',fr:'Simple ou carnet de dix ?',side:'right'},
+      {s:'Viajero',es:'¿Cuánto cuesta el sencillo?',fr:'Combien coûte le billet simple ?',side:'left'},
+      {s:'Empleada',es:'Un euro cincuenta. El de diez viajes son doce euros.',fr:'Un euro cinquante. Le carnet de dix c\'est douze euros.',side:'right'},
+      {s:'Viajero',es:'Quiero el de diez viajes.',fr:'Je veux le carnet de dix.',side:'left'},
+      {s:'Empleada',es:'Aquí tiene.',fr:'Voilà.',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Dans le bus',img:'🚌',dialogue:[
+      {s:'Pasajero',es:'Perdona, ¿este autobús va a la playa?',fr:'Pardon, ce bus va à la plage ?',side:'left'},
+      {s:'Señor',es:'No, este va al aeropuerto.',fr:'Non, celui-ci va à l\'aéroport.',side:'right'},
+      {s:'Pasajero',es:'¿Qué autobús va a la playa?',fr:'Quel bus va à la plage ?',side:'left'},
+      {s:'Señor',es:'El número veintitrés.',fr:'Le numéro vingt-trois.',side:'right'},
+      {s:'Pasajero',es:'¿Dónde está la parada?',fr:'Où est l\'arrêt ?',side:'left'},
+      {s:'Señor',es:'Está enfrente, al otro lado de la calle.',fr:'Il est en face, de l\'autre côté de la rue.',side:'right'}
+    ]}
    ],
-   vocab:['Una cita médica = Un rendez-vous médical','El centro de salud = Le centre de santé','La receta médica = L\'ordonnance','El medicamento o el fármaco = Le médicament','Me duele... = J\'ai mal à...','La fiebre = La fièvre','La tos = La toux','El/la farmacéutico(a) = Le/la pharmacien(ne)'],
+   vocab:['Coger el metro = Prendre le métro','La línea = La ligne','La parada = L\'arrêt','El billete sencillo = Le billet simple','Bajar en = Descendre à','¿Cuántas paradas? = Combien d\'arrêts ?','El autobús = Le bus'],
    quiz:[
-    {q:'¿Cómo se llama el lugar donde se pide cita con el médico en España?',opts:['El hospital','El centro de salud','La clínica privada','La farmacia'],ans:1},
-    {q:'¿Qué significa "Tengo fiebre"?',opts:['J\'ai de la toux','J\'ai mal à la tête','J\'ai de la fièvre','Je suis fatigué'],ans:2},
-    {q:'¿Qué significa "La receta médica"?',opts:['L\'hôpital','Le médecin','L\'ordonnance','Le médicament'],ans:2}
+    {q:'¿Cómo se dice "Prendre le métro" en español?',opts:['Ir al metro','Coger el metro','Bajar del metro','Buscar el metro'],ans:1},
+    {q:'¿Qué significa "La parada"?',opts:['Le billet','La ligne','L\'arrêt','Le quai'],ans:2},
+    {q:'¿Cómo se dice "Descendre à Sol" en español?',opts:['Subir en Sol','Ir a Sol','Bajar en Sol','Coger Sol'],ans:2}
    ]},
-  {id:'objets2',level:2,emoji:'🔑',name:'Objetos del Día',sub:'Llaves, boli, cargador, móvil / Clés, stylo, chargeur, portable',type:'dialog',
+ 
+  /* 8 ── À la pharmacie */
+  {id:'farmacia2',level:2,emoji:'💊',name:'En la farmacia',sub:'Acheter des médicaments / À la pharmacie',type:'dialog',
    situations:[
-    {label:'Sit. 1',title:'Buscar las llaves antes de salir',img:'🔍',dialogue:[
-      {s:'Carlos',fr:'¡Espera, no encuentro las llaves!',es:'¡Espera, no encuentro las llaves!',side:'left'},
-      {s:'Ana',fr:'¿Has mirado en la mochila?',es:'¿Has mirado en la mochila?',side:'right'},
-      {s:'Carlos',fr:'Sí... y la cartera, ¿dónde está?',es:'Sí... ¡ah, no! ¿Y la cartera dónde está?',side:'left'},
-      {s:'Ana',fr:'Creo que la dejaste encima de la mesa del salón.',es:'Creo que la dejaste encima de la mesa del salón.',side:'right'},
-      {s:'Carlos',fr:'¡Ah sí! ¡Aquí están! Ya podemos irnos.',es:'¡Ah sí! ¡Aquí están! Ya podemos irnos.',side:'left'},
-      {s:'Ana',fr:'¡No te olvides las gafas tampoco!',es:'¡No te olvides las gafas tampoco!',side:'right'}
+    {label:'Sit. 1',title:'Mal de tête',img:'🤕',dialogue:[
+      {s:'Cliente',es:'Hola. Me duele la cabeza. ¿Qué tiene?',fr:'Bonjour. J\'ai mal à la tête. Qu\'est-ce que vous avez ?',side:'left'},
+      {s:'Farmacéutica',es:'¿Es alérgico a algún medicamento?',fr:'Vous êtes allergique à un médicament ?',side:'right'},
+      {s:'Cliente',es:'No, no soy alérgico.',fr:'Non, je ne suis pas allergique.',side:'left'},
+      {s:'Farmacéutica',es:'Le doy un ibuprofeno. Tome uno con comida.',fr:'Je vous donne un ibuprofène. Prenez-en un avec de la nourriture.',side:'right'},
+      {s:'Cliente',es:'¿Cuántas veces al día?',fr:'Combien de fois par jour ?',side:'left'},
+      {s:'Farmacéutica',es:'Tres veces al día, máximo.',fr:'Trois fois par jour, maximum.',side:'right'}
     ]},
-    {label:'Sit. 2',title:'Pedir prestado un boli',img:'✏️',dialogue:[
-      {s:'Luisa',fr:'Oye, ¿me puedes dejar un boli?',es:'Oye, ¿me puedes dejar un boli?',side:'left'},
-      {s:'Compañero',fr:'Sí, claro. Toma.',es:'Sí, claro. Toma.',side:'right'},
-      {s:'Luisa',fr:'¡Gracias! ¿Y tienes también una hoja de papel?',es:'¡Gracias! ¿Y tienes también una hoja de papel?',side:'left'},
-      {s:'Compañero',fr:'Sí, aquí tienes. ¿La necesitas mucho tiempo?',es:'Sí, aquí tienes. ¿La necesitas mucho tiempo?',side:'right'},
-      {s:'Luisa',fr:'No, solo cinco minutos. Te lo devuelvo enseguida.',es:'No, solo cinco minutos. Te lo devuelvo enseguida.',side:'left'}
+    {label:'Sit. 2',title:'Trouver la pharmacie de garde',img:'🌙',dialogue:[
+      {s:'Turista',es:'Perdone, ¿hay una farmacia abierta ahora?',fr:'Pardon, il y a une pharmacie ouverte maintenant ?',side:'left'},
+      {s:'Vecina',es:'Las farmacias están cerradas. Necesitas la farmacia de guardia.',fr:'Les pharmacies sont fermées. Tu as besoin de la pharmacie de garde.',side:'right'},
+      {s:'Turista',es:'¿Dónde está?',fr:'Elle est où ?',side:'left'},
+      {s:'Vecina',es:'Mira el cartel de esta farmacia. Pone cuál está abierta.',fr:'Regarde l\'affiche de cette pharmacie. Elle indique laquelle est ouverte.',side:'right'},
+      {s:'Turista',es:'¡Ah, entiendo! Gracias.',fr:'Ah, je comprends ! Merci.',side:'left'},
+      {s:'Vecina',es:'¡De nada!',fr:'De rien !',side:'right'}
     ]},
-    {label:'Sit. 3',title:'Pedir el cargador del móvil',img:'🔌',dialogue:[
-      {s:'Pedro',fr:'Mi móvil está a punto de quedarse sin batería. ¿Tienes un cargador?',es:'Mi móvil está a punto de quedarse sin batería. ¿Tienes un cargador?',side:'left'},
-      {s:'María',fr:'¿Qué modelo de móvil tienes?',es:'¿Qué modelo de móvil tienes?',side:'right'},
-      {s:'Pedro',fr:'Un Samsung. ¿Tendrás un cargador USB-C?',es:'Un Samsung. ¿Tendrás un cargador USB-C?',side:'left'},
-      {s:'María',fr:'¡Sí! Aquí está. Puedes quedártelo una hora.',es:'¡Sí! Aquí está. Puedes quedártelo una hora.',side:'right'},
-      {s:'Pedro',fr:'¡Muchísimas gracias, me has salvado la vida!',es:'¡Muchísimas gracias, ¡me has salvado la vida!',side:'left'}
-     ]}
+    {label:'Sit. 3',title:'Acheter un médicament',img:'💉',dialogue:[
+      {s:'Cliente',es:'Hola. ¿Tiene algo para la tos?',fr:'Bonjour. Vous avez quelque chose pour la toux ?',side:'left'},
+      {s:'Farmacéutico',es:'Sí. ¿Es para adulto o para niño?',fr:'Oui. C\'est pour un adulte ou un enfant ?',side:'right'},
+      {s:'Cliente',es:'Para adulto.',fr:'Pour un adulte.',side:'left'},
+      {s:'Farmacéutico',es:'Tome este jarabe. Dos cucharadas, tres veces al día.',fr:'Prenez ce sirop. Deux cuillères, trois fois par jour.',side:'right'},
+      {s:'Cliente',es:'¿Cuánto cuesta?',fr:'Ça coûte combien ?',side:'left'},
+      {s:'Farmacéutico',es:'Cinco euros con ochenta.',fr:'Cinq euros quatre-vingt.',side:'right'}
+    ]}
    ],
-   vocab:['Las llaves = Les clés','La cartera o el monedero = Le portefeuille','La mochila = Le sac à dos','El bolígrafo o el boli = Le stylo / le bic','La hoja = La feuille','El cargador = Le chargeur','Las gafas = Les lunettes','El móvil = Le portable'],
+   vocab:['Me duele la cabeza = J\'ai mal à la tête','Me duele la garganta = J\'ai mal à la gorge','La farmacia de guardia = La pharmacie de garde','No soy alérgico = Je ne suis pas allergique','El jarabe = Le sirop','Tres veces al día = Trois fois par jour','El cartel = L\'affiche'],
    quiz:[
-    {q:'¿Cómo se dice "Les clés" en español?',opts:['La cartera','Las llaves','El boli','La botella'],ans:1},
-    {q:'¿Cómo se dice "Le portable" en España?',opts:['El ordenador','El boli','El móvil','La tableta'],ans:2},
-    {q:'¿Qué significa "¡Me has salvado la vida!"?',opts:['Tu me donnes la vie !','Tu m\'aides un peu !','Tu m\'as sauvé la vie !','Tu es génial !'],ans:2}
+    {q:'¿Cómo se dice "J\'ai mal à la tête" en español?',opts:['Tengo fiebre','Me duele el estómago','Me duele la cabeza','Estoy cansado'],ans:2},
+    {q:'¿Qué es la "farmacia de guardia"?',opts:['La grande pharmacie','La pharmacie de garde ouverte la nuit','La pharmacie de l\'hôpital','La pharmacie pour touristes'],ans:1},
+    {q:'¿Cómo se dice "Trois fois par jour" en español?',opts:['Dos veces al día','Una vez al día','Tres veces al día','Cuatro veces al día'],ans:2}
+   ]},
+ 
+  /* 9 ── À l'hôtel */
+  {id:'hotel2',level:2,emoji:'🏨',name:'En el hotel',sub:'Arriver à l\'hôtel / S\'installer',type:'dialog',
+   situations:[
+    {label:'Sit. 1',title:'Arrivée à la réception',img:'🛎️',dialogue:[
+      {s:'Recepcionista',es:'¡Buenas noches! ¿Tiene reserva?',fr:'Bonsoir ! Vous avez une réservation ?',side:'right'},
+      {s:'Huésped',es:'Sí. Me llamo Dupont. Una habitación doble.',fr:'Oui. Je m\'appelle Dupont. Une chambre double.',side:'left'},
+      {s:'Recepcionista',es:'Aquí está. ¿Su pasaporte, por favor?',fr:'Voilà. Votre passeport, s\'il vous plaît ?',side:'right'},
+      {s:'Huésped',es:'Aquí tiene. ¿El desayuno está incluido?',fr:'Voilà. Le petit-déjeuner est inclus ?',side:'left'},
+      {s:'Recepcionista',es:'Sí, de siete a diez.',fr:'Oui, de sept à dix heures.',side:'right'},
+      {s:'Huésped',es:'¡Perfecto! Gracias.',fr:'Parfait ! Merci.',side:'left'}
+    ]},
+    {label:'Sit. 2',title:'Un problème dans la chambre',img:'🔧',dialogue:[
+      {s:'Huésped',es:'Hola. Hay un problema en mi habitación.',fr:'Bonjour. Il y a un problème dans ma chambre.',side:'left'},
+      {s:'Recepcionista',es:'¿Qué pasa?',fr:'Qu\'est-ce qui se passe ?',side:'right'},
+      {s:'Huésped',es:'El aire acondicionado no funciona.',fr:'La climatisation ne fonctionne pas.',side:'left'},
+      {s:'Recepcionista',es:'Lo siento. ¿Quiere cambiar de habitación?',fr:'Je suis désolé. Vous voulez changer de chambre ?',side:'right'},
+      {s:'Huésped',es:'Sí, por favor.',fr:'Oui, s\'il vous plaît.',side:'left'},
+      {s:'Recepcionista',es:'Aquí tiene la llave de la trescientos veinte.',fr:'Voilà la clé de la trois cent vingt.',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Demander des infos',img:'🗺️',dialogue:[
+      {s:'Huésped',es:'Perdone, ¿hay un restaurante cerca?',fr:'Pardon, il y a un restaurant près d\'ici ?',side:'left'},
+      {s:'Recepcionista',es:'Sí, hay uno muy bueno a dos minutos.',fr:'Oui, il y en a un très bon à deux minutes.',side:'right'},
+      {s:'Huésped',es:'¿Y hay algo para visitar aquí?',fr:'Et il y a des choses à visiter ici ?',side:'left'},
+      {s:'Recepcionista',es:'Sí, la catedral está muy cerca.',fr:'Oui, la cathédrale est très près.',side:'right'},
+      {s:'Huésped',es:'¿Está abierta hoy?',fr:'Elle est ouverte aujourd\'hui ?',side:'left'},
+      {s:'Recepcionista',es:'Sí, de nueve a seis.',fr:'Oui, de neuf heures à dix-huit heures.',side:'right'}
+    ]}
+   ],
+   vocab:['¿Tiene reserva? = Vous avez une réservation ?','La habitación doble = La chambre double','El desayuno incluido = Le petit-déjeuner inclus','No funciona = Ça ne fonctionne pas','Cambiar de habitación = Changer de chambre','La llave = La clé','¿Está abierta? = C\'est ouvert ?'],
+   quiz:[
+    {q:'¿Cómo se dice "La chambre double" en español?',opts:['La habitación individual','La habitación doble','La suite','La habitación familiar'],ans:1},
+    {q:'¿Qué significa "No funciona"?',opts:['C\'est fermé','Ça ne marche pas','C\'est cassé','Je ne sais pas'],ans:1},
+    {q:'¿Cómo se dice "La clé" en español?',opts:['La puerta','La ventana','La llave','El ascensor'],ans:2}
+   ]},
+ 
+  /* 10 ── Chez le médecin */
+  {id:'medico2',level:2,emoji:'🩺',name:'En el médico',sub:'Expliquer ce qui ne va pas / Chez le médecin',type:'dialog',
+   situations:[
+    {label:'Sit. 1',title:'Expliquer ses symptômes',img:'🤒',dialogue:[
+      {s:'Médico',es:'¡Buenos días! ¿Qué le pasa?',fr:'Bonjour ! Qu\'est-ce qui ne va pas ?',side:'right'},
+      {s:'Paciente',es:'Tengo fiebre y me duele la garganta.',fr:'J\'ai de la fièvre et j\'ai mal à la gorge.',side:'left'},
+      {s:'Médico',es:'¿Desde cuándo?',fr:'Depuis quand ?',side:'right'},
+      {s:'Paciente',es:'Desde ayer.',fr:'Depuis hier.',side:'left'},
+      {s:'Médico',es:'¿Tiene tos también?',fr:'Vous avez aussi de la toux ?',side:'right'},
+      {s:'Paciente',es:'Sí, un poco.',fr:'Oui, un peu.',side:'left'}
+    ]},
+    {label:'Sit. 2',title:'Comprendre le médecin',img:'💊',dialogue:[
+      {s:'Médico',es:'Tiene una infección. Le receto un antibiótico.',fr:'Vous avez une infection. Je vous prescris un antibiotique.',side:'right'},
+      {s:'Paciente',es:'¿Cuándo tomo el medicamento?',fr:'Quand est-ce que je prends le médicament ?',side:'left'},
+      {s:'Médico',es:'Uno por la mañana y uno por la noche.',fr:'Un le matin et un le soir.',side:'right'},
+      {s:'Paciente',es:'¿Durante cuántos días?',fr:'Pendant combien de jours ?',side:'left'},
+      {s:'Médico',es:'Siete días. Y beba mucha agua.',fr:'Sept jours. Et buvez beaucoup d\'eau.',side:'right'},
+      {s:'Paciente',es:'Gracias, doctor.',fr:'Merci, docteur.',side:'left'}
+    ]},
+    {label:'Sit. 3',title:'Appeler le médecin',img:'📞',dialogue:[
+      {s:'Paciente',es:'Hola, quiero una cita con el médico.',fr:'Bonjour, je veux un rendez-vous avec le médecin.',side:'left'},
+      {s:'Recepcionista',es:'¿Para cuándo?',fr:'Pour quand ?',side:'right'},
+      {s:'Paciente',es:'Para hoy si es posible. Estoy muy mal.',fr:'Pour aujourd\'hui si c\'est possible. Je suis très malade.',side:'left'},
+      {s:'Recepcionista',es:'¿Tiene fiebre?',fr:'Vous avez de la fièvre ?',side:'right'},
+      {s:'Paciente',es:'Sí, treinta y nueve grados.',fr:'Oui, trente-neuf degrés.',side:'left'},
+      {s:'Recepcionista',es:'Venga a las cuatro. Trae el pasaporte.',fr:'Venez à seize heures. Apportez votre passeport.',side:'right'}
+    ]}
+   ],
+   vocab:['¿Qué le pasa? = Qu\'est-ce qui ne va pas ?','Tengo fiebre = J\'ai de la fièvre','Me duele la garganta = J\'ai mal à la gorge','Desde ayer = Depuis hier','La tos = La toux','Una cita = Un rendez-vous','Estoy muy mal = Je suis très malade'],
+   quiz:[
+    {q:'¿Cómo se dice "J\'ai de la fièvre" en español?',opts:['Tengo frío','Tengo fiebre','Tengo tos','Tengo dolor'],ans:1},
+    {q:'¿Qué significa "Me duele la garganta"?',opts:['J\'ai mal à la tête','J\'ai mal au ventre','J\'ai mal à la gorge','J\'ai mal au dos'],ans:2},
+    {q:'¿Cómo se dice "Un rendez-vous" en español?',opts:['Una receta','Una cita','Una consulta','Una visita'],ans:1}
+   ]},
+ 
+  /* 11 ── La météo */
+  {id:'meteo2',level:2,emoji:'☀️',name:'El tiempo',sub:'Parler de la météo / Qu\'est-ce qu\'il fait ?',type:'dialog',
+   situations:[
+    {label:'Sit. 1',title:'Parler du temps',img:'🌤️',dialogue:[
+      {s:'Marta',es:'¡Qué calor hace hoy!',fr:'Quelle chaleur aujourd\'hui !',side:'left'},
+      {s:'Romain',es:'Sí, hace mucho calor. ¿Cuántos grados son?',fr:'Oui, il fait très chaud. Il fait combien de degrés ?',side:'right'},
+      {s:'Marta',es:'Treinta y cinco grados.',fr:'Trente-cinq degrés.',side:'left'},
+      {s:'Romain',es:'¡Es mucho! ¿Hay piscina aquí?',fr:'C\'est beaucoup ! Il y a une piscine ici ?',side:'right'},
+      {s:'Marta',es:'Sí, está en el hotel.',fr:'Oui, elle est à l\'hôtel.',side:'left'},
+      {s:'Romain',es:'¡Vamos!',fr:'Allons-y !',side:'right'}
+    ]},
+    {label:'Sit. 2',title:'Prévoir la sortie',img:'🌧️',dialogue:[
+      {s:'Luis',es:'¿Salimos hoy?',fr:'On sort aujourd\'hui ?',side:'left'},
+      {s:'Camille',es:'No sé. ¿Qué tiempo hace?',fr:'Je ne sais pas. Il fait quel temps ?',side:'right'},
+      {s:'Luis',es:'Llueve un poco.',fr:'Il pleut un peu.',side:'left'},
+      {s:'Camille',es:'¿Tienes paraguas?',fr:'Tu as un parapluie ?',side:'right'},
+      {s:'Luis',es:'No. ¿Y tú?',fr:'Non. Et toi ?',side:'left'},
+      {s:'Camille',es:'Yo sí. ¡Vamos juntos!',fr:'Moi oui. Allons-y ensemble !',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Parler des saisons',img:'🍂',dialogue:[
+      {s:'Sara',es:'¿Cuál es tu estación favorita?',fr:'Quelle est ta saison préférée ?',side:'right'},
+      {s:'Théo',es:'El verano. Me gusta el sol y el calor.',fr:'L\'été. J\'aime le soleil et la chaleur.',side:'left'},
+      {s:'Sara',es:'Yo prefiero el otoño. No hace ni frío ni calor.',fr:'Moi je préfère l\'automne. Il ne fait ni chaud ni froid.',side:'right'},
+      {s:'Théo',es:'¿Y en España? ¿Hace mucho frío en invierno?',fr:'Et en Espagne ? Il fait très froid en hiver ?',side:'left'},
+      {s:'Sara',es:'Depende. En Madrid sí, en Sevilla no.',fr:'Ça dépend. À Madrid oui, à Séville non.',side:'right'},
+      {s:'Théo',es:'¡Qué interesante!',fr:'Comme c\'est intéressant !',side:'left'}
+    ]}
+   ],
+   vocab:['¡Qué calor! = Quelle chaleur !','Hace frío = Il fait froid','Hace calor = Il fait chaud','Llueve = Il pleut','El paraguas = Le parapluie','El verano = L\'été','El invierno = L\'hiver'],
+   quiz:[
+    {q:'¿Cómo se dice "Il fait froid" en español?',opts:['Hace calor','Hay sol','Llueve','Hace frío'],ans:3},
+    {q:'¿Qué significa "¡Qué calor!"?',opts:['Quelle chance !','Quelle chaleur !','Quel froid !','Quel vent !'],ans:1},
+    {q:'¿Cómo se dice "Le parapluie" en español?',opts:['El abrigo','La bufanda','El paraguas','El sombrero'],ans:2}
+   ]},
+ 
+  /* 12 ── Trouver un logement */
+  {id:'logement2',level:2,emoji:'🏠',name:'Buscar piso',sub:'Chercher un logement / Louer un appartement',type:'dialog',
+   situations:[
+    {label:'Sit. 1',title:'Appeler pour un appartement',img:'📱',dialogue:[
+      {s:'Cliente',es:'Hola, llamo por el piso en alquiler.',fr:'Bonjour, j\'appelle pour l\'appartement en location.',side:'left'},
+      {s:'Propietario',es:'Sí. ¿Para cuántas personas?',fr:'Oui. Pour combien de personnes ?',side:'right'},
+      {s:'Cliente',es:'Para una persona. ¿Cuánto es el alquiler?',fr:'Pour une personne. Le loyer c\'est combien ?',side:'left'},
+      {s:'Propietario',es:'Setecientos euros al mes.',fr:'Sept cents euros par mois.',side:'right'},
+      {s:'Cliente',es:'¿Los gastos están incluidos?',fr:'Les charges sont incluses ?',side:'left'},
+      {s:'Propietario',es:'No, los gastos son aparte.',fr:'Non, les charges sont en plus.',side:'right'}
+    ]},
+    {label:'Sit. 2',title:'Visiter l\'appartement',img:'🔑',dialogue:[
+      {s:'Propietario',es:'El salón es grande y tiene mucha luz.',fr:'Le salon est grand et très lumineux.',side:'right'},
+      {s:'Cliente',es:'¡Me gusta! ¿Cuántas habitaciones tiene?',fr:'J\'aime bien ! Il a combien de chambres ?',side:'left'},
+      {s:'Propietario',es:'Dos habitaciones y un baño.',fr:'Deux chambres et une salle de bain.',side:'right'},
+      {s:'Cliente',es:'¿Hay calefacción?',fr:'Il y a le chauffage ?',side:'left'},
+      {s:'Propietario',es:'Sí, hay radiadores.',fr:'Oui, il y a des radiateurs.',side:'right'},
+      {s:'Cliente',es:'¿Puedo pensarlo?',fr:'Je peux réfléchir ?',side:'left'}
+    ]},
+    {label:'Sit. 3',title:'Un problème dans l\'appartement',img:'🔧',dialogue:[
+      {s:'Inquilino',es:'Hola, hay un problema. El agua no funciona.',fr:'Bonjour, il y a un problème. L\'eau ne fonctionne pas.',side:'left'},
+      {s:'Propietario',es:'¿Desde cuándo?',fr:'Depuis quand ?',side:'right'},
+      {s:'Inquilino',es:'Desde esta mañana.',fr:'Depuis ce matin.',side:'left'},
+      {s:'Propietario',es:'Voy a llamar al fontanero ahora.',fr:'Je vais appeler le plombier maintenant.',side:'right'},
+      {s:'Inquilino',es:'¿Va a venir hoy?',fr:'Il vient aujourd\'hui ?',side:'left'},
+      {s:'Propietario',es:'Sí, creo que sí.',fr:'Oui, je crois que oui.',side:'right'}
+    ]}
+   ],
+   vocab:['El alquiler = Le loyer','Los gastos = Les charges','Las habitaciones = Les chambres','La calefacción = Le chauffage','El inquilino = Le locataire','El fontanero = Le plombier','Los gastos son aparte = Les charges sont en plus'],
+   quiz:[
+    {q:'¿Qué significa "Los gastos son aparte"?',opts:['Tout compris','Les charges sont incluses','Les charges sont en plus','C\'est gratuit'],ans:2},
+    {q:'¿Cómo se dice "Le plombier" en español?',opts:['El electricista','El fontanero','El carpintero','El pintor'],ans:1},
+    {q:'¿Qué significa "El alquiler"?',opts:['La vente','Le loyer','La maison','Le contrat'],ans:1}
+   ]},
+ 
+  /* 13 ── Parler de ses goûts */
+  {id:'gustos2',level:2,emoji:'❤️',name:'Gustos y aficiones',sub:'Parler de ce qu\'on aime / Les loisirs',type:'dialog',
+   situations:[
+    {label:'Sit. 1',title:'Parler de musique',img:'🎵',dialogue:[
+      {s:'Lucía',es:'¿Te gusta la música?',fr:'Tu aimes la musique ?',side:'right'},
+      {s:'Paul',es:'Sí, mucho. Me gusta el rock.',fr:'Oui, beaucoup. J\'aime le rock.',side:'left'},
+      {s:'Lucía',es:'¿Y el flamenco?',fr:'Et le flamenco ?',side:'right'},
+      {s:'Paul',es:'También, pero no conozco mucho.',fr:'Aussi, mais je ne connais pas beaucoup.',side:'left'},
+      {s:'Lucía',es:'¡Hay un espectáculo esta noche! ¿Vienes?',fr:'Il y a un spectacle ce soir ! Tu viens ?',side:'right'},
+      {s:'Paul',es:'¡Sí! ¿A qué hora empieza?',fr:'Oui ! Ça commence à quelle heure ?',side:'left'}
+    ]},
+    {label:'Sit. 2',title:'Parler de sport',img:'⚽',dialogue:[
+      {s:'Diego',es:'¿Practicas algún deporte?',fr:'Tu pratiques un sport ?',side:'left'},
+      {s:'Claire',es:'Sí, me gusta mucho el fútbol.',fr:'Oui, j\'aime beaucoup le football.',side:'right'},
+      {s:'Diego',es:'¿De verdad? ¡Yo también! ¿Ves el partido esta noche?',fr:'Vraiment ? Moi aussi ! Tu regardes le match ce soir ?',side:'left'},
+      {s:'Claire',es:'Sí. ¿Juegas al fútbol también?',fr:'Oui. Tu joues au football aussi ?',side:'right'},
+      {s:'Diego',es:'Sí, los domingos con amigos.',fr:'Oui, le dimanche avec des amis.',side:'left'},
+      {s:'Claire',es:'¡Qué guay!',fr:'Super !',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Proposer une activité',img:'🎬',dialogue:[
+      {s:'Ana',es:'¿Qué haces esta tarde?',fr:'Tu fais quoi cet après-midi ?',side:'left'},
+      {s:'Marc',es:'Nada. ¿Por qué?',fr:'Rien. Pourquoi ?',side:'right'},
+      {s:'Ana',es:'¿Quieres ir al cine?',fr:'Tu veux aller au cinéma ?',side:'left'},
+      {s:'Marc',es:'¡Sí! ¿Qué ponen?',fr:'Oui ! Qu\'est-ce qu\'il y a ?',side:'right'},
+      {s:'Ana',es:'Una película francesa. ¿Te gusta el cine francés?',fr:'Un film français. Tu aimes le cinéma français ?',side:'left'},
+      {s:'Marc',es:'¡Me encanta! ¿A qué hora quedamos?',fr:'J\'adore ça ! On se retrouve à quelle heure ?',side:'right'}
+    ]}
+   ],
+   vocab:['Me gusta = J\'aime','No me gusta = Je n\'aime pas','Me encanta = J\'adore','¿Practicas un deporte? = Tu pratiques un sport ?','El partido = Le match','¿Qué ponen? = Qu\'est-ce qu\'il y a (au cinéma) ?','¿A qué hora quedamos? = On se retrouve à quelle heure ?'],
+   quiz:[
+    {q:'¿Cómo se dice "J\'adore" en español?',opts:['Me gusta','No me gusta','Me encanta','Odio'],ans:2},
+    {q:'¿Qué significa "¿Qué ponen?" en el contexto del cine?',opts:['Ça coûte combien ?','À quelle heure ?','Qu\'est-ce qu\'il y a ?','C\'est où ?'],ans:2},
+    {q:'¿Cómo se dice "Le match" en español?',opts:['El deporte','El equipo','El partido','El estadio'],ans:2}
+   ]},
+ 
+  /* 14 ── Sortir le soir */
+  {id:'fiesta2',level:2,emoji:'🎉',name:'Salir de noche',sub:'Sortir le soir / Vie sociale en Espagne',type:'dialog',
+   situations:[
+    {label:'Sit. 1',title:'Organiser une sortie',img:'🎊',dialogue:[
+      {s:'Pablo',es:'¡Hola! ¿Salimos esta noche?',fr:'Salut ! On sort ce soir ?',side:'left'},
+      {s:'Lea',es:'¡Sí! ¿Adónde vamos?',fr:'Oui ! On va où ?',side:'right'},
+      {s:'Pablo',es:'Hay un bar muy chulo en el centro.',fr:'Il y a un bar très sympa au centre.',side:'left'},
+      {s:'Lea',es:'¡Bien! ¿A qué hora?',fr:'Super ! À quelle heure ?',side:'right'},
+      {s:'Pablo',es:'A las diez. En España se sale tarde.',fr:'À dix heures. En Espagne on sort tard.',side:'left'},
+      {s:'Lea',es:'¡Vale! ¡Hasta luego!',fr:'D\'accord ! À plus tard !',side:'right'}
+    ]},
+    {label:'Sit. 2',title:'Au bar le soir',img:'🍺',dialogue:[
+      {s:'Marc',es:'¡Esta música está muy bien! ¿Bailamos?',fr:'Cette musique est super ! On danse ?',side:'left'},
+      {s:'Inés',es:'¡Sí! Me encanta bailar.',fr:'Oui ! J\'adore danser.',side:'right'},
+      {s:'Marc',es:'¿Quieres algo de beber?',fr:'Tu veux quelque chose à boire ?',side:'left'},
+      {s:'Inés',es:'Sí, un agua, por favor. Tengo calor.',fr:'Oui, une eau, s\'il te plaît. J\'ai chaud.',side:'right'},
+      {s:'Marc',es:'¡Ahora vuelvo!',fr:'Je reviens tout de suite !',side:'left'},
+      {s:'Inés',es:'¡Vale!',fr:'D\'accord !',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Le lendemain',img:'😴',dialogue:[
+      {s:'Carla',es:'¡Hola! ¿Cómo estás? ¡Llegué tarde a casa!',fr:'Salut ! Tu vas bien ? Je suis rentré tard à la maison !',side:'left'},
+      {s:'Tom',es:'¡Yo también! Pero fue una noche muy buena.',fr:'Moi aussi ! Mais c\'était une très bonne soirée.',side:'right'},
+      {s:'Carla',es:'Sí, la gente era muy simpática.',fr:'Oui, les gens étaient très sympas.',side:'left'},
+      {s:'Tom',es:'¿Comemos juntos hoy?',fr:'On mange ensemble aujourd\'hui ?',side:'right'},
+      {s:'Carla',es:'¡Sí! Necesito comer. Tengo mucha hambre.',fr:'Oui ! J\'ai besoin de manger. J\'ai très faim.',side:'left'},
+      {s:'Tom',es:'¡Yo también! ¡La siesta es para después!',fr:'Moi aussi ! La sieste c\'est pour après !',side:'right'}
+    ]}
+   ],
+   vocab:['¡Salimos! = On sort !','¿Adónde vamos? = On va où ?','En España se sale tarde = En Espagne on sort tard','¡Vale! = D\'accord !','Tengo calor = J\'ai chaud','Tengo hambre = J\'ai faim','La siesta = La sieste'],
+   quiz:[
+    {q:'¿Qué significa "¡Vale!" en España?',opts:['Au revoir !','Allons-y !','D\'accord !','C\'est nul !'],ans:2},
+    {q:'¿Cómo se dice "J\'ai faim" en español?',opts:['Tengo sed','Tengo sueño','Tengo frío','Tengo hambre'],ans:3},
+    {q:'¿Qué significa "En España se sale tarde"?',opts:['En Espagne on rentre tard','En Espagne on travaille tard','En Espagne on sort tard','En Espagne on mange tard'],ans:2}
    ]}
+ 
 ];
 
 var ALL_THEMES=LEVEL1_THEMES.concat(LEVEL2_THEMES);
