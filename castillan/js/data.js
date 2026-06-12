@@ -418,7 +418,7 @@ var LEVEL1_THEMES=[
     {es:'El espejo',fr:'Le miroir',em:'🪞'},
     {es:'La toalla',fr:'La serviette',em:'🛁'},
     {es:'El jabón',fr:'Le savon',em:'🧼'},
-    {es:'La almohada',fr:'L\'oreiller',em:'🛏️'},
+    {es:'La almohada',fr:'L\'oreiller',em:''},
    ],
    quiz10:[
     {q:'¿Cómo se dice "Les clés" en español?',opts:['El bolígrafo','Las tijeras','Las llaves','El cargador'],ans:2},
@@ -455,6 +455,38 @@ var LEVEL1_THEMES=[
     {q:'¿Qué significa "El aseo" en España?',opts:['La salle de bain','Le garage','Les toilettes','La salle à manger'],ans:2},
     {q:'¿Cómo se dice "L\'appartement" en España?',opts:['La casa','La entrada','El piso / El apartamento','La habitación'],ans:2}
    ]},
+   {id:'muebles_equipamiento', level:1, emoji:'🪑', name:'Muebles y Equipamiento', sub:'Sofá, electrodomésticos, baño… / Meubles et équipements',
+ words:[
+    // Salon
+    {es:'El sofá',fr:'Le canapé',em:'🛋️'},
+    {es:'El sillón',fr:'Le fauteuil',em:'💺'},
+    {es:'La mesa',fr:'La table',em:''},
+    {es:'La silla',fr:'La chaise',em:'🪑'},
+    {es:'La lámpara',fr:'La lampe',em:'💡'},
+    {es:'La estantería',fr:'L\'étagère',em:''},
+    // Chambre
+    {es:'La cama',fr:'Le lit',em:'🛏️'},
+    {es:'El armario',fr:'L\'armoire',em:'🗄️'},
+    {es:'El escritorio',fr:'Le bureau',em:'🖊️'},
+    // Cuisine
+    {es:'El frigorífico / La nevera',fr:'Le réfrigérateur',em:'🧊'},
+    {es:'El horno',fr:'Le four',em:'🔥'},
+    {es:'El microondas',fr:'Le micro-ondes',em:'🔲♨️'},
+    {es:'El fregadero',fr:'L\'évier',em:'🚰'},
+    // Salle de bain
+    {es:'El lavabo',fr:'Le lavabo',em:'🚰'},
+    {es:'La bañera',fr:'La baignoire',em:'🛁'},
+    {es:'La ducha',fr:'La douche',em:'🚿'},
+  ],
+  quiz10:[
+    {q:'¿Cómo se dice "Le canapé" en español?',opts:['El sillón','La silla','El sofá','La cama'],ans:2},
+    {q:'¿Qué significa "El armario"?',opts:['Le bureau','L\'étagère','Le fauteuil','L\'armoire'],ans:3},
+    {q:'¿Cómo se dice "Le réfrigérateur" en español de España?',opts:['El horno','El microondas','El frigorífico / La nevera','El fregadero'],ans:2},
+    {q:'¿Cómo se dice "Le four" en español?',opts:['El microondas','El horno','El fregadero','El lavabo'],ans:1},
+    {q:'¿Qué significa "La estantería"?',opts:['La lampe','Le fauteuil','La chaise','L\'étagère'],ans:3},
+    {q:'¿Cómo se dice "La baignoire" en español?',opts:['El lavabo','El fregadero','La bañera','La ducha'],ans:2},
+    {q:'¿Qué significa "El escritorio"?',opts:['L\'armoire','Le lit','Le bureau','La table'],ans:2},
+  ]},   
    {id:'emot',level:1,emoji:'😄',name:'Las Emociones',sub:'Alegre, cansado… / Les émotions',
    words:[
     {es:'Contento / Contenta',fr:'Content / Contente',em:'😊'},
@@ -648,7 +680,46 @@ var LEVEL1_THEMES=[
     {q:'¿Cómo se dice "Le thermomètre" en español?',opts:['La presión','El termómetro','La fiebre','La inyección'],ans:1},
     {q:'¿Cómo se dice "Un rendez-vous médical" en español?',opts:['Una visita','Una cita médica','Una receta','Una consulta'],ans:1}
    ]},
-  {id:'veth',level:1,emoji:'👗',name:'La Ropa',sub:'Camiseta, pantalón… / Les vêtements',
+  {id:'ocio', level:1, emoji:'⛰️', name:'El Ocio', sub:'Deporte, senderismo, lectura… / Les loisirs',
+  words:[
+    // Loisirs culturels
+    {es:'La lectura',fr:'La lecture',em:'📚'},
+    {es:'El libro',fr:'Le livre',em:'📖'},
+    {es:'La música',fr:'La musique',em:'🎵'},
+    {es:'El cine',fr:'Le cinéma',em:'🎬'},
+    {es:'El teatro',fr:'Le théâtre',em:'🎭'},
+    // Sport général
+    {es:'El deporte',fr:'Le sport',em:''},
+    {es:'El fútbol',fr:'Le football',em:'⚽'},
+    {es:'La natación',fr:'La natation',em:'🏊'},
+    {es:'El ciclismo',fr:'Le cyclisme',em:'🚴'},
+    {es:'El atletismo',fr:'L\'athlétisme',em:'🏃'},
+    // Plein air
+    {es:'El senderismo',fr:'La randonnée',em:'🥾'},
+    {es:'La marcha nórdica',fr:'La marche nordique',em:''},
+    {es:'El paseo',fr:'La promenade',em:'🌳'},
+    // Verbes utiles
+    {es:'Jugar',fr:'Jouer',em:'🎮'},
+    {es:'Practicar',fr:'Pratiquer',em:'💪'},
+    {es:'Descansar',fr:'Se reposer',em:'😴'},
+    {es:'Disfrutar',fr:'Profiter / Apprécier',em:'😊'},
+  ],
+  quiz10:[
+    {q:'¿Cómo se dice "La randonnée" en español?',opts:['El paseo','La marcha nórdica','El atletismo','El senderismo'],ans:3},
+    {q:'¿Qué significa "La natación"?',opts:['Le cyclisme','L\'athlétisme','La natation','Le football'],ans:2},
+    {q:'¿Cómo se dice "Le livre" en español?',opts:['La lectura','La música','El libro','El cine'],ans:2},
+    {q:'¿Qué significa "El atletismo"?',opts:['Le football','Le cyclisme','La natation','L\'athlétisme'],ans:3},
+    {q:'¿Cómo se dice "La marche nordique" en español?',opts:['El paseo','El senderismo','El atletismo','La marcha nórdica'],ans:3},
+    {q:'¿Qué significa "Descansar"?',opts:['Jouer','Pratiquer','Apprécier','Se reposer'],ans:3},
+    {q:'¿Cómo se dice "Le cinéma" en español?',opts:['El teatro','La música','La lectura','El cine'],ans:3},
+    {q:'¿Qué significa "El ciclismo"?',opts:['La natation','L\'athlétisme','Le cyclisme','Le football'],ans:2},
+    {q:'¿Cómo se dice "Jouer" en español?',opts:['Practicar','Disfrutar','Descansar','Jugar'],ans:3},
+    {q:'¿Qué significa "El paseo"?',opts:['La randonnée','La montagne','La campagne','La promenade'],ans:3},
+    {q:'¿Cómo se dice "Pratiquer" en español?',opts:['Jugar','Disfrutar','Practicar','Descansar'],ans:2},
+    {q:'¿Qué significa "Disfrutar"?',opts:['Se reposer','Jouer','Pratiquer','Profiter / Apprécier'],ans:3},
+  ]
+},  
+   {id:'veth',level:1,emoji:'👗',name:'La Ropa',sub:'Camiseta, pantalón… / Les vêtements',
    words:[
     // Niveau 1 — Vêtements du quotidien, très fréquents
     {es:'La camiseta',fr:'Le t-shirt',em:'👕'},
