@@ -38,7 +38,7 @@ var LEVEL1_THEMES=[
    words:[
     {es:'Buenos días / Buen día',fr:'Bonjour (le matin)',em:'🌅'},{es:'Buenas tardes',fr:'Bon après-midi',em:'🌆'},
     {es:'Buenas noches',fr:'Bonsoir / Bonne nuit',em:'🌙'},{es:'¡Hola!',fr:'Salut !',em:'👋'},
-    {es:'Adiós / hasta luego',fr:'Au revoir / À bientôt',em:'👋'},{es:'Hasta pronto',fr:'À bientôt',em:'⏱️'},
+    {es:'Adiós / Hasta luego',fr:'Au revoir / À bientôt',em:'👋'},{es:'Hasta pronto',fr:'À bientôt',em:'⏱️'},
     {es:'Gracias / Muchas gracias',fr:'Merci / Merci beaucoup',em:'🙏'},
     {es:'Por favor / De nada',fr:'S\'il vous plaît / De rien',em:'🤝'},
     {es:'Perdona / Perdone',fr:'Pardon / Excusez-moi',em:'🙇'},
@@ -438,22 +438,22 @@ var LEVEL1_THEMES=[
    words:[
         // Types de logement
     {es:'La casa',fr:'La maison',em:'🏠'},
-    {es:'El piso / el apartamento',fr:'L\'appartement',em:'🏢'},
+    {es:'El piso / El apartamento',fr:'L\'appartement',em:'🏢'},
     // Pièces principales
-    {es:'La entrada / el recibidor',fr:'L\'entrée',em:'🚪'},
-    {es:'El salón / el comedor',fr:'Le salon / la salle à manger',em:'🛋️'},
+    {es:'La entrada / El recibidor',fr:'L\'entrée',em:'🚪'},
+    {es:'El salón / El comedor',fr:'Le salon / la salle à manger',em:'🛋️'},
     {es:'La cocina',fr:'La cuisine',em:'🍳'},
-    {es:'La habitación / el cuarto',fr:'La chambre',em:'🛏️'},
-    {es:'El cuarto de baño / el baño',fr:'La salle de bain',em:'🚿'},
-    {es:'El aseo / el váter',fr:'Les toilettes',em:'🚽'},
+    {es:'La habitación / El cuarto',fr:'La chambre',em:'🛏️'},
+    {es:'El cuarto de baño / El baño',fr:'La salle de bain',em:'🚿'},
+    {es:'El aseo / El váter',fr:'Les toilettes',em:'🚽'},
     {es:'El garaje',fr:'Le garage',em:'🚗'},
    ],
    quiz10:[
     {q:'¿Cómo se dice "Le salon" en español de España?',opts:['La cocina','La habitación','El salón','El garaje'],ans:2},
     {q:'¿Qué significa "La cocina"?',opts:['La salle à manger','La cuisine','La salle de bain','Le salon'],ans:1},
-    {q:'¿Cómo se dice "La chambre" en español?',opts:['El salón','La habitación / el cuarto','La entrada','El garaje'],ans:1},
-    {q:'¿Qué significa "El aseo / el váter" en España?',opts:['La salle de bain','Le garage','Les toilettes','La salle à manger'],ans:2},
-    {q:'¿Cómo se dice "L\'appartement" en España?',opts:['La casa','La entrada','El piso / el apartamento','La habitación'],ans:2}
+    {q:'¿Cómo se dice "La chambre" en español?',opts:['El salón','La habitación / El cuarto','La entrada','El garaje'],ans:1},
+    {q:'¿Qué significa "El aseo" en España?',opts:['La salle de bain','Le garage','Les toilettes','La salle à manger'],ans:2},
+    {q:'¿Cómo se dice "L\'appartement" en España?',opts:['La casa','La entrada','El piso / El apartamento','La habitación'],ans:2}
    ]},
    {id:'emot',level:1,emoji:'😄',name:'Las Emociones',sub:'Alegre, cansado… / Les émotions',
    words:[
@@ -654,7 +654,7 @@ var LEVEL1_THEMES=[
     {es:'La camiseta',fr:'Le t-shirt',em:'👕'},
     {es:'La camisa',fr:'La chemise',em:'👔'},
     {es:'El pantalón',fr:'Le pantalon',em:'👖'},
-    {es:'Los zapatos / las zapatillas',fr:'Les chaussures / Les baskets',em:'👟'},
+    {es:'Los zapatos / Las zapatillas',fr:'Les chaussures / Les baskets',em:'👟'},
     {es:'Los calcetines',fr:'Les chaussettes',em:'🧦'},
     // Niveau 2 — Vêtements courants, un peu plus spécifiques
     {es:'El vestido / La falda',fr:'La robe / La jupe',em:'👗'},
@@ -673,7 +673,7 @@ var LEVEL1_THEMES=[
    quiz10:[
     {q:'¿Cómo se dice "Le t-shirt" en español?',opts:['El jersey','La camisa','La camiseta','La chaqueta'],ans:2},
     {q:'¿Qué significa "El pantalón vaquero o tejano"?',opts:['Le short','Le jean','La jupe','Le survêtement'],ans:1},
-    {q:'¿Cómo se dice "Les chaussures" en español?',opts:['Los calcetines','LAs zapatillas','Los zapatos','El sombrero'],ans:2},
+    {q:'¿Cómo se dice "Les chaussures" en español?',opts:['Los calcetines','Las zapatillas','Los zapatos','El sombrero'],ans:2},
     {q:'¿Cómo se dice "Le pull" en España?',opts:['La bufanda','La chaqueta','El jersey','El abrigo'],ans:2},
     {q:'¿Cómo se dice "Le maillot de bain" en España?',opts:['El bañador','El gorro','El short','Los calcetines'],ans:0},
     {q:'¿Qué significa "La bufanda"?',opts:['Les gants','Le manteau','L\'écharpe','Le bonnet'],ans:2},
