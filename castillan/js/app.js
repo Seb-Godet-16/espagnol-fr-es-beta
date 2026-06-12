@@ -4,12 +4,26 @@
    © 2026 Sébastien Godet
 ======================================== */
 
-function speak(txt){
-  if(!window.speechSynthesis)return;
+function speak(txt) {
+  if (!window.speechSynthesis) return;
   speechSynthesis.cancel();
-  var u=new SpeechSynthesisUtterance(txt);
-  u.lang='es-ES';u.rate=0.85;
-  speechSynthesis.speak(u);
+
+  var parts = (txt || '').split('/').map(function(p) { return p.trim(); }).filter(Boolean);
+
+  function speakPart(i) {
+    if (i >= parts.length) return;
+    var u = new SpeechSynthesisUtterance(parts[i]);
+    u.lang = 'es-ES';
+    u.rate = 0.85;
+    u.onend = function() {
+      if (i + 1 < parts.length) {
+        setTimeout(function() { speakPart(i + 1); }, 2000);
+      }
+    };
+    speechSynthesis.speak(u);
+  }
+
+  speakPart(0);
 }
 
 function getQuizTotal(theme){
