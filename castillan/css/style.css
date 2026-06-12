@@ -132,3 +132,4 @@ footer a:hover{text-decoration:underline}
 #home footer{position:absolute;bottom:0;left:0;right:0;background:transparent;border:none;color:#ffffff99;padding:14px 12px;}
 #home footer a{color:#ffffffbb;font-weight:600}
 #home footer a:hover{text-decoration:underline}
+.fr-hint{font-size:.7em;opacity:.7}
