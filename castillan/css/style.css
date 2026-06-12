@@ -133,5 +133,5 @@ footer a:hover{text-decoration:underline}
 #home footer a{color:#ffffffbb;font-weight:600}
 #home footer a:hover{text-decoration:underline}
 .fr-hint{font-size:.65rem;color:#ffffff99;font-weight:400}
-.sections-header .back-btn{font-size:1rem;font-weight:800;color:#fff;}
+.sections-header .back-btn{font-size:1rem!important;font-weight:800;color:#fff;}
 .sections-header h2{font-size:1rem;font-weight:800;margin-bottom:10px}
