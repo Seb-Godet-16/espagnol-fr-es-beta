@@ -3,7 +3,7 @@
    Styles – extraits et séparés du HTML
    © 2026 Sébastien Godet
 ======================================== */
-
+ 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4ff;min-height:100vh;font-size:16px}
 .screen{display:none;min-height:100vh;flex-direction:column}
@@ -128,3 +128,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4ff;min-height:1
 footer{text-align:center;padding:16px 12px 20px;font-size:.72rem;color:#888;background:#e8ecf8;border-top:1px solid #d0d8ee;line-height:1.7;}
 footer a{color:#AA151B;text-decoration:none;font-weight:600}
 footer a:hover{text-decoration:underline}
+#home footer{background:transparent;border:none;color:#ffffff99;margin-top:auto;padding-top:24px;}
+#home footer a{color:#ffffffbb;font-weight:600}
+#home footer a:hover{text-decoration:underline}
