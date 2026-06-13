@@ -67,7 +67,7 @@ function renderSections(){
   ['grid1','grid2'].forEach(function(gid){
     var lv=gid==='grid1'?1:2;
     document.getElementById(gid).innerHTML=ALL_THEMES.filter(function(t){return t.level===lv;}).map(function(t){
-      return '<div class="theme-card"+(isDone(t.id)?' done':'\')+\' onclick="openTheme(\'\\\''+t.id+'\\\'\')">\''
+      return '<div class="theme-card'+(isDone(t.id)?' done':'')+'" onclick="openTheme(\''+t.id+'\')">'
         +'<div class="t-emoji">'+t.emoji+'</div>'
         +'<div class="t-name">'+t.name+'</div>'
         +'<div class="t-sub">'+t.sub+'</div>'
