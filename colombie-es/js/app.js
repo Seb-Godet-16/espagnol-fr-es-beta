@@ -1,19 +1,31 @@
 /* ========================================
-   Français → Español Argentin 🇦🇷 – Logique applicative
+   Español Colombiano → Français 🇨🇴 – Logique applicative
    Fonctions UI, état, navigation
-   © 2026 Sébastien Godet
+   © Juin 2026 Sébastien Godet
 ======================================== */
 
-// ══ SPEECH ══
-function speak(txt){
-  if(!window.speechSynthesis)return;
+function speak(txt) {
+  if (!window.speechSynthesis) return;
   speechSynthesis.cancel();
-  var u=new SpeechSynthesisUtterance(txt);
-  u.lang='fr-FR';u.rate=0.85;
-  speechSynthesis.speak(u);
+
+  var parts = (txt || '').split('/').map(function(p) { return p.trim(); }).filter(Boolean);
+
+  function speakPart(i) {
+    if (i >= parts.length) return;
+    var u = new SpeechSynthesisUtterance(parts[i]);
+    u.lang = 'es-CO';
+    u.rate = 0.85;
+    u.onend = function() {
+      if (i + 1 < parts.length) {
+        setTimeout(function() { speakPart(i + 1); }, 2000);
+      }
+    };
+    speechSynthesis.speak(u);
+  }
+
+  speakPart(0);
 }
 
-// ══ QUIZ LENGTH LOGIC ══
 function getQuizTotal(theme){
   var n=(theme.words||[]).length;
   if(n<10)return 5;
@@ -26,18 +38,14 @@ function getQuizQuestions(theme){
   return qs.slice(0,total);
 }
 
-// ══ LEVEL 1 THEMES ══
-
-// ══ PERSISTENCE ══
 var done=[];
-function loadDone(){try{done=JSON.parse(localStorage.getItem('pf_done_ar_v1')||'[]');}catch(e){done=[];}}
-function saveDone(){try{localStorage.setItem('pf_done_ar_v1',JSON.stringify(done));}catch(e){}}
+function loadDone(){try{done=JSON.parse(localStorage.getItem('pe_es_done_co')||'[]');}catch(e){done=[];}}
+function saveDone(){try{localStorage.setItem('pe_es_done_co',JSON.stringify(done));}catch(e){}}
 function markDone(id){if(!done.includes(id)){done.push(id);saveDone();}}
 function resetTheme(id){done=done.filter(function(d){return d!==id;});saveDone();renderSections();renderHome();}
 function isDone(id){return done.includes(id);}
 loadDone();
 
-// ══ SCREENS ══
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
   document.getElementById(id).classList.add('active');
@@ -55,7 +63,7 @@ function renderHome(){
 function renderSections(){
   var total=ALL_THEMES.length,n=done.length,pct=Math.round(n/total*100);
   document.getElementById('globalProgress').style.width=pct+'%';
-  document.getElementById('progressLabel').textContent=n+' / '+total+' modules — '+pct+'%';
+  document.getElementById('progressLabel').textContent=n+' / '+total+' módulos — '+pct+'%';
   ['grid1','grid2'].forEach(function(gid){
     var lv=gid==='grid1'?1:2;
     document.getElementById(gid).innerHTML=ALL_THEMES.filter(function(t){return t.level===lv;}).map(function(t){
@@ -64,13 +72,12 @@ function renderSections(){
         +'<div class="t-name">'+t.name+'</div>'
         +'<div class="t-sub">'+t.sub+'</div>'
         +'<div class="t-stars">'+(isDone(t.id)?'⭐⭐⭐':'☆☆☆')+'</div>'
-        +(isDone(t.id)?'<button onclick="event.stopPropagation();resetTheme(\''+t.id+'\')" style="margin-top:6px;font-size:.65rem;background:#fff;border:1.5px solid #ED2939;color:#ED2939;border-radius:50px;padding:4px 10px;cursor:pointer;font-weight:700">🔄 Reiniciar</button>':'')
+        +(isDone(t.id)?'<button onclick="event.stopPropagation();resetTheme(\''+t.id+'\')" style="margin-top:6px;font-size:.65rem;background:#fff;border:1.5px solid #CE1126;color:#CE1126;border-radius:50px;padding:4px 10px;cursor:pointer;font-weight:700">🔄 Reiniciar</button>':'')
         +'</div>';
     }).join('');
   });
 }
 
-// ══ LESSON STATE ══
 var CT=null;
 var fcIdx=0;
 var dqStep=0,dqScore=0,dqAnswered=false;
@@ -86,11 +93,11 @@ function openTheme(id){
   showScreen('lesson');
   var tabs;
   if(CT.type==='dialog'){
-    tabs=[{k:'dialog',lbl:'💬 Dialogue'},{k:'vocab',lbl:'📚 Vocab'},{k:'dquiz',lbl:'❓ Quiz'}];
+    tabs=[{k:'dialog',lbl:'💬 Diálogo'},{k:'vocab',lbl:'📚 Vocab'},{k:'dquiz',lbl:'❓ Quiz'}];
   } else if(CT.type==='alpha'){
-    tabs=[{k:'flash',lbl:'🔤 Lettres'},{k:'quiz10',lbl:'🔊 Quiz Audio'}];
+    tabs=[{k:'flash',lbl:'🔤 Letras'},{k:'quiz10',lbl:'🔊 Quiz audio'}];
   } else {
-    tabs=[{k:'flash',lbl:'🃏 Cartes'},{k:'quiz10',lbl:'❓ Quiz'}];
+    tabs=[{k:'flash',lbl:'🃏 Tarjetas'},{k:'quiz10',lbl:'❓ Quiz'}];
   }
   document.getElementById('lessonTabs').innerHTML=tabs.map(function(t,i){
     return '<button class="tab'+(i===0?' active':'')+'" data-tab="'+t.k+'" onclick="switchTab(\''+t.k+'\')">'+t.lbl+'</button>';
@@ -111,43 +118,55 @@ function renderFlash(){
   var w=CT.words,card=w[fcIdx];
   if(CT.type==='alpha'){
     document.getElementById('tabContent').innerHTML=
-      '<div class="section-label">¡Tocá una letra y escuchala!</div>'
+      '<div class="section-label">¡Toca una letra y escúchala!</div>'
       +'<div class="alpha-grid">'+w.map(function(c,i){
         return '<div class="alpha-card" onclick="pickAlpha('+i+')">'
-          +'<div class="alpha-letter">'+c.fr+'</div>'
-          +'<div class="alpha-name">'+c.es+'</div></div>';
+          +'<div class="alpha-letter">'+c.es+'</div>'
+          +'<div class="alpha-name">'+c.fr+'</div></div>';
       }).join('')+'</div>'
       +'<div id="alphaDetail" class="alpha-detail">'+buildAlphaDetail(card)+'</div>';
     return;
   }
   var emFr=card.em?'<div class="fc-front-emoji">'+card.em+'</div>':'';
   var emBk=card.em?'<div class="fc-back-emoji">'+card.em+'</div>':'';
+  var hasConj=card.conj&&card.conj.es&&card.conj.fr;
+  var frontContent, backContent;
+  if(hasConj){
+    frontContent=emFr
+      +'<div class="fc-front-word">'+card.es+'</div>'
+      +'<div class="fc-conj">'+card.conj.es.map(function(l){return '<div class="fc-conj-line">'+l+'</div>';}).join('')+'</div>';
+    backContent=emBk
+      +'<div class="fc-back-word">'+card.fr+'</div>'
+      +'<div class="fc-conj">'+card.conj.fr.map(function(l){return '<div class="fc-conj-line">'+l+'</div>';}).join('')+'</div>';
+  } else {
+    frontContent=emFr+'<div class="fc-front-word">'+card.es+'</div><div class="fc-front-hint">👆 Toca para ver la traducción</div>';
+    backContent=emBk+'<div class="fc-back-word">'+card.fr+'</div>';
+  }
   document.getElementById('tabContent').innerHTML=
-    '<div class="section-label">Recto : français — Verso : español · ¡Tocá para voltear!</div>'
+    '<div class="section-label">Recto: español 🇨🇴 — Verso: français 🇫🇷 · ¡Toca para voltear!</div>'
     +'<div class="fc-wrap">'
-    +  '<div class="fc" id="fc" onclick="flipCard()">'
-    +    '<div class="fc-front">'+emFr+'<div class="fc-front-word">'+card.fr+'</div><div class="fc-front-hint">👆 Tocá para ver la traducción</div></div>'
-    +    '<div class="fc-back">'+emBk+'<div class="fc-back-word">'+card.es+'</div><div class="fc-back-hint">🇦🇷 Traducción</div></div>'
-    +  '</div>'
-    +'</div>'
+    +'<div class="fc" id="fc" onclick="flipCard()">'
+    +'<div class="fc-front">'+frontContent+'</div>'
+    +'<div class="fc-back">'+backContent+'</div>'
+    +'</div></div>'
     +'<div class="fc-nav">'
-    +  '<button onclick="prevCard()">← Anterior</button>'
-    +  '<span class="fc-counter">'+(fcIdx+1)+' / '+w.length+'</span>'
-    +  '<button onclick="nextCard()">Siguiente →</button>'
+    +'<button onclick="prevCard()">← Anterior</button>'
+    +'<span class="fc-counter">'+(fcIdx+1)+' / '+w.length+'</span>'
+    +'<button onclick="nextCard()">Siguiente →</button>'
     +'</div>'
-    +'<button class="audio-btn-big" onclick="speak(\''+esc(card.fr)+'\')">🔊 Escuchar en francés</button>';
+    +'<button class="audio-btn-big" onclick="speak(\''+esc(card.es)+'\')">🔊 Escuchar en español</button>';
 }
 
 function buildAlphaDetail(c){
-  return '<div style="font-size:2.5rem;font-weight:900;color:#002395">'+c.fr+'</div>'
-    +'<div style="color:#555;margin:4px 0;font-size:.85rem">'+c.es+'</div>'
-    +'<button onclick="speak(\''+esc(c.fr)+'\')" style="margin-top:10px;background:#ED2939;color:#fff;border:none;border-radius:50px;padding:9px 18px;cursor:pointer;font-weight:700;min-height:44px">🔊 Écouter</button>';
+  return '<div style="font-size:2.5rem;font-weight:900;color:#CE1126">'+c.es+'</div>'
+    +'<div style="color:#555;margin:4px 0;font-size:.85rem">'+c.fr+'</div>'
+    +'<button onclick="speak(\''+esc(c.es)+'\')" style="margin-top:10px;background:#CE1126;color:#fff;border:none;border-radius:50px;padding:9px 18px;cursor:pointer;font-weight:700;min-height:44px">🔊 Escuchar</button>';
 }
 
 function pickAlpha(i){
   fcIdx=i;
   var card=CT.words[i];
-  speak(card.fr);
+  speak(card.es);
   var d=document.getElementById('alphaDetail');
   if(d)d.innerHTML=buildAlphaDetail(card);
 }
@@ -156,17 +175,18 @@ function flipCard(){
   var fc=document.getElementById('fc');
   if(!fc)return;
   fc.classList.toggle('flipped');
-  speak(CT.words[fcIdx].fr);
+  speak(CT.words[fcIdx].es);
 }
 
 function nextCard(){
   fcIdx=(fcIdx+1)%CT.words.length;
   renderFlash();
-  setTimeout(function(){speak(CT.words[fcIdx].fr);},300);
+  setTimeout(function(){speak(CT.words[fcIdx].es);},300);
 }
 function prevCard(){
   fcIdx=(fcIdx-1+CT.words.length)%CT.words.length;
   renderFlash();
+  setTimeout(function(){speak(CT.words[fcIdx].es);},300);
 }
 
 function isAlphaQuiz(){return CT&&CT.type==='alpha';}
@@ -185,7 +205,7 @@ function renderQuiz10(){
       +'<div style="font-size:3rem">'+(pct===100?'🌟':'💪')+'</div>'
       +'<h3>'+(pct===100?'¡Perfecto! ✅':'¡Quiz terminado!')+'</h3>'
       +'<div class="score-num">'+q10Score+'/'+total+'</div>'
-      +'<div style="font-size:1rem;margin:6px 0;color:'+(pct===100?'#4CAF50':'#ED2939')+'">'
+      +'<div style="font-size:1rem;margin:6px 0;color:'+(pct===100?'#4CAF50':'#CE1126')+'">'
       +(pct===100?'¡Módulo desbloqueado! ⭐':'Necesitas 100% para validar. ¡Inténtalo de nuevo!')+' </div>'
       +'<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px">'
       +'<button class="retry-btn" style="background:#888" onclick="q10Step=0;q10Score=0;q10Answered=false;renderQuiz10()">🔄 Intentar de nuevo</button>'
@@ -200,9 +220,9 @@ function renderQuiz10(){
     }).join('');
     document.getElementById('tabContent').innerHTML=
       '<div class="alpha-audio-quiz">'
-      +'<div class="alpha-audio-label">Escuchá y elegí la letra<br><small>Pregunta '+(q10Step+1)+'/'+total+'</small></div>'
+      +'<div class="alpha-audio-label">Escucha y elige la letra<br><small>Pregunta '+(q10Step+1)+'/'+total+'</small></div>'
       +'<button class="alpha-audio-btn" id="playAudioBtn" onclick="playAlphaAudio(\''+esc(q.audio)+'\')" title="Escuchar">🔊</button>'
-      +'<div style="font-size:.75rem;color:#aaa;margin-bottom:14px">Presioná para escuchar</div>'
+      +'<div style="font-size:.75rem;color:#aaa;margin-bottom:14px">Presiona para escuchar</div>'
       +'<div class="quiz-options" style="grid-template-columns:1fr 1fr;gap:12px">'+opts+'</div>'
       +'<div class="quiz-feedback" id="q10fb"></div>'
       +'</div>';
@@ -242,14 +262,14 @@ function checkQ10(chosen,correct){
   if(chosen===correct)q10Score++;
   var correctWord=qs[q10Step].opts[correct];
   var fb=document.getElementById('q10fb');
-  fb.textContent=chosen===correct?'✅ ¡Correcto! ¡Qué copado!':'❌ Respuesta correcta: '+correctWord;
-  fb.style.color=chosen===correct?'#4CAF50':'#ED2939';
+  fb.textContent=chosen===correct?'✅ ¡Correcto! ¡Qué chévere!':'❌ Respuesta correcta: '+correctWord;
+  fb.style.color=chosen===correct?'#4CAF50':'#CE1126';
   if(isAlphaQuiz()){
     if(chosen!==correct)setTimeout(function(){speak(qs[q10Step].audio);},300);
   } else {
     if(CT.words){
-      var match=CT.words.find(function(w){return w.fr===correctWord||w.es===correctWord;});
-      if(match)speak(match.fr);
+      var match=CT.words.find(function(w){return w.es===correctWord||w.fr===correctWord;});
+      if(match)speak(match.es);
     }
   }
   setTimeout(function(){q10Step++;renderQuiz10();},1600);
@@ -265,10 +285,10 @@ function renderDialog(){
     return '<div class="bubble '+ln.side+'" style="opacity:0;transition:opacity .3s '+(i*.08)+'s" id="bl'+i+'">'
       +'<div class="speaker-name">'+ln.s+'</div>'
       +'<div class="msg-row">'
-      +'<div class="msg">'+ln.fr+'</div>'
-      +'<button class="speak-bubble-btn" onclick="speak(\''+esc(ln.fr)+'\')" title="Écouter">🔊</button>'
+      +'<div class="msg">'+ln.es+'</div>'
+      +'<button class="speak-bubble-btn" onclick="speak(\''+esc(ln.es)+'\')" title="Escuchar">🔊</button>'
       +'</div>'
-      +'<div class="bubble-translation">'+ln.tr+'</div>'
+      +'<div class="bubble-translation">'+ln.fr+'</div>'
       +'</div>';
   }).join('');
   document.getElementById('tabContent').innerHTML=
@@ -287,16 +307,16 @@ function pickSit(i){sitIdx=i;renderDialog();}
 function renderVocab(){
   var chips=CT.vocab.map(function(v){
     var parts=v.split('=');
-    var fr=parts[0].trim();
-    var es=parts[1]?parts[1].trim():'';
-    return '<span class="vocab-chip" onclick="speak(\''+esc(fr)+'\')">'
-      +'<span class="vocab-item-fr">'+fr+'</span>'
-      +(es?'<span class="vocab-item-es">= '+es+'</span>':'')
+    var es=parts[0].trim();
+    var fr=parts[1]?parts[1].trim():'';
+    return '<span class="vocab-chip" onclick="speak(\''+esc(es)+'\')">'
+      +'<span class="vocab-item-es">'+es+'</span>'
+      +(fr?'<span class="vocab-item-fr">= '+fr+'</span>':'')
       +'</span>';
   }).join('');
   document.getElementById('tabContent').innerHTML=
     '<div class="vocab-section">'
-    +'<div class="vocab-title">📚 Vocabulaire clé — ¡Tocá para escuchar!</div>'
+    +'<div class="vocab-title">📚 Vocabulario clave — ¡Toca para escuchar!</div>'
     +'<div class="vocab-grid">'+chips+'</div>'
     +'</div>'
     +'<div class="action-row">'
@@ -314,7 +334,7 @@ function renderDialogQuiz(){
       +'<div style="font-size:3rem">'+(pct===100?'🎉':'💪')+'</div>'
       +'<h3>'+(pct===100?'¡Perfecto! ✅':'¡Sigue practicando!')+'</h3>'
       +'<div class="score-num">'+dqScore+'/'+total+'</div>'
-      +'<div style="font-size:.9rem;margin-top:6px;color:'+(pct===100?'#4CAF50':'#ED2939')+'">'
+      +'<div style="font-size:.9rem;margin-top:6px;color:'+(pct===100?'#4CAF50':'#CE1126')+'">'
       +(pct===100?'¡Módulo desbloqueado! ⭐':'Necesitas 100% para validar. ¡Inténtalo de nuevo!')+' </div>'
       +'<div style="display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap">'
       +'<button class="retry-btn" style="background:#888" onclick="dqStep=0;dqScore=0;dqAnswered=false;renderDialogQuiz()">🔄 Intentar de nuevo</button>'
@@ -347,8 +367,8 @@ function checkDQ(chosen,correct){
   });
   if(chosen===correct)dqScore++;
   var fb=document.getElementById('dqfb');
-  fb.textContent=chosen===correct?'✅ ¡Correcto! ¡Qué copado!':'❌ Intentalo de nuevo.';
-  fb.style.color=chosen===correct?'#4CAF50':'#ED2939';
+  fb.textContent=chosen===correct?'✅ ¡Correcto! ¡Qué chévere!':'❌ ¡Inténtalo de nuevo!';
+  fb.style.color=chosen===correct?'#4CAF50':'#CE1126';
   setTimeout(function(){dqStep++;renderDialogQuiz();},1500);
 }
 
