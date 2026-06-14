@@ -1,5 +1,5 @@
 /* ========================================
-   Français pour Argentins 🇦🇷 → 🇫🇷 – Logique applicative
+   Français → Español Argentino 🇫🇷 – Logique applicative
    Fonctions UI, état, navigation
    © Juin 2026 Sébastien Godet
 ======================================== */
@@ -39,8 +39,9 @@ function getQuizQuestions(theme){
 }
 
 var done=[];
-function loadDone(){try{done=JSON.parse(localStorage.getItem('fr_ar_done_v1')||'[]');}catch(e){done=[];}};
-function saveDone(){try{localStorage.setItem('fr_ar_done_v1',JSON.stringify(done));}catch(e){}}
+function loadDone(){try{done=JSON.parse(localStorage.getItem('fr_ar_ done_v1')||'[]');}catch(e){done=[];}
+}
+function saveDone(){try{localStorage.setItem('fr_ar_ done_v1',JSON.stringify(done));}catch(e){}}
 function markDone(id){if(!done.includes(id)){done.push(id);saveDone();}}
 function resetTheme(id){done=done.filter(function(d){return d!==id;});saveDone();renderSections();renderHome();}
 function isDone(id){return done.includes(id);}
@@ -55,7 +56,7 @@ function showScreen(id){
 function renderHome(){
   var total=ALL_THEMES.length,n=done.length,pct=Math.round(n/total*100);
   document.getElementById('homeBar').style.width=pct+'%';
-  document.getElementById('homeBarLabel').textContent=n+' / '+total+' modules terminés — '+pct+'%';
+  document.getElementById('homeBarLabel').textContent=n+' / '+total+' modules complétés — '+pct+'%';
   document.getElementById('homeStars').innerHTML=Array.from({length:total},function(_,i){
     return '<span class="star">'+(i<n?'⭐':'☆')+'</span>';
   }).join('');
@@ -67,12 +68,12 @@ function renderSections(){
   ['grid1','grid2'].forEach(function(gid){
     var lv=gid==='grid1'?1:2;
     document.getElementById(gid).innerHTML=ALL_THEMES.filter(function(t){return t.level===lv;}).map(function(t){
-      return '<div class="theme-card'+(isDone(t.id)?' done':'')+'" onclick="openTheme(\''+t.id+'\')">'
+      return '<div class="theme-card'+(isDone(t.id)?' done':'')+'\" onclick="openTheme(\''+t.id+'\')">'
         +'<div class="t-emoji">'+t.emoji+'</div>'
         +'<div class="t-name">'+t.name+'</div>'
         +'<div class="t-sub">'+t.sub+'</div>'
         +'<div class="t-stars">'+(isDone(t.id)?'⭐⭐⭐':'☆☆☆')+'</div>'
-        +(isDone(t.id)?'<button onclick="event.stopPropagation();resetTheme(\'\\\''+t.id+'\\\'\''+')" style="margin-top:6px;font-size:.65rem;background:#fff;border:1.5px solid #3A5FCD;color:#3A5FCD;border-radius:50px;padding:4px 10px;cursor:pointer;font-weight:700">🔄 Recommencer</button>':'')
+        +(isDone(t.id)?'<button onclick="event.stopPropagation();resetTheme(\''+t.id+'\')" style="margin-top:6px;font-size:.65rem;background:#fff;border:1.5px solid #ED2939;color:#ED2939;border-radius:50px;padding:4px 10px;cursor:pointer;font-weight:700">🔄 Réinitialiser</button>':'')
         +'</div>';
     }).join('');
   });
@@ -93,14 +94,14 @@ function openTheme(id){
   showScreen('lesson');
   var tabs;
   if(CT.type==='dialog'){
-    tabs=[{k:'dialog',lbl:'💬 Dialogue'},{k:'vocab',lbl:'📚 Vocab'},{k:'dquiz',lbl:'❓ Quiz'}];
+    tabs=[{k:'dialog',lbl:'💬 Dialogue'},{k:'vocab',lbl:'📚 Vocabulaire'},{k:'dquiz',lbl:'❓ Quiz'}];
   } else if(CT.type==='alpha'){
     tabs=[{k:'flash',lbl:'🔤 Lettres'},{k:'quiz10',lbl:'🔊 Quiz audio'}];
   } else {
     tabs=[{k:'flash',lbl:'🃏 Cartes'},{k:'quiz10',lbl:'❓ Quiz'}];
   }
   document.getElementById('lessonTabs').innerHTML=tabs.map(function(t,i){
-    return '<button class="tab'+(i===0?' active':'')+'" data-tab="'+t.k+'" onclick="switchTab(\''+t.k+'\')">'+t.lbl+'</button>';
+    return '<button class="tab'+(i===0?' active':'')+'\" data-tab="'+t.k+'" onclick="switchTab(\''+t.k+'\')">'+t.lbl+'</button>';
   }).join('');
   switchTab(tabs[0].k);
 }
@@ -118,7 +119,7 @@ function renderFlash(){
   var w=CT.words,card=w[fcIdx];
   if(CT.type==='alpha'){
     document.getElementById('tabContent').innerHTML=
-      '<div class="section-label">Touche une lettre et écoute-la !</div>'
+      '<div class="section-label">Touche une lettre pour l\'écouter !</div>'
       +'<div class="alpha-grid">'+w.map(function(c,i){
         return '<div class="alpha-card" onclick="pickAlpha('+i+')">'
           +'<div class="alpha-letter">'+c.fr+'</div>'
@@ -143,7 +144,7 @@ function renderFlash(){
     backContent=emBk+'<div class="fc-back-word">'+card.es+'</div>';
   }
   document.getElementById('tabContent').innerHTML=
-    '<div class="section-label">Recto : français 🇫🇷 — Verso : español 🇦🇷 · Touche pour retourner !</div>'
+    '<div class="section-label">Recto: français 🇫🇷 — Verso: español 🇦🇷 · ¡Toca para voltear!</div>'
     +'<div class="fc-wrap">'
     +'<div class="fc" id="fc" onclick="flipCard()">'
     +'<div class="fc-front">'+frontContent+'</div>'
@@ -159,9 +160,9 @@ function renderFlash(){
 
 
 function buildAlphaDetail(c){
-  return '<div style="font-size:2.5rem;font-weight:900;color:#3A5FCD">'+c.fr+'</div>'
+  return '<div style="font-size:2.5rem;font-weight:900;color:#0072C6">'+c.fr+'</div>'
     +'<div style="color:#555;margin:4px 0;font-size:.85rem">'+c.es+'</div>'
-    +'<button onclick="speak(\''+esc(c.fr)+'\')" style="margin-top:10px;background:#3A5FCD;color:#fff;border:none;border-radius:50px;padding:9px 18px;cursor:pointer;font-weight:700;min-height:44px">🔊 Écouter</button>';
+    +'<button onclick="speak(\''+esc(c.fr)+'\')" style="margin-top:10px;background:#0072C6;color:#fff;border:none;border-radius:50px;padding:9px 18px;cursor:pointer;font-weight:700;min-height:44px">🔊 Écouter</button>';
 }
 
 function pickAlpha(i){
@@ -195,7 +196,7 @@ function renderQuiz10(){
   var qs=getQuizQuestions(CT);
   var total=qs.length;
   if(!qs||!total){
-    document.getElementById('tabContent').innerHTML='<div class="result-box"><p>Quiz non disponible.</p></div>';
+    document.getElementById('tabContent').innerHTML='<div class="result-box"><p>Quiz indisponible.</p></div>';
     return;
   }
   if(q10Step>=total){
@@ -205,8 +206,8 @@ function renderQuiz10(){
       +'<div style="font-size:3rem">'+(pct===100?'🌟':'💪')+'</div>'
       +'<h3>'+(pct===100?'Parfait ! ✅':'Quiz terminé !')+'</h3>'
       +'<div class="score-num">'+q10Score+'/'+total+'</div>'
-      +'<div style="font-size:1rem;margin:6px 0;color:'+(pct===100?'#4CAF50':'#3A5FCD')+'">'
-      +(pct===100?'Module débloqué ! ⭐':'Il faut 100% pour valider. Réessaie !')+' </div>'
+      +'<div style="font-size:1rem;margin:6px 0;color:'+(pct===100?'#4CAF50':'#ED2939')+'">'
+      +(pct===100?'Module débloqué ! ⭐':'Il faut 100% pour valider. Essaie encore !')+' </div>'
       +'<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px">'
       +'<button class="retry-btn" style="background:#888" onclick="q10Step=0;q10Score=0;q10Answered=false;renderQuiz10()">🔄 Réessayer</button>'
       +(pct===100?'<button class="retry-btn" onclick="renderSections();showScreen(\'sections\')">✓ Terminer</button>':'')
@@ -262,7 +263,7 @@ function checkQ10(chosen,correct){
   if(chosen===correct)q10Score++;
   var correctWord=qs[q10Step].opts[correct];
   var fb=document.getElementById('q10fb');
-  fb.textContent=chosen===correct?'✅ Correct ! Très bien !':'❌ Bonne réponse : '+correctWord;
+  fb.textContent=chosen===correct?'✅ Correct ! Bravo !':'❌ Bonne réponse : '+correctWord;
   fb.style.color=chosen===correct?'#4CAF50':'#c0392b';
   if(isAlphaQuiz()){
     if(chosen!==correct)setTimeout(function(){speak(qs[q10Step].audio);},300);
@@ -278,7 +279,7 @@ function checkQ10(chosen,correct){
 function renderDialog(){
   var sits=CT.situations;
   var sitBtns=sits.map(function(s,i){
-    return '<button class="sit-btn'+(i===sitIdx?' active':'')+'" onclick="pickSit('+i+')">'+s.label+'</button>';
+    return '<button class="sit-btn'+(i===sitIdx?' active':'')+'\" onclick="pickSit('+i+')">'+s.label+'</button>';
   }).join('');
   var sit=sits[sitIdx];
   var bubbles=sit.dialogue.map(function(ln,i){
@@ -332,10 +333,10 @@ function renderDialogQuiz(){
     if(pct===100)markDone(CT.id);
     document.getElementById('tabContent').innerHTML='<div class="result-box">'
       +'<div style="font-size:3rem">'+(pct===100?'🎉':'💪')+'</div>'
-      +'<h3>'+(pct===100?'Parfait ! ✅':'Continue à pratiquer !')+'</h3>'
+      +'<h3>'+(pct===100?'Parfait ! ✅':'Continue à t\'entraîner !')+'</h3>'
       +'<div class="score-num">'+dqScore+'/'+total+'</div>'
-      +'<div style="font-size:.9rem;margin-top:6px;color:'+(pct===100?'#4CAF50':'#3A5FCD')+'">'
-      +(pct===100?'Module débloqué ! ⭐':'Il faut 100% pour valider. Réessaie !')+' </div>'
+      +'<div style="font-size:.9rem;margin-top:6px;color:'+(pct===100?'#4CAF50':'#ED2939')+'">'
+      +(pct===100?'Module débloqué ! ⭐':'Il faut 100% pour valider. Essaie encore !')+' </div>'
       +'<div style="display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap">'
       +'<button class="retry-btn" style="background:#888" onclick="dqStep=0;dqScore=0;dqAnswered=false;renderDialogQuiz()">🔄 Réessayer</button>'
       +(pct===100?'<button class="retry-btn" onclick="renderSections();showScreen(\'sections\')">✓ Terminer</button>':'')
@@ -367,7 +368,7 @@ function checkDQ(chosen,correct){
   });
   if(chosen===correct)dqScore++;
   var fb=document.getElementById('dqfb');
-  fb.textContent=chosen===correct?'✅ Correct ! Très bien !':'❌ Réessaie !';
+  fb.textContent=chosen===correct?'✅ Correct ! Bravo !':'❌ Essaie encore !';
   fb.style.color=chosen===correct?'#4CAF50':'#c0392b';
   setTimeout(function(){dqStep++;renderDialogQuiz();},1500);
 }

@@ -39,9 +39,9 @@ function getQuizQuestions(theme){
 }
 
 var done=[];
-function loadDone(){try{done=JSON.parse(localStorage.getItem('fr_co_ done_v1')||'[]');}catch(e){done=[];}
+function loadDone(){try{done=JSON.parse(localStorage.getItem('fr_es_done_v1')||'[]');}catch(e){done=[];}
 }
-function saveDone(){try{localStorage.setItem('fr_co_ done_v1',JSON.stringify(done));}catch(e){}}
+function saveDone(){try{localStorage.setItem('fr_es_done_v1',JSON.stringify(done));}catch(e){}}
 function markDone(id){if(!done.includes(id)){done.push(id);saveDone();}}
 function resetTheme(id){done=done.filter(function(d){return d!==id;});saveDone();renderSections();renderHome();}
 function isDone(id){return done.includes(id);}
@@ -144,7 +144,7 @@ function renderFlash(){
     backContent=emBk+'<div class="fc-back-word">'+card.es+'</div>';
   }
   document.getElementById('tabContent').innerHTML=
-    '<div class="section-label">Recto: français 🇫🇷 — Verso: español 🇨🇴 · ¡Toca para voltear!</div>'
+    '<div class="section-label">Recto: français 🇫🇷 — Verso: español 🇪🇸 · ¡Toca para voltear!</div>'
     +'<div class="fc-wrap">'
     +'<div class="fc" id="fc" onclick="flipCard()">'
     +'<div class="fc-front">'+frontContent+'</div>'
