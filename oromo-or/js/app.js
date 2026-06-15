@@ -55,7 +55,7 @@ function showScreen(id){
 function renderHome(){
   var total=ALL_THEMES.length,n=done.length,pct=Math.round(n/total*100);
   document.getElementById('homeBar').style.width=pct+'%';
-  document.getElementById('homeBarLabel').textContent=n+' / '+total+' modules terminés — '+pct+'%';
+  document.getElementById('homeBarLabel').textContent=n+' / '+total+' kutaalee xumuraman — '+pct+'%';
   document.getElementById('homeStars').innerHTML=Array.from({length:total},function(_,i){
     return '<span class="star">'+(i<n?'⭐':'☆')+'</span>';
   }).join('');
@@ -63,7 +63,7 @@ function renderHome(){
 function renderSections(){
   var total=ALL_THEMES.length,n=done.length,pct=Math.round(n/total*100);
   document.getElementById('globalProgress').style.width=pct+'%';
-  document.getElementById('progressLabel').textContent=n+' / '+total+' modules — '+pct+'%';
+  document.getElementById('progressLabel').textContent=n+' / '+total+' kutaalee — '+pct+'%';
   ['grid1','grid2'].forEach(function(gid){
     var lv=gid==='grid1'?1:2;
     document.getElementById(gid).innerHTML=ALL_THEMES.filter(function(t){return t.level===lv;}).map(function(t){

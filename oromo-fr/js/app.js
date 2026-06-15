@@ -52,23 +52,34 @@ function showScreen(id){
   if(id==='home')renderHome();
   if(id==='sections')renderSections();
 }
+
+// MISE À JOUR : Titres Accueil (Français en premier / Oromo en petit à côté)
 function renderHome(){
   var total=ALL_THEMES.length,n=done.length,pct=Math.round(n/total*100);
   document.getElementById('homeBar').style.width=pct+'%';
-  document.getElementById('homeBarLabel').textContent = n + ' / ' + total + ' kutaalee xumuraman — ' + pct + '%';
+  
+  // Correction de la barre supérieure pour correspondre à Capture_2.JPG (Français -> Oromo)
+  document.getElementById('homeBarLabel').textContent = n + ' / ' + total + ' modules terminés — ' + pct + '%';
+  
   document.getElementById('homeStars').innerHTML=Array.from({length:total},function(_,i){
     return '<span class="star">'+(i<n?'⭐':'☆')+'</span>';
   }).join('');
 }
+
+// MISE À JOUR : Titres de la grille de choix des modules
 function renderSections(){
   var total=ALL_THEMES.length,n=done.length,pct=Math.round(n/total*100);
   document.getElementById('globalProgress').style.width=pct+'%';
-  document.getElementById('progressLabel').textContent = n + ' / ' + total + ' kutaalee — ' + pct + '%';
+  
+  // Reprise du libellé "modules" de la capture écran
+  document.getElementById('progressLabel').textContent = n + ' / ' + total + ' modules — ' + pct + '%';
+  
   ['grid1','grid2'].forEach(function(gid){
     var lv=gid==='grid1'?1:2;
     document.getElementById(gid).innerHTML=ALL_THEMES.filter(function(t){return t.level===lv;}).map(function(t){
       return '<div class="theme-card'+(isDone(t.id)?' done':'')+'" onclick="openTheme(\''+t.id+'\')">'
         +'<div class="t-emoji">'+t.emoji+'</div>'
+        // Français en premier (Gros titre) et Oromo en deuxième (.sub) comme demandé
         +'<div class="t-name">'+t.name+'</div>'
         +'<div class="t-sub">'+t.sub+'</div>'
         +'<div class="t-stars">'+(isDone(t.id)?'⭐⭐⭐':'☆☆☆')+'</div>'
@@ -121,7 +132,7 @@ function renderFlash(){
       '<div class="section-label">Qubee dhaggeeffachuuf irratti cuqaasi !</div>'
       +'<div class="alpha-grid">'+w.map(function(c,i){
         return '<div class="alpha-card" onclick="pickAlpha('+i+')">'
-          +'<div class="alpha-letter">'+c.fr+'</div>' // Français au Recto pour l'alphabet
+          +'<div class="alpha-letter">'+c.fr+'</div>' 
           +'<div class="alpha-name">'+c.es+'</div></div>';
       }).join('')+'</div>'
       +'<div id="alphaDetail" class="alpha-detail">'+buildAlphaDetail(card)+'</div>';
@@ -132,7 +143,6 @@ function renderFlash(){
   var hasConj=card.conj&&card.conj.es&&card.conj.fr;
   var frontContent, backContent;
   
-  // INVERSION : Français au recto (.fr), Oromo au verso (.es)
   if(hasConj){
     frontContent=emFr
       +'<div class="fc-front-word">'+card.fr+'</div>'
@@ -140,8 +150,7 @@ function renderFlash(){
     backContent=emBk
       +'<div class="fc-back-word">'+card.es+'</div>'
       +'<div class="fc-conj">'+card.conj.es.map(function(l){return '<div class="fc-conj-line">'+l+'</div>';}).join('')+'</div>';
-  } else {
-    frontContent=emFr+'<div class="fc-front-word">'+card.fr+'</div><div class="fc-front-hint">👆 Hiika isaa Afaan Oromootin arguuf cuqaasi</div>';
+  } else { frontContent=emFr+'<div class="fc-front-word">'+card.fr+'</div><div class="fc-front-hint">👆 Hiika isaa Afaan Oromootin arguuf cuqaasi</div>';
     backContent=emBk+'<div class="fc-back-word">'+card.es+'</div>';
   }
   
@@ -169,7 +178,7 @@ function buildAlphaDetail(c){
 function pickAlpha(i){
   fcIdx=i;
   var card=CT.words[i];
-  speak(card.fr); // Prononce le français
+  speak(card.fr); 
   var d=document.getElementById('alphaDetail');
   if(d)d.innerHTML=buildAlphaDetail(card);
 }
@@ -183,7 +192,6 @@ function flipCard(){
 function nextCard(){
   fcIdx=(fcIdx+1)%CT.words.length;
   renderFlash();
-  // Prononciation automatique immédiate du français au changement de carte
   setTimeout(function(){speak(CT.words[fcIdx].fr);},300);
 }
 function prevCard(){
@@ -272,7 +280,7 @@ function checkQ10(chosen,correct){
   } else {
     if(CT.words){
       var match=CT.words.find(function(w){return w.es===correctWord||w.fr===correctWord;});
-      if(match)speak(match.fr); // Parle français
+      if(match)speak(match.fr);
     }
   }
   setTimeout(function(){q10Step++;renderQuiz10();},1600);
@@ -288,10 +296,10 @@ function renderDialog(){
     return '<div class="bubble '+ln.side+'" style="opacity:0;transition:opacity .3s '+(i*.08)+'s" id="bl'+i+'">'
       +'<div class="speaker-name">'+ln.s+'</div>'
       +'<div class="msg-row">'
-      +'<div class="msg">'+ln.fr+'</div>' // Français affiché en premier
+      +'<div class="msg">'+ln.fr+'</div>'
       +'<button class="speak-bubble-btn" onclick="speak(\''+esc(ln.fr)+'\')" title="Dhaggeeffadhu">🔊</button>'
       +'</div>'
-      +'<div class="bubble-translation">'+ln.es+'</div>' // Traduction en Oromo en dessous
+      +'<div class="bubble-translation">'+ln.es+'</div>'
       +'</div>';
   }).join('');
   document.getElementById('tabContent').innerHTML=
@@ -312,7 +320,6 @@ function renderVocab(){
     var parts=v.split('=');
     var es=parts[0].trim();
     var fr=parts[1]?parts[1].trim():'';
-    // On présente le français en premier dans la liste du lexique
     return '<span class="vocab-chip" onclick="speak(\''+esc(fr)+'\')">'
       +'<span class="vocab-item-es">'+fr+'</span>'
       +(es?'<span class="vocab-item-fr">= '+es+'</span>':'')
