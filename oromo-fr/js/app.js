@@ -70,8 +70,6 @@ function renderHome(){
 function renderSections(){
   var total=ALL_THEMES.length,n=done.length,pct=Math.round(n/total*100);
   document.getElementById('globalProgress').style.width=pct+'%';
-  
-  // Reprise du libellé "modules" de la capture écran
   document.getElementById('progressLabel').textContent = n + ' / ' + total + ' modules — ' + pct + '%';
   
   ['grid1','grid2'].forEach(function(gid){
@@ -79,9 +77,9 @@ function renderSections(){
     document.getElementById(gid).innerHTML=ALL_THEMES.filter(function(t){return t.level===lv;}).map(function(t){
       return '<div class="theme-card'+(isDone(t.id)?' done':'')+'" onclick="openTheme(\''+t.id+'\')">'
         +'<div class="t-emoji">'+t.emoji+'</div>'
-        // Français en premier (Gros titre) et Oromo en deuxième (.sub) comme demandé
-        +'<div class="t-name">'+t.name+'</div>'
-        +'<div class="t-sub">'+t.sub+'</div>'
+        // EN INVERSANT ICI : On force l'affichage du Français (.sub) en gros titre, et de l'Oromo (.name) en petit sous-titre
+        +'<div class="t-name">'+t.sub+'</div>' 
+        +'<div class="t-sub">'+t.name+'</div>'
         +'<div class="t-stars">'+(isDone(t.id)?'⭐⭐⭐':'☆☆☆')+'</div>'
         +(isDone(t.id)?'<button onclick="event.stopPropagation();resetTheme(\''+t.id+'\')" style="margin-top:6px;font-size:.65rem;background:#fff;border:1.5px solid #009A44;color:#009A44;border-radius:50px;padding:4px 10px;cursor:pointer;font-weight:700">🔄 Irra deebiʼi</button>':'')
         +'</div>';
