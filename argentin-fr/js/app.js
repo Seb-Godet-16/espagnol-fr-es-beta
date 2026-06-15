@@ -123,7 +123,7 @@ function renderFlash(){
       +'<div class="alpha-grid">'+w.map(function(c,i){
         return '<div class="alpha-card" onclick="pickAlpha('+i+')">'
           +'<div class="alpha-letter">'+c.fr+'</div>'
-          +'<div class="alpha-name">'+c.es+'</div></div>';
+          +'<div class="alpha-name">'+c.fr.toLowerCase()+'</div></div>'; // <--- ICI : Met la majuscule en minuscule automatiquement !
       }).join('')+'</div>'
       +'<div id="alphaDetail" class="alpha-detail">'+buildAlphaDetail(card)+'</div>';
     return;
@@ -161,7 +161,7 @@ function renderFlash(){
 
 function buildAlphaDetail(c){
   return '<div style="font-size:2.5rem;font-weight:900;color:#0072C6">'+c.fr+'</div>'
-    +'<div style="color:#555;margin:4px 0;font-size:.85rem">'+c.es+'</div>'
+    +'<div style="color:#555;margin:4px 0;font-size:.85rem">'+c.fr.toLowerCase()+'</div>' // <--- ICI : .toLowerCase() à la place de c.es
     +'<button onclick="speak(\''+esc(c.fr)+'\')" style="margin-top:10px;background:#0072C6;color:#fff;border:none;border-radius:50px;padding:9px 18px;cursor:pointer;font-weight:700;min-height:44px">🔊 Écouter</button>';
 }
 
