@@ -9,7 +9,7 @@ var LEVEL1_THEMES=[
   level: 1,
   emoji: '🔤',
   name: 'Qubee',
-  sub: 'Alphabet Faransaayii (A-Z)',
+  sub: 'A-Z / L\'Alphabet',
   type: 'alpha',
   words: [
     { es: 'A', fr: 'A', em: '✈️' },
@@ -913,7 +913,7 @@ var LEVEL1_THEMES=[
 var LEVEL2_THEMES = [
  
   /* 1 ── Saluer et prendre des nouvelles */
-  {id:'salut2',level:2,emoji:'👋',name:'Nagaa gaafachuu',sub:'Saluer quelqu\'un / Dire bonjour en Oromia',type:'dialog',
+  {id:'salut2',level:2,emoji:'👋',name:'Nagaa gaafachuu',sub:'Saluer quelqu\'un',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Dans la rue',img:'🏘️',dialogue:[
       {s:'Lamma',es:'Akkam! Fayyaa?',fr:'Salut ! Ça va ?',side:'left'},
@@ -947,7 +947,7 @@ var LEVEL2_THEMES = [
    ]},
  
   /* 2 ── Se présenter */
-  {id:'pres2',level:2,emoji:'🙋',name:'Ofbeeksisuu',sub:'Dire son nom, son pays / Se présenter',type:'dialog',
+  {id:'pres2',level:2,emoji:'🙋',name:'Ofbeeksisuu',sub:'Se présenter',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Dans un cours d\'oromo',img:'📚',dialogue:[
       {s:'Barsiistuu',es:'Akkam! Maqaan kee eenyu?',fr:'Bonjour ! Tu t\'appelles comment ?',side:'right'},
@@ -982,7 +982,7 @@ var LEVEL2_THEMES = [
    ]},
  
   /* 3 ── Demander son chemin */
-  {id:'chemin2',level:2,emoji:'🗺️',name:'Karaa gaafachuu',sub:'Demander son chemin / S\'orienter en ville',type:'dialog',
+  {id:'chemin2',level:2,emoji:'🗺️',name:'Karaa gaafachuu',sub:'Demander son chemin',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Trouver la gare',img:'🚉',dialogue:[
       {s:'Daawwataa',es:'Dhiifama, buufatni traakinii eessa jira?',fr:'Pardon, où est la gare ?',side:'left'},
@@ -1017,7 +1017,7 @@ var LEVEL2_THEMES = [
    ]},
  
   /* 4 ── Au bar */
-  {id:'bar2',level:2,emoji:'☕',name:'Kaafee keessatti',sub:'Commander au café oromo / Buna et injera',type:'dialog',
+  {id:'bar2',level:2,emoji:'☕',name:'Kaafee keessatti',sub:'Commander au café',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Commande simple',img:'☕',dialogue:[
       {s:'Maamilaa',es:'Akkam! Buna qara\'ee tokko, maaloo.',fr:'Bonjour ! Un café au lait, s\'il vous plaît.',side:'left'},
@@ -1052,7 +1052,7 @@ var LEVEL2_THEMES = [
    ]},
  
   /* 5 ── Au restaurant */
-  {id:'resto2',level:2,emoji:'🍽️',name:'Mana nyaataa keessatti',sub:'Commander un repas / Au restaurant en Oromia',type:'dialog',
+  {id:'resto2',level:2,emoji:'🍽️',name:'Mana nyaataa keessatti',sub:'Commander un repas',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Avoir une table',img:'🪑',dialogue:[
       {s:'Maamilaa',es:'Akkam, nama lamaa teessoo qabduu?',fr:'Bonjour, vous avez une table pour deux ?',side:'left'},
@@ -1087,7 +1087,7 @@ var LEVEL2_THEMES = [
    ]},
  
   /* 6 ── Faire des courses */
-  {id:'compras2',level:2,emoji:'🛍️',name:'Bitachuu',sub:'Acheter des choses / Faire ses courses',type:'dialog',
+  {id:'compras2',level:2,emoji:'🛍️',name:'Bitachuu',sub:'Faire ses courses',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Au marché',img:'🧺',dialogue:[
       {s:'Maamilaa',es:'Nagaan bultee. Toomaatiin meeqa?',fr:'Bonjour. Combien coûtent les tomates ?',side:'left'},
@@ -1122,7 +1122,7 @@ var LEVEL2_THEMES = [
    ]},
  
   /* 7 ── Prendre les transports */
-  {id:'transp2',level:2,emoji:'🚌',name:'Geejjiba fayyadamuu',sub:'Prendre le bus et les transports / Se déplacer',type:'dialog',
+  {id:'transp2',level:2,emoji:'🚌',name:'Geejjiba fayyadamuu',sub:'Se déplacer',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Dans le minibus',img:'🚌',dialogue:[
       {s:'Imaltuu',es:'Dhiifama, kuni bustii magaalaa gidduu deemaa?',fr:'Pardon, ce bus va au centre ?',side:'left'},
@@ -1157,7 +1157,7 @@ var LEVEL2_THEMES = [
    ]},
  
   /* 8 ── À la pharmacie */
-  {id:'farmacia2',level:2,emoji:'💊',name:'Farmaasiitti',sub:'Acheter des médicaments / À la pharmacie',type:'dialog',
+  {id:'farmacia2',level:2,emoji:'💊',name:'Farmaasiitti',sub:'À la pharmacie',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Mal de tête',img:'🤕',dialogue:[
       {s:'Maamilaa',es:'Akkam. Mataan natti dhukkuba. Waa qabduu?',fr:'Bonjour. J\'ai mal à la tête. Qu\'est-ce que vous avez ?',side:'left'},
@@ -1192,7 +1192,7 @@ var LEVEL2_THEMES = [
    ]},
  
   /* 9 ── À l'hôtel */
-  {id:'hotel2',level:2,emoji:'🏨',name:'Hootelatti',sub:'Arriver à l\'hôtel / S\'installer',type:'dialog',
+  {id:'hotel2',level:2,emoji:'🏨',name:'Hootelatti',sub:'Arriver à l\'hôtel',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Arrivée à la réception',img:'🛎️',dialogue:[
       {s:'Simataa',es:'Gaarii bulee! Beellama qabduu?',fr:'Bonsoir ! Vous avez une réservation ?',side:'right'},
@@ -1227,7 +1227,7 @@ var LEVEL2_THEMES = [
    ]},
  
   /* 10 ── Chez le médecin */
-  {id:'medico2',level:2,emoji:'🩺',name:'Doktoratti',sub:'Expliquer ce qui ne va pas / Chez le médecin',type:'dialog',
+  {id:'medico2',level:2,emoji:'🩺',name:'Doktoratti',sub:'Chez le médecin',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Expliquer ses symptômes',img:'🤒',dialogue:[
       {s:'Doktora',es:'Nagaan bulte! Maal sitti dhiphise?',fr:'Bonjour ! Qu\'est-ce qui ne va pas ?',side:'right'},
@@ -1262,7 +1262,7 @@ var LEVEL2_THEMES = [
    ]},
  
   /* 11 ── La météo */
-  {id:'meteo2',level:2,emoji:'☀️',name:'Qilleensa',sub:'Parler de la météo / Qu\'est-ce qu\'il fait ?',type:'dialog',
+  {id:'meteo2',level:2,emoji:'☀️',name:'Qilleensa',sub:'Parler de la météo',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Parler du temps',img:'🌤️',dialogue:[
       {s:'Tulluu',es:'Har\'a baay\'ee ho\'aa!',fr:'Quelle chaleur aujourd\'hui !',side:'left'},
@@ -1297,7 +1297,7 @@ var LEVEL2_THEMES = [
    ]},
  
   /* 12 ── Trouver un logement */
-  {id:'logement2',level:2,emoji:'🏠',name:'Mana barbaaduu',sub:'Chercher un logement / Louer une maison',type:'dialog',
+  {id:'logement2',level:2,emoji:'🏠',name:'Mana barbaaduu',sub:'Chercher un logement',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Appeler pour une maison',img:'📱',dialogue:[
       {s:'Maamilaa',es:'Akkam, mana kiraa irratti bilbilaa jira.',fr:'Bonjour, j\'appelle pour la maison en location.',side:'left'},
@@ -1332,7 +1332,7 @@ var LEVEL2_THEMES = [
    ]},
  
   /* 13 ── Parler de ses goûts */
-  {id:'gustos2',level:2,emoji:'❤️',name:'Jaalala fi filannoowwan',sub:'Parler de ce qu\'on aime / Les loisirs',type:'dialog',
+  {id:'gustos2',level:2,emoji:'❤️',name:'Jaalala fi filannoowwan',sub:'Les loisirs',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Parler de musique',img:'🎵',dialogue:[
       {s:'Iftu',es:'Muuziiqaa jaallattaa?',fr:'Tu aimes la musique ?',side:'right'},
@@ -1367,7 +1367,7 @@ var LEVEL2_THEMES = [
    ]},
  
   /* 14 ── Sortir le soir */
-  {id:'fiesta2',level:2,emoji:'🎉',name:'Halkan bahu',sub:'Sortir le soir / Vie sociale en Oromia',type:'dialog',
+  {id:'fiesta2',level:2,emoji:'🎉',name:'Halkan bahu',sub:'Sortir le soir',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Organiser une sortie',img:'🎊',dialogue:[
       {s:'Nagaasaa',es:'Akkam! Halkan kana bahuun?',fr:'Salut ! On sort ce soir ?',side:'left'},
