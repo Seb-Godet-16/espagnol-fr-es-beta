@@ -62,7 +62,7 @@ function renderHome(){
   }).join('');
 }
 
-// MISE À JOUR GLOBAL DE LA GRILLE AVEC EXTRACTION DU FRANÇAIS
+// AFFICHAGE DE LA GRILLE (ACCUEIL) AVEC ORDRE DES LANGUES HARMONISÉ
 function renderSections(){
   var total=ALL_THEMES.length,n=done.length,pct=Math.round(n/total*100);
   document.getElementById('globalProgress').style.width=pct+'%';
@@ -76,27 +76,34 @@ function renderSections(){
       var grosTitreFr = '';
       var petitsExemples = '';
 
-      // Découpage du texte pour isoler le français situé après le "/"
-      if(subText.includes('/')) {
+      // 1. Cas particulier de l'alphabet (Niveau 1)
+      if (t.id === 'alpha' || t.type === 'alpha') {
+        grosTitreFr = "L'Alphabet";
+        petitsExemples = "Alphabet Faransaayii (A-Z) / Qubee";
+      } 
+      // 2. Cas général du Niveau 1 : le texte de "sub" contient un "/"
+      else if (subText.includes('/')) {
         var parts = subText.split('/');
         grosTitreFr = parts[1].trim(); 
-        petitsExemples = parts[0].trim(); 
-      } else {
-        grosTitreFr = t.name;
-        petitsExemples = t.sub;
+        petitsExemples = parts[0].trim() + ' / ' + t.name; 
+      } 
+      // 3. Cas général du Niveau 2 : structure propre (ex: name: Oromo, sub: Français)
+      else {
+        grosTitreFr = t.sub;
+        petitsExemples = t.name;
       }
 
-      // Majuscule sur la première lettre du titre en Français
-      if(grosTitreFr) {
+      // Majuscule automatique sur la première lettre du gros titre en Français
+      if (grosTitreFr) {
         grosTitreFr = grosTitreFr.charAt(0).toUpperCase() + grosTitreFr.slice(1);
       }
 
       return '<div class="theme-card'+(isDone(t.id)?' done':'')+'" onclick="openTheme(\''+t.id+'\')">'
         +'<div class="t-emoji">'+t.emoji+'</div>'
-        // Gros titre : Le français propre[cite: 5]
+        // Gros titre toujours en Français[cite: 5]
         +'<div class="t-name">'+grosTitreFr+'</div>' 
-        // Sous-titre : Les exemples en Oromo + le titre court en Oromo[cite: 5]
-        +'<div class="t-sub">'+petitsExemples+' / ' + t.name + '</div>'
+        // Sous-titre en Oromo (Exemples et/ou titre court)[cite: 5]
+        +'<div class="t-sub">'+petitsExemples+'</div>'
         +'<div class="t-stars">'+(isDone(t.id)?'⭐⭐⭐':'☆☆☆')+'</div>'
         +(isDone(t.id)?'<button onclick="event.stopPropagation();resetTheme(\''+t.id+'\')" style="margin-top:6px;font-size:.65rem;background:#fff;border:1.5px solid #009A44;color:#009A44;border-radius:50px;padding:4px 10px;cursor:pointer;font-weight:700">🔄 Irra deebiʼi</button>':'')
         +'</div>';
@@ -110,7 +117,7 @@ var dqStep=0,dqScore=0,dqAnswered=false;
 var sitIdx=0;
 var q10Step=0,q10Score=0,q10Answered=false;
 
-// MISE À JOUR DE L'OUVERTURE DU MODULE (EN-TÊTE DE LA LEÇON)
+// OUVERTURE D'UN MODULE (HARMONISATION DE L'EN-TÊTE DE LA LEÇON)
 function openTheme(id){
   CT=ALL_THEMES.find(function(t){return t.id===id;});
   fcIdx=0;dqStep=0;dqScore=0;dqAnswered=false;sitIdx=0;
@@ -118,17 +125,23 @@ function openTheme(id){
   
   document.getElementById('lessonEmoji').textContent=CT.emoji;
   
-  // Extraction propre du français pour le titre de la leçon[cite: 5]
   var subText = CT.sub || '';
   var titreFr = '';
-  if(subText.includes('/')) {
+  
+  // Extraction intelligente pour l'en-tête de la leçon (Français en premier)[cite: 5]
+  if (CT.id === 'alpha' || CT.type === 'alpha') {
+    titreFr = "L'Alphabet";
+  } else if (subText.includes('/')) {
     titreFr = subText.split('/')[1].trim();
-    titreFr = titreFr.charAt(0).toUpperCase() + titreFr.slice(1);
   } else {
-    titreFr = CT.name;
+    titreFr = CT.sub;
   }
   
-  // Affichage : "Titre Français — Titre Oromo"[cite: 5]
+  if (titreFr) {
+    titreFr = titreFr.charAt(0).toUpperCase() + titreFr.slice(1);
+  }
+  
+  // Rendu dans l'en-tête de la leçon : "Français — Oromo"[cite: 5]
   document.getElementById('lessonTitle').textContent = titreFr + ' — ' + CT.name;
   
   showScreen('lesson');
@@ -180,7 +193,7 @@ function renderFlash(){
     backContent=emBk
       +'<div class="fc-back-word">'+card.es+'</div>'
       +'<div class="fc-conj">'+card.conj.es.map(function(l){return '<div class="fc-conj-line">'+l+'</div>';}).join('')+'</div>';
-  } else { FrontContent=emFr+'<div class="fc-front-word">'+card.fr+'</div><div class="fc-front-hint">👆 Hiika isaa Afaan Oromootin arguuf cuqaasi</div>';
+  } else { frontContent=emFr+'<div class="fc-front-word">'+card.fr+'</div><div class="fc-front-hint">👆 Hiika isaa Afaan Oromootin arguuf cuqaasi</div>';
     backContent=emBk+'<div class="fc-back-word">'+card.es+'</div>';
   }
   
@@ -196,7 +209,7 @@ function renderFlash(){
     +'<span class="fc-counter">'+(fcIdx+1)+' / '+w.length+'</span>'
     +'<button onclick="nextCard()">Kan itti aanu →</button>'
     +'</div>'
-    +'<button class="audio-btn-big" onclick="speak(\''+esc(card.fr)+'\')">🔊 Sagalee dhaggeeffadhu</button>';
+    +'<div style="text-align:center;margin-top:10px;"><button class="audio-btn-big" onclick="speak(\''+esc(card.fr)+'\')">🔊 Sagalee dhaggeeffadhu</button></div>';
 }
 
 function buildAlphaDetail(c){
