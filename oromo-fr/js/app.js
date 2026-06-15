@@ -62,18 +62,41 @@ function renderHome(){
   }).join('');
 }
 
-// CORRECTION 1 : Inversion sur la grille d'accueil (Français en gros, Oromo en petit)
+// MISE À JOUR GLOBAL DE LA GRILLE AVEC EXTRACTION DU FRANÇAIS
 function renderSections(){
   var total=ALL_THEMES.length,n=done.length,pct=Math.round(n/total*100);
   document.getElementById('globalProgress').style.width=pct+'%';
   document.getElementById('progressLabel').textContent = n + ' / ' + total + ' modules — ' + pct + '%';
+  
   ['grid1','grid2'].forEach(function(gid){
     var lv=gid==='grid1'?1:2;
     document.getElementById(gid).innerHTML=ALL_THEMES.filter(function(t){return t.level===lv;}).map(function(t){
+      
+      var subText = t.sub || '';
+      var grosTitreFr = '';
+      var petitsExemples = '';
+
+      // Découpage du texte pour isoler le français situé après le "/"
+      if(subText.includes('/')) {
+        var parts = subText.split('/');
+        grosTitreFr = parts[1].trim(); 
+        petitsExemples = parts[0].trim(); 
+      } else {
+        grosTitreFr = t.name;
+        petitsExemples = t.sub;
+      }
+
+      // Majuscule sur la première lettre du titre en Français
+      if(grosTitreFr) {
+        grosTitreFr = grosTitreFr.charAt(0).toUpperCase() + grosTitreFr.slice(1);
+      }
+
       return '<div class="theme-card'+(isDone(t.id)?' done':'')+'" onclick="openTheme(\''+t.id+'\')">'
         +'<div class="t-emoji">'+t.emoji+'</div>'
-        +'<div class="t-name">'+t.sub+'</div>' // <-- CORRECTION : t.sub (Français) passe en gros titre
-        +'<div class="t-sub">'+t.name+'</div>' // <-- CORRECTION : t.name (Oromo) passe en sous-titre
+        // Gros titre : Le français propre[cite: 5]
+        +'<div class="t-name">'+grosTitreFr+'</div>' 
+        // Sous-titre : Les exemples en Oromo + le titre court en Oromo[cite: 5]
+        +'<div class="t-sub">'+petitsExemples+' / ' + t.name + '</div>'
         +'<div class="t-stars">'+(isDone(t.id)?'⭐⭐⭐':'☆☆☆')+'</div>'
         +(isDone(t.id)?'<button onclick="event.stopPropagation();resetTheme(\''+t.id+'\')" style="margin-top:6px;font-size:.65rem;background:#fff;border:1.5px solid #009A44;color:#009A44;border-radius:50px;padding:4px 10px;cursor:pointer;font-weight:700">🔄 Irra deebiʼi</button>':'')
         +'</div>';
@@ -87,15 +110,26 @@ var dqStep=0,dqScore=0,dqAnswered=false;
 var sitIdx=0;
 var q10Step=0,q10Score=0,q10Answered=false;
 
-// CORRECTION 2 : Inversion lors de l'ouverture d'un module pour l'en-tête de la leçon
+// MISE À JOUR DE L'OUVERTURE DU MODULE (EN-TÊTE DE LA LEÇON)
 function openTheme(id){
   CT=ALL_THEMES.find(function(t){return t.id===id;});
   fcIdx=0;dqStep=0;dqScore=0;dqAnswered=false;sitIdx=0;
   q10Step=0;q10Score=0;q10Answered=false;
+  
   document.getElementById('lessonEmoji').textContent=CT.emoji;
   
-  // <-- CORRECTION : On affiche le Français (CT.sub) d'abord, puis l'Oromo (CT.name)
-  document.getElementById('lessonTitle').textContent=CT.sub+' — '+CT.name;
+  // Extraction propre du français pour le titre de la leçon[cite: 5]
+  var subText = CT.sub || '';
+  var titreFr = '';
+  if(subText.includes('/')) {
+    titreFr = subText.split('/')[1].trim();
+    titreFr = titreFr.charAt(0).toUpperCase() + titreFr.slice(1);
+  } else {
+    titreFr = CT.name;
+  }
+  
+  // Affichage : "Titre Français — Titre Oromo"[cite: 5]
+  document.getElementById('lessonTitle').textContent = titreFr + ' — ' + CT.name;
   
   showScreen('lesson');
   var tabs;
@@ -146,8 +180,7 @@ function renderFlash(){
     backContent=emBk
       +'<div class="fc-back-word">'+card.es+'</div>'
       +'<div class="fc-conj">'+card.conj.es.map(function(l){return '<div class="fc-conj-line">'+l+'</div>';}).join('')+'</div>';
-  } else {
-    frontContent=emFr+'<div class="fc-front-word">'+card.fr+'</div><div class="fc-front-hint">👆 Hiika isaa Afaan Oromootin arguuf cuqaasi</div>';
+  } else { FrontContent=emFr+'<div class="fc-front-word">'+card.fr+'</div><div class="fc-front-hint">👆 Hiika isaa Afaan Oromootin arguuf cuqaasi</div>';
     backContent=emBk+'<div class="fc-back-word">'+card.es+'</div>';
   }
   
