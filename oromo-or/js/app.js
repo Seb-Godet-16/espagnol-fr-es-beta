@@ -1,6 +1,6 @@
 /* ========================================
-   Afaan Oromoo → Français 🇪🇹 – Logique applicative
-   Fonctions UI, état, navigation
+   Afaan Oromoo 🇪🇹 → Français 🇫🇷 (Shashemene)
+   Logique applicative — Oromo au Recto / Français au Verso
    © 2026 Sébastien Godet
 ======================================== */
 
@@ -13,7 +13,7 @@ function speak(txt) {
   function speakPart(i) {
     if (i >= parts.length) return;
     var u = new SpeechSynthesisUtterance(parts[i]);
-    u.lang = 'om-ET'; // Code de langue officiel pour l'Oromo (Éthiopie)
+    u.lang = 'om-ET'; // Code de langue pour l'Oromo
     u.rate = 0.85;
     u.onend = function() {
       if (i + 1 < parts.length) {
@@ -39,8 +39,8 @@ function getQuizQuestions(theme){
 }
 
 var done=[];
-function loadDone(){try{done=JSON.parse(localStorage.getItem('pe_om_done_v1')||'[]');}catch(e){done=[];}}
-function saveDone(){try{localStorage.setItem('pe_om_done_v1',JSON.stringify(done));}catch(e){}}
+function loadDone(){try{done=JSON.parse(localStorage.getItem('pe_fr_om_done_v1')||'[]');}catch(e){done=[];}}
+function saveDone(){try{localStorage.setItem('pe_fr_om_done_v1',JSON.stringify(done));}catch(e){}}
 function markDone(id){if(!done.includes(id)){done.push(id);saveDone();}}
 function resetTheme(id){done=done.filter(function(d){return d!==id;});saveDone();renderSections();renderHome();}
 function isDone(id){return done.includes(id);}
@@ -55,7 +55,7 @@ function showScreen(id){
 function renderHome(){
   var total=ALL_THEMES.length,n=done.length,pct=Math.round(n/total*100);
   document.getElementById('homeBar').style.width=pct+'%';
-  document.getElementById('homeBarLabel').textContent=n+' / '+total+' moojuloota xumuraman — '+pct+'%';
+  document.getElementById('homeBarLabel').textContent=n+' / '+total+' modules terminés — '+pct+'%';
   document.getElementById('homeStars').innerHTML=Array.from({length:total},function(_,i){
     return '<span class="star">'+(i<n?'⭐':'☆')+'</span>';
   }).join('');
@@ -63,7 +63,7 @@ function renderHome(){
 function renderSections(){
   var total=ALL_THEMES.length,n=done.length,pct=Math.round(n/total*100);
   document.getElementById('globalProgress').style.width=pct+'%';
-  document.getElementById('progressLabel').textContent=n+' / '+total+' moojuloota — '+pct+'%';
+  document.getElementById('progressLabel').textContent=n+' / '+total+' modules — '+pct+'%';
   ['grid1','grid2'].forEach(function(gid){
     var lv=gid==='grid1'?1:2;
     document.getElementById(gid).innerHTML=ALL_THEMES.filter(function(t){return t.level===lv;}).map(function(t){
@@ -72,7 +72,7 @@ function renderSections(){
         +'<div class="t-name">'+t.name+'</div>'
         +'<div class="t-sub">'+t.sub+'</div>'
         +'<div class="t-stars">'+(isDone(t.id)?'⭐⭐⭐':'☆☆☆')+'</div>'
-        +(isDone(t.id)?'<button onclick="event.stopPropagation();resetTheme(\''+t.id+'\')" style="margin-top:6px;font-size:.65rem;background:#fff;border:1.5px solid #009A44;color:#009A44;border-radius:50px;padding:4px 10px;cursor:pointer;font-weight:700">🔄 Irra deebiʼi</button>':'')
+        +(isDone(t.id)?'<button onclick="event.stopPropagation();resetTheme(\''+t.id+'\')" style="margin-top:6px;font-size:.65rem;background:#fff;border:1.5px solid #009A44;color:#009A44;border-radius:50px;padding:4px 10px;cursor:pointer;font-weight:700">🔄 Recommencer</button>':'')
         +'</div>';
     }).join('');
   });
@@ -93,11 +93,11 @@ function openTheme(id){
   showScreen('lesson');
   var tabs;
   if(CT.type==='dialog'){
-    tabs=[{k:'dialog',lbl:'💬 Haasaa'},{k:'vocab',lbl:'📚 Jechoota'},{k:'dquiz',lbl:'❓ Quiz'}];
+    tabs=[{k:'dialog',lbl:'💬 Dialogue'},{k:'vocab',lbl:'📚 Vocabulaire'},{k:'dquiz',lbl:'❓ Quiz'}];
   } else if(CT.type==='alpha'){
-    tabs=[{k:'flash',lbl:'🔤 Qubee'},{k:'quiz10',lbl:'🔊 Quiz sagalee'}];
+    tabs=[{k:'flash',lbl:'🔤 Alphabet'},{k:'quiz10',lbl:'🔊 Quiz Audio'}];
   } else {
-    tabs=[{k:'flash',lbl:'🃏 Kaardii'},{k:'quiz10',lbl:'❓ Quiz'}];
+    tabs=[{k:'flash',lbl:'🃏 Cartes'},{k:'quiz10',lbl:'❓ Quiz'}];
   }
   document.getElementById('lessonTabs').innerHTML=tabs.map(function(t,i){
     return '<button class="tab'+(i===0?' active':'')+'" data-tab="'+t.k+'" onclick="switchTab(\''+t.k+'\')">'+t.lbl+'</button>';
@@ -118,10 +118,10 @@ function renderFlash(){
   var w=CT.words,card=w[fcIdx];
   if(CT.type==='alpha'){
     document.getElementById('tabContent').innerHTML=
-      '<div class="section-label">Qubee tuqi sassaabi dhaggeeffadhu!</div>'
+      '<div class="section-label">Cliquez sur une lettre pour l\'écouter !</div>'
       +'<div class="alpha-grid">'+w.map(function(c,i){
         return '<div class="alpha-card" onclick="pickAlpha('+i+')">'
-          +'<div class="alpha-letter">'+c.es+'</div>' // '.es' conservé pour la compatibilité avec data.js
+          +'<div class="alpha-letter">'+c.es+'</div>' // Oromo
           +'<div class="alpha-name">'+c.fr+'</div></div>';
       }).join('')+'</div>'
       +'<div id="alphaDetail" class="alpha-detail">'+buildAlphaDetail(card)+'</div>';
@@ -131,6 +131,8 @@ function renderFlash(){
   var emBk=card.em?'<div class="fc-back-emoji">'+card.em+'</div>':'';
   var hasConj=card.conj&&card.conj.es&&card.conj.fr;
   var frontContent, backContent;
+  
+  // RETOUR À LA CONFIGURATION : Oromo au recto (.es), Français au verso (.fr)
   if(hasConj){
     frontContent=emFr
       +'<div class="fc-front-word">'+card.es+'</div>'
@@ -139,29 +141,29 @@ function renderFlash(){
       +'<div class="fc-back-word">'+card.fr+'</div>'
       +'<div class="fc-conj">'+card.conj.fr.map(function(l){return '<div class="fc-conj-line">'+l+'</div>';}).join('')+'</div>';
   } else {
-    frontContent=emFr+'<div class="fc-front-word">'+card.es+'</div><div class="fc-front-hint">👆 Hiika argachuuf tuqi</div>';
+    frontContent=emFr+'<div class="fc-front-word">'+card.es+'</div><div class="fc-front-hint">👆 Cliquez pour voir la traduction en français</div>';
     backContent=emBk+'<div class="fc-back-word">'+card.fr+'</div>';
   }
+  
   document.getElementById('tabContent').innerHTML=
-    '<div class="section-label">Gara duraa: Afaan Oromoo 🇪🇹 — Gara duubaa: français 🇫🇷 · Garagalchuuf tuqi!</div>'
+    '<div class="section-label">Recto : Afaan Oromoo 🇪🇹 — Verso : Français 🇫🇷 · Cliquez pour retourner !</div>'
     +'<div class="fc-wrap">'
     +'<div class="fc" id="fc" onclick="flipCard()">'
     +'<div class="fc-front">'+frontContent+'</div>'
     +'<div class="fc-back">'+backContent+'</div>'
     +'</div></div>'
     +'<div class="fc-nav">'
-    +'<button onclick="prevCard()">← Duubatti</button>'
+    +'<button onclick="prevCard()">← Précédent</button>'
     +'<span class="fc-counter">'+(fcIdx+1)+' / '+w.length+'</span>'
-    +'<button onclick="nextCard()">Fuulduratti →</button>'
+    +'<button onclick="nextCard()">Suivant →</button>'
     +'</div>'
-    +'<button class="audio-btn-big" onclick="speak(\''+esc(card.es)+'\')">🔊 Afaan Oromoon dhaggeeffadhu</button>';
+    +'<button class="audio-btn-big" onclick="speak(\''+esc(card.es)+'\')">🔊 Écouter la prononciation</button>';
 }
-
 
 function buildAlphaDetail(c){
   return '<div style="font-size:2.5rem;font-weight:900;color:#009A44">'+c.es+'</div>'
     +'<div style="color:#555;margin:4px 0;font-size:.85rem">'+c.fr+'</div>'
-    +'<button onclick="speak(\''+esc(c.es)+'\')" style="margin-top:10px;background:#009A44;color:#fff;border:none;border-radius:50px;padding:9px 18px;cursor:pointer;font-weight:700;min-height:44px">🔊 Dhaggeeffadhu</button>';
+    +'<button onclick="speak(\''+esc(c.es)+'\')" style="margin-top:10px;background:#009A44;color:#fff;border:none;border-radius:50px;padding:9px 18px;cursor:pointer;font-weight:700;min-height:44px">🔊 Écouter</button>';
 }
 
 function pickAlpha(i){
@@ -176,12 +178,12 @@ function flipCard(){
   var fc=document.getElementById('fc');
   if(!fc)return;
   fc.classList.toggle('flipped');
-  speak(CT.words[fcIdx].es);
 }
 
 function nextCard(){
   fcIdx=(fcIdx+1)%CT.words.length;
   renderFlash();
+  // Prononciation automatique dès qu'on arrive sur le mot en Oromo
   setTimeout(function(){speak(CT.words[fcIdx].es);},300);
 }
 function prevCard(){
@@ -195,7 +197,7 @@ function renderQuiz10(){
   var qs=getQuizQuestions(CT);
   var total=qs.length;
   if(!qs||!total){
-    document.getElementById('tabContent').innerHTML='<div class="result-box"><p>Quiz hin jiru.</p></div>';
+    document.getElementById('tabContent').innerHTML='<div class="result-box"><p>Aucun quiz disponible.</p></div>';
     return;
   }
   if(q10Step>=total){
@@ -203,13 +205,13 @@ function renderQuiz10(){
     if(pct===100)markDone(CT.id);
     document.getElementById('tabContent').innerHTML='<div class="result-box">'
       +'<div style="font-size:3rem">'+(pct===100?'🌟':'💪')+'</div>'
-      +'<h3>'+(pct===100?'Baayʼee gaarii! ✅':'Quiz xumurameera!')+'</h3>'
+      +'<h3>'+(pct===100?'Excellent ! ✅':'Quiz terminé !')+'</h3>'
       +'<div class="score-num">'+q10Score+'/'+total+'</div>'
       +'<div style="font-size:1rem;margin:6px 0;color:'+(pct===100?'#009A44':'#EF2B2D')+'">'
-      +(pct===100?'Moojulichi banameera! ⭐':'Mirkaneessuuf 100% isan barbaachisa. Ammas yaali!')+' </div>'
+      +(pct===100?'Module validé avec succès ! ⭐':'Il vous faut 100% de bonnes réponses pour valider. Réessayez !')+' </div>'
       +'<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px">'
-      +'<button class="retry-btn" style="background:#888" onclick="q10Step=0;q10Score=0;q10Answered=false;renderQuiz10()">🔄 Ammas yaali</button>'
-      +(pct===100?'<button class="retry-btn" onclick="renderSections();showScreen(\'sections\')">✓ Xumuri</button>':'')
+      +'<button class="retry-btn" style="background:#888" onclick="q10Step=0;q10Score=0;q10Answered=false;renderQuiz10()">🔄 Réessayer</button>'
+      +(pct===100?'<button class="retry-btn" onclick="renderSections();showScreen(\'sections\')">✓ Terminer</button>':'')
       +'</div></div>';
     renderSections();return;
   }
@@ -220,9 +222,9 @@ function renderQuiz10(){
     }).join('');
     document.getElementById('tabContent').innerHTML=
       '<div class="alpha-audio-quiz">'
-      +'<div class="alpha-audio-label">Dhaggeeffadhu qubee filadhu<br><small>Gaaffii '+(q10Step+1)+'/'+total+'</small></div>'
-      +'<button class="alpha-audio-btn" id="playAudioBtn" onclick="playAlphaAudio(\''+esc(q.audio)+'\')" title="Dhaggeeffadhu">🔊</button>'
-      +'<div style="font-size:.75rem;color:#aaa;margin-bottom:14px">Dhaggeeffachuuf cuqaasi</div>'
+      +'<div class="alpha-audio-label">Écoutez le son et choisissez la bonne lettre<br><small>Question '+(q10Step+1)+'/'+total+'</small></div>'
+      +'<button class="alpha-audio-btn" id="playAudioBtn" onclick="playAlphaAudio(\''+esc(q.audio)+'\')" title="Écouter">🔊</button>'
+      +'<div style="font-size:.75rem;color:#aaa;margin-bottom:14px">Cliquez pour écouter</div>'
       +'<div class="quiz-options" style="grid-template-columns:1fr 1fr;gap:12px">'+opts+'</div>'
       +'<div class="quiz-feedback" id="q10fb"></div>'
       +'</div>';
@@ -236,7 +238,7 @@ function renderQuiz10(){
   document.getElementById('tabContent').innerHTML=
     '<div class="dialog-quiz-wrap">'
     +'<div class="quiz-q">'
-    +'<div class="q-text">Gaaffii '+(q10Step+1)+'/'+total+'<br><b>'+q.q+'</b></div>'
+    +'<div class="q-text">Question '+(q10Step+1)+'/'+total+'<br><b>'+q.q+'</b></div>'
     +'</div>'
     +'<div class="quiz-options" style="grid-template-columns:1fr">'+opts+'</div>'
     +'<div class="quiz-feedback" id="q10fb"></div>'
@@ -262,8 +264,9 @@ function checkQ10(chosen,correct){
   if(chosen===correct)q10Score++;
   var correctWord=qs[q10Step].opts[correct];
   var fb=document.getElementById('q10fb');
-  fb.textContent=chosen===correct?'✅ Sirrii dha! Baayʼee namatti tola!':'❌ Deebii sirriin: '+correctWord;
+  fb.textContent=chosen===correct?'✅ Correct ! Félicitations !':'❌ Mauvaise réponse. La solution était : '+correctWord;
   fb.style.color=chosen===correct?'#009A44':'#c0392b';
+  
   if(isAlphaQuiz()){
     if(chosen!==correct)setTimeout(function(){speak(qs[q10Step].audio);},300);
   } else {
@@ -285,8 +288,8 @@ function renderDialog(){
     return '<div class="bubble '+ln.side+'" style="opacity:0;transition:opacity .3s '+(i*.08)+'s" id="bl'+i+'">'
       +'<div class="speaker-name">'+ln.s+'</div>'
       +'<div class="msg-row">'
-      +'<div class="msg">'+ln.es+'</div>' // '.es' préservé pour l'oromo
-      +'<button class="speak-bubble-btn" onclick="speak(\''+esc(ln.es)+'\')" title="Dhaggeeffadhu">🔊</button>'
+      +'<div class="msg">'+ln.es+'</div>' // Oromo en premier
+      +'<button class="speak-bubble-btn" onclick="speak(\''+esc(ln.es)+'\')" title="Écouter">🔊</button>'
       +'</div>'
       +'<div class="bubble-translation">'+ln.fr+'</div>'
       +'</div>';
@@ -298,7 +301,7 @@ function renderDialog(){
     +'<div class="bubble-wrap">'+bubbles+'</div>'
     +'</div>'
     +'<div class="action-row">'
-    +'<button class="btn-start-quiz" onclick="switchTab(\'dquiz\')">Mini quiz ➜</button>'
+    +'<button class="btn-start-quiz" onclick="switchTab(\'dquiz\')">Lancer le mini quiz ➜</button>'
     +'</div>';
   setTimeout(function(){document.querySelectorAll('[id^=bl]').forEach(function(b){b.style.opacity='1';});},80);
 }
@@ -316,11 +319,11 @@ function renderVocab(){
   }).join('');
   document.getElementById('tabContent').innerHTML=
     '<div class="vocab-section">'
-    +'<div class="vocab-title">📚 Jechoota murteessoo — Tuqi dhaggeeffadhu!</div>'
+    +'<div class="vocab-title">📚 Lexique essentiel — Cliquez pour écouter l\'Oromo !</div>'
     +'<div class="vocab-grid">'+chips+'</div>'
     +'</div>'
     +'<div class="action-row">'
-    +'<button class="btn-start-quiz" onclick="switchTab(\'dquiz\')">Mini quiz ➜</button>'
+    +'<button class="btn-start-quiz" onclick="switchTab(\'dquiz\')">Lancer le mini quiz ➜</button>'
     +'</div>';
 }
 
@@ -332,13 +335,13 @@ function renderDialogQuiz(){
     if(pct===100)markDone(CT.id);
     document.getElementById('tabContent').innerHTML='<div class="result-box">'
       +'<div style="font-size:3rem">'+(pct===100?'🎉':'💪')+'</div>'
-      +'<h3>'+(pct===100?'Baayʼee gaarii! ✅':'Shaakaluu keessi fudhadhu!')+'</h3>'
+      +'<h3>'+(pct===100?'Parfait ! ✅':'Entraînement terminé !')+'</h3>'
       +'<div class="score-num">'+dqScore+'/'+total+'</div>'
       +'<div style="font-size:.9rem;margin-top:6px;color:'+(pct===100?'#009A44':'#EF2B2D')+'">'
-      +(pct===100?'Moojulichi banameera! ⭐':'Mirkaneessuuf 100% isan barbaachisa. Ammas yaali!')+' </div>'
+      +(pct===100?'Module débloqué ! ⭐':'Il vous faut 100% de bonnes réponses pour valider. Réessayez !')+' </div>'
       +'<div style="display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap">'
-      +'<button class="retry-btn" style="background:#888" onclick="dqStep=0;dqScore=0;dqAnswered=false;renderDialogQuiz()">🔄 Ammas yaali</button>'
-      +(pct===100?'<button class="retry-btn" onclick="renderSections();showScreen(\'sections\')">✓ Xumuri</button>':'')
+      +'<button class="retry-btn" style="background:#888" onclick="dqStep=0;dqScore=0;dqAnswered=false;renderDialogQuiz()">🔄 Réessayer</button>'
+      +(pct===100?'<button class="retry-btn" onclick="renderSections();showScreen(\'sections\')">✓ Terminer</button>':'')
       +'</div></div>';
     renderSections();return;
   }
@@ -349,7 +352,7 @@ function renderDialogQuiz(){
   document.getElementById('tabContent').innerHTML=
     '<div class="dialog-quiz-wrap">'
     +'<div class="quiz-q">'
-    +'<div class="q-text">Gaaffii '+(dqStep+1)+'/'+total+'<br><b>'+q.q+'</b></div>'
+    +'<div class="q-text">Question '+(dqStep+1)+'/'+total+'<br><b>'+q.q+'</b></div>'
     +'</div>'
     +'<div class="quiz-options" style="grid-template-columns:1fr">'+opts+'</div>'
     +'<div class="quiz-feedback" id="dqfb"></div>'
@@ -367,7 +370,7 @@ function checkDQ(chosen,correct){
   });
   if(chosen===correct)dqScore++;
   var fb=document.getElementById('dqfb');
-  fb.textContent=chosen===correct?'✅ Sirrii dha! Baayʼee namatti tola!':'❌ Ammas yaali!';
+  fb.textContent=chosen===correct?'✅ Bonne réponse !':'❌ Essayer de nouveau !';
   fb.style.color=chosen===correct?'#009A44':'#c0392b';
   setTimeout(function(){dqStep++;renderDialogQuiz();},1500);
 }
