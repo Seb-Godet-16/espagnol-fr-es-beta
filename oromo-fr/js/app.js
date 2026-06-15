@@ -53,33 +53,27 @@ function showScreen(id){
   if(id==='sections')renderSections();
 }
 
-// MISE À JOUR : Titres Accueil (Français en premier / Oromo en petit à côté)
 function renderHome(){
   var total=ALL_THEMES.length,n=done.length,pct=Math.round(n/total*100);
   document.getElementById('homeBar').style.width=pct+'%';
-  
-  // Correction de la barre supérieure pour correspondre à Capture_2.JPG (Français -> Oromo)
   document.getElementById('homeBarLabel').textContent = n + ' / ' + total + ' modules terminés — ' + pct + '%';
-  
   document.getElementById('homeStars').innerHTML=Array.from({length:total},function(_,i){
     return '<span class="star">'+(i<n?'⭐':'☆')+'</span>';
   }).join('');
 }
 
-// MISE À JOUR : Titres de la grille de choix des modules
+// CORRECTION 1 : Inversion sur la grille d'accueil (Français en gros, Oromo en petit)
 function renderSections(){
   var total=ALL_THEMES.length,n=done.length,pct=Math.round(n/total*100);
   document.getElementById('globalProgress').style.width=pct+'%';
   document.getElementById('progressLabel').textContent = n + ' / ' + total + ' modules — ' + pct + '%';
-  
   ['grid1','grid2'].forEach(function(gid){
     var lv=gid==='grid1'?1:2;
     document.getElementById(gid).innerHTML=ALL_THEMES.filter(function(t){return t.level===lv;}).map(function(t){
       return '<div class="theme-card'+(isDone(t.id)?' done':'')+'" onclick="openTheme(\''+t.id+'\')">'
         +'<div class="t-emoji">'+t.emoji+'</div>'
-        // EN INVERSANT ICI : On force l'affichage du Français (.sub) en gros titre, et de l'Oromo (.name) en petit sous-titre
-        +'<div class="t-name">'+t.sub+'</div>' 
-        +'<div class="t-sub">'+t.name+'</div>'
+        +'<div class="t-name">'+t.sub+'</div>' // <-- CORRECTION : t.sub (Français) passe en gros titre
+        +'<div class="t-sub">'+t.name+'</div>' // <-- CORRECTION : t.name (Oromo) passe en sous-titre
         +'<div class="t-stars">'+(isDone(t.id)?'⭐⭐⭐':'☆☆☆')+'</div>'
         +(isDone(t.id)?'<button onclick="event.stopPropagation();resetTheme(\''+t.id+'\')" style="margin-top:6px;font-size:.65rem;background:#fff;border:1.5px solid #009A44;color:#009A44;border-radius:50px;padding:4px 10px;cursor:pointer;font-weight:700">🔄 Irra deebiʼi</button>':'')
         +'</div>';
@@ -93,12 +87,16 @@ var dqStep=0,dqScore=0,dqAnswered=false;
 var sitIdx=0;
 var q10Step=0,q10Score=0,q10Answered=false;
 
+// CORRECTION 2 : Inversion lors de l'ouverture d'un module pour l'en-tête de la leçon
 function openTheme(id){
   CT=ALL_THEMES.find(function(t){return t.id===id;});
   fcIdx=0;dqStep=0;dqScore=0;dqAnswered=false;sitIdx=0;
   q10Step=0;q10Score=0;q10Answered=false;
   document.getElementById('lessonEmoji').textContent=CT.emoji;
-  document.getElementById('lessonTitle').textContent=CT.name+' — '+CT.sub;
+  
+  // <-- CORRECTION : On affiche le Français (CT.sub) d'abord, puis l'Oromo (CT.name)
+  document.getElementById('lessonTitle').textContent=CT.sub+' — '+CT.name;
+  
   showScreen('lesson');
   var tabs;
   if(CT.type==='dialog'){
@@ -148,7 +146,8 @@ function renderFlash(){
     backContent=emBk
       +'<div class="fc-back-word">'+card.es+'</div>'
       +'<div class="fc-conj">'+card.conj.es.map(function(l){return '<div class="fc-conj-line">'+l+'</div>';}).join('')+'</div>';
-  } else { frontContent=emFr+'<div class="fc-front-word">'+card.fr+'</div><div class="fc-front-hint">👆 Hiika isaa Afaan Oromootin arguuf cuqaasi</div>';
+  } else {
+    frontContent=emFr+'<div class="fc-front-word">'+card.fr+'</div><div class="fc-front-hint">👆 Hiika isaa Afaan Oromootin arguuf cuqaasi</div>';
     backContent=emBk+'<div class="fc-back-word">'+card.es+'</div>';
   }
   
