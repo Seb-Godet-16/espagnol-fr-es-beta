@@ -123,30 +123,178 @@ function _setText(id, val) {
 
 
 /* ═══════════════════════════════════════════
-   3. SYNTHÈSE VOCALE
-   Utilise la variable globale voiceLang
+   3. SYNTHÈSE VOCALE + PRONONCIATION OROMO
+   - Mode français  : Web Speech API (fr-FR)
+   - Mode oromo     : voix native si dispo,
+     sinon panneau phonétique via Claude API
 ═══════════════════════════════════════════ */
 
+/* Cache voix Oromo et cache phonétique */
+var _oromoVoice   = undefined; // undefined = pas encore cherché, null = non dispo
+var _phonoCache   = {};        // { mot: résultat phonétique }
+
+/* ── Résolution de la voix Oromo ── */
+function _resolveOromoVoice(callback) {
+  if (_oromoVoice !== undefined) { callback(_oromoVoice); return; }
+  function search() {
+    var voices = speechSynthesis.getVoices();
+    if (!voices.length) return false;
+    var preferred = ['om-ET','om','am-ET','am','ti-ET','ti'];
+    var found = null;
+    for (var pi = 0; pi < preferred.length && !found; pi++) {
+      for (var vi = 0; vi < voices.length && !found; vi++) {
+        if (voices[vi].lang.toLowerCase().startsWith(preferred[pi].toLowerCase())) found = voices[vi];
+      }
+    }
+    _oromoVoice = found;
+    callback(_oromoVoice);
+    return true;
+  }
+  if (!search()) {
+    speechSynthesis.addEventListener('voiceschanged', function h() {
+      speechSynthesis.removeEventListener('voiceschanged', h);
+      search();
+      callback(_oromoVoice);
+    });
+  }
+}
+
+/* ── Point d'entrée principal ── */
 function speak(txt) {
-  if (!window.speechSynthesis) return;
+  if (!txt) return;
+
+  if (currentMode === 'learn_oromo') {
+    if (!window.speechSynthesis) { _showPhono(txt); return; }
+    _resolveOromoVoice(function(voice) {
+      if (voice) {
+        _doSpeak(txt, voice, 0.85);
+      } else {
+        /* Pas de voix Oromo → panneau phonétique Claude */
+        _showPhono(txt);
+      }
+    });
+  } else {
+    _doSpeak(txt, null, 0.80);
+  }
+}
+
+/* ── Synthèse vocale standard ── */
+function _doSpeak(txt, voiceObj, rate) {
   speechSynthesis.cancel();
-
   var parts = (txt || '').split('/').map(function(p) { return p.trim(); }).filter(Boolean);
-
   function speakPart(i) {
     if (i >= parts.length) return;
     var u = new SpeechSynthesisUtterance(parts[i]);
-    u.lang = voiceLang;   // ← dynamique selon le mode actif
-    u.rate = (currentMode === 'learn_french') ? 0.80 : 0.85;
-    u.onend = function() {
-      if (i + 1 < parts.length) {
-        setTimeout(function() { speakPart(i + 1); }, 2000);
-      }
-    };
+    u.lang = voiceLang;
+    u.rate = rate;
+    if (voiceObj) u.voice = voiceObj;
+    u.onend = function() { if (i + 1 < parts.length) setTimeout(function() { speakPart(i + 1); }, 2000); };
     speechSynthesis.speak(u);
   }
-
   speakPart(0);
+}
+
+/* ── Panneau phonétique via Claude API ── */
+function _showPhono(txt) {
+  /* Crée ou réutilise le panneau flottant */
+  var panel = document.getElementById('_phonoPanel');
+  if (!panel) {
+    panel = document.createElement('div');
+    panel.id = '_phonoPanel';
+    panel.style.cssText =
+      'position:fixed;bottom:70px;left:50%;transform:translateX(-50%);'
+      + 'background:#1a1a2e;color:#fff;border-radius:18px;'
+      + 'width:92vw;max-width:420px;z-index:9999;'
+      + 'box-shadow:0 8px 32px rgba(0,0,0,.45);'
+      + 'font-family:system-ui,sans-serif;overflow:hidden;';
+
+    var header = document.createElement('div');
+    header.style.cssText =
+      'display:flex;align-items:center;justify-content:space-between;'
+      + 'padding:12px 16px 0;';
+    header.innerHTML =
+      '<span style="font-size:.7rem;font-weight:700;letter-spacing:.08em;'
+      + 'text-transform:uppercase;color:rgba(255,255,255,.5)">🔊 Prononciation Oromo</span>'
+      + '<button onclick="document.getElementById(\'_phonoPanel\').style.display=\'none\'" '
+      + 'style="background:none;border:none;color:rgba(255,255,255,.5);font-size:1.2rem;'
+      + 'cursor:pointer;padding:0 0 0 12px;line-height:1">×</button>';
+
+    var body = document.createElement('div');
+    body.id = '_phonoBody';
+    body.style.cssText = 'padding:10px 16px 16px;';
+
+    panel.appendChild(header);
+    panel.appendChild(body);
+    document.body.appendChild(panel);
+  }
+
+  panel.style.display = '';
+  var body = document.getElementById('_phonoBody');
+  body.innerHTML = '<div style="text-align:center;padding:18px 0;color:rgba(255,255,255,.6);font-size:.85rem">⏳ Génération de la phonétique…</div>';
+
+  /* Clé de cache */
+  var cacheKey = txt.trim();
+  if (_phonoCache[cacheKey]) {
+    _renderPhono(body, txt, _phonoCache[cacheKey]);
+    return;
+  }
+
+  /* Appel Claude API */
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 300,
+      messages: [{
+        role: 'user',
+        content:
+          'Tu es un expert en prononciation de l\'Afaan Oromoo (langue Oromo d\'Éthiopie).\n'
+          + 'Donne la prononciation du ou des mots Oromo suivants pour un locuteur francophone.\n'
+          + 'Réponds UNIQUEMENT avec un objet JSON (sans markdown) de cette forme exacte :\n'
+          + '{"items":[{"mot":"…","phono":"…","astuce":"…"}]}\n'
+          + '- mot : le mot Oromo tel quel\n'
+          + '- phono : prononciation syllabe par syllabe en majuscules pour la syllabe accentuée, ex: "na-GAA"\n'
+          + '- astuce : une courte règle de prononciation en français (max 10 mots)\n'
+          + 'Mots à transcrire : ' + cacheKey
+      }]
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    var raw = (data.content || []).map(function(c) { return c.text || ''; }).join('');
+    var clean = raw.replace(/```json|```/g, '').trim();
+    var parsed = JSON.parse(clean);
+    _phonoCache[cacheKey] = parsed;
+    _renderPhono(body, txt, parsed);
+  })
+  .catch(function() {
+    body.innerHTML =
+      '<div style="padding:12px 0">'
+      + '<div style="font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:4px">' + txt + '</div>'
+      + '<div style="font-size:.78rem;color:rgba(255,255,255,.5)">Prononciation non disponible hors connexion.</div>'
+      + '</div>';
+  });
+}
+
+function _renderPhono(container, original, data) {
+  var items = (data && data.items) ? data.items : [];
+  if (!items.length) {
+    container.innerHTML =
+      '<div style="font-size:1.3rem;font-weight:700;color:#fff;padding:8px 0">' + original + '</div>'
+      + '<div style="font-size:.75rem;color:rgba(255,255,255,.4)">Pas de phonétique disponible.</div>';
+    return;
+  }
+  container.innerHTML = items.map(function(item) {
+    return '<div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.1)">'
+      + '<div style="font-size:.75rem;color:rgba(255,255,255,.45);margin-bottom:2px">Oromo</div>'
+      + '<div style="font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:4px">' + item.mot + '</div>'
+      + '<div style="font-size:.75rem;color:rgba(255,255,255,.45);margin-bottom:2px">Prononciation</div>'
+      + '<div style="font-size:1.5rem;font-weight:900;color:#FED141;letter-spacing:.05em;margin-bottom:6px">' + item.phono + '</div>'
+      + '<div style="font-size:.75rem;color:rgba(255,255,255,.55);font-style:italic">💡 ' + item.astuce + '</div>'
+      + '</div>';
+  }).join('')
+  + '<div style="font-size:.65rem;color:rgba(255,255,255,.3);text-align:right;margin-top:4px">Majuscules = syllabe accentuée</div>';
 }
 
 
