@@ -263,7 +263,7 @@ function _showPhono(txt) {
   .then(function(r) { return r.json(); })
   .then(function(data) {
     var raw = (data.content || []).map(function(c) { return c.text || ''; }).join('');
-    var clean = raw.replace(/```json|```/g, '').trim();
+    var clean = raw.replaceAll('```json', '').replaceAll('```', '').trim();
     var parsed = JSON.parse(clean);
     _phonoCache[cacheKey] = parsed;
     _renderPhono(body, txt, parsed);
@@ -818,7 +818,7 @@ function renderDialog() {
     + '<div class="bubble-wrap">' + bubbles + '</div>'
     + '</div>'
     + '<div class="action-row">'
-    + '<button class="btn-start-quiz" onclick="switchTab(\'dquiz\')">' + quizBtnLabel + '</button>'
+    + '<button class="btn-start-quiz" onclick="switchTab(\'' + 'dquiz' + '\')">' + quizBtnLabel + '</button>'
     + '</div>';
   setTimeout(function() { document.querySelectorAll('[id^=bl]').forEach(function(b) { b.style.opacity = '1'; }); }, 80);
 }
@@ -856,7 +856,7 @@ function renderVocab() {
     + '<div class="vocab-grid">' + chips + '</div>'
     + '</div>'
     + '<div class="action-row">'
-    + '<button class="btn-start-quiz" onclick="switchTab(\'dquiz\')">' + quizBtnLabel + '</button>'
+    + '<button class="btn-start-quiz" onclick="switchTab(\'' + 'dquiz' + '\')">' + quizBtnLabel + '</button>'
     + '</div>';
 }
 
@@ -951,5 +951,5 @@ function _quizResultStrings(pct, type) {
 
 /* Échappe les caractères spéciaux pour les attributs HTML inline */
 function esc(s) {
-  return (s || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+  return (s || '').replaceAll('\\', '\\\\').replaceAll("'", "\\'").replaceAll('"', '&quot;');
 }
