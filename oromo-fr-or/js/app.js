@@ -49,16 +49,16 @@ function initApp(mode) {
          (l'apprenant Oromo doit comprendre les menus) ── */
     _setUI({
       homeFlagRow    : '🇫🇷',
-      homeTitle      : 'Afaan Faransaayii Barachuu',
-      homeSubtitle   : 'Fuuldura Faransaayii · Duuba Oromoo',
-      homeStartBtn   : '▶ Jalqabi',
-      sectionsBackBtn: '← Duubatti',
-      sectionsTitle  : '📚 Kutaalee',
-      lessonBackBtn  : '← Kutaalee',
+      homeTitle      : 'Apprendre le Français',
+      homeSubtitle   : 'Recto Français · Verso Oromo',
+      homeStartBtn   : '▶ Commencer',
+      sectionsBackBtn: '← Retour',
+      sectionsTitle  : '📚 Modules',
+      lessonBackBtn  : '← Modules',
       level1Badge    : '1',
-      level1Label    : 'Sadarkaa 1 — Eegala',
+      level1Label    : 'Niveau 1 — Vocabulaire',
       level2Badge    : '2',
-      level2Label    : 'Sadarkaa 2 — Giddu Galeessa'
+      level2Label    : 'Niveau 2 — Phrases simples'
     });
 
   } else if (mode === 'learn_oromo') {
@@ -76,16 +76,16 @@ function initApp(mode) {
          (l'apprenant francophone doit comprendre les menus) ── */
     _setUI({
       homeFlagRow    : '🇪🇹',
-      homeTitle      : 'Apprendre l\'Afaan Oromo',
-      homeSubtitle   : 'Recto Oromo · Verso Français',
-      homeStartBtn   : '▶ Commencer',
-      sectionsBackBtn: '← Retour',
-      sectionsTitle  : '📚 Modules',
-      lessonBackBtn  : '← Modules',
+      homeTitle      : 'Afaan Faransaayii barachuu',
+      homeSubtitle   : 'Fuuldura Afaan Oromo · Duuba Afaan Faransaay',
+      homeStartBtn   : '▶ Jalqabi',
+      sectionsBackBtn: '← Gara duubaatti',
+      sectionsTitle  : '📚 Moojuulota',
+      lessonBackBtn  : '← Moojuulota',
       level1Badge    : '1',
-      level1Label    : 'Niveau 1 — Débutant',
+      level1Label    : 'Sadarkaa 1 — Jechoota',
       level2Badge    : '2',
-      level2Label    : 'Niveau 2 — Intermédiaire'
+      level2Label    : 'Sadarkaa 2 — Himoota salphaa'
     });
   }
 
@@ -530,9 +530,9 @@ function renderFlash() {
     document.getElementById('tabContent').innerHTML =
       '<div class="section-label">' + alphaLabel + '</div>'
       + '<div class="alpha-grid">' + w.map(function(c, i) {
-          /* learn_french : grande lettre = .fr (latin), learn_oromo : grande lettre = .es (qubee) */
-          var bigLetter = (currentMode === 'learn_french') ? c.fr : c.es;
-          var smallName = (currentMode === 'learn_french') ? c.es : c.fr;
+          /* learn_french : grande lettre = .fr (latin), learn_oromo : grande lettre = .et (qubee) */
+          var bigLetter = (currentMode === 'learn_french') ? c.fr : c.et;
+          var smallName = (currentMode === 'learn_french') ? c.et : c.fr;
           return '<div class="alpha-card" onclick="pickAlpha(' + i + ')">'
             + '<div class="alpha-letter">' + bigLetter + '</div>'
             + '<div class="alpha-name">'   + smallName  + '</div>'
@@ -550,18 +550,18 @@ function renderFlash() {
   var frontContent, backContent;
 
   if (currentMode === 'learn_french') {
-    /* Recto = Français (.fr), Verso = Oromo (.es) */
+    /* Recto = Français (.fr), Verso = Oromo (.et) */
     var hintFr = 'Hiika isaa Afaan Oromootin arguuf cuqaasi';
     if (hasConj) {
       frontContent = emFr
         + '<div class="fc-front-word">' + card.fr + '</div>'
         + '<div class="fc-conj">' + card.conj.fr.map(function(l) { return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
       backContent = emBk
-        + '<div class="fc-back-word">' + card.es + '</div>'
-        + '<div class="fc-conj">' + card.conj.es.map(function(l) { return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
+        + '<div class="fc-back-word">' + card.et + '</div>'
+        + '<div class="fc-conj">' + card.conj.et.map(function(l) { return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
     } else {
       frontContent = emFr + '<div class="fc-front-word">' + card.fr + '</div><div class="fc-front-hint">👆 ' + hintFr + '</div>';
-      backContent  = emBk + '<div class="fc-back-word">' + card.es + '</div>';
+      backContent  = emBk + '<div class="fc-back-word">' + card.et + '</div>';
     }
     document.getElementById('tabContent').innerHTML =
       '<div class="section-label">Fuuldura : Français 🇫🇷 — Duuba : Afaan Oromoo 🇪🇹 · Kaardicha garagalchi !</div>'
@@ -579,17 +579,17 @@ function renderFlash() {
       + '</div>';
 
   } else {
-    /* Recto = Oromo (.es), Verso = Français (.fr) */
+    /* Recto = Oromo (.et), Verso = Français (.fr) */
     var hintOr = 'Cliquez pour voir la traduction en français';
     if (hasConj) {
       frontContent = emFr
-        + '<div class="fc-front-word">' + card.es + '</div>'
-        + '<div class="fc-conj">' + card.conj.es.map(function(l) { return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
+        + '<div class="fc-front-word">' + card.et + '</div>'
+        + '<div class="fc-conj">' + card.conj.et.map(function(l) { return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
       backContent = emBk
         + '<div class="fc-back-word">' + card.fr + '</div>'
         + '<div class="fc-conj">' + card.conj.fr.map(function(l) { return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
     } else {
-      frontContent = emFr + '<div class="fc-front-word">' + card.es + '</div><div class="fc-front-hint">👆 ' + hintOr + '</div>';
+      frontContent = emFr + '<div class="fc-front-word">' + card.et + '</div><div class="fc-front-hint">👆 ' + hintOr + '</div>';
       backContent  = emBk + '<div class="fc-back-word">' + card.fr + '</div>';
     }
     document.getElementById('tabContent').innerHTML =
@@ -603,16 +603,16 @@ function renderFlash() {
       + '<span class="fc-counter">' + (fcIdx + 1) + ' / ' + w.length + '</span>'
       + '<button onclick="nextCard()">Suivant →</button>'
       + '</div>'
-      + '<button class="audio-btn-big" onclick="speak(\'' + esc(card.es) + '\')">🔊 Écouter la prononciation</button>';
+      + '<button class="audio-btn-big" onclick="speak(\'' + esc(card.et) + '\')">🔊 Écouter la prononciation</button>';
   }
 }
 
 /* Détail d'une lettre d'alphabet */
 function buildAlphaDetail(c) {
-  var bigLetter = (currentMode === 'learn_french') ? c.fr : c.es;
-  var smallName = (currentMode === 'learn_french') ? c.es : c.fr;
+  var bigLetter = (currentMode === 'learn_french') ? c.fr : c.et;
+  var smallName = (currentMode === 'learn_french') ? c.et : c.fr;
   var btnLabel  = (currentMode === 'learn_french') ? '🔊 Dhaggeeffadhu' : '🔊 Écouter';
-  var spokenKey = (currentMode === 'learn_french') ? c.fr : c.es;
+  var spokenKey = (currentMode === 'learn_french') ? c.fr : c.et;
   return '<div style="font-size:2.5rem;font-weight:900;color:#009A44">' + bigLetter + '</div>'
     + '<div style="color:#555;margin:4px 0;font-size:.85rem">' + smallName + '</div>'
     + '<button onclick="speak(\'' + esc(spokenKey) + '\')" '
@@ -623,7 +623,7 @@ function buildAlphaDetail(c) {
 function pickAlpha(i) {
   fcIdx = i;
   var card = CT.words[i];
-  var spokenKey = (currentMode === 'learn_french') ? card.fr : card.es;
+  var spokenKey = (currentMode === 'learn_french') ? card.fr : card.et;
   speak(spokenKey);
   var d = document.getElementById('alphaDetail');
   if (d) d.innerHTML = buildAlphaDetail(card);
@@ -639,7 +639,7 @@ function nextCard() {
   fcIdx = (fcIdx + 1) % CT.words.length;
   renderFlash();
   /* Prononciation automatique de la langue cible */
-  var spokenKey = (currentMode === 'learn_french') ? CT.words[fcIdx].fr : CT.words[fcIdx].es;
+  var spokenKey = (currentMode === 'learn_french') ? CT.words[fcIdx].fr : CT.words[fcIdx].et;
   setTimeout(function() { speak(spokenKey); }, 300);
 }
 
@@ -770,9 +770,9 @@ function checkQ10(chosen, correct) {
     if (chosen !== correct) setTimeout(function() { speak(qs[q10Step].audio); }, 300);
   } else {
     if (CT.words) {
-      var match = CT.words.find(function(w) { return w.es === correctWord || w.fr === correctWord; });
+      var match = CT.words.find(function(w) { return w.et === correctWord || w.fr === correctWord; });
       if (match) {
-        var spokenKey = (currentMode === 'learn_french') ? match.fr : match.es;
+        var spokenKey = (currentMode === 'learn_french') ? match.fr : match.et;
         speak(spokenKey);
       }
     }
@@ -795,9 +795,9 @@ function renderDialog() {
   var bubbles = sit.dialogue.map(function(ln, i) {
     /* learn_french : bulle principale en Français, traduction en Oromo */
     /* learn_oromo  : bulle principale en Oromo,   traduction en Français */
-    var mainMsg   = (currentMode === 'learn_french') ? ln.fr : ln.es;
-    var transMsg  = (currentMode === 'learn_french') ? ln.es : ln.fr;
-    var spokenKey = (currentMode === 'learn_french') ? ln.fr : ln.es;
+    var mainMsg   = (currentMode === 'learn_french') ? ln.fr : ln.et;
+    var transMsg  = (currentMode === 'learn_french') ? ln.et : ln.fr;
+    var spokenKey = (currentMode === 'learn_french') ? ln.fr : ln.et;
     var listenTip = (currentMode === 'learn_french') ? 'Dhaggeeffadhu' : 'Écouter';
     return '<div class="bubble ' + ln.side + '" style="opacity:0;transition:opacity .3s ' + (i * 0.08) + 's" id="bl' + i + '">'
       + '<div class="speaker-name">' + ln.s + '</div>'
@@ -832,15 +832,15 @@ function pickSit(i) { sitIdx = i; renderDialog(); }
 function renderVocab() {
   var chips = CT.vocab.map(function(v) {
     var parts = v.split('=');
-    var es    = parts[0].trim();       // Oromo
+    var et    = parts[0].trim();       // Oromo
     var fr    = parts[1] ? parts[1].trim() : ''; // Français
     /* learn_french : mot prononcé en Français, label en FR, sous en Oromo */
     /* learn_oromo  : mot prononcé en Oromo,    label en Oromo, sous en FR */
-    var mainWord  = (currentMode === 'learn_french') ? fr : es;
-    var subWord   = (currentMode === 'learn_french') ? es : fr;
-    var spokenKey = (currentMode === 'learn_french') ? fr : es;
+    var mainWord  = (currentMode === 'learn_french') ? fr : et;
+    var subWord   = (currentMode === 'learn_french') ? et : fr;
+    var spokenKey = (currentMode === 'learn_french') ? fr : et;
     return '<span class="vocab-chip" onclick="speak(\'' + esc(spokenKey) + '\')">'
-      + '<span class="vocab-item-es">' + mainWord + '</span>'
+      + '<span class="vocab-item-et">' + mainWord + '</span>'
       + (subWord ? '<span class="vocab-item-fr">= ' + subWord + '</span>' : '')
       + '</span>';
   }).join('');
