@@ -43,10 +43,10 @@ function initApp(mode) {
 
     /* ── Données ── */
     ALL_THEMES = ALL_THEMES_FR;           // défini dans data.js
-    STORAGE_KEY = 'pe_om_fr_done_v1';    // clé originale app_francais
+    STORAGE_KEY = 'pe_es_fr_done_v1';    // clé originale app_francais
 
-    /* ── Textes de l'interface en OROMO
-         (l'apprenant Oromo doit comprendre les menus) ── */
+    /* ── Textes de l'interface en ESPAGNOL
+         (l'apprenant Espagnol doit comprendre les menus) ── */
     _setUI({
       homeFlagRow    : '🇫🇷',
       homeTitle      : 'Apprendre le Français',
@@ -70,7 +70,7 @@ function initApp(mode) {
 
     /* ── Données ── */
     ALL_THEMES = ALL_THEMES_ES;            // défini dans data.js
-    STORAGE_KEY = 'pe_fr_es_done_v1';    // clé originale app_oromo
+    STORAGE_KEY = 'pe_fr_es_done_v1';    // clé originale app_espagnol
 
     /* ── Textes de l'interface en FRANÇAIS
          (l'apprenant francophone doit comprendre les menus) ── */
@@ -325,7 +325,7 @@ function renderHome() {
 
   var label = (currentMode === 'learn_french')
     ? (n + ' / ' + total + ' modules validés — ' + pct + '%')
-    : (n + ' / ' + total + ' kutaalee darban — ' + pct + '%');
+    : (n + ' / ' + total + ' módulos aprobados — ' + pct + '%');
   document.getElementById('homeBarLabel').textContent = label;
 
   var totalStarsEarned = done.reduce(function(acc, d) { return acc + d.stars; }, 0);
@@ -389,7 +389,7 @@ function _buildThemeCard(t) {
     ? '<button onclick="event.stopPropagation();resetTheme(\'' + t.id + '\')" '
       + 'style="margin-top:6px;font-size:.65rem;background:#fff;border:1.5px solid #009A44;'
       + 'color:#009A44;border-radius:50px;padding:4px 10px;cursor:pointer;font-weight:700">'
-      + (currentMode === 'learn_french' ? '🔄 Irra deebiʼi' : '🔄 Recommencer')
+      + (currentMode === 'learn_french' ? '🔄 Volver a empezar' : '🔄 Recommencer')
       + '</button>'
     : '';
 
@@ -754,7 +754,7 @@ function renderDialog() {
     var mainMsg   = (currentMode === 'learn_french') ? ln.fr : ln.es;
     var transMsg  = (currentMode === 'learn_french') ? ln.es : ln.fr;
     var spokenKey = (currentMode === 'learn_french') ? ln.fr : ln.es;
-    var listenTip = (currentMode === 'learn_french') ? 'Dhaggeeffadhu' : 'Écouter';
+    var listenTip = (currentMode === 'learn_french') ? 'Escuchar' : 'Écouter';
     return '<div class="bubble ' + ln.side + '" style="opacity:0;transition:opacity .3s ' + (i * 0.08) + 's" id="bl' + i + '">'
       + '<div class="speaker-name">' + ln.s + '</div>'
       + '<div class="msg-row">'
