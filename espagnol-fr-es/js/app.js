@@ -87,16 +87,16 @@ function initApp(mode) {
          (l'apprenant francophone doit comprendre les menus) ── */
     _setUI({
       homeFlagRow    : '🇪🇸',
-      homeTitle      : 'Aprender Español',
-      homeSubtitle   : 'Anverso Español · Reverso Francés ',
-      homeStartBtn   : '▶ Empezar',
-      sectionsBackBtn: '← Volver',
-      sectionsTitle  : '📚 Módulos',
-      lessonBackBtn  : '← Módulos',
+      homeTitle      : 'Aprender Español<br><span class="translation-sub">Apprendre l\'Espagnol</span>',
+      homeSubtitle   : 'Anverso Español · Reverso Francés<br><span class="translation-sub">Recto Espagnol · Verso Français</span>',
+      homeStartBtn   : '▶ Empezar<br><span class="translation-sub">Commencer</span>',
+      sectionsBackBtn: '← Volver<br><span class="translation-sub">Retour</span>',
+      sectionsTitle  : '📚 Módulos<br><span class="translation-sub">Modules</span>',
+      lessonBackBtn  : '← Módulos<br><span class="translation-sub">Modules</span>',
       level1Badge    : '1',
-      level1Label    : 'Nivel 1 — Vocabulario',
+      level1Label    : '<span>Nivel 1 — Vocabulario<br><span class="translation-sub">Niveau 1 — Vocabulaire</span></span>',
       level2Badge    : '2',
-      level2Label    : 'Nivel 2 — Frases sencillas'
+      level2Label    : '<span>Nivel 2 — Frases sencillas<br><span class="translation-sub">Niveau 2 — Phrases simples</span></span>'
     });
   }
 
