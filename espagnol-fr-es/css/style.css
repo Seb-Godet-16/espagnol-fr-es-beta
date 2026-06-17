@@ -584,3 +584,9 @@ html.theme-spain body{background:#f4f9f4}
 .home-back-btn:active{background:rgba(255,255,255,.4)}
 
 body{background:#f5f5f0}  /* écran lanceur uniquement */
+.vocab-translation-sub {
+    font-size: 0.8rem;      /* Rend le texte plus petit que le mot principal */
+    color: #666666;         /* Alège la couleur (gris) pour créer une hiérarchie visuelle */
+    margin-top: 4px;        /* Ajoute un petit espace sous le mot français */
+    font-weight: normal;    /* S'assure que la traduction n'est pas en gras */
+}

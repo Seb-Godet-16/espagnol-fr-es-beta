@@ -6,35 +6,7 @@
 ======================================== */
 
 var LEVEL1_THEMES_FR=[
- {id:'alpha',level:1,emoji:'🔤',name:'El Alfabeto',sub:'A, B, C… Z / L\'alphabet',type:'alpha',
-   words:[
-    {es:'A',fr:'a',em:'✈️'},{es:'B',fr:'bé',em:'🎈'},
-    {es:'C',fr:'cé (th devant e/i)',em:'☕'},{es:'D',fr:'dé',em:'💃'},
-    {es:'E',fr:'e',em:'🏫'},{es:'F',fr:'efe',em:'🌸'},
-    {es:'G',fr:'jé (devant e/i)',em:'🚉'},{es:'H',fr:'hache (muette)',em:'🏨'},
-    {es:'I',fr:'i',em:'🏝️'},{es:'J',fr:'jota',em:'🌿'},
-    {es:'K',fr:'ka',em:'⚖️'},{es:'L',fr:'ele',em:'🦁'},
-    {es:'M',fr:'eme',em:'🏠'},{es:'N',fr:'ene',em:'🌙'},
-    {es:'Ñ',fr:'eñe (son gn)',em:'🎵'},{es:'O',fr:'o',em:'🐦'},
-    {es:'P',fr:'pé',em:'🍞'},{es:'Q',fr:'cu',em:'🏘️'},
-    {es:'R',fr:'erre',em:'🌹'},{es:'S',fr:'ese',em:'☀️'},
-    {es:'T',fr:'té',em:'🚂'},{es:'U',fr:'u',em:'1️⃣'},
-    {es:'V',fr:'uve',em:'🌆'},{es:'W',fr:'uve doble',em:'🚃'},
-    {es:'X',fr:'equis',em:'🎵'},{es:'Y',fr:'ye / i griega',em:'🥛'},
-    {es:'Z',fr:'ceta (th en Espagne)',em:'0️⃣'}
-   ],
-   quiz10:[
-    {q:'¿Qué letra escuchas?',audio:'B',opts:['A','B','C','D'],ans:1},
-    {q:'¿Qué letra escuchas?',audio:'G',opts:['J','K','G','H'],ans:2},
-    {q:'¿Qué letra escuchas?',audio:'Ñ',opts:['N','Ñ','M','L'],ans:1},
-    {q:'¿Qué letra escuchas?',audio:'R',opts:['A','R','L','N'],ans:1},
-    {q:'¿Qué letra escuchas?',audio:'Z',opts:['S','X','Z','C'],ans:2},
-    {q:'¿Qué letra escuchas?',audio:'H',opts:['H','F','M','N'],ans:0},
-    {q:'¿Qué letra escuchas?',audio:'K',opts:['C','G','K','Q'],ans:2},
-    {q:'¿Qué letra escuchas?',audio:'Y',opts:['I','U','Y','E'],ans:2},
-    {q:'¿Qué letra escuchas?',audio:'W',opts:['V','W','X','Y'],ans:1},
-    {q:'¿Qué letra escuchas?',audio:'P',opts:['B','D','P','T'],ans:2}
-   ]},
+  {id:'alpha',level:1,emoji:'🔤',name:'El Alfabeto',sub:'A, B, C… Z / L\'alphabet',type:'alpha',words:[{es:'A',fr:'A',em:'✈️'},{es:'B',fr:'B',em:'🎈'},{es:'C',fr:'C',em:'☕'},{es:'D',fr:'D',em:'💃'},{es:'E',fr:'E',em:'🏫'},{es:'F',fr:'F',em:'🌸'},{es:'G',fr:'G',em:'🚉'},{es:'H',fr:'H',em:'🏨'},{es:'I',fr:'I',em:'🏝️'},{es:'J',fr:'J',em:'🌿'},{es:'K',fr:'K',em:'⚖️'},{es:'L',fr:'L',em:'🦁'},{es:'M',fr:'M',em:'🏠'},{es:'N',fr:'N',em:'🌙'},{es:'O',fr:'O',em:'🐦'},{es:'P',fr:'P',em:'🍞'},{es:'Q',fr:'Q',em:'🏘️'},{es:'R',fr:'R',em:'🌹'},{es:'S',fr:'S',em:'☀️'},{es:'T',fr:'T',em:'🚂'},{es:'U',fr:'U',em:'1️⃣'},{es:'V',fr:'V',em:'🌆'},{es:'W',fr:'W',em:'🚃'},{es:'X',fr:'X',em:'🎵'},{es:'Y',fr:'Y',em:'🥛'},{es:'Z',fr:'Z',em:'0️⃣'}],quiz10:[{q:'¿Qué letra escuchas?',audio:'J',opts:['L','G','J','V'],ans:2},{q:'¿Qué letra escuchas?',audio:'F',opts:['Z','P','H','F'],ans:3},{q:'¿Qué letra escuchas?',audio:'U',opts:['M','U','I','J'],ans:1},{q:'¿Qué letra escuchas?',audio:'I',opts:['O','A','I','Y'],ans:2},{q:'¿Qué letra escuchas?',audio:'H',opts:['B','F','X','H'],ans:3},{q:'¿Qué letra escuchas?',audio:'Y',opts:['L','P','Y','Z'],ans:2},{q:'¿Qué letra escuchas?',audio:'G',opts:['K','T','G','N'],ans:2},{q:'¿Qué letra escuchas?',audio:'R',opts:['V','M','B','R'],ans:3},{q:'¿Qué letra escuchas?',audio:'Z',opts:['B','M','G','Z'],ans:3},{q:'¿Qué letra escuchas?',audio:'S',opts:['T','S','Y','D'],ans:1},{q:'¿Qué letra escuchas?',audio:'N',opts:['L','M','D','N'],ans:3},{q:'¿Qué letra escuchas?',audio:'X',opts:['X','C','W','N'],ans:0}]},
   {id:'salut',level:1,emoji:'👋',name:'Los Saludos',sub:'Buenos días, gracias… / Les salutations',
    words:[
     {es:'Buenos días / Buen día',fr:'Bonjour (le matin)',em:'🌅'},{es:'Buenas tardes',fr:'Bon après-midi',em:'🌆'},
@@ -896,7 +868,7 @@ var LEVEL1_THEMES_FR=[
 var LEVEL2_THEMES_FR = [
  
 /* 1 ── Saluer et prendre des nouvelles */
-  {id:'salut2',level:2,emoji:'👋',name:'Saludos',sub:'Saluer quelqu\'un / Dire bonjour en Espagne',type:'dialog',
+  {id:'salut2',level:2,emoji:'👋',name:'Saludos',sub:'Saluer quelqu\'un',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Dans la rue',img:'🏘️',dialogue:[
       {s:'Lucas',es:'¡Hola! ¿Qué tal?',fr:'Salut ! Ça va ?',side:'left'},
@@ -930,7 +902,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 2 ── Se présenter */
-  {id:'pres2',level:2,emoji:'🙋',name:'Presentarse',sub:'Dire son nom, son pays / Se présenter',type:'dialog',
+  {id:'pres2',level:2,emoji:'🙋',name:'Presentarse',sub:'Se présenter',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Dans un cours d\'espagnol',img:'📚',dialogue:[
       {s:'Profesora',es:'¡Hola! ¿Cómo te llamas?',fr:'Bonjour ! Tu t\'appelles comment ?',side:'right'},
@@ -965,7 +937,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 3 ── Demander son chemin */
-  {id:'chemin2',level:2,emoji:'🗺️',name:'Pedir camino',sub:'Demander son chemin / S\'orienter en ville',type:'dialog',
+  {id:'chemin2',level:2,emoji:'🗺️',name:'Pedir camino',sub:'Demander son chemin',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Trouver la gare',img:'🚉',dialogue:[
       {s:'Turista',es:'Perdona, ¿dónde está la estación?',fr:'Pardon, où est la gare ?',side:'left'},
@@ -1000,7 +972,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 4 ── Au bar */
-  {id:'bar2',level:2,emoji:'☕',name:'En el bar',sub:'Commander au bar espagnol / Café et tapas',type:'dialog',
+  {id:'bar2',level:2,emoji:'☕',name:'En el bar',sub:'Commander au bar',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Commande simple',img:'☕',dialogue:[
       {s:'Cliente',es:'¡Hola! Un café con leche, por favor.',fr:'Bonjour ! Un café au lait, s\'il vous plaît.',side:'left'},
@@ -1035,7 +1007,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 5 ── Au restaurant */
-  {id:'resto2',level:2,emoji:'🍽️',name:'En el restaurante',sub:'Commander un repas / Au restaurant espagnol',type:'dialog',
+  {id:'resto2',level:2,emoji:'🍽️',name:'En el restaurante',sub:'Au restaurant',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Avoir une table',img:'🪑',dialogue:[
       {s:'Cliente',es:'Hola, ¿tiene una mesa para dos?',fr:'Bonjour, vous avez une table pour deux ?',side:'left'},
@@ -1105,7 +1077,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 7 ── Prendre les transports */
-  {id:'transp2',level:2,emoji:'🚌',name:'El transporte',sub:'Prendre le bus et le métro / Les transports',type:'dialog',
+  {id:'transp2',level:2,emoji:'🚌',name:'El transporte',sub:'Les transports',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Dans le métro',img:'🚇',dialogue:[
       {s:'Viajero',es:'Perdona, ¿este metro va al centro?',fr:'Pardon, ce métro va au centre ?',side:'left'},
@@ -1140,7 +1112,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 8 ── À la pharmacie */
-  {id:'farmacia2',level:2,emoji:'💊',name:'En la farmacia',sub:'Acheter des médicaments / À la pharmacie',type:'dialog',
+  {id:'farmacia2',level:2,emoji:'💊',name:'En la farmacia',sub:'À la pharmacie',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Mal de tête',img:'🤕',dialogue:[
       {s:'Cliente',es:'Hola. Me duele la cabeza. ¿Qué tiene?',fr:'Bonjour. J\'ai mal à la tête. Qu\'est-ce que vous avez ?',side:'left'},
@@ -1175,7 +1147,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 9 ── À l'hôtel */
-  {id:'hotel2',level:2,emoji:'🏨',name:'En el hotel',sub:'Arriver à l\'hôtel / S\'installer',type:'dialog',
+  {id:'hotel2',level:2,emoji:'🏨',name:'En el hotel',sub:'Arriver à l\'hôtel',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Arrivée à la réception',img:'🛎️',dialogue:[
       {s:'Recepcionista',es:'¡Buenas noches! ¿Tiene reserva?',fr:'Bonsoir ! Vous avez une réservation ?',side:'right'},
@@ -1210,7 +1182,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 10 ── Chez le médecin */
-  {id:'medico2',level:2,emoji:'🩺',name:'En el médico',sub:'Expliquer ce qui ne va pas / Chez le médecin',type:'dialog',
+  {id:'medico2',level:2,emoji:'🩺',name:'En el médico',sub:'Chez le médecin',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Expliquer ses symptômes',img:'🤒',dialogue:[
       {s:'Médico',es:'¡Buenos días! ¿Qué le pasa?',fr:'Bonjour ! Qu\'est-ce qui ne va pas ?',side:'right'},
@@ -1245,7 +1217,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 11 ── La météo */
-  {id:'meteo2',level:2,emoji:'☀️',name:'El tiempo',sub:'Parler de la météo / Qu\'est-ce qu\'il fait ?',type:'dialog',
+  {id:'meteo2',level:2,emoji:'☀️',name:'El tiempo',sub:'Parler de la météo',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Parler du temps',img:'🌤️',dialogue:[
       {s:'Marta',es:'¡Qué calor hace hoy!',fr:'Quelle chaleur aujourd\'hui !',side:'left'},
@@ -1280,7 +1252,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 12 ── Trouver un logement */
-  {id:'logement2',level:2,emoji:'🏠',name:'Buscar piso',sub:'Chercher un logement / Louer un appartement',type:'dialog',
+  {id:'logement2',level:2,emoji:'🏠',name:'Buscar piso',sub:'Chercher un logement',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Appeler pour un appartement',img:'📱',dialogue:[
       {s:'Cliente',es:'Hola, llamo por el piso en alquiler.',fr:'Bonjour, j\'appelle pour l\'appartement en location.',side:'left'},
@@ -1315,7 +1287,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 13 ── Parler de ses goûts */
-  {id:'gustos2',level:2,emoji:'❤️',name:'Gustos y aficiones',sub:'Parler de ce qu\'on aime / Les loisirs',type:'dialog',
+  {id:'gustos2',level:2,emoji:'❤️',name:'Gustos y aficiones',sub:'Parler de ce qu\'on aime',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Parler de musique',img:'🎵',dialogue:[
       {s:'Lucía',es:'¿Te gusta la música?',fr:'Tu aimes la musique ?',side:'right'},
@@ -1350,7 +1322,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 14 ── Sortir le soir */
-  {id:'fiesta2',level:2,emoji:'🎉',name:'Salir de noche',sub:'Sortir le soir / Vie sociale en Espagne',type:'dialog',
+  {id:'fiesta2',level:2,emoji:'🎉',name:'Salir de noche',sub:'Sortir le soir',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Organiser une sortie',img:'🎊',dialogue:[
       {s:'Pablo',es:'¡Hola! ¿Salimos esta noche?',fr:'Salut ! On sort ce soir ?',side:'left'},
@@ -1396,7 +1368,7 @@ var ALL_THEMES_FR=LEVEL1_THEMES_FR.concat(LEVEL2_THEMES_FR);
 ======================================== */
 
 var LEVEL1_THEMES_ES=[
-{id:'alpha',level:1,emoji:'🔤',name:'L\'Alphabet',sub:'A, B, C… Z / El alfabeto',type:'alpha',words:[{es:'A',fr:'A',em:'✈️'},{es:'B',fr:'B',em:'🎈'},{es:'C',fr:'C',em:'☕'},{es:'D',fr:'D',em:'💃'},{es:'E',fr:'E',em:'🏫'},{es:'F',fr:'F',em:'🌸'},{es:'G',fr:'G',em:'🚉'},{es:'H',fr:'H',em:'🏨'},{es:'I',fr:'I',em:'🏝️'},{es:'J',fr:'J',em:'🌿'},{es:'K',fr:'K',em:'⚖️'},{es:'L',fr:'L',em:'🦁'},{es:'M',fr:'M',em:'🏠'},{es:'N',fr:'N',em:'🌙'},{es:'O',fr:'O',em:'🐦'},{es:'P',fr:'P',em:'🍞'},{es:'Q',fr:'Q',em:'🏘️'},{es:'R',fr:'R',em:'🌹'},{es:'S',fr:'S',em:'☀️'},{es:'T',fr:'T',em:'🚂'},{es:'U',fr:'U',em:'1️⃣'},{es:'V',fr:'V',em:'🌆'},{es:'W',fr:'W',em:'🚃'},{es:'X',fr:'X',em:'🎵'},{es:'Y',fr:'Y',em:'🥛'},{es:'Z',fr:'Z',em:'0️⃣'}],quiz10:[{q:'¿Qué letra escuchas?',audio:'J',opts:['L','G','J','V'],ans:2},{q:'¿Qué letra escuchas?',audio:'F',opts:['Z','P','H','F'],ans:3},{q:'¿Qué letra escuchas?',audio:'U',opts:['M','U','I','J'],ans:1},{q:'¿Qué letra escuchas?',audio:'I',opts:['O','A','I','Y'],ans:2},{q:'¿Qué letra escuchas?',audio:'H',opts:['B','F','X','H'],ans:3},{q:'¿Qué letra escuchas?',audio:'Y',opts:['L','P','Y','Z'],ans:2},{q:'¿Qué letra escuchas?',audio:'G',opts:['K','T','G','N'],ans:2},{q:'¿Qué letra escuchas?',audio:'R',opts:['V','M','B','R'],ans:3},{q:'¿Qué letra escuchas?',audio:'Z',opts:['B','M','G','Z'],ans:3},{q:'¿Qué letra escuchas?',audio:'S',opts:['T','S','Y','D'],ans:1},{q:'¿Qué letra escuchas?',audio:'N',opts:['L','M','D','N'],ans:3},{q:'¿Qué letra escuchas?',audio:'X',opts:['X','C','W','N'],ans:0}]},
+{id: 'alpha',level: 1,emoji: '🔤',name: 'El Alfabeto',sub: 'A, B, C… Z / L\'alphabet',type: 'alpha',words: [{es: 'A', fr: 'A', em: '✈️'},{es: 'B', fr: 'B', em: '🎈'},{es: 'C', fr: 'C', em: '☕'},{es: 'D', fr: 'D', em: '💃'},{es: 'E', fr: 'E', em: '🏫'},{es: 'F', fr: 'F', em: '🌸'},{es: 'G', fr: 'G', em: '🚉'},{es: 'H', fr: 'H', em: '🏨'},{es: 'I', fr: 'I', em: '🏝️'},{es: 'J', fr: 'J', em: '🌿'},{es: 'K', fr: 'K', em: '⚖️'},{es: 'L', fr: 'L', em: '🦁'},{es: 'M', fr: 'M', em: '🏠'},{es: 'N', fr: 'N', em: '🌙'},{es: 'Ñ', fr: 'Ñ', em: '🪅'},{es: 'O', fr: 'O', em: '🐦'},{es: 'P', fr: 'P', em: '🍞'},{es: 'Q', fr: 'Q', em: '🏘️'},{es: 'R', fr: 'R', em: '🌹'},{es: 'S', fr: 'S', em: '☀️'},{es: 'T', fr: 'T', em: '🚂'},{es: 'U', fr: 'U', em: '1️⃣'},{es: 'V', fr: 'V', em: '🌆'},{es: 'W', fr: 'W', em: '🚃'},{es: 'X', fr: 'X', em: '🎵'},{es: 'Y', fr: 'Y', em: '🥛'},{es: 'Z', fr: 'Z', em: '0️⃣'}],quiz10: [{q: 'Quelle lettre entends-tu ?', audio: 'J', opts: ['L', 'G', 'J', 'V'], ans: 2},{q: 'Quelle lettre entends-tu ?', audio: 'F', opts: ['Z', 'P', 'H', 'F'], ans: 3},{q: 'Quelle lettre entends-tu ?', audio: 'U', opts: ['M', 'U', 'I', 'J'], ans: 1},{q: 'Quelle lettre entends-tu ?', audio: 'I', opts: ['O', 'A', 'I', 'Y'], ans: 2},{q: 'Quelle lettre entends-tu ?', audio: 'H', opts: ['B', 'F', 'X', 'H'], ans: 3},{q: 'Quelle lettre entends-tu ?', audio: 'Y', opts: ['L', 'P', 'Y', 'Z'], ans: 2},{q: 'Quelle lettre entends-tu ?', audio: 'G', opts: ['K', 'T', 'G', 'N'], ans: 2},{q: 'Quelle lettre entends-tu ?', audio: 'R', opts: ['V', 'M', 'B', 'R'], ans: 3},{q: 'Quelle lettre entends-tu ?', audio: 'Z', opts: ['B', 'M', 'G', 'Z'], ans: 3},{q: 'Quelle lettre entends-tu ?', audio: 'S', opts: ['T', 'S', 'Y', 'D'], ans: 1},{q: 'Quelle lettre entends-tu ?', audio: 'N', opts: ['L', 'M', 'D', 'N'], ans: 3},{q: 'Quelle lettre entends-tu ?', audio: 'X', opts: ['X', 'C', 'W', 'N'], ans: 0}]},
 {id:'salut',level:1,emoji:'👋',name:'Les Salutations',sub:'Bonjour, merci… / Los saludos',words:[{es:'Buenos días',fr:'Bonjour (le matin)',em:'🌅'},{es:'Buenas tardes',fr:'Bon après-midi',em:'🌆'},{es:'Buenas noches',fr:'Bonsoir / Bonne nuit',em:'🌙'},{es:'¡Hola!',fr:'Salut !',em:'👋'},{es:'Adiós / Hasta luego',fr:'Au revoir / À bientôt',em:'👋'},{es:'Hasta pronto',fr:'À bientôt',em:'⏱️'},{es:'Gracias / Muchas gracias',fr:'Merci / Merci beaucoup',em:'🙏'},{es:'Por favor / De rien',fr:'S\'il vous plaît / De rien',em:'🤝'},{es:'Disculpa / Disculpe',fr:'Pardon / Excusez-moi',em:'🙇'},{es:'¡Venga! / ¡Vale!',fr:'Allez ! / D\'accord !',em:'👍'},{es:'Sí',fr:'Oui',em:'✅'},{es:'No',fr:'Non',em:'❌'},{es:'¿Cómo estás? o ¿Qué tal?',fr:'Comment ça va ?',em:'🤗'},{es:'Estoy bien, gracias',fr:'Je vais bien, merci',em:'😊'},{es:'Más o menos / Así así',fr:'Comme ci comme ça',em:'😐'},{es:'No estoy bien / No me encuentro bien',fr:'Je ne vais pas bien / Je n\'ai pas la forme',em:'😞'},{es:'¡Qué guay! / ¡Mola!',fr:'C\'est cool ! / Super !',em:'🌟'}],quiz10:[{q:'¿Cómo se dice "No" en francés?',opts:['Je ne vais pas bien','Bonsoir','Salut !','Non'],ans:3},{q:'¿Cómo se dice "Buenas tardes" en francés?',opts:['Comment ça va ?','Bon après-midi','Non','Comme ci comme ça'],ans:1},{q:'¿Cómo se dice "Por favor" en francés?',opts:['Oui','Salut !','Merci','S\'il vous plaît'],ans:3},{q:'¿Cómo se dice "Hasta pronto" en francés?',opts:['Je vais bien, merci','Oui','Bon après-midi','À bientôt'],ans:3},{q:'¿Cómo se dice "Buenas noches" en francés?',opts:['Bonsoir','C\'est cool !','Pardon','Allez !'],ans:0},{q:'¿Cómo se dice "Disculpa" en francés?',opts:['Au revoir','Je vais bien, merci','Bon après-midi','Pardon'],ans:3},{q:'¿Cómo se dice "No estoy bien" en francés?',opts:['Je ne vais pas bien','S\'il vous plaît','Oui','Comme ci comme ça'],ans:0},{q:'¿Cómo se dice "¡Venga!" en francés?',opts:['Au revoir','Allez !','Comment ça va ?','Je ne vais pas bien'],ans:1}]},
 {id:'pres',level:1,emoji:'🙋',name:'Se présenter',sub:'Nom, âge, ville… / Presentarse',words:[{es:'El apellido',fr:'Le nom de famille',em:'👨‍👩‍👧'},{es:'El nombre',fr:'Le prénom',em:'🏷️'},{es:'La nacionalidad',fr:'La nationalité',em:'🌍'},{es:'La edad',fr:'L\'âge',em:'🎂'},{es:'La profesión o el oficio',fr:'La profession',em:'💼'},{es:'El país',fr:'Le pays',em:'🗺️'},{es:'Francés / francesa',fr:'Français(e)',em:'🇫🇷'},{es:'Español / española',fr:'Espagnol(e)',em:'🇪🇸'},{es:'Vivo en',fr:'J\'habite à',em:'🏠'},{es:'Soy o Estoy',fr:'Je suis',em:'🧑'},{es:'Tengo ... años',fr:'J\'ai ... ans',em:'🎈'},{es:'Me llamo',fr:'Je m\'appelle',em:'👋'},{es:'¿De dónde eres?',fr:'D\'où es-tu ?',em:'🌍'},{es:'Soy de Madrid',fr:'Je suis de Madrid',em:'🏙️'}],quiz10:[{q:'¿Cómo se dice "Espagnol" en francés?',opts:['Le pays','Je suis de Madrid','Espagnol','J\'habite à'],ans:2},{q:'¿Cómo se dice "La nacionalidad" en francés?',opts:['D\'où es-tu ?','La nationalité','Je m\'appelle','Le prénom'],ans:1},{q:'¿Cómo se dice "Vivo en" en francés?',opts:['La nacionalidad','J\'habite à','Le nom de famille','Je suis de Madrid'],ans:1},{q:'¿Cómo se dice "El país" en francés?',opts:['J\'habite à','J\'ai ... ans','Je suis de Madrid','Le pays'],ans:3},{q:'¿Cómo se dice "Tengo ... años" en francés?',opts:['J\'ai ... ans','Je suis de Madrid','D\'où es-tu ?','Je suis'],ans:0},{q:'¿Cómo se dice "El apellido" en francés?',opts:['Le nom de famille','Je suis de Madrid','J\'habite à','Espagnol'],ans:0},{q:'¿Cómo se dice "Francés" en francés?',opts:['Je m\'appelle','D\'où es-tu ?','Le pays','Français'],ans:3},{q:'¿Cómo se dice "Soy de Madrid" en francés?',opts:['Je suis','Le nom de famille','Je suis de Madrid','Espagnol'],ans:2}]},
 {id:'orient',level:1,emoji:'🧭',name:'S\'orienter',sub:'Gauche, droite… / Orientarse',words:[{es:'Todo recto',fr:'Tout droit',em:'⬆️'},{es:'A la izquierda',fr:'À gauche',em:'⬅️'},{es:'A la derecha',fr:'À droite',em:'➡️'},{es:'Delante',fr:'Devant',em:'🔜'},{es:'Detrás',fr:'Derrière',em:'🔙'},{es:'Al lado',fr:'À côté',em:'↔️'},{es:'Frente a / Enfrente',fr:'En face',em:'🔄'},{es:'Cerca',fr:'Près',em:'📍'},{es:'Lejos',fr:'Loin',em:'🌅'},{es:'El mapa / El plano',fr:'Le plan / La carte',em:'🗺️'}],quiz10:[{q:'¿Cómo se dice "Delante" en francés?',opts:['À côté','Le plan','En face','Devant'],ans:3},{q:'¿Cómo se dice "El mapa" en francés?',opts:['Le plan','À côté','Derrière','À gauche'],ans:0},{q:'¿Cómo se dice "A la derecha" en francés?',opts:['Tout droit','En face','Derrière','À droite'],ans:3},{q:'¿Cómo se dice "A la izquierda" en francés?',opts:['Derrière','À gauche','Devant','En face'],ans:1},{q:'¿Cómo se dice "Detrás" en francés?',opts:['À gauche','Derrière','À côté','En face'],ans:1},{q:'¿Cómo se dice "Cerca" en francés?',opts:['Près','Loin','À gauche','À droite'],ans:0},{q:'¿Cómo se dice "Al lado" en francés?',opts:['À côté','À gauche','En face','À droite'],ans:0},{q:'¿Cómo se dice "Frente a" en francés?',opts:['En face','Le plan','Tout droit','Devant'],ans:0}]},

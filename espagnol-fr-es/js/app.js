@@ -805,10 +805,10 @@ function renderVocab() {
     var mainWord  = (currentMode === 'learn_french') ? fr : es;
     var subWord   = (currentMode === 'learn_french') ? es : fr;
     var spokenKey = (currentMode === 'learn_french') ? fr : es;
-    return '<span class="vocab-chip" onclick="speak(\'' + esc(spokenKey) + '\')">'
-      + '<span class="vocab-item-et">' + mainWord + '</span>'
-      + (subWord ? '<span class="vocab-item-fr">= ' + subWord + '</span>' : '')
-      + '</span>';
+    return '<span class="vocab-chip" style="display: inline-flex; flex-direction: column; align-items: center; text-align: center;" onclick="speak(\'' + esc(spokenKey) + '\')">'
+  + '<span class="vocab-item-et" style="font-weight: bold;">' + mainWord + '</span>'
+  + (subWord ? '<span class="vocab-translation-sub">' + subWord + '</span>' : '')
+  + '</span>';
   }).join('');
 
   var vocabTitle   = (currentMode === 'learn_french')
