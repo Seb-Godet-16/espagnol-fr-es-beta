@@ -350,7 +350,7 @@ function renderSections() {
 
   var progressLabel = (currentMode === 'learn_french')
     ? (n + ' / ' + total + ' modules — ' + pct + '%')
-    : (n + ' / ' + total + ' kutaalee — ' + pct + '%');
+    : (n + ' / ' + total + ' módulos — ' + pct + '%');
   document.getElementById('progressLabel').textContent = progressLabel;
 
   ['grid1', 'grid2'].forEach(function(gid) {

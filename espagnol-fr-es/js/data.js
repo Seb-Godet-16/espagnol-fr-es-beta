@@ -1,5 +1,6 @@
 /* ========================================
    Español Castillan → Français 🇪🇸 – Données
+   Langage python
    Vocabulaire, quiz et dialogues
    © 2026 Sébastien Godet
 ======================================== */
