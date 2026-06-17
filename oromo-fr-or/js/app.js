@@ -22,7 +22,7 @@ var dqStep      = 0, dqScore    = 0, dqAnswered   = false;
 var sitIdx      = 0;
 var q10Step     = 0, q10Score   = 0, q10Answered  = false;
 
-/* Progression persistante */
+/* Progression persistante (contient désormais des objets {id, stars}) */
 var done = [];
 
 
@@ -124,15 +124,11 @@ function _setText(id, val) {
 
 /* ═══════════════════════════════════════════
    3. SYNTHÈSE VOCALE + PRONONCIATION OROMO (CASCADE LOCALE)
-   - Mode français  : Web Speech API (fr-FR)
-   - Mode oromo     : Cascade de voix (Oromo > Somali > Amharic > Hausa > Swahili > Système)
-   - Alerte unique à l'initialisation de l'audio
 ═══════════════════════════════════════════ */
 
 var _oromoVoice = undefined;
 var _hasNotifiedVoice = false;
 
-// Fonction de recherche de voix disponible sur le téléphone
 function _resolveOromoVoice(callback) {
   if (_oromoVoice !== undefined) {
     callback(_oromoVoice);
@@ -143,7 +139,6 @@ function _resolveOromoVoice(callback) {
     var voices = speechSynthesis.getVoices();
     if (!voices || voices.length === 0) return false;
 
-    // Ordre de priorité des langues (le Swahili est inclus)
     var priorities = [
       { lang: 'om-ET', name: 'Oromo' },
       { lang: 'so-SO', name: 'Somali' },
@@ -175,7 +170,6 @@ function _resolveOromoVoice(callback) {
 
     _oromoVoice = foundVoice;
 
-    // Notification unique pour savoir quelle voix est utilisée
     if (!_hasNotifiedVoice) {
       _hasNotifiedVoice = true;
       alert("🎙️ Audio Oromo configuré avec la voix : " + foundLabel);
@@ -194,37 +188,6 @@ function _resolveOromoVoice(callback) {
   }
 }
 
-// Fonction de lecture
-function speak(txt) {
-  if (!txt || !window.speechSynthesis) return;
-
-  _resolveOromoVoice(function(voice) {
-    speechSynthesis.cancel();
-    
-    // Découpage du texte pour lecture fluide
-    var parts = (txt || '').split('/').map(function(p) { return p.trim(); }).filter(Boolean);
-    
-    function speakPart(i) {
-      if (i >= parts.length) return;
-      var u = new SpeechSynthesisUtterance(parts[i]);
-      if (voice) {
-        u.voice = voice;
-        u.lang = voice.lang;
-      }
-      u.rate = 0.85; // Vitesse optimisée
-      u.onend = function() {
-        if (i + 1 < parts.length) {
-          setTimeout(function() { speakPart(i + 1); }, 1000);
-        }
-      };
-      speechSynthesis.speak(u);
-    }
-    
-    speakPart(0);
-  });
-}
-
-/* ── Point d'entrée audio unique ── */
 function speak(txt) {
   if (!txt) return;
 
@@ -252,12 +215,10 @@ function speak(txt) {
     });
 
   } else {
-    // Mode d'apprentissage du Français standard
     _doSpeak(txt, null, 0.80);
   }
 }
 
-/* ── Synthèse vocale standard pour le français ── */
 function _doSpeak(txt, voiceObj, rate) {
   speechSynthesis.cancel();
   var parts = (txt || '').split('/').map(function(p) { return p.trim(); }).filter(Boolean);
@@ -275,27 +236,56 @@ function _doSpeak(txt, voiceObj, rate) {
 
 
 /* ═══════════════════════════════════════════
-   4. PERSISTANCE DE LA PROGRESSION
+   4. PERSISTANCE DE LA PROGRESSION (SYSTÈME D'ÉTOILES)
 ═══════════════════════════════════════════ */
 
 function loadDone() {
   try { done = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
   catch(e) { done = []; }
 }
+
 function saveDone() {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(done)); }
   catch(e) {}
 }
-function markDone(id) {
-  if (!done.includes(id)) { done.push(id); saveDone(); }
+
+function _calcStars(pct) {
+  if (pct === 100) return 3;
+  if (pct >= 75) return 2;
+  if (pct >= 50) return 1;
+  return 0;
 }
+
+function markDone(id, pct) {
+  var newStars = _calcStars(pct);
+  if (newStars === 0) return; 
+
+  var existing = done.find(function(d) { return d.id === id; });
+  if (existing) {
+    if (newStars > existing.stars) {
+      existing.stars = newStars;
+    }
+  } else {
+    done.push({ id: id, stars: newStars });
+  }
+  saveDone();
+}
+
 function resetTheme(id) {
-  done = done.filter(function(d) { return d !== id; });
+  done = done.filter(function(d) { return d.id !== id; });
   saveDone();
   renderSections();
   renderHome();
 }
-function isDone(id) { return done.includes(id); }
+
+function isDone(id) { 
+  return done.some(function(d) { return d.id === id; }); 
+}
+
+function getThemeStars(id) {
+  var found = done.find(function(d) { return d.id === id; });
+  return found ? found.stars : 0;
+}
 
 
 /* ═══════════════════════════════════════════
@@ -332,19 +322,21 @@ function showScreen(id) {
 function renderHome() {
   if (!ALL_THEMES.length) return;
   var total = ALL_THEMES.length;
-  var n     = done.length;
+  var n     = done.length; 
   var pct   = Math.round(n / total * 100);
 
   document.getElementById('homeBar').style.width = pct + '%';
 
   var label = (currentMode === 'learn_french')
-    ? (n + ' / ' + total + ' modules terminés — ' + pct + '%')
-    : (n + ' / ' + total + ' kutaalee xumuraman — ' + pct + '%');
+    ? (n + ' / ' + total + ' modules validés — ' + pct + '%')
+    : (n + ' / ' + total + ' kutaalee darban — ' + pct + '%');
   document.getElementById('homeBarLabel').textContent = label;
 
-  document.getElementById('homeStars').innerHTML = Array.from({ length: total }, function(_, i) {
-    return '<span class="star">' + (i < n ? '⭐' : '☆') + '</span>';
-  }).join('');
+  var totalStarsEarned = done.reduce(function(acc, d) { return acc + d.stars; }, 0);
+  var maxStarsPossible = total * 3;
+
+  document.getElementById('homeStars').innerHTML = 
+    '<span style="font-size:1.1rem; font-weight:bold; color:#f1c40f;">⭐ ' + totalStarsEarned + ' / ' + maxStarsPossible + '</span>';
 }
 
 
@@ -405,11 +397,16 @@ function _buildThemeCard(t) {
       + '</button>'
     : '';
 
+  var currentStars = getThemeStars(t.id);
+  var starsStr = Array.from({ length: 3 }, function(_, i) {
+    return i < currentStars ? '⭐' : '☆';
+  }).join('');
+
   return '<div class="theme-card' + (isDone(t.id) ? ' done' : '') + '" onclick="openTheme(\'' + t.id + '\')">'
     + '<div class="t-emoji">'  + t.emoji    + '</div>'
     + '<div class="t-name">'   + mainTitle  + '</div>'
     + '<div class="t-sub">'    + subLine    + '</div>'
-    + '<div class="t-stars">'  + (isDone(t.id) ? '⭐⭐⭐' : '☆☆☆') + '</div>'
+    + '<div class="t-stars" style="letter-spacing:2px">'  + starsStr + '</div>'
     + resetBtn
     + '</div>';
 }
@@ -611,7 +608,7 @@ function isAlphaQuiz() { return CT && CT.type === 'alpha'; }
 
 
 /* ═══════════════════════════════════════════
-   10. QUIZ 10 QUESTIONS (renderQuiz10)
+   10. QUIZ 10 QUESTIONS (AVEC ÉTOILES PROGRESSIVES)
 ═══════════════════════════════════════════ */
 
 function getQuizTotal(theme) {
@@ -620,6 +617,7 @@ function getQuizTotal(theme) {
   if (n <= 20) return 8;
   return 12;
 }
+
 function getQuizQuestions(theme) {
   return (theme.quiz10 || []).slice(0, getQuizTotal(theme));
 }
@@ -636,17 +634,27 @@ function renderQuiz10() {
 
   if (q10Step >= total) {
     var pct = Math.round(q10Score / total * 100);
-    if (pct === 100) markDone(CT.id);
+    var earnedStars = _calcStars(pct);
+    
+    if (earnedStars > 0) {
+      markDone(CT.id, pct);
+    }
 
     var r = _quizResultStrings(pct, 'q10');
+    var isSuccess = earnedStars > 0;
+    
+    var endStars = Array.from({ length: 3 }, function(_, i) {
+      return i < earnedStars ? '⭐' : '☆';
+    }).join('');
+
     document.getElementById('tabContent').innerHTML = '<div class="result-box">'
-      + '<div style="font-size:3rem">' + (pct === 100 ? '🌟' : '💪') + '</div>'
+      + '<div style="font-size:2rem; margin-bottom:5px;">' + (earnedStars === 3 ? '🌟🌟🌟' : endStars) + '</div>'
       + '<h3>' + r.title + '</h3>'
       + '<div class="score-num">' + q10Score + '/' + total + '</div>'
-      + '<div style="font-size:1rem;margin:6px 0;color:' + (pct === 100 ? '#009A44' : '#EF2B2D') + '">' + r.sub + '</div>'
+      + '<div style="font-size:1rem;margin:6px 0;color:' + (isSuccess ? '#009A44' : '#EF2B2D') + '">' + r.sub + '</div>'
       + '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px">'
       + '<button class="retry-btn" style="background:#888" onclick="q10Step=0;q10Score=0;q10Answered=false;renderQuiz10()">' + r.retry + '</button>'
-      + (pct === 100 ? '<button class="retry-btn" onclick="renderSections();showScreen(\'sections\')">' + r.finish + '</button>' : '')
+      + (isSuccess ? '<button class="retry-btn" onclick="renderSections();showScreen(\'sections\')">' + r.finish + '</button>' : '')
       + '</div></div>';
     renderSections();
     return;
@@ -774,6 +782,7 @@ function renderDialog() {
     + '</div>';
   setTimeout(function() { document.querySelectorAll('[id^=bl]').forEach(function(b) { b.style.opacity = '1'; }); }, 80);
 }
+
 function pickSit(i) { sitIdx = i; renderDialog(); }
 
 
@@ -812,7 +821,7 @@ function renderVocab() {
 
 
 /* ═══════════════════════════════════════════
-   13. QUIZ DIALOGUE (renderDialogQuiz)
+   13. QUIZ DIALOGUE (AVEC ÉTOILES PROGRESSIVES)
 ═══════════════════════════════════════════ */
 
 function renderDialogQuiz() {
@@ -821,16 +830,26 @@ function renderDialogQuiz() {
 
   if (dqStep >= total) {
     var pct = Math.round(dqScore / total * 100);
-    if (pct === 100) markDone(CT.id);
+    var earnedStars = _calcStars(pct);
+    
+    if (earnedStars > 0) {
+      markDone(CT.id, pct);
+    }
+
     var r = _quizResultStrings(pct, 'dq');
+    var isSuccess = earnedStars > 0;
+    var endStars = Array.from({ length: 3 }, function(_, i) {
+      return i < earnedStars ? '⭐' : '☆';
+    }).join('');
+
     document.getElementById('tabContent').innerHTML = '<div class="result-box">'
-      + '<div style="font-size:3rem">' + (pct === 100 ? '🎉' : '💪') + '</div>'
+      + '<div style="font-size:2rem; margin-bottom:5px;">' + (earnedStars === 3 ? '🎉🎉🎉' : endStars) + '</div>'
       + '<h3>' + r.title + '</h3>'
       + '<div class="score-num">' + dqScore + '/' + total + '</div>'
-      + '<div style="font-size:.9rem;margin-top:6px;color:' + (pct === 100 ? '#009A44' : '#EF2B2D') + '">' + r.sub + '</div>'
+      + '<div style="font-size:.9rem;margin-top:6px;color:' + (isSuccess ? '#009A44' : '#EF2B2D') + '">' + r.sub + '</div>'
       + '<div style="display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap">'
       + '<button class="retry-btn" style="background:#888" onclick="dqStep=0;dqScore=0;dqAnswered=false;renderDialogQuiz()">' + r.retry + '</button>'
-      + (pct === 100 ? '<button class="retry-btn" onclick="renderSections();showScreen(\'sections\')">' + r.finish + '</button>' : '')
+      + (isSuccess ? '<button class="retry-btn" onclick="renderSections();showScreen(\'sections\')">' + r.finish + '</button>' : '')
       + '</div></div>';
     renderSections();
     return;
@@ -871,27 +890,38 @@ function checkDQ(chosen, correct) {
 
 
 /* ═══════════════════════════════════════════
-   14. UTILITAIRES
+   14. UTILITAIRES & TRADUCTIONS DES RÉSULTATS
 ═══════════════════════════════════════════ */
 
 function _quizResultStrings(pct, type) {
-  var ok = pct === 100;
+  var stars = _calcStars(pct);
+  var isSuccess = stars > 0;
+
   if (currentMode === 'learn_french') {
+    var titleFr = 'Quiz xumurameera!';
+    if (stars === 3) titleFr = 'Baayʼee gaari da! 🌟🌟🌟';
+    else if (stars === 2) titleFr = 'Gari da! ⭐⭐';
+    else if (stars === 1) titleFr = 'Ni danda\'ama! ⭐';
+
     return {
-      title : ok ? 'Baayʼee gaari da! ✅' : (type === 'dq' ? 'Shaakala xumurameera!' : 'Quiz xumurameera!'),
-      sub   : ok ? 'Kutaan kun milkiin darbeera! ⭐' : (type === 'dq'
-              ? 'Darbuuf 100% deebii sirrii barbaachisa. Deebisii yaali!'
-              : 'Darbuuf 100% barbaachisa. Deebisii yaali!'),
+      title : titleFr,
+      sub   : isSuccess 
+              ? 'Kutaan kun milkiin darbeera! Tarreeffama haaraa argatteetta.' 
+              : 'Darbuuf yoo xiqqaate 50% deebii sirrii barbaachisa. Deebisii yaali!',
       retry : '🔄 Deebisi yaali',
       finish: '✓ Xumuri'
     };
   } else {
+    var titleOr = 'Quiz terminé !';
+    if (stars === 3) titleOr = 'Parfait ! 🌟🌟🌟';
+    else if (stars === 2) titleOr = 'Très bien ! ⭐⭐';
+    else if (stars === 1) titleOr = 'Bien ! ⭐';
+
     return {
-      title : ok ? (type === 'dq' ? 'Parfait ! ✅' : 'Excellent ! ✅') : (type === 'dq' ? 'Entraînement terminé !' : 'Quiz terminé !'),
-      sub   : ok ? (type === 'dq' ? 'Module débloqué ! ⭐' : 'Module validé avec succès ! ⭐')
-                 : (type === 'dq'
-                    ? 'Il vous faut 100% de bonnes réponses pour valider. Réessayez !'
-                    : 'Il vous faut 100% de bonnes réponses pour valider. Réessayez !'),
+      title : titleOr,
+      sub   : isSuccess 
+              ? 'Module validé ! Vous pouvez passer au suivant ou réessayer pour plus d\'étoiles.' 
+              : 'Il vous faut au moins 50% de bonnes réponses (1⭐) pour valider. Réessayez !',
       retry : '🔄 Réessayer',
       finish: '✓ Terminer'
     };
