@@ -129,7 +129,8 @@ function _setUI(t) {
 
 function _setText(id, val) {
   var el = document.getElementById(id);
-  if (el) el.textContent = val;
+  // On remplace .textContent par .innerHTML pour que le code HTML/CSS soit interprété
+  if (el) el.innerHTML = val || ''; 
 }
 
 
