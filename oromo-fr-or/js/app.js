@@ -146,11 +146,12 @@ function _resolveOromoVoice(callback) {
     // Ordre de priorité des langues (le Swahili est inclus)
     var priorities = [
       { lang: 'om-ET', name: 'Oromo' },
-      { lang: 'sw-KE', name: 'Swahili' },
-      { lang: 'am-ET', name: 'Amharique' },
       { lang: 'so-SO', name: 'Somali' },
+      { lang: 'am-ET', name: 'Amharique' },
       { lang: 'ha-NG', name: 'Haoussa' },
-      { lang: 'es-ES', name: 'Espagnol (Phonétique)' }
+      { lang: 'sw-KE', name: 'Swahili' },
+      { lang: 'es-ES', name: 'Phonétique (Optimisé Espagnol)' },
+      { lang: 'it-IT', name: 'Phonétique (Optimisé Italien)' }
     ];
 
     var foundVoice = null;
