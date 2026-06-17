@@ -129,34 +129,37 @@ function _setText(id, val) {
    - Alerte unique à l'initialisation de l'audio
 ═══════════════════════════════════════════ */
 
-var _oromoVoice       = undefined; 
-var _hasNotifiedVoice = false; // Permet de ne notifier qu'une seule fois
+var _oromoVoice = undefined;
+var _hasNotifiedVoice = false;
 
-/* ── Résolution en cascade selon les disponibilités réelles de l'appareil ── */
+// Fonction de recherche de voix disponible sur le téléphone
 function _resolveOromoVoice(callback) {
-  if (_oromoVoice !== undefined) { callback(_oromoVoice); return; }
-  
+  if (_oromoVoice !== undefined) {
+    callback(_oromoVoice);
+    return;
+  }
+
   function search() {
     var voices = speechSynthesis.getVoices();
-    if (!voices.length) return false;
+    if (!voices || voices.length === 0) return false;
 
-    // Tableau de priorité décroissante des langues locales
+    // Ordre de priorité des langues (le Swahili est inclus)
     var priorities = [
       { lang: 'om-ET', name: 'Oromo' },
+      { lang: 'sw-KE', name: 'Swahili' },
+      { lang: 'am-ET', name: 'Amharique' },
       { lang: 'so-SO', name: 'Somali' },
-      { lang: 'am-ET', name: 'Amharic' },
-      { lang: 'ha-NG', name: 'Hausa' },
-      { lang: 'sw-KE', name: 'Swahili' }
+      { lang: 'ha-NG', name: 'Haoussa' },
+      { lang: 'es-ES', name: 'Espagnol (Phonétique)' }
     ];
 
     var foundVoice = null;
-    var foundLabel = "Voix par défaut (Système)";
+    var foundLabel = "Voix par défaut";
 
-    // Parcours de la liste des priorités
     for (var i = 0; i < priorities.length; i++) {
       var target = priorities[i];
       var match = voices.find(function(v) {
-        return v.lang.toLowerCase().startsWith(target.lang.toLowerCase());
+        return v.lang.toLowerCase().indexOf(target.lang.split('-')[0].toLowerCase()) !== -1;
       });
       if (match) {
         foundVoice = match;
@@ -165,17 +168,16 @@ function _resolveOromoVoice(callback) {
       }
     }
 
-    // Si aucune langue de la liste n'est présente, on prend la première voix système disponible
-    if (!foundVoice && voices.length > 0) {
+    if (!foundVoice) {
       foundVoice = voices[0];
     }
 
     _oromoVoice = foundVoice;
 
-    // Alerte UNIQUE à l'utilisateur lors du premier déclenchement audio
+    // Notification unique pour savoir quelle voix est utilisée
     if (!_hasNotifiedVoice) {
       _hasNotifiedVoice = true;
-      alert("🎙️ Configuration Audio Oromo :\nLa prononciation est gérée par la langue : " + foundLabel);
+      alert("🎙️ Audio Oromo configuré avec la voix : " + foundLabel);
     }
 
     callback(_oromoVoice);
@@ -189,6 +191,36 @@ function _resolveOromoVoice(callback) {
       callback(_oromoVoice);
     });
   }
+}
+
+// Fonction de lecture
+function speak(txt) {
+  if (!txt || !window.speechSynthesis) return;
+
+  _resolveOromoVoice(function(voice) {
+    speechSynthesis.cancel();
+    
+    // Découpage du texte pour lecture fluide
+    var parts = (txt || '').split('/').map(function(p) { return p.trim(); }).filter(Boolean);
+    
+    function speakPart(i) {
+      if (i >= parts.length) return;
+      var u = new SpeechSynthesisUtterance(parts[i]);
+      if (voice) {
+        u.voice = voice;
+        u.lang = voice.lang;
+      }
+      u.rate = 0.85; // Vitesse optimisée
+      u.onend = function() {
+        if (i + 1 < parts.length) {
+          setTimeout(function() { speakPart(i + 1); }, 1000);
+        }
+      };
+      speechSynthesis.speak(u);
+    }
+    
+    speakPart(0);
+  });
 }
 
 /* ── Point d'entrée audio unique ── */
