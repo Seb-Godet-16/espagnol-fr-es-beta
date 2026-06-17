@@ -367,8 +367,8 @@ function renderSections() {
   var progressLabel = (currentMode === 'learn_french')
     ? (n + ' / ' + total + ' modules — ' + pct + '%')
     : (n + ' / ' + total + ' módulos — ' + pct + '%');
-  document.getElementById('progressLabel').textContent = progressLabel;
-
+  document.getElementById('progressLabel').innerHTML = progressLabel;
+  
   ['grid1', 'grid2'].forEach(function(gid) {
     var lv = gid === 'grid1' ? 1 : 2;
     document.getElementById(gid).innerHTML = ALL_THEMES

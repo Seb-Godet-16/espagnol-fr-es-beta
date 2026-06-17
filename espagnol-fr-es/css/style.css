@@ -631,3 +631,18 @@ body{background:#f5f5f0}  /* écran lanceur uniquement */
 #sectionsTitle {
   line-height: 1.2 !important;
 }
+
+/* Ajustement spécifique pour l'en-tête de l'écran 3 (Modules) */
+.sections-header {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+#sectionsTitle {
+  margin-bottom: 2px !important;
+}
+
+.sections-header .progress-bar-wrap {
+  margin: 8px 0 4px 0 !important;
+}
