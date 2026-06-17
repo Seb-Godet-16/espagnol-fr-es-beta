@@ -34,6 +34,17 @@ var done = [];
 function initApp(mode) {
   currentMode = mode;
 
+  /* ── Bug 2 : vider ALL_THEMES et les grilles HTML avant rechargement ── */
+  ALL_THEMES = [];
+  var g1 = document.getElementById('grid1');
+  var g2 = document.getElementById('grid2');
+  if (g1) g1.innerHTML = '';
+  if (g2) g2.innerHTML = '';
+
+  /* ── Bug 3 : réinitialiser les variables de synthèse vocale ── */
+  _spanishVoice     = undefined;
+  _hasNotifiedVoice = false;
+
   if (mode === 'learn_french') {
     /* ── Thème couleur ── */
     document.documentElement.className = 'theme-french';
