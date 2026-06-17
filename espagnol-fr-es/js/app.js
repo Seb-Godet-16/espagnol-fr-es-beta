@@ -541,11 +541,11 @@ function renderFlash() {
       + '<button onclick="nextCard()">Siguiente →</button>'
       + '</div>'
       + '<div style="text-align:center;margin-top:10px;">'
-      + '<button class="audio-btn-big" onclick="speak(\'' + esc(card.fr) + '\')">🔊 Sagalee dhaggeeffadhu</button>'
+      + '<button class="audio-btn-big" onclick="speak(\'' + esc(card.fr) + '\')">🔊 Escuchar audio</button>'
       + '</div>';
 
   } else {
-    var hintOr = 'Cliquez pour voir la traduction en français';
+    var hintEs = 'Cliquez pour voir la traduction en français';
     if (hasConj) {
       frontContent = emFr
         + '<div class="fc-front-word">' + card.es + '</div>'
@@ -554,7 +554,7 @@ function renderFlash() {
         + '<div class="fc-back-word">' + card.fr + '</div>'
         + '<div class="fc-conj">' + card.conj.fr.map(function(l) { return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
     } else {
-      frontContent = emFr + '<div class="fc-front-word">' + card.es + '</div><div class="fc-front-hint">👆 ' + hintOr + '</div>';
+      frontContent = emFr + '<div class="fc-front-word">' + card.es + '</div><div class="fc-front-hint">👆 ' + hintEs + '</div>';
       backContent  = emBk + '<div class="fc-back-word">' + card.fr + '</div>';
     }
     document.getElementById('tabContent').innerHTML =
@@ -800,11 +800,11 @@ function pickSit(i) { sitIdx = i; renderDialog(); }
 function renderVocab() {
   var chips = CT.vocab.map(function(v) {
     var parts = v.split('=');
-    var et    = parts[0].trim();       
+    var es    = parts[0].trim();       
     var fr    = parts[1] ? parts[1].trim() : ''; 
-    var mainWord  = (currentMode === 'learn_french') ? fr : et;
-    var subWord   = (currentMode === 'learn_french') ? et : fr;
-    var spokenKey = (currentMode === 'learn_french') ? fr : et;
+    var mainWord  = (currentMode === 'learn_french') ? fr : es;
+    var subWord   = (currentMode === 'learn_french') ? es : fr;
+    var spokenKey = (currentMode === 'learn_french') ? fr : es;
     return '<span class="vocab-chip" onclick="speak(\'' + esc(spokenKey) + '\')">'
       + '<span class="vocab-item-et">' + mainWord + '</span>'
       + (subWord ? '<span class="vocab-item-fr">= ' + subWord + '</span>' : '')
