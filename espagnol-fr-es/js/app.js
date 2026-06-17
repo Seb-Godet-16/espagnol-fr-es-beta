@@ -60,16 +60,16 @@ function initApp(mode) {
          (l'apprenant Espagnol doit comprendre les menus) ── */
     _setUI({
       homeFlagRow    : '🇫🇷',
-      homeTitle      : 'Apprendre le Français',
-      homeSubtitle   : 'Recto Français · Verso Espagnol',
-      homeStartBtn   : '▶ Commencer',
-      sectionsBackBtn: '← Retour',
-      sectionsTitle  : '📚 Modules',
-      lessonBackBtn  : '← Modules',
+      homeTitle      : 'Apprendre le Français<br><small style="font-size: 0.55em; opacity: 0.85; font-weight: normal; display: block; margin-top: 4px;">Aprender Francés</small>',
+      homeSubtitle   : 'Recto Français · Verso Espagnol<br><small style="font-size: 0.8em; opacity: 0.75; display: block; margin-top: 2px;">Anverso Francés · Reverso Español</small>',
+      homeStartBtn   : '▶ Commencer<br><small style="font-size: 0.7em; opacity: 0.85; font-weight: normal; display: block;">Empezar</small>',
+      sectionsBackBtn: '← Retour<br><small style="font-size: 0.75em; opacity: 0.8; font-weight: normal; display: block;">Volver</small>',
+      sectionsTitle  : '📚 Modules<br><small style="font-size: 0.65em; opacity: 0.8; font-weight: normal; display: block; margin-top: 2px;">Módulos</small>',
+      lessonBackBtn  : '← Modules<br><small style="font-size: 0.75em; opacity: 0.8; font-weight: normal; display: block;">Módulos</small>',
       level1Badge    : '1',
-      level1Label    : 'Niveau 1 — Vocabulaire',
+      level1Label    : 'Niveau 1 — Vocabulaire<br><small style="font-size: 0.8em; opacity: 0.75; display: block; margin-top: 2px;">Nivel 1 — Vocabulario</small>',
       level2Badge    : '2',
-      level2Label    : 'Niveau 2 — Phrases simples'
+      level2Label    : 'Niveau 2 — Phrases simples<br><small style="font-size: 0.8em; opacity: 0.75; display: block; margin-top: 2px;">Nivel 2 — Frases sencillas</small>'
     });
 
   } else if (mode === 'learn_spain') {
@@ -335,9 +335,11 @@ function renderHome() {
   document.getElementById('homeBar').style.width = pct + '%';
 
   var label = (currentMode === 'learn_french')
-    ? (n + ' / ' + total + ' modules validés — ' + pct + '%')
-    : (n + ' / ' + total + ' módulos aprobados — ' + pct + '%');
-  document.getElementById('homeBarLabel').textContent = label;
+    ? (n + ' / ' + total + ' modules validés — ' + pct + '%<br><small style="font-size: 0.8em; opacity: 0.75; display: block; margin-top: 2px;">' + n + ' / ' + total + ' módulos completados — ' + pct + '%</small>')
+    : (n + ' / ' + total + ' módulos aprobados — ' + pct + '%<br><small style="font-size: 0.8em; opacity: 0.75; display: block; margin-top: 2px;">' + n + ' / ' + total + ' modules validés — ' + pct + '%</small>');
+
+  // Remplacement de .textContent par .innerHTML pour activer les balises <br> et <small>
+  document.getElementById('homeBarLabel').innerHTML = label;
 
   var totalStarsEarned = done.reduce(function(acc, d) { return acc + d.stars; }, 0);
   var maxStarsPossible = total * 3;
