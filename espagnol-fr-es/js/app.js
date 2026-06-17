@@ -67,9 +67,9 @@ function initApp(mode) {
       sectionsTitle  : '📚 Modules<br><span class="translation-sub">Módulos</span>',
       lessonBackBtn  : '← Modules<br><span class="translation-sub">Módulos</span>',
       level1Badge    : '1',
-      level1Label    : 'Niveau 1 — Vocabulaire<br><span class="translation-sub">Nivel 1 — Vocabulario</span>',
+      level1Label    : '<span>Niveau 1 — Vocabulaire<br><span class="translation-sub">Nivel 1 — Vocabulario</span></span>',
       level2Badge    : '2',
-      level2Label    : 'Niveau 2 — Phrases simples<br><span class="translation-sub">Nivel 2 — Frases sencillas</span>'
+      level2Label    : '<span>Niveau 2 — Phrases simples<br><span class="translation-sub">Nivel 2 — Frases sencillas</span></span>'
     });
 
   } else if (mode === 'learn_spain') {
