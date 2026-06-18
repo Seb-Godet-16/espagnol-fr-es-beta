@@ -45,7 +45,7 @@ function initApp(mode) {
   _spanishVoice     = undefined;
   _hasNotifiedVoice = false;
 
-  // 🔄 Chargement immédiat de l'historique ou Espagne par défaut pour l'affichage initial des sous-titres
+  // 🔄 Chargement immédiat de l'historique ou Espagne par défaut
   var savedRegion = localStorage.getItem('user_preferred_region');
   currentRegion = savedRegion ? savedRegion : 'ES';
 
@@ -60,26 +60,24 @@ function initApp(mode) {
     voiceLang = 'fr-FR';
 
     /* ── Données ── */
-    ALL_THEMES = ALL_THEMES_FR;           // défini dans data.js
-    STORAGE_KEY = 'pe_es_fr_done_v1';    // clé originale app_francais
+    ALL_THEMES = ALL_THEMES_FR;
+    STORAGE_KEY = 'pe_es_fr_done_v1';
 
-    /* ── Textes de l'interface en ESPAGNOL
-         (l'apprenant Espagnol doit comprendre les menus) ── */
+    /* ── Textes de l'interface en ESPAGNOL ── */
     _setUI({
       homeFlagRow    : '🇫🇷',
       homeTitle      : 'Apprendre le Français<br><span class="translation-sub">Aprender Francés</span>',
-      
-      // 🌟 MISE À JOUR : Ajout du conteneur de drapeau dynamique sur le sous-titre d'accueil
-      homeSubtitle   : 'Recto Français · Verso Espagnol (<span id="current-lang-flag">' + activeFlag + '</span>)<br><span class="translation-sub">Anverso Francés · Reverso Español</span>',
-      
+      homeSubtitle   : '', // ✨ SUPPRIMÉ : Plus de sous-titre Anverso/Reverso ici
       homeStartBtn   : '▶ Commencer<br><span class="translation-sub">Empezar</span>',
       sectionsBackBtn: '← Retour<br><span class="translation-sub">Volver</span>',
-      sectionsTitle  : '📚 Modules<br><span class="translation-sub">Módulos</span>',
+      
+      // 🌟 NETTOYAGE MODULES (Français) : Suppression des sous-titres et traductions
+      sectionsTitle  : '📚 Modules',
       lessonBackBtn  : '← Modules<br><span class="translation-sub">Módulos</span>',
       level1Badge    : '1',
-      level1Label    : '<span>Niveau 1 — Vocabulaire<br><span class="translation-sub">Nivel 1 — Vocabulario</span></span>',
+      level1Label    : '<span>Niveau 1 — Vocabulaire</span>',
       level2Badge    : '2',
-      level2Label    : '<span>Niveau 2 — Phrases simples<br><span class="translation-sub">Nivel 2 — Frases sencillas</span></span>'
+      level2Label    : '<span>Niveau 2 — Phrases simples</span>'
     });
 
   } else if (mode === 'learn_spain') {
@@ -90,26 +88,24 @@ function initApp(mode) {
     voiceLang = 'es-ES';
 
     /* ── Données ── */
-    ALL_THEMES = ALL_THEMES_ES;            // défini dans data.js
-    STORAGE_KEY = 'pe_fr_es_done_v1';    // clé originale app_espagnol
+    ALL_THEMES = ALL_THEMES_ES;
+    STORAGE_KEY = 'pe_fr_es_done_v1';
 
-    /* ── Textes de l'interface en FRANÇAIS
-         (l'apprenant francophone doit comprendre les menus) ── */
+    /* ── Textes de l'interface en FRANÇAIS ── */
     _setUI({
-      homeFlagRow    : '🇪🇸',
+      homeFlagRow    : activeFlag, // ✨ DYNAMIQUE : Reçoit directement le bon drapeau au lieu de "🇪🇸" en dur
       homeTitle      : 'Aprender Español<br><span class="translation-sub">Apprendre l\'Espagnol</span>',
-      
-      // 🌟 MISE À JOUR : Ajout du conteneur de drapeau dynamique sur le sous-titre d'accueil
-      homeSubtitle   : 'Anverso Español (<span id="current-lang-flag">' + activeFlag + '</span>) · Reverso Francés<br><span class="translation-sub">Recto Espagnol · Verso Français</span>',
-      
+      homeSubtitle   : '', // ✨ SUPPRIMÉ : Plus de sous-titre Anverso/Reverso ici
       homeStartBtn   : '▶ Empezar<br><span class="translation-sub">Commencer</span>',
       sectionsBackBtn: '← Volver<br><span class="translation-sub">Retour</span>',
-      sectionsTitle  : '📚 Módulos<br><span class="translation-sub">Modules</span>',
+      
+      // 🌟 NETTOYAGE MODULES (Espagnol) : Suppression des sous-titres et traductions
+      sectionsTitle  : '📚 Módulos',
       lessonBackBtn  : '← Módulos<br><span class="translation-sub">Modules</span>',
       level1Badge    : '1',
-      level1Label    : '<span>Nivel 1 — Vocabulario<br><span class="translation-sub">Niveau 1 — Vocabulaire</span></span>',
+      level1Label    : '<span>Nivel 1 — Vocabulario</span>',
       level2Badge    : '2',
-      level2Label    : '<span>Nivel 2 — Phrases simples<br><span class="translation-sub">Niveau 2 — Phrases simples</span></span>'
+      level2Label    : '<span>Nivel 2 — Phrases simples</span>'
     });
   }
 
@@ -121,12 +117,11 @@ function initApp(mode) {
   showScreen('home');
 
   // ══════════════════════════════════════════════════════════════════════
-  // GESTION DU SÉLECTEUR DE RÉGIONS HISPANIQUES (Pour les deux modes)
+  // GESTION DU SÉLECTEUR DE RÉGIONS HISPANIQUES
   // ══════════════════════════════════════════════════════════════════════
   var selectorWrap = document.getElementById('region-selector-wrap');
   if (selectorWrap) {
     selectorWrap.style.display = 'block';
-    // Structure ordonnée : la liste déroulante au-dessus, le bandeau bleu en dessous
     selectorWrap.innerHTML = '<div id="region-select-container"></div>'
                            + '<div id="region-message-box"></div>';
   }
@@ -134,7 +129,7 @@ function initApp(mode) {
   // On génère la liste des options dans le sélecteur HTML
   renderRegionOptions();
 
-  // 🌟 Application immédiate de la région enregistrée (classes CSS, texte d'accent, et mise à jour de l'élément d'accueil fraîchement créé)
+  // 🌟 Force l'application immédiate de la bonne variante graphique
   pickRegion(currentRegion);
 }
 
@@ -1126,15 +1121,13 @@ function pickRegion(regionId) {
 
   // 🌟 GESTION DYNAMIQUE DES COULEURS DE FOND (CLASSES CSS)
   if (currentMode === 'learn_spain') {
-    // On retire absolument toutes les classes de pays pour repartir à zéro
     document.documentElement.classList.remove('region-ES', 'region-MX', 'region-CO', 'region-PE', 'region-VE', 'region-AR', 'region-EC');
-    // On applique la classe spécifique du pays sélectionné (ex: region-EC pour l'Équateur)
     document.documentElement.classList.add('region-' + regionId);
   }
 
   currentRegion = regionId;
   
-  // ⚡ Force la cascade à rescanner le smartphone et déclencher l'alerte popup au prochain clic audio
+  // ⚡ Force la cascade à rescanner le smartphone
   _spanishVoice = undefined;
   _hasNotifiedVoice = false;
   
@@ -1166,24 +1159,29 @@ function pickRegion(regionId) {
     }
   }
 
-  // Dictionnaire des drapeaux
-  var flagEmojis = { 'ES': '🇪🇸', 'MX': '🇲🇽', 'CO': '🇨🇴', 'PE': '🇵🇪', 'VE': '🇻🇪', 'AR': '🇦🇷', 'EC': '🇪🇨' };
-  var activeFlag = flagEmojis[currentRegion] || '🇪🇸';
+  // Codes pays pour les images de drapeaux (évite le problème d'affichage de Windows)
+  var flagCodes = { 'ES': 'es', 'MX': 'mx', 'CO': 'co', 'PE': 'pe', 'VE': 've', 'AR': 'ar', 'EC': 'ec' };
+  var code = flagCodes[currentRegion] || 'es';
+  
+  // Génère une balise image d'émoji ultra-propre qui fonctionne partout (Windows, Android, iOS)
+  var flagHtml = '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/' 
+               + (code === 'es' ? '1f1ea-1f1f8' : code === 'mx' ? '1f1f2-1f1fd' : code === 'co' ? '1f1e8-1f1f4' : code === 'pe' ? '1f1f5-1f1ea' : code === 've' ? '1f1fb-1f1ea' : code === 'ar' ? '1f1e6-1f1f7' : '1f1ea-1f1e8') 
+               + '.svg" style="width:1.5em; vertical-align:middle; display:inline-block;" alt="flag">';
 
-  // 🌟 CORRECTIF DE L'ÉCRANS D'ACCUEIL : On cible directement la div écrasée par _setUI
+  // 🌟 MISE À JOUR DU GROS DRAPEAU D'ACCUEIL
   var homeFlagRow = document.getElementById('homeFlagRow');
   if (homeFlagRow) {
     if (currentMode === 'learn_spain') {
-      homeFlagRow.innerHTML = activeFlag; // Remplace le "ES" par le drapeau de la variante (ex: AR)
+      homeFlagRow.innerHTML = flagHtml; 
     } else {
-      homeFlagRow.innerHTML = '🇫🇷';
+      homeFlagRow.innerHTML = '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1eb-1f1f7.svg" style="width:1.5em; vertical-align:middle;" alt="fr">';
     }
   }
 
-  // 🌟 CHANGEMENT DYNAMIQUE DU PETIT DRAPEAU (Dans le sous-titre de l'accueil ou les Cartes Flash)
+  // Met à jour le petit drapeau dans les textes si un élément l'attend
   var flagSpan = document.getElementById('current-lang-flag');
   if (flagSpan) {
-    flagSpan.innerHTML = activeFlag;
+    flagSpan.innerHTML = flagHtml;
   }
   
   // Rafraîchissement des modules de cours
