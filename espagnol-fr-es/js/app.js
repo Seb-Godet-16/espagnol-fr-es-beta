@@ -118,11 +118,15 @@ function initApp(mode) {
                            + '<div id="region-message-box"></div>';
   }
   
-  // Réinitialisation par défaut sur l'Espagne (Castillan)
-  currentRegion = 'ES';
+  // 🔄 HISTORIQUE : Récupération du choix précédent enregistré ou Espagne par défaut
+  var savedRegion = localStorage.getItem('user_preferred_region');
+  currentRegion = savedRegion ? savedRegion : 'ES';
   
-  // On génère le sélecteur et le bandeau de texte initial (Espagne)
+  // On génère la liste des options dans le sélecteur HTML
   renderRegionOptions();
+
+  // 🌟 Application immédiate de la région enregistrée (classes CSS, texte d'accent, etc.)
+  pickRegion(currentRegion);
 }
 
 /* Utilitaire interne : injecte les textes dans les IDs du HTML */
@@ -1073,13 +1077,13 @@ function renderRegionOptions() {
 
   var regions = [
     { id: 'ES', name: (currentMode === 'learn_french') ? 'España (Castellano)' : 'Espagne (Castillan)', flag: '🇪🇸' },
-    { id: 'MX', name: (currentMode === 'learn_french') ? 'México' : 'Mexique', flag: '🇲🇽' },
-    { id: 'CO', name: (currentMode === 'learn_french') ? 'Colombia' : 'Colombie', flag: '🇨🇴' },
-    { id: 'PE', name: (currentMode === 'learn_french') ? 'Perú' : 'Pérou', flag: '🇵🇪' },
-    { id: 'VE', name: (currentMode === 'learn_french') ? 'Venezuela' : 'Venezuela', flag: '🇻🇪' },
     { id: 'AR', name: (currentMode === 'learn_french') ? 'Argentina' : 'Argentine', flag: '🇦🇷' },
-    { id: 'EC', name: (currentMode === 'learn_french') ? 'Ecuador' : 'Équateur', flag: '🇪🇨' }
-  ];
+    { id: 'CO', name: (currentMode === 'learn_french') ? 'Colombia' : 'Colombie', flag: '🇨🇴' },
+    { id: 'EC', name: (currentMode === 'learn_french') ? 'Ecuador' : 'Équateur', flag: '🇪🇨' },
+    { id: 'MX', name: (currentMode === 'learn_french') ? 'México' : 'Mexique', flag: '🇲🇽' },
+    { id: 'PE', name: (currentMode === 'learn_french') ? 'Perú' : 'Pérou', flag: '🇵🇪' },
+    { id: 'VE', name: (currentMode === 'learn_french') ? 'Venezuela' : 'Venezuela', flag: '🇻🇪' }
+   ];
 
   // 1. Construction du sélecteur
   var html = '<div style="padding: 10px 10px 5px 10px;">'
@@ -1108,7 +1112,10 @@ function renderRegionOptions() {
 }
 
 function pickRegion(regionId) {
-  // 🌟 GESTION DYNAMIC DES COULEURS DE FOND (CLASSES CSS)
+  // 🌟 HISTORIQUE : Sauvegarde le choix du pays dans l'appareil de l'utilisateur
+  localStorage.setItem('user_preferred_region', regionId);
+
+  // 🌟 GESTION DYNAMIQUE DES COULEURS DE FOND (CLASSES CSS)
   if (currentMode === 'learn_spain') {
     // On retire absolument toutes les classes de pays pour repartir à zéro
     document.documentElement.classList.remove('region-ES', 'region-MX', 'region-CO', 'region-PE', 'region-VE', 'region-AR', 'region-EC');
@@ -1140,7 +1147,7 @@ function pickRegion(regionId) {
     if (currentMode === 'learn_french') {
       msgBox.innerHTML = '<div style="margin: 5px 10px 15px 10px; padding: 12px; background-color: #eef9ff; border-left: 4px solid #007bff; border-radius: 8px; font-size: 0.9rem; color: #333; text-align: left;">'
                        + 'ℹ️ Tu aplicación está configurada actualmente con la variante de <strong>' + activeName + '</strong>.'
-                       + '<div style="margin-top: 5px; font-size: 0.75rem; color: #666; font-style: italic;">Nota: El acento real depende de las voces instaladas en la configuración de síntesis de voz de tu dispositivo.</div>'
+                       + '<div style="margin-top: 5px; font-size: 0.75rem; color: #666; font-style: italic;">Nota: El acento real depende de las voces instaladas en la configuration de síntesis de voz de tu dispositivo.</div>'
                        + '</div>';
     } else {
       msgBox.innerHTML = '<div style="margin: 5px 10px 15px 10px; padding: 12px; background-color: #eef9ff; border-left: 4px solid #007bff; border-radius: 8px; font-size: 0.9rem; color: #333; text-align: left;">'
@@ -1149,10 +1156,26 @@ function pickRegion(regionId) {
                        + '</div>';
     }
   }
+
+  // 🌟 CHANGEMENT DYNAMIQUE DU PETIT DRAPEAU (Dans les Cartes Flash)
+  var flagSpan = document.getElementById('current-lang-flag');
+  if (flagSpan) {
+    var flagEmojis = {
+      'ES': '🇪🇸',
+      'MX': '🇲🇽',
+      'CO': '🇨🇴',
+      'PE': '🇵🇪',
+      'VE': '🇻🇪',
+      'AR': '🇦🇷',
+      'EC': '🇪🇨'
+    };
+    flagSpan.innerHTML = flagEmojis[currentRegion] || '🇪🇸';
+  }
   
   // Rafraîchissement des modules de cours
   if (typeof activeTab !== 'undefined') {
     if (activeTab === 'vocab') renderVocab();
     if (activeTab === 'dialog') renderDialog();
+    if (activeTab === 'flash') renderFlash(); // Synchronise l'affichage immédiat sur l'écran des cartes
   }
 }
