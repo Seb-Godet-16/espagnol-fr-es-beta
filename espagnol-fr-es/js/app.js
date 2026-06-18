@@ -108,19 +108,19 @@ function initApp(mode) {
   document.getElementById('app-launcher').classList.remove('active');
   showScreen('home');
   // ══════════════════════════════════════════════════════════════════════
-  // GESTION DU SÉLECTEUR DE VARIANTES HISPANIQUES
+  // GESTION DU SÉLECTEUR DE RÉGIONS HISPANIQUES (Pour les deux modes)
   // ══════════════════════════════════════════════════════════════════════
   var selectorWrap = document.getElementById('region-selector-wrap');
   if (selectorWrap) {
-    selectorWrap.style.display = (mode === 'learn_spain') ? 'block' : 'none';
+    // Le sélecteur reste visible pour "learn_spain" ET pour "learn_french"
+    selectorWrap.style.display = 'block';
   }
   
-  // Réinitialisation par défaut sur l'Espagne lors du changement de langue
+  // Réinitialisation par défaut sur l'Espagne (Castillan) lors du changement de langue
   currentRegion = 'ES';
-  var selectorEl = document.getElementById('regionSelector');
-  if (selectorEl) {
-    selectorEl.value = 'ES';
-  }
+  
+  // Génération du rendu dynamique avec les beaux boutons radios (Design Capture.jpeg)
+  renderRegionOptions();
 }
 
 /* Utilitaire interne : injecte les textes dans les IDs du HTML */
@@ -1036,5 +1036,74 @@ function changeRegion(region) {
   // Si l'utilisateur est déjà dans une leçon, on rafraîchit immédiatement la carte
   if (document.getElementById('lesson').classList.contains('active')) {
     _renderFlashcard();
+  }
+}
+
+/* ═══════════════════════════════════════════
+   FONCTION DE RENDU DYNAMIQUE DES RÉGIONS (Design Capture.jpeg)
+═══════════════════════════════════════════ */
+
+function renderRegionOptions() {
+  var selectorWrap = document.getElementById('region-selector-wrap');
+  if (!selectorWrap) return;
+
+  var regions = [];
+  
+  if (currentMode === 'learn_french') {
+    // L'utilisateur est hispanophone (Interface en espagnol)
+    regions = [
+      { id: 'ES', name: 'España (Castellano)', flag: '🇪🇸' },
+      { id: 'MX', name: 'México', flag: '🇲🇽' },
+      { id: 'CO', name: 'Colombia', flag: '🇨🇴' },
+      { id: 'PE', name: 'Perú', flag: '🇵🇪' },
+      { id: 'VE', name: 'Venezuela', flag: '🇻🇪' },
+      { id: 'AR', name: 'Argentina', flag: '🇦🇷' },
+      { id: 'EC', name: 'Ecuador', flag: '🇪🇨' }
+    ];
+  } else {
+    // L'utilisateur est francophone (Interface en français)
+    regions = [
+      { id: 'ES', name: 'Espagne (Castillan)', flag: '🇪🇸' },
+      { id: 'MX', name: 'Mexique', flag: '🇲🇽' },
+      { id: 'CO', name: 'Colombie', flag: '🇨🇴' },
+      { id: 'PE', name: 'Pérou', flag: '🇵🇪' },
+      { id: 'VE', name: 'Venezuela', flag: '🇻🇪' },
+      { id: 'AR', name: 'Argentine', flag: '🇦🇷' },
+      { id: 'EC', name: 'Équateur', flag: '🇪🇨' }
+    ];
+  }
+
+  // Rendu graphique identique à ta Capture.jpeg
+  var html = '<div class="region-list-card" style="background:#fff; border-radius:24px; box-shadow:0 4px 20px rgba(0,0,0,0.06); overflow:hidden; margin:10px 0;">';
+
+  html += regions.map(function(r) {
+    var isSelected = (currentRegion === r.id);
+    
+    // Pastille orange de sélection
+    var radioBtn = isSelected 
+      ? '<div style="width:22px; height:22px; border-radius:50%; border:2px solid #f05423; display:flex; align-items:center; justify-content:center;"><div style="width:11px; height:11px; border-radius:50%; background:#f05423;"></div></div>'
+      : '<div style="width:22px; height:22px; border-radius:50%; border:2px solid #ccc;"></div>';
+
+    return '<div class="region-row" onclick="pickRegion(\'' + r.id + '\')" style="display:flex; justify-content:space-between; align-items:center; padding:18px 20px; cursor:pointer; border-bottom:1px solid #f2f2f2; transition: background 0.2s;">'
+      + '<div style="display:flex; align-items:center; gap:14px; font-size:1.2rem; color:#111;">'
+      +   '<span style="font-size:1.4rem;">' + r.flag + '</span>'
+      +   '<span style="font-weight:500;">' + r.name + '</span>'
+      + '</div>'
+      +  radioBtn
+      + '</div>';
+  }).join('');
+
+  html += '</div>';
+  selectorWrap.innerHTML = html;
+}
+
+function pickRegion(regionId) {
+  currentRegion = regionId;
+  renderRegionOptions(); // Met à jour la puce orange
+  
+  // Rafraîchissement instantané des modules si un onglet est déjà ouvert
+  if (typeof activeTab !== 'undefined') {
+    if (activeTab === 'vocab') renderVocab();
+    if (activeTab === 'dialog') renderDialog();
   }
 }
