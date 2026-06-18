@@ -1166,14 +1166,18 @@ function pickRegion(regionId) {
     }
   }
 
-  // Dictionnaire partagé des émojis
+  // Dictionnaire des drapeaux
   var flagEmojis = { 'ES': '🇪🇸', 'MX': '🇲🇽', 'CO': '🇨🇴', 'PE': '🇵🇪', 'VE': '🇻🇪', 'AR': '🇦🇷', 'EC': '🇪🇨' };
   var activeFlag = flagEmojis[currentRegion] || '🇪🇸';
 
-  // 🌟 NOUVEAUTÉ : Mise à jour du GROS drapeau situé tout en haut de l'écran d'accueil
-  var bigFlagSpan = document.getElementById('home-big-flag');
-  if (bigFlagSpan) {
-    bigFlagSpan.innerHTML = activeFlag;
+  // 🌟 CORRECTIF DE L'ÉCRANS D'ACCUEIL : On cible directement la div écrasée par _setUI
+  var homeFlagRow = document.getElementById('homeFlagRow');
+  if (homeFlagRow) {
+    if (currentMode === 'learn_spain') {
+      homeFlagRow.innerHTML = activeFlag; // Remplace le "ES" par le drapeau de la variante (ex: AR)
+    } else {
+      homeFlagRow.innerHTML = '🇫🇷';
+    }
   }
 
   // 🌟 CHANGEMENT DYNAMIQUE DU PETIT DRAPEAU (Dans le sous-titre de l'accueil ou les Cartes Flash)
