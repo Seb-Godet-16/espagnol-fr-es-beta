@@ -21,6 +21,7 @@ var fcIdx       = 0;
 var dqStep      = 0, dqScore    = 0, dqAnswered   = false;
 var sitIdx      = 0;
 var q10Step     = 0, q10Score   = 0, q10Answered  = false;
+var _q10Questions = null;  // Cache des questions générées pour le quiz en cours
 
 /* Progression persistante (contient désormais des objets {id, stars}) */
 var done = [];
@@ -419,7 +420,7 @@ function _buildThemeCard(t) {
 function openTheme(id) {
   CT = ALL_THEMES.find(function(t) { return t.id === id; });
   fcIdx = 0; dqStep = 0; dqScore = 0; dqAnswered = false; sitIdx = 0;
-  q10Step = 0; q10Score = 0; q10Answered = false;
+  q10Step = 0; q10Score = 0; q10Answered = false; _q10Questions = null;
 
   document.getElementById('lessonEmoji').textContent = CT.emoji;
 
@@ -470,7 +471,7 @@ function switchTab(tab) {
     b.classList.toggle('active', b.dataset.tab === tab);
   });
   if (tab === 'flash')       renderFlash();
-  else if (tab === 'quiz10') { q10Step = 0; q10Score = 0; q10Answered = false; renderQuiz10(); }
+  else if (tab === 'quiz10') { q10Step = 0; q10Score = 0; q10Answered = false; _q10Questions = null; renderQuiz10(); }
   else if (tab === 'dialog') renderDialog();
   else if (tab === 'vocab')  renderVocab();
   else if (tab === 'dquiz')  { dqStep = 0; dqScore = 0; dqAnswered = false; renderDialogQuiz(); }
@@ -611,19 +612,103 @@ function isAlphaQuiz() { return CT && CT.type === 'alpha'; }
    10. QUIZ 10 QUESTIONS (AVEC ÉTOILES PROGRESSIVES)
 ═══════════════════════════════════════════ */
 
+/* Nombre de questions selon la taille du vocabulaire (Niveau 1 dynamique) */
 function getQuizTotal(theme) {
   var n = (theme.words || []).length;
-  if (n < 10)  return 5;
-  if (n <= 20) return 8;
-  return 12;
+  if (n < 10)  return 3;
+  if (n < 15)  return 5;
+  if (n <= 27) return 8;
+  return 10;
 }
 
+/* ── Mélange de Fisher-Yates ── */
+function _shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+
+/* ── Récupère le libellé affiché d'un mot selon le mode et la direction du quiz ──
+   En mode learn_french : on montre la question en français → on cherche l'Oromo (et)
+   En mode learn_oromo  : on montre la question en Oromo   → on cherche le français (fr)
+   Pour les mots avec conjugaison (conj), on utilise le mot racine sans les formes.
+*/
+function _wordLabel(word, lang) {
+  var raw = word[lang] || '';
+  /* Si le mot a des conjugaisons, on utilise le label racine tel quel */
+  return raw;
+}
+
+/* ── Génère N questions aléatoires depuis words ── */
+function _generateQuiz(theme, total) {
+  var words = theme.words || [];
+  if (words.length < 2) return [];
+
+  /* Langue de la question et langue de la réponse selon le mode */
+  var qLang  = (currentMode === 'learn_french') ? 'fr' : 'et'; // langue affichée dans la question
+  var aLang  = (currentMode === 'learn_french') ? 'et' : 'fr'; // langue des réponses (options)
+
+  /* On mélange et on sélectionne les mots pour ce tirage */
+  var shuffled = _shuffle(words);
+  var selected = shuffled.slice(0, Math.min(total, shuffled.length));
+
+  return selected.map(function(correctWord) {
+    var qText    = _wordLabel(correctWord, qLang);
+    var aCorrect = _wordLabel(correctWord, aLang);
+
+    /* Distracteurs : tous les mots SAUF le mot correct */
+    var pool = words.filter(function(w) { return w !== correctWord; });
+    var distractors = _shuffle(pool).slice(0, 3).map(function(w) {
+      return _wordLabel(w, aLang);
+    });
+
+    /* On construit le tableau des 4 options et on insère la bonne réponse à une position aléatoire */
+    var opts    = distractors.slice(0, 3);
+    var ansPos  = Math.floor(Math.random() * 4);
+    opts.splice(ansPos, 0, aCorrect);
+
+    /* Libellé de la question selon le mode */
+    var qLabel = (currentMode === 'learn_french')
+      ? 'Afaan Oromootti akkamitti jedhamaa ?'
+      : 'Comment dit-on en français ?';
+
+    return {
+      q   : '"' + qText + '" — ' + qLabel,
+      opts: opts,
+      ans : ansPos,
+      audio: qText   /* utilisé si besoin de lecture audio */
+    };
+  });
+}
+
+/* ── Retourne les questions à utiliser pour le quiz ──
+   - Thème alpha (type:'alpha')      → quiz10 statique (quiz audio spécial)
+   - Thème niveau 1 (non-alpha)      → génération dynamique depuis words
+   - Thème niveau 2 (type:'dialog')  → quiz statique (champ quiz)
+*/
 function getQuizQuestions(theme) {
-  return (theme.quiz10 || []).slice(0, getQuizTotal(theme));
+  if (theme.type === 'alpha') {
+    /* Quiz audio statique : on garde quiz10 tel quel */
+    return (theme.quiz10 || []);
+  }
+  if (theme.level === 2 || theme.type === 'dialog') {
+    /* Quiz de dialogue statique */
+    return (theme.quiz || []);
+  }
+  /* Niveau 1 non-alpha : génération dynamique */
+  var total = getQuizTotal(theme);
+  return _generateQuiz(theme, total);
 }
 
 function renderQuiz10() {
-  var qs    = getQuizQuestions(CT);
+  /* Génère (ou récupère depuis le cache) les questions pour ce quiz */
+  if (!_q10Questions) {
+    _q10Questions = getQuizQuestions(CT);
+  }
+  var qs    = _q10Questions;
   var total = qs.length;
 
   if (!qs || !total) {
@@ -653,7 +738,7 @@ function renderQuiz10() {
       + '<div class="score-num">' + q10Score + '/' + total + '</div>'
       + '<div style="font-size:1rem;margin:6px 0;color:' + (isSuccess ? '#009A44' : '#EF2B2D') + '">' + r.sub + '</div>'
       + '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px">'
-      + '<button class="retry-btn" style="background:#888" onclick="q10Step=0;q10Score=0;q10Answered=false;renderQuiz10()">' + r.retry + '</button>'
+      + '<button class="retry-btn" style="background:#888" onclick="q10Step=0;q10Score=0;q10Answered=false;_q10Questions=null;renderQuiz10()">' + r.retry + '</button>'
       + (isSuccess ? '<button class="retry-btn" onclick="renderSections();showScreen(\'sections\')">' + r.finish + '</button>' : '')
       + '</div></div>';
     renderSections();
@@ -713,7 +798,7 @@ function playAlphaAudio(letter) {
 function checkQ10(chosen, correct) {
   if (q10Answered) return;
   q10Answered = true;
-  var qs = getQuizQuestions(CT);
+  var qs = _q10Questions || getQuizQuestions(CT);
   document.querySelectorAll('[id^=q10o]').forEach(function(b, i) {
     b.classList.add('disabled');
     if (i === correct) b.classList.add('correct');

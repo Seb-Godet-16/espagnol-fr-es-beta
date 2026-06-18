@@ -1,7 +1,7 @@
 /* ========================================
    Afaan Oromoo → Français 🇫🇷 – Données
    Vocabulaire, quiz et dialogues
-   © 2026 Sébastien Godet
+   © Juin 2026 Sébastien Godet
 ======================================== */
 
 var LEVEL1_THEMES_FR=[
@@ -68,16 +68,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Jidduu jira / Haaluma',fr:'Comme ci comme ça',em:'😐'},
     {et:'Dafqaan jira / Fayyaa miti',fr:'Je ne vais pas bien / Je n\'ai pas la forme',em:'😔'},
     {et:'Baay\'ee gaarii! / Roorroo!',fr:'C\'est cool ! / Super !',em:'🌟'}
-   ],
-   quiz10:[
-    {q:'\"Bonjour (le matin)\" Afaan Oromootti akkamitti jedhamaa?',opts:['Nagaa!','Akkam ooltee','Akkam bulte','Aduun galatoomaa'],ans:2},
-    {q:'\"Nagaan ooluu\" jechuun maali?',opts:['À tout à l\'heure','Au revoir','Bonjour','Bonne nuit'],ans:1},
-    {q:'\"Merci\" Afaan Oromootti akkamitti jedhamaa?',opts:['Maaloo','Dhiifama','Galatoomaa','Eeyyee'],ans:2},
-    {q:'\"Tole!\" Oromiyaatti maal jechuudha?',opts:['Adieu','Allons-y !','D\'accord !','Bonne nuit'],ans:2},
-    {q:'\"S\'il vous plaît\" Afaan Oromootti akkamitti jedhamaa?',opts:['Galatoomaa','Dhiifama','Maaloo','Eeyyee'],ans:2},
-    {q:'\"Eeyyee!\" Oromiyaatti maal jechuudha?',opts:['Viens !','Allez ! / D\'accord !','Non !','Peut-être !'],ans:1},
-    {q:'\"Akkam jirta?\" jechuun maali?',opts:['Où es-tu ?','Comment tu t\'appelles ?','Comment vas-tu ?','Quel âge as-tu ?'],ans:2},
-    {q:'\"Baay\'ee gaarii!\" jechuun maali?',opts:['Comme c\'est bizarre !','Comme c\'est cool !','Comme c\'est triste !','Comme c\'est grand !'],ans:1}
    ]},
   {id:'pres',level:1,emoji:'🙋',name:'Ofii Beeksisuu',sub:'Maqaa, dachee, magaalaa… / Se présenter',
    words:[
@@ -88,16 +78,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Nan jiraadha',fr:'J\'habite à',em:'🏠'},{et:'Ani / Naan',fr:'Je suis',em:'🧑'},
     {et:'Waggoota ... qabaadha',fr:'J\'ai ... ans',em:'🎈'},{et:'Maqaan koo ...',fr:'Je m\'appelle',em:'👋'},
     {et:'Eessa irraa dhufte?',fr:'D\'où es-tu ?',em:'🌍'},{et:'Shashemaneetti dhufeen',fr:'Je suis de Shashemene',em:'🏙️'}
-   ],
-   quiz10:[
-    {q:'\"Je m\'appelle\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ani','Maqaan koo ...','Nan jiraadha','Waggoota qabaadha'],ans:1},
-    {q:'\"Maqaa abbaaf eeyyee\" jechuun maali?',opts:['Le prénom','L\'âge','Le nom de famille','La profession'],ans:2},
-    {q:'\"J\'ai 25 ans\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ani waggaa 25','Nan jiraadha 25','Waggoota 25 qabaadha','Hojii 25'],ans:2},
-    {q:'\"Biyya irraa dhufame\" jechuun maali?',opts:['Le pays','La ville','La profession','La nationalité'],ans:3},
-    {q:'\"J\'habite à Shashemane\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ani Shashemane','Shashamenetti nan jiraadha','Shashemane deema','Shashemane qabaadha'],ans:1},
-    {q:'\"Maqaa ofii\" jechuun maali?',opts:['Le nom de famille','Le prénom','L\'âge','La profession'],ans:1},
-    {q:'\"Je suis Éthiopienne\" Afaan Oromootti akkamitti jedhamaa?',opts:['Faransaawitii','Oromiyaadhaa','Shashemane nan jiraadha','Oromoo hojjedha'],ans:1},
-    {q:'\"Eessa irraa dhufte?\" jechuun maali?',opts:['Umurii meeqa?','Maqaan kee eenyu?','Eessa irraa dhufte?','Eessa jiraatta?'],ans:2}
    ]},
   {id:'orient',level:1,emoji:'🧭',name:'Karaa Barbaaduuu',sub:'Bitaa, mirga… / S\'orienter',
    words:[
@@ -115,14 +95,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Fagoo',fr:'Loin',em:'🌅'},
     // Outil
     {et:'Kaartaa',fr:'Le plan / La carte',em:'🗺️'},
-    ],
-   quiz10:[
-    {q:'\"À gauche\" Afaan Oromootti akkamitti jedhamaa?',opts:['Mirgatti','Kallattii itti fufi','Bitatti','Fuuldura'],ans:2},
-    {q:'\"Mirgatti\" jechuun maali?',opts:['À gauche','Tout droit','À côté','À droite'],ans:3},
-    {q:'\"Tout droit\" Afaan Oromootti akkamitti jedhamaa?',opts:['Bitatti','Kallattii itti fufi','Fuuldura','Cinaa'],ans:1},
-    {q:'\"Fuuldura / Eegalan\" jechuun maali?',opts:['À côté','Derrière','En face','Près'],ans:2},
-    {q:'\"Près\" Afaan Oromootti akkamitti jedhamaa?',opts:['Fagoo','Cinaa','Dhiyoo','Fuuldura'],ans:2}
-   ]},
+    ]},
   {id:'lieux',level:1,emoji:'🏙️',name:'Bakkoota Barbaachisoo',sub:'Gabaa, daandii, bunaa… / Les lieux importants',
    words:[
     // Lieux de vie / nature
@@ -153,16 +126,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Mana barumsaa sadarkaa lammaffaa',fr:'Le collège',em:'📚'},
     {et:'Mana barumsaa ol\'aanaa',fr:'Le lycée',em:'🎓'},
     {et:'Yuniversitii',fr:'L\'université',em:'🏛️'},
-   ],
-   quiz10:[
-    {q:'\"La pharmacie\" Afaan Oromootti akkamitti jedhamaa?',opts:['Baankii','Hospitaala','Farmaasiitii','Suupaarmaarkeeti'],ans:2},
-    {q:'\"La mairie\" Oromiyaatti akkamitti jedhamaa?',opts:['Kiilistiyaana','Mana murtii','Mana bulchiinsaa','Gabaa'],ans:2},
-    {q:'\"L\'hôpital\" Afaan Oromootti akkamitti jedhamaa?',opts:['Farmaasiitii','Mana bulchiinsaa','Hospitaala','Baankii'],ans:2},
-    {q:'Oromiyaatti bakka tokko tokkotti baay\'een argamu?',opts:['Le supermarché','Le bar / Le café','La pharmacie','L\'école'],ans:1},
-    {q:'\"La mer\" Afaan Oromootti akkamitti jedhamaa?',opts:['Laga','Tullu','Galaana','Haroo'],ans:2},
-    {q:'\"Mana bulchiinsaa\" jechuun maali?',opts:['Le tribunal','La mairie','Le parlement','L\'université'],ans:1},
-    {q:'\"La ville\" Afaan Oromootti akkamitti jedhamaa?',opts:['Daandii','Ganda','Magaalaa','Tullu'],ans:2},
-    {q:'\"Baankii\" jechuun maali?',opts:['La pharmacie','La banque','La caisse','Le bureau'],ans:1}
    ]},
   {id:'nour',level:1,emoji:'🍽️',name:'Nyaata',sub:'Buddeena, muduraa, injera… / La nourriture',
    words:[
@@ -204,16 +167,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Barbaree',fr:'Le poivre',em:'🌶️'},
     {et:'Damma',fr:'Le miel',em:'🍯'},
     {et:'Chokolaatii',fr:'Le chocolat',em:'🍫'},
-   ],
-   quiz10:[
-    {q:'\"Le pain\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ruzii','Buddeena','Baadaa','Dhadhaa'],ans:1},
-    {q:'\"Lukkuu\" jechuun maali?',opts:['Le poisson','La viande','Le poulet','Le porc'],ans:2},
-    {q:'\"L\'œuf\" Afaan Oromootti akkamitti jedhamaa?',opts:['Dhadhaa','Baadaa','Karootii','Hanqaaquu'],ans:3},
-    {q:'\"La pomme\" Afaan Oromootti akkamitti jedhamaa?',opts:['Muuzii','Mukarroo','Pomii','Burtukaana'],ans:2},
-    {q:'\"Les frites\" Afaan Oromootti Oromiyaatti akkamitti jedhamaa?',opts:['Foonii dinnichaa','Maakiirooni','Tibs','Buddeena'],ans:0},
-    {q:'\"La pastèque\" Afaan Oromootti akkamitti jedhamaa?',opts:['Mukarroo','Harbuu','Liimoo','Burtukaana'],ans:1},
-    {q:'\"La carotte\" Afaan Oromootti akkamitti jedhamaa?',opts:['Salaaxi','Karootii','Timaatimii','Qullubbii'],ans:1},
-    {q:'\"La fraise\" Afaan Oromootti Oromiyaatti akkamitti jedhamaa?',opts:['Muuzii','Harbuu','Mukarroo','Liimoo'],ans:2}
    ]},
   {id:'bois',level:1,emoji:'🥤',name:'Dhugaatii',sub:'Bishaani, buna, shaayii… / Les boissons',
    words:[
@@ -232,16 +185,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Koonjoo (diimaa / adii)',fr:'Le vin (rouge / blanc)',em:'🍷'},
     {et:'Biiraa',fr:'La bière',em:'🍺'},
     {et:'Araqee',fr:'La sangria',em:'🍷'},
-   ],
-   quiz10:[
-    {q:'\"L\'eau\" Afaan Oromootti akkamitti jedhamaa?',opts:['Aannaan','Jiisii','Bishaan','Shaayii'],ans:2},
-    {q:'\"Buna qullayyoo\" Oromiyaatti maaliyyu?',opts:['Un café au lait','Un café noir','Un café avec sucre','Un café froid'],ans:1},
-    {q:'\"Le lait\" Afaan Oromootti akkamitti jedhamaa?',opts:['Aannaan','Bishaan','Shaayii','Jiisii'],ans:0},
-    {q:'\"Jiisii\" jechuun maali?',opts:['Le vin','La bière','La limonade','Le jus'],ans:3},
-    {q:'Oromiyaatti dhugaatii beekamaa maaltu jira?',opts:['Biiraa','Araqee','Sodaa','Buna aannaan waliin'],ans:1},
-    {q:'\"Buna nannoo aannaan xinnoo\" maaliyyu?',opts:['Un café noir','Une bière','Un café avec un nuage de lait','Un jus d\'orange'],ans:2},
-    {q:'\"Le thé\" Afaan Oromootti akkamitti jedhamaa?',opts:['Buna','Shaayii','Aannaan','Bishaan'],ans:1},
-    {q:'\"L\'eau gazeuse\" Afaan Oromootti akkamitti jedhamaa?',opts:['Bishaan qorraa','Bishaan dhugaatii','Bishaan gaazii qaba','Gasiyoozaa'],ans:2}
    ]},
 {id:'num',level:1,emoji:'🔢',name:'Lakkoofsa',sub:'Zeerroo irraa hanga kuma lamaa / Zéro à deux mille',
  words:[
@@ -272,27 +215,7 @@ var LEVEL1_THEMES_FR=[
   {et:'Dhibba sagal',fr:'Neuf cents',em:'9️⃣0️⃣0️⃣'},
   {et:'Kuma',fr:'Mille',em:'1️⃣0️⃣0️⃣0️⃣'},
   {et:'Kuma lama',fr:'Deux mille',em:'2️⃣0️⃣0️⃣0️⃣'}
- ],
-   quiz10:[
-    {q:'\"Shan\" lakkoofsa meeqaa?',opts:['4','6','5','7'],ans:2},
-    {q:'12 Afaan Oromootti akkamitti jedhamaa?',opts:['Kudha tokko','Kudha lama','Kudha sadii','Kudhan'],ans:1},
-    {q:'16 Afaan Oromootti akkamitti jedhamaa?',opts:['Kudha shan','Kudha torba','Kudha jaha','Kudha sadii'],ans:2},
-    {q:'\"Sagal\" lakkoofsa meeqaa?',opts:['7','8','10','9'],ans:3},
-    {q:'20 Afaan Oromootti akkamitti jedhamaa?',opts:['Kudha sagal','Digdama','Kudha shan','Kudha saddeet'],ans:1},
-    {q:'\"Kudha sadii\" lakkoofsa meeqaa?',opts:['12','11','14','13'],ans:3},
-    {q:'8 Afaan Oromootti akkamitti jedhamaa?',opts:['Torba','Sagal','Saddeet','Jaha'],ans:2},
-    {q:'\"Kudha afur\" lakkoofsa meeqaa?',opts:['15','13','14','12'],ans:2},
-    {q:'30 Afaan Oromootti akkamitti jedhamaa?',opts:['Digdama','Afurtama','Soddomaa','Shantama'],ans:2},
-    {q:'\"Torbaatama\" lakkoofsa meeqaa?',opts:['60','80','90','70'],ans:3},
-    {q:'50 Afaan Oromootti akkamitti jedhamaa?',opts:['Jahatama','Shantama','Afurtama','Torbaatama'],ans:1},
-    {q:'\"Saddeetama\" lakkoofsa meeqaa?',opts:['70','90','80','60'],ans:2},
-    {q:'100 Afaan Oromootti akkamitti jedhamaa?',opts:['Kuma','Dhibbaa','Dhibba','Sagaltama'],ans:2},
-    {q:'\"Dhibba shan\" lakkoofsa meeqaa?',opts:['400','600','300','500'],ans:3},
-    {q:'1000 Afaan Oromootti akkamitti jedhamaa?',opts:['Dhibba','Dhibba lama','Kuma','Dhibba sagal'],ans:2},
-    {q:'\"Dhibba lama\" lakkoofsa meeqaa?',opts:['300','100','400','200'],ans:3},
-    {q:'2000 Afaan Oromootti akkamitti jedhamaa?',opts:['Kuma lama','Kuma','Dhibba lama','Digdama kuma'],ans:0},
-    {q:'\"Dhibba sagal\" lakkoofsa meeqaa?',opts:['800','700','1000','900'],ans:3}
-   ]},
+ ]},
   {id:'col',level:1,emoji:'🎨',name:'Halluu',sub:'Diimaa, magariisa, keelloo… / Les couleurs',
    words:[
     {et:'Diimaa',fr:'Rouge',em:'❤️'},{et:'Cuquliisa',fr:'Bleu',em:'💙'},{et:'Magariisa',fr:'Vert',em:'💚'},
@@ -300,15 +223,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Gurraacha',fr:'Noir',em:'🖤'},{et:'Roozii',fr:'Rose',em:'🩷'},
     {et:'Daallatii / Diimtuuja',fr:'Violet',em:'💜'},{et:'Bunii',fr:'Marron',em:'🤎'},
     {et:'Garaa garaa / Dulluma',fr:'Gris',em:'🩶'}
-   ],
-   quiz10:[
-    {q:'\"Rouge\" Afaan Oromootti akkamitti jedhamaa?',opts:['Cuquliisa','Diimaa','Magariisa','Keelloo'],ans:1},
-    {q:'\"Cuquliisa\" jechuun maali?',opts:['Vert','Jaune','Bleu','Violet'],ans:2},
-    {q:'\"Vert\" Afaan Oromootti akkamitti jedhamaa?',opts:['Keelloo','Dulluma','Magariisa','Adii'],ans:2},
-    {q:'\"Gurraacha\" jechuun maali?',opts:['Blanc','Gris','Marron','Noir'],ans:3},
-    {q:'\"Jaune\" Afaan Oromootti akkamitti jedhamaa?',opts:['Burtukaana','Keelloo','Roozii','Daallatii'],ans:1},
-    {q:'\"Roozii\" jechuun maali?',opts:['Rouge','Orange','Rose','Violet'],ans:2},
-    {q:'\"Blanc\" Afaan Oromootti akkamitti jedhamaa?',opts:['Adii','Gurraacha','Dulluma','Bunii'],ans:0}
    ]},
 {id:'viaje',level:1,emoji:'🧳',name:'Deemsa',sub:'Baggaajii, hooteela, paaspoortiifi… / Le voyage',
    words:[
@@ -334,16 +248,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Qorichee laga',fr:'La plage',em:'🏖️'},
     {et:'Tullu',fr:'La montagne',em:'⛰️'},
     {et:'Daawwataa',fr:'Le touriste',em:'📸'},
-   ],
-   quiz10:[
-    {q:'\"Le passeport\" Afaan Oromootti akkamitti jedhamaa?',opts:['Baggaajii','Tikeeta','Paaspoortiifi','Qabeenya deemsa'],ans:2},
-    {q:'\"Baggaajii\" jechuun maali?',opts:['Le sac à dos','La valise','Les bagages','Le billet'],ans:1},
-    {q:'\"L\'aéroport\" Afaan Oromootti akkamitti jedhamaa?',opts:['Buufata konkolaataa','Bakka doonii','Buufata xiyyaaraa','Koostamii'],ans:2},
-    {q:'\"Reserveeshina\" jechuun maali?',opts:['La réduction','La réservation','L\'assurance','Le remboursement'],ans:1},
-    {q:'\"Les bagages\" Afaan Oromootti akkamitti jedhamaa?',opts:['Baggaajii','Tikeeta','Qabeenya deemsa','Bursuusaa'],ans:2},
-    {q:'\"Koostamii\" jechuun maali?',opts:['L\'arrivée','Le départ','La douane','La frontière'],ans:2},
-    {q:'\"La croisière\" Afaan Oromootti akkamitti jedhamaa?',opts:['Doonii xinnoo','Doonii guddaa','Xiyyaara','Deemsa'],ans:1},
-    {q:'\"Ga\'uu\" jechuun maali?',opts:['Le départ','La correspondance','L\'escale','L\'arrivée'],ans:3}
    ]},
   {id:'rest',level:1,emoji:'🍽️',name:'Mana Nyaataa',sub:'Menuu, kafaltii, teessoo… / Au restaurant',
    words:[
@@ -371,16 +275,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Baasii nyaataa',fr:'L\'addition',em:'💶'},
     {et:'Qarshii dabalataa',fr:'Le pourboire',em:'💰'},
     {et:'Qarshii dabalataan dabalamee jira',fr:'Le pourboire est inclus',em:'✅'},
-   ],
-   quiz10:[
-    {q:'\"L\'addition\" Afaan Oromootti akkamitti jedhamaa?',opts:['Qarshii dabalataa','Baasii nyaataa','Menuu','Reserveeshina'],ans:1},
-    {q:'\"Tajaajilaa\" jechuun maali?',opts:['Le cuisinier','Le patron','Le serveur','Le client'],ans:2},
-    {q:'\"Le dessert\" Afaan Oromootti akkamitti jedhamaa?',opts:['Fuullaa dura','Nyaata ijoo','Dhaamsa nyaataa','Fuullaa xinnoo'],ans:2},
-    {q:'\"Fudhachuuf\" jechuun maali?',opts:['Pour manger sur place','À emporter','À partager','Pour deux personnes'],ans:1},
-    {q:'\"La terrasse\" Afaan Oromootti akkamitti jedhamaa?',opts:['Balbala','Daandii','Balbala alaa','Mana'],ans:2},
-    {q:'\"Gaafachuu\" jechuun maali?',opts:['Payer','Réserver','Commander','Choisir'],ans:2},
-    {q:'\"Le pourboire\" Afaan Oromootti akkamitti jedhamaa?',opts:['Baasii nyaataa','Qarshii dabalataa','Dhiibaa','Gatii'],ans:1},
-    {q:'\"Maal yaaddu?\" jechuun maali?',opts:['Qu\'est-ce que vous préparez ?','Qu\'est-ce que vous avez ?','Que recommandez-vous ?','C\'est bon ?'],ans:2}
    ]},
   {id:'trans',level:1,emoji:'🚌',name:'Geejjiba',sub:'Baasii, gaarii, konkolaataa… / Les transports',
    words:[
@@ -397,12 +291,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Biskileetii',fr:'Le vélo',em:'🚴'},
     // Titre de transport
     {et:'Tikeeta',fr:'Le billet',em:'🎫'},
-   ],
-   quiz10:[
-    {q:'\"Le bus\" Afaan Oromootti akkamitti jedhamaa?',opts:['Gaarii sibii','Meetiroo','Baasii / Konkolaataa ummataa','Taaksii'],ans:2},
-    {q:'\"La voiture\" Oromiyaatti akkamitti jedhamaa?',opts:['Mootoorisikkilii','Konkolaataa','Tiraamii','Geejjiba guddaa'],ans:1},
-    {q:'\"L\'avion\" Afaan Oromootti akkamitti jedhamaa?',opts:['Doonii','Xiyyaara','Biskileetii','Meetiroo'],ans:1},
-    {q:'\"Le billet\" Oromiyaatti akkamitti jedhamaa?',opts:['Kaardii','Xiqqoo','Tikeeta','Paaspoortiifi'],ans:2}
    ]},
   {id:'objets',level:1,emoji:'🔑',name:'Meeshaalee Guyyaatii',sub:'Bilbila, hirnaa… / Objets du quotidien',
    words:[
@@ -437,20 +325,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Tuwaallii',fr:'La serviette',em:'🛁'},
     {et:'Saabunaa',fr:'Le savon',em:'🧼'},
     {et:'Kaafiyaa',fr:'L\'oreiller',em:''},
-   ],
-   quiz10:[
-    {q:'\"Les clés\" Afaan Oromootti akkamitti jedhamaa?',opts:['Qalama','Mishira','Hirnaa','Chaajjara'],ans:2},
-    {q:'\"Le téléphone portable\" Oromiyaatti akkamitti jedhamaa?',opts:['Taabileettii','Bilbila harkaa','Kompiyuutara','Raadiyoo'],ans:1},
-    {q:'\"Le sac à dos\" Afaan Oromootti akkamitti jedhamaa?',opts:['Fardaa qarshii','Buursaa','Bursuusaa dugdaa','Kuullaa'],ans:2},
-    {q:'\"L\'ordinateur\" Oromiyaatti akkamitti jedhamaa?',opts:['Bilbila harkaa','Taabileettii','Kompiyuutara','Ibsaa'],ans:2},
-    {q:'\"Les lunettes\" Oromiyaatti akkamitti jedhamaa?',opts:['Gurra meeshaa','Miidhagina ija','Hattuu','Sa\'atii harkaa'],ans:1},
-    {q:'\"Le stylo\" Oromiyaatti (beekamaa) akkamitti jedhamaa?',opts:['Qorataa','Waraqaa','Qalama','Kitaaba'],ans:2},
-    {q:'\"Le portefeuille\" Afaan Oromootti akkamitti jedhamaa?',opts:['Bursuusaa dugdaa','Hirnaa','Fardaa qarshii','Bilbila'],ans:2},
-    {q:'\"Iyyaanoo\" jechuun maali?',opts:['La fenêtre','Le miroir','Le tableau','La porte'],ans:1},
-    {q:'\"La serviette\" Afaan Oromootti akkamitti jedhamaa?',opts:['Kaafiyaa','Saabunaa','Tuwaallii','Kilaasii'],ans:2},
-    {q:'\"Simiintoo\" jechuun maali?',opts:['Le couteau','La fourchette','La cuillère','L\'assiette'],ans:2},
-    {q:'\"Le parapluie\" Afaan Oromootti akkamitti jedhamaa?',opts:['Koobbii','Aanoo roobaa','Haguuggii','Uffata qilleensaa'],ans:1},
-    {q:'\"Kaafiyaa\" jechuun maali?',opts:['La couverture','Le matelas','Le drap','L\'oreiller'],ans:3},
    ]},
    {id:'log',level:1,emoji:'🏠',name:'Mana Jireenyaa',sub:'Dabtaroo, daakuu… / Le logement',
    words:[
@@ -465,13 +339,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Mana fincaanii / Dhiqachuu',fr:'La salle de bain',em:'🚿'},
     {et:'Mana fincaanii',fr:'Les toilettes',em:'🚽'},
     {et:'Mana konkolaataa',fr:'Le garage',em:'🚗'},
-   ],
-   quiz10:[
-    {q:'\"Le salon\" Afaan Oromootti Oromiyaatti akkamitti jedhamaa?',opts:['Daakuu','Kutaa ciisichaa','Galma','Mana konkolaataa'],ans:2},
-    {q:'\"Daakuu\" jechuun maali?',opts:['La salle à manger','La cuisine','La salle de bain','Le salon'],ans:1},
-    {q:'\"La chambre\" Afaan Oromootti akkamitti jedhamaa?',opts:['Galma','Kutaa ciisichaa','Seensa','Mana konkolaataa'],ans:1},
-    {q:'\"Mana fincaanii\" Oromiyaatti maal jechuudha?',opts:['La salle de bain','Le garage','Les toilettes','La salle à manger'],ans:2},
-    {q:'\"L\'appartement\" Oromiyaatti akkamitti jedhamaa?',opts:['Mana','Seensa','Apartamaantii','Kutaa ciisichaa'],ans:2}
    ]},
    {id:'muebles_equipamiento', level:1, emoji:'🪑', name:'Meeshaalee Manaa', sub:'Soofa, meeshaalee ummataa, dhiqachuu… / Meubles et équipements',
  words:[
@@ -495,15 +362,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Dhiqa fuulaa',fr:'Le lavabo',em:'🚰'},
     {et:'Kuubii dhiqachuu',fr:'La baignoire',em:'🛁'},
     {et:'Shawara',fr:'La douche',em:'🚿'},
-  ],
-  quiz10:[
-    {q:'\"Le canapé\" Afaan Oromootti akkamitti jedhamaa?',opts:['Teessoo qofaa','Sannaddaa','Soofa','Siree'],ans:2},
-    {q:'\"Amaaroo uffataa\" jechuun maali?',opts:['Le bureau','L\'étagère','Le fauteuil','L\'armoire'],ans:3},
-    {q:'\"Le réfrigérateur\" Afaan Oromootti Oromiyaatti akkamitti jedhamaa?',opts:['Aawoo','Maaykirooweevii','Friijiidara','Dhiqa meeshaa'],ans:2},
-    {q:'\"Le four\" Afaan Oromootti akkamitti jedhamaa?',opts:['Maaykirooweevii','Aawoo','Dhiqa meeshaa','Dhiqa fuulaa'],ans:1},
-    {q:'\"Mudaa kitaabaa\" jechuun maali?',opts:['La lampe','Le fauteuil','La chaise','L\'étagère'],ans:3},
-    {q:'\"La baignoire\" Afaan Oromootti akkamitti jedhamaa?',opts:['Dhiqa fuulaa','Dhiqa meeshaa','Kuubii dhiqachuu','Shawara'],ans:2},
-    {q:'\"Maardiima / Barrumsaa\" jechuun maali?',opts:['L\'armoire','Le lit','Le bureau','La table'],ans:2},
   ]},   
    {id:'emot',level:1,emoji:'😄',name:'Miira',sub:'Gammaduu, dadhabuu… / Les émotions',
    words:[
@@ -525,15 +383,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Jibba / Jibbitu',fr:'Déçu / Déçue',em:'😞'},
     {et:'Jaallachuu / Jaallattuu',fr:'Amoureux / Amoureuse',em:'😍'},
     {et:'Baay\'ee gaarii! / Roorroo!',fr:'C\'est super ! / C\'est cool !',em:'🌟'}
-   ],
-   quiz10:[
-    {q:'\"Énervée\" Afaan Oromootti Oromiyaatti akkamitti jedhamaa?',opts:['Manooftuu','Dallantuu','Yaaddoftuu','Gammatti'],ans:1},
-    {q:'\"Joyeuse\" Afaan Oromootti akkamitti jedhamaa?',opts:['Gadda','Dadhabduu','Kooltuu','Dhukkubsattuu'],ans:2},
-    {q:'\"Fatigué\" Afaan Oromootti akkamitti jedhamaa?',opts:['Dhiphina','Dhukkubsataa','Yaaddoo','Dadhabaa'],ans:3},
-    {q:'\"Dallantuu\" Oromiyaatti maal jechuudha?',opts:['Fatiguée','Contente','Fâchée','Malade'],ans:2},
-    {q:'\"Roorroo!\" Oromiyaatti maal jechuudha?',opts:['Ça m\'énerve !','C\'est nul !','C\'est super ! / C\'est cool !','J\'ai peur !'],ans:2},
-    {q:'\"Inquiète\" Afaan Oromootti akkamitti jedhamaa?',opts:['Dhibaa','Jaallattuu','Yaaddoftuu','Manooftuu'],ans:2},
-    {q:'\"Sodaachuu\" jechuun maali?',opts:['Avoir faim','Avoir peur','Avoir froid','Avoir sommeil'],ans:1}
    ]},
   {id:'fam',level:1,emoji:'👨‍👩‍👧',name:'Maatii',sub:'Abbaa, haadha, ilma… / La famille',
    words:[
@@ -548,16 +397,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Niitii / Haadha manaa',fr:'La femme',em:'💑'},
     {et:'Abbaa warraa / Dhiirsa',fr:'Le mari',em:'💍'},
     {et:'Adaadaa / Haadha Abbaa (Oromiyaatti)',fr:'L\'oncle / La tante (aussi : mec / nana en argot)',em:'👨/👩'}
-   ],
-   quiz10:[
-    {q:'\"Le père\" Afaan Oromootti akkamitti jedhamaa?',opts:['Dhiirsa','Ilma','Abbaa manaa yookiin Abbaa','Obboleessa'],ans:2},
-    {q:'\"Haadha\" jechuun maali?',opts:['La fille','La sœur','La maman','La mère'],ans:3},
-    {q:'\"Le frère\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ilma','Obboleessa','Abbaa','Dhiirsa'],ans:1},
-    {q:'\"Obboleettii\" jechuun maali?',opts:['La mère','La grand-mère','La sœur','La fille'],ans:2},
-    {q:'\"Le grand-père\" Afaan Oromootti akkamitti jedhamaa?',opts:['Abbaa','Dhiirsa','Ilma','Akaakayyuu'],ans:3},
-    {q:'\"Akoo / Awoo\" jechuun maali?',opts:['La mère','La grand-mère','La sœur','La fille'],ans:1},
-    {q:'\"La fille\" Afaan Oromootti akkamitti jedhamaa?',opts:['Obboleettii','Niitii','Intala','Haadha'],ans:2},
-    {q:'Afaan Oromootti \"Adaadaa / Haadha Abbaa\" jechuun danda\'a…',opts:['Père / mère','Mec / nana','Frère / sœur','L\'oncle / La tante'],ans:1}
    ]},
   {id:'verb',level:1,emoji:'📝',name:'Yakkawwan',sub:'Ta\'uu, qabaachuu, deemuu… / Les verbes principaux',
    words:[
@@ -595,41 +434,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Gaafachuu',fr:'Demander',em:'🙋‍♂️',conj:{et:['Ani nan gaafadha','Ati ni gaafatta','Inni/Isheen ni gaafata','Nuti ni gaafanna','Isin ni gaafastu','Isaan ni gaafatu'],fr:['Je demande','Tu demandes','Il/Elle demande','Nous demandons','Vous demandez','Ils/Elles demandent']}},
     {et:'Konkolaachisuu',fr:'Conduire',em:'🚗',conj:{et:['Ani nan konkolaachisa','Ati ni konkolaachista','Inni/Isheen ni konkolaachisa','Nuti ni konkolaachisina','Isin ni konkolaachistuu','Isaan ni konkolaachisu'],fr:['Je conduis','Tu conduis','Il/Elle conduit','Nous conduisons','Vous conduisez','Ils/Elles conduisent']}},
     {et:'Baay\'ee jaaladhu',fr:'Adorer (argot)',em:'😎',conj:{et:['Nan baay\'ee jaalladha','Ni baay\'ee jaallataa','Ni baay\'ee jaallata','Ni baay\'ee jaallannaа','Ni baay\'ee jaallattu','Ni baay\'ee jaallatu'],fr:['J\'adore','Tu adores','Il/Elle adore','Nous adorons','Vous adorez','Ils/Elles adorent']}}
-  ],
-   quiz10:[
-    {q:'\"Nan baay\'ee jaalladha\" Afaan Oromootti maal jechuudha?',opts:['Ça m\'ennuie','Ça me fait peur','Ça me plaît / j\'adore','Suis fatigué'],ans:2},
-    {q:'\"Isheen misooftee\" jechuun maali?',opts:['Elle crie','Elle pleure','Elle sourit','Elle chante'],ans:2},
-    {q:'\"Tu conduis\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni fiigta','Ni deemta miila','Ni konkolaachista','Ni ba\'ata'],ans:2},
-    {q:'\"Nan baradha\" jechuun maali?',opts:['Tu enseignes','Tu écoutes','Tu apprends','Tu lis'],ans:2},
-    {q:'\"Ni gurguru\" jechuun maali?',opts:['Ils achètent','Ils cherchent','Ils vendent','Ils donnent'],ans:2},
-    {q:'\"Il dort\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni fiiga','Ni deema miila','Ni rafa','Ni nyaata'],ans:2},
-    {q:'\"Vous habitez\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni jiraastu','Ni jiraanna','Ni jiraatu','Nan jiraadha'],ans:0},
-    {q:'\"Nan nyaadha\" jechuun maali?',opts:['Tu bois','Tu manges','Tu dors','Tu marches'],ans:1},
-    {q:'\"Meetiroo fudhata\" jechuun maali?',opts:['Il rate le métro','Il cherche le métro','Il prend le métro','Il attend le métro'],ans:2},
-    {q:'\"Nan dubbadha\" jechuun maali?',opts:['Tu écoutes','Tu lis','Tu parles','Tu regardes'],ans:2},
-    {q:'\"Ils mangent\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni nyaanna','Ni nyaastu','Ni nyaatu','Nan nyaadha'],ans:2},
-    {q:'\"Ni kennina\" jechuun maali?',opts:['Nous prenons','Nous vendons','Nous donnons','Nous recevons'],ans:2},
-    {q:'\"Ni qulqulleessina\" jechuun maali?',opts:['Nous cuisinons','Nous nettoyons','Nous lavons','Nous rangeons'],ans:1},
-    {q:'\"Ils boivent\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni dhugna','Ni dhugtu','Nan dhuga','Ni dhugu'],ans:3},
-    {q:'\"Tu penses\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni dubbatta','Ni barbaadda','Ni yaadda','Ni ilaalta'],ans:2},
-    {q:'\"Ni waamta\" jechuun maali?',opts:['Tu réponds','Tu appelles','Tu parles','Tu écoutes'],ans:1},
-    {q:'\"J\'ai\" Afaan Oromootti akkamitti jedhamaa?',opts:['Nan ta\'a','Nan deema','Nan qabaadha','Nan dubbadha'],ans:2},
-    {q:'\"Tu vas\" Afaan Oromootti akkamitti jedhamaa?',opts:['Nan ta\'a','Nan qabaadha','Nan dhufa','Ni deemta'],ans:3},
-    {q:'\"Il part\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni dhufa','Ni ba\'a','Ni deema','Ni ba\'uuf'],ans:1},
-    {q:'Oromiyaatti \"Baasii fudhachuu\" jechuun…',opts:['Rater le bus','Prendre le bus','Attendre le bus','Chercher le bus'],ans:1},
-    {q:'\"Nous travaillons\" Afaan Oromootti akkamitti jedhamaa?',opts:['Nan qulqulleessa','Nan bilcheessa','Ni hojjenna','Ni konkolaachisina'],ans:2},
-    {q:'\"Ni gaafatu\" jechuun maali?',opts:['Ils répondent','Ils cherchent','Ils demandent','Ils écoutent'],ans:2},
-    {q:'\"Tu arrives\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni ba\'ata','Ni dhufa','Ni barbaadda','Ni kaffalta'],ans:1},
-    {q:'\"Nan bita\" jechuun maali?',opts:['Tu vends','Tu cherches','Tu paies','Tu achètes'],ans:3},
-    {q:'\"Inni dhiqata\" jechuun maali?',opts:['Il se lève','Il se douche','Il se repose','Il se lave'],ans:1},
-    {q:'\"Tu cherches\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni bitta','Ni hojjetta','Ni barbaadda','Ni yaadda'],ans:2},
-    {q:'\"Isheen bilcheessa\" jechuun maali?',opts:['Elle mange','Elle cuisine','Elle nettoie','Elle lit'],ans:1},
-    {q:'\"Nous parlons\" Afaan Oromootti akkamitti jedhamaa?',opts:['Nan dubbadha','Ni dubbanna','Ni dubbastu','Ni dubbatu'],ans:1},
-    {q:'\"Tu lis\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni dhaggeeffatta','Ni baratta','Ni dubbista','Ni ilaalta'],ans:2},
-    {q:'\"Tu écris\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni dubbista','Ni dhaggeeffatta','Ni ilaalta','Ni barreesta'],ans:3},
-    {q:'\"Tu paies\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni kenta','Ni fudhatta','Ni gurgurta','Ni kaffalda'],ans:3},
-    {q:'\"Tu cours\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni deemta miila','Ni konkolaachista','Ni fiigta','Ni ba\'ata'],ans:2}
-   ]},
+  ]},
   {id:'corps',level:1,emoji:'🧍',name:'Qaamaa',sub:'Mataa, harkaa, miila… / Le corps',
    words:[
     {et:'Mataa',fr:'La tête',em:'🗣️'},
@@ -653,16 +458,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Onnee',fr:'Le cœur',em:'❤️'},
     {et:'Sammuu',fr:'Le cerveau',em:'🧠'},
     {et:'Lafee / Lafaan',fr:'L\'os / Les os',em:'🦴'}
-   ],
-   quiz10:[
-    {q:'"La tête" Afaan Oromootti akkamitti jedhamaa?',opts:['Funyaan','Afaan','Mataa','Morma'],ans:2},
-    {q:'"Ijaan" jechuun maali?',opts:['Les oreilles','Le nez','Les lèvres','Les yeux'],ans:3},
-    {q:'"La main" Afaan Oromootti akkamitti jedhamaa?',opts:['Miila jalaa','Miila','Harka','Harka'],ans:3},
-    {q:'"Funyaan" jechuun maali?',opts:['La bouche','Le nez','L\'oreille','Le cou'],ans:1},
-    {q:'"La jambe" Afaan Oromootti akkamitti jedhamaa?',opts:['Harka','Miila','Miila jalaa','Dugda'],ans:1},
-    {q:'"Sammuu" jechuun maali?',opts:['Le cœur','Le ventre','Le cerveau','L\'os'],ans:2},
-    {q:'"Les dents" Afaan Oromootti akkamitti jedhamaa?',opts:['Hidhii','Arraba','Ilkaan','Gurraan'],ans:2},
-    {q:'"Onnee" jechuun maali?',opts:['Le cerveau','Le cœur','L\'os','Le dos'],ans:1}
    ]},
   {id:'sante',level:1,emoji:'🏥',name:'Fayyaa',sub:'Doktora, farmaasiitii… / La santé',
    words:[
@@ -687,16 +482,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Xaxaa madaa',fr:'Le bandage',em:'🩼'},
     {et:'Ambulaansii',fr:'L\'ambulance',em:'🚑'},
     {et:'Bakka ariifachiisaa',fr:'Les urgences',em:'🆘'}
-   ],
-   quiz10:[
-    {q:'"L\'hôpital" Afaan Oromootti akkamitti jedhamaa?',opts:['Farmaasiitii','Hospitaala','Bakka ariifachiisaa','Gorsaa fayyaa'],ans:1},
-    {q:'"Ho\'a qaamaa" jechuun maali?',opts:['La toux','La douleur','La fièvre','La grippe'],ans:2},
-    {q:'"Le vaccin" Afaan Oromootti akkamitti jedhamaa?',opts:['Mallattoo madaa','Vaaksiniifi','Xaxaa madaa','Qoricha'],ans:1},
-    {q:'"Le pansement" Oromiyaatti akkamitti jedhamaa?',opts:['Dhiyaannoo','Vaaksiniifi','Mallattoo madaa','Qoricha'],ans:2},
-    {q:'"L\'ordonnance" Afaan Oromootti akkamitti jedhamaa?',opts:['Gorsaa fayyaa','Qoricha','Reseeptii / Ajaja qorichaa','Vaaksiniifi'],ans:2},
-    {q:'"Les urgences" Afaan Oromootti akkamitti jedhamaa?',opts:['Doktora eeggannaa','Kutaa eeggannaa','Bakka ariifachiisaa','Gorsaa fayyaa'],ans:2},
-    {q:'"Le thermomètre" Afaan Oromootti akkamitti jedhamaa?',opts:['Dhiibbaa','Meeshaa ho\'a safaruu','Ho\'a qaamaa','Dhiyaannoo'],ans:1},
-    {q:'"Un rendez-vous médical" Afaan Oromootti akkamitti jedhamaa?',opts:['Daawwannaa','Beellama fayyaa','Reseeptii','Gorsaa fayyaa'],ans:1}
    ]},
   {id:'ocio', level:1, emoji:'⛰️', name:'Boqonnaa fi Bashannannaa', sub:'Ispoortii, dubbisuu, muuziqaa… / Les loisirs',
   words:[
@@ -721,20 +506,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Leenjii hojjechuu',fr:'Pratiquer',em:'💪'},
     {et:'Boqachuu',fr:'Se reposer',em:'😴'},
     {et:'Gammachuun fayyadamuu',fr:'Profiter / Apprécier',em:'😊'},
-  ],
-  quiz10:[
-    {q:'"La randonnée" Afaan Oromootti akkamitti jedhamaa?',opts:['Naqata','Deemsa karaa','Fiigichaa','Deemsa tulluutti'],ans:3},
-    {q:'"Daakuu bishaan" jechuun maali?',opts:['Le cyclisme','L\'athlétisme','La natation','Le football'],ans:2},
-    {q:'"Le livre" Afaan Oromootti akkamitti jedhamaa?',opts:['Dubbisuu','Muuziqaa','Kitaaba','Siinimaa'],ans:2},
-    {q:'"Fiigichaa" jechuun maali?',opts:['Le football','Le cyclisme','La natation','L\'athlétisme'],ans:3},
-    {q:'"La marche nordique" Afaan Oromootti akkamitti jedhamaa?',opts:['Naqata','Deemsa tulluutti','Fiigichaa','Deemsa karaa'],ans:3},
-    {q:'"Boqachuu" jechuun maali?',opts:['Jouer','Pratiquer','Apprécier','Se reposer'],ans:3},
-    {q:'"Le cinéma" Afaan Oromootti akkamitti jedhamaa?',opts:['Tiyaatira','Muuziqaa','Dubbisuu','Siinimaa'],ans:3},
-    {q:'"Biskileetii oofuu" jechuun maali?',opts:['La natation','L\'athlétisme','Le cyclisme','Le football'],ans:2},
-    {q:'"Jouer" Afaan Oromootti akkamitti jedhamaa?',opts:['Leenjii hojjechuu','Gammachuun fayyadamuu','Boqachuu','Taphaachuu'],ans:3},
-    {q:'"Naqata / Seenaa" jechuun maali?',opts:['La randonnée','La montagne','La campagne','La promenade'],ans:3},
-    {q:'"Pratiquer" Afaan Oromootti akkamitti jedhamaa?',opts:['Taphaachuu','Gammachuun fayyadamuu','Leenjii hojjechuu','Boqachuu'],ans:2},
-    {q:'"Gammachuun fayyadamuu" jechuun maali?',opts:['Se reposer','Jouer','Pratiquer','Profiter / Apprécier'],ans:3},
   ]
 },  
    {id:'veth',level:1,emoji:'👗',name:'Uffata',sub:'Shartii, surrii… / Les vêtements',
@@ -758,16 +529,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Kuullaa ho\'a',fr:'Le bonnet',em:'🎿'},
     {et:'Buursaa / Fardaa',fr:'Le sac / La poche',em:'👜'},
     {et:'Uffata bishaan',fr:'Le maillot de bain',em:'🩱'},
-   ],
-   quiz10:[
-    {q:'"Le t-shirt" Afaan Oromootti akkamitti jedhamaa?',opts:['Jaakeetii','Shartii dheeraa','Shartii','Jaakeetii alaa'],ans:2},
-    {q:'"Surrii dargaggeessaa" jechuun maali?',opts:['Le short','Le jean','La jupe','Le survêtement'],ans:1},
-    {q:'"Les chaussures" Afaan Oromootti akkamitti jedhamaa?',opts:['Kaalseettii','Shaakaalaa','Kophee','Kuullaa'],ans:2},
-    {q:'"Le pull" Oromiyaatti akkamitti jedhamaa?',opts:['Shanxii morma','Jaakeetii alaa','Jaakeetii / Uffata ho\'a','Koobii guddaa'],ans:2},
-    {q:'"Le maillot de bain" Oromiyaatti akkamitti jedhamaa?',opts:['Uffata bishaan','Kuullaa ho\'a','Surrii gabaabaa','Kaalseettii'],ans:0},
-    {q:'"Shanxii morma" jechuun maali?',opts:['Les gants','Le manteau','L\'écharpe','Le bonnet'],ans:2},
-    {q:'"La robe" Afaan Oromootti akkamitti jedhamaa?',opts:['Qanafee','Uffata dubartii','Jaakeetii alaa','Jaakeetii'],ans:1},
-    {q:'"Kaalseettii" jechuun maali?',opts:['Les chaussures','Les gants','Les chaussettes','Le maillot de bain'],ans:2}
    ]},
   {id:'pays',level:1,emoji:'🌍',name:'Biyyoota',sub:'Itoophiyaa, Oromiyaa… / Les pays',
    words:[
@@ -797,16 +558,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Giriikii',fr:'La Grèce',em:'🇬🇷'},
     {et:'Awustiraaliyaa',fr:'L\'Australie',em:'🇦🇺'},
     {et:'Afrikaa Kibbaa',fr:'L\'Afrique du Sud',em:'🇿🇦'},
-   ],
-   quiz10:[
-    {q:'"La France" Afaan Oromootti akkamitti jedhamaa?',opts:['Beljiyoom','Faransaay','Swiizerlaandii','Keeniyaa'],ans:1},
-    {q:'"Jarman" jechuun maali?',opts:['Autriche','Pays-Bas','Allemagne','Danemark'],ans:2},
-    {q:'"Le Brésil" Afaan Oromootti akkamitti jedhamaa?',opts:['Sudaan','Somaaliyaa','Braazil','Jibuutii'],ans:2},
-    {q:'"Ingliizii" jechuun maali?',opts:['Irlande','Royaume-Uni','Écosse','Danemark'],ans:1},
-    {q:'"Le Maroc" Afaan Oromootti akkamitti jedhamaa?',opts:['Jibuutii','Somaaliyaa','Morokkoo','Afrikaa Kibbaa'],ans:2},
-    {q:'"La Turquie" Afaan Oromootti akkamitti jedhamaa?',opts:['Tuniiziyaa','Tailaandii','Turkii','Taanzaaniyaa'],ans:2},
-    {q:'"Biyyoota Gadii" jechuun maali?',opts:['Belgique','Danemark','Pays-Bas','Luxembourg'],ans:2},
-    {q:'"La Grèce" Afaan Oromootti akkamitti jedhamaa?',opts:['Turkii','Giriikii','Xaaliyaanii','Chaayinaa'],ans:1}
    ]},
   {id:'met',level:1,emoji:'💼',name:'Ogummaa',sub:'Doktora, barsiisaa… / Les professions',
    words:[
@@ -823,13 +574,6 @@ var LEVEL1_THEMES_FR=[
     // Niveau 3 — Métiers plus spécifiques ou lexicalement complexes
     {et:'Ogaa bishaan',fr:'Le plombier / La plombière',em:'🔧'},
     {et:'Ogaa kompiyuutaraa',fr:'L\'informaticien / L\'informaticienne',em:'💻'},
-   ],
-   quiz10:[
-    {q:'"Le médecin" Afaan Oromootti akkamitti jedhamaa?',opts:['Barsiisaa','Doktora','Narsii','Nyaata bilcheessaa'],ans:1},
-    {q:'"Barsiisaa" Oromiyaatti maal jechuudha?',opts:['L\'étudiant','Le directeur','Le professeur','Le concierge'],ans:2},
-    {q:'"La serveuse" Oromiyaatti akkamitti jedhamaa?',opts:['Nyaata bilcheessaa','Tajaajiltu','Oofaa taaksii','Gurgurattu'],ans:1},
-    {q:'"Barattuun" jechuun maali?',opts:['La professeure','L\'étudiante','La médecin','La vendeuse'],ans:1},
-    {q:'"L\'infirmier" Afaan Oromootti akkamitti jedhamaa?',opts:['Doktora','Barsiisaa','Narsii','Tajaajilaa'],ans:2}
    ]},
   {id:'anim',level:1,emoji:'🐘',name:'Bineeldota',sub:'Saree, adurree, sangaa… / Les animaux',
    words:[
@@ -865,20 +609,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Saappanaa',fr:'L\'araignée',em:'🕷️'},
     {et:'Hiyyeessa / Bineeldota xixiqqaa',fr:'Le moustique',em:'🦟'},
     {et:'Dirreetti',fr:'La fourmi',em:'🐜'},
-   ],
-   quiz10:[
-    {q:'"Le chien" Afaan Oromootti akkamitti jedhamaa?',opts:['Adurree','Farda','Saree','Illeena'],ans:2},
-    {q:'"Adurree" jechuun maali?',opts:['Le chien','Le chat','Le lapin','L\'oiseau'],ans:1},
-    {q:'"Le cheval" Afaan Oromootti akkamitti jedhamaa?',opts:['Loon','Farda','Dubbii','Booyee'],ans:1},
-    {q:'Oromiyaatti bineeldii mallattoo biyyaa eenyu?',opts:['Ardiitii','Sangaa','Arba','Farda'],ans:2},
-    {q:'"L\'éléphant" Afaan Oromootti akkamitti jedhamaa?',opts:['Qeerransaa','Harootii guddaa','Arba','Dubbii'],ans:2},
-    {q:'"Le papillon" Afaan Oromootti akkamitti jedhamaa?',opts:['Dirreetti','Buraayyoo','Saappanaa','Hiyyeessa'],ans:1},
-    {q:'"Bofa" jechuun maali?',opts:['Le lézard','La grenouille','Le serpent','L\'insecte'],ans:2},
-    {q:'"Le coq" Afaan Oromootti akkamitti jedhamaa?',opts:['Lukkuu','Qurxummii','Kormaa lukkuu','Molgaa'],ans:2},
-    {q:'"Qurxummii bishaaniin jiraatuu" jechuun maali?',opts:['La baleine','Le requin','Le dauphin','Le poisson'],ans:2},
-    {q:'"Re\'ee" jechuun maali?',opts:['La vache','Le cochon','L\'agneau','La chèvre'],ans:3},
-    {q:'"Le taureau" Afaan Oromootti akkamitti jedhamaa?',opts:['Farda','Sangaa','Booyee','Loon'],ans:1},
-    {q:'"Hoolaa / Hoolii" jechuun maali?',opts:['La vache','Le cochon','L\'agneau','La chèvre'],ans:2}
    ]},
   {id:'plan',level:1,emoji:'🌿',name:'Biqiltoota',sub:'Adaraa, muka, bosonaa… / Les plantes',
    words:[
@@ -893,13 +623,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Bosonaa',fr:'La forêt',em:'🌲'},
     // 🔴 Niveau 3 — Vocabulaire plus précis ou contextuel
     {et:'Marga miidhagoo',fr:'La pelouse / Le gazon',em:'⛳'},
-   ],
-   quiz10:[
-    {q:'"La fleur" Afaan Oromootti akkamitti jedhamaa?',opts:['Caasee','Adaraa / Daadhii','Marga miidhagoo','Daadhii diimaa'],ans:1},
-    {q:'"Muka" jechuun maali?',opts:['La feuille','L\'herbe','L\'arbre','La fleur'],ans:2},
-    {q:'"La rose" Afaan Oromootti akkamitti jedhamaa?',opts:['Adaraa','Caasee','Marga miidhagoo','Daadhii diimaa'],ans:3},
-    {q:'"Bosonaa" jechuun maali?',opts:['Le jardin','La forêt','Le champ','Le parc'],ans:1},
-    {q:'"Le jardin" Afaan Oromootti akkamitti jedhamaa?',opts:['Bosonaa','Muka','Bakkee miidhagoo','Adaraa'],ans:2}
    ]}  
 ];
 
@@ -1480,16 +1203,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Jidduu jira / Haaluma',fr:'Comme ci comme ça',em:'😐'},
     {et:'Dafqaan jira / Fayyaa miti',fr:'Je ne vais pas bien / Je n\'ai pas la forme',em:'😔'},
     {et:'Baay\'ee gaarii! / Roorroo!',fr:'C\'est cool ! / Super !',em:'🌟'}
-   ],
-   quiz10:[
-    {q:'\"Bonjour (le matin)\" Afaan Oromootti akkamitti jedhamaa?',opts:['Nagaa!','Akkam ooltee','Akkam bulte','Aduun galatoomaa'],ans:2},
-    {q:'\"Nagaan ooluu\" jechuun maali?',opts:['À tout à l\'heure','Au revoir','Bonjour','Bonne nuit'],ans:1},
-    {q:'\"Merci\" Afaan Oromootti akkamitti jedhamaa?',opts:['Maaloo','Dhiifama','Galatoomaa','Eeyyee'],ans:2},
-    {q:'\"Tole!\" Oromiyaatti maal jechuudha?',opts:['Adieu','Allons-y !','D\'accord !','Bonne nuit'],ans:2},
-    {q:'\"S\'il vous plaît\" Afaan Oromootti akkamitti jedhamaa?',opts:['Galatoomaa','Dhiifama','Maaloo','Eeyyee'],ans:2},
-    {q:'\"Eeyyee!\" Oromiyaatti maal jechuudha?',opts:['Viens !','Allez ! / D\'accord !','Non !','Peut-être !'],ans:1},
-    {q:'\"Akkam jirta?\" jechuun maali?',opts:['Où es-tu ?','Comment tu t\'appelles ?','Comment vas-tu ?','Quel âge as-tu ?'],ans:2},
-    {q:'\"Baay\'ee gaarii!\" jechuun maali?',opts:['Comme c\'est bizarre !','Comme c\'est cool !','Comme c\'est triste !','Comme c\'est grand !'],ans:1}
    ]},
   {id:'pres',level:1,emoji:'🙋',name:'Ofii Beeksisuu',sub:'Maqaa, dachee, magaalaa… / Se présenter',
    words:[
@@ -1500,16 +1213,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Nan jiraadha',fr:'J\'habite à',em:'🏠'},{et:'Ani / Naan',fr:'Je suis',em:'🧑'},
     {et:'Waggoota ... qabaadha',fr:'J\'ai ... ans',em:'🎈'},{et:'Maqaan koo ...',fr:'Je m\'appelle',em:'👋'},
     {et:'Eessa irraa dhufte?',fr:'D\'où es-tu ?',em:'🌍'},{et:'Shashemaneetti dhufeen',fr:'Je suis de Shashemene',em:'🏙️'}
-   ],
-   quiz10:[
-    {q:'\"Je m\'appelle\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ani','Maqaan koo ...','Nan jiraadha','Waggoota qabaadha'],ans:1},
-    {q:'\"Maqaa abbaaf eeyyee\" jechuun maali?',opts:['Le prénom','L\'âge','Le nom de famille','La profession'],ans:2},
-    {q:'\"J\'ai 25 ans\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ani waggaa 25','Nan jiraadha 25','Waggoota 25 qabaadha','Hojii 25'],ans:2},
-    {q:'\"Biyya irraa dhufame\" jechuun maali?',opts:['Le pays','La ville','La profession','La nationalité'],ans:3},
-    {q:'\"J\'habite à Shashemane\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ani Shashemane','Shashamenetti nan jiraadha','Shashemane deema','Shashemane qabaadha'],ans:1},
-    {q:'\"Maqaa ofii\" jechuun maali?',opts:['Le nom de famille','Le prénom','L\'âge','La profession'],ans:1},
-    {q:'\"Je suis Éthiopienne\" Afaan Oromootti akkamitti jedhamaa?',opts:['Faransaawitii','Oromiyaadhaa','Shashemane nan jiraadha','Oromoo hojjedha'],ans:1},
-    {q:'\"Eessa irraa dhufte?\" jechuun maali?',opts:['Umurii meeqa?','Maqaan kee eenyu?','Eessa irraa dhufte?','Eessa jiraatta?'],ans:2}
    ]},
   {id:'orient',level:1,emoji:'🧭',name:'Karaa Barbaaduuu',sub:'Bitaa, mirga… / S\'orienter',
    words:[
@@ -1527,14 +1230,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Fagoo',fr:'Loin',em:'🌅'},
     // Outil
     {et:'Kaartaa',fr:'Le plan / La carte',em:'🗺️'},
-    ],
-   quiz10:[
-    {q:'\"À gauche\" Afaan Oromootti akkamitti jedhamaa?',opts:['Mirgatti','Kallattii itti fufi','Bitatti','Fuuldura'],ans:2},
-    {q:'\"Mirgatti\" jechuun maali?',opts:['À gauche','Tout droit','À côté','À droite'],ans:3},
-    {q:'\"Tout droit\" Afaan Oromootti akkamitti jedhamaa?',opts:['Bitatti','Kallattii itti fufi','Fuuldura','Cinaa'],ans:1},
-    {q:'\"Fuuldura / Eegalan\" jechuun maali?',opts:['À côté','Derrière','En face','Près'],ans:2},
-    {q:'\"Près\" Afaan Oromootti akkamitti jedhamaa?',opts:['Fagoo','Cinaa','Dhiyoo','Fuuldura'],ans:2}
-   ]},
+    ]},
   {id:'lieux',level:1,emoji:'🏙️',name:'Bakkoota Barbaachisoo',sub:'Gabaa, daandii, bunaa… / Les lieux importants',
    words:[
     // Lieux de vie / nature
@@ -1565,16 +1261,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Mana barumsaa sadarkaa lammaffaa',fr:'Le collège',em:'📚'},
     {et:'Mana barumsaa ol\'aanaa',fr:'Le lycée',em:'🎓'},
     {et:'Yuniversitii',fr:'L\'université',em:'🏛️'},
-   ],
-   quiz10:[
-    {q:'\"La pharmacie\" Afaan Oromootti akkamitti jedhamaa?',opts:['Baankii','Hospitaala','Farmaasiitii','Suupaarmaarkeeti'],ans:2},
-    {q:'\"La mairie\" Oromiyaatti akkamitti jedhamaa?',opts:['Kiilistiyaana','Mana murtii','Mana bulchiinsaa','Gabaa'],ans:2},
-    {q:'\"L\'hôpital\" Afaan Oromootti akkamitti jedhamaa?',opts:['Farmaasiitii','Mana bulchiinsaa','Hospitaala','Baankii'],ans:2},
-    {q:'Oromiyaatti bakka tokko tokkotti baay\'een argamu?',opts:['Le supermarché','Le bar / Le café','La pharmacie','L\'école'],ans:1},
-    {q:'\"La mer\" Afaan Oromootti akkamitti jedhamaa?',opts:['Laga','Tullu','Galaana','Haroo'],ans:2},
-    {q:'\"Mana bulchiinsaa\" jechuun maali?',opts:['Le tribunal','La mairie','Le parlement','L\'université'],ans:1},
-    {q:'\"La ville\" Afaan Oromootti akkamitti jedhamaa?',opts:['Daandii','Ganda','Magaalaa','Tullu'],ans:2},
-    {q:'\"Baankii\" jechuun maali?',opts:['La pharmacie','La banque','La caisse','Le bureau'],ans:1}
    ]},
   {id:'nour',level:1,emoji:'🍽️',name:'Nyaata',sub:'Buddeena, muduraa, injera… / La nourriture',
    words:[
@@ -1616,16 +1302,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Barbaree',fr:'Le poivre',em:'🌶️'},
     {et:'Damma',fr:'Le miel',em:'🍯'},
     {et:'Chokolaatii',fr:'Le chocolat',em:'🍫'},
-   ],
-   quiz10:[
-    {q:'\"Le pain\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ruzii','Buddeena','Baadaa','Dhadhaa'],ans:1},
-    {q:'\"Lukkuu\" jechuun maali?',opts:['Le poisson','La viande','Le poulet','Le porc'],ans:2},
-    {q:'\"L\'œuf\" Afaan Oromootti akkamitti jedhamaa?',opts:['Dhadhaa','Baadaa','Karootii','Hanqaaquu'],ans:3},
-    {q:'\"La pomme\" Afaan Oromootti akkamitti jedhamaa?',opts:['Muuzii','Mukarroo','Pomii','Burtukaana'],ans:2},
-    {q:'\"Les frites\" Afaan Oromootti Oromiyaatti akkamitti jedhamaa?',opts:['Foonii dinnichaa','Maakiirooni','Tibs','Buddeena'],ans:0},
-    {q:'\"La pastèque\" Afaan Oromootti akkamitti jedhamaa?',opts:['Mukarroo','Harbuu','Liimoo','Burtukaana'],ans:1},
-    {q:'\"La carotte\" Afaan Oromootti akkamitti jedhamaa?',opts:['Salaaxi','Karootii','Timaatimii','Qullubbii'],ans:1},
-    {q:'\"La fraise\" Afaan Oromootti Oromiyaatti akkamitti jedhamaa?',opts:['Muuzii','Harbuu','Mukarroo','Liimoo'],ans:2}
    ]},
   {id:'bois',level:1,emoji:'🥤',name:'Dhugaatii',sub:'Bishaani, buna, shaayii… / Les boissons',
    words:[
@@ -1644,16 +1320,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Koonjoo (diimaa / adii)',fr:'Le vin (rouge / blanc)',em:'🍷'},
     {et:'Biiraa',fr:'La bière',em:'🍺'},
     {et:'Araqee',fr:'La sangria',em:'🍷'},
-   ],
-   quiz10:[
-    {q:'\"L\'eau\" Afaan Oromootti akkamitti jedhamaa?',opts:['Aannaan','Jiisii','Bishaan','Shaayii'],ans:2},
-    {q:'\"Buna qullayyoo\" Oromiyaatti maaliyyu?',opts:['Un café au lait','Un café noir','Un café avec sucre','Un café froid'],ans:1},
-    {q:'\"Le lait\" Afaan Oromootti akkamitti jedhamaa?',opts:['Aannaan','Bishaan','Shaayii','Jiisii'],ans:0},
-    {q:'\"Jiisii\" jechuun maali?',opts:['Le vin','La bière','La limonade','Le jus'],ans:3},
-    {q:'Oromiyaatti dhugaatii beekamaa maaltu jira?',opts:['Biiraa','Araqee','Sodaa','Buna aannaan waliin'],ans:1},
-    {q:'\"Buna nannoo aannaan xinnoo\" maaliyyu?',opts:['Un café noir','Une bière','Un café avec un nuage de lait','Un jus d\'orange'],ans:2},
-    {q:'\"Le thé\" Afaan Oromootti akkamitti jedhamaa?',opts:['Buna','Shaayii','Aannaan','Bishaan'],ans:1},
-    {q:'\"L\'eau gazeuse\" Afaan Oromootti akkamitti jedhamaa?',opts:['Bishaan qorraa','Bishaan dhugaatii','Bishaan gaazii qaba','Gasiyoozaa'],ans:2}
    ]},
 {id:'num',level:1,emoji:'🔢',name:'Lakkoofsa',sub:'Zeerroo irraa hanga kuma lamaa / Zéro à deux mille',
  words:[
@@ -1684,27 +1350,7 @@ var LEVEL1_THEMES_OR=[
   {et:'Dhibba sagal',fr:'Neuf cents',em:'9️⃣0️⃣0️⃣'},
   {et:'Kuma',fr:'Mille',em:'1️⃣0️⃣0️⃣0️⃣'},
   {et:'Kuma lama',fr:'Deux mille',em:'2️⃣0️⃣0️⃣0️⃣'}
- ],
-   quiz10:[
-    {q:'\"Shan\" lakkoofsa meeqaa?',opts:['4','6','5','7'],ans:2},
-    {q:'12 Afaan Oromootti akkamitti jedhamaa?',opts:['Kudha tokko','Kudha lama','Kudha sadii','Kudhan'],ans:1},
-    {q:'16 Afaan Oromootti akkamitti jedhamaa?',opts:['Kudha shan','Kudha torba','Kudha jaha','Kudha sadii'],ans:2},
-    {q:'\"Sagal\" lakkoofsa meeqaa?',opts:['7','8','10','9'],ans:3},
-    {q:'20 Afaan Oromootti akkamitti jedhamaa?',opts:['Kudha sagal','Digdama','Kudha shan','Kudha saddeet'],ans:1},
-    {q:'\"Kudha sadii\" lakkoofsa meeqaa?',opts:['12','11','14','13'],ans:3},
-    {q:'8 Afaan Oromootti akkamitti jedhamaa?',opts:['Torba','Sagal','Saddeet','Jaha'],ans:2},
-    {q:'\"Kudha afur\" lakkoofsa meeqaa?',opts:['15','13','14','12'],ans:2},
-    {q:'30 Afaan Oromootti akkamitti jedhamaa?',opts:['Digdama','Afurtama','Soddomaa','Shantama'],ans:2},
-    {q:'\"Torbaatama\" lakkoofsa meeqaa?',opts:['60','80','90','70'],ans:3},
-    {q:'50 Afaan Oromootti akkamitti jedhamaa?',opts:['Jahatama','Shantama','Afurtama','Torbaatama'],ans:1},
-    {q:'\"Saddeetama\" lakkoofsa meeqaa?',opts:['70','90','80','60'],ans:2},
-    {q:'100 Afaan Oromootti akkamitti jedhamaa?',opts:['Kuma','Dhibbaa','Dhibba','Sagaltama'],ans:2},
-    {q:'\"Dhibba shan\" lakkoofsa meeqaa?',opts:['400','600','300','500'],ans:3},
-    {q:'1000 Afaan Oromootti akkamitti jedhamaa?',opts:['Dhibba','Dhibba lama','Kuma','Dhibba sagal'],ans:2},
-    {q:'\"Dhibba lama\" lakkoofsa meeqaa?',opts:['300','100','400','200'],ans:3},
-    {q:'2000 Afaan Oromootti akkamitti jedhamaa?',opts:['Kuma lama','Kuma','Dhibba lama','Digdama kuma'],ans:0},
-    {q:'\"Dhibba sagal\" lakkoofsa meeqaa?',opts:['800','700','1000','900'],ans:3}
-   ]},
+ ]},
   {id:'col',level:1,emoji:'🎨',name:'Halluu',sub:'Diimaa, magariisa, keelloo… / Les couleurs',
    words:[
     {et:'Diimaa',fr:'Rouge',em:'❤️'},{et:'Cuquliisa',fr:'Bleu',em:'💙'},{et:'Magariisa',fr:'Vert',em:'💚'},
@@ -1712,15 +1358,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Gurraacha',fr:'Noir',em:'🖤'},{et:'Roozii',fr:'Rose',em:'🩷'},
     {et:'Daallatii / Diimtuuja',fr:'Violet',em:'💜'},{et:'Bunii',fr:'Marron',em:'🤎'},
     {et:'Garaa garaa / Dulluma',fr:'Gris',em:'🩶'}
-   ],
-   quiz10:[
-    {q:'\"Rouge\" Afaan Oromootti akkamitti jedhamaa?',opts:['Cuquliisa','Diimaa','Magariisa','Keelloo'],ans:1},
-    {q:'\"Cuquliisa\" jechuun maali?',opts:['Vert','Jaune','Bleu','Violet'],ans:2},
-    {q:'\"Vert\" Afaan Oromootti akkamitti jedhamaa?',opts:['Keelloo','Dulluma','Magariisa','Adii'],ans:2},
-    {q:'\"Gurraacha\" jechuun maali?',opts:['Blanc','Gris','Marron','Noir'],ans:3},
-    {q:'\"Jaune\" Afaan Oromootti akkamitti jedhamaa?',opts:['Burtukaana','Keelloo','Roozii','Daallatii'],ans:1},
-    {q:'\"Roozii\" jechuun maali?',opts:['Rouge','Orange','Rose','Violet'],ans:2},
-    {q:'\"Blanc\" Afaan Oromootti akkamitti jedhamaa?',opts:['Adii','Gurraacha','Dulluma','Bunii'],ans:0}
    ]},
 {id:'viaje',level:1,emoji:'🧳',name:'Deemsa',sub:'Baggaajii, hooteela, paaspoortiifi… / Le voyage',
    words:[
@@ -1746,16 +1383,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Qorichee laga',fr:'La plage',em:'🏖️'},
     {et:'Tullu',fr:'La montagne',em:'⛰️'},
     {et:'Daawwataa',fr:'Le touriste',em:'📸'},
-   ],
-   quiz10:[
-    {q:'\"Le passeport\" Afaan Oromootti akkamitti jedhamaa?',opts:['Baggaajii','Tikeeta','Paaspoortiifi','Qabeenya deemsa'],ans:2},
-    {q:'\"Baggaajii\" jechuun maali?',opts:['Le sac à dos','La valise','Les bagages','Le billet'],ans:1},
-    {q:'\"L\'aéroport\" Afaan Oromootti akkamitti jedhamaa?',opts:['Buufata konkolaataa','Bakka doonii','Buufata xiyyaaraa','Koostamii'],ans:2},
-    {q:'\"Reserveeshina\" jechuun maali?',opts:['La réduction','La réservation','L\'assurance','Le remboursement'],ans:1},
-    {q:'\"Les bagages\" Afaan Oromootti akkamitti jedhamaa?',opts:['Baggaajii','Tikeeta','Qabeenya deemsa','Bursuusaa'],ans:2},
-    {q:'\"Koostamii\" jechuun maali?',opts:['L\'arrivée','Le départ','La douane','La frontière'],ans:2},
-    {q:'\"La croisière\" Afaan Oromootti akkamitti jedhamaa?',opts:['Doonii xinnoo','Doonii guddaa','Xiyyaara','Deemsa'],ans:1},
-    {q:'\"Ga\'uu\" jechuun maali?',opts:['Le départ','La correspondance','L\'escale','L\'arrivée'],ans:3}
    ]},
   {id:'rest',level:1,emoji:'🍽️',name:'Mana Nyaataa',sub:'Menuu, kafaltii, teessoo… / Au restaurant',
    words:[
@@ -1783,16 +1410,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Baasii nyaataa',fr:'L\'addition',em:'💶'},
     {et:'Qarshii dabalataa',fr:'Le pourboire',em:'💰'},
     {et:'Qarshii dabalataan dabalamee jira',fr:'Le pourboire est inclus',em:'✅'},
-   ],
-   quiz10:[
-    {q:'\"L\'addition\" Afaan Oromootti akkamitti jedhamaa?',opts:['Qarshii dabalataa','Baasii nyaataa','Menuu','Reserveeshina'],ans:1},
-    {q:'\"Tajaajilaa\" jechuun maali?',opts:['Le cuisinier','Le patron','Le serveur','Le client'],ans:2},
-    {q:'\"Le dessert\" Afaan Oromootti akkamitti jedhamaa?',opts:['Fuullaa dura','Nyaata ijoo','Dhaamsa nyaataa','Fuullaa xinnoo'],ans:2},
-    {q:'\"Fudhachuuf\" jechuun maali?',opts:['Pour manger sur place','À emporter','À partager','Pour deux personnes'],ans:1},
-    {q:'\"La terrasse\" Afaan Oromootti akkamitti jedhamaa?',opts:['Balbala','Daandii','Balbala alaa','Mana'],ans:2},
-    {q:'\"Gaafachuu\" jechuun maali?',opts:['Payer','Réserver','Commander','Choisir'],ans:2},
-    {q:'\"Le pourboire\" Afaan Oromootti akkamitti jedhamaa?',opts:['Baasii nyaataa','Qarshii dabalataa','Dhiibaa','Gatii'],ans:1},
-    {q:'\"Maal yaaddu?\" jechuun maali?',opts:['Qu\'est-ce que vous préparez ?','Qu\'est-ce que vous avez ?','Que recommandez-vous ?','C\'est bon ?'],ans:2}
    ]},
   {id:'trans',level:1,emoji:'🚌',name:'Geejjiba',sub:'Baasii, gaarii, konkolaataa… / Les transports',
    words:[
@@ -1809,12 +1426,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Biskileetii',fr:'Le vélo',em:'🚴'},
     // Titre de transport
     {et:'Tikeeta',fr:'Le billet',em:'🎫'},
-   ],
-   quiz10:[
-    {q:'\"Le bus\" Afaan Oromootti akkamitti jedhamaa?',opts:['Gaarii sibii','Meetiroo','Baasii / Konkolaataa ummataa','Taaksii'],ans:2},
-    {q:'\"La voiture\" Oromiyaatti akkamitti jedhamaa?',opts:['Mootoorisikkilii','Konkolaataa','Tiraamii','Geejjiba guddaa'],ans:1},
-    {q:'\"L\'avion\" Afaan Oromootti akkamitti jedhamaa?',opts:['Doonii','Xiyyaara','Biskileetii','Meetiroo'],ans:1},
-    {q:'\"Le billet\" Oromiyaatti akkamitti jedhamaa?',opts:['Kaardii','Xiqqoo','Tikeeta','Paaspoortiifi'],ans:2}
    ]},
   {id:'objets',level:1,emoji:'🔑',name:'Meeshaalee Guyyaatii',sub:'Bilbila, hirnaa… / Objets du quotidien',
    words:[
@@ -1849,20 +1460,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Tuwaallii',fr:'La serviette',em:'🛁'},
     {et:'Saabunaa',fr:'Le savon',em:'🧼'},
     {et:'Kaafiyaa',fr:'L\'oreiller',em:''},
-   ],
-   quiz10:[
-    {q:'\"Les clés\" Afaan Oromootti akkamitti jedhamaa?',opts:['Qalama','Mishira','Hirnaa','Chaajjara'],ans:2},
-    {q:'\"Le téléphone portable\" Oromiyaatti akkamitti jedhamaa?',opts:['Taabileettii','Bilbila harkaa','Kompiyuutara','Raadiyoo'],ans:1},
-    {q:'\"Le sac à dos\" Afaan Oromootti akkamitti jedhamaa?',opts:['Fardaa qarshii','Buursaa','Bursuusaa dugdaa','Kuullaa'],ans:2},
-    {q:'\"L\'ordinateur\" Oromiyaatti akkamitti jedhamaa?',opts:['Bilbila harkaa','Taabileettii','Kompiyuutara','Ibsaa'],ans:2},
-    {q:'\"Les lunettes\" Oromiyaatti akkamitti jedhamaa?',opts:['Gurra meeshaa','Miidhagina ija','Hattuu','Sa\'atii harkaa'],ans:1},
-    {q:'\"Le stylo\" Oromiyaatti (beekamaa) akkamitti jedhamaa?',opts:['Qorataa','Waraqaa','Qalama','Kitaaba'],ans:2},
-    {q:'\"Le portefeuille\" Afaan Oromootti akkamitti jedhamaa?',opts:['Bursuusaa dugdaa','Hirnaa','Fardaa qarshii','Bilbila'],ans:2},
-    {q:'\"Iyyaanoo\" jechuun maali?',opts:['La fenêtre','Le miroir','Le tableau','La porte'],ans:1},
-    {q:'\"La serviette\" Afaan Oromootti akkamitti jedhamaa?',opts:['Kaafiyaa','Saabunaa','Tuwaallii','Kilaasii'],ans:2},
-    {q:'\"Simiintoo\" jechuun maali?',opts:['Le couteau','La fourchette','La cuillère','L\'assiette'],ans:2},
-    {q:'\"Le parapluie\" Afaan Oromootti akkamitti jedhamaa?',opts:['Koobbii','Aanoo roobaa','Haguuggii','Uffata qilleensaa'],ans:1},
-    {q:'\"Kaafiyaa\" jechuun maali?',opts:['La couverture','Le matelas','Le drap','L\'oreiller'],ans:3},
    ]},
    {id:'log',level:1,emoji:'🏠',name:'Mana Jireenyaa',sub:'Dabtaroo, daakuu… / Le logement',
    words:[
@@ -1877,13 +1474,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Mana fincaanii / Dhiqachuu',fr:'La salle de bain',em:'🚿'},
     {et:'Mana fincaanii',fr:'Les toilettes',em:'🚽'},
     {et:'Mana konkolaataa',fr:'Le garage',em:'🚗'},
-   ],
-   quiz10:[
-    {q:'\"Le salon\" Afaan Oromootti Oromiyaatti akkamitti jedhamaa?',opts:['Daakuu','Kutaa ciisichaa','Galma','Mana konkolaataa'],ans:2},
-    {q:'\"Daakuu\" jechuun maali?',opts:['La salle à manger','La cuisine','La salle de bain','Le salon'],ans:1},
-    {q:'\"La chambre\" Afaan Oromootti akkamitti jedhamaa?',opts:['Galma','Kutaa ciisichaa','Seensa','Mana konkolaataa'],ans:1},
-    {q:'\"Mana fincaanii\" Oromiyaatti maal jechuudha?',opts:['La salle de bain','Le garage','Les toilettes','La salle à manger'],ans:2},
-    {q:'\"L\'appartement\" Oromiyaatti akkamitti jedhamaa?',opts:['Mana','Seensa','Apartamaantii','Kutaa ciisichaa'],ans:2}
    ]},
    {id:'muebles_equipamiento', level:1, emoji:'🪑', name:'Meeshaalee Manaa', sub:'Soofa, meeshaalee ummataa, dhiqachuu… / Meubles et équipements',
  words:[
@@ -1907,15 +1497,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Dhiqa fuulaa',fr:'Le lavabo',em:'🚰'},
     {et:'Kuubii dhiqachuu',fr:'La baignoire',em:'🛁'},
     {et:'Shawara',fr:'La douche',em:'🚿'},
-  ],
-  quiz10:[
-    {q:'\"Le canapé\" Afaan Oromootti akkamitti jedhamaa?',opts:['Teessoo qofaa','Sannaddaa','Soofa','Siree'],ans:2},
-    {q:'\"Amaaroo uffataa\" jechuun maali?',opts:['Le bureau','L\'étagère','Le fauteuil','L\'armoire'],ans:3},
-    {q:'\"Le réfrigérateur\" Afaan Oromootti Oromiyaatti akkamitti jedhamaa?',opts:['Aawoo','Maaykirooweevii','Friijiidara','Dhiqa meeshaa'],ans:2},
-    {q:'\"Le four\" Afaan Oromootti akkamitti jedhamaa?',opts:['Maaykirooweevii','Aawoo','Dhiqa meeshaa','Dhiqa fuulaa'],ans:1},
-    {q:'\"Mudaa kitaabaa\" jechuun maali?',opts:['La lampe','Le fauteuil','La chaise','L\'étagère'],ans:3},
-    {q:'\"La baignoire\" Afaan Oromootti akkamitti jedhamaa?',opts:['Dhiqa fuulaa','Dhiqa meeshaa','Kuubii dhiqachuu','Shawara'],ans:2},
-    {q:'\"Maardiima / Barrumsaa\" jechuun maali?',opts:['L\'armoire','Le lit','Le bureau','La table'],ans:2},
   ]},   
    {id:'emot',level:1,emoji:'😄',name:'Miira',sub:'Gammaduu, dadhabuu… / Les émotions',
    words:[
@@ -1937,15 +1518,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Jibba / Jibbitu',fr:'Déçu / Déçue',em:'😞'},
     {et:'Jaallachuu / Jaallattuu',fr:'Amoureux / Amoureuse',em:'😍'},
     {et:'Baay\'ee gaarii! / Roorroo!',fr:'C\'est super ! / C\'est cool !',em:'🌟'}
-   ],
-   quiz10:[
-    {q:'\"Énervée\" Afaan Oromootti Oromiyaatti akkamitti jedhamaa?',opts:['Manooftuu','Dallantuu','Yaaddoftuu','Gammatti'],ans:1},
-    {q:'\"Joyeuse\" Afaan Oromootti akkamitti jedhamaa?',opts:['Gadda','Dadhabduu','Kooltuu','Dhukkubsattuu'],ans:2},
-    {q:'\"Fatigué\" Afaan Oromootti akkamitti jedhamaa?',opts:['Dhiphina','Dhukkubsataa','Yaaddoo','Dadhabaa'],ans:3},
-    {q:'\"Dallantuu\" Oromiyaatti maal jechuudha?',opts:['Fatiguée','Contente','Fâchée','Malade'],ans:2},
-    {q:'\"Roorroo!\" Oromiyaatti maal jechuudha?',opts:['Ça m\'énerve !','C\'est nul !','C\'est super ! / C\'est cool !','J\'ai peur !'],ans:2},
-    {q:'\"Inquiète\" Afaan Oromootti akkamitti jedhamaa?',opts:['Dhibaa','Jaallattuu','Yaaddoftuu','Manooftuu'],ans:2},
-    {q:'\"Sodaachuu\" jechuun maali?',opts:['Avoir faim','Avoir peur','Avoir froid','Avoir sommeil'],ans:1}
    ]},
   {id:'fam',level:1,emoji:'👨‍👩‍👧',name:'Maatii',sub:'Abbaa, haadha, ilma… / La famille',
    words:[
@@ -1960,16 +1532,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Niitii / Haadha manaa',fr:'La femme',em:'💑'},
     {et:'Abbaa warraa / Dhiirsa',fr:'Le mari',em:'💍'},
     {et:'Adaadaa / Haadha Abbaa (Oromiyaatti)',fr:'L\'oncle / La tante (aussi : mec / nana en argot)',em:'👨/👩'}
-   ],
-   quiz10:[
-    {q:'\"Le père\" Afaan Oromootti akkamitti jedhamaa?',opts:['Dhiirsa','Ilma','Abbaa manaa yookiin Abbaa','Obboleessa'],ans:2},
-    {q:'\"Haadha\" jechuun maali?',opts:['La fille','La sœur','La maman','La mère'],ans:3},
-    {q:'\"Le frère\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ilma','Obboleessa','Abbaa','Dhiirsa'],ans:1},
-    {q:'\"Obboleettii\" jechuun maali?',opts:['La mère','La grand-mère','La sœur','La fille'],ans:2},
-    {q:'\"Le grand-père\" Afaan Oromootti akkamitti jedhamaa?',opts:['Abbaa','Dhiirsa','Ilma','Akaakayyuu'],ans:3},
-    {q:'\"Akoo / Awoo\" jechuun maali?',opts:['La mère','La grand-mère','La sœur','La fille'],ans:1},
-    {q:'\"La fille\" Afaan Oromootti akkamitti jedhamaa?',opts:['Obboleettii','Niitii','Intala','Haadha'],ans:2},
-    {q:'Afaan Oromootti \"Adaadaa / Haadha Abbaa\" jechuun danda\'a…',opts:['Père / mère','Mec / nana','Frère / sœur','L\'oncle / La tante'],ans:1}
    ]},
   {id:'verb',level:1,emoji:'📝',name:'Yakkawwan',sub:'Ta\'uu, qabaachuu, deemuu… / Les verbes principaux',
    words:[
@@ -2007,41 +1569,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Gaafachuu',fr:'Demander',em:'🙋‍♂️',conj:{et:['Ani nan gaafadha','Ati ni gaafatta','Inni/Isheen ni gaafata','Nuti ni gaafanna','Isin ni gaafastu','Isaan ni gaafatu'],fr:['Je demande','Tu demandes','Il/Elle demande','Nous demandons','Vous demandez','Ils/Elles demandent']}},
     {et:'Konkolaachisuu',fr:'Conduire',em:'🚗',conj:{et:['Ani nan konkolaachisa','Ati ni konkolaachista','Inni/Isheen ni konkolaachisa','Nuti ni konkolaachisina','Isin ni konkolaachistuu','Isaan ni konkolaachisu'],fr:['Je conduis','Tu conduis','Il/Elle conduit','Nous conduisons','Vous conduisez','Ils/Elles conduisent']}},
     {et:'Baay\'ee jaaladhu',fr:'Adorer (argot)',em:'😎',conj:{et:['Nan baay\'ee jaalladha','Ni baay\'ee jaallataa','Ni baay\'ee jaallata','Ni baay\'ee jaallannaа','Ni baay\'ee jaallattu','Ni baay\'ee jaallatu'],fr:['J\'adore','Tu adores','Il/Elle adore','Nous adorons','Vous adorez','Ils/Elles adorent']}}
-  ],
-   quiz10:[
-    {q:'\"Nan baay\'ee jaalladha\" Afaan Oromootti maal jechuudha?',opts:['Ça m\'ennuie','Ça me fait peur','Ça me plaît / j\'adore','Suis fatigué'],ans:2},
-    {q:'\"Isheen misooftee\" jechuun maali?',opts:['Elle crie','Elle pleure','Elle sourit','Elle chante'],ans:2},
-    {q:'\"Tu conduis\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni fiigta','Ni deemta miila','Ni konkolaachista','Ni ba\'ata'],ans:2},
-    {q:'\"Nan baradha\" jechuun maali?',opts:['Tu enseignes','Tu écoutes','Tu apprends','Tu lis'],ans:2},
-    {q:'\"Ni gurguru\" jechuun maali?',opts:['Ils achètent','Ils cherchent','Ils vendent','Ils donnent'],ans:2},
-    {q:'\"Il dort\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni fiiga','Ni deema miila','Ni rafa','Ni nyaata'],ans:2},
-    {q:'\"Vous habitez\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni jiraastu','Ni jiraanna','Ni jiraatu','Nan jiraadha'],ans:0},
-    {q:'\"Nan nyaadha\" jechuun maali?',opts:['Tu bois','Tu manges','Tu dors','Tu marches'],ans:1},
-    {q:'\"Meetiroo fudhata\" jechuun maali?',opts:['Il rate le métro','Il cherche le métro','Il prend le métro','Il attend le métro'],ans:2},
-    {q:'\"Nan dubbadha\" jechuun maali?',opts:['Tu écoutes','Tu lis','Tu parles','Tu regardes'],ans:2},
-    {q:'\"Ils mangent\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni nyaanna','Ni nyaastu','Ni nyaatu','Nan nyaadha'],ans:2},
-    {q:'\"Ni kennina\" jechuun maali?',opts:['Nous prenons','Nous vendons','Nous donnons','Nous recevons'],ans:2},
-    {q:'\"Ni qulqulleessina\" jechuun maali?',opts:['Nous cuisinons','Nous nettoyons','Nous lavons','Nous rangeons'],ans:1},
-    {q:'\"Ils boivent\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni dhugna','Ni dhugtu','Nan dhuga','Ni dhugu'],ans:3},
-    {q:'\"Tu penses\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni dubbatta','Ni barbaadda','Ni yaadda','Ni ilaalta'],ans:2},
-    {q:'\"Ni waamta\" jechuun maali?',opts:['Tu réponds','Tu appelles','Tu parles','Tu écoutes'],ans:1},
-    {q:'\"J\'ai\" Afaan Oromootti akkamitti jedhamaa?',opts:['Nan ta\'a','Nan deema','Nan qabaadha','Nan dubbadha'],ans:2},
-    {q:'\"Tu vas\" Afaan Oromootti akkamitti jedhamaa?',opts:['Nan ta\'a','Nan qabaadha','Nan dhufa','Ni deemta'],ans:3},
-    {q:'\"Il part\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni dhufa','Ni ba\'a','Ni deema','Ni ba\'uuf'],ans:1},
-    {q:'Oromiyaatti \"Baasii fudhachuu\" jechuun…',opts:['Rater le bus','Prendre le bus','Attendre le bus','Chercher le bus'],ans:1},
-    {q:'\"Nous travaillons\" Afaan Oromootti akkamitti jedhamaa?',opts:['Nan qulqulleessa','Nan bilcheessa','Ni hojjenna','Ni konkolaachisina'],ans:2},
-    {q:'\"Ni gaafatu\" jechuun maali?',opts:['Ils répondent','Ils cherchent','Ils demandent','Ils écoutent'],ans:2},
-    {q:'\"Tu arrives\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni ba\'ata','Ni dhufa','Ni barbaadda','Ni kaffalta'],ans:1},
-    {q:'\"Nan bita\" jechuun maali?',opts:['Tu vends','Tu cherches','Tu paies','Tu achètes'],ans:3},
-    {q:'\"Inni dhiqata\" jechuun maali?',opts:['Il se lève','Il se douche','Il se repose','Il se lave'],ans:1},
-    {q:'\"Tu cherches\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni bitta','Ni hojjetta','Ni barbaadda','Ni yaadda'],ans:2},
-    {q:'\"Isheen bilcheessa\" jechuun maali?',opts:['Elle mange','Elle cuisine','Elle nettoie','Elle lit'],ans:1},
-    {q:'\"Nous parlons\" Afaan Oromootti akkamitti jedhamaa?',opts:['Nan dubbadha','Ni dubbanna','Ni dubbastu','Ni dubbatu'],ans:1},
-    {q:'\"Tu lis\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni dhaggeeffatta','Ni baratta','Ni dubbista','Ni ilaalta'],ans:2},
-    {q:'\"Tu écris\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni dubbista','Ni dhaggeeffatta','Ni ilaalta','Ni barreesta'],ans:3},
-    {q:'\"Tu paies\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni kenta','Ni fudhatta','Ni gurgurta','Ni kaffalda'],ans:3},
-    {q:'\"Tu cours\" Afaan Oromootti akkamitti jedhamaa?',opts:['Ni deemta miila','Ni konkolaachista','Ni fiigta','Ni ba\'ata'],ans:2}
-   ]},
+  ]},
   {id:'corps',level:1,emoji:'🧍',name:'Qaamaa',sub:'Mataa, harkaa, miila… / Le corps',
    words:[
     {et:'Mataa',fr:'La tête',em:'🗣️'},
@@ -2065,16 +1593,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Onnee',fr:'Le cœur',em:'❤️'},
     {et:'Sammuu',fr:'Le cerveau',em:'🧠'},
     {et:'Lafee / Lafaan',fr:'L\'os / Les os',em:'🦴'}
-   ],
-   quiz10:[
-    {q:'"La tête" Afaan Oromootti akkamitti jedhamaa?',opts:['Funyaan','Afaan','Mataa','Morma'],ans:2},
-    {q:'"Ijaan" jechuun maali?',opts:['Les oreilles','Le nez','Les lèvres','Les yeux'],ans:3},
-    {q:'"La main" Afaan Oromootti akkamitti jedhamaa?',opts:['Miila jalaa','Miila','Harka','Harka'],ans:3},
-    {q:'"Funyaan" jechuun maali?',opts:['La bouche','Le nez','L\'oreille','Le cou'],ans:1},
-    {q:'"La jambe" Afaan Oromootti akkamitti jedhamaa?',opts:['Harka','Miila','Miila jalaa','Dugda'],ans:1},
-    {q:'"Sammuu" jechuun maali?',opts:['Le cœur','Le ventre','Le cerveau','L\'os'],ans:2},
-    {q:'"Les dents" Afaan Oromootti akkamitti jedhamaa?',opts:['Hidhii','Arraba','Ilkaan','Gurraan'],ans:2},
-    {q:'"Onnee" jechuun maali?',opts:['Le cerveau','Le cœur','L\'os','Le dos'],ans:1}
    ]},
   {id:'sante',level:1,emoji:'🏥',name:'Fayyaa',sub:'Doktora, farmaasiitii… / La santé',
    words:[
@@ -2099,16 +1617,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Xaxaa madaa',fr:'Le bandage',em:'🩼'},
     {et:'Ambulaansii',fr:'L\'ambulance',em:'🚑'},
     {et:'Bakka ariifachiisaa',fr:'Les urgences',em:'🆘'}
-   ],
-   quiz10:[
-    {q:'"L\'hôpital" Afaan Oromootti akkamitti jedhamaa?',opts:['Farmaasiitii','Hospitaala','Bakka ariifachiisaa','Gorsaa fayyaa'],ans:1},
-    {q:'"Ho\'a qaamaa" jechuun maali?',opts:['La toux','La douleur','La fièvre','La grippe'],ans:2},
-    {q:'"Le vaccin" Afaan Oromootti akkamitti jedhamaa?',opts:['Mallattoo madaa','Vaaksiniifi','Xaxaa madaa','Qoricha'],ans:1},
-    {q:'"Le pansement" Oromiyaatti akkamitti jedhamaa?',opts:['Dhiyaannoo','Vaaksiniifi','Mallattoo madaa','Qoricha'],ans:2},
-    {q:'"L\'ordonnance" Afaan Oromootti akkamitti jedhamaa?',opts:['Gorsaa fayyaa','Qoricha','Reseeptii / Ajaja qorichaa','Vaaksiniifi'],ans:2},
-    {q:'"Les urgences" Afaan Oromootti akkamitti jedhamaa?',opts:['Doktora eeggannaa','Kutaa eeggannaa','Bakka ariifachiisaa','Gorsaa fayyaa'],ans:2},
-    {q:'"Le thermomètre" Afaan Oromootti akkamitti jedhamaa?',opts:['Dhiibbaa','Meeshaa ho\'a safaruu','Ho\'a qaamaa','Dhiyaannoo'],ans:1},
-    {q:'"Un rendez-vous médical" Afaan Oromootti akkamitti jedhamaa?',opts:['Daawwannaa','Beellama fayyaa','Reseeptii','Gorsaa fayyaa'],ans:1}
    ]},
   {id:'ocio', level:1, emoji:'⛰️', name:'Boqonnaa fi Bashannannaa', sub:'Ispoortii, dubbisuu, muuziqaa… / Les loisirs',
   words:[
@@ -2133,20 +1641,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Leenjii hojjechuu',fr:'Pratiquer',em:'💪'},
     {et:'Boqachuu',fr:'Se reposer',em:'😴'},
     {et:'Gammachuun fayyadamuu',fr:'Profiter / Apprécier',em:'😊'},
-  ],
-  quiz10:[
-    {q:'"La randonnée" Afaan Oromootti akkamitti jedhamaa?',opts:['Naqata','Deemsa karaa','Fiigichaa','Deemsa tulluutti'],ans:3},
-    {q:'"Daakuu bishaan" jechuun maali?',opts:['Le cyclisme','L\'athlétisme','La natation','Le football'],ans:2},
-    {q:'"Le livre" Afaan Oromootti akkamitti jedhamaa?',opts:['Dubbisuu','Muuziqaa','Kitaaba','Siinimaa'],ans:2},
-    {q:'"Fiigichaa" jechuun maali?',opts:['Le football','Le cyclisme','La natation','L\'athlétisme'],ans:3},
-    {q:'"La marche nordique" Afaan Oromootti akkamitti jedhamaa?',opts:['Naqata','Deemsa tulluutti','Fiigichaa','Deemsa karaa'],ans:3},
-    {q:'"Boqachuu" jechuun maali?',opts:['Jouer','Pratiquer','Apprécier','Se reposer'],ans:3},
-    {q:'"Le cinéma" Afaan Oromootti akkamitti jedhamaa?',opts:['Tiyaatira','Muuziqaa','Dubbisuu','Siinimaa'],ans:3},
-    {q:'"Biskileetii oofuu" jechuun maali?',opts:['La natation','L\'athlétisme','Le cyclisme','Le football'],ans:2},
-    {q:'"Jouer" Afaan Oromootti akkamitti jedhamaa?',opts:['Leenjii hojjechuu','Gammachuun fayyadamuu','Boqachuu','Taphaachuu'],ans:3},
-    {q:'"Naqata / Seenaa" jechuun maali?',opts:['La randonnée','La montagne','La campagne','La promenade'],ans:3},
-    {q:'"Pratiquer" Afaan Oromootti akkamitti jedhamaa?',opts:['Taphaachuu','Gammachuun fayyadamuu','Leenjii hojjechuu','Boqachuu'],ans:2},
-    {q:'"Gammachuun fayyadamuu" jechuun maali?',opts:['Se reposer','Jouer','Pratiquer','Profiter / Apprécier'],ans:3},
   ]
 },  
    {id:'veth',level:1,emoji:'👗',name:'Uffata',sub:'Shartii, surrii… / Les vêtements',
@@ -2170,16 +1664,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Kuullaa ho\'a',fr:'Le bonnet',em:'🎿'},
     {et:'Buursaa / Fardaa',fr:'Le sac / La poche',em:'👜'},
     {et:'Uffata bishaan',fr:'Le maillot de bain',em:'🩱'},
-   ],
-   quiz10:[
-    {q:'"Le t-shirt" Afaan Oromootti akkamitti jedhamaa?',opts:['Jaakeetii','Shartii dheeraa','Shartii','Jaakeetii alaa'],ans:2},
-    {q:'"Surrii dargaggeessaa" jechuun maali?',opts:['Le short','Le jean','La jupe','Le survêtement'],ans:1},
-    {q:'"Les chaussures" Afaan Oromootti akkamitti jedhamaa?',opts:['Kaalseettii','Shaakaalaa','Kophee','Kuullaa'],ans:2},
-    {q:'"Le pull" Oromiyaatti akkamitti jedhamaa?',opts:['Shanxii morma','Jaakeetii alaa','Jaakeetii / Uffata ho\'a','Koobii guddaa'],ans:2},
-    {q:'"Le maillot de bain" Oromiyaatti akkamitti jedhamaa?',opts:['Uffata bishaan','Kuullaa ho\'a','Surrii gabaabaa','Kaalseettii'],ans:0},
-    {q:'"Shanxii morma" jechuun maali?',opts:['Les gants','Le manteau','L\'écharpe','Le bonnet'],ans:2},
-    {q:'"La robe" Afaan Oromootti akkamitti jedhamaa?',opts:['Qanafee','Uffata dubartii','Jaakeetii alaa','Jaakeetii'],ans:1},
-    {q:'"Kaalseettii" jechuun maali?',opts:['Les chaussures','Les gants','Les chaussettes','Le maillot de bain'],ans:2}
    ]},
   {id:'pays',level:1,emoji:'🌍',name:'Biyyoota',sub:'Itoophiyaa, Oromiyaa… / Les pays',
    words:[
@@ -2209,16 +1693,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Giriikii',fr:'La Grèce',em:'🇬🇷'},
     {et:'Awustiraaliyaa',fr:'L\'Australie',em:'🇦🇺'},
     {et:'Afrikaa Kibbaa',fr:'L\'Afrique du Sud',em:'🇿🇦'},
-   ],
-   quiz10:[
-    {q:'"La France" Afaan Oromootti akkamitti jedhamaa?',opts:['Beljiyoom','Faransaay','Swiizerlaandii','Keeniyaa'],ans:1},
-    {q:'"Jarman" jechuun maali?',opts:['Autriche','Pays-Bas','Allemagne','Danemark'],ans:2},
-    {q:'"Le Brésil" Afaan Oromootti akkamitti jedhamaa?',opts:['Sudaan','Somaaliyaa','Braazil','Jibuutii'],ans:2},
-    {q:'"Ingliizii" jechuun maali?',opts:['Irlande','Royaume-Uni','Écosse','Danemark'],ans:1},
-    {q:'"Le Maroc" Afaan Oromootti akkamitti jedhamaa?',opts:['Jibuutii','Somaaliyaa','Morokkoo','Afrikaa Kibbaa'],ans:2},
-    {q:'"La Turquie" Afaan Oromootti akkamitti jedhamaa?',opts:['Tuniiziyaa','Tailaandii','Turkii','Taanzaaniyaa'],ans:2},
-    {q:'"Biyyoota Gadii" jechuun maali?',opts:['Belgique','Danemark','Pays-Bas','Luxembourg'],ans:2},
-    {q:'"La Grèce" Afaan Oromootti akkamitti jedhamaa?',opts:['Turkii','Giriikii','Xaaliyaanii','Chaayinaa'],ans:1}
    ]},
   {id:'met',level:1,emoji:'💼',name:'Ogummaa',sub:'Doktora, barsiisaa… / Les professions',
    words:[
@@ -2235,13 +1709,6 @@ var LEVEL1_THEMES_OR=[
     // Niveau 3 — Métiers plus spécifiques ou lexicalement complexes
     {et:'Ogaa bishaan',fr:'Le plombier / La plombière',em:'🔧'},
     {et:'Ogaa kompiyuutaraa',fr:'L\'informaticien / L\'informaticienne',em:'💻'},
-   ],
-   quiz10:[
-    {q:'"Le médecin" Afaan Oromootti akkamitti jedhamaa?',opts:['Barsiisaa','Doktora','Narsii','Nyaata bilcheessaa'],ans:1},
-    {q:'"Barsiisaa" Oromiyaatti maal jechuudha?',opts:['L\'étudiant','Le directeur','Le professeur','Le concierge'],ans:2},
-    {q:'"La serveuse" Oromiyaatti akkamitti jedhamaa?',opts:['Nyaata bilcheessaa','Tajaajiltu','Oofaa taaksii','Gurgurattu'],ans:1},
-    {q:'"Barattuun" jechuun maali?',opts:['La professeure','L\'étudiante','La médecin','La vendeuse'],ans:1},
-    {q:'"L\'infirmier" Afaan Oromootti akkamitti jedhamaa?',opts:['Doktora','Barsiisaa','Narsii','Tajaajilaa'],ans:2}
    ]},
   {id:'anim',level:1,emoji:'🐘',name:'Bineeldota',sub:'Saree, adurree, sangaa… / Les animaux',
    words:[
@@ -2277,20 +1744,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Saappanaa',fr:'L\'araignée',em:'🕷️'},
     {et:'Hiyyeessa / Bineeldota xixiqqaa',fr:'Le moustique',em:'🦟'},
     {et:'Dirreetti',fr:'La fourmi',em:'🐜'},
-   ],
-   quiz10:[
-    {q:'"Le chien" Afaan Oromootti akkamitti jedhamaa?',opts:['Adurree','Farda','Saree','Illeena'],ans:2},
-    {q:'"Adurree" jechuun maali?',opts:['Le chien','Le chat','Le lapin','L\'oiseau'],ans:1},
-    {q:'"Le cheval" Afaan Oromootti akkamitti jedhamaa?',opts:['Loon','Farda','Dubbii','Booyee'],ans:1},
-    {q:'Oromiyaatti bineeldii mallattoo biyyaa eenyu?',opts:['Ardiitii','Sangaa','Arba','Farda'],ans:2},
-    {q:'"L\'éléphant" Afaan Oromootti akkamitti jedhamaa?',opts:['Qeerransaa','Harootii guddaa','Arba','Dubbii'],ans:2},
-    {q:'"Le papillon" Afaan Oromootti akkamitti jedhamaa?',opts:['Dirreetti','Buraayyoo','Saappanaa','Hiyyeessa'],ans:1},
-    {q:'"Bofa" jechuun maali?',opts:['Le lézard','La grenouille','Le serpent','L\'insecte'],ans:2},
-    {q:'"Le coq" Afaan Oromootti akkamitti jedhamaa?',opts:['Lukkuu','Qurxummii','Kormaa lukkuu','Molgaa'],ans:2},
-    {q:'"Qurxummii bishaaniin jiraatuu" jechuun maali?',opts:['La baleine','Le requin','Le dauphin','Le poisson'],ans:2},
-    {q:'"Re\'ee" jechuun maali?',opts:['La vache','Le cochon','L\'agneau','La chèvre'],ans:3},
-    {q:'"Le taureau" Afaan Oromootti akkamitti jedhamaa?',opts:['Farda','Sangaa','Booyee','Loon'],ans:1},
-    {q:'"Hoolaa / Hoolii" jechuun maali?',opts:['La vache','Le cochon','L\'agneau','La chèvre'],ans:2}
    ]},
   {id:'plan',level:1,emoji:'🌿',name:'Biqiltoota',sub:'Adaraa, muka, bosonaa… / Les plantes',
    words:[
@@ -2305,13 +1758,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Bosonaa',fr:'La forêt',em:'🌲'},
     // 🔴 Niveau 3 — Vocabulaire plus précis ou contextuel
     {et:'Marga miidhagoo',fr:'La pelouse / Le gazon',em:'⛳'},
-   ],
-   quiz10:[
-    {q:'"La fleur" Afaan Oromootti akkamitti jedhamaa?',opts:['Caasee','Adaraa / Daadhii','Marga miidhagoo','Daadhii diimaa'],ans:1},
-    {q:'"Muka" jechuun maali?',opts:['La feuille','L\'herbe','L\'arbre','La fleur'],ans:2},
-    {q:'"La rose" Afaan Oromootti akkamitti jedhamaa?',opts:['Adaraa','Caasee','Marga miidhagoo','Daadhii diimaa'],ans:3},
-    {q:'"Bosonaa" jechuun maali?',opts:['Le jardin','La forêt','Le champ','Le parc'],ans:1},
-    {q:'"Le jardin" Afaan Oromootti akkamitti jedhamaa?',opts:['Bosonaa','Muka','Bakkee miidhagoo','Adaraa'],ans:2}
    ]}  
 ];
 
