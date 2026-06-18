@@ -45,6 +45,13 @@ function initApp(mode) {
   _spanishVoice     = undefined;
   _hasNotifiedVoice = false;
 
+  // 🔄 Chargement immédiat de l'historique ou Espagne par défaut pour l'affichage initial des sous-titres
+  var savedRegion = localStorage.getItem('user_preferred_region');
+  currentRegion = savedRegion ? savedRegion : 'ES';
+
+  var flagEmojis = { 'ES': '🇪🇸', 'MX': '🇲🇽', 'CO': '🇨🇴', 'PE': '🇵🇪', 'VE': '🇻🇪', 'AR': '🇦🇷', 'EC': '🇪🇨' };
+  var activeFlag = flagEmojis[currentRegion] || '🇪🇸';
+
   if (mode === 'learn_french') {
     /* ── Thème couleur ── */
     document.documentElement.className = 'theme-french';
@@ -61,7 +68,10 @@ function initApp(mode) {
     _setUI({
       homeFlagRow    : '🇫🇷',
       homeTitle      : 'Apprendre le Français<br><span class="translation-sub">Aprender Francés</span>',
-      homeSubtitle   : 'Recto Français · Verso Espagnol<br><span class="translation-sub">Anverso Francés · Reverso Español</span>',
+      
+      // 🌟 MISE À JOUR : Ajout du conteneur de drapeau dynamique sur le sous-titre d'accueil
+      homeSubtitle   : 'Recto Français · Verso Espagnol (<span id="current-lang-flag">' + activeFlag + '</span>)<br><span class="translation-sub">Anverso Francés · Reverso Español</span>',
+      
       homeStartBtn   : '▶ Commencer<br><span class="translation-sub">Empezar</span>',
       sectionsBackBtn: '← Retour<br><span class="translation-sub">Volver</span>',
       sectionsTitle  : '📚 Modules<br><span class="translation-sub">Módulos</span>',
@@ -88,7 +98,10 @@ function initApp(mode) {
     _setUI({
       homeFlagRow    : '🇪🇸',
       homeTitle      : 'Aprender Español<br><span class="translation-sub">Apprendre l\'Espagnol</span>',
-      homeSubtitle   : 'Anverso Español · Reverso Francés<br><span class="translation-sub">Recto Espagnol · Verso Français</span>',
+      
+      // 🌟 MISE À JOUR : Ajout du conteneur de drapeau dynamique sur le sous-titre d'accueil
+      homeSubtitle   : 'Anverso Español (<span id="current-lang-flag">' + activeFlag + '</span>) · Reverso Francés<br><span class="translation-sub">Recto Espagnol · Verso Français</span>',
+      
       homeStartBtn   : '▶ Empezar<br><span class="translation-sub">Commencer</span>',
       sectionsBackBtn: '← Volver<br><span class="translation-sub">Retour</span>',
       sectionsTitle  : '📚 Módulos<br><span class="translation-sub">Modules</span>',
@@ -118,14 +131,10 @@ function initApp(mode) {
                            + '<div id="region-message-box"></div>';
   }
   
-  // 🔄 HISTORIQUE : Récupération du choix précédent enregistré ou Espagne par défaut
-  var savedRegion = localStorage.getItem('user_preferred_region');
-  currentRegion = savedRegion ? savedRegion : 'ES';
-  
   // On génère la liste des options dans le sélecteur HTML
   renderRegionOptions();
 
-  // 🌟 Application immédiate de la région enregistrée (classes CSS, texte d'accent, etc.)
+  // 🌟 Application immédiate de la région enregistrée (classes CSS, texte d'accent, et mise à jour de l'élément d'accueil fraîchement créé)
   pickRegion(currentRegion);
 }
 
@@ -560,7 +569,7 @@ function renderFlash() {
     ? card.variants[currentRegion] 
     : card.es;
 
-  // Dictionnaire local pour afficher le drapeau actif dès la construction HTML
+  // 🔄 Dictionnaire local pour injecter le bon drapeau d'historique dès la construction HTML
   var flagEmojis = { 'ES': '🇪🇸', 'MX': '🇲🇽', 'CO': '🇨🇴', 'PE': '🇵🇪', 'VE': '🇻🇪', 'AR': '🇦🇷', 'EC': '🇪🇨' };
   var activeFlag = flagEmojis[currentRegion] || '🇪🇸';
 
@@ -578,7 +587,7 @@ function renderFlash() {
       backContent  = emBk + '<div class="fc-back-word">' + finalEsWord + '</div>';
     }
     
-    // 🌟 MISE À JOUR : Intégration du span dynamique pour le mode Apprendre le Français
+    // 🌟 RENDER : Intégration du span avec le drapeau dynamique d'initialisation (Mode Français)
     document.getElementById('tabContent').innerHTML =
       '<div class="section-label">Anverso : Francés 🇫🇷 — Reverso : Español <span id="current-lang-flag">' + activeFlag + '</span> · Haz clic para volver !</div>'
       + '<div class="fc-wrap"><div class="fc" id="fc" onclick="flipCard()">'
@@ -608,7 +617,7 @@ function renderFlash() {
       backContent  = emBk + '<div class="fc-back-word">' + card.fr + '</div>';
     }
     
-    // 🌟 MISE À JOUR : Intégration du span dynamique pour le mode Apprendre l'Espagnol
+    // 🌟 RENDER : Intégration du span avec le drapeau dynamique d'initialisation (Mode Espagnol)
     document.getElementById('tabContent').innerHTML =
       '<div class="section-label">Recto : Espagnol <span id="current-lang-flag">' + activeFlag + '</span> — Verso : Français 🇫🇷 · Cliquez pour retourner !</div>'
       + '<div class="fc-wrap"><div class="fc" id="fc" onclick="flipCard()">'
@@ -1157,7 +1166,7 @@ function pickRegion(regionId) {
     }
   }
 
-  // 🌟 CHANGEMENT DYNAMIQUE DU PETIT DRAPEAU (Dans les Cartes Flash)
+  // 🌟 CHANGEMENT DYNAMIQUE DU PETIT DRAPEAU (Dans l'interface ou les Cartes Flash)
   var flagSpan = document.getElementById('current-lang-flag');
   if (flagSpan) {
     var flagEmojis = {
