@@ -152,10 +152,10 @@ function _setText(id, val) {
 
 
 /* ═══════════════════════════════════════════
-   3. SYNTHÈSE VOCALE + PRONONCIATION ESPAGNOL CASTILLAN
+   3. SYNTHÈSE VOCALE + PRONONCIATION ESPAGNOLE (CASCADE LOCALE)
 ═══════════════════════════════════════════ */
 
-var _spanishVoice = undefined;
+var _spanishVoice     = undefined;
 var _hasNotifiedVoice = false;
 
 function _resolveSpanishVoice(callback) {
@@ -168,25 +168,33 @@ function _resolveSpanishVoice(callback) {
     var voices = speechSynthesis.getVoices();
     if (!voices || voices.length === 0) return false;
 
-    // Priorités axées sur l'espagnol castillan (Espagne)
-    var priorities = [
-      { lang: 'es-ES', name: 'Espagnol (Castillan)' },
-      { lang: 'es', name: 'Espagnol (Standard)' }
-    ];
-
+    var langMap = {
+      'ES': 'es-ES',
+      'MX': 'es-MX',
+      'CO': 'es-CO',
+      'AR': 'es-AR',
+      'PE': 'es-PE',
+      'VE': 'es-VE',
+      'EC': 'es-EC'
+    };
+    
+    var targetLang = langMap[currentRegion] || 'es-ES';
     var foundVoice = null;
-    var foundLabel = "Voix par défaut";
+    var foundLabel = "Espagne (Voix par défaut)";
 
-    for (var i = 0; i < priorities.length; i++) {
-      var target = priorities[i];
-      var match = voices.find(function(v) {
-        return v.lang.toLowerCase().indexOf(target.lang.toLowerCase()) !== -1;
+    // 1. Recherche de la voix exacte demandée (ex: es-EC pour l'Équateur)
+    foundVoice = voices.find(function(v) {
+      return v.lang.toLowerCase() === targetLang.toLowerCase();
+    });
+
+    if (foundVoice) {
+      foundLabel = targetLang;
+    } else {
+      // 2. Cascade de secours : n'importe quel espagnol disponible sur l'appareil
+      foundVoice = voices.find(function(v) {
+        return v.lang.toLowerCase().indexOf('es') === 0;
       });
-      if (match) {
-        foundVoice = match;
-        foundLabel = target.name;
-        break;
-      }
+      foundLabel = foundVoice ? foundVoice.lang + " (Secours)" : "Voix par défaut";
     }
 
     if (!foundVoice) {
@@ -195,9 +203,14 @@ function _resolveSpanishVoice(callback) {
 
     _spanishVoice = foundVoice;
 
+    // Pop-up d'alerte à l'initialisation de l'audio
     if (!_hasNotifiedVoice) {
       _hasNotifiedVoice = true;
-      alert("🎙️ Audio Espagnol configuré avec la voix : " + foundLabel);
+      if (currentMode === 'learn_french') {
+        alert("🎙️ Audio Español configurado con la voz de tu dispositivo: " + foundLabel);
+      } else {
+        alert("🎙️ Audio Espagnol configuré avec la voix de votre appareil : " + foundLabel);
+      }
     }
 
     callback(_spanishVoice);
@@ -216,12 +229,6 @@ function _resolveSpanishVoice(callback) {
 function speak(txt) {
   if (!txt) return;
 
-  // On veut utiliser le moteur "espagnol avec accents" si :
-  // 1. On apprend l'espagnol (learn_spain)
-  // 2. OU on apprend le français, mais qu'on doit lire un texte espagnol (ex: vocabulaire/dialogue)
-  // Une astuce simple est de vérifier si on n'est pas en mode "learn_french" 
-  // OU de gérer spécifiquement le français dans le bloc "else"
-  
   if (currentMode !== 'learn_french') {
     if (!window.speechSynthesis) return;
     
@@ -236,7 +243,7 @@ function speak(txt) {
           u.voice = voice;
           u.lang = voice.lang;
         }
-        u.rate = 0.85; 
+        u.rate = 0.85;
         u.onend = function() { 
           if (i + 1 < parts.length) setTimeout(function() { speakPart(i + 1); }, 2000); 
         };
@@ -246,7 +253,6 @@ function speak(txt) {
     });
 
   } else {
-    // Si on est en mode "learn_french", on utilise la voix française standard
     _doSpeak(txt, null, 0.80);
   }
 }
@@ -1096,7 +1102,10 @@ function renderRegionOptions() {
 function pickRegion(regionId) {
   currentRegion = regionId;
   
-  // Mise à jour instantanée du texte dans le bandeau bleu existant
+  // ⚡ Force la cascade à rescanner le smartphone et déclencher l'alerte popup au prochain clic audio
+  _spanishVoice = undefined;
+  _hasNotifiedVoice = false;
+  
   var msgBox = document.getElementById('region-message-box');
   if (msgBox) {
     var regionsNames = {
@@ -1113,16 +1122,17 @@ function pickRegion(regionId) {
 
     if (currentMode === 'learn_french') {
       msgBox.innerHTML = '<div style="margin: 5px 10px 15px 10px; padding: 12px; background-color: #eef9ff; border-left: 4px solid #007bff; border-radius: 8px; font-size: 0.9rem; color: #333; text-align: left;">'
-                       + 'ℹ️ Tu aplicación está configurada actuellement con la variante de <strong>' + activeName + '</strong>.'
+                       + 'ℹ️ Tu aplicación está configurada actualmente con la variante de <strong>' + activeName + '</strong>.'
+                       + '<div style="margin-top: 5px; font-size: 0.75rem; color: #666; font-style: italic;">Nota: El acento real depende de las voces instaladas en la configuración de síntesis de voz de tu dispositivo.</div>'
                        + '</div>';
     } else {
       msgBox.innerHTML = '<div style="margin: 5px 10px 15px 10px; padding: 12px; background-color: #eef9ff; border-left: 4px solid #007bff; border-radius: 8px; font-size: 0.9rem; color: #333; text-align: left;">'
                        + 'ℹ️ Votre application est actuellement configurée sur la variante <strong>' + activeName + '</strong>.'
+                       + '<div style="margin-top: 5px; font-size: 0.75rem; color: #666; font-style: italic;">Note : L\'accent audio dépend des voix espagnoles installées dans les paramètres de synthèse vocale de votre smartphone.</div>'
                        + '</div>';
     }
   }
   
-  // Rafraîchissement des modules de cours
   if (typeof activeTab !== 'undefined') {
     if (activeTab === 'vocab') renderVocab();
     if (activeTab === 'dialog') renderDialog();
