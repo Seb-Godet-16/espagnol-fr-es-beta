@@ -1086,6 +1086,9 @@ function renderRegionOptions() {
 function pickRegion(regionId) {
   currentRegion = regionId;
   
+  // Elle force le recalcul et la mise à jour du texte informatif bleu
+  renderRegionOptions(); 
+  
   // Rafraîchissement instantané du vocabulaire ou du dialogue si l'utilisateur est déjà dans un onglet
   if (typeof activeTab !== 'undefined') {
     if (activeTab === 'vocab') renderVocab();
