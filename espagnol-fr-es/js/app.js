@@ -26,7 +26,6 @@ var q10Step     = 0, q10Score   = 0, q10Answered  = false;
 /* Progression persistante (contient désormais des objets {id, stars}) */
 var done = [];
 
-
 /* ═══════════════════════════════════════════
    2. POINT D'ENTRÉE : initApp(mode)
    Appelée par les boutons du launcher HTML
@@ -97,7 +96,7 @@ function initApp(mode) {
       level1Badge    : '1',
       level1Label    : '<span>Nivel 1 — Vocabulario<br><span class="translation-sub">Niveau 1 — Vocabulaire</span></span>',
       level2Badge    : '2',
-      level2Label    : '<span>Nivel 2 — Frases sencillas<br><span class="translation-sub">Niveau 2 — Phrases simples</span></span>'
+      level2Label    : '<span>Niveau 2 — Phrases simples<br><span class="translation-sub">Niveau 2 — Phrases simples</span></span>'
     });
   }
 
@@ -113,34 +112,19 @@ function initApp(mode) {
   // ══════════════════════════════════════════════════════════════════════
   var selectorWrap = document.getElementById('region-selector-wrap');
   if (selectorWrap) {
-    // Le sélecteur reste visible pour "learn_spain" ET pour "learn_french"
+    // On force l'affichage du bloc parent
     selectorWrap.style.display = 'block';
+    
+    // Structure HTML propre : la boîte de message d'abord, puis le select en dessous
+    selectorWrap.innerHTML = '<div id="region-message-box"></div>'
+                           + '<div id="region-select-container"></div>';
   }
   
   // Réinitialisation par défaut sur l'Espagne (Castillan) lors du changement de langue
   currentRegion = 'ES';
   
-  // Génération de la liste déroulante compacte (Étape 2)
+  // Génération dynamique de la liste déroulante ET du premier message ciblé
   renderRegionOptions();
-
-  // 💬 AJOUT DU MESSAGE INITIAL UNIQUE (S'affiche une fois au chargement du mode)
-  var messageHtml = '';
-  if (mode === 'learn_french') {
-    // Message en espagnol pour l'hispanophone qui apprend le français
-    messageHtml = '<div style="margin: 10px; padding: 12px; background-color: #eef9ff; border-left: 4px solid #007bff; border-radius: 8px; font-size: 0.9rem; color: #333;">'
-                + 'ℹ️ Tu aplicación está configurada actualmente con la variante de <strong>España (Castellano)</strong>. Puedes cambiarla en la lista desplegable si lo deseas.'
-                + '</div>';
-  } else {
-    // Message en français pour le francophone qui apprend l'espagnol
-    messageHtml = '<div style="margin: 10px; padding: 12px; background-color: #eef9ff; border-left: 4px solid #007bff; border-radius: 8px; font-size: 0.9rem; color: #333;">'
-                + 'ℹ️ Votre application est actuellement configurée sur la variante <strong>Espagne (Castillan)</strong>. Vous pouvez la modifier dans la liste déroulante.'
-                + '</div>';
-  }
-
-  // Injection du petit message informatif tout en haut du sélecteur
-  if (selectorWrap) {
-    selectorWrap.insertAdjacentHTML('afterbegin', messageHtml);
-  }
 }
 
 /* Utilitaire interne : injecte les textes dans les IDs du HTML */
