@@ -556,6 +556,10 @@ function renderFlash() {
     ? card.variants[currentRegion] 
     : card.es;
 
+  // Dictionnaire local pour afficher le drapeau actif dès la construction HTML
+  var flagEmojis = { 'ES': '🇪🇸', 'MX': '🇲🇽', 'CO': '🇨🇴', 'PE': '🇵🇪', 'VE': '🇻🇪', 'AR': '🇦🇷', 'EC': '🇪🇨' };
+  var activeFlag = flagEmojis[currentRegion] || '🇪🇸';
+
   if (currentMode === 'learn_french') {
     var hintFr = 'Haz clic para ver su significado en español';
     if (hasConj) {
@@ -563,14 +567,16 @@ function renderFlash() {
         + '<div class="fc-front-word">' + card.fr + '</div>'
         + '<div class="fc-conj">' + card.conj.fr.map(function(l) { return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
       backContent = emBk
-        + '<div class="fc-back-word">' + finalEsWord + '</div>' // <-- CORRIGÉ : Utilise la variante au verso
+        + '<div class="fc-back-word">' + finalEsWord + '</div>'
         + '<div class="fc-conj">' + card.conj.es.map(function(l) { return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
     } else {
       frontContent = emFr + '<div class="fc-front-word">' + card.fr + '</div><div class="fc-front-hint">👆 ' + hintFr + '</div>';
-      backContent  = emBk + '<div class="fc-back-word">' + finalEsWord + '</div>'; // <-- CORRIGÉ : Utilise la variante au verso
+      backContent  = emBk + '<div class="fc-back-word">' + finalEsWord + '</div>';
     }
+    
+    // 🌟 MISE À JOUR : Intégration du span dynamique pour le mode Apprendre le Français
     document.getElementById('tabContent').innerHTML =
-      '<div class="section-label">Anverso : Francés 🇫🇷 — Reverso : Español 🇪🇸 · Haz clic para volver !</div>'
+      '<div class="section-label">Anverso : Francés 🇫🇷 — Reverso : Español <span id="current-lang-flag">' + activeFlag + '</span> · Haz clic para volver !</div>'
       + '<div class="fc-wrap"><div class="fc" id="fc" onclick="flipCard()">'
       + '<div class="fc-front">' + frontContent + '</div>'
       + '<div class="fc-back">'  + backContent  + '</div>'
@@ -588,17 +594,19 @@ function renderFlash() {
     var hintEs = 'Cliquez pour voir la traduction en français';
     if (hasConj) {
       frontContent = emFr
-        + '<div class="fc-front-word">' + finalEsWord + '</div>' // <-- CORRIGÉ : Utilise la variante au recto
+        + '<div class="fc-front-word">' + finalEsWord + '</div>'
         + '<div class="fc-conj">' + card.conj.es.map(function(l) { return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
       backContent = emBk
         + '<div class="fc-back-word">' + card.fr + '</div>'
         + '<div class="fc-conj">' + card.conj.fr.map(function(l) { return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
     } else {
-      frontContent = emFr + '<div class="fc-front-word">' + finalEsWord + '</div><div class="fc-front-hint">👆 ' + hintEs + '</div>'; // <-- CORRIGÉ : Utilise la variante au recto
+      frontContent = emFr + '<div class="fc-front-word">' + finalEsWord + '</div><div class="fc-front-hint">👆 ' + hintEs + '</div>';
       backContent  = emBk + '<div class="fc-back-word">' + card.fr + '</div>';
     }
+    
+    // 🌟 MISE À JOUR : Intégration du span dynamique pour le mode Apprendre l'Espagnol
     document.getElementById('tabContent').innerHTML =
-      '<div class="section-label">Recto : Espagnol 🇪🇸 — Verso : Français 🇫🇷 · Cliquez pour retourner !</div>'
+      '<div class="section-label">Recto : Espagnol <span id="current-lang-flag">' + activeFlag + '</span> — Verso : Français 🇫🇷 · Cliquez pour retourner !</div>'
       + '<div class="fc-wrap"><div class="fc" id="fc" onclick="flipCard()">'
       + '<div class="fc-front">' + frontContent + '</div>'
       + '<div class="fc-back">'  + backContent  + '</div>'
@@ -608,7 +616,7 @@ function renderFlash() {
       + '<span class="fc-counter">' + (fcIdx + 1) + ' / ' + w.length + '</span>'
       + '<button onclick="nextCard()">Suivant →</button>'
       + '</div>'
-      + '<button class="audio-btn-big" onclick="speak(\'' + esc(finalEsWord) + '\')">🔊 Écouter la prononciation</button>'; // <-- CORRIGÉ : Lit la variante avec le bon accent !
+      + '<button class="audio-btn-big" onclick="speak(\'' + esc(finalEsWord) + '\')">🔊 Écouter la prononciation</button>';
   }
 }
 
