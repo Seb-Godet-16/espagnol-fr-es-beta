@@ -587,15 +587,15 @@ html.theme-spain.region-PE {
   --c-grad-alpha-btn: linear-gradient(135deg, #9d0a14, #70060c);
 }
 
-/* Argentine 🇦🇷 (Bleu outremer/azur prononcé et Or vieux) */
+/* Argentine 🇦🇷 (Vrai bleu céleste du drapeau et blanc) */
 html.theme-spain.region-AR {
-  --c-primary: #3b82c4;       /* Bleu Argentine assombri et plus saturé */
-  --c-accent: #d49413;        /* Or du soleil plus foncé/cuivré */
-  --c-grad-home: linear-gradient(135deg, #3b82c4 0%, #f7f9fa 50%, #3b82c4 100%);
-  --c-grad-sections: linear-gradient(135deg, #2a6194, #d49413, #2a6194);
-  --c-grad-lesson: linear-gradient(135deg, #3b82c4, #d49413);
-  --c-grad-fc-back: linear-gradient(135deg, #d49413, #3b82c4);
-  --c-grad-alpha-btn: linear-gradient(135deg, #3b82c4, #2a6194);
+  --c-primary: #75AADB;       /* Bleu céleste officiel */
+  --c-accent: #F6B426;        /* Jaune d'or du soleil de Mai */
+  --c-grad-home: linear-gradient(135deg, #75AADB 0%, #FFFFFF 50%, #75AADB 100%); /* Style drapeau Albiceleste */
+  --c-grad-sections: linear-gradient(135deg, #75AADB, #F6B426, #75AADB);
+  --c-grad-lesson: linear-gradient(135deg, #75AADB, #FFFFFF);
+  --c-grad-fc-back: linear-gradient(135deg, #FFFFFF, #75AADB);
+  --c-grad-alpha-btn: linear-gradient(135deg, #75AADB, #F6B426);
 }
 
 /* Équateur 🇪🇨 (Jaune ambré, Bleu nuit et Rouge brique) */
@@ -609,26 +609,26 @@ html.theme-spain.region-EC {
   --c-grad-alpha-btn: linear-gradient(135deg, #dca600, #0f4080);
 }
 
-/* Colombie 🇨🇴 (Style classique chaud : Jaune ocre massif et Rouge vif dominant) */
+/* Colombie 🇨🇴 (Style Tricolore Lumineux : Dominante Jaune s'ouvrant sur le bleu et le rouge) */
 html.theme-spain.region-CO {
-  --c-primary: #e5a900;       /* Jaune impérial foncé */
-  --c-accent: #b30012;        /* Rouge vif profond */
-  --c-grad-home: linear-gradient(135deg, #e5a900 0%, #001f5c 50%, #b30012 100%);
-  --c-grad-sections: linear-gradient(135deg, #e5a900, #b30012, #e5a900);
-  --c-grad-lesson: linear-gradient(135deg, #e5a900, #b30012);
-  --c-grad-fc-back: linear-gradient(135deg, #001f5c, #b30012);
-  --c-grad-alpha-btn: linear-gradient(135deg, #e5a900, #001f5c);
+  --c-primary: #FCD116;       /* Jaune Colombie éclatant */
+  --c-accent: #003893;        /* Bleu intense */
+  --c-grad-home: linear-gradient(135deg, #FCD116 35%, #003893 70%, #CE1126 100%); /* Progression diagonale classique */
+  --c-grad-sections: linear-gradient(90deg, #FCD116, #003893, #CE1126); /* Bandes horizontales */
+  --c-grad-lesson: linear-gradient(135deg, #FCD116, #003893);
+  --c-grad-fc-back: linear-gradient(135deg, #003893, #CE1126);
+  --c-grad-alpha-btn: linear-gradient(135deg, #FCD116, #CE1126);
 }
 
-/* Venezuela 🇻🇪 (Style alternatif : Accentuation sur le Bleu saphir, l'Or et l'Étoilé) */
+/* Venezuela 🇻🇪 (Style Tricolore Étoilé : Équilibre des 3 couleurs avec un cœur Bleu Roi central) */
 html.theme-spain.region-VE {
-  --c-primary: #002d72;       /* Bleu roi très profond dominant */
-  --c-accent: #ffcc00;        /* Or brillant */
-  --c-grad-home: linear-gradient(135deg, #002d72 0%, #ffcc00 50%, #cc0000 100%);
-  --c-grad-sections: linear-gradient(135deg, #002d72, #00173b, #002d72); /* Ambiance nocturne élégante */
-  --c-grad-lesson: linear-gradient(135deg, #002d72, #cc0000);
-  --c-grad-fc-back: linear-gradient(135deg, #ffcc00, #002d72);
-  --c-grad-alpha-btn: linear-gradient(135deg, #002d72, #ffcc00);
+  --c-primary: #00247D;       /* Bleu Roi Profond */
+  --c-accent: #FFCC00;        /* Jaune chaud */
+  --c-grad-home: linear-gradient(180deg, #FFCC00 0%, #00247D 50%, #CF142B 100% ); /* Dégradé vertical pour un style totalement différent */
+  --c-grad-sections: linear-gradient(135deg, #00247D, #CF142B, #FFCC00); /* Rotation des couleurs */
+  --c-grad-lesson: linear-gradient(135deg, #00247D, #FFCC00);
+  --c-grad-fc-back: linear-gradient(135deg, #CF142B, #00247D);
+  --c-grad-alpha-btn: linear-gradient(135deg, #FFCC00, #00247D);
 }
 
 /* body bg synchro avec thème */
