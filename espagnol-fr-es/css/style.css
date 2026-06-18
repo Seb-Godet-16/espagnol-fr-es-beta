@@ -653,3 +653,30 @@ h1 .translation-sub {
   opacity: 0.8 !important;       /* Rend le texte un peu plus discret */
   margin-top: 4px !important;    /* Donne un petit espace avec le texte du dessus */
 }
+
+/* ==========================================================================
+   SÉLECTEUR DE VARIANTES HISPANIQUES (AMÉRIQUE LATINE)
+   ========================================================================== */
+
+#region-selector-wrap {
+  margin: 15px auto !important;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+#regionSelector {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 2px solid #e0e0e0;
+  font-size: 0.95rem;
+  background-color: #ffffff;
+  color: #333333;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+#regionSelector:focus {
+  outline: none;
+  border-color: #002395; /* S'aligne généralement sur le bleu primaire de l'app */
+  box-shadow: 0 0 0 3px rgba(0, 35, 149, 0.15);
+}

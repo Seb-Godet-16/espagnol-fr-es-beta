@@ -64,6 +64,20 @@
   <div class="home-progress-wrap"><div class="home-progress-bar" id="homeBar" style="width:0%"></div></div>
   <div class="home-progress-label" id="homeBarLabel"></div>
   <div class="stars-row" id="homeStars"></div>
+
+<div id="region-selector-wrap" style="margin: 0 auto 15px; text-align: center; display: none;">
+    <label for="regionSelector" style="font-size: 0.9rem; opacity: 0.8; margin-right: 8px; color: var(--c-home-subtitle);">Variante :</label>
+    <select id="regionSelector" onchange="changeRegion(this.value)" style="padding: 6px 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 0.9rem; background: white; font-family: inherit;">
+      <option value="ES">🇪🇸 Espagne (Castillan)</option>
+      <option value="MX">🇲🇽 Mexique</option>
+      <option value="CO">🇨🇴 Colombie</option>
+      <option value="PE">🇵🇪 Pérou</option>
+      <option value="VE">🇻🇪 Venezuela</option>
+      <option value="AR">🇦🇷 Argentine</option>
+      <option value="EC">🇪🇨 Équateur</option>
+    </select>
+  </div>
+
   <button class="btn-primary" id="homeStartBtn"></button>
   <footer>
     © Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>

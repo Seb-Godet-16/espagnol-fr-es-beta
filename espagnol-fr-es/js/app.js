@@ -9,6 +9,7 @@
 ═══════════════════════════════════════════ */
 
 var currentMode = '';       // 'learn_french' ou 'learn_spain'
+var currentRegion = 'ES'; // 'ES' par défaut, basculera sur 'MX', 'CO', 'PE', 'VE', 'AR' ou 'EC'
 var voiceLang   = 'fr-FR';  // Langue de la synthèse vocale (mise à jour par initApp)
 var ALL_THEMES  = [];       // Rempli par initApp() depuis data.js
 
@@ -106,6 +107,20 @@ function initApp(mode) {
   /* ── Masquer le launcher et afficher l'accueil ── */
   document.getElementById('app-launcher').classList.remove('active');
   showScreen('home');
+  // ══════════════════════════════════════════════════════════════════════
+  // GESTION DU SÉLECTEUR DE VARIANTES HISPANIQUES
+  // ══════════════════════════════════════════════════════════════════════
+  var selectorWrap = document.getElementById('region-selector-wrap');
+  if (selectorWrap) {
+    selectorWrap.style.display = (mode === 'learn_spain') ? 'block' : 'none';
+  }
+  
+  // Réinitialisation par défaut sur l'Espagne lors du changement de langue
+  currentRegion = 'ES';
+  var selectorEl = document.getElementById('regionSelector');
+  if (selectorEl) {
+    selectorEl.value = 'ES';
+  }
 }
 
 /* Utilitaire interne : injecte les textes dans les IDs du HTML */
@@ -521,6 +536,11 @@ function renderFlash() {
   var hasConj = card.conj && card.conj.es && card.conj.fr;
   var frontContent, backContent;
 
+  // ── DÉTERMINATION DYNAMIQUE DU MOT ESPAGNOL (Castillan vs Variantes AL) ──
+  var finalEsWord = (card.variants && card.variants[currentRegion]) 
+    ? card.variants[currentRegion] 
+    : card.es;
+
   if (currentMode === 'learn_french') {
     var hintFr = 'Haz clic para ver su significado en español';
     if (hasConj) {
@@ -528,11 +548,11 @@ function renderFlash() {
         + '<div class="fc-front-word">' + card.fr + '</div>'
         + '<div class="fc-conj">' + card.conj.fr.map(function(l) { return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
       backContent = emBk
-        + '<div class="fc-back-word">' + card.es + '</div>'
+        + '<div class="fc-back-word">' + finalEsWord + '</div>' // <-- CORRIGÉ : Utilise la variante au verso
         + '<div class="fc-conj">' + card.conj.es.map(function(l) { return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
     } else {
       frontContent = emFr + '<div class="fc-front-word">' + card.fr + '</div><div class="fc-front-hint">👆 ' + hintFr + '</div>';
-      backContent  = emBk + '<div class="fc-back-word">' + card.es + '</div>';
+      backContent  = emBk + '<div class="fc-back-word">' + finalEsWord + '</div>'; // <-- CORRIGÉ : Utilise la variante au verso
     }
     document.getElementById('tabContent').innerHTML =
       '<div class="section-label">Anverso : Francés 🇫🇷 — Reverso : Español 🇪🇸 · Haz clic para volver !</div>'
@@ -553,13 +573,13 @@ function renderFlash() {
     var hintEs = 'Cliquez pour voir la traduction en français';
     if (hasConj) {
       frontContent = emFr
-        + '<div class="fc-front-word">' + card.es + '</div>'
+        + '<div class="fc-front-word">' + finalEsWord + '</div>' // <-- CORRIGÉ : Utilise la variante au recto
         + '<div class="fc-conj">' + card.conj.es.map(function(l) { return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
       backContent = emBk
         + '<div class="fc-back-word">' + card.fr + '</div>'
         + '<div class="fc-conj">' + card.conj.fr.map(function(l) { return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
     } else {
-      frontContent = emFr + '<div class="fc-front-word">' + card.es + '</div><div class="fc-front-hint">👆 ' + hintEs + '</div>';
+      frontContent = emFr + '<div class="fc-front-word">' + finalEsWord + '</div><div class="fc-front-hint">👆 ' + hintEs + '</div>'; // <-- CORRIGÉ : Utilise la variante au recto
       backContent  = emBk + '<div class="fc-back-word">' + card.fr + '</div>';
     }
     document.getElementById('tabContent').innerHTML =
@@ -573,7 +593,7 @@ function renderFlash() {
       + '<span class="fc-counter">' + (fcIdx + 1) + ' / ' + w.length + '</span>'
       + '<button onclick="nextCard()">Suivant →</button>'
       + '</div>'
-      + '<button class="audio-btn-big" onclick="speak(\'' + esc(card.es) + '\')">🔊 Écouter la prononciation</button>';
+      + '<button class="audio-btn-big" onclick="speak(\'' + esc(finalEsWord) + '\')">🔊 Écouter la prononciation</button>'; // <-- CORRIGÉ : Lit la variante avec le bon accent !
   }
 }
 
@@ -607,7 +627,17 @@ function flipCard() {
 function nextCard() {
   fcIdx = (fcIdx + 1) % CT.words.length;
   renderFlash();
-  var spokenKey = (currentMode === 'learn_french') ? CT.words[fcIdx].fr : CT.words[fcIdx].es;
+  
+  // Adaptation dynamique du mot prononcé lors du passage automatique à la carte suivante
+  var spokenKey;
+  if (currentMode === 'learn_french') {
+    spokenKey = CT.words[fcIdx].fr;
+  } else {
+    spokenKey = (CT.words[fcIdx].variants && CT.words[fcIdx].variants[currentRegion]) 
+      ? CT.words[fcIdx].variants[currentRegion] 
+      : CT.words[fcIdx].es;
+  }
+  
   setTimeout(function() { speak(spokenKey); }, 300);
 }
 
@@ -744,16 +774,23 @@ function checkQ10(chosen, correct) {
     if (chosen !== correct) setTimeout(function() { speak(qs[q10Step].audio); }, 300);
   } else {
     if (CT.words) {
-      var match = CT.words.find(function(w) { return w.es === correctWord || w.fr === correctWord; });
+      // 1. On cherche le mot dans le dictionnaire (via es, fr ou la variante régionale active)
+      var match = CT.words.find(function(w) { 
+        var regionalVar = (w.variants && w.variants[currentRegion]) ? w.variants[currentRegion] : '';
+        return w.es === correctWord || w.fr === correctWord || regionalVar === correctWord; 
+      });
+      
       if (match) {
-        var spokenKey = (currentMode === 'learn_french') ? match.fr : match.es;
+        // 2. Si mode espagnol, on récupère en priorité la variante régionale, sinon le castillan
+        var finalEsMatch = (match.variants && match.variants[currentRegion]) ? match.variants[currentRegion] : match.es;
+        var spokenKey = (currentMode === 'learn_french') ? match.fr : finalEsMatch;
+        
         speak(spokenKey);
       }
     }
   }
   setTimeout(function() { q10Step++; renderQuiz10(); }, 1600);
 }
-
 
 /* ═══════════════════════════════════════════
    11. DIALOGUE (renderDialog)
@@ -767,10 +804,15 @@ function renderDialog() {
   var sit = sits[sitIdx];
 
   var bubbles = sit.dialogue.map(function(ln, i) {
-    var mainMsg   = (currentMode === 'learn_french') ? ln.fr : ln.es;
-    var transMsg  = (currentMode === 'learn_french') ? ln.es : ln.fr;
-    var spokenKey = (currentMode === 'learn_french') ? ln.fr : ln.es;
+    // ── ADAPTATION DYNAMIQUE DE LA LIGNE D'EGO (Castillan vs Variante Régionale) ──
+    var finalEsLine = (ln.variants && ln.variants[currentRegion]) ? ln.variants[currentRegion] : ln.es;
+
+    var mainMsg   = (currentMode === 'learn_french') ? ln.fr : finalEsLine;
+    var transMsg  = (currentMode === 'learn_french') ? finalEsLine : ln.fr;
+    var spokenKey = (currentMode === 'learn_french') ? ln.fr : finalEsLine;
+    
     var listenTip = (currentMode === 'learn_french') ? 'Escuchar' : 'Écouter';
+    
     return '<div class="bubble ' + ln.side + '" style="opacity:0;transition:opacity .3s ' + (i * 0.08) + 's" id="bl' + i + '">'
       + '<div class="speaker-name">' + ln.s + '</div>'
       + '<div class="msg-row">'
@@ -792,10 +834,16 @@ function renderDialog() {
     + '<div class="action-row">'
     + '<button class="btn-start-quiz" onclick="switchTab(\'' + 'dquiz' + '\')">' + quizBtnLabel + '</button>'
     + '</div>';
-  setTimeout(function() { document.querySelectorAll('[id^=bl]').forEach(function(b) { b.style.opacity = '1'; }); }, 80);
+    
+  setTimeout(function() { 
+    document.querySelectorAll('[id^=bl]').forEach(function(b) { b.style.opacity = '1'; }); 
+  }, 80);
 }
 
-function pickSit(i) { sitIdx = i; renderDialog(); }
+function pickSit(i) { 
+  sitIdx = i; 
+  renderDialog(); 
+}
 
 
 /* ═══════════════════════════════════════════
@@ -807,9 +855,27 @@ function renderVocab() {
     var parts = v.split('=');
     var es    = parts[0].trim();       
     var fr    = parts[1] ? parts[1].trim() : ''; 
-    var mainWord  = (currentMode === 'learn_french') ? fr : es;
-    var subWord   = (currentMode === 'learn_french') ? es : fr;
-    var spokenKey = (currentMode === 'learn_french') ? fr : es;
+
+    // ── RECHERCHE DE LA VARIANTE RÉGIONALE DANS CT.words ──
+    var finalEs = es;
+    if (CT.words) {
+      var match = CT.words.find(function(w) {
+        // Gère le match exact ou les cas avec des barres obliques comme "Morado / Violeta"
+        if (w.es === es) return true;
+        var esParts = w.es.split('/').map(function(p) { return p.trim(); });
+        return esParts.indexOf(es) !== -1;
+      });
+      
+      // Si une variante existe pour la région sélectionnée, on écrase le mot par défaut
+      if (match && match.variants && match.variants[currentRegion]) {
+        finalEs = match.variants[currentRegion];
+      }
+    }
+
+    var mainWord  = (currentMode === 'learn_french') ? fr : finalEs;
+    var subWord   = (currentMode === 'learn_french') ? finalEs : fr;
+    var spokenKey = (currentMode === 'learn_french') ? fr : finalEs;
+
     return '<span class="vocab-chip" style="display: inline-flex; flex-direction: column; align-items: center; text-align: center;" onclick="speak(\'' + esc(spokenKey) + '\')">'
   + '<span class="vocab-item-et" style="font-weight: bold;">' + mainWord + '</span>'
   + (subWord ? '<span class="vocab-translation-sub">' + subWord + '</span>' : '')
@@ -942,4 +1008,33 @@ function _quizResultStrings(pct, type) {
 
 function esc(s) {
   return (s || '').replaceAll('\\', '\\\\').replaceAll("'", "\\'").replaceAll('"', '&quot;');
+}
+
+/* ═══════════════════════════════════════════
+   15. GESTION DES VARIANTES RÉGIONALES (AL)
+   ═══════════════════════════════════════════ */
+
+function changeRegion(region) {
+  currentRegion = region;
+  
+  if (currentMode === 'learn_spain') {
+    // Configuration de la synthèse vocale (TTS) selon le pays sélectionné
+    var voiceMap = {
+      'ES': 'es-ES', // Espagne (Castillan)
+      'MX': 'es-MX', // Mexique
+      'CO': 'es-CO', // Colombie
+      'PE': 'es-PE', // Pérou
+      'VE': 'es-VE', // Venezuela
+      'AR': 'es-AR', // Argentine
+      'EC': 'es-EC'  // Équateur
+    };
+    
+    // Assigne la voix locale correspondante, ou l'Espagne par défaut si non trouvée
+    voiceLang = voiceMap[region] || 'es-ES';
+  }
+  
+  // Si l'utilisateur est déjà dans une leçon, on rafraîchit immédiatement la carte
+  if (document.getElementById('lesson').classList.contains('active')) {
+    _renderFlashcard();
+  }
 }
