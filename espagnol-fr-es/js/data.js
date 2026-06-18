@@ -2,7 +2,7 @@
    Español Castillan → Français 🇪🇸 – Données
    Langage python
    Vocabulaire, quiz et dialogues
-   © 2026 Sébastien Godet
+   © Juin 2026 Sébastien Godet
 ======================================== */
 
 var LEVEL1_THEMES_FR=[

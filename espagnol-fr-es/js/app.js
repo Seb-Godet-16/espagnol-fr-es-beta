@@ -23,6 +23,9 @@ var dqStep      = 0, dqScore    = 0, dqAnswered   = false;
 var sitIdx      = 0;
 var q10Step     = 0, q10Score   = 0, q10Answered  = false;
 
+/* Quiz Niveau 1 dynamique : cache des questions générées pour la session courante */
+var _currentDynQuiz = [];
+
 /* Progression persistante (contient désormais des objets {id, stars}) */
 var done = [];
 
@@ -470,6 +473,8 @@ function openTheme(id) {
   CT = ALL_THEMES.find(function(t) { return t.id === id; });
   fcIdx = 0; dqStep = 0; dqScore = 0; dqAnswered = false; sitIdx = 0;
   q10Step = 0; q10Score = 0; q10Answered = false;
+  /* Pré-génération du quiz dynamique Niveau 1 */
+  _currentDynQuiz = (CT && CT.level === 1 && CT.type !== 'alpha') ? _generateLevel1Quiz(CT) : [];
 
   document.getElementById('lessonEmoji').textContent = CT.emoji;
 
@@ -520,7 +525,14 @@ function switchTab(tab) {
     b.classList.toggle('active', b.dataset.tab === tab);
   });
   if (tab === 'flash')       renderFlash();
-  else if (tab === 'quiz10') { q10Step = 0; q10Score = 0; q10Answered = false; renderQuiz10(); }
+  else if (tab === 'quiz10') {
+    q10Step = 0; q10Score = 0; q10Answered = false;
+    /* Pour le Niveau 1 (non-alpha), régénère les questions à chaque ouverture */
+    if (CT && CT.level === 1 && CT.type !== 'alpha') {
+      _currentDynQuiz = _generateLevel1Quiz(CT);
+    }
+    renderQuiz10();
+  }
   else if (tab === 'dialog') renderDialog();
   else if (tab === 'vocab')  renderVocab();
   else if (tab === 'dquiz')  { dqStep = 0; dqScore = 0; dqAnswered = false; renderDialogQuiz(); }
@@ -684,19 +696,114 @@ function isAlphaQuiz() { return CT && CT.type === 'alpha'; }
    10. QUIZ 10 QUESTIONS (AVEC ÉTOILES PROGRESSIVES)
 ═══════════════════════════════════════════ */
 
+/* ───────────────────────────────────────────────────────────
+   RÈGLE DU NOMBRE DE QUESTIONS — Niveau 1 (génération dyn.)
+   < 10 mots  → 3 questions
+   10–14 mots → 5 questions
+   15–27 mots → 8 questions
+   > 27 mots  → 10 questions
+─────────────────────────────────────────────────────────── */
 function getQuizTotal(theme) {
+  if (theme.level === 2) {
+    /* Niveau 2 : mini-quiz fixes de 3 questions */
+    return (theme.quiz || []).length;
+  }
   var n = (theme.words || []).length;
-  if (n < 10)  return 5;
-  if (n <= 20) return 8;
-  return 12;
+  if (n < 10)  return 3;
+  if (n < 15)  return 5;
+  if (n <= 27) return 8;
+  return 10;
 }
 
+/* Mélange un tableau (Fisher-Yates) — renvoie un nouveau tableau */
+function _shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+
+/* ───────────────────────────────────────────────────────────
+   GÉNÉRATION DYNAMIQUE DU QUIZ — Niveau 1
+   Sélectionne aléatoirement des mots, adapte les options
+   à la variante régionale active, mélange la bonne réponse.
+─────────────────────────────────────────────────────────── */
+function _generateLevel1Quiz(theme) {
+  var words = (theme.words || []).filter(function(w) {
+    /* On exclut les mots purement audio (alphabet) */
+    return w.fr && w.es;
+  });
+
+  if (words.length < 2) return [];
+
+  var total = getQuizTotal(theme);
+  /* Mélange l'ensemble des mots, puis prend les N premiers */
+  var pool  = _shuffle(words).slice(0, total);
+
+  return pool.map(function(card) {
+    /* Mot cible selon le mode et la variante régionale */
+    var correctEs  = (card.variants && card.variants[currentRegion]) ? card.variants[currentRegion] : card.es;
+    var correctFr  = card.fr;
+
+    /* Pour le mode learn_french : question en FR, réponse en ES
+       Pour le mode learn_spain  : question en ES (variante), réponse en FR */
+    var qText, correctAnswer;
+    if (currentMode === 'learn_french') {
+      qText         = '¿Cómo se dice "' + correctFr  + '" en español?';
+      correctAnswer = correctEs;
+    } else {
+      qText         = 'Comment dit-on "' + correctEs + '" en français ?';
+      correctAnswer = correctFr;
+    }
+
+    /* Construction d'un pool de distracteurs (autres mots, sans doublon) */
+    var distractors = words.filter(function(w) { return w !== card; });
+    var pickedDistractors = _shuffle(distractors).slice(0, 3).map(function(d) {
+      if (currentMode === 'learn_french') {
+        return (d.variants && d.variants[currentRegion]) ? d.variants[currentRegion] : d.es;
+      } else {
+        return d.fr;
+      }
+    });
+
+    /* On insère la bonne réponse à une position aléatoire parmi les 4 */
+    var opts = pickedDistractors.slice(0, 3);
+    var ansIdx = Math.floor(Math.random() * 4);
+    opts.splice(ansIdx, 0, correctAnswer);
+
+    return { q: qText, opts: opts, ans: ansIdx };
+  });
+}
+
+/* Renvoie les questions du quiz selon le niveau :
+   - Niveau 1 : génération DYNAMIQUE (mots aléatoires, variante régionale)
+   - Niveau 2 (type dialog) : conserve les quiz fixes existants */
 function getQuizQuestions(theme) {
-  return (theme.quiz10 || []).slice(0, getQuizTotal(theme));
+  if (theme.level === 2 || theme.type === 'dialog') {
+    /* Niveau 2 : mini-quiz fixes conservés */
+    return (theme.quiz || []);
+  }
+  if (theme.type === 'alpha') {
+    /* Alphabet : quiz audio conservé en dur */
+    return (theme.quiz10 || []).slice(0, 12);
+  }
+  /* Niveau 1 standard : génération dynamique */
+  return _generateLevel1Quiz(theme);
 }
 
 function renderQuiz10() {
-  var qs    = getQuizQuestions(CT);
+  /* Sélection de la source de questions selon le type de thème */
+  var qs;
+  if (CT && CT.type === 'alpha') {
+    qs = getQuizQuestions(CT);
+  } else if (CT && CT.level === 1) {
+    /* Niveau 1 : utilise le cache dynamique (généré à l'ouverture de l'onglet) */
+    qs = _currentDynQuiz.length ? _currentDynQuiz : _generateLevel1Quiz(CT);
+  } else {
+    qs = getQuizQuestions(CT);
+  }
   var total = qs.length;
 
   if (!qs || !total) {
@@ -726,7 +833,7 @@ function renderQuiz10() {
       + '<div class="score-num">' + q10Score + '/' + total + '</div>'
       + '<div style="font-size:1rem;margin:6px 0;color:' + (isSuccess ? '#009A44' : '#EF2B2D') + '">' + r.sub + '</div>'
       + '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px">'
-      + '<button class="retry-btn" style="background:#888" onclick="q10Step=0;q10Score=0;q10Answered=false;renderQuiz10()">' + r.retry + '</button>'
+      + '<button class="retry-btn" style="background:#888" onclick="_retryQuiz10()">' + r.retry + '</button>'
       + (isSuccess ? '<button class="retry-btn" onclick="renderSections();showScreen(\'sections\')">' + r.finish + '</button>' : '')
       + '</div></div>';
     renderSections();
@@ -783,10 +890,27 @@ function playAlphaAudio(letter) {
   if (btn) { btn.style.transform = 'scale(0.9)'; setTimeout(function() { btn.style.transform = 'scale(1)'; }, 200); }
 }
 
+/* Helper : relance le quiz10 en régénérant les questions dynamiques si besoin */
+function _retryQuiz10() {
+  q10Step = 0; q10Score = 0; q10Answered = false;
+  if (CT && CT.level === 1 && CT.type !== 'alpha') {
+    _currentDynQuiz = _generateLevel1Quiz(CT);
+  }
+  renderQuiz10();
+}
+
 function checkQ10(chosen, correct) {
   if (q10Answered) return;
   q10Answered = true;
-  var qs = getQuizQuestions(CT);
+  /* Source des questions selon le type */
+  var qs;
+  if (CT && CT.type === 'alpha') {
+    qs = getQuizQuestions(CT);
+  } else if (CT && CT.level === 1) {
+    qs = _currentDynQuiz;
+  } else {
+    qs = getQuizQuestions(CT);
+  }
   document.querySelectorAll('[id^=q10o]').forEach(function(b, i) {
     b.classList.add('disabled');
     if (i === correct) b.classList.add('correct');
@@ -827,6 +951,55 @@ function checkQ10(chosen, correct) {
    11. DIALOGUE (renderDialog)
 ═══════════════════════════════════════════ */
 
+/*
+ * Dictionnaire de substitutions textuelles pour les dialogues.
+ * Chaque entrée est une paire { castillan → { region: equivalent } }.
+ * Utilisé dans _adaptDialogueLine() pour adapter automatiquement les lignes
+ * de dialogue qui n'ont pas de propriété `variants` explicite.
+ */
+var _DIALOG_REGIONAL_SUBS = {
+  /* Transports */
+  'autobús':    {MX:'camión',     AR:'colectivo', CO:'bus',         VE:'autobús',  PE:'micro',   CL:'micro'},
+  'billete':    {MX:'boleto',     AR:'boleto',    CO:'pasaje',      VE:'pasaje',   PE:'boleto',  CL:'boleto'},
+  'coche':      {MX:'carro',      AR:'auto',      CO:'carro',       VE:'carro',    PE:'carro',   CL:'auto'},
+  /* Boissons */
+  'zumo':       {MX:'jugo',       AR:'jugo',      CO:'jugo',        VE:'jugo',     PE:'jugo',    EC:'jugo'},
+  /* Nourriture */
+  'patata':     {MX:'papa',       AR:'papa',      CO:'papa',        VE:'papa',     PE:'papa',    EC:'papa'},
+  'patatas':    {MX:'papas',      AR:'papas',     CO:'papas',       VE:'papas',    PE:'papas',   EC:'papas'},
+  /* Technologie */
+  'móvil':      {MX:'celular',    AR:'celular',   CO:'celular',     VE:'celular',  PE:'celular', CL:'celular'},
+  'ordenador':  {MX:'computadora',AR:'computadora',CO:'computador', VE:'computador',PE:'computadora',CL:'computador'},
+  /* Personnel de service */
+  'camarero':   {MX:'mesero',     AR:'mozo',      CO:'mesero',      VE:'mesero',   PE:'mesero',  CL:'mesero'},
+  'camarera':   {MX:'mesera',     AR:'moza',      CO:'mesera',      VE:'mesera',   PE:'mesera',  CL:'mesera'},
+  /* Expressions familières */
+  '¡Vale!':     {MX:'¡Sale!',     AR:'¡Dale!',    CO:'¡Listo!',     VE:'¡Listo!',  PE:'¡Dale!',  EC:'¡Dale!'},
+  'Vale,':      {MX:'Sale,',      AR:'Dale,',     CO:'Listo,',      VE:'Listo,',   PE:'Dale,',   EC:'Dale,'},
+  '¡Venga!':    {MX:'¡Órale!',    AR:'¡Dale!',    CO:'¡Dale!',      VE:'¡Dale!',   PE:'¡Dale!',  EC:'¡Dale!'},
+  /* Appartement */
+  'piso':       {MX:'departamento',AR:'departamento',CO:'apartamento',VE:'apartamento',PE:'departamento'}
+};
+
+/**
+ * Adapte le texte espagnol d'une ligne de dialogue à la variante régionale
+ * sélectionnée, en remplaçant les mots castillans par leurs équivalents.
+ * Respecte la casse et n'altère que les mots entiers (word boundaries).
+ */
+function _adaptDialogueLine(esText) {
+  if (!esText) return esText;
+  var result = esText;
+  Object.keys(_DIALOG_REGIONAL_SUBS).forEach(function(castillanWord) {
+    var regionMap = _DIALOG_REGIONAL_SUBS[castillanWord];
+    var regional  = regionMap[currentRegion];
+    if (!regional) return; // Pas de variante pour cette région : on garde le castillan
+    /* Remplacement insensible à la casse avec word-boundary simulé */
+    var escaped = castillanWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    result = result.replace(new RegExp('(?<![\\wÁÉÍÓÚáéíóúÑñ])' + escaped + '(?![\\wÁÉÍÓÚáéíóúÑñ])', 'g'), regional);
+  });
+  return result;
+}
+
 function renderDialog() {
   var sits    = CT.situations;
   var sitBtns = sits.map(function(s, i) {
@@ -835,8 +1008,15 @@ function renderDialog() {
   var sit = sits[sitIdx];
 
   var bubbles = sit.dialogue.map(function(ln, i) {
-    // ── ADAPTATION DYNAMIQUE DE LA LIGNE D'EGO (Castillan vs Variante Régionale) ──
-    var finalEsLine = (ln.variants && ln.variants[currentRegion]) ? ln.variants[currentRegion] : ln.es;
+    // ── ADAPTATION DYNAMIQUE DE LA LIGNE (Castillan vs Variante Régionale) ──
+    // Priorité 1 : variants explicite sur la ligne elle-même
+    // Priorité 2 : substitution automatique via _DIALOG_REGIONAL_SUBS
+    var finalEsLine;
+    if (ln.variants && ln.variants[currentRegion]) {
+      finalEsLine = ln.variants[currentRegion];
+    } else {
+      finalEsLine = _adaptDialogueLine(ln.es);
+    }
 
     var mainMsg   = (currentMode === 'learn_french') ? ln.fr : finalEsLine;
     var transMsg  = (currentMode === 'learn_french') ? finalEsLine : ln.fr;
