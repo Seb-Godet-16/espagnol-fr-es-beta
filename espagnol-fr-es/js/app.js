@@ -1191,3 +1191,11 @@ function pickRegion(regionId) {
     if (activeTab === 'flash') renderFlash();
   }
 }
+
+/* ═══════════════════════════════════════════
+   REMERCIEMENTS
+═══════════════════════════════════════════ */
+
+function showCredits() {
+  document.getElementById('credits-modal').style.display = 'flex';
+}
