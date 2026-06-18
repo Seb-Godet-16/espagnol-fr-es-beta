@@ -931,3 +931,14 @@ function _quizResultStrings(pct, type) {
 function esc(s) {
   return (s || '').replaceAll('\\', '\\\\').replaceAll("'", "\\'").replaceAll('"', '&quot;');
 }
+
+/* ═══════════════════════════════════════════
+   REMERCIEMENTS
+═══════════════════════════════════════════ */
+
+function showCredits() {
+    const modal = document.getElementById('credits-modal');
+    if (modal) {
+        modal.style.display = 'flex';
+    }
+}
