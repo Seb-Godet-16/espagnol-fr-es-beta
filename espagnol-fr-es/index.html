@@ -9,9 +9,6 @@
 <body>
 <div class="app">
 
-<!-- ══════════════════════════════════════
-     ÉCRAN 0 — LANCEUR D'APPLICATION
-══════════════════════════════════════ -->
 <div id="app-launcher" class="screen active">
   <div class="launcher-bg"></div>
   <div class="launcher-inner">
@@ -21,7 +18,6 @@
 
     <div class="launcher-cards">
 
-      <!-- Carte Français -->
       <button class="lang-card lang-card--fr" onclick="initApp('learn_french')">
         <div class="lang-card-flag">🇫🇷</div>
         <div class="lang-card-body">
@@ -31,7 +27,6 @@
         <div class="lang-card-arrow">›</div>
       </button>
 
-      <!-- Carte Espagne (CORRIGÉE) -->
       <button class="lang-card lang-card--es" onclick="initApp('learn_spain')">
         <div class="lang-card-flag">🇪🇸</div>
         <div class="lang-card-body">
@@ -52,13 +47,11 @@
 </div>
 
 
-<!-- ══════════════════════════════════════
-     ÉCRANS — APPLICATION (communs)
-══════════════════════════════════════ -->
-
 <div id="home" class="screen">
   <button class="back-btn home-back-btn" id="homeBackBtn">← Retour / Volver</button>
-  <div class="flag-row" id="homeFlagRow"></div>
+  
+  <div class="flag-row" id="homeFlagRow"><span id="home-big-flag"></span></div>
+  
   <h1 id="homeTitle"></h1>
   <p class="subtitle" id="homeSubtitle"></p>
   <div class="home-progress-wrap"><div class="home-progress-bar" id="homeBar" style="width:0%"></div></div>

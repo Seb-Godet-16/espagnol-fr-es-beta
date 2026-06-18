@@ -1166,25 +1166,26 @@ function pickRegion(regionId) {
     }
   }
 
-  // 🌟 CHANGEMENT DYNAMIQUE DU PETIT DRAPEAU (Dans l'interface ou les Cartes Flash)
+  // Dictionnaire partagé des émojis
+  var flagEmojis = { 'ES': '🇪🇸', 'MX': '🇲🇽', 'CO': '🇨🇴', 'PE': '🇵🇪', 'VE': '🇻🇪', 'AR': '🇦🇷', 'EC': '🇪🇨' };
+  var activeFlag = flagEmojis[currentRegion] || '🇪🇸';
+
+  // 🌟 NOUVEAUTÉ : Mise à jour du GROS drapeau situé tout en haut de l'écran d'accueil
+  var bigFlagSpan = document.getElementById('home-big-flag');
+  if (bigFlagSpan) {
+    bigFlagSpan.innerHTML = activeFlag;
+  }
+
+  // 🌟 CHANGEMENT DYNAMIQUE DU PETIT DRAPEAU (Dans le sous-titre de l'accueil ou les Cartes Flash)
   var flagSpan = document.getElementById('current-lang-flag');
   if (flagSpan) {
-    var flagEmojis = {
-      'ES': '🇪🇸',
-      'MX': '🇲🇽',
-      'CO': '🇨🇴',
-      'PE': '🇵🇪',
-      'VE': '🇻🇪',
-      'AR': '🇦🇷',
-      'EC': '🇪🇨'
-    };
-    flagSpan.innerHTML = flagEmojis[currentRegion] || '🇪🇸';
+    flagSpan.innerHTML = activeFlag;
   }
   
   // Rafraîchissement des modules de cours
   if (typeof activeTab !== 'undefined') {
     if (activeTab === 'vocab') renderVocab();
     if (activeTab === 'dialog') renderDialog();
-    if (activeTab === 'flash') renderFlash(); // Synchronise l'affichage immédiat sur l'écran des cartes
+    if (activeTab === 'flash') renderFlash();
   }
 }
