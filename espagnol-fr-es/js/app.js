@@ -112,18 +112,16 @@ function initApp(mode) {
   // ══════════════════════════════════════════════════════════════════════
   var selectorWrap = document.getElementById('region-selector-wrap');
   if (selectorWrap) {
-    // On force l'affichage du bloc parent
     selectorWrap.style.display = 'block';
-    
-    // Structure HTML propre : la boîte de message d'abord, puis le select en dessous
+    // On crée deux conteneurs distincts bien clairs
     selectorWrap.innerHTML = '<div id="region-message-box"></div>'
                            + '<div id="region-select-container"></div>';
   }
   
-  // Réinitialisation par défaut sur l'Espagne (Castillan) lors du changement de langue
+  // Réinitialisation par défaut sur l'Espagne (Castillan)
   currentRegion = 'ES';
   
-  // Génération dynamique de la liste déroulante ET du premier message ciblé
+  // On génère le sélecteur ET le message
   renderRegionOptions();
 }
 
@@ -1055,10 +1053,10 @@ function changeRegion(region) {
 ═══════════════════════════════════════════ */
 
 function renderRegionOptions() {
-  var selectorWrap = document.getElementById('region-selector-wrap');
-  if (!selectorWrap) return;
+  var msgBox = document.getElementById('region-message-box');
+  var selectContainer = document.getElementById('region-select-container');
+  if (!selectContainer) return;
 
-  // Liste des régions avec noms adaptés selon la langue de l'interface
   var regions = [
     { id: 'ES', name: (currentMode === 'learn_french') ? 'España (Castellano)' : 'Espagne (Castillan)', flag: '🇪🇸' },
     { id: 'MX', name: (currentMode === 'learn_french') ? 'México' : 'Mexique', flag: '🇲🇽' },
@@ -1069,8 +1067,22 @@ function renderRegionOptions() {
     { id: 'EC', name: (currentMode === 'learn_french') ? 'Ecuador' : 'Équateur', flag: '🇪🇨' }
   ];
 
-  // Construction de la liste déroulante
-  var html = '<div style="padding: 10px;">'
+  // 1. MISE À JOUR DU MESSAGE BLEU
+  var activeRegion = regions.find(function(r) { return r.id === currentRegion; }) || regions[0];
+  if (msgBox) {
+    if (currentMode === 'learn_french') {
+      msgBox.innerHTML = '<div style="margin: 10px; padding: 12px; background-color: #eef9ff; border-left: 4px solid #007bff; border-radius: 8px; font-size: 0.9rem; color: #333; text-align: left;">'
+                       + 'ℹ️ Tu aplicación está configurada actualmente con la variante de <strong>' + activeRegion.name + '</strong>. Puedes cambiarla en la lista desplegable si lo deseas.'
+                       + '</div>';
+    } else {
+      msgBox.innerHTML = '<div style="margin: 10px; padding: 12px; background-color: #eef9ff; border-left: 4px solid #007bff; border-radius: 8px; font-size: 0.9rem; color: #333; text-align: left;">'
+                       + 'ℹ️ Votre application est actuellement configurée sur la variante <strong>' + activeRegion.name + '</strong>. Vous pouvez la modifier dans la liste déroulante.'
+                       + '</div>';
+    }
+  }
+
+  // 2. CONSTRUCTION DE LA LISTE DÉROULANTE
+  var html = '<div style="padding: 10px; margin-bottom: 15px;">'
            + '<select id="regionSelector" onchange="pickRegion(this.value)" style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ddd; font-size: 1rem; background: #fff; cursor: pointer; outline: none;">';
   
   regions.forEach(function(r) {
@@ -1080,16 +1092,38 @@ function renderRegionOptions() {
   
   html += '</select></div>';
   
-  selectorWrap.innerHTML = html;
+  selectContainer.innerHTML = html;
 }
 
 function pickRegion(regionId) {
   currentRegion = regionId;
   
-  // Elle force le recalcul et la mise à jour du texte informatif bleu
-  renderRegionOptions(); 
+  // 1. On met à jour uniquement le texte du message bleu sans toucher au reste
+  var msgBox = document.getElementById('region-message-box');
+  if (msgBox) {
+    var regions = [
+      { id: 'ES', name: (currentMode === 'learn_french') ? 'España (Castellano)' : 'Espagne (Castillan)' },
+      { id: 'MX', name: (currentMode === 'learn_french') ? 'México' : 'Mexique' },
+      { id: 'CO', name: (currentMode === 'learn_french') ? 'Colombia' : 'Colombie' },
+      { id: 'PE', name: (currentMode === 'learn_french') ? 'Perú' : 'Pérou' },
+      { id: 'VE', name: (currentMode === 'learn_french') ? 'Venezuela' : 'Venezuela' },
+      { id: 'AR', name: (currentMode === 'learn_french') ? 'Argentina' : 'Argentine' },
+      { id: 'EC', name: (currentMode === 'learn_french') ? 'Ecuador' : 'Équateur' }
+    ];
+    var activeRegion = regions.find(function(r) { return r.id === currentRegion; }) || regions[0];
+    
+    if (currentMode === 'learn_french') {
+      msgBox.innerHTML = '<div style="margin: 10px; padding: 12px; background-color: #eef9ff; border-left: 4px solid #007bff; border-radius: 8px; font-size: 0.9rem; color: #333; text-align: left;">'
+                       + 'ℹ️ Tu aplicación está configurada actualmente con la variante de <strong>' + activeRegion.name + '</strong>. Puedes cambiarla en la lista desplegable si lo deseas.'
+                       + '</div>';
+    } else {
+      msgBox.innerHTML = '<div style="margin: 10px; padding: 12px; background-color: #eef9ff; border-left: 4px solid #007bff; border-radius: 8px; font-size: 0.9rem; color: #333; text-align: left;">'
+                       + 'ℹ️ Votre application est actuellement configurée sur la variante <strong>' + activeRegion.name + '</strong>. Vous pouvez la modifier dans la liste déroulante.'
+                       + '</div>';
+    }
+  }
   
-  // Rafraîchissement instantané du vocabulaire ou du dialogue si l'utilisateur est déjà dans un onglet
+  // 2. Rafraîchissement instantané des modules de cours
   if (typeof activeTab !== 'undefined') {
     if (activeTab === 'vocab') renderVocab();
     if (activeTab === 'dialog') renderDialog();
