@@ -1100,12 +1100,21 @@ function renderRegionOptions() {
 }
 
 function pickRegion(regionId) {
+  // 🌟 GESTION DYNAMIC DES COULEURS DE FOND (CLASSES CSS)
+  if (currentMode === 'learn_spain') {
+    // On retire absolument toutes les classes de pays pour repartir à zéro
+    document.documentElement.classList.remove('region-ES', 'region-MX', 'region-CO', 'region-PE', 'region-VE', 'region-AR', 'region-EC');
+    // On applique la classe spécifique du pays sélectionné (ex: region-EC pour l'Équateur)
+    document.documentElement.classList.add('region-' + regionId);
+  }
+
   currentRegion = regionId;
   
   // ⚡ Force la cascade à rescanner le smartphone et déclencher l'alerte popup au prochain clic audio
   _spanishVoice = undefined;
   _hasNotifiedVoice = false;
   
+  // Mise à jour instantanée du texte dans le bandeau bleu existant
   var msgBox = document.getElementById('region-message-box');
   if (msgBox) {
     var regionsNames = {
@@ -1133,6 +1142,7 @@ function pickRegion(regionId) {
     }
   }
   
+  // Rafraîchissement des modules de cours
   if (typeof activeTab !== 'undefined') {
     if (activeTab === 'vocab') renderVocab();
     if (activeTab === 'dialog') renderDialog();
