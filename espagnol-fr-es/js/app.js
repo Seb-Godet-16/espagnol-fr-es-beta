@@ -107,6 +107,7 @@ function initApp(mode) {
   /* ── Masquer le launcher et afficher l'accueil ── */
   document.getElementById('app-launcher').classList.remove('active');
   showScreen('home');
+
   // ══════════════════════════════════════════════════════════════════════
   // GESTION DU SÉLECTEUR DE RÉGIONS HISPANIQUES (Pour les deux modes)
   // ══════════════════════════════════════════════════════════════════════
@@ -119,8 +120,27 @@ function initApp(mode) {
   // Réinitialisation par défaut sur l'Espagne (Castillan) lors du changement de langue
   currentRegion = 'ES';
   
-  // Génération du rendu dynamique avec les beaux boutons radios (Design Capture.jpeg)
+  // Génération de la liste déroulante compacte (Étape 2)
   renderRegionOptions();
+
+  // 💬 AJOUT DU MESSAGE INITIAL UNIQUE (S'affiche une fois au chargement du mode)
+  var messageHtml = '';
+  if (mode === 'learn_french') {
+    // Message en espagnol pour l'hispanophone qui apprend le français
+    messageHtml = '<div style="margin: 10px; padding: 12px; background-color: #eef9ff; border-left: 4px solid #007bff; border-radius: 8px; font-size: 0.9rem; color: #333;">'
+                + 'ℹ️ Tu aplicación está configurada actualmente con la variante de <strong>España (Castellano)</strong>. Puedes cambiarla en la lista desplegable si lo deseas.'
+                + '</div>';
+  } else {
+    // Message en français pour le francophone qui apprend l'espagnol
+    messageHtml = '<div style="margin: 10px; padding: 12px; background-color: #eef9ff; border-left: 4px solid #007bff; border-radius: 8px; font-size: 0.9rem; color: #333;">'
+                + 'ℹ️ Votre application est actuellement configurée sur la variante <strong>Espagne (Castillan)</strong>. Vous pouvez la modifier dans la liste déroulante.'
+                + '</div>';
+  }
+
+  // Injection du petit message informatif tout en haut du sélecteur
+  if (selectorWrap) {
+    selectorWrap.insertAdjacentHTML('afterbegin', messageHtml);
+  }
 }
 
 /* Utilitaire interne : injecte les textes dans les IDs du HTML */
@@ -214,7 +234,13 @@ function _resolveSpanishVoice(callback) {
 function speak(txt) {
   if (!txt) return;
 
-  if (currentMode === 'learn_spain') {
+  // On veut utiliser le moteur "espagnol avec accents" si :
+  // 1. On apprend l'espagnol (learn_spain)
+  // 2. OU on apprend le français, mais qu'on doit lire un texte espagnol (ex: vocabulaire/dialogue)
+  // Une astuce simple est de vérifier si on n'est pas en mode "learn_french" 
+  // OU de gérer spécifiquement le français dans le bloc "else"
+  
+  if (currentMode !== 'learn_french') {
     if (!window.speechSynthesis) return;
     
     _resolveSpanishVoice(function(voice) {
@@ -228,7 +254,7 @@ function speak(txt) {
           u.voice = voice;
           u.lang = voice.lang;
         }
-        u.rate = 0.85; // Vitesse légèrement réduite pour une écoute claire
+        u.rate = 0.85; 
         u.onend = function() { 
           if (i + 1 < parts.length) setTimeout(function() { speakPart(i + 1); }, 2000); 
         };
@@ -238,6 +264,7 @@ function speak(txt) {
     });
 
   } else {
+    // Si on est en mode "learn_french", on utilise la voix française standard
     _doSpeak(txt, null, 0.80);
   }
 }
@@ -1040,68 +1067,42 @@ function changeRegion(region) {
 }
 
 /* ═══════════════════════════════════════════
-   FONCTION DE RENDU DYNAMIQUE DES RÉGIONS (Design Capture.jpeg)
+   FONCTION DE RENDU DYNAMIQUE DES RÉGIONS et SÉLECTEUR DÉROULANT
 ═══════════════════════════════════════════ */
 
 function renderRegionOptions() {
   var selectorWrap = document.getElementById('region-selector-wrap');
   if (!selectorWrap) return;
 
-  var regions = [];
+  // Liste des régions avec noms adaptés selon la langue de l'interface
+  var regions = [
+    { id: 'ES', name: (currentMode === 'learn_french') ? 'España (Castellano)' : 'Espagne (Castillan)', flag: '🇪🇸' },
+    { id: 'MX', name: (currentMode === 'learn_french') ? 'México' : 'Mexique', flag: '🇲🇽' },
+    { id: 'CO', name: (currentMode === 'learn_french') ? 'Colombia' : 'Colombie', flag: '🇨🇴' },
+    { id: 'PE', name: (currentMode === 'learn_french') ? 'Perú' : 'Pérou', flag: '🇵🇪' },
+    { id: 'VE', name: (currentMode === 'learn_french') ? 'Venezuela' : 'Venezuela', flag: '🇻🇪' },
+    { id: 'AR', name: (currentMode === 'learn_french') ? 'Argentina' : 'Argentine', flag: '🇦🇷' },
+    { id: 'EC', name: (currentMode === 'learn_french') ? 'Ecuador' : 'Équateur', flag: '🇪🇨' }
+  ];
+
+  // Construction de la liste déroulante
+  var html = '<div style="padding: 10px;">'
+           + '<select id="regionSelector" onchange="pickRegion(this.value)" style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ddd; font-size: 1rem; background: #fff; cursor: pointer; outline: none;">';
   
-  if (currentMode === 'learn_french') {
-    // L'utilisateur est hispanophone (Interface en espagnol)
-    regions = [
-      { id: 'ES', name: 'España (Castellano)', flag: '🇪🇸' },
-      { id: 'MX', name: 'México', flag: '🇲🇽' },
-      { id: 'CO', name: 'Colombia', flag: '🇨🇴' },
-      { id: 'PE', name: 'Perú', flag: '🇵🇪' },
-      { id: 'VE', name: 'Venezuela', flag: '🇻🇪' },
-      { id: 'AR', name: 'Argentina', flag: '🇦🇷' },
-      { id: 'EC', name: 'Ecuador', flag: '🇪🇨' }
-    ];
-  } else {
-    // L'utilisateur est francophone (Interface en français)
-    regions = [
-      { id: 'ES', name: 'Espagne (Castillan)', flag: '🇪🇸' },
-      { id: 'MX', name: 'Mexique', flag: '🇲🇽' },
-      { id: 'CO', name: 'Colombie', flag: '🇨🇴' },
-      { id: 'PE', name: 'Pérou', flag: '🇵🇪' },
-      { id: 'VE', name: 'Venezuela', flag: '🇻🇪' },
-      { id: 'AR', name: 'Argentine', flag: '🇦🇷' },
-      { id: 'EC', name: 'Équateur', flag: '🇪🇨' }
-    ];
-  }
-
-  // Rendu graphique identique à ta Capture.jpeg
-  var html = '<div class="region-list-card" style="background:#fff; border-radius:24px; box-shadow:0 4px 20px rgba(0,0,0,0.06); overflow:hidden; margin:10px 0;">';
-
-  html += regions.map(function(r) {
-    var isSelected = (currentRegion === r.id);
-    
-    // Pastille orange de sélection
-    var radioBtn = isSelected 
-      ? '<div style="width:22px; height:22px; border-radius:50%; border:2px solid #f05423; display:flex; align-items:center; justify-content:center;"><div style="width:11px; height:11px; border-radius:50%; background:#f05423;"></div></div>'
-      : '<div style="width:22px; height:22px; border-radius:50%; border:2px solid #ccc;"></div>';
-
-    return '<div class="region-row" onclick="pickRegion(\'' + r.id + '\')" style="display:flex; justify-content:space-between; align-items:center; padding:18px 20px; cursor:pointer; border-bottom:1px solid #f2f2f2; transition: background 0.2s;">'
-      + '<div style="display:flex; align-items:center; gap:14px; font-size:1.2rem; color:#111;">'
-      +   '<span style="font-size:1.4rem;">' + r.flag + '</span>'
-      +   '<span style="font-weight:500;">' + r.name + '</span>'
-      + '</div>'
-      +  radioBtn
-      + '</div>';
-  }).join('');
-
-  html += '</div>';
+  regions.forEach(function(r) {
+    var selected = (currentRegion === r.id) ? ' selected' : '';
+    html += '<option value="' + r.id + '"' + selected + '>' + r.flag + ' ' + r.name + '</option>';
+  });
+  
+  html += '</select></div>';
+  
   selectorWrap.innerHTML = html;
 }
 
 function pickRegion(regionId) {
   currentRegion = regionId;
-  renderRegionOptions(); // Met à jour la puce orange
   
-  // Rafraîchissement instantané des modules si un onglet est déjà ouvert
+  // Rafraîchissement instantané du vocabulaire ou du dialogue si l'utilisateur est déjà dans un onglet
   if (typeof activeTab !== 'undefined') {
     if (activeTab === 'vocab') renderVocab();
     if (activeTab === 'dialog') renderDialog();
