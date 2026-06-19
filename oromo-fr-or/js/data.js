@@ -115,7 +115,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Hospitaala',fr:'L\'hôpital',em:'🏥'},
     {et:'Farmaasiitii',fr:'La pharmacie',em:'💊'},
     {et:'Baankii',fr:'La banque',em:'🏦'},
-    {et:'Kiilistiyaana / Masjiida',fr:'L\'église',em:'⛪'},
+    {et:'Kiilistiyaana / Masjiida',fr:'L\'église / La mosquée',em:'⛪🕌'},
     // Commerces
     {et:'Suupaarmaarkeeti',fr:'Le supermarché',em:'🛒'},
     {et:'Buna mana / Bunaa',fr:'Le bar / Le café',em:'☕'},
@@ -153,7 +153,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Burtukaana',fr:'L\'orange',em:'🍊'},
     {et:'Liimoo',fr:'Le citron',em:'🍋'},
     {et:'Mukarroo',fr:'La fraise',em:'🍓'},
-    {et:'Harbuu / Watermelon',fr:'La pastèque',em:'🍉'},
+    {et:'Harbuu',fr:'La pastèque',em:'🍉'},
     // Légumes
     {et:'Timaatimii',fr:'La tomate',em:'🍅'},
     {et:'Karootii',fr:'La carotte',em:'🥕'},
@@ -168,7 +168,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Damma',fr:'Le miel',em:'🍯'},
     {et:'Chokolaatii',fr:'Le chocolat',em:'🍫'},
    ]},
-  {id:'bois',level:1,emoji:'🥤',name:'Dhugaatii',sub:'Bishaani, buna, shaayii… / Les boissons',
+  {id:'bois',level:1,emoji:'🥤',name:'Dhugaatii',sub:'Bishaan, buna, shaayii… / Les boissons',
    words:[
     // Essentiels
     {et:'Bishaan',fr:'L\'eau',em:'💧'},
@@ -265,7 +265,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Gluten hin qabu',fr:'Sans gluten',em:'🌾'},
     {et:'Foon hin nyaatu',fr:'Végétarien / Végétarienne',em:'🥦'},
     // Repas
-    {et:'Fuullaa xinnoo',fr:'La tapa',em:'🫒'},
+    {et:'Fuullaa xinnoo',fr:'L\'amuse-bouche',em:'🫒'},
     {et:'Fuullaa dura',fr:'L\'entrée',em:'🥗'},
     {et:'Nyaata ijoo',fr:'Le plat principal',em:'🍖'},
     {et:'Dhaamsa nyaataa',fr:'Le dessert',em:'🍮'},
@@ -340,7 +340,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Mana fincaanii',fr:'Les toilettes',em:'🚽'},
     {et:'Mana konkolaataa',fr:'Le garage',em:'🚗'},
    ]},
-   {id:'muebles_equipamiento', level:1, emoji:'🪑', name:'Meeshaalee Manaa', sub:'Soofa, meeshaalee ummataa, dhiqachuu… / Meubles et équipements',
+   {id:'muebles_equipamiento', level:1, emoji:'🪑', name:'Meeshaalee Manaa', sub:'Soofa, siree, firiijiidara… / Meubles et équipements',
  words:[
     // Salon
     {et:'Soofa',fr:'Le canapé',em:'🛋️'},
@@ -396,7 +396,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Akaakayyuu / Awoo Abbaa',fr:'Le grand-père',em:'👴'},
     {et:'Niitii / Haadha manaa',fr:'La femme',em:'💑'},
     {et:'Abbaa warraa / Dhiirsa',fr:'Le mari',em:'💍'},
-    {et:'Adaadaa / Haadha Abbaa (Oromiyaatti)',fr:'L\'oncle / La tante (aussi : mec / nana en argot)',em:'👨/👩'}
+    {et:'Adaadaa (haadha abbaa) / Adda (obboleessa abbaa)',fr:'La tante (côté père) / L\'oncle',em:'👨‍👩‍👧'}
    ]},
   {id:'verb',level:1,emoji:'📝',name:'Yakkawwan',sub:'Ta\'uu, qabaachuu, deemuu… / Les verbes principaux',
    words:[
@@ -433,7 +433,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Waamuu',fr:'Appeler',em:'📞',conj:{et:['Ani nan waama','Ati ni waamta','Inni/Isheen ni waama','Nuti ni waamna','Isin ni waamtu','Isaan ni waamu'],fr:['J\'appelle','Tu appelles','Il/Elle appelle','Nous appelons','Vous appelez','Ils/Elles appellent']}},
     {et:'Gaafachuu',fr:'Demander',em:'🙋‍♂️',conj:{et:['Ani nan gaafadha','Ati ni gaafatta','Inni/Isheen ni gaafata','Nuti ni gaafanna','Isin ni gaafastu','Isaan ni gaafatu'],fr:['Je demande','Tu demandes','Il/Elle demande','Nous demandons','Vous demandez','Ils/Elles demandent']}},
     {et:'Konkolaachisuu',fr:'Conduire',em:'🚗',conj:{et:['Ani nan konkolaachisa','Ati ni konkolaachista','Inni/Isheen ni konkolaachisa','Nuti ni konkolaachisina','Isin ni konkolaachistuu','Isaan ni konkolaachisu'],fr:['Je conduis','Tu conduis','Il/Elle conduit','Nous conduisons','Vous conduisez','Ils/Elles conduisent']}},
-    {et:'Baay\'ee jaaladhu',fr:'Adorer (argot)',em:'😎',conj:{et:['Nan baay\'ee jaalladha','Ni baay\'ee jaallataa','Ni baay\'ee jaallata','Ni baay\'ee jaallannaа','Ni baay\'ee jaallattu','Ni baay\'ee jaallatu'],fr:['J\'adore','Tu adores','Il/Elle adore','Nous adorons','Vous adorez','Ils/Elles adorent']}}
+    {et:'Baay\'ee jaalladha',fr:'Adorer',em:'😍',conj:{et:['Nan baay\'ee jaalladha','Ni baay\'ee jaallataa','Ni baay\'ee jaallata','Ni baay\'ee jaallannaа','Ni baay\'ee jaallattu','Ni baay\'ee jaallatu'],fr:['J\'adore','Tu adores','Il/Elle adore','Nous adorons','Vous adorez','Ils/Elles adorent']}}
   ]},
   {id:'corps',level:1,emoji:'🧍',name:'Qaamaa',sub:'Mataa, harkaa, miila… / Le corps',
    words:[
@@ -447,7 +447,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Arraba',fr:'La langue',em:'👅'},
     {et:'Ilkaan',fr:'La dent / Les dents',em:'🦷'},
     {et:'Morma',fr:'Le cou',em:''},
-    {et:'Harka / Harkaafi',fr:'Le bras / Les bras',em:'💪'},
+    {et:'Harka gubbaa',fr:'Le bras / Les bras',em:'💪'},
     {et:'Harka / Harkaan',fr:'La main / Les mains',em:'✋'},
     {et:'Quba / Qubaan',fr:'Le doigt / Les doigts',em:'☝️'},
     {et:'Quba miila / Ciltuu',fr:'L\'orteil / L\'ongle',em:'💅'},
@@ -625,78 +625,115 @@ var LEVEL1_THEMES_FR=[
     {et:'Marga miidhagoo',fr:'La pelouse / Le gazon',em:'⛳'},
    ]},
 
-  {id:'routine',level:1,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'Ka\'uu, rafuu, hojjechuu\u2026 / La vie quotidienne',
+  {id:'routine',level:1,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'Ka\'uu, rafuu, hojjechuu… / La vie quotidienne',
    words:[
-    {et:'Ka\'uu / Dammaquu',fr:'Se lever / Se r\xe9veiller',em:'\u23f0'},
-    {et:'Dhiqachuu',fr:'Se doucher / Se laver',em:'\U0001f6bf'},
-    {et:'Fuula dhiqachuu',fr:'Se laver le visage',em:'\U0001f9fc'},
-    {et:'Ilkaan eebuu',fr:'Se brosser les dents',em:'\U0001f9b7'},
-    {et:'Uffachuu',fr:'S\'habiller',em:'\U0001f455'},
-    {et:'Ciree nyaachuu',fr:'Prendre le petit-d\xe9jeuner',em:'\U0001f373'},
-    {et:'Hojjechuu',fr:'Travailler',em:'\U0001f4bc'},
-    {et:'Barumsaaf deemuu',fr:'Aller \xe0 l\'cole / Aller \xe9tudier',em:'\U0001f392'},
-    {et:'Baha manaa deemuu',fr:'Sortir de la maison',em:'\U0001f6aa'},
-    {et:'Bitachuu / Gabaa deemuu',fr:'Faire les courses',em:'\U0001f6d2'},
-    {et:'Nyaata bilcheessuu / Daakuu hojjechuu',fr:'Faire la cuisine / Cuisiner',em:'\U0001f373'},
-    {et:'Uffata dhiquu',fr:'Laver le linge',em:'\U0001f9fa'},
-    {et:'Uffata miicuu',fr:'\xc9tendre / Repasser le linge',em:'\U0001f455'},
-    {et:'Mana qulqulleessuu',fr:'Nettoyer la maison / Faire le m\xe9nage',em:'\U0001f9f9'},
-    {et:'Meeshaalee dhiquu',fr:'Faire la vaisselle',em:'\U0001f37d\ufe0f'},
-    {et:'Saree oofuu',fr:'Sortir le chien',em:'\U0001f415'},
-    {et:'Bifa cireen duraa nyaachuu',fr:'D\xe9jeuner',em:'\U0001f957'},
-    {et:'Halkan nyaachuu',fr:'D\xeener',em:'\U0001f37d\ufe0f'},
-    {et:'Boqochuu',fr:'Se reposer',em:'\U0001f62e\u200d\U0001f4a8'},
-    {et:'Telefishina ilaalu',fr:'Regarder la t\xe9l\xe9',em:'\U0001f4fa'},
-    {et:'Kitaaba dubbisuu',fr:'Lire un livre',em:'\U0001f4d6'},
-    {et:'Ciisuu / Rafuu',fr:'Se coucher / Dormir',em:'\U0001f6cf\ufe0f'},
+    {et:'Ka\'uu / Dammaquu',fr:'Se lever / Se réveiller',em:'⏰'},
+    {et:'Dhiqachuu',fr:'Se doucher / Se laver',em:'🚿'},
+    {et:'Fuula dhiqachuu',fr:'Se laver le visage',em:'🧼'},
+    {et:'Ilkaan eebuu',fr:'Se brosser les dents',em:'🦷'},
+    {et:'Uffachuu',fr:'S\'habiller',em:'👕'},
+    {et:'Ciree nyaachuu',fr:'Prendre le petit-déjeuner',em:'🍳'},
+    {et:'Hojjechuu',fr:'Travailler',em:'💼'},
+    {et:'Barumsaaf deemuu',fr:'Aller à l\'cole / Aller étudier',em:'🎒'},
+    {et:'Baha manaa deemuu',fr:'Sortir de la maison',em:'🚪'},
+    {et:'Bitachuu / Gabaa deemuu',fr:'Faire les courses',em:'🛒'},
+    {et:'Nyaata bilcheessuu / Daakuu hojjechuu',fr:'Faire la cuisine / Cuisiner',em:'🍳'},
+    {et:'Uffata dhiquu',fr:'Laver le linge',em:'🧺'},
+    {et:'Uffata miicuu',fr:'Étendre / Repasser le linge',em:'👕'},
+    {et:'Mana qulqulleessuu',fr:'Nettoyer la maison / Faire le ménage',em:'🧹'},
+    {et:'Meeshaalee dhiquu',fr:'Faire la vaisselle',em:'🍽️'},
+    {et:'Saree oofuu',fr:'Sortir le chien',em:'🐕'},
+    {et:'Bifa cireen duraa nyaachuu',fr:'Déjeuner',em:'🥗'},
+    {et:'Halkan nyaachuu',fr:'Dîner',em:'🍽️'},
+    {et:'Boqochuu',fr:'Se reposer',em:'😮‍💨'},
+    {et:'Telefishina ilaalu',fr:'Regarder la télé',em:'📺'},
+    {et:'Kitaaba dubbisuu',fr:'Lire un livre',em:'📖'},
+    {et:'Ciisuu / Rafuu',fr:'Se coucher / Dormir',em:'🛏️'},
    ]},
 
-  {id:'temps',level:1,emoji:'🕐',name:'Sa\'atii fi Qilleensa',sub:'Yeroo, guyyaa, ji\'aa\u2026 / L\'heure, la m\xe9t\xe9o',
+  {id:'temps',level:1,emoji:'🕐',name:'Sa\'atii fi Qilleensa',sub:'Yeroo, guyyaa, ji\'aa… / L\'heure, la météo',
    words:[
-    {et:'Sa\'atii meeqa?',fr:'Quelle heure est-il\xa0?',em:'\U0001f550'},
-    {et:'Walakkaa',fr:'Et demie',em:'\U0001f567'},
-    {et:'Daqiiqaa',fr:'La minute',em:'\u23f1\ufe0f'},
-    {et:'Sa\'atii',fr:'L\'heure',em:'\u23f0'},
-    {et:'Ganama',fr:'Le matin',em:'\U0001f305'},
-    {et:'Guyyaa',fr:'L\'apr\xe8s-midi',em:'\u2600\ufe0f'},
-    {et:'Galgala',fr:'Le soir',em:'\U0001f306'},
-    {et:'Halkan',fr:'La nuit',em:'\U0001f319'},
-    {et:'Har\'aa',fr:'Aujourd\'hui',em:'\U0001f4c5'},
-    {et:'Boruu',fr:'Demain',em:'\u27a1\ufe0f'},
-    {et:'Kaleessa',fr:'Hier',em:'\u2b05\ufe0f'},
-    {et:'Wiixata',fr:'Lundi',em:'1\ufe0f\u20e3'},
-    {et:'Kibxata',fr:'Mardi',em:'2\ufe0f\u20e3'},
-    {et:'Roobii',fr:'Mercredi',em:'3\ufe0f\u20e3'},
-    {et:'Kamiisa',fr:'Jeudi',em:'4\ufe0f\u20e3'},
-    {et:'Jimaata',fr:'Vendredi',em:'5\ufe0f\u20e3'},
-    {et:'Sanbata',fr:'Samedi',em:'6\ufe0f\u20e3'},
-    {et:'Dilbata',fr:'Dimanche',em:'7\ufe0f\u20e3'},
-    {et:'Amajjii',fr:'Janvier',em:'\u2744\ufe0f'},
-    {et:'Guraandhala',fr:'F\xe9vrier',em:'\U0001f49d'},
-    {et:'Bitootessa',fr:'Mars',em:'\U0001f331'},
-    {et:'Ebla',fr:'Avril',em:'\U0001f338'},
-    {et:'Caamsaa',fr:'Mai',em:'\U0001f33a'},
-    {et:'Waxabajjii',fr:'Juin',em:'\u2600\ufe0f'},
-    {et:'Adoolessa',fr:'Juillet',em:'\U0001f3d6\ufe0f'},
-    {et:'Hagayya',fr:'Ao\xfbt',em:'\U0001f33b'},
-    {et:'Fuulbana',fr:'Septembre',em:'\U0001f342'},
-    {et:'Onkoloolessa',fr:'Octobre',em:'\U0001f383'},
-    {et:'Sadaasa',fr:'Novembre',em:'\U0001f341'},
-    {et:'Muddee',fr:'D\xe9cembre',em:'\U0001f384'},
-    {et:'Arfasaa',fr:'Le printemps / La saison des pluies',em:'\U0001f327\ufe0f'},
-    {et:'Gannaa',fr:'L\'t\xe9 / La grande saison s\xe8che',em:'\u2600\ufe0f'},
-    {et:'Birraa',fr:'L\'automne / La petite saison s\xe8che',em:'\U0001f342'},
-    {et:'Bona',fr:'L\'hiver / La saison fra\xeeche',em:'\u2744\ufe0f'},
-    {et:'Qilleensa akkam?',fr:'Quel temps fait-il\xa0?',em:'\U0001f324\ufe0f'},
-    {et:'Ho\'aa',fr:'Il fait chaud',em:'\U0001f525'},
-    {et:'Qorraa',fr:'Il fait froid',em:'\U0001f976'},
-    {et:'Roobu / Roobni jira',fr:'Il pleut',em:'\U0001f327\ufe0f'},
-    {et:'Urjiin jira',fr:'Il y a des nuages',em:'\u2601\ufe0f'},
-    {et:'Aduu jira',fr:'Il y a du soleil',em:'\u2600\ufe0f'},
-    {et:'Qilleensi jabaan jira',fr:'Il y a du vent',em:'\U0001f4a8'},
-    {et:'Arfasaa (cimdii)',fr:'Le parapluie',em:'\u2602\ufe0f'},
-    {et:'Ho\'a qilleensaa',fr:'La temp\xe9rature',em:'\U0001f321\ufe0f'},
-    {et:'Digrii',fr:'Les degr\xe9s',em:'\U0001f321\ufe0f'},
+    {et:'Sa\'atii meeqa?',fr:'Quelle heure est-il ?',em:'🕐'},
+    {et:'Walakkaa',fr:'Et demie',em:'🕧'},
+    {et:'Daqiiqaa',fr:'La minute',em:'⏱️'},
+    {et:'Sa\'atii',fr:'L\'heure',em:'⏰'},
+    {et:'Ganama',fr:'Le matin',em:'🌅'},
+    {et:'Guyyaa',fr:'L\'après-midi',em:'☀️'},
+    {et:'Galgala',fr:'Le soir',em:'🌆'},
+    {et:'Halkan',fr:'La nuit',em:'🌙'},
+    {et:'Har\'aa',fr:'Aujourd\'hui',em:'📅'},
+    {et:'Boruu',fr:'Demain',em:'➡️'},
+    {et:'Kaleessa',fr:'Hier',em:'⬅️'},
+    {et:'Wiixata',fr:'Lundi',em:'1️⃣'},
+    {et:'Kibxata',fr:'Mardi',em:'2️⃣'},
+    {et:'Roobii',fr:'Mercredi',em:'3️⃣'},
+    {et:'Kamiisa',fr:'Jeudi',em:'4️⃣'},
+    {et:'Jimaata',fr:'Vendredi',em:'5️⃣'},
+    {et:'Sanbata',fr:'Samedi',em:'6️⃣'},
+    {et:'Dilbata',fr:'Dimanche',em:'7️⃣'},
+    {et:'Amajjii',fr:'Janvier',em:'❄️'},
+    {et:'Guraandhala',fr:'Février',em:'💝'},
+    {et:'Bitootessa',fr:'Mars',em:'🌱'},
+    {et:'Ebla',fr:'Avril',em:'🌸'},
+    {et:'Caamsaa',fr:'Mai',em:'🌺'},
+    {et:'Waxabajjii',fr:'Juin',em:'☀️'},
+    {et:'Adoolessa',fr:'Juillet',em:'🏖️'},
+    {et:'Hagayya',fr:'Août',em:'🌻'},
+    {et:'Fuulbana',fr:'Septembre',em:'🍂'},
+    {et:'Onkoloolessa',fr:'Octobre',em:'🎃'},
+    {et:'Sadaasa',fr:'Novembre',em:'🍁'},
+    {et:'Muddee',fr:'Décembre',em:'🎄'},
+    {et:'Arfasaa',fr:'Le printemps / La saison des pluies',em:'🌧️'},
+    {et:'Gannaa',fr:'L\'té / La grande saison sèche',em:'☀️'},
+    {et:'Birraa',fr:'L\'automne / La petite saison sèche',em:'🍂'},
+    {et:'Bona',fr:'L\'hiver / La saison fraîche',em:'❄️'},
+    {et:'Qilleensa akkam?',fr:'Quel temps fait-il ?',em:'🌤️'},
+    {et:'Ho\'aa',fr:'Il fait chaud',em:'🔥'},
+    {et:'Qorraa',fr:'Il fait froid',em:'🥶'},
+    {et:'Roobu / Roobni jira',fr:'Il pleut',em:'🌧️'},
+    {et:'Urjiin jira',fr:'Il y a des nuages',em:'☁️'},
+    {et:'Aduu jira',fr:'Il y a du soleil',em:'☀️'},
+    {et:'Qilleensi jabaan jira',fr:'Il y a du vent',em:'💨'},
+    {et:'Arfasaa (cimdii)',fr:'Le parapluie',em:'☂️'},
+    {et:'Ho\'a qilleensaa',fr:'La température',em:'🌡️'},
+    {et:'Digrii',fr:'Les degrés',em:'🌡️'},
+   ]},
+
+
+  {id:'agri',level:1,emoji:'🌾',name:'Qonnaa fi Horsiisee',sub:'Lafa, biqiltuu, loon… / Agriculture et élevage',
+   note:'📍 Contexte : région de Shashamané, terres fertiles du Rift éthiopien, caféiculture, élevage bovin traditionnel',
+   words:[
+    // Terres et milieu naturel
+    {et:'Lafa',fr:'La terre / Le champ',em:'🌍'},
+    {et:'Midhaanii / Qonnaan bulaa',fr:'Le champ cultivé / La ferme',em:'🌾'},
+    {et:'Laga / Burqaa',fr:'La rivière / La source',em:'💧'},
+    {et:'Rooba',fr:'La pluie',em:'🌧️'},
+    {et:'Biyyoo',fr:'Le sol',em:'🪨'},
+    // Cultures principales (région Shashamané)
+    {et:'Buna',fr:'Le café',em:'☕'},
+    {et:'Qamadii',fr:'Le blé',em:'🌾'},
+    {et:'Masarii / Boqqolloo',fr:'Le maïs / Le sorgho',em:'🌽'},
+    {et:'Enseetee',fr:'L\'ensète (faux bananier)',em:'🌿'},
+    {et:'Xaafii',fr:'Le teff (céréale éthiopienne)',em:'🌾'},
+    {et:'Karootiifi / Tikimtii',fr:'Les légumes du jardin',em:'🥕'},
+    // Élevage
+    {et:'Loon',fr:'Le bétail',em:'🐄'},
+    {et:'Sangaa / Farda',fr:'Le bœuf / Le cheval (de trait)',em:'🐂'},
+    {et:'Harree',fr:'L\'âne (bête de somme)',em:'🫏'},
+    {et:'Re\'ee / Hoolaa',fr:'La chèvre / Le mouton',em:'🐐'},
+    {et:'Lukkuu',fr:'La volaille / La poule',em:'🐔'},
+    // Outils et travaux
+    {et:'Qottoo',fr:'La charrue',em:'🪵'},
+    {et:'Mootora qonnaa',fr:'Le tracteur',em:'🚜'},
+    {et:'Dhiiqaa / Hirmaata',fr:'La faucille / La faux',em:'🌾'},
+    {et:'Roobni barbaachisaa dha',fr:'La pluie est nécessaire',em:'🌧️'},
+    {et:'Qonnaan buluu',fr:'Cultiver / Faire l\'agriculture',em:'👨‍🌾'},
+    {et:'Sassabuu',fr:'Récolter / Ramasser',em:'🧺'},
+    {et:'Gabaa geessuu',fr:'Apporter au marché',em:'🛒'},
+    // Saisons agricoles oromo
+    {et:'Arfasaa (bonni)',fr:'Saison des grandes pluies (mars-mai)',em:'🌧️'},
+    {et:'Hagayya (rooba xiqqaa)',fr:'Saison des petites pluies (août)',em:'🌦️'},
+    {et:'Bona (ganna)',fr:'Grande saison sèche (jan-fév)',em:'☀️'},
    ]},
 ];
 
@@ -793,7 +830,7 @@ var LEVEL2_THEMES_FR = [
       {s:'Marc',et:'Dhiifama, farmaasinni dhiyotti jiraa?',fr:'Pardon, il y a une pharmacie près d\'ici ?',side:'left'},
       {s:'Dargagoo',et:'Eeyyeen. Dallaa kana gaditti qajeeli ergasii mirgutti garagali.',fr:'Oui. Descends cette rue et tourne à droite.',side:'right'},
       {s:'Marc',et:'Baankii booda?',fr:'Après la banque ?',side:'left'},
-      {s:'Dargagoo',et:'Eeyyeen, siruma. Balballi gurraacha isa.',fr:'Oui, exactement. C\'est la porte verte.',side:'right'},
+      {s:'Dargagoo',et:'Eeyyeen, siruma. Balballi magariisa isa.',fr:'Oui, exactement. C\'est la porte verte.',side:'right'},
       {s:'Marc',et:'Amma banama jiraa?',fr:'Elle est ouverte maintenant ?',side:'left'},
       {s:'Dargagoo',et:'Eeyyeen, nan yaada.',fr:'Oui, je crois que oui.',side:'right'}
     ]},
@@ -1198,6 +1235,84 @@ var LEVEL2_THEMES_FR = [
     {q:'Jechuun "Oromiyaatti halkan bahu" maal jechuudha?',opts:['En Oromia on rentre tard','En Oromia on travaille tard','En Oromia on sort tard','En Oromia on mange tard'],ans:2}
    ]}
  
+
+
+  ,
+
+  /* 15 -- La vie quotidienne */
+  {id:'routine2',level:2,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'La routine / La vie de tous les jours',type:'dialog',
+   note:'📍 En France, on prend rarement le temps d\'une longue cérémonie du café le matin. En Oromia (Shashamané), la cérémonie du buna (café) est un moment social important. Le shor (déjeuner) est le repas principal en France.',
+   situations:[
+    {label:'Sit. 1',title:'La matinée',img:'⏰',dialogue:[
+      {s:'Haadha',et:'Ka\'i! Sa\'atii torba ta\'eera!',fr:'Lève-toi ! Il est sept heures !',side:'right'},
+      {s:'Dargagoo',et:'Eeyyeen, amma kaa\'a. Cireen qophaa\'eeii?',fr:'Oui, je me lève. Le petit-déjeuner est prêt ?',side:'left'},
+      {s:'Haadha',et:'Eeyyeen. Dhiqadhu jalqaba.',fr:'Oui. Douche-toi d\'abord.',side:'right'},
+      {s:'Dargagoo',et:'Tolee. Ilkaanis?',fr:'D\'accord. Les dents aussi ?',side:'left'},
+      {s:'Haadha',et:'Dhugumatti! Ilkaan eebuu dagattee?',fr:'Bien sûr ! Tu as oublié de te brosser les dents ?',side:'right'},
+      {s:'Dargagoo',et:'Lakki lakki, nan yaadadha!',fr:'Non non, je m\'en souviens !',side:'left'}
+    ]},
+    {label:'Sit. 2',title:'Partager les tâches',img:'🧹',dialogue:[
+      {s:'Julie',et:'Kana booda mana qulqulleessina.',fr:'Après on fait le ménage.',side:'left'},
+      {s:'Marc',et:'Tolee. Ani meeshaa dhiqa, ati hoo?',fr:'D\'accord. Je fais la vaisselle, et toi ?',side:'right'},
+      {s:'Julie',et:'Ani daakuu qulqulleessa. Uffatnis?',fr:'Moi je nettoie la cuisine. Et le linge ?',side:'left'},
+      {s:'Marc',et:'Uffata dhiquu hojjedheen jira.',fr:'J\'ai déjà lavé le linge.',side:'right'},
+      {s:'Julie',et:'Baay\'ee gaarii! Xumurree nyaata bilcheessina.',fr:'Super ! Après le ménage on cuisine.',side:'left'},
+      {s:'Marc',et:'Yaada gaarii! Maal bilcheessina?',fr:'Bonne idée ! On fait quoi à manger ?',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Le soir après le travail',img:'🌆',dialogue:[
+      {s:'Tolaa',et:'Hojii irraa dhufe. Dadhabee jira!',fr:'Je rentre du travail. Je suis fatigué !',side:'left'},
+      {s:'Caaltuu',et:'Boqo xiqqoo. Nyaata bilcheessaan jira.',fr:'Repose-toi un peu. Je suis en train de cuisiner.',side:'right'},
+      {s:'Tolaa',et:'Baay\'ee galatoomi. Maal bilcheessita?',fr:'Merci beaucoup. Tu cuisines quoi ?',side:'left'},
+      {s:'Caaltuu',et:'Injera fi atara. Dhukkubsattee?',fr:'De l\'injera et des lentilles. Ça va ?',side:'right'},
+      {s:'Tolaa',et:'Gaarii, baay\'ee beela\'ee jira.',fr:'Ça va, j\'ai très faim.',side:'left'},
+      {s:'Caaltuu',et:'Daqiiqaa kudha booda nyaanna!',fr:'Dans dix minutes on mange !',side:'right'}
+    ]}
+   ],
+   vocab:['Ka\'i! = Lève-toi !','Dhiqadhu = Douche-toi','Ilkaan eebuu = Se brosser les dents','Mana qulqulleessuu = Faire le ménage','Meeshaa dhiquu = Faire la vaisselle','Uffata dhiquu = Laver le linge','Nyaata bilcheessuu = Cuisiner','Dadhabee jira = Je suis fatigué','Boqo = Repose-toi'],
+   quiz:[
+    {q:'Afaan Oromootti "Faire le ménage" akkamiin jedha?',opts:['Mana ijaaruu','Mana qulqulleessuu','Mana bituu','Mana jijjiiruu'],ans:1},
+    {q:'Jechuun "Uffata dhiquu" maal jechuudha?',opts:['Repasser le linge','Étendre le linge','Laver le linge','Porter des vêtements'],ans:2},
+    {q:'Afaan Oromootti "Je suis fatigué" akkamiin jedha?',opts:['Beela\'ee jira','Dheebuu dhabe','Dadhabee jira','Rafee jira'],ans:2}
+   ]}
+
+,
+
+  /* 16 -- L'heure et la météo */
+  {id:'temps2',level:2,emoji:'🕐',name:'Sa\'atii fi Qilleensa',sub:'L\'heure et la météo',type:'dialog',
+   note:'📍 Attention : en Oromia, l\'heure éthiopienne (sa\'atii Itoophiyaa) commence à 6h du matin (notre 6h = leur 12h). La journée à Shashamané est rythmée par le soleil, pas par les horloges !',
+   situations:[
+    {label:'Sit. 1',title:'Quelle heure est-il ?',img:'⏰',dialogue:[
+      {s:'Marc',et:'Dhiifama, sa\'atii meeqa?',fr:'Pardon, quelle heure est-il ?',side:'left'},
+      {s:'Caaltuu',et:'Sa\'atii sadii fi walakkaa.',fr:'Il est trois heures et demie.',side:'right'},
+      {s:'Marc',et:'Baankiin amma banama jiraa?',fr:'La banque est encore ouverte ?',side:'left'},
+      {s:'Caaltuu',et:'Eeyyeen, hanga shan banama.',fr:'Oui, elle est ouverte jusqu\'à cinq heures.',side:'right'},
+      {s:'Marc',et:'Galatoomi! Ariifadhee deema.',fr:'Merci ! Je dois me dépêcher.',side:'left'},
+      {s:'Caaltuu',et:'Ariifi! Nagaan!',fr:'Vas-y ! Bonne chance !',side:'right'}
+    ]},
+    {label:'Sit. 2',title:'Parler de la météo',img:'🌤️',dialogue:[
+      {s:'Sophie',et:'Qilleensi har\'a akkam?',fr:'Il fait quel temps aujourd\'hui ?',side:'left'},
+      {s:'Lamma',et:'Ganama ho\'aa, garuu galgala roobu dandaa.',fr:'Il fait chaud le matin, mais il peut pleuvoir le soir.',side:'right'},
+      {s:'Sophie',et:'Shaashamanneetti yeroo maraan akkana?',fr:'À Shashamané c\'est souvent comme ça ?',side:'left'},
+      {s:'Lamma',et:'Arfasaatti eeyyeen. Roobni guyyaa guyyaa dhufa.',fr:'En saison des pluies oui. Il pleut tous les jours.',side:'right'},
+      {s:'Sophie',et:'Faransaayitti garuu bona qofaaa.',fr:'En France c\'est seulement en hiver.',side:'left'},
+      {s:'Lamma',et:'Baay\'ee adda! As ho\'a baay\'ee jaalladha.',fr:'C\'est très différent ! Ici j\'aime beaucoup la chaleur.',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Planifier selon la météo',img:'🌧️',dialogue:[
+      {s:'Iftu',et:'Boruu gabaa deemna?',fr:'On va au marché demain ?',side:'right'},
+      {s:'Théo',et:'Qilleensi akkam jedha?',fr:'Qu\'est-ce que dit la météo ?',side:'left'},
+      {s:'Iftu',et:'Roobu jetteetti. Aanoo roobaa kaasi!',fr:'Elle dit qu\'il va pleuvoir. Prends ton parapluie !',side:'right'},
+      {s:'Théo',et:'Tolee. Sa\'atii meeqatti deemna?',fr:'D\'accord. On y va à quelle heure ?',side:'left'},
+      {s:'Iftu',et:'Ganama sa\'atii saddeet. Roobni dura deemuun wayya.',fr:'À huit heures du matin. Mieux vaut partir avant la pluie.',side:'right'},
+      {s:'Théo',et:'Eeyyeen! Ganamaas ko\'otni baay\'ee jiru.',fr:'Oui ! Et le matin il y a plus de choix au marché.',side:'left'}
+    ]}
+   ],
+   vocab:['Sa\'atii meeqa? = Quelle heure est-il ?','Hanga ... banama = Ouvert jusqu\'à...','Ariifi! = Dépêche-toi !','Qilleensi akkam? = Quel temps fait-il ?','Arfasaatti = En saison des pluies','Roobni dhufa = Il va pleuvoir','Aanoo roobaa kaasi = Prends ton parapluie'],
+   quiz:[
+    {q:'Afaan Oromootti "Quelle heure est-il ?" akkamiin jedha?',opts:['Guyyaan meeqa?','Sa\'atii meeqa?','Boruu meeqa?','Daqiiqaan meeqa?'],ans:1},
+    {q:'Jechuun "Arfasaatti roobu" maal jechuudha?',opts:['Il neige en hiver','Il fait chaud en été','Il pleut en saison des pluies','Il y a du vent au printemps'],ans:2},
+    {q:'Afaan Oromootti "Dépêche-toi !" akkamiin jedha?',opts:['Boqo!','Deemi!','Ariifi!','Rafuu!'],ans:2}
+   ]}
+
 ];
 
 var ALL_THEMES_FR=LEVEL1_THEMES_FR.concat(LEVEL2_THEMES_FR);
@@ -1324,7 +1439,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Hospitaala',fr:'L\'hôpital',em:'🏥'},
     {et:'Farmaasiitii',fr:'La pharmacie',em:'💊'},
     {et:'Baankii',fr:'La banque',em:'🏦'},
-    {et:'Kiilistiyaana / Masjiida',fr:'L\'église',em:'⛪'},
+    {et:'Kiilistiyaana / Masjiida',fr:'L\'église / La mosquée',em:'⛪🕌'},
     // Commerces
     {et:'Suupaarmaarkeeti',fr:'Le supermarché',em:'🛒'},
     {et:'Buna mana / Bunaa',fr:'Le bar / Le café',em:'☕'},
@@ -1362,7 +1477,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Burtukaana',fr:'L\'orange',em:'🍊'},
     {et:'Liimoo',fr:'Le citron',em:'🍋'},
     {et:'Mukarroo',fr:'La fraise',em:'🍓'},
-    {et:'Harbuu / Watermelon',fr:'La pastèque',em:'🍉'},
+    {et:'Harbuu',fr:'La pastèque',em:'🍉'},
     // Légumes
     {et:'Timaatimii',fr:'La tomate',em:'🍅'},
     {et:'Karootii',fr:'La carotte',em:'🥕'},
@@ -1377,7 +1492,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Damma',fr:'Le miel',em:'🍯'},
     {et:'Chokolaatii',fr:'Le chocolat',em:'🍫'},
    ]},
-  {id:'bois',level:1,emoji:'🥤',name:'Dhugaatii',sub:'Bishaani, buna, shaayii… / Les boissons',
+  {id:'bois',level:1,emoji:'🥤',name:'Dhugaatii',sub:'Bishaan, buna, shaayii… / Les boissons',
    words:[
     // Essentiels
     {et:'Bishaan',fr:'L\'eau',em:'💧'},
@@ -1474,7 +1589,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Gluten hin qabu',fr:'Sans gluten',em:'🌾'},
     {et:'Foon hin nyaatu',fr:'Végétarien / Végétarienne',em:'🥦'},
     // Repas
-    {et:'Fuullaa xinnoo',fr:'La tapa',em:'🫒'},
+    {et:'Fuullaa xinnoo',fr:'L\'amuse-bouche',em:'🫒'},
     {et:'Fuullaa dura',fr:'L\'entrée',em:'🥗'},
     {et:'Nyaata ijoo',fr:'Le plat principal',em:'🍖'},
     {et:'Dhaamsa nyaataa',fr:'Le dessert',em:'🍮'},
@@ -1549,7 +1664,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Mana fincaanii',fr:'Les toilettes',em:'🚽'},
     {et:'Mana konkolaataa',fr:'Le garage',em:'🚗'},
    ]},
-   {id:'muebles_equipamiento', level:1, emoji:'🪑', name:'Meeshaalee Manaa', sub:'Soofa, meeshaalee ummataa, dhiqachuu… / Meubles et équipements',
+   {id:'muebles_equipamiento', level:1, emoji:'🪑', name:'Meeshaalee Manaa', sub:'Soofa, siree, firiijiidara… / Meubles et équipements',
  words:[
     // Salon
     {et:'Soofa',fr:'Le canapé',em:'🛋️'},
@@ -1605,7 +1720,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Akaakayyuu / Awoo Abbaa',fr:'Le grand-père',em:'👴'},
     {et:'Niitii / Haadha manaa',fr:'La femme',em:'💑'},
     {et:'Abbaa warraa / Dhiirsa',fr:'Le mari',em:'💍'},
-    {et:'Adaadaa / Haadha Abbaa (Oromiyaatti)',fr:'L\'oncle / La tante (aussi : mec / nana en argot)',em:'👨/👩'}
+    {et:'Adaadaa (haadha abbaa) / Adda (obboleessa abbaa)',fr:'La tante (côté père) / L\'oncle',em:'👨‍👩‍👧'}
    ]},
   {id:'verb',level:1,emoji:'📝',name:'Yakkawwan',sub:'Ta\'uu, qabaachuu, deemuu… / Les verbes principaux',
    words:[
@@ -1642,7 +1757,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Waamuu',fr:'Appeler',em:'📞',conj:{et:['Ani nan waama','Ati ni waamta','Inni/Isheen ni waama','Nuti ni waamna','Isin ni waamtu','Isaan ni waamu'],fr:['J\'appelle','Tu appelles','Il/Elle appelle','Nous appelons','Vous appelez','Ils/Elles appellent']}},
     {et:'Gaafachuu',fr:'Demander',em:'🙋‍♂️',conj:{et:['Ani nan gaafadha','Ati ni gaafatta','Inni/Isheen ni gaafata','Nuti ni gaafanna','Isin ni gaafastu','Isaan ni gaafatu'],fr:['Je demande','Tu demandes','Il/Elle demande','Nous demandons','Vous demandez','Ils/Elles demandent']}},
     {et:'Konkolaachisuu',fr:'Conduire',em:'🚗',conj:{et:['Ani nan konkolaachisa','Ati ni konkolaachista','Inni/Isheen ni konkolaachisa','Nuti ni konkolaachisina','Isin ni konkolaachistuu','Isaan ni konkolaachisu'],fr:['Je conduis','Tu conduis','Il/Elle conduit','Nous conduisons','Vous conduisez','Ils/Elles conduisent']}},
-    {et:'Baay\'ee jaaladhu',fr:'Adorer (argot)',em:'😎',conj:{et:['Nan baay\'ee jaalladha','Ni baay\'ee jaallataa','Ni baay\'ee jaallata','Ni baay\'ee jaallannaа','Ni baay\'ee jaallattu','Ni baay\'ee jaallatu'],fr:['J\'adore','Tu adores','Il/Elle adore','Nous adorons','Vous adorez','Ils/Elles adorent']}}
+    {et:'Baay\'ee jaalladha',fr:'Adorer',em:'😍',conj:{et:['Nan baay\'ee jaalladha','Ni baay\'ee jaallataa','Ni baay\'ee jaallata','Ni baay\'ee jaallannaа','Ni baay\'ee jaallattu','Ni baay\'ee jaallatu'],fr:['J\'adore','Tu adores','Il/Elle adore','Nous adorons','Vous adorez','Ils/Elles adorent']}}
   ]},
   {id:'corps',level:1,emoji:'🧍',name:'Qaamaa',sub:'Mataa, harkaa, miila… / Le corps',
    words:[
@@ -1656,7 +1771,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Arraba',fr:'La langue',em:'👅'},
     {et:'Ilkaan',fr:'La dent / Les dents',em:'🦷'},
     {et:'Morma',fr:'Le cou',em:''},
-    {et:'Harka / Harkaafi',fr:'Le bras / Les bras',em:'💪'},
+    {et:'Harka gubbaa',fr:'Le bras / Les bras',em:'💪'},
     {et:'Harka / Harkaan',fr:'La main / Les mains',em:'✋'},
     {et:'Quba / Qubaan',fr:'Le doigt / Les doigts',em:'☝️'},
     {et:'Quba miila / Ciltuu',fr:'L\'orteil / L\'ongle',em:'💅'},
@@ -1832,7 +1947,203 @@ var LEVEL1_THEMES_OR=[
     {et:'Bosonaa',fr:'La forêt',em:'🌲'},
     // 🔴 Niveau 3 — Vocabulaire plus précis ou contextuel
     {et:'Marga miidhagoo',fr:'La pelouse / Le gazon',em:'⛳'},
-   ]}  
+   ]},  
+
+
+  {id:'routine',level:1,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'Ka\'uu, rafuu, hojjechuu… / La vie quotidienne',
+   note:'📍 Journée type à Shashamané : cérémonie du café le matin, marché hebdomadaire, vie communautaire',
+   words:[
+    {et:'Ka\'uu / Dammaquu',fr:'Se lever / Se réveiller',em:'⏰'},
+    {et:'Dhiqachuu',fr:'Se doucher / Se laver',em:'🚿'},
+    {et:'Fuula dhiqachuu',fr:'Se laver le visage',em:'🧼'},
+    {et:'Ilkaan eebuu',fr:'Se brosser les dents',em:'🦷'},
+    {et:'Uffachuu',fr:'S\'habiller',em:'👔'},
+    {et:'Ciree nyaachuu',fr:'Prendre le petit-déjeuner',em:'🍳'},
+    {et:'Buna dhuguuf ta\'uu',fr:'Prendre le café du matin',em:'☕'},
+    {et:'Hojjechuu',fr:'Travailler',em:'💼'},
+    {et:'Barumsaaf deemuu',fr:'Aller à l\'école / Aller étudier',em:'🎒'},
+    {et:'Baha manaa deemuu',fr:'Sortir de la maison',em:'🚪'},
+    {et:'Bitachuu / Gabaa deemuu',fr:'Faire les courses / Aller au marché',em:'🛒'},
+    {et:'Nyaata bilcheessuu / Daakuu hojjechuu',fr:'Faire la cuisine / Cuisiner',em:'🍳'},
+    {et:'Uffata dhiquu',fr:'Laver le linge',em:'🧺'},
+    {et:'Mana qulqulleessuu',fr:'Nettoyer la maison / Faire le ménage',em:'🧹'},
+    {et:'Meeshaalee dhiquu',fr:'Faire la vaisselle',em:'🍽️'},
+    {et:'Irbaata nyaachuu',fr:'Déjeuner',em:'🥙'},
+    {et:'Halkan nyaachuu',fr:'Dîner',em:'🍽️'},
+    {et:'Boqochuu',fr:'Se reposer',em:'😌'},
+    {et:'Telefishina ilaalu',fr:'Regarder la télé',em:'📺'},
+    {et:'Kitaaba dubbisuu',fr:'Lire un livre',em:'📖'},
+    {et:'Ciisuu / Rafuu',fr:'Se coucher / Dormir',em:'🛏️'},
+   ]},
+
+  {id:'temps',level:1,emoji:'🕐',name:'Sa\'atii fi Qilleensa',sub:'Yeroo, guyyaa, ji\'aa… / L\'heure, la météo',
+   note:'📍 En Oromia, la journée est découpée différemment : le café est bu dès l\'aube, le marché de Shashamané est hebdomadaire (mercredi), les saisons oromo diffèrent du calendrier français.',
+   words:[
+    // Heure
+    {et:'Sa\'atii meeqa?',fr:'Quelle heure est-il ?',em:'🕐'},
+    {et:'Walakkaa',fr:'Et demie',em:'🕕'},
+    {et:'Daqiiqaa',fr:'La minute',em:'⏱️'},
+    {et:'Sa\'atii',fr:'L\'heure',em:'⏰'},
+    // Moments de la journée
+    {et:'Ganama',fr:'Le matin (6h-11h)',em:'🌅'},
+    {et:'Guyyaa',fr:'L\'après-midi (12h-17h)',em:'☀️'},
+    {et:'Galgala',fr:'Le soir (18h-20h)',em:'🌆'},
+    {et:'Halkan',fr:'La nuit',em:'🌙'},
+    // Jours
+    {et:'Har\'aa',fr:'Aujourd\'hui',em:'📅'},
+    {et:'Boruu',fr:'Demain',em:'➡️'},
+    {et:'Kaleessa',fr:'Hier',em:'⬅️'},
+    {et:'Wiixata',fr:'Lundi',em:'1️⃣'},
+    {et:'Kibxata',fr:'Mardi',em:'2️⃣'},
+    {et:'Roobii',fr:'Mercredi (jour de marché à Shashamané !)',em:'🛒'},
+    {et:'Kamiisa',fr:'Jeudi',em:'4️⃣'},
+    {et:'Jimaata',fr:'Vendredi (jour de prière)',em:'🕌'},
+    {et:'Sanbata',fr:'Samedi',em:'6️⃣'},
+    {et:'Dilbata',fr:'Dimanche (jour de repos)',em:'⛪'},
+    // Mois (calendrier grégorien en usage courant)
+    {et:'Amajjii',fr:'Janvier',em:'❄️'},
+    {et:'Guraandhala',fr:'Février',em:'💝'},
+    {et:'Bitootessa',fr:'Mars',em:'🌱'},
+    {et:'Ebla',fr:'Avril',em:'🌸'},
+    {et:'Caamsaa',fr:'Mai',em:'🌺'},
+    {et:'Waxabajjii',fr:'Juin',em:'☀️'},
+    {et:'Adoolessa',fr:'Juillet',em:'🏖️'},
+    {et:'Hagayya',fr:'Août',em:'🌻'},
+    {et:'Fuulbana',fr:'Septembre',em:'🍂'},
+    {et:'Onkoloolessa',fr:'Octobre',em:'🎃'},
+    {et:'Sadaasa',fr:'Novembre',em:'🍁'},
+    {et:'Muddee',fr:'Décembre',em:'🎄'},
+    // Saisons Oromo (≠ saisons françaises)
+    {et:'Arfasaa',fr:'Saison des pluies / Le printemps français',em:'🌧️'},
+    {et:'Gannaa',fr:'Grande saison sèche / L\'été français',em:'☀️'},
+    {et:'Birraa',fr:'Petite saison sèche / L\'automne français',em:'🍂'},
+    {et:'Bona',fr:'Saison fraîche / L\'hiver français',em:'❄️'},
+    // Météo
+    {et:'Qilleensa akkam?',fr:'Quel temps fait-il ?',em:'🌤️'},
+    {et:'Ho\'aa',fr:'Il fait chaud',em:'🔥'},
+    {et:'Qorraa',fr:'Il fait froid',em:'🥶'},
+    {et:'Roobu / Roobni jira',fr:'Il pleut',em:'🌧️'},
+    {et:'Urjiin jira',fr:'Il y a des nuages',em:'☁️'},
+    {et:'Aduu jira',fr:'Il y a du soleil',em:'☀️'},
+    {et:'Qilleensi jabaan jira',fr:'Il y a du vent',em:'💨'},
+    {et:'Aanoo roobaa',fr:'Le parapluie',em:'☂️'},
+    {et:'Ho\'a qilleensaa',fr:'La température',em:'🌡️'},
+    {et:'Digrii',fr:'Les degrés',em:'🌡️'},
+   ]},
+
+  {id:'agri',level:1,emoji:'🌾',name:'Qonnaa fi Horsiisee',sub:'Lafa, biqiltuu, loon… / Agriculture et élevage',
+   note:'📍 Contexte : région de Shashamané, terres fertiles du Rift éthiopien, caféiculture, élevage bovin traditionnel',
+   words:[
+    // Terres et milieu naturel
+    {et:'Lafa',fr:'La terre / Le champ',em:'🌍'},
+    {et:'Midhaanii / Qonnaan bulaa',fr:'Le champ cultivé / La ferme',em:'🌾'},
+    {et:'Laga / Burqaa',fr:'La rivière / La source',em:'💧'},
+    {et:'Rooba',fr:'La pluie',em:'🌧️'},
+    {et:'Biyyoo',fr:'Le sol',em:'🪨'},
+    // Cultures principales (région Shashamané)
+    {et:'Buna',fr:'Le café',em:'☕'},
+    {et:'Qamadii',fr:'Le blé',em:'🌾'},
+    {et:'Masarii / Boqqolloo',fr:'Le maïs / Le sorgho',em:'🌽'},
+    {et:'Enseetee',fr:'L\'ensète (faux bananier éthiopien)',em:'🌿'},
+    {et:'Xaafii',fr:'Le teff (céréale éthiopienne de base)',em:'🌾'},
+    {et:'Karootiifi / Tikimtii',fr:'Les légumes du jardin',em:'🥕'},
+    // Élevage
+    {et:'Loon',fr:'Le bétail',em:'🐄'},
+    {et:'Sangaa / Farda',fr:'Le bœuf / Le cheval (de trait)',em:'🐂'},
+    {et:'Harree',fr:'L\'âne (bête de somme)',em:'🫏'},
+    {et:'Re\'ee / Hoolaa',fr:'La chèvre / Le mouton',em:'🐐'},
+    {et:'Lukkuu',fr:'La volaille / La poule',em:'🐔'},
+    // Outils et travaux
+    {et:'Qottoo',fr:'La charrue traditionnelle',em:'🪵'},
+    {et:'Mootora qonnaa',fr:'Le tracteur',em:'🚜'},
+    {et:'Dhiiqaa / Hirmaata',fr:'La faucille / La faux',em:'🌾'},
+    {et:'Roobni barbaachisaa dha',fr:'La pluie est nécessaire',em:'🌧️'},
+    {et:'Qonnaan buluu',fr:'Cultiver / Faire l\'agriculture',em:'👨‍🌾'},
+    {et:'Sassabuu',fr:'Récolter / Ramasser',em:'🧺'},
+    {et:'Gabaa geessuu',fr:'Apporter au marché',em:'🛒'},
+    // Saisons agricoles oromo
+    {et:'Arfasaa (bonni)',fr:'Saison des grandes pluies (mars-mai)',em:'🌧️'},
+    {et:'Hagayya (rooba xiqqaa)',fr:'Saison des petites pluies (août)',em:'🌦️'},
+    {et:'Bona (ganna)',fr:'Grande saison sèche (jan-fév)',em:'☀️'},
+   ]},
+
+
+  ,
+
+  /* 15 -- La vie quotidienne */
+  {id:'routine2',level:2,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'La routine / La vie de tous les jours',type:'dialog',
+   note:'📍 En France, on prend rarement le temps d\'une longue cérémonie du café le matin. En Oromia (Shashamané), la cérémonie du buna (café) est un moment social important. Le shor (déjeuner) est le repas principal en France.',
+   situations:[
+    {label:'Sit. 1',title:'La matinée',img:'⏰',dialogue:[
+      {s:'Haadha',et:'Ka\'i! Sa\'atii torba ta\'eera!',fr:'Lève-toi ! Il est sept heures !',side:'right'},
+      {s:'Dargagoo',et:'Eeyyeen, amma kaa\'a. Cireen qophaa\'eeii?',fr:'Oui, je me lève. Le petit-déjeuner est prêt ?',side:'left'},
+      {s:'Haadha',et:'Eeyyeen. Dhiqadhu jalqaba.',fr:'Oui. Douche-toi d\'abord.',side:'right'},
+      {s:'Dargagoo',et:'Tolee. Ilkaanis?',fr:'D\'accord. Les dents aussi ?',side:'left'},
+      {s:'Haadha',et:'Dhugumatti! Ilkaan eebuu dagattee?',fr:'Bien sûr ! Tu as oublié de te brosser les dents ?',side:'right'},
+      {s:'Dargagoo',et:'Lakki lakki, nan yaadadha!',fr:'Non non, je m\'en souviens !',side:'left'}
+    ]},
+    {label:'Sit. 2',title:'Partager les tâches',img:'🧹',dialogue:[
+      {s:'Julie',et:'Kana booda mana qulqulleessina.',fr:'Après on fait le ménage.',side:'left'},
+      {s:'Marc',et:'Tolee. Ani meeshaa dhiqa, ati hoo?',fr:'D\'accord. Je fais la vaisselle, et toi ?',side:'right'},
+      {s:'Julie',et:'Ani daakuu qulqulleessa. Uffatnis?',fr:'Moi je nettoie la cuisine. Et le linge ?',side:'left'},
+      {s:'Marc',et:'Uffata dhiquu hojjedheen jira.',fr:'J\'ai déjà lavé le linge.',side:'right'},
+      {s:'Julie',et:'Baay\'ee gaarii! Xumurree nyaata bilcheessina.',fr:'Super ! Après le ménage on cuisine.',side:'left'},
+      {s:'Marc',et:'Yaada gaarii! Maal bilcheessina?',fr:'Bonne idée ! On fait quoi à manger ?',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Le soir après le travail',img:'🌆',dialogue:[
+      {s:'Tolaa',et:'Hojii irraa dhufe. Dadhabee jira!',fr:'Je rentre du travail. Je suis fatigué !',side:'left'},
+      {s:'Caaltuu',et:'Boqo xiqqoo. Nyaata bilcheessaan jira.',fr:'Repose-toi un peu. Je suis en train de cuisiner.',side:'right'},
+      {s:'Tolaa',et:'Baay\'ee galatoomi. Maal bilcheessita?',fr:'Merci beaucoup. Tu cuisines quoi ?',side:'left'},
+      {s:'Caaltuu',et:'Injera fi atara. Dhukkubsattee?',fr:'De l\'injera et des lentilles. Ça va ?',side:'right'},
+      {s:'Tolaa',et:'Gaarii, baay\'ee beela\'ee jira.',fr:'Ça va, j\'ai très faim.',side:'left'},
+      {s:'Caaltuu',et:'Daqiiqaa kudha booda nyaanna!',fr:'Dans dix minutes on mange !',side:'right'}
+    ]}
+   ],
+   vocab:['Ka\'i! = Lève-toi !','Dhiqadhu = Douche-toi','Ilkaan eebuu = Se brosser les dents','Mana qulqulleessuu = Faire le ménage','Meeshaa dhiquu = Faire la vaisselle','Uffata dhiquu = Laver le linge','Nyaata bilcheessuu = Cuisiner','Dadhabee jira = Je suis fatigué','Boqo = Repose-toi'],
+   quiz:[
+    {q:'Afaan Oromootti "Faire le ménage" akkamiin jedha?',opts:['Mana ijaaruu','Mana qulqulleessuu','Mana bituu','Mana jijjiiruu'],ans:1},
+    {q:'Jechuun "Uffata dhiquu" maal jechuudha?',opts:['Repasser le linge','Étendre le linge','Laver le linge','Porter des vêtements'],ans:2},
+    {q:'Afaan Oromootti "Je suis fatigué" akkamiin jedha?',opts:['Beela\'ee jira','Dheebuu dhabe','Dadhabee jira','Rafee jira'],ans:2}
+   ]}
+
+,
+
+  /* 16 -- L'heure et la météo */
+  {id:'temps2',level:2,emoji:'🕐',name:'Sa\'atii fi Qilleensa',sub:'L\'heure et la météo',type:'dialog',
+   note:'📍 Attention : en Oromia, l\'heure éthiopienne (sa\'atii Itoophiyaa) commence à 6h du matin (notre 6h = leur 12h). La journée à Shashamané est rythmée par le soleil, pas par les horloges !',
+   situations:[
+    {label:'Sit. 1',title:'Quelle heure est-il ?',img:'⏰',dialogue:[
+      {s:'Marc',et:'Dhiifama, sa\'atii meeqa?',fr:'Pardon, quelle heure est-il ?',side:'left'},
+      {s:'Caaltuu',et:'Sa\'atii sadii fi walakkaa.',fr:'Il est trois heures et demie.',side:'right'},
+      {s:'Marc',et:'Baankiin amma banama jiraa?',fr:'La banque est encore ouverte ?',side:'left'},
+      {s:'Caaltuu',et:'Eeyyeen, hanga shan banama.',fr:'Oui, elle est ouverte jusqu\'à cinq heures.',side:'right'},
+      {s:'Marc',et:'Galatoomi! Ariifadhee deema.',fr:'Merci ! Je dois me dépêcher.',side:'left'},
+      {s:'Caaltuu',et:'Ariifi! Nagaan!',fr:'Vas-y ! Bonne chance !',side:'right'}
+    ]},
+    {label:'Sit. 2',title:'Parler de la météo',img:'🌤️',dialogue:[
+      {s:'Sophie',et:'Qilleensi har\'a akkam?',fr:'Il fait quel temps aujourd\'hui ?',side:'left'},
+      {s:'Lamma',et:'Ganama ho\'aa, garuu galgala roobu dandaa.',fr:'Il fait chaud le matin, mais il peut pleuvoir le soir.',side:'right'},
+      {s:'Sophie',et:'Shaashamanneetti yeroo maraan akkana?',fr:'À Shashamané c\'est souvent comme ça ?',side:'left'},
+      {s:'Lamma',et:'Arfasaatti eeyyeen. Roobni guyyaa guyyaa dhufa.',fr:'En saison des pluies oui. Il pleut tous les jours.',side:'right'},
+      {s:'Sophie',et:'Faransaayitti garuu bona qofaaa.',fr:'En France c\'est seulement en hiver.',side:'left'},
+      {s:'Lamma',et:'Baay\'ee adda! As ho\'a baay\'ee jaalladha.',fr:'C\'est très différent ! Ici j\'aime beaucoup la chaleur.',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Planifier selon la météo',img:'🌧️',dialogue:[
+      {s:'Iftu',et:'Boruu gabaa deemna?',fr:'On va au marché demain ?',side:'right'},
+      {s:'Théo',et:'Qilleensi akkam jedha?',fr:'Qu\'est-ce que dit la météo ?',side:'left'},
+      {s:'Iftu',et:'Roobu jetteetti. Aanoo roobaa kaasi!',fr:'Elle dit qu\'il va pleuvoir. Prends ton parapluie !',side:'right'},
+      {s:'Théo',et:'Tolee. Sa\'atii meeqatti deemna?',fr:'D\'accord. On y va à quelle heure ?',side:'left'},
+      {s:'Iftu',et:'Ganama sa\'atii saddeet. Roobni dura deemuun wayya.',fr:'À huit heures du matin. Mieux vaut partir avant la pluie.',side:'right'},
+      {s:'Théo',et:'Eeyyeen! Ganamaas ko\'otni baay\'ee jiru.',fr:'Oui ! Et le matin il y a plus de choix au marché.',side:'left'}
+    ]}
+   ],
+   vocab:['Sa\'atii meeqa? = Quelle heure est-il ?','Hanga ... banama = Ouvert jusqu\'à...','Ariifi! = Dépêche-toi !','Qilleensi akkam? = Quel temps fait-il ?','Arfasaatti = En saison des pluies','Roobni dhufa = Il va pleuvoir','Aanoo roobaa kaasi = Prends ton parapluie'],
+   quiz:[
+    {q:'Afaan Oromootti "Quelle heure est-il ?" akkamiin jedha?',opts:['Guyyaan meeqa?','Sa\'atii meeqa?','Boruu meeqa?','Daqiiqaan meeqa?'],ans:1},
+    {q:'Jechuun "Arfasaatti roobu" maal jechuudha?',opts:['Il neige en hiver','Il fait chaud en été','Il pleut en saison des pluies','Il y a du vent au printemps'],ans:2},
+    {q:'Afaan Oromootti "Dépêche-toi !" akkamiin jedha?',opts:['Boqo!','Deemi!','Ariifi!','Rafuu!'],ans:2}
+   ]}
+
 ];
 
   /* ========================================
@@ -1928,7 +2239,7 @@ var LEVEL2_THEMES_OR = [
       {s:'Marc',et:'Dhiifama, farmaasinni dhiyotti jiraa?',fr:'Pardon, il y a une pharmacie près d\'ici ?',side:'left'},
       {s:'Dargagoo',et:'Eeyyeen. Dallaa kana gaditti qajeeli ergasii mirgutti garagali.',fr:'Oui. Descends cette rue et tourne à droite.',side:'right'},
       {s:'Marc',et:'Baankii booda?',fr:'Après la banque ?',side:'left'},
-      {s:'Dargagoo',et:'Eeyyeen, siruma. Balballi gurraacha isa.',fr:'Oui, exactement. C\'est la porte verte.',side:'right'},
+      {s:'Dargagoo',et:'Eeyyeen, siruma. Balballi magariisa isa.',fr:'Oui, exactement. C\'est la porte verte.',side:'right'},
       {s:'Marc',et:'Amma banama jiraa?',fr:'Elle est ouverte maintenant ?',side:'left'},
       {s:'Dargagoo',et:'Eeyyeen, nan yaada.',fr:'Oui, je crois que oui.',side:'right'}
     ]},
@@ -2335,38 +2646,78 @@ var LEVEL2_THEMES_OR = [
  ,
 
   /* 15 -- La vie quotidienne */
-  {id:'routine2',level:2,emoji:'\U0001f305',name:'Guyyaa Guyyaa',sub:'La routine / La vie de tous les jours',type:'dialog',
+  {id:'routine2',level:2,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'La routine / La vie de tous les jours',type:'dialog',
    situations:[
-    {label:'Sit. 1',title:'La matin\xe9e',img:'\u23f0',dialogue:[
-      {s:'Haadha',et:'Ka\'i! Sa\'atii torba ta\'eera!',fr:'L\xe8ve-toi\xa0! Il est sept heures\xa0!',side:'right'},
-      {s:'Dargagoo',et:'Eeyyeen, amma kaa\'a. Cireen qophaa\'eeii?',fr:'Oui, je me l\xe8ve. Le petit-d\xe9jeuner est pr\xeat\xa0?',side:'left'},
+    {label:'Sit. 1',title:'La matinée',img:'⏰',dialogue:[
+      {s:'Haadha',et:'Ka\'i! Sa\'atii torba ta\'eera!',fr:'Lève-toi ! Il est sept heures !',side:'right'},
+      {s:'Dargagoo',et:'Eeyyeen, amma kaa\'a. Cireen qophaa\'eeii?',fr:'Oui, je me lève. Le petit-déjeuner est prêt ?',side:'left'},
       {s:'Haadha',et:'Eeyyeen. Dhiqadhu jalqaba.',fr:'Oui. Douche-toi d\'abord.',side:'right'},
-      {s:'Dargagoo',et:'Tolee. Ilkaanis?',fr:'D\'accord. Les dents aussi\xa0?',side:'left'},
-      {s:'Haadha',et:'Dhugumatti! Ilkaan eebuu dagattee?',fr:'Bien s\xfbr\xa0! Tu as oubli\xe9 de te brosser les dents\xa0?',side:'right'},
-      {s:'Dargagoo',et:'Lakki lakki, nan yaadadha!',fr:'Non non, je m\'en souviens\xa0!',side:'left'}
+      {s:'Dargagoo',et:'Tolee. Ilkaanis?',fr:'D\'accord. Les dents aussi ?',side:'left'},
+      {s:'Haadha',et:'Dhugumatti! Ilkaan eebuu dagattee?',fr:'Bien sûr ! Tu as oublié de te brosser les dents ?',side:'right'},
+      {s:'Dargagoo',et:'Lakki lakki, nan yaadadha!',fr:'Non non, je m\'en souviens !',side:'left'}
     ]},
-    {label:'Sit. 2',title:'Partager les t\xe2ches',img:'\U0001f9f9',dialogue:[
-      {s:'Julie',et:'Kana booda mana qulqulleessina.',fr:'Apr\xe8s on fait le m\xe9nage.',side:'left'},
-      {s:'Marc',et:'Tolee. Ani meeshaa dhiqa, ati hoo?',fr:'D\'accord. Je fais la vaisselle, et toi\xa0?',side:'right'},
-      {s:'Julie',et:'Ani daakuu qulqulleessa. Uffatnis?',fr:'Moi je nettoie la cuisine. Et le linge\xa0?',side:'left'},
-      {s:'Marc',et:'Uffata dhiquu hojjedheen jira.',fr:'J\'ai d\xe9j\xe0 lav\xe9 le linge.',side:'right'},
-      {s:'Julie',et:'Baay\'ee gaarii! Xumurree nyaata bilcheessina.',fr:'Super\xa0! Apr\xe8s le m\xe9nage on cuisine.',side:'left'},
-      {s:'Marc',et:'Yaada gaarii! Maal bilcheessina?',fr:'Bonne id\xe9e\xa0! On fait quoi \xe0 manger\xa0?',side:'right'}
+    {label:'Sit. 2',title:'Partager les tâches',img:'🧹',dialogue:[
+      {s:'Julie',et:'Kana booda mana qulqulleessina.',fr:'Après on fait le ménage.',side:'left'},
+      {s:'Marc',et:'Tolee. Ani meeshaa dhiqa, ati hoo?',fr:'D\'accord. Je fais la vaisselle, et toi ?',side:'right'},
+      {s:'Julie',et:'Ani daakuu qulqulleessa. Uffatnis?',fr:'Moi je nettoie la cuisine. Et le linge ?',side:'left'},
+      {s:'Marc',et:'Uffata dhiquu hojjedheen jira.',fr:'J\'ai déjà lavé le linge.',side:'right'},
+      {s:'Julie',et:'Baay\'ee gaarii! Xumurree nyaata bilcheessina.',fr:'Super ! Après le ménage on cuisine.',side:'left'},
+      {s:'Marc',et:'Yaada gaarii! Maal bilcheessina?',fr:'Bonne idée ! On fait quoi à manger ?',side:'right'}
     ]},
-    {label:'Sit. 3',title:'Le soir apr\xe8s le travail',img:'\U0001f306',dialogue:[
-      {s:'Tolaa',et:'Hojii irraa dhufe. Dadhabee jira!',fr:'Je rentre du travail. Je suis fatigu\xe9\xa0!',side:'left'},
+    {label:'Sit. 3',title:'Le soir après le travail',img:'🌆',dialogue:[
+      {s:'Tolaa',et:'Hojii irraa dhufe. Dadhabee jira!',fr:'Je rentre du travail. Je suis fatigué !',side:'left'},
       {s:'Caaltuu',et:'Boqo xiqqoo. Nyaata bilcheessaan jira.',fr:'Repose-toi un peu. Je suis en train de cuisiner.',side:'right'},
-      {s:'Tolaa',et:'Baay\'ee galatoomi. Maal bilcheessita?',fr:'Merci beaucoup. Tu cuisines quoi\xa0?',side:'left'},
-      {s:'Caaltuu',et:'Injera fi atara. Dhukkubsattee?',fr:'De l\'injera et des lentilles. \xc7a va\xa0?',side:'right'},
-      {s:'Tolaa',et:'Gaarii, baay\'ee beela\'ee jira.',fr:'\xc7a va, j\'ai tr\xe8s faim.',side:'left'},
-      {s:'Caaltuu',et:'Daqiiqaa kudha booda nyaanna!',fr:'Dans dix minutes on mange\xa0!',side:'right'}
+      {s:'Tolaa',et:'Baay\'ee galatoomi. Maal bilcheessita?',fr:'Merci beaucoup. Tu cuisines quoi ?',side:'left'},
+      {s:'Caaltuu',et:'Injera fi atara. Dhukkubsattee?',fr:'De l\'injera et des lentilles. Ça va ?',side:'right'},
+      {s:'Tolaa',et:'Gaarii, baay\'ee beela\'ee jira.',fr:'Ça va, j\'ai très faim.',side:'left'},
+      {s:'Caaltuu',et:'Daqiiqaa kudha booda nyaanna!',fr:'Dans dix minutes on mange !',side:'right'}
     ]}
    ],
-   vocab:['Ka\'i! = L\xe8ve-toi\xa0!','Dhiqadhu = Douche-toi','Ilkaan eebuu = Se brosser les dents','Mana qulqulleessuu = Faire le m\xe9nage','Meeshaa dhiquu = Faire la vaisselle','Uffata dhiquu = Laver le linge','Nyaata bilcheessuu = Cuisiner','Dadhabee jira = Je suis fatigu\xe9','Boqo = Repose-toi'],
+   vocab:['Ka\'i! = Lève-toi !','Dhiqadhu = Douche-toi','Ilkaan eebuu = Se brosser les dents','Mana qulqulleessuu = Faire le ménage','Meeshaa dhiquu = Faire la vaisselle','Uffata dhiquu = Laver le linge','Nyaata bilcheessuu = Cuisiner','Dadhabee jira = Je suis fatigué','Boqo = Repose-toi'],
    quiz:[
-    {q:'Afaan Oromootti "Faire le m\xe9nage" akkamiin jedha?',opts:['Mana ijaaruu','Mana qulqulleessuu','Mana bituu','Mana jijjiiruu'],ans:1},
-    {q:'Jechuun "Uffata dhiquu" maal jechuudha?',opts:['Repasser le linge','tendre le linge','Laver le linge','Porter des v\xeatements'],ans:2},
-    {q:'Afaan Oromootti "Je suis fatigu\xe9" akkamiin jedha?',opts:['Beela\'ee jira','Dheebuu dhabe','Dadhabee jira','Rafee jira'],ans:2}
+    {q:'Afaan Oromootti "Faire le ménage" akkamiin jedha?',opts:['Mana ijaaruu','Mana qulqulleessuu','Mana bituu','Mana jijjiiruu'],ans:1},
+    {q:'Jechuun "Uffata dhiquu" maal jechuudha?',opts:['Repasser le linge','tendre le linge','Laver le linge','Porter des vêtements'],ans:2},
+    {q:'Afaan Oromootti "Je suis fatigué" akkamiin jedha?',opts:['Beela\'ee jira','Dheebuu dhabe','Dadhabee jira','Rafee jira'],ans:2}
+   ]}
+
+
+
+,
+
+  /* 16 -- L'heure et la météo */
+  {id:'temps2',level:2,emoji:'🕐',name:'Sa\'atii fi Qilleensa',sub:'L\'heure et la météo / Parler du temps',type:'dialog',
+   note:'📍 En France, la météo est un sujet de conversation très courant ! Les saisons françaises (printemps, été, automne, hiver) sont très marquées, contrairement à Shashamané où les variations sont surtout liées à la pluie.',
+   situations:[
+    {label:'Sit. 1',title:'Quelle heure est-il ?',img:'⏰',dialogue:[
+      {s:'Marc',et:'Dhiifama, sa\'atii meeqa?',fr:'Pardon, quelle heure est-il ?',side:'left'},
+      {s:'Caaltuu',et:'Sa\'atii sadii fi walakkaa.',fr:'Il est trois heures et demie.',side:'right'},
+      {s:'Marc',et:'Baankiin amma banama jiraa?',fr:'La banque est encore ouverte ?',side:'left'},
+      {s:'Caaltuu',et:'Eeyyeen, hanga shan banama.',fr:'Oui, elle est ouverte jusqu\'à cinq heures.',side:'right'},
+      {s:'Marc',et:'Galatoomi! Ariifadhee deema.',fr:'Merci ! Je dois me dépêcher.',side:'left'},
+      {s:'Caaltuu',et:'Ariifi! Nagaan!',fr:'Vas-y ! Bonne chance !',side:'right'}
+    ]},
+    {label:'Sit. 2',title:'Parler de la météo',img:'🌤️',dialogue:[
+      {s:'Sophie',et:'Qilleensi har\'a akkam?',fr:'Il fait quel temps aujourd\'hui ?',side:'left'},
+      {s:'Lamma',et:'Ganama ho\'aa, garuu galgala roobu dandaa.',fr:'Il fait chaud le matin, mais il peut pleuvoir le soir.',side:'right'},
+      {s:'Sophie',et:'Shaashamanneetti yeroo maraan akkana?',fr:'À Shashamané c\'est souvent comme ça ?',side:'left'},
+      {s:'Lamma',et:'Arfasaatti eeyyeen. Roobni guyyaa guyyaa dhufa.',fr:'En saison des pluies oui. Il pleut tous les jours.',side:'right'},
+      {s:'Sophie',et:'Faransaayitti garuu bona qofaa.',fr:'En France c\'est seulement en hiver.',side:'left'},
+      {s:'Lamma',et:'Baay\'ee adda! As ho\'a baay\'ee jaalladha.',fr:'C\'est très différent ! Ici j\'aime beaucoup la chaleur.',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Planifier selon la météo',img:'🌧️',dialogue:[
+      {s:'Iftu',et:'Boruu gabaa deemna?',fr:'On va au marché demain ?',side:'right'},
+      {s:'Théo',et:'Qilleensi akkam jedha?',fr:'Qu\'est-ce que dit la météo ?',side:'left'},
+      {s:'Iftu',et:'Roobu jetteetti. Aanoo roobaa kaasi!',fr:'Elle dit qu\'il va pleuvoir. Prends ton parapluie !',side:'right'},
+      {s:'Théo',et:'Tolee. Sa\'atii meeqatti deemna?',fr:'D\'accord. On y va à quelle heure ?',side:'left'},
+      {s:'Iftu',et:'Ganama sa\'atii saddeet. Roobni dura deemuun wayya.',fr:'À huit heures du matin. Mieux vaut partir avant la pluie.',side:'right'},
+      {s:'Théo',et:'Eeyyeen! Ganamaas ko\'otni baay\'ee jiru.',fr:'Oui ! Et le matin il y a plus de choix au marché.',side:'left'}
+    ]}
+   ],
+   vocab:['Sa\'atii meeqa? = Quelle heure est-il ?','Hanga ... banama = Ouvert jusqu\'à...','Ariifi! = Dépêche-toi !','Qilleensi akkam? = Quel temps fait-il ?','Arfasaatti = En saison des pluies','Roobni dhufa = Il va pleuvoir','Aanoo roobaa kaasi = Prends ton parapluie'],
+   quiz:[
+    {q:'Afaan Oromootti "Quelle heure est-il ?" akkamiin jedha?',opts:['Guyyaan meeqa?','Sa\'atii meeqa?','Boruu meeqa?','Daqiiqaan meeqa?'],ans:1},
+    {q:'Jechuun "Arfasaatti roobu" maal jechuudha?',opts:['Il neige en hiver','Il fait chaud en été','Il pleut en saison des pluies','Il y a du vent au printemps'],ans:2},
+    {q:'Afaan Oromootti "Dépêche-toi !" akkamiin jedha?',opts:['Boqo!','Deemi!','Ariifi!','Rafuu!'],ans:2}
    ]}
 
 ];
