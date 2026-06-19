@@ -451,8 +451,8 @@ var LEVEL1_THEMES_FR=[
     {et:'Kaartaa',fr:'Le plan / La carte',em:'🗺️'},
     ]},
 
-  {id:'trans',level:1,emoji:'🚌',name:'Geejjiba',sub:'Baasii, gaarii, konkolaataa… / Les transports',
-   words:[
+  {id:'trans',level:1,emoji:'🚌',name:'Geejjiba',sub:'Baasii, gaarii, koonkolaataa… / Les transports',
+ words:[
     // Transports en commun
     {et:'Baasii / Konkolaataa ummataa',fr:'Le bus',em:'🚌'},
     {et:'Meetiroo',fr:'Le métro',em:'🚇'},
@@ -460,13 +460,22 @@ var LEVEL1_THEMES_FR=[
     {et:'Gaarii sibii',fr:'Le train',em:'🚂'},
     {et:'Xiyyaara',fr:'L\'avion',em:'✈️'},
     {et:'Taaksii',fr:'Le taxi',em:'🚕'},
+
     // Transports individuels
     {et:'Konkolaataa',fr:'La voiture',em:'🚗'},
     {et:'Mootoorisikkilii',fr:'La moto',em:'🏍️'},
     {et:'Biskileetii',fr:'Le vélo',em:'🚴'},
+
     // Titre de transport
     {et:'Tikeeta',fr:'Le billet',em:'🎫'},
-   ]},
+
+    // 🆕 Ajouts spécifiques — Transports locaux de Shashemene et du quotidien éthiopien
+    {et:'Bajaajii',fr:'Le bajaj (tricycle / tuk-tuk)',em:'🛺'},
+    {et:'Gaarii / Gaarii fardaa',fr:'Le gari (calèche à cheval)',em:'🐴'},
+    {et:'Minibaasii',fr:'Le minibus collectif',em:'🚐'},
+    {et:'Konkolaataa fe\'umsaa',fr:'Le camion de marchandises',em:'🚚'},
+    {et:'Iddoo baasii / Tarmaala',fr:'La gare routière / station',em:'🏣'}
+ ]},
 
   {id:'rest',level:1,emoji:'🍽️',name:'Mana Nyaataa',sub:'Menuu, kafaltii, teessoo… / Au restaurant',
    words:[
@@ -1872,7 +1881,7 @@ var LEVEL1_THEMES_OR=[
     ]},
 
   {id:'trans',level:1,emoji:'🚌',name:'Geejjiba',sub:'Baasii, gaarii, konkolaataa… / Les transports',
-   words:[
+ words:[
     // Transports en commun
     {et:'Baasii / Konkolaataa ummataa',fr:'Le bus',em:'🚌'},
     {et:'Meetiroo',fr:'Le métro',em:'🚇'},
@@ -1880,13 +1889,22 @@ var LEVEL1_THEMES_OR=[
     {et:'Gaarii sibii',fr:'Le train',em:'🚂'},
     {et:'Xiyyaara',fr:'L\'avion',em:'✈️'},
     {et:'Taaksii',fr:'Le taxi',em:'🚕'},
+
     // Transports individuels
     {et:'Konkolaataa',fr:'La voiture',em:'🚗'},
     {et:'Mootoorisikkilii',fr:'La moto',em:'🏍️'},
     {et:'Biskileetii',fr:'Le vélo',em:'🚴'},
+
     // Titre de transport
     {et:'Tikeeta',fr:'Le billet',em:'🎫'},
-   ]},
+
+    // Transports locaux de Shashemene
+    {et:'Bajaajii',fr:'Le bajaj (tricycle / tuk-tuk)',em:'🛺'},
+    {et:'Gaarii / Gaarii fardaa',fr:'Le gari (calèche à cheval)',em:'🐴'},
+    {et:'Minibaasii',fr:'Le minibus collectif',em:'🚐'},
+    {et:'Konkolaataa fe\'umsaa',fr:'Le camion de marchandises',em:'🚚'},
+    {et:'Iddoo baasii / Tarmaala',fr:'La gare routière / station',em:'🏣'}
+ ]},
 
   {id:'rest',level:1,emoji:'🍽️',name:'Mana Nyaataa',sub:'Menuu, kafaltii, teessoo… / Au restaurant',
    words:[
