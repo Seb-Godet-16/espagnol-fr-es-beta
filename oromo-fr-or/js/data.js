@@ -72,6 +72,17 @@ var LEVEL1_THEMES_FR=[
     {et:'Baay\'ee gaarii! / Roorroo!',fr:'Très bien ! / Super !',em:'🌟'}
    ]},
 
+   {id:'pres',level:1,emoji:'🙋',name:'Ofii Beeksisuu',sub:'Maqaa, dachee, magaalaa… / Se présenter',
+   words:[
+    {et:'Maqaa abbaaf eeyyee',fr:'Le nom de famille',em:'👨‍👩‍👧'},{et:'Maqaa ofii',fr:'Le prénom',em:'🏷️'},
+    {et:'Biyya irraa dhufame',fr:'La nationalité',em:'🌍'},{et:'Umurii',fr:'L\'âge',em:'🎂'},
+    {et:'Hojii yookiin ogummaa',fr:'La profession',em:'💼'},{et:'Biyya',fr:'Le pays',em:'🗺️'},
+    {et:'Faransaawi / Faransaawitii',fr:'Français(e)',em:'🇫🇷'},{et:'Oromoo / Itoophiyaanitti',fr:'Éthiopien(ne)',em:'🇪🇹'},
+    {et:'Nan jiraadha',fr:'J\'habite à',em:'🏠'},{et:'Ani / Naan',fr:'Je suis',em:'🧑'},
+    {et:'Waggoota ... qabaadha',fr:'J\'ai ... ans',em:'🎈'},{et:'Maqaan koo ...',fr:'Je m\'appelle',em:'👋'},
+    {et:'Eessa irraa dhufte?',fr:'D\'où es-tu ?',em:'🌍'},{et:'Shashemaneetti dhufeen',fr:'Je suis de Shashemene',em:'🏙️'}
+   ]},
+
   {id:'expr',level:1,emoji:'💬',name:'Jechi Murteessoo',sub:'Hin galeef, maaloo… / Expressions essentielles',
    words:[
     {et:'Hin galeef.',fr:'Je ne comprends pas.',em:'😕'},
@@ -113,17 +124,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Meeqa gatii qaba?',fr:'Ça coûte combien ?',em:'💶'},
    ]},
 
-  {id:'pres',level:1,emoji:'🙋',name:'Ofii Beeksisuu',sub:'Maqaa, dachee, magaalaa… / Se présenter',
-   words:[
-    {et:'Maqaa abbaaf eeyyee',fr:'Le nom de famille',em:'👨‍👩‍👧'},{et:'Maqaa ofii',fr:'Le prénom',em:'🏷️'},
-    {et:'Biyya irraa dhufame',fr:'La nationalité',em:'🌍'},{et:'Umurii',fr:'L\'âge',em:'🎂'},
-    {et:'Hojii yookiin ogummaa',fr:'La profession',em:'💼'},{et:'Biyya',fr:'Le pays',em:'🗺️'},
-    {et:'Faransaawi / Faransaawitii',fr:'Français(e)',em:'🇫🇷'},{et:'Oromoo / Itoophiyaanitti',fr:'Éthiopien(ne)',em:'🇪🇹'},
-    {et:'Nan jiraadha',fr:'J\'habite à',em:'🏠'},{et:'Ani / Naan',fr:'Je suis',em:'🧑'},
-    {et:'Waggoota ... qabaadha',fr:'J\'ai ... ans',em:'🎈'},{et:'Maqaan koo ...',fr:'Je m\'appelle',em:'👋'},
-    {et:'Eessa irraa dhufte?',fr:'D\'où es-tu ?',em:'🌍'},{et:'Shashemaneetti dhufeen',fr:'Je suis de Shashemene',em:'🏙️'}
-   ]},
-
   {id:'num',level:1,emoji:'🔢',name:'Lakkoofsa',sub:'Zeerroo irraa hanga kuma lamaa / Zéro à deux mille',
  words:[
   {et:'Zeerroo',fr:'Zéro',em:'0️⃣'},{et:'Tokko',fr:'Un',em:'1️⃣'},{et:'Lama',fr:'Deux',em:'2️⃣'},
@@ -154,8 +154,6 @@ var LEVEL1_THEMES_FR=[
   {et:'Kuma',fr:'Mille',em:'1️⃣0️⃣0️⃣0️⃣'},
   {et:'Kuma lama',fr:'Deux mille',em:'2️⃣0️⃣0️⃣0️⃣'}
  ]},
-
-  
 
   {id:'temps',level:1,emoji:'🕐',name:'Sa\'atii fi Sanaata',sub:'Sa\'atii, guyyaa, ji\'aa… / L\'heure et le calendrier',
    words:[
@@ -289,16 +287,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Baay\'ee gaarii! / Roorroo!',fr:'C\'est super ! / C\'est cool !',em:'🌟'}
    ]},
 
-  {id:'col',level:1,emoji:'🎨',name:'Halluu',sub:'Diimaa, magariisa, keelloo… / Les couleurs',
-   words:[
-    {et:'Diimaa',fr:'Rouge',em:'❤️'},{et:'Cuquliisa',fr:'Bleu',em:'💙'},{et:'Magariisa',fr:'Vert',em:'💚'},
-    {et:'Keelloo',fr:'Jaune',em:'💛'},{et:'Burtukaana',fr:'Orange',em:'🧡'},{et:'Adii',fr:'Blanc',em:'🤍'},
-    {et:'Gurraacha',fr:'Noir',em:'🖤'},{et:'Roozii',fr:'Rose',em:'🩷'},
-    {et:'Daallatii / Diimtuuja',fr:'Violet',em:'💜'},{et:'Bunii',fr:'Marron',em:'🤎'},
-    {et:'Garaa garaa / Dulluma',fr:'Gris',em:'🩶'}
-   ]},
-
-  {id:'fam',level:1,emoji:'👨‍👩‍👧',name:'Maatii',sub:'Abbaa, haadha, ilma… / La famille',
+   {id:'fam',level:1,emoji:'👨‍👩‍👧',name:'Maatii',sub:'Abbaa, haadha, ilma… / La famille',
    words:[
    {et:'Haadha / Haadha manaa',fr:'La mère / La maman',em:'👩'},
     {et:'Abbaa / Abbaa manaa',fr:'Le père / Le papa',em:'👨'},
@@ -313,34 +302,44 @@ var LEVEL1_THEMES_FR=[
     {et:'Adaadaa (haadha abbaa) / Adda (obboleessa abbaa)',fr:'La tante (côté père) / L\'oncle',em:'👨‍👩‍👧'}
    ]},
 
-  {id:'corps',level:1,emoji:'🧍',name:'Qaamaa',sub:'Mataa, harkaa, miila… / Le corps',
+  {id:'col',level:1,emoji:'🎨',name:'Halluu',sub:'Diimaa, magariisa, keelloo… / Les couleurs',
    words:[
-    {et:'Mataa',fr:'La tête',em:'🗣️'},
-    {et:'Rifeensa',fr:'Les cheveux',em:'💇‍♂️'},
-    {et:'Ija / Ijaan',fr:'L\'œil / Les yeux',em:'👀'},
-    {et:'Funyaan',fr:'Le nez',em:'👃'},
-    {et:'Gurra / Gurraan',fr:'L\'oreille / Les oreilles',em:'👂'},
-    {et:'Afaan',fr:'La bouche',em:'👄'},
-    {et:'Hidhii',fr:'Les lèvres',em:'💋'},
-    {et:'Arraba',fr:'La langue',em:'👅'},
-    {et:'Ilkaan',fr:'La dent / Les dents',em:'🦷'},
-    {et:'Morma',fr:'Le cou',em:''},
-    {et:'Harka gubbaa',fr:'Le bras / Les bras',em:'💪'},
-    {et:'Harka / Harkaan',fr:'La main / Les mains',em:'✋'},
-    {et:'Quba / Qubaan',fr:'Le doigt / Les doigts',em:'☝️'},
-    {et:'Quba miila / Ciltuu',fr:'L\'orteil / L\'ongle',em:'💅'},
-    {et:'Dugda',fr:'Le dos',em:''},
-    {et:'Garaa',fr:'Le ventre',em:'🫃'},
-    {et:'Miila / Miilaan',fr:'La jambe / Les jambes',em:'🦵'},
-    {et:'Miila jalaa / Miilaafi',fr:'Le pied / Les pieds',em:'🦶'},
-    {et:'Onnee',fr:'Le cœur',em:'❤️'},
-    {et:'Sammuu',fr:'Le cerveau',em:'🧠'},
-    {et:'Lafee / Lafaan',fr:'L\'os / Les os',em:'🦴'}
+    {et:'Diimaa',fr:'Rouge',em:'❤️'},{et:'Cuquliisa',fr:'Bleu',em:'💙'},{et:'Magariisa',fr:'Vert',em:'💚'},
+    {et:'Keelloo',fr:'Jaune',em:'💛'},{et:'Burtukaana',fr:'Orange',em:'🧡'},{et:'Adii',fr:'Blanc',em:'🤍'},
+    {et:'Gurraacha',fr:'Noir',em:'🖤'},{et:'Roozii',fr:'Rose',em:'🩷'},
+    {et:'Daallatii / Diimtuuja',fr:'Violet',em:'💜'},{et:'Bunii',fr:'Marron',em:'🤎'},
+    {et:'Garaa garaa / Dulluma',fr:'Gris',em:'🩶'}
    ]},
 
-{id:'nour',level:1,emoji:'🍽️',name:'Nyaata',sub:'Buddeena, muduraa, injera… / La nourriture',
+   {id:'routine',level:1,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'Ka\'uu, rafuu, hojjechuu… / La vie quotidienne',
+   words:[
+    {et:'Ka\'uu / Dammaquu',fr:'Se lever / Se réveiller',em:'⏰'},
+    {et:'Dhiqachuu',fr:'Se doucher / Se laver',em:'🚿'},
+    {et:'Fuula dhiqachuu',fr:'Se laver le visage',em:'🧼'},
+    {et:'Ilkaan eebuu',fr:'Se brosser les dents',em:'🦷'},
+    {et:'Uffachuu',fr:'S\'habiller',em:'👕'},
+    {et:'Ciree nyaachuu',fr:'Prendre le petit-déjeuner',em:'🍳'},
+    {et:'Hojjechuu',fr:'Travailler',em:'💼'},
+    {et:'Barumsaaf deemuu',fr:'Aller à l\'cole / Aller étudier',em:'🎒'},
+    {et:'Baha manaa deemuu',fr:'Sortir de la maison',em:'🚪'},
+    {et:'Bitachuu / Gabaa deemuu',fr:'Faire les courses',em:'🛒'},
+    {et:'Nyaata bilcheessuu / Daakuu hojjechuu',fr:'Faire la cuisine / Cuisiner',em:'🍳'},
+    {et:'Uffata dhiquu',fr:'Laver le linge',em:'🧺'},
+    {et:'Uffata miicuu',fr:'Étendre / Repasser le linge',em:'👕'},
+    {et:'Mana qulqulleessuu',fr:'Nettoyer la maison / Faire le ménage',em:'🧹'},
+    {et:'Meeshaalee dhiquu',fr:'Faire la vaisselle',em:'🍽️'},
+    {et:'Saree oofuu',fr:'Sortir le chien',em:'🐕'},
+    {et:'Bifa cireen duraa nyaachuu',fr:'Déjeuner',em:'🥗'},
+    {et:'Halkan nyaachuu',fr:'Dîner',em:'🍽️'},
+    {et:'Boqochuu',fr:'Se reposer',em:'😮‍💨'},
+    {et:'Telefishina ilaalu',fr:'Regarder la télé',em:'📺'},
+    {et:'Kitaaba dubbisuu',fr:'Lire un livre',em:'📖'},
+    {et:'Ciisuu / Rafuu',fr:'Se coucher / Dormir',em:'🛏️'},
+   ]},
+
+   {id:'nour',level:1,emoji:'🍽️',name:'Nyaata',sub:'Buddeena, muduraa, injera… / La nourriture',
  words:[
-    // 🟢 Niveau 1 — Catégories générales & Base de l'alimentation (8 mots)
+    // Niveau 1 — Catégories générales & Base de l'alimentation (8 mots)
     {et:'Muduraa',fr:'Les fruits',em:'🍉'},
     {et:'Kuduraa',fr:'Les légumes',em:'🥦'},
     {et:'Buddeena / Injeeraa',fr:'L\'injera / La galette',em:'🫓'},
@@ -350,7 +349,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Dinnichi',fr:'La pomme de terre',em:'🥔'},
     {et:'Foonii dinnichaa',fr:'Les frites',em:'🍟'},
 
-    // 🟡 Niveau 2 — Protéines, produits laitiers & spécialités locales (9 mots)
+    // Niveau 2 — Protéines, produits laitiers & spécialités locales (9 mots)
     {et:'Foon',fr:'La viande',em:'🥩'},
     {et:'Lukkuu',fr:'Le poulet',em:'🍗'},
     {et:'Qurxummii',fr:'Le poisson',em:'🐟'},
@@ -361,7 +360,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Dhadhaa',fr:'Le beurre',em:'🧈'},
     {et:'Buna',fr:'Le café (boisson)',em:'☕'},
 
-    // 🔴 Niveau 3 — Épices, fruits, légumes & condiments du marché (17 mots)
+    // Niveau 3 — Épices, fruits, légumes & condiments du marché (17 mots)
     {et:'Berbere',fr:'Le berbéré (piment rouge)',em:'🌶️'},
     {et:'Maangoo',fr:'La mangue',em:'🥭'},
     {et:'Muzii',fr:'La banane',em:'🍌'},
@@ -401,7 +400,53 @@ var LEVEL1_THEMES_FR=[
     {et:'Araqee',fr:'L\'araqé (alcool éthiopien)',em:'🍶'},
    ]},
 
-  {id:'lieux',level:1,emoji:'🏙️',name:'Bakkoota Barbaachisoo',sub:'Gabaa, daandii, bunaa… / Les lieux importants',
+   {id:'rest',level:1,emoji:'🍽️',name:'Mana Nyaataa',sub:'Menuu, kafaltii, teessoo… / Au restaurant',
+   words:[
+      // Arrivée
+    {et:'Balbala alaa',fr:'La terrasse',em:'☀️'},
+    {et:'Teessoo',fr:'La table',em:'🪑'},
+    {et:'Teessoon kun duwwaa dha?',fr:'Cette table est libre ?',em:'🪑'},
+    // Commander
+    {et:'Tajaajilaa / Tajaajiltu',fr:'Le serveur / La serveuse',em:'🧑‍🍳'},
+    {et:'Liistii nyaataa',fr:'La carte',em:'📋'},
+    {et:'Menuu guyyaa',fr:'Le menu du jour',em:'🍱'},
+    {et:'Gaafachuu',fr:'Commander',em:'🙋'},
+    {et:'Maal yaaddu?',fr:'Que recommandez-vous ?',em:'👨‍🍳'},
+    // Régimes
+    {et:'Gluten hin qabu',fr:'Sans gluten',em:'🌾'},
+    {et:'Foon hin nyaatu',fr:'Végétarien / Végétarienne',em:'🥦'},
+    // Repas
+    {et:'Fuullaa xinnoo',fr:'L\'amuse-bouche',em:'🫒'},
+    {et:'Fuullaa dura',fr:'L\'entrée',em:'🥗'},
+    {et:'Nyaata ijoo',fr:'Le plat principal',em:'🍖'},
+    {et:'Dhaamsa nyaataa',fr:'Le dessert',em:'🍮'},
+    {et:'Saandiwichii / Buddeena',fr:'Le sandwich',em:'🥖'},
+    {et:'Fudhachuuf',fr:'À emporter',em:'🥡'},
+    // Addition
+    {et:'Baasii nyaataa',fr:'L\'addition',em:'💶'},
+    {et:'Qarshii dabalataa',fr:'Le pourboire',em:'💰'},
+    {et:'Qarshii dabalataan dabalamee jira',fr:'Le pourboire est inclus',em:'✅'},
+   ]},
+
+   {id:'orient',level:1,emoji:'🧭',name:'Karaa Barbaaduu',sub:'Bitaa, mirga… / S\'orienter',
+   words:[
+   // Directions
+    {et:'Kallattii itti fufi',fr:'Tout droit',em:'⬆️'},
+    {et:'Bitatti',fr:'À gauche',em:'⬅️'},
+    {et:'Mirgatti',fr:'À droite',em:'➡️'},
+    // Position relative
+    {et:'Fuuldura',fr:'Devant',em:'🔜'},
+    {et:'Duuba',fr:'Derrière',em:'🔙'},
+    {et:'Cinaa',fr:'À côté',em:'↔️'},
+    {et:'Fuuldura / Eegalan',fr:'En face',em:'🔄'},
+    // Distance
+    {et:'Dhiyoo',fr:'Près',em:'📍'},
+    {et:'Fagoo',fr:'Loin',em:'🌅'},
+    // Outil
+    {et:'Kaartaa',fr:'Le plan / La carte',em:'🗺️'},
+    ]},
+
+   {id:'lieux',level:1,emoji:'🏙️',name:'Bakkoota Barbaachisoo',sub:'Gabaa, daandii, bunaa… / Les lieux importants',
    words:[
     // Lieux de vie / nature
     {et:'Magaalaa',fr:'La ville',em:'🏙️'},
@@ -433,25 +478,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Yuniversitii',fr:'L\'université',em:'🏛️'},
    ]},
 
-  {id:'orient',level:1,emoji:'🧭',name:'Karaa Barbaaduu',sub:'Bitaa, mirga… / S\'orienter',
-   words:[
-   // Directions
-    {et:'Kallattii itti fufi',fr:'Tout droit',em:'⬆️'},
-    {et:'Bitatti',fr:'À gauche',em:'⬅️'},
-    {et:'Mirgatti',fr:'À droite',em:'➡️'},
-    // Position relative
-    {et:'Fuuldura',fr:'Devant',em:'🔜'},
-    {et:'Duuba',fr:'Derrière',em:'🔙'},
-    {et:'Cinaa',fr:'À côté',em:'↔️'},
-    {et:'Fuuldura / Eegalan',fr:'En face',em:'🔄'},
-    // Distance
-    {et:'Dhiyoo',fr:'Près',em:'📍'},
-    {et:'Fagoo',fr:'Loin',em:'🌅'},
-    // Outil
-    {et:'Kaartaa',fr:'Le plan / La carte',em:'🗺️'},
-    ]},
-
-  {id:'trans',level:1,emoji:'🚌',name:'Geejjiba',sub:'Baasii, gaarii, koonkolaataa… / Les transports',
+   {id:'trans',level:1,emoji:'🚌',name:'Geejjiba',sub:'Baasii, gaarii, koonkolaataa… / Les transports',
  words:[
     // Transports en commun
     {et:'Baasii / Konkolaataa ummataa',fr:'Le bus',em:'🚌'},
@@ -477,50 +504,32 @@ var LEVEL1_THEMES_FR=[
     {et:'Iddoo baasii / Tarmaala',fr:'La gare routière / station',em:'🏣'}
  ]},
 
-  {id:'rest',level:1,emoji:'🍽️',name:'Mana Nyaataa',sub:'Menuu, kafaltii, teessoo… / Au restaurant',
+  {id:'corps',level:1,emoji:'🧍',name:'Qaamaa',sub:'Mataa, harkaa, miila… / Le corps',
    words:[
-      // Arrivée
-    {et:'Balbala alaa',fr:'La terrasse',em:'☀️'},
-    {et:'Teessoo',fr:'La table',em:'🪑'},
-    {et:'Teessoon kun duwwaa dha?',fr:'Cette table est libre ?',em:'🪑'},
-    // Commander
-    {et:'Tajaajilaa / Tajaajiltu',fr:'Le serveur / La serveuse',em:'🧑‍🍳'},
-    {et:'Liistii nyaataa',fr:'La carte',em:'📋'},
-    {et:'Menuu guyyaa',fr:'Le menu du jour',em:'🍱'},
-    {et:'Gaafachuu',fr:'Commander',em:'🙋'},
-    {et:'Maal yaaddu?',fr:'Que recommandez-vous ?',em:'👨‍🍳'},
-    // Régimes
-    {et:'Gluten hin qabu',fr:'Sans gluten',em:'🌾'},
-    {et:'Foon hin nyaatu',fr:'Végétarien / Végétarienne',em:'🥦'},
-    // Repas
-    {et:'Fuullaa xinnoo',fr:'L\'amuse-bouche',em:'🫒'},
-    {et:'Fuullaa dura',fr:'L\'entrée',em:'🥗'},
-    {et:'Nyaata ijoo',fr:'Le plat principal',em:'🍖'},
-    {et:'Dhaamsa nyaataa',fr:'Le dessert',em:'🍮'},
-    {et:'Saandiwichii / Buddeena',fr:'Le sandwich',em:'🥖'},
-    {et:'Fudhachuuf',fr:'À emporter',em:'🥡'},
-    // Addition
-    {et:'Baasii nyaataa',fr:'L\'addition',em:'💶'},
-    {et:'Qarshii dabalataa',fr:'Le pourboire',em:'💰'},
-    {et:'Qarshii dabalataan dabalamee jira',fr:'Le pourboire est inclus',em:'✅'},
+    {et:'Mataa',fr:'La tête',em:'🗣️'},
+    {et:'Rifeensa',fr:'Les cheveux',em:'💇‍♂️'},
+    {et:'Ija / Ijaan',fr:'L\'œil / Les yeux',em:'👀'},
+    {et:'Funyaan',fr:'Le nez',em:'👃'},
+    {et:'Gurra / Gurraan',fr:'L\'oreille / Les oreilles',em:'👂'},
+    {et:'Afaan',fr:'La bouche',em:'👄'},
+    {et:'Hidhii',fr:'Les lèvres',em:'💋'},
+    {et:'Arraba',fr:'La langue',em:'👅'},
+    {et:'Ilkaan',fr:'La dent / Les dents',em:'🦷'},
+    {et:'Morma',fr:'Le cou',em:''},
+    {et:'Harka gubbaa',fr:'Le bras / Les bras',em:'💪'},
+    {et:'Harka / Harkaan',fr:'La main / Les mains',em:'✋'},
+    {et:'Quba / Qubaan',fr:'Le doigt / Les doigts',em:'☝️'},
+    {et:'Quba miila / Ciltuu',fr:'L\'orteil / L\'ongle',em:'💅'},
+    {et:'Dugda',fr:'Le dos',em:''},
+    {et:'Garaa',fr:'Le ventre',em:'🫃'},
+    {et:'Miila / Miilaan',fr:'La jambe / Les jambes',em:'🦵'},
+    {et:'Miila jalaa / Miilaafi',fr:'Le pied / Les pieds',em:'🦶'},
+    {et:'Onnee',fr:'Le cœur',em:'❤️'},
+    {et:'Sammuu',fr:'Le cerveau',em:'🧠'},
+    {et:'Lafee / Lafaan',fr:'L\'os / Les os',em:'🦴'}
    ]},
 
-  {id:'log',level:1,emoji:'🏠',name:'Mana Jireenyaa',sub:'Dabtaroo, daakuu… / Le logement',
-   words:[
-        // Types de logement
-    {et:'Mana',fr:'La maison',em:'🏠'},
-    {et:'Apartamaantii',fr:'L\'appartement',em:'🏢'},
-    // Pièces principales
-    {et:'Seensa / Galma dura',fr:'L\'entrée',em:'🚪'},
-    {et:'Galma / Mana nyaataa',fr:'Le salon / la salle à manger',em:'🛋️'},
-    {et:'Daakuu',fr:'La cuisine',em:'🍳'},
-    {et:'Kutaa ciisichaa',fr:'La chambre',em:'🛏️'},
-    {et:'Mana fincaanii / Dhiqachuu',fr:'La salle de bain',em:'🚿'},
-    {et:'Mana fincaanii',fr:'Les toilettes',em:'🚽'},
-    {et:'Mana konkolaataa',fr:'Le garage',em:'🚗'},
-   ]},
-
-  {id:'objets',level:1,emoji:'🔑',name:'Meeshaalee Guyyaatii',sub:'Bilbila, hirnaa… / Objets du quotidien',
+{id:'objets',level:1,emoji:'🔑',name:'Meeshaalee Guyyaatii',sub:'Bilbila, hirnaa… / Objets du quotidien',
    words:[
         // Technologie
     {et:'Bilbila',fr:'Le téléphone',em:'☎️'},
@@ -555,6 +564,21 @@ var LEVEL1_THEMES_FR=[
     {et:'Kaafiyaa',fr:'L\'oreiller',em:''},
    ]},
 
+  {id:'log',level:1,emoji:'🏠',name:'Mana Jireenyaa',sub:'Dabtaroo, daakuu… / Le logement',
+   words:[
+        // Types de logement
+    {et:'Mana',fr:'La maison',em:'🏠'},
+    {et:'Apartamaantii',fr:'L\'appartement',em:'🏢'},
+    // Pièces principales
+    {et:'Seensa / Galma dura',fr:'L\'entrée',em:'🚪'},
+    {et:'Galma / Mana nyaataa',fr:'Le salon / la salle à manger',em:'🛋️'},
+    {et:'Daakuu',fr:'La cuisine',em:'🍳'},
+    {et:'Kutaa ciisichaa',fr:'La chambre',em:'🛏️'},
+    {et:'Mana fincaanii / Dhiqachuu',fr:'La salle de bain',em:'🚿'},
+    {et:'Mana fincaanii',fr:'Les toilettes',em:'🚽'},
+    {et:'Mana konkolaataa',fr:'Le garage',em:'🚗'},
+   ]},
+
   {id:'muebles_equipamiento', level:1, emoji:'🪑', name:'Meeshaalee Manaa', sub:'Soofa, siree, firiijiidara… / Meubles et équipements',
  words:[
     // Salon
@@ -578,32 +602,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Kuubii dhiqachuu',fr:'La baignoire',em:'🛁'},
     {et:'Shawara',fr:'La douche',em:'🚿'},
   ]},
-
-  {id:'routine',level:1,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'Ka\'uu, rafuu, hojjechuu… / La vie quotidienne',
-   words:[
-    {et:'Ka\'uu / Dammaquu',fr:'Se lever / Se réveiller',em:'⏰'},
-    {et:'Dhiqachuu',fr:'Se doucher / Se laver',em:'🚿'},
-    {et:'Fuula dhiqachuu',fr:'Se laver le visage',em:'🧼'},
-    {et:'Ilkaan eebuu',fr:'Se brosser les dents',em:'🦷'},
-    {et:'Uffachuu',fr:'S\'habiller',em:'👕'},
-    {et:'Ciree nyaachuu',fr:'Prendre le petit-déjeuner',em:'🍳'},
-    {et:'Hojjechuu',fr:'Travailler',em:'💼'},
-    {et:'Barumsaaf deemuu',fr:'Aller à l\'cole / Aller étudier',em:'🎒'},
-    {et:'Baha manaa deemuu',fr:'Sortir de la maison',em:'🚪'},
-    {et:'Bitachuu / Gabaa deemuu',fr:'Faire les courses',em:'🛒'},
-    {et:'Nyaata bilcheessuu / Daakuu hojjechuu',fr:'Faire la cuisine / Cuisiner',em:'🍳'},
-    {et:'Uffata dhiquu',fr:'Laver le linge',em:'🧺'},
-    {et:'Uffata miicuu',fr:'Étendre / Repasser le linge',em:'👕'},
-    {et:'Mana qulqulleessuu',fr:'Nettoyer la maison / Faire le ménage',em:'🧹'},
-    {et:'Meeshaalee dhiquu',fr:'Faire la vaisselle',em:'🍽️'},
-    {et:'Saree oofuu',fr:'Sortir le chien',em:'🐕'},
-    {et:'Bifa cireen duraa nyaachuu',fr:'Déjeuner',em:'🥗'},
-    {et:'Halkan nyaachuu',fr:'Dîner',em:'🍽️'},
-    {et:'Boqochuu',fr:'Se reposer',em:'😮‍💨'},
-    {et:'Telefishina ilaalu',fr:'Regarder la télé',em:'📺'},
-    {et:'Kitaaba dubbisuu',fr:'Lire un livre',em:'📖'},
-    {et:'Ciisuu / Rafuu',fr:'Se coucher / Dormir',em:'🛏️'},
-   ]},
 
   {id:'veth',level:1,emoji:'👗',name:'Uffata',sub:'Shartii, surrii… / Les vêtements',
    words:[
@@ -754,7 +752,7 @@ var LEVEL1_THEMES_FR=[
 
   {id:'plan',level:1,emoji:'🌿',name:'Biqiltoota',sub:'Adaraa, muka, bosonaa… / Les plantes',
  words:[
-    // 🟢 Niveau 1 — Éléments naturels de base, très visuels (7 mots)
+    // Niveau 1 — Éléments naturels de base, très visuels (7 mots)
     {et:'Adaraa / Daadhii',fr:'La fleur',em:'🌸'},
     {et:'Muka',fr:'L\'arbre',em:'🌳'},
     {et:'Caasee',fr:'La feuille',em:'🍃'},
@@ -763,7 +761,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Ija muka',fr:'Le fruit (sur l\'arbre)',em:'🍎'},
     {et:'Sanyii',fr:'La graine',em:'🌻'},
 
-    // 🟡 Niveau 2 — Espaces & Arbres cultivés (La flore utile) (8 mots)
+    // Niveau 2 — Espaces & Arbres cultivés (La flore utile) (8 mots)
     {et:'Bakkee miidhagoo',fr:'Le jardin',em:'🏡'},
     {et:'Daadhii diimaa',fr:'La rose',em:'🌹'},
     {et:'Bosonaa',fr:'La forêt',em:'🌲'},
@@ -773,7 +771,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Qoccoo / Warqee',fr:'L\'Ensete / Faux-bananier',em:'🌴'},
     {et:'Biqiltuu',fr:'La jeune pousse / Le plant',em:'🌱'},
 
-    // 🔴 Niveau 3 — Vocabulaire précis ou à forte valeur culturelle (6 mots)
+    // Niveau 3 — Vocabulaire précis ou à forte valeur culturelle (6 mots)
     {et:'Marga miidhagoo',fr:'La pelouse / Le gazon',em:'⛳'},
     {et:'Odaa',fr:'Le sycomore (Arbre sacré Oromo)',em:'🌳'},
     {et:'Ejersa',fr:'L\'olivier sauvage d\'Afrique',em:'🫒'},
@@ -821,7 +819,7 @@ var LEVEL1_THEMES_FR=[
   {id:'agri',level:1,emoji:'🌾',name:'Qonnaa fi Horsiisee',sub:'Lafa, biqiltuu, loon… / Agriculture et élevage',
  note:'📍 Contexte : région de Shashamané, terres fertiles du Rift éthiopien, caféiculture, élevage bovin traditionnel',
  words:[
-    // 🟢 Niveau 1 — La ferme, la terre et le bétail de base
+    // Niveau 1 — La ferme, la terre et le bétail de base
     {et:'Qonnaan bulaa',fr:'L\'agriculteur / Le fermier',em:'👨‍🌾'},
     {et:'Oyruu / Maasii',fr:'Le champ cultivé',em:'🌾'},
     {et:'Lafa',fr:'La terre / Le domaine',em:'🌍'},
@@ -830,7 +828,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Farda',fr:'Le cheval',em:'🐎'},
     {et:'Harree',fr:'L\'âne (bête de somme)',em:'🫏'},
 
-    // 🟡 Niveau 2 — Les grandes cultures locales & Petit élevage
+    // Niveau 2 — Les grandes cultures locales & Petit élevage
     {et:'Buna',fr:'La culture du café',em:'☕'},
     {et:'Xaafii',fr:'Le teff (céréale locale)',em:'🌾'},
     {et:'Boqqolloo',fr:'Le maïs',em:'🌽'},
@@ -841,7 +839,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Lukkuu',fr:'La volaille / La poule',em:'🐔'},
     {et:'Laga / Burqaa',fr:'La rivière / La source d\'eau',em:'💧'},
 
-    // 🔴 Niveau 3 — Outils, actions de la ferme & Saisons du Rift
+    // Niveau 3 — Outils, actions de la ferme & Saisons du Rift
     {et:'Gindee / Muka marfoo',fr:'La charrue traditionnelle',em:'🪵'},
     {et:'Moteera qonnaa',fr:'Le tracteur',em:'🚜'},
     {et:'Haamtuu',fr:'La faucille',em:'🌾'},
@@ -1500,6 +1498,17 @@ var LEVEL1_THEMES_OR=[
     {et:'Baay\'ee gaarii! / Roorroo!',fr:'Très bien ! / Super !',em:'🌟'}
    ]},
 
+   {id:'pres',level:1,emoji:'🙋',name:'Ofii Beeksisuu',sub:'Maqaa, dachee, magaalaa… / Se présenter',
+   words:[
+    {et:'Maqaa abbaaf eeyyee',fr:'Le nom de famille',em:'👨‍👩‍👧'},{et:'Maqaa ofii',fr:'Le prénom',em:'🏷️'},
+    {et:'Biyya irraa dhufame',fr:'La nationalité',em:'🌍'},{et:'Umurii',fr:'L\'âge',em:'🎂'},
+    {et:'Hojii yookiin ogummaa',fr:'La profession',em:'💼'},{et:'Biyya',fr:'Le pays',em:'🗺️'},
+    {et:'Faransaawi / Faransaawitii',fr:'Français(e)',em:'🇫🇷'},{et:'Oromoo / Itoophiyaanitti',fr:'Éthiopien(ne)',em:'🇪🇹'},
+    {et:'Nan jiraadha',fr:'J\'habite à',em:'🏠'},{et:'Ani / Naan',fr:'Je suis',em:'🧑'},
+    {et:'Waggoota ... qabaadha',fr:'J\'ai ... ans',em:'🎈'},{et:'Maqaan koo ...',fr:'Je m\'appelle',em:'👋'},
+    {et:'Eessa irraa dhufte?',fr:'D\'où es-tu ?',em:'🌍'},{et:'Shashemaneetti dhufeen',fr:'Je suis de Shashemene',em:'🏙️'}
+   ]},
+
   {id:'expr',level:1,emoji:'💬',name:'Jechi Murteessoo',sub:'Hin galeef, maaloo… / Expressions essentielles',
    words:[
     {et:'Hin galeef.',fr:'Je ne comprends pas.',em:'😕'},
@@ -1541,17 +1550,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Meeqa gatii qaba?',fr:'Ça coûte combien ?',em:'💶'},
    ]},
 
-  {id:'pres',level:1,emoji:'🙋',name:'Ofii Beeksisuu',sub:'Maqaa, dachee, magaalaa… / Se présenter',
-   words:[
-    {et:'Maqaa abbaaf eeyyee',fr:'Le nom de famille',em:'👨‍👩‍👧'},{et:'Maqaa ofii',fr:'Le prénom',em:'🏷️'},
-    {et:'Biyya irraa dhufame',fr:'La nationalité',em:'🌍'},{et:'Umurii',fr:'L\'âge',em:'🎂'},
-    {et:'Hojii yookiin ogummaa',fr:'La profession',em:'💼'},{et:'Biyya',fr:'Le pays',em:'🗺️'},
-    {et:'Faransaawi / Faransaawitii',fr:'Français(e)',em:'🇫🇷'},{et:'Oromoo / Itoophiyaanitti',fr:'Éthiopien(ne)',em:'🇪🇹'},
-    {et:'Nan jiraadha',fr:'J\'habite à',em:'🏠'},{et:'Ani / Naan',fr:'Je suis',em:'🧑'},
-    {et:'Waggoota ... qabaadha',fr:'J\'ai ... ans',em:'🎈'},{et:'Maqaan koo ...',fr:'Je m\'appelle',em:'👋'},
-    {et:'Eessa irraa dhufte?',fr:'D\'où es-tu ?',em:'🌍'},{et:'Shashemaneetti dhufeen',fr:'Je suis de Shashemene',em:'🏙️'}
-   ]},
-
   {id:'num',level:1,emoji:'🔢',name:'Lakkoofsa',sub:'Zeerroo irraa hanga kuma lamaa / Zéro à deux mille',
  words:[
   {et:'Zeerroo',fr:'Zéro',em:'0️⃣'},{et:'Tokko',fr:'Un',em:'1️⃣'},{et:'Lama',fr:'Deux',em:'2️⃣'},
@@ -1582,8 +1580,6 @@ var LEVEL1_THEMES_OR=[
   {et:'Kuma',fr:'Mille',em:'1️⃣0️⃣0️⃣0️⃣'},
   {et:'Kuma lama',fr:'Deux mille',em:'2️⃣0️⃣0️⃣0️⃣'}
  ]},
-
-  
 
   {id:'temps',level:1,emoji:'🕐',name:'Sa\'atii fi Sanaata',sub:'Sa\'atii, guyyaa, ji\'aa… / L\'heure et le calendrier',
    note:'📍 En Oromia, la journée est découpée différemment : le café est bu dès l\'aube, le marché de Shashamané est hebdomadaire (mercredi), les saisons oromo diffèrent du calendrier français.',
@@ -1719,16 +1715,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Baay\'ee gaarii! / Roorroo!',fr:'C\'est super ! / C\'est cool !',em:'🌟'}
    ]},
 
-  {id:'col',level:1,emoji:'🎨',name:'Halluu',sub:'Diimaa, magariisa, keelloo… / Les couleurs',
-   words:[
-    {et:'Diimaa',fr:'Rouge',em:'❤️'},{et:'Cuquliisa',fr:'Bleu',em:'💙'},{et:'Magariisa',fr:'Vert',em:'💚'},
-    {et:'Keelloo',fr:'Jaune',em:'💛'},{et:'Burtukaana',fr:'Orange',em:'🧡'},{et:'Adii',fr:'Blanc',em:'🤍'},
-    {et:'Gurraacha',fr:'Noir',em:'🖤'},{et:'Roozii',fr:'Rose',em:'🩷'},
-    {et:'Daallatii / Diimtuuja',fr:'Violet',em:'💜'},{et:'Bunii',fr:'Marron',em:'🤎'},
-    {et:'Garaa garaa / Dulluma',fr:'Gris',em:'🩶'}
-   ]},
-
-  {id:'fam',level:1,emoji:'👨‍👩‍👧',name:'Maatii',sub:'Abbaa, haadha, ilma… / La famille',
+   {id:'fam',level:1,emoji:'👨‍👩‍👧',name:'Maatii',sub:'Abbaa, haadha, ilma… / La famille',
    words:[
    {et:'Haadha / Haadha manaa',fr:'La mère / La maman',em:'👩'},
     {et:'Abbaa / Abbaa manaa',fr:'Le père / Le papa',em:'👨'},
@@ -1743,34 +1730,44 @@ var LEVEL1_THEMES_OR=[
     {et:'Adaadaa (haadha abbaa) / Adda (obboleessa abbaa)',fr:'La tante (côté père) / L\'oncle',em:'👨‍👩‍👧'}
    ]},
 
-  {id:'corps',level:1,emoji:'🧍',name:'Qaamaa',sub:'Mataa, harkaa, miila… / Le corps',
+  {id:'col',level:1,emoji:'🎨',name:'Halluu',sub:'Diimaa, magariisa, keelloo… / Les couleurs',
    words:[
-    {et:'Mataa',fr:'La tête',em:'🗣️'},
-    {et:'Rifeensa',fr:'Les cheveux',em:'💇‍♂️'},
-    {et:'Ija / Ijaan',fr:'L\'œil / Les yeux',em:'👀'},
-    {et:'Funyaan',fr:'Le nez',em:'👃'},
-    {et:'Gurra / Gurraan',fr:'L\'oreille / Les oreilles',em:'👂'},
-    {et:'Afaan',fr:'La bouche',em:'👄'},
-    {et:'Hidhii',fr:'Les lèvres',em:'💋'},
-    {et:'Arraba',fr:'La langue',em:'👅'},
-    {et:'Ilkaan',fr:'La dent / Les dents',em:'🦷'},
-    {et:'Morma',fr:'Le cou',em:''},
-    {et:'Harka gubbaa',fr:'Le bras / Les bras',em:'💪'},
-    {et:'Harka / Harkaan',fr:'La main / Les mains',em:'✋'},
-    {et:'Quba / Qubaan',fr:'Le doigt / Les doigts',em:'☝️'},
-    {et:'Quba miila / Ciltuu',fr:'L\'orteil / L\'ongle',em:'💅'},
-    {et:'Dugda',fr:'Le dos',em:''},
-    {et:'Garaa',fr:'Le ventre',em:'🫃'},
-    {et:'Miila / Miilaan',fr:'La jambe / Les jambes',em:'🦵'},
-    {et:'Miila jalaa / Miilaafi',fr:'Le pied / Les pieds',em:'🦶'},
-    {et:'Onnee',fr:'Le cœur',em:'❤️'},
-    {et:'Sammuu',fr:'Le cerveau',em:'🧠'},
-    {et:'Lafee / Lafaan',fr:'L\'os / Les os',em:'🦴'}
+    {et:'Diimaa',fr:'Rouge',em:'❤️'},{et:'Cuquliisa',fr:'Bleu',em:'💙'},{et:'Magariisa',fr:'Vert',em:'💚'},
+    {et:'Keelloo',fr:'Jaune',em:'💛'},{et:'Burtukaana',fr:'Orange',em:'🧡'},{et:'Adii',fr:'Blanc',em:'🤍'},
+    {et:'Gurraacha',fr:'Noir',em:'🖤'},{et:'Roozii',fr:'Rose',em:'🩷'},
+    {et:'Daallatii / Diimtuuja',fr:'Violet',em:'💜'},{et:'Bunii',fr:'Marron',em:'🤎'},
+    {et:'Garaa garaa / Dulluma',fr:'Gris',em:'🩶'}
    ]},
 
-  {id:'nour',level:1,emoji:'🍽️',name:'Nyaata',sub:'Buddeena, muduraa, injera… / La nourriture',
+  {id:'routine',level:1,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'Ka\'uu, rafuu, hojjechuu… / La vie quotidienne',
+   note:'📍 Journée type à Shashamané : cérémonie du café le matin, marché hebdomadaire, vie communautaire',
+   words:[
+    {et:'Ka\'uu / Dammaquu',fr:'Se lever / Se réveiller',em:'⏰'},
+    {et:'Dhiqachuu',fr:'Se doucher / Se laver',em:'🚿'},
+    {et:'Fuula dhiqachuu',fr:'Se laver le visage',em:'🧼'},
+    {et:'Ilkaan eebuu',fr:'Se brosser les dents',em:'🦷'},
+    {et:'Uffachuu',fr:'S\'habiller',em:'👔'},
+    {et:'Ciree nyaachuu',fr:'Prendre le petit-déjeuner',em:'🍳'},
+    {et:'Buna dhuguuf ta\'uu',fr:'Prendre le café du matin',em:'☕'},
+    {et:'Hojjechuu',fr:'Travailler',em:'💼'},
+    {et:'Barumsaaf deemuu',fr:'Aller à l\'école / Aller étudier',em:'🎒'},
+    {et:'Baha manaa deemuu',fr:'Sortir de la maison',em:'🚪'},
+    {et:'Bitachuu / Gabaa deemuu',fr:'Faire les courses / Aller au marché',em:'🛒'},
+    {et:'Nyaata bilcheessuu / Daakuu hojjechuu',fr:'Faire la cuisine / Cuisiner',em:'🍳'},
+    {et:'Uffata dhiquu',fr:'Laver le linge',em:'🧺'},
+    {et:'Mana qulqulleessuu',fr:'Nettoyer la maison / Faire le ménage',em:'🧹'},
+    {et:'Meeshaalee dhiquu',fr:'Faire la vaisselle',em:'🍽️'},
+    {et:'Irbaata nyaachuu',fr:'Déjeuner',em:'🥙'},
+    {et:'Halkan nyaachuu',fr:'Dîner',em:'🍽️'},
+    {et:'Boqochuu',fr:'Se reposer',em:'😌'},
+    {et:'Telefishina ilaalu',fr:'Regarder la télé',em:'📺'},
+    {et:'Kitaaba dubbisuu',fr:'Lire un livre',em:'📖'},
+    {et:'Ciisuu / Rafuu',fr:'Se coucher / Dormir',em:'🛏️'},
+   ]},
+
+   {id:'nour',level:1,emoji:'🍽️',name:'Nyaata',sub:'Buddeena, muduraa, injera… / La nourriture',
  words:[
-    // 🟢 Niveau 1 — Catégories générales & Base de l'alimentation
+    // Niveau 1 — Catégories générales & Base de l'alimentation
     {et:'Muduraa',fr:'Les fruits',em:'🍉'},
     {et:'Kuduraa',fr:'Les légumes',em:'🥦'},
     {et:'Buddeena / Injeeraa',fr:'L\'injera / La galette',em:'🫓'},
@@ -1780,7 +1777,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Dinnichi',fr:'La pomme de terre',em:'🥔'},
     {et:'Foonii dinnichaa',fr:'Les frites',em:'🍟'},
 
-    // 🟡 Niveau 2 — Protéines, produits laitiers & spécialités locales
+    // Niveau 2 — Protéines, produits laitiers & spécialités locales
     {et:'Foon',fr:'La viande',em:'🥩'},
     {et:'Lukkuu',fr:'Le poulet',em:'🍗'},
     {et:'Qurxummii',fr:'Le poisson',em:'🐟'},
@@ -1791,7 +1788,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Dhadhaa',fr:'Le beurre',em:'🧈'},
     {et:'Buna',fr:'Le café (boisson)',em:'☕'},
 
-    // 🔴 Niveau 3 — Fruits, légumes, condiments & épices du marché
+    // Niveau 3 — Fruits, légumes, condiments & épices du marché
     {et:'Berbere',fr:'Le berbéré (piment rouge)',em:'🌶️'},
     {et:'Maangoo',fr:'La mangue',em:'🥭'},
     {et:'Muzii',fr:'La banane',em:'🍌'},
@@ -1830,7 +1827,53 @@ var LEVEL1_THEMES_OR=[
     {et:'Araqee',fr:'L\'araqé (alcool éthiopien)',em:'🍶'},
    ]},
 
-  {id:'lieux',level:1,emoji:'🏙️',name:'Bakkoota Barbaachisoo',sub:'Gabaa, daandii, bunaa… / Les lieux importants',
+{id:'rest',level:1,emoji:'🍽️',name:'Mana Nyaataa',sub:'Menuu, kafaltii, teessoo… / Au restaurant',
+   words:[
+      // Arrivée
+    {et:'Balbala alaa',fr:'La terrasse',em:'☀️'},
+    {et:'Teessoo',fr:'La table',em:'🪑'},
+    {et:'Teessoon kun duwwaa dha?',fr:'Cette table est libre ?',em:'🪑'},
+    // Commander
+    {et:'Tajaajilaa / Tajaajiltu',fr:'Le serveur / La serveuse',em:'🧑‍🍳'},
+    {et:'Liistii nyaataa',fr:'La carte',em:'📋'},
+    {et:'Menuu guyyaa',fr:'Le menu du jour',em:'🍱'},
+    {et:'Gaafachuu',fr:'Commander',em:'🙋'},
+    {et:'Maal yaaddu?',fr:'Que recommandez-vous ?',em:'👨‍🍳'},
+    // Régimes
+    {et:'Gluten hin qabu',fr:'Sans gluten',em:'🌾'},
+    {et:'Foon hin nyaatu',fr:'Végétarien / Végétarienne',em:'🥦'},
+    // Repas
+    {et:'Fuullaa xinnoo',fr:'L\'amuse-bouche',em:'🫒'},
+    {et:'Fuullaa dura',fr:'L\'entrée',em:'🥗'},
+    {et:'Nyaata ijoo',fr:'Le plat principal',em:'🍖'},
+    {et:'Dhaamsa nyaataa',fr:'Le dessert',em:'🍮'},
+    {et:'Saandiwichii / Buddeena',fr:'Le sandwich',em:'🥖'},
+    {et:'Fudhachuuf',fr:'À emporter',em:'🥡'},
+    // Addition
+    {et:'Baasii nyaataa',fr:'L\'addition',em:'💶'},
+    {et:'Qarshii dabalataa',fr:'Le pourboire',em:'💰'},
+    {et:'Qarshii dabalataan dabalamee jira',fr:'Le pourboire est inclus',em:'✅'},
+   ]},
+
+{id:'orient',level:1,emoji:'🧭',name:'Karaa Barbaaduu',sub:'Bitaa, mirga… / S\'orienter',
+   words:[
+   // Directions
+    {et:'Kallattii itti fufi',fr:'Tout droit',em:'⬆️'},
+    {et:'Bitatti',fr:'À gauche',em:'⬅️'},
+    {et:'Mirgatti',fr:'À droite',em:'➡️'},
+    // Position relative
+    {et:'Fuuldura',fr:'Devant',em:'🔜'},
+    {et:'Duuba',fr:'Derrière',em:'🔙'},
+    {et:'Cinaa',fr:'À côté',em:'↔️'},
+    {et:'Fuuldura / Eegalan',fr:'En face',em:'🔄'},
+    // Distance
+    {et:'Dhiyoo',fr:'Près',em:'📍'},
+    {et:'Fagoo',fr:'Loin',em:'🌅'},
+    // Outil
+    {et:'Kaartaa',fr:'Le plan / La carte',em:'🗺️'},
+    ]},
+
+{id:'lieux',level:1,emoji:'🏙️',name:'Bakkoota Barbaachisoo',sub:'Gabaa, daandii, bunaa… / Les lieux importants',
    words:[
     // Lieux de vie / nature
     {et:'Magaalaa',fr:'La ville',em:'🏙️'},
@@ -1862,25 +1905,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Yuniversitii',fr:'L\'université',em:'🏛️'},
    ]},
 
-  {id:'orient',level:1,emoji:'🧭',name:'Karaa Barbaaduu',sub:'Bitaa, mirga… / S\'orienter',
-   words:[
-   // Directions
-    {et:'Kallattii itti fufi',fr:'Tout droit',em:'⬆️'},
-    {et:'Bitatti',fr:'À gauche',em:'⬅️'},
-    {et:'Mirgatti',fr:'À droite',em:'➡️'},
-    // Position relative
-    {et:'Fuuldura',fr:'Devant',em:'🔜'},
-    {et:'Duuba',fr:'Derrière',em:'🔙'},
-    {et:'Cinaa',fr:'À côté',em:'↔️'},
-    {et:'Fuuldura / Eegalan',fr:'En face',em:'🔄'},
-    // Distance
-    {et:'Dhiyoo',fr:'Près',em:'📍'},
-    {et:'Fagoo',fr:'Loin',em:'🌅'},
-    // Outil
-    {et:'Kaartaa',fr:'Le plan / La carte',em:'🗺️'},
-    ]},
-
-  {id:'trans',level:1,emoji:'🚌',name:'Geejjiba',sub:'Baasii, gaarii, konkolaataa… / Les transports',
+ {id:'trans',level:1,emoji:'🚌',name:'Geejjiba',sub:'Baasii, gaarii, konkolaataa… / Les transports',
  words:[
     // Transports en commun
     {et:'Baasii / Konkolaataa ummataa',fr:'Le bus',em:'🚌'},
@@ -1906,47 +1931,29 @@ var LEVEL1_THEMES_OR=[
     {et:'Iddoo baasii / Tarmaala',fr:'La gare routière / station',em:'🏣'}
  ]},
 
-  {id:'rest',level:1,emoji:'🍽️',name:'Mana Nyaataa',sub:'Menuu, kafaltii, teessoo… / Au restaurant',
+  {id:'corps',level:1,emoji:'🧍',name:'Qaamaa',sub:'Mataa, harkaa, miila… / Le corps',
    words:[
-      // Arrivée
-    {et:'Balbala alaa',fr:'La terrasse',em:'☀️'},
-    {et:'Teessoo',fr:'La table',em:'🪑'},
-    {et:'Teessoon kun duwwaa dha?',fr:'Cette table est libre ?',em:'🪑'},
-    // Commander
-    {et:'Tajaajilaa / Tajaajiltu',fr:'Le serveur / La serveuse',em:'🧑‍🍳'},
-    {et:'Liistii nyaataa',fr:'La carte',em:'📋'},
-    {et:'Menuu guyyaa',fr:'Le menu du jour',em:'🍱'},
-    {et:'Gaafachuu',fr:'Commander',em:'🙋'},
-    {et:'Maal yaaddu?',fr:'Que recommandez-vous ?',em:'👨‍🍳'},
-    // Régimes
-    {et:'Gluten hin qabu',fr:'Sans gluten',em:'🌾'},
-    {et:'Foon hin nyaatu',fr:'Végétarien / Végétarienne',em:'🥦'},
-    // Repas
-    {et:'Fuullaa xinnoo',fr:'L\'amuse-bouche',em:'🫒'},
-    {et:'Fuullaa dura',fr:'L\'entrée',em:'🥗'},
-    {et:'Nyaata ijoo',fr:'Le plat principal',em:'🍖'},
-    {et:'Dhaamsa nyaataa',fr:'Le dessert',em:'🍮'},
-    {et:'Saandiwichii / Buddeena',fr:'Le sandwich',em:'🥖'},
-    {et:'Fudhachuuf',fr:'À emporter',em:'🥡'},
-    // Addition
-    {et:'Baasii nyaataa',fr:'L\'addition',em:'💶'},
-    {et:'Qarshii dabalataa',fr:'Le pourboire',em:'💰'},
-    {et:'Qarshii dabalataan dabalamee jira',fr:'Le pourboire est inclus',em:'✅'},
-   ]},
-
-  {id:'log',level:1,emoji:'🏠',name:'Mana Jireenyaa',sub:'Dabtaroo, daakuu… / Le logement',
-   words:[
-        // Types de logement
-    {et:'Mana',fr:'La maison',em:'🏠'},
-    {et:'Apartamaantii',fr:'L\'appartement',em:'🏢'},
-    // Pièces principales
-    {et:'Seensa / Galma dura',fr:'L\'entrée',em:'🚪'},
-    {et:'Galma / Mana nyaataa',fr:'Le salon / la salle à manger',em:'🛋️'},
-    {et:'Daakuu',fr:'La cuisine',em:'🍳'},
-    {et:'Kutaa ciisichaa',fr:'La chambre',em:'🛏️'},
-    {et:'Mana fincaanii / Dhiqachuu',fr:'La salle de bain',em:'🚿'},
-    {et:'Mana fincaanii',fr:'Les toilettes',em:'🚽'},
-    {et:'Mana konkolaataa',fr:'Le garage',em:'🚗'},
+    {et:'Mataa',fr:'La tête',em:'🗣️'},
+    {et:'Rifeensa',fr:'Les cheveux',em:'💇‍♂️'},
+    {et:'Ija / Ijaan',fr:'L\'œil / Les yeux',em:'👀'},
+    {et:'Funyaan',fr:'Le nez',em:'👃'},
+    {et:'Gurra / Gurraan',fr:'L\'oreille / Les oreilles',em:'👂'},
+    {et:'Afaan',fr:'La bouche',em:'👄'},
+    {et:'Hidhii',fr:'Les lèvres',em:'💋'},
+    {et:'Arraba',fr:'La langue',em:'👅'},
+    {et:'Ilkaan',fr:'La dent / Les dents',em:'🦷'},
+    {et:'Morma',fr:'Le cou',em:''},
+    {et:'Harka gubbaa',fr:'Le bras / Les bras',em:'💪'},
+    {et:'Harka / Harkaan',fr:'La main / Les mains',em:'✋'},
+    {et:'Quba / Qubaan',fr:'Le doigt / Les doigts',em:'☝️'},
+    {et:'Quba miila / Ciltuu',fr:'L\'orteil / L\'ongle',em:'💅'},
+    {et:'Dugda',fr:'Le dos',em:''},
+    {et:'Garaa',fr:'Le ventre',em:'🫃'},
+    {et:'Miila / Miilaan',fr:'La jambe / Les jambes',em:'🦵'},
+    {et:'Miila jalaa / Miilaafi',fr:'Le pied / Les pieds',em:'🦶'},
+    {et:'Onnee',fr:'Le cœur',em:'❤️'},
+    {et:'Sammuu',fr:'Le cerveau',em:'🧠'},
+    {et:'Lafee / Lafaan',fr:'L\'os / Les os',em:'🦴'}
    ]},
 
   {id:'objets',level:1,emoji:'🔑',name:'Meeshaalee Guyyaatii',sub:'Bilbila, hirnaa… / Objets du quotidien',
@@ -1984,6 +1991,21 @@ var LEVEL1_THEMES_OR=[
     {et:'Kaafiyaa',fr:'L\'oreiller',em:''},
    ]},
 
+  {id:'log',level:1,emoji:'🏠',name:'Mana Jireenyaa',sub:'Dabtaroo, daakuu… / Le logement',
+   words:[
+        // Types de logement
+    {et:'Mana',fr:'La maison',em:'🏠'},
+    {et:'Apartamaantii',fr:'L\'appartement',em:'🏢'},
+    // Pièces principales
+    {et:'Seensa / Galma dura',fr:'L\'entrée',em:'🚪'},
+    {et:'Galma / Mana nyaataa',fr:'Le salon / la salle à manger',em:'🛋️'},
+    {et:'Daakuu',fr:'La cuisine',em:'🍳'},
+    {et:'Kutaa ciisichaa',fr:'La chambre',em:'🛏️'},
+    {et:'Mana fincaanii / Dhiqachuu',fr:'La salle de bain',em:'🚿'},
+    {et:'Mana fincaanii',fr:'Les toilettes',em:'🚽'},
+    {et:'Mana konkolaataa',fr:'Le garage',em:'🚗'},
+   ]},
+
   {id:'muebles_equipamiento', level:1, emoji:'🪑', name:'Meeshaalee Manaa', sub:'Soofa, siree, firiijiidara… / Meubles et équipements',
  words:[
     // Salon
@@ -2007,32 +2029,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Kuubii dhiqachuu',fr:'La baignoire',em:'🛁'},
     {et:'Shawara',fr:'La douche',em:'🚿'},
   ]},
-
-  {id:'routine',level:1,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'Ka\'uu, rafuu, hojjechuu… / La vie quotidienne',
-   note:'📍 Journée type à Shashamané : cérémonie du café le matin, marché hebdomadaire, vie communautaire',
-   words:[
-    {et:'Ka\'uu / Dammaquu',fr:'Se lever / Se réveiller',em:'⏰'},
-    {et:'Dhiqachuu',fr:'Se doucher / Se laver',em:'🚿'},
-    {et:'Fuula dhiqachuu',fr:'Se laver le visage',em:'🧼'},
-    {et:'Ilkaan eebuu',fr:'Se brosser les dents',em:'🦷'},
-    {et:'Uffachuu',fr:'S\'habiller',em:'👔'},
-    {et:'Ciree nyaachuu',fr:'Prendre le petit-déjeuner',em:'🍳'},
-    {et:'Buna dhuguuf ta\'uu',fr:'Prendre le café du matin',em:'☕'},
-    {et:'Hojjechuu',fr:'Travailler',em:'💼'},
-    {et:'Barumsaaf deemuu',fr:'Aller à l\'école / Aller étudier',em:'🎒'},
-    {et:'Baha manaa deemuu',fr:'Sortir de la maison',em:'🚪'},
-    {et:'Bitachuu / Gabaa deemuu',fr:'Faire les courses / Aller au marché',em:'🛒'},
-    {et:'Nyaata bilcheessuu / Daakuu hojjechuu',fr:'Faire la cuisine / Cuisiner',em:'🍳'},
-    {et:'Uffata dhiquu',fr:'Laver le linge',em:'🧺'},
-    {et:'Mana qulqulleessuu',fr:'Nettoyer la maison / Faire le ménage',em:'🧹'},
-    {et:'Meeshaalee dhiquu',fr:'Faire la vaisselle',em:'🍽️'},
-    {et:'Irbaata nyaachuu',fr:'Déjeuner',em:'🥙'},
-    {et:'Halkan nyaachuu',fr:'Dîner',em:'🍽️'},
-    {et:'Boqochuu',fr:'Se reposer',em:'😌'},
-    {et:'Telefishina ilaalu',fr:'Regarder la télé',em:'📺'},
-    {et:'Kitaaba dubbisuu',fr:'Lire un livre',em:'📖'},
-    {et:'Ciisuu / Rafuu',fr:'Se coucher / Dormir',em:'🛏️'},
-   ]},
 
   {id:'veth',level:1,emoji:'👗',name:'Uffata',sub:'Shartii, surrii… / Les vêtements',
    words:[
@@ -2183,7 +2179,7 @@ var LEVEL1_THEMES_OR=[
 
   {id:'plan',level:1,emoji:'🌿',name:'Biqiltoota',sub:'Adaraa, muka, bosonaa… / Les plantes',
  words:[
-    // 🟢 Niveau 1 — Éléments naturels de base, très visuels
+    // Niveau 1 — Éléments naturels de base, très visuels
     {et:'Adaraa / Daadhii',fr:'La fleur',em:'🌸'},
     {et:'Muka',fr:'L\'arbre',em:'🌳'},
     {et:'Caasee',fr:'La feuille',em:'🍃'},
@@ -2192,7 +2188,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Ija muka',fr:'Le fruit (sur l\'arbre)',em:'🍎'},
     {et:'Sanyii',fr:'La graine',em:'🌻'},
 
-    // 🟡 Niveau 2 — Espaces & Arbres cultivés (La flore utile)
+    // Niveau 2 — Espaces & Arbres cultivés (La flore utile)
     {et:'Bakkee miidhagoo',fr:'Le jardin',em:'🏡'},
     {et:'Daadhii diimaa',fr:'La rose',em:'🌹'},
     {et:'Bosonaa',fr:'La forêt',em:'🌲'},
@@ -2202,7 +2198,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Qoccoo / Warqee',fr:'L\'Ensete / Faux-bananier',em:'🌴'},
     {et:'Biqiltuu',fr:'La jeune pousse / Le plant',em:'🌱'},
 
-    // 🔴 Niveau 3 — Vocabulaire précis ou à forte valeur culturelle
+    // Niveau 3 — Vocabulaire précis ou à forte valeur culturelle
     {et:'Marga miidhagoo',fr:'La pelouse / Le gazon',em:'⛳'},
     {et:'Odaa',fr:'Le sycomore (Arbre sacré Oromo)',em:'🌳'},
     {et:'Ejersa',fr:'L\'olivier sauvage d\'Afrique',em:'🫒'},
@@ -2250,7 +2246,7 @@ var LEVEL1_THEMES_OR=[
   {id:'agri',level:1,emoji:'🌾',name:'Qonnaa fi Horsiisee',sub:'Lafa, biqiltuu, loon… / Agriculture et élevage',
  note:'📍 Contexte : région de Shashamané, terres fertiles du Rift éthiopien, caféiculture, élevage bovin traditionnel',
  words:[
-    // 🟢 Niveau 1 — La ferme, la terre et le bétail de base
+    // Niveau 1 — La ferme, la terre et le bétail de base
     {et:'Qonnaan bulaa',fr:'L\'agriculteur / Le fermier',em:'👨‍🌾'},
     {et:'Oyruu / Maasii',fr:'Le champ cultivé',em:'🌾'},
     {et:'Lafa',fr:'La terre / Le domaine',em:'🌍'},
@@ -2259,7 +2255,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Farda',fr:'Le cheval',em:'🐎'},
     {et:'Harree',fr:'L\'âne (bête de somme)',em:'🫏'},
 
-    // 🟡 Niveau 2 — Les grandes cultures locales & Petit élevage
+    // Niveau 2 — Les grandes cultures locales & Petit élevage
     {et:'Buna',fr:'La culture du café',em:'☕'},
     {et:'Xaafii',fr:'Le teff (céréale de base)',em:'🌾'},
     {et:'Boqqolloo',fr:'Le maïs',em:'🌽'},
@@ -2270,7 +2266,7 @@ var LEVEL1_THEMES_OR=[
     {et:'Lukkuu',fr:'La volaille / La poule',em:'🐔'},
     {et:'Laga / Burqaa',fr:'La rivière / La source d\'eau',em:'💧'},
 
-    // 🔴 Niveau 3 — Outils, actions de la ferme & Saisons du Rift
+    // Niveau 3 — Outils, actions de la ferme & Saisons du Rift
     {et:'Gindee / Muka marfoo',fr:'La charrue traditionnelle',em:'🪵'},
     {et:'Moteera qonnaa',fr:'Le tracteur',em:'🚜'},
     {et:'Haamtuu',fr:'La faucille',em:'🌾'},
