@@ -340,7 +340,7 @@ var LEVEL1_THEMES_FR=[
 
 {id:'nour',level:1,emoji:'🍽️',name:'Nyaata',sub:'Buddeena, muduraa, injera… / La nourriture',
  words:[
-    // 🟢 Niveau 1 — Catégories générales & Base de l'alimentation
+    // 🟢 Niveau 1 — Catégories générales & Base de l'alimentation (8 mots)
     {et:'Muduraa',fr:'Les fruits',em:'🍉'},
     {et:'Kuduraa',fr:'Les légumes',em:'🥦'},
     {et:'Buddeena / Injeeraa',fr:'L\'injera / La galette',em:'🫓'},
@@ -350,7 +350,7 @@ var LEVEL1_THEMES_FR=[
     {et:'Dinnichi',fr:'La pomme de terre',em:'🥔'},
     {et:'Foonii dinnichaa',fr:'Les frites',em:'🍟'},
 
-    // 🟡 Niveau 2 — Protéines, plats locaux & produits laitiers
+    // 🟡 Niveau 2 — Protéines, produits laitiers & spécialités locales (9 mots)
     {et:'Foon',fr:'La viande',em:'🥩'},
     {et:'Lukkuu',fr:'Le poulet',em:'🍗'},
     {et:'Qurxummii',fr:'Le poisson',em:'🐟'},
@@ -361,13 +361,15 @@ var LEVEL1_THEMES_FR=[
     {et:'Dhadhaa',fr:'Le beurre',em:'🧈'},
     {et:'Buna',fr:'Le café (boisson)',em:'☕'},
 
-    // 🔴 Niveau 3 — Épices, fruits, légumes & condiments du marché
+    // 🔴 Niveau 3 — Épices, fruits, légumes & condiments du marché (17 mots)
     {et:'Berbere',fr:'Le berbéré (piment rouge)',em:'🌶️'},
     {et:'Maangoo',fr:'La mangue',em:'🥭'},
     {et:'Muzii',fr:'La banane',em:'🍌'},
     {et:'Burtukaana',fr:'L\'orange',em:'🍊'},
     {et:'Limiin',fr:'Le citron',em:'🍋'},
     {et:'Avokaadoo',fr:'L\'avocat',em:'🥑'},
+    {et:'Pomii',fr:'La pomme',em:'🍎'},
+    {et:'Mukarroo',fr:'La fraise',em:'🍓'},
     {et:'Timaatimii',fr:'La tomate',em:'🍅'},
     {et:'Karootii',fr:'La carotte',em:'🥕'},
     {et:'Qullubbii diimaa',fr:'L\'oignon rouge',em:'🧅'},
@@ -742,19 +744,34 @@ var LEVEL1_THEMES_FR=[
 },
 
   {id:'plan',level:1,emoji:'🌿',name:'Biqiltoota',sub:'Adaraa, muka, bosonaa… / Les plantes',
-   words:[
-    // Niveau 1 — Éléments naturels de base, très visuels
+ words:[
+    // 🟢 Niveau 1 — Éléments naturels de base, très visuels (7 mots)
     {et:'Adaraa / Daadhii',fr:'La fleur',em:'🌸'},
     {et:'Muka',fr:'L\'arbre',em:'🌳'},
     {et:'Caasee',fr:'La feuille',em:'🍃'},
     {et:'Marga',fr:'L\'herbe',em:'🌱'},
-    // 🟡 Niveau 2 — Espaces & végétaux plus spécifiques
+    {et:'Hidda',fr:'La racine',em:'🪵'},
+    {et:'Ija muka',fr:'Le fruit (sur l\'arbre)',em:'🍎'},
+    {et:'Sanyii',fr:'La graine',em:'🌻'},
+
+    // 🟡 Niveau 2 — Espaces & Arbres cultivés (La flore utile) (8 mots)
     {et:'Bakkee miidhagoo',fr:'Le jardin',em:'🏡'},
     {et:'Daadhii diimaa',fr:'La rose',em:'🌹'},
     {et:'Bosonaa',fr:'La forêt',em:'🌲'},
-    // 🔴 Niveau 3 — Vocabulaire plus précis ou contextuel
+    {et:'Muka Maangoo',fr:'Le manguier',em:'🥭'},
+    {et:'Muka Paappaayaa',fr:'Le papayer',em:'🍈'},
+    {et:'Muka Avokaadoo',fr:'L\'avocatier',em:'🥑'},
+    {et:'Qoccoo / Warqee',fr:'L\'Ensete / Faux-bananier',em:'🌴'},
+    {et:'Biqiltuu',fr:'La jeune pousse / Le plant',em:'🌱'},
+
+    // 🔴 Niveau 3 — Vocabulaire précis ou à forte valeur culturelle (6 mots)
     {et:'Marga miidhagoo',fr:'La pelouse / Le gazon',em:'⛳'},
-   ]},
+    {et:'Odaa',fr:'Le sycomore (Arbre sacré Oromo)',em:'🌳'},
+    {et:'Ejersa',fr:'L\'olivier sauvage d\'Afrique',em:'🫒'},
+    {et:'Heexoo',fr:'Le kousso (arbre médicinal)',em:'🌿'},
+    {et:'Oyruu / Maasii',fr:'Le champ cultivé',em:'👨‍🌾'},
+    {et:'Qoraan',fr:'Le bois de chauffage',em:'🪵'}
+ ]},
 
   {id:'anim',level:1,emoji:'🐘',name:'Bineeldota',sub:'Saree, adurree, sangaa… / Les animaux',
    words:[
