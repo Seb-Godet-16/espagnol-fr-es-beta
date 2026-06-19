@@ -5,7 +5,8 @@
 ======================================== */
 
 var LEVEL1_THEMES_FR=[
- {id: 'alpha',
+
+  {id: 'alpha',
   level:1,
   emoji: '🔤',
   name: 'Qubee',
@@ -52,6 +53,7 @@ var LEVEL1_THEMES_FR=[
     { q: 'Sagalee kam dhageessan?', audio: 'Z', opts: ['S', 'X', 'Z', 'J'], ans: 2 }
   ]
 },
+
   {id:'salut',level:1,emoji:'👋',name:'Nagaa Gaafachuu',sub:'Akkam, galatoomaa… / Les salutations',
    words:[
     {et:'Akkam bulte / Akkam boolte',fr:'Bonjour (le matin)',em:'🌅'},{et:'Akkam ooltee',fr:'Bon après-midi',em:'🌆'},
@@ -69,6 +71,48 @@ var LEVEL1_THEMES_FR=[
     {et:'Dafqaan jira / Fayyaa miti',fr:'Je ne vais pas bien / Je n\'ai pas la forme',em:'😔'},
     {et:'Baay\'ee gaarii! / Roorroo!',fr:'Très bien ! / Super !',em:'🌟'}
    ]},
+
+  {id:'expr',level:1,emoji:'💬',name:'Jechi Murteessoo',sub:'Hin galeef, maaloo… / Expressions essentielles',
+   words:[
+    {et:'Hin galeef.',fr:'Je ne comprends pas.',em:'😕'},
+    {et:'Galeef.',fr:'Je comprends.',em:'✅'},
+    {et:'Xiqqoo dubbadhu.',fr:'Parlez plus lentement, s\'il vous plaît.',em:'🐢'},
+    {et:'Irra deebi\'i, maaloo.',fr:'Répétez, s\'il vous plaît.',em:'🔄'},
+    {et:'Maal jechuudha?',fr:'Qu\'est-ce que ça veut dire ?',em:'📖'},
+    {et:'Afaan Faransaayi xiqqoo dubbadha.',fr:'Je parle un peu français.',em:'🇫🇷'},
+    {et:'Afaan Oromoo xiqqoo dubbadha.',fr:'Je parle un peu oromo.',em:'🇪🇹'},
+    {et:'Gargaarsa barbaada.',fr:'J\'ai besoin d\'aide.',em:'🆘'},
+    {et:'Rakkoo hin qabu.',fr:'Pas de problème.',em:'👌'},
+    {et:'Beekaa.',fr:'Je sais.',em:'💡'},
+    {et:'Hin beeku.',fr:'Je ne sais pas.',em:'🤷'},
+    {et:'Yaada gaarii!',fr:'Bonne idée !',em:'💡'},
+    {et:'Anis / Anaanis!',fr:'Moi aussi !',em:'🙋'},
+    {et:'Lakki, galatoomi.',fr:'Non merci.',em:'🙅'},
+    {et:'Baay\'ee gaarii dha!',fr:'C\'est très bien !',em:'🌟'},
+    {et:'Maaloo?',fr:'S\'il vous plaît ? / Pardon ?',em:'🙏'},
+    {et:'Sirriidha!',fr:'C\'est exact ! / C\'est juste !',em:'✔️'},
+    {et:'Sirrii miti.',fr:'Ce n\'est pas exact.',em:'❌'},
+   ]},
+
+  {id:'interro',level:1,emoji:'❓',name:'Gaaffii Addaadaa',sub:'Eessa, yoom, maaliif… / Mots interrogatifs',
+   words:[
+    {et:'Eessa?',fr:'Où ?',em:'📍'},
+    {et:'Yoom?',fr:'Quand ?',em:'📅'},
+    {et:'Maaliif? / Maaf?',fr:'Pourquoi ?',em:'🤔'},
+    {et:'Akkamiin? / Maaliin?',fr:'Comment ?',em:'💬'},
+    {et:'Eenyu?',fr:'Qui ?',em:'🙋'},
+    {et:'Maal? / Maali?',fr:'Quoi ? / Qu\'est-ce que ?',em:'❓'},
+    {et:'Meeqa?',fr:'Combien ?',em:'🔢'},
+    {et:'Kami? / Isa kamii?',fr:'Lequel ? / Laquelle ?',em:'👆'},
+    {et:'Eessa jira?',fr:'Où est… ?',em:'🗺️'},
+    {et:'Yoom dhufa?',fr:'Ça arrive quand ?',em:'🕐'},
+    {et:'Maaliif barbaadda?',fr:'Pourquoi tu veux ?',em:'🤷'},
+    {et:'Akkamiin jedha?',fr:'Comment dit-on ?',em:'💬'},
+    {et:'Eenyu kan?',fr:'C\'est qui ?',em:'👤'},
+    {et:'Maal jechuudha?',fr:'Qu\'est-ce que ça veut dire ?',em:'📖'},
+    {et:'Meeqa gatii qaba?',fr:'Ça coûte combien ?',em:'💶'},
+   ]},
+
   {id:'pres',level:1,emoji:'🙋',name:'Ofii Beeksisuu',sub:'Maqaa, dachee, magaalaa… / Se présenter',
    words:[
     {et:'Maqaa abbaaf eeyyee',fr:'Le nom de famille',em:'👨‍👩‍👧'},{et:'Maqaa ofii',fr:'Le prénom',em:'🏷️'},
@@ -79,114 +123,8 @@ var LEVEL1_THEMES_FR=[
     {et:'Waggoota ... qabaadha',fr:'J\'ai ... ans',em:'🎈'},{et:'Maqaan koo ...',fr:'Je m\'appelle',em:'👋'},
     {et:'Eessa irraa dhufte?',fr:'D\'où es-tu ?',em:'🌍'},{et:'Shashemaneetti dhufeen',fr:'Je suis de Shashemene',em:'🏙️'}
    ]},
-  {id:'orient',level:1,emoji:'🧭',name:'Karaa Barbaaduu',sub:'Bitaa, mirga… / S\'orienter',
-   words:[
-   // Directions
-    {et:'Kallattii itti fufi',fr:'Tout droit',em:'⬆️'},
-    {et:'Bitatti',fr:'À gauche',em:'⬅️'},
-    {et:'Mirgatti',fr:'À droite',em:'➡️'},
-    // Position relative
-    {et:'Fuuldura',fr:'Devant',em:'🔜'},
-    {et:'Duuba',fr:'Derrière',em:'🔙'},
-    {et:'Cinaa',fr:'À côté',em:'↔️'},
-    {et:'Fuuldura / Eegalan',fr:'En face',em:'🔄'},
-    // Distance
-    {et:'Dhiyoo',fr:'Près',em:'📍'},
-    {et:'Fagoo',fr:'Loin',em:'🌅'},
-    // Outil
-    {et:'Kaartaa',fr:'Le plan / La carte',em:'🗺️'},
-    ]},
-  {id:'lieux',level:1,emoji:'🏙️',name:'Bakkoota Barbaachisoo',sub:'Gabaa, daandii, bunaa… / Les lieux importants',
-   words:[
-    // Lieux de vie / nature
-    {et:'Magaalaa',fr:'La ville',em:'🏙️'},
-    {et:'Ganda',fr:'Le village',em:'🏡'},
-    {et:'Baadiyyaa',fr:'La campagne',em:'🌾'},
-    {et:'Tullu / Gaara',fr:'La montagne / La chaîne de montagnes',em:'⛰️'},
-    {et:'Galaana / Haroo',fr:'La mer / L\'océan',em:'🌊'},
-    {et:'Qorichee / Qixxee qilleensaa',fr:'La plage',em:'🏖️'},
-    {et:'Laga',fr:'La rivière',em:'🏞️'},
-    {et:'Meeshaa bashannannaa',fr:'Le parc',em:'🌳'},
-    {et:'Bulee / Daaqqoo',fr:'La place publique',em:'⛲'},
-    {et:'Daandii / Karaa',fr:'La rue / L\'avenue',em:'🛣️'},
-    {et:'Naannoo manaa',fr:'Le pâté de maisons',em:'🏘️'},
-    // Services publics
-    {et:'Mana bulchiinsaa',fr:'La mairie',em:'🏛️'},
-    {et:'Hospitaala',fr:'L\'hôpital',em:'🏥'},
-    {et:'Farmaasiitii',fr:'La pharmacie',em:'💊'},
-    {et:'Baankii',fr:'La banque',em:'🏦'},
-    {et:'Kiilistiyaana / Masjiida',fr:'L\'église / La mosquée',em:'⛪🕌'},
-    // Commerces
-    {et:'Suupaarmaarkeeti',fr:'Le supermarché',em:'🛒'},
-    {et:'Buna mana / Bunaa',fr:'Le bar / Le café',em:'☕'},
-    {et:'Gabaa / Suuqii',fr:'Le marché / La boutique',em:'🛍️'},
-    // Éducation
-    {et:'Mana barumsaa daa\'immanii',fr:'L\'école maternelle',em:'🧸'},
-    {et:'Mana barumsaa sadarkaa duraatii',fr:'L\'école primaire',em:'🎒'},
-    {et:'Mana barumsaa sadarkaa lammaffaa',fr:'Le collège',em:'📚'},
-    {et:'Mana barumsaa ol\'aanaa',fr:'Le lycée',em:'🎓'},
-    {et:'Yuniversitii',fr:'L\'université',em:'🏛️'},
-   ]},
-  {id:'nour',level:1,emoji:'🍽️',name:'Nyaata',sub:'Buddeena, muduraa, injera… / La nourriture',
-   words:[
-    // Catégories générales d'abord
-    {et:'Muduraa',fr:'Les fruits',em:'🍉'},
-    {et:'Kuduraa',fr:'Les légumes',em:'🥦'},
-    // Féculents / base
-    {et:'Buddeena',fr:'Le pain',em:'🍞'},
-    {et:'Ruzii',fr:'Le riz',em:'🍚'},
-    {et:'Maakiirooni',fr:'Les pâtes',em:'🍝'},
-    {et:'Dinnichi / Foonii dinnichaa',fr:'La pomme de terre / Les frites',em:'🥔'},
-    // Protéines
-    {et:'Foon',fr:'La viande',em:'🥩'},
-    {et:'Lukkuu',fr:'Le poulet',em:'🍗'},
-    {et:'Qurxummii',fr:'Le poisson',em:'🐟'},
-    {et:'Foon garbuu / Tibs',fr:'Le tibs (viande grillée)',em:'🥩'},
-    {et:'Berbere',fr:'Le berbéré (mélange d\'épices)',em:'🌶️'},
-    {et:'Hanqaaquu',fr:'L\'œuf',em:'🥚'},
-    // Produits laitiers
-    {et:'Baadaa',fr:'Le fromage',em:'🧀'},
-    {et:'Dhadhaa',fr:'Le beurre',em:'🧈'},
-    // Fruits
-    {et:'Pomii',fr:'La pomme',em:'🍎'},
-    {et:'Muuzii',fr:'La banane',em:'🍌'},
-    {et:'Burtukaana',fr:'L\'orange',em:'🍊'},
-    {et:'Liimoo',fr:'Le citron',em:'🍋'},
-    {et:'Mukarroo',fr:'La fraise',em:'🍓'},
-    {et:'Harbuu',fr:'La pastèque',em:'🍉'},
-    // Légumes
-    {et:'Timaatimii',fr:'La tomate',em:'🍅'},
-    {et:'Karootii',fr:'La carotte',em:'🥕'},
-    {et:'Qullubbii / Laasuna',fr:'L\'oignon',em:'🧅'},
-    {et:'Turunfaa',fr:'L\'ail',em:'🧄'},
-    {et:'Salaaxi',fr:'Le concombre',em:'🥒'},
-    {et:'Salaaditii',fr:'La salade',em:'🥗'},
-    // Condiments / épicerie
-    {et:'Zeyitii / Eelaa',fr:'L\'huile d\'olive',em:'🫒'},
-    {et:'Citaa',fr:'Le sel',em:'🧂'},
-    {et:'Barbaree',fr:'Le poivre',em:'🌶️'},
-    {et:'Damma',fr:'Le miel',em:'🍯'},
-    {et:'Chokolaatii',fr:'Le chocolat',em:'🍫'},
-   ]},
-  {id:'bois',level:1,emoji:'🥤',name:'Dhugaatii',sub:'Bishaan, buna, shaayii… / Les boissons',
-   words:[
-    // Essentiels
-    {et:'Bishaan',fr:'L\'eau',em:'💧'},
-    {et:'Bishaan gaazii qaba',fr:'L\'eau gazeuse',em:'🫧'},
-    {et:'Aannaan',fr:'Le lait',em:'🥛'},
-    {et:'Jiisii (Burtukaanaa)',fr:'Le jus (d\'orange)',em:'🍊'},
-    {et:'Sodaa / Gasiyoozaa',fr:'Le soda',em:'🥤'},
-    // Cafés
-    {et:'Buna (qullayyoo)',fr:'Le café noir',em:'☕'},
-    {et:'Buna aannaan waliin',fr:'Le café au lait',em:'☕'},
-    {et:'Buna nannoo aannaan xinnoo',fr:'Le café avec un nuage de lait',em:'☕'},
-    {et:'Shaayii',fr:'Le thé',em:'🍵'},
-    // Alcools
-    {et:'Koonjoo (diimaa / adii)',fr:'Le vin (rouge / blanc)',em:'🍷'},
-    {et:'Biiraa',fr:'La bière',em:'🍺'},
-    {et:'Araqee',fr:'L\'araqé (alcool éthiopien)',em:'🍶'},
-   ]},
-{id:'num',level:1,emoji:'🔢',name:'Lakkoofsa',sub:'Zeerroo irraa hanga kuma lamaa / Zéro à deux mille',
+
+  {id:'num',level:1,emoji:'🔢',name:'Lakkoofsa',sub:'Zeerroo irraa hanga kuma lamaa / Zéro à deux mille',
  words:[
   {et:'Zeerroo',fr:'Zéro',em:'0️⃣'},{et:'Tokko',fr:'Un',em:'1️⃣'},{et:'Lama',fr:'Deux',em:'2️⃣'},
   {et:'Sadii',fr:'Trois',em:'3️⃣'},{et:'Afur',fr:'Quatre',em:'4️⃣'},{et:'Shan',fr:'Cinq',em:'5️⃣'},
@@ -216,439 +154,46 @@ var LEVEL1_THEMES_FR=[
   {et:'Kuma',fr:'Mille',em:'1️⃣0️⃣0️⃣0️⃣'},
   {et:'Kuma lama',fr:'Deux mille',em:'2️⃣0️⃣0️⃣0️⃣'}
  ]},
-  {id:'col',level:1,emoji:'🎨',name:'Halluu',sub:'Diimaa, magariisa, keelloo… / Les couleurs',
-   words:[
-    {et:'Diimaa',fr:'Rouge',em:'❤️'},{et:'Cuquliisa',fr:'Bleu',em:'💙'},{et:'Magariisa',fr:'Vert',em:'💚'},
-    {et:'Keelloo',fr:'Jaune',em:'💛'},{et:'Burtukaana',fr:'Orange',em:'🧡'},{et:'Adii',fr:'Blanc',em:'🤍'},
-    {et:'Gurraacha',fr:'Noir',em:'🖤'},{et:'Roozii',fr:'Rose',em:'🩷'},
-    {et:'Daallatii / Diimtuuja',fr:'Violet',em:'💜'},{et:'Bunii',fr:'Marron',em:'🤎'},
-    {et:'Garaa garaa / Dulluma',fr:'Gris',em:'🩶'}
-   ]},
-{id:'viaje',level:1,emoji:'🧳',name:'Deemsa',sub:'Baggaajii, hooteela, paaspoortiifi… / Le voyage',
-   words:[
-   // Préparation
-    {et:'Paaspoortiifi',fr:'Le passeport',em:'🛂'},
-    {et:'Baggaajii',fr:'La valise',em:'🧳'},
-    {et:'Qabeenya deemsa',fr:'Les bagages',em:'🎒'},
-    {et:'Tikeeta',fr:'Le billet',em:'🎫'},
-    {et:'Reserveeshina',fr:'La réservation',em:'📋'},
-    {et:'Ejensii deemsa',fr:'L\'agence de voyages',em:'🗺️'},
-    {et:'Inshuraansii deemsa',fr:'L\'assurance voyage',em:'📄'},
-    // Transport
-    {et:'Xiyyaara',fr:'L\'avion',em:'✈️'},
-    {et:'Buufata xiyyaaraa',fr:'L\'aéroport',em:'🛫'},
-    {et:'Ba\'uu',fr:'Le départ',em:'🚪'},
-    {et:'Ga\'uu',fr:'L\'arrivée',em:'🛬'},
-    {et:'Koostamii',fr:'La douane',em:'🛃'},
-    {et:'Doonii guddaa',fr:'La croisière',em:'🚢'},
-    // Hébergement
-    {et:'Hooteela',fr:'L\'hôtel',em:'🏨'},
-    {et:'Kutaa lama yookiin tokko',fr:'La chambre double ou simple',em:'🛏️'},
-    // Destinations
-    {et:'Qorichee laga',fr:'La plage',em:'🏖️'},
-    {et:'Tullu',fr:'La montagne',em:'⛰️'},
-    {et:'Daawwataa',fr:'Le touriste',em:'📸'},
-   ]},
-  {id:'rest',level:1,emoji:'🍽️',name:'Mana Nyaataa',sub:'Menuu, kafaltii, teessoo… / Au restaurant',
-   words:[
-      // Arrivée
-    {et:'Balbala alaa',fr:'La terrasse',em:'☀️'},
-    {et:'Teessoo',fr:'La table',em:'🪑'},
-    {et:'Teessoon kun duwwaa dha?',fr:'Cette table est libre ?',em:'🪑'},
-    // Commander
-    {et:'Tajaajilaa / Tajaajiltu',fr:'Le serveur / La serveuse',em:'🧑‍🍳'},
-    {et:'Liistii nyaataa',fr:'La carte',em:'📋'},
-    {et:'Menuu guyyaa',fr:'Le menu du jour',em:'🍱'},
-    {et:'Gaafachuu',fr:'Commander',em:'🙋'},
-    {et:'Maal yaaddu?',fr:'Que recommandez-vous ?',em:'👨‍🍳'},
-    // Régimes
-    {et:'Gluten hin qabu',fr:'Sans gluten',em:'🌾'},
-    {et:'Foon hin nyaatu',fr:'Végétarien / Végétarienne',em:'🥦'},
-    // Repas
-    {et:'Fuullaa xinnoo',fr:'L\'amuse-bouche',em:'🫒'},
-    {et:'Fuullaa dura',fr:'L\'entrée',em:'🥗'},
-    {et:'Nyaata ijoo',fr:'Le plat principal',em:'🍖'},
-    {et:'Dhaamsa nyaataa',fr:'Le dessert',em:'🍮'},
-    {et:'Saandiwichii / Buddeena',fr:'Le sandwich',em:'🥖'},
-    {et:'Fudhachuuf',fr:'À emporter',em:'🥡'},
-    // Addition
-    {et:'Baasii nyaataa',fr:'L\'addition',em:'💶'},
-    {et:'Qarshii dabalataa',fr:'Le pourboire',em:'💰'},
-    {et:'Qarshii dabalataan dabalamee jira',fr:'Le pourboire est inclus',em:'✅'},
-   ]},
-  {id:'trans',level:1,emoji:'🚌',name:'Geejjiba',sub:'Baasii, gaarii, konkolaataa… / Les transports',
-   words:[
-    // Transports en commun
-    {et:'Baasii / Konkolaataa ummataa',fr:'Le bus',em:'🚌'},
-    {et:'Meetiroo',fr:'Le métro',em:'🚇'},
-    {et:'Tiraamii',fr:'Le tramway',em:'🚊'},
-    {et:'Gaarii sibii',fr:'Le train',em:'🚂'},
-    {et:'Xiyyaara',fr:'L\'avion',em:'✈️'},
-    {et:'Taaksii',fr:'Le taxi',em:'🚕'},
-    // Transports individuels
-    {et:'Konkolaataa',fr:'La voiture',em:'🚗'},
-    {et:'Mootoorisikkilii',fr:'La moto',em:'🏍️'},
-    {et:'Biskileetii',fr:'Le vélo',em:'🚴'},
-    // Titre de transport
-    {et:'Tikeeta',fr:'Le billet',em:'🎫'},
-   ]},
-  {id:'objets',level:1,emoji:'🔑',name:'Meeshaalee Guyyaatii',sub:'Bilbila, hirnaa… / Objets du quotidien',
-   words:[
-        // Technologie
-    {et:'Bilbila',fr:'Le téléphone',em:'☎️'},
-    {et:'Bilbila harkaa',fr:'Le portable',em:'📱'},
-    {et:'Kompiyuutara',fr:'L\'ordinateur',em:'💻'},
-    {et:'Chaajjara',fr:'Le chargeur',em:'🔌'},
-    // Temps
-    {et:'Sa\'atii harkaa',fr:'La montre',em:'⌚'},
-    {et:'Sa\'atii',fr:'L\'horloge / la pendule',em:'🕐'},
-    // Accessoires personnels
-    {et:'Hirnaa',fr:'Les clés',em:'🔑'},
-    {et:'Fardaa qarshii / Baankii xinnoo',fr:'Le portefeuille / le porte-monnaie',em:'👛'},
-    {et:'Bursuusaa dugdaa',fr:'Le sac à dos',em:'🎒'},
-    {et:'Miidhagina ija',fr:'Les lunettes',em:'👓'},
-    {et:'Aanoo roobaa',fr:'Le parapluie',em:'☂️'},
-    // Papeterie
-    {et:'Waraqaa',fr:'Le papier',em:'📄'},
-    {et:'Qalama / Biiroo',fr:'Le stylo / le bic',em:'🖊️'},
-    {et:'Mishira',fr:'Les ciseaux',em:'✂️'},
-    // Vaisselle
-    {et:'Xaa\'oo',fr:'L\'assiette',em:'🍽️'},
-    {et:'Kilaasii',fr:'Le verre',em:'🥛'},
-    {et:'Kubboo buna',fr:'La tasse',em:'☕'},
-    {et:'Simiintoo',fr:'La cuillère',em:'🥄'},
-    {et:'Forkii',fr:'La fourchette',em:'🍴'},
-    {et:'Bilaa',fr:'Le couteau',em:'🔪'},
-    {et:'Booteelaa',fr:'La bouteille',em:'🍶'},
-    // Salle de bain / chambre
-    {et:'Iyyaanoo',fr:'Le miroir',em:'🪞'},
-    {et:'Tuwaallii',fr:'La serviette',em:'🛁'},
-    {et:'Saabunaa',fr:'Le savon',em:'🧼'},
-    {et:'Kaafiyaa',fr:'L\'oreiller',em:''},
-   ]},
-   {id:'log',level:1,emoji:'🏠',name:'Mana Jireenyaa',sub:'Dabtaroo, daakuu… / Le logement',
-   words:[
-        // Types de logement
-    {et:'Mana',fr:'La maison',em:'🏠'},
-    {et:'Apartamaantii',fr:'L\'appartement',em:'🏢'},
-    // Pièces principales
-    {et:'Seensa / Galma dura',fr:'L\'entrée',em:'🚪'},
-    {et:'Galma / Mana nyaataa',fr:'Le salon / la salle à manger',em:'🛋️'},
-    {et:'Daakuu',fr:'La cuisine',em:'🍳'},
-    {et:'Kutaa ciisichaa',fr:'La chambre',em:'🛏️'},
-    {et:'Mana fincaanii / Dhiqachuu',fr:'La salle de bain',em:'🚿'},
-    {et:'Mana fincaanii',fr:'Les toilettes',em:'🚽'},
-    {et:'Mana konkolaataa',fr:'Le garage',em:'🚗'},
-   ]},
-   {id:'muebles_equipamiento', level:1, emoji:'🪑', name:'Meeshaalee Manaa', sub:'Soofa, siree, firiijiidara… / Meubles et équipements',
- words:[
-    // Salon
-    {et:'Soofa',fr:'Le canapé',em:'🛋️'},
-    {et:'Teessoo qofaa',fr:'Le fauteuil',em:'💺'},
-    {et:'Teessoo',fr:'La table',em:''},
-    {et:'Sannaddaa',fr:'La chaise',em:'🪑'},
-    {et:'Ibsaa',fr:'La lampe',em:'💡'},
-    {et:'Mudaa kitaabaa',fr:'L\'étagère',em:''},
-    // Chambre
-    {et:'Siree',fr:'Le lit',em:'🛏️'},
-    {et:'Amaaroo uffataa',fr:'L\'armoire',em:'🗄️'},
-    {et:'Maardiima / Barrumsaa',fr:'Le bureau',em:'🖊️'},
-    // Cuisine
-    {et:'Friijiidara',fr:'Le réfrigérateur',em:'🧊'},
-    {et:'Aawoo',fr:'Le four',em:'🔥'},
-    {et:'Maaykirooweevii',fr:'Le micro-ondes',em:'🔲♨️'},
-    {et:'Dhiqa meeshaa',fr:'L\'évier',em:'🚰'},
-    // Salle de bain
-    {et:'Dhiqa fuulaa',fr:'Le lavabo',em:'🚰'},
-    {et:'Kuubii dhiqachuu',fr:'La baignoire',em:'🛁'},
-    {et:'Shawara',fr:'La douche',em:'🚿'},
-  ]},   
-   {id:'emot',level:1,emoji:'😄',name:'Miira',sub:'Gammaduu, dadhabuu… / Les émotions',
-   words:[
-    {et:'Gammadaa / Gammatti',fr:'Content / Contente',em:'😊'},
-    {et:'Baayyee gammadaa / Gammatti',fr:'Heureux / Heureuse',em:'😊'},
-    {et:'Koolu / Kooltuu',fr:'Joyeux / Joyeuse',em:'😄'},
-    {et:'Gadda / Gadditi',fr:'Triste / Triste',em:'😢'},
-    {et:'Dadhabaa / Dadhabduu',fr:'Fatigué / Fatiguée',em:'😴'},
-    {et:'Dallansuu / Dallantuu',fr:'Fâché / Fâchée',em:'😠'},
-    {et:'Rifaatuu / Rifatii',fr:'Surpris / Choqué(e)',em:'😲'},
-    {et:'Sodaachuu',fr:'Avoir peur / Avoir peur',em:'😨'},
-    {et:'Dhukkubsataa / Dhukkubsattuu',fr:'Malade / Malade',em:'🤒'},
-    {et:'Xiqqoo dhukkubsataa',fr:'Pas très bien / Un peu souffrant',em:'🤒'},
-    {et:'Yaaddoo / Yaaddoftuu',fr:'Inquiet / Inquiète',em:'😟'},
-    {et:'Yaaddoo jabaa',fr:'Inquiet / Inquiète',em:'😟'},
-    {et:'Dhiphina / Dhibaa',fr:'Stressé / Stressée',em:'😰'},
-    {et:'Baay\'ee dhiphina',fr:'Stressé / Stressée',em:'😰'},
-    {et:'Abdii kutaa / Manooftuu',fr:'Déçu / Déçue',em:'😞'},
-    {et:'Jibba / Jibbitu',fr:'Haineux / Haineuse',em:'😤'},
-    {et:'Jaallachuu / Jaallattuu',fr:'Amoureux / Amoureuse',em:'😍'},
-    {et:'Baay\'ee gaarii! / Roorroo!',fr:'C\'est super ! / C\'est cool !',em:'🌟'}
-   ]},
-  {id:'fam',level:1,emoji:'👨‍👩‍👧',name:'Maatii',sub:'Abbaa, haadha, ilma… / La famille',
-   words:[
-   {et:'Haadha / Haadha manaa',fr:'La mère / La maman',em:'👩'},
-    {et:'Abbaa / Abbaa manaa',fr:'Le père / Le papa',em:'👨'},
-    {et:'Intala',fr:'La fille',em:'👧'},
-    {et:'Ilma',fr:'Le fils',em:'👦'},
-    {et:'Obboleettii',fr:'La sœur',em:'👧'},
-    {et:'Obboleessa',fr:'Le frère',em:'🧑'},
-    {et:'Akoo / Awoo',fr:'La grand-mère',em:'👵'},
-    {et:'Akaakayyuu / Awoo Abbaa',fr:'Le grand-père',em:'👴'},
-    {et:'Niitii / Haadha manaa',fr:'La femme',em:'💑'},
-    {et:'Abbaa warraa / Dhiirsa',fr:'Le mari',em:'💍'},
-    {et:'Adaadaa (haadha abbaa) / Adda (obboleessa abbaa)',fr:'La tante (côté père) / L\'oncle',em:'👨‍👩‍👧'}
-   ]},
-  {id:'verb',level:1,emoji:'📝',name:'Yakkawwan',sub:'Ta\'uu, qabaachuu, deemuu… / Les verbes principaux',
-   words:[
-   {et:'Ta\'uu / Jiraachuu',fr:'Être',em:'🧑',conj:{et:['Ani nan ta\'a / jira','Ati ni ta\'a / jirta','Inni/Isheen ni ta\'a / jira','Nuti ni taana / jirra','Isin ni taastu / jirtu','Isaan ni ta\'u / jiru'],fr:['Je suis','Tu es','Il/Elle est','Nous sommes','Vous êtes','Ils/Elles sont']}},
-    {et:'Qabaachuu',fr:'Avoir',em:'🤲',conj:{et:['Ani nan qabaadha','Ati ni qabaatta','Inni/Isheen ni qabaata','Nuti ni qabaanna','Isin ni qabaastu','Isaan ni qabaatu'],fr:['J\'ai','Tu as','Il/Elle a','Nous avons','Vous avez','Ils/Elles ont']}},
-    {et:'Dubbachuu',fr:'Parler',em:'🗣️',conj:{et:['Ani nan dubbadha','Ati ni dubbatta','Inni/Isheen ni dubbata','Nuti ni dubbanna','Isin ni dubbastu','Isaan ni dubbatu'],fr:['Je parle','Tu parles','Il/Elle parle','Nous parlons','Vous parlez','Ils/Elles parlent']}},
-    {et:'Jiraachuu',fr:'Habiter',em:'🏠',conj:{et:['Ani nan jiraadha','Ati ni jiraatta','Inni/Isheen ni jiraata','Nuti ni jiraanna','Isin ni jiraastu','Isaan ni jiraatu'],fr:['J\'habite','Tu habites','Il/Elle habite','Nous habitons','Vous habitez','Ils/Elles habitent']}},
-    {et:'Deemuu',fr:'Aller',em:'🚶',conj:{et:['Ani nan deema','Ati ni deemta','Inni/Isheen ni deema','Nuti ni deemna','Isin ni deemtu','Isaan ni deemu'],fr:['Je vais','Tu vas','Il/Elle va','Nous allons','Vous allez','Ils/Elles vont']}},
-    {et:'Jaalachuu',fr:'Aimer',em:'❤️',conj:{et:['Nan jaalladha','Ni jaallataa','Ni jaallata','Ni jaallannaа','Ni jaallattu','Ni jaallatu'],fr:['J\'aime','Tu aimes','Il/Elle aime','Nous aimons','Vous aimez','Ils/Elles aiment']}},
-    {et:'Nyaachuu',fr:'Manger',em:'🍽️',conj:{et:['Ani nan nyaadha','Ati ni nyaatta','Inni/Isheen ni nyaata','Nuti ni nyaanna','Isin ni nyaastu','Isaan ni nyaatu'],fr:['Je mange','Tu manges','Il/Elle mange','Nous mangeons','Vous mangez','Ils/Elles mangent']}},
-    {et:'Dhuguu',fr:'Boire',em:'🥤',conj:{et:['Ani nan dhuga','Ati ni dhugta','Inni/Isheen ni dhuga','Nuti ni dhugna','Isin ni dhugtu','Isaan ni dhugu'],fr:['Je bois','Tu bois','Il/Elle boit','Nous buvons','Vous buvez','Ils/Elles boivent']}},
-    {et:'Rafuu',fr:'Dormir',em:'😴',conj:{et:['Ani nan rafaa','Ati ni rafta','Inni/Isheen ni rafa','Nuti ni rafna','Isin ni raftu','Isaan ni rafu'],fr:['Je dors','Tu dors','Il/Elle dort','Nous dormons','Vous dormez','Ils/Elles dorment']}},
-    {et:'Deemuu miila',fr:'Marcher',em:'🚶‍♂️',conj:{et:['Ani nan deema miila','Ati ni deemta miila','Inni/Isheen ni deema miila','Nuti ni deemna miila','Isin ni deemtu miila','Isaan ni deemu miila'],fr:['Je marche','Tu marches','Il/Elle marche','Nous marchons','Vous marchez','Ils/Elles marchent']}},
-    {et:'Fiiguu',fr:'Courir',em:'🏃‍♂️',conj:{et:['Ani nan fiiga','Ati ni fiigta','Inni/Isheen ni fiiga','Nuti ni fiigna','Isin ni fiigtu','Isaan ni fiigu'],fr:['Je cours','Tu cours','Il/Elle court','Nous courons','Vous courez','Ils/Elles courent']}},
-    {et:'Dubbisuu',fr:'Lire',em:'📖',conj:{et:['Ani nan dubbisa','Ati ni dubbista','Inni/Isheen ni dubbisa','Nuti ni dubbisna','Isin ni dubbistu','Isaan ni dubbisu'],fr:['Je lis','Tu lis','Il/Elle lit','Nous lisons','Vous lisez','Ils/Elles lisent']}},
-    {et:'Barreessuu',fr:'Écrire',em:'✍️',conj:{et:['Ani nan barreessa','Ati ni barreesta','Inni/Isheen ni barreessa','Nuti ni barreessina','Isin ni barreestu','Isaan ni barreesu'],fr:['J\'écris','Tu écris','Il/Elle écrit','Nous écrivons','Vous écrivez','Ils/Elles écrivent']}},
-    {et:'Dhaggeeffachuu',fr:'Écouter',em:'🎧',conj:{et:['Ani nan dhaggeeffadha','Ati ni dhaggeeffatta','Inni/Isheen ni dhaggeeffata','Nuti ni dhaggeeffanna','Isin ni dhaggeeffastu','Isaan ni dhaggeeffatu'],fr:['J\'écoute','Tu écoutes','Il/Elle écoute','Nous écoutons','Vous écoutez','Ils/Elles écoutent']}},
-    {et:'Ilaaluu',fr:'Regarder',em:'👀',conj:{et:['Ani nan ilaala','Ati ni ilaalta','Inni/Isheen ni ilaala','Nuti ni ilaalana','Isin ni ilaaltuu','Isaan ni ilaalu'],fr:['Je regarde','Tu regardes','Il/Elle regarde','Nous regardons','Vous regardez','Ils/Elles regardent']}},
-    {et:'Barachuu',fr:'Apprendre',em:'🧠',conj:{et:['Ani nan baradha','Ati ni baratta','Inni/Isheen ni barata','Nuti ni baranna','Isin ni barastu','Isaan ni baratu'],fr:['J\'apprends','Tu apprends','Il/Elle apprend','Nous apprenons','Vous apprenez','Ils/Elles apprennent']}},
-    {et:'Yaaduu',fr:'Penser',em:'🤔',conj:{et:['Ani nan yaada','Ati ni yaadda','Inni/Isheen ni yaada','Nuti ni yaadna','Isin ni yaaddu','Isaan ni yaadu'],fr:['Je pense','Tu penses','Il/Elle pense','Nous pensons','Vous pensez','Ils/Elles pensent']}},
-    {et:'Misoomsuu / Kolfuu',fr:'Sourire',em:'😊',conj:{et:['Ani nan misoomsa','Ati ni misoosta','Inni/Isheen ni misooma','Nuti ni misoomsina','Isin ni misoostu','Isaan ni misoomu'],fr:['Je souris','Tu souris','Il/Elle sourit','Nous sourions','Vous souriez','Ils/Elles sourient']}},
-    {et:'Fudhachuu',fr:'Prendre',em:'🤲',conj:{et:['Ani nan fudhadha','Ati ni fudhatta','Inni/Isheen ni fudhata','Nuti ni fudhanna','Isin ni fudhastu','Isaan ni fudhatu'],fr:['Je prends','Tu prends','Il/Elle prend','Nous prenons','Vous prenez','Ils/Elles prennent']}},
-    {et:'Kennuu',fr:'Donner',em:'🤲',conj:{et:['Ani nan kenna','Ati ni kenta','Inni/Isheen ni kenna','Nuti ni kennina','Isin ni kentu','Isaan ni kennu'],fr:['Je donne','Tu donnes','Il/Elle donne','Nous donnons','Vous donnez','Ils/Elles donnent']}},
-    {et:'Barbaaduu',fr:'Chercher',em:'🔍',conj:{et:['Ani nan barbaada','Ati ni barbaadda','Inni/Isheen ni barbaada','Nuti ni barbaadna','Isin ni barbaaddu','Isaan ni barbaadu'],fr:['Je cherche','Tu cherches','Il/Elle cherche','Nous cherchons','Vous cherchez','Ils/Elles cherchent']}},
-    {et:'Bituu',fr:'Acheter',em:'🛒',conj:{et:['Ani nan bita','Ati ni bitta','Inni/Isheen ni bita','Nuti ni bitna','Isin ni bittu','Isaan ni bitu'],fr:['J\'achète','Tu achètes','Il/Elle achète','Nous achetons','Vous achetez','Ils/Elles achètent']}},
-    {et:'Gurguruu',fr:'Vendre',em:'💰',conj:{et:['Ani nan gurgura','Ati ni gurgurta','Inni/Isheen ni gurgura','Nuti ni gurgurna','Isin ni gurgurtu','Isaan ni gurguru'],fr:['Je vends','Tu vends','Il/Elle vend','Nous vendons','Vous vendez','Ils/Elles vendent']}},
-    {et:'Kaffaltii kaffaluu',fr:'Payer',em:'💳',conj:{et:['Ani nan kaffala','Ati ni kaffalda','Inni/Isheen ni kaffala','Nuti ni kaffalina','Isin ni kaffaltu','Isaan ni kaffalu'],fr:['Je paie','Tu paies','Il/Elle paie','Nous payons','Vous payez','Ils/Elles paient']}},
-    {et:'Hojjechuu',fr:'Travailler',em:'💼',conj:{et:['Ani nan hojjedha','Ati ni hojjetta','Inni/Isheen ni hojjeta','Nuti ni hojjenna','Isin ni hojjestu','Isaan ni hojjetu'],fr:['Je travaille','Tu travailles','Il/Elle travaille','Nous travaillons','Vous travaillez','Ils/Elles travaillent']}},
-    {et:'Nyaata bilcheessuu',fr:'Cuisiner',em:'🍳',conj:{et:['Ani nan bilcheessa','Ati ni bilcheesta','Inni/Isheen ni bilcheessa','Nuti ni bilcheessina','Isin ni bilcheestu','Isaan ni bilcheesu'],fr:['Je cuisine','Tu cuisines','Il/Elle cuisine','Nous cuisinons','Vous cuisinez','Ils/Elles cuisinent']}},
-    {et:'Qulqulleessuu',fr:'Nettoyer',em:'🧹',conj:{et:['Ani nan qulqulleessa','Ati ni qulqulleesta','Inni/Isheen ni qulqulleessa','Nuti ni qulqulleessina','Isin ni qulqulleestu','Isaan ni qulqulleesu'],fr:['Je nettoie','Tu nettoies','Il/Elle nettoie','Nous nettoyons','Vous nettoyez','Ils/Elles nettoient']}},
-    {et:'Dhiqachuu',fr:'Se doucher',em:'🧼',conj:{et:['Ani nan dhiqadha','Ati ni dhiqatta','Inni/Isheen ni dhiqata','Nuti ni dhiqanna','Isin ni dhiqastu','Isaan ni dhiqatu'],fr:['Je me douche','Tu te douches','Il/Elle se douche','Nous nous douchons','Vous vous douchez','Ils/Elles se douchent']}},
-    {et:'Ba\'uu / Deemuu',fr:'Partir',em:'🚪',conj:{et:['Ani nan ba\'a','Ati ni baata','Inni/Isheen ni ba\'a','Nuti ni baana','Isin ni baatu','Isaan ni ba\'u'],fr:['Je pars','Tu pars','Il/Elle part','Nous partons','Vous partez','Ils/Elles partent']}},
-    {et:'Ga\'uu / Dhufuu',fr:'Arriver',em:'🛬',conj:{et:['Ani nan dhufa','Ati ni dhufta','Inni/Isheen ni dhufa','Nuti ni dhufna','Isin ni dhuftu','Isaan ni dhufu'],fr:['J\'arrive','Tu arrives','Il/Elle arrive','Nous arrivons','Vous arrivez','Ils/Elles arrivent']}},
-    {et:'Waamuu',fr:'Appeler',em:'📞',conj:{et:['Ani nan waama','Ati ni waamta','Inni/Isheen ni waama','Nuti ni waamna','Isin ni waamtu','Isaan ni waamu'],fr:['J\'appelle','Tu appelles','Il/Elle appelle','Nous appelons','Vous appelez','Ils/Elles appellent']}},
-    {et:'Gaafachuu',fr:'Demander',em:'🙋‍♂️',conj:{et:['Ani nan gaafadha','Ati ni gaafatta','Inni/Isheen ni gaafata','Nuti ni gaafanna','Isin ni gaafastu','Isaan ni gaafatu'],fr:['Je demande','Tu demandes','Il/Elle demande','Nous demandons','Vous demandez','Ils/Elles demandent']}},
-    {et:'Konkolaachisuu',fr:'Conduire',em:'🚗',conj:{et:['Ani nan konkolaachisa','Ati ni konkolaachista','Inni/Isheen ni konkolaachisa','Nuti ni konkolaachisina','Isin ni konkolaachistuu','Isaan ni konkolaachisu'],fr:['Je conduis','Tu conduis','Il/Elle conduit','Nous conduisons','Vous conduisez','Ils/Elles conduisent']}},
-    {et:'Baay\'ee jaalladha',fr:'Adorer',em:'😍',conj:{et:['Nan baay\'ee jaalladha','Ni baay\'ee jaallataa','Ni baay\'ee jaallata','Ni baay\'ee jaallannaа','Ni baay\'ee jaallattu','Ni baay\'ee jaallatu'],fr:['J\'adore','Tu adores','Il/Elle adore','Nous adorons','Vous adorez','Ils/Elles adorent']}}
-  ]},
-  {id:'corps',level:1,emoji:'🧍',name:'Qaamaa',sub:'Mataa, harkaa, miila… / Le corps',
-   words:[
-    {et:'Mataa',fr:'La tête',em:'🗣️'},
-    {et:'Rifeensa',fr:'Les cheveux',em:'💇‍♂️'},
-    {et:'Ija / Ijaan',fr:'L\'œil / Les yeux',em:'👀'},
-    {et:'Funyaan',fr:'Le nez',em:'👃'},
-    {et:'Gurra / Gurraan',fr:'L\'oreille / Les oreilles',em:'👂'},
-    {et:'Afaan',fr:'La bouche',em:'👄'},
-    {et:'Hidhii',fr:'Les lèvres',em:'💋'},
-    {et:'Arraba',fr:'La langue',em:'👅'},
-    {et:'Ilkaan',fr:'La dent / Les dents',em:'🦷'},
-    {et:'Morma',fr:'Le cou',em:''},
-    {et:'Harka gubbaa',fr:'Le bras / Les bras',em:'💪'},
-    {et:'Harka / Harkaan',fr:'La main / Les mains',em:'✋'},
-    {et:'Quba / Qubaan',fr:'Le doigt / Les doigts',em:'☝️'},
-    {et:'Quba miila / Ciltuu',fr:'L\'orteil / L\'ongle',em:'💅'},
-    {et:'Dugda',fr:'Le dos',em:''},
-    {et:'Garaa',fr:'Le ventre',em:'🫃'},
-    {et:'Miila / Miilaan',fr:'La jambe / Les jambes',em:'🦵'},
-    {et:'Miila jalaa / Miilaafi',fr:'Le pied / Les pieds',em:'🦶'},
-    {et:'Onnee',fr:'Le cœur',em:'❤️'},
-    {et:'Sammuu',fr:'Le cerveau',em:'🧠'},
-    {et:'Lafee / Lafaan',fr:'L\'os / Les os',em:'🦴'}
-   ]},
-  {id:'sante',level:1,emoji:'🏥',name:'Fayyaa',sub:'Doktora, farmaasiitii… / La santé',
-   words:[
-    {et:'Dhukkubbii / Nan dhukkuba',fr:'Faire mal / j\'ai mal (j\'ai mal à la tête)',em:'🤕'},
-    {et:'Dhukkubbii qabaachuu',fr:'Avoir une douleur (plus formel)',em:'😣'},
-    {et:'Ho\'a qaamaa',fr:'La fièvre',em:'🌡️'},
-    {et:'Qufaa',fr:'La toux',em:'😮‍💨'},
-    {et:'Xuruura fuulaa',fr:'Le mouchoir',em:'🤧'},
-    {et:'Meeshaa ho\'a safaruu',fr:'Le thermomètre',em:'🌡️'},
-    {et:'Beellama',fr:'Le rendez-vous',em:'📅'},
-    {et:'Doktora / Doktoricha',fr:'Le médecin / La médecin',em:'🩺'},
-    {et:'Dhukkubsataa',fr:'Le/la patient(e)',em:'🛏️'},
-    {et:'Gorsaa fayyaa',fr:'La consultation médicale',em:'📋'},
-    {et:'Narsii / Narsicha',fr:'L\'infirmier / L\'infirmière',em:'👨‍⚕️'},
-    {et:'Hospitaala',fr:'L\'hôpital',em:'🏥'},
-    {et:'Reseeptii / Ajaja qorichaa',fr:'L\'ordonnance',em:'📋'},
-    {et:'Farmaasiitii',fr:'La pharmacie',em:'🏪'},
-    {et:'Qoricha',fr:'Le médicament',em:'💊'},
-    {et:'Haaphii qoricha',fr:'Le comprimé',em:'💊'},
-    {et:'Vaaksiniifi',fr:'Le vaccin',em:'💉'},
-    {et:'Mallattoo madaa',fr:'Le pansement adhésif',em:'🩹'},
-    {et:'Xaxaa madaa',fr:'Le bandage',em:'🩼'},
-    {et:'Ambulaansii',fr:'L\'ambulance',em:'🚑'},
-    {et:'Bakka ariifachiisaa',fr:'Les urgences',em:'🆘'}
-   ]},
-  {id:'ocio', level:1, emoji:'⛰️', name:'Boqonnaa fi Bashannannaa', sub:'Ispoortii, dubbisuu, muuziqaa… / Les loisirs',
-  words:[
-    // Loisirs culturels
-    {et:'Dubbisuu',fr:'La lecture',em:'📚'},
-    {et:'Kitaaba',fr:'Le livre',em:'📖'},
-    {et:'Muuziqaa',fr:'La musique',em:'🎵'},
-    {et:'Siinimaa',fr:'Le cinéma',em:'🎬'},
-    {et:'Tiyaatira',fr:'Le théâtre',em:'🎭'},
-    // Sport général
-    {et:'Ispoortii',fr:'Le sport',em:''},
-    {et:'Kora miilaa',fr:'Le football',em:'⚽'},
-    {et:'Daakuu bishaan',fr:'La natation',em:'🏊'},
-    {et:'Biskileetii oofuu',fr:'Le cyclisme',em:'🚴'},
-    {et:'Fiigichaa',fr:'L\'athlétisme',em:'🏃'},
-    // Plein air
-    {et:'Deemsa tulluutti',fr:'La randonnée',em:'🥾'},
-    {et:'Deemsa karaa',fr:'La marche nordique',em:''},
-    {et:'Naqata / Seenaa',fr:'La promenade',em:'🌳'},
-    // Verbes utiles
-    {et:'Taphaachuu',fr:'Jouer',em:'🎮'},
-    {et:'Leenjii hojjechuu',fr:'Pratiquer',em:'💪'},
-    {et:'Boqachuu',fr:'Se reposer',em:'😴'},
-    {et:'Gammachuun fayyadamuu',fr:'Profiter / Apprécier',em:'😊'},
-  ]
-},  
-   {id:'veth',level:1,emoji:'👗',name:'Uffata',sub:'Shartii, surrii… / Les vêtements',
-   words:[
-    // Niveau 1 — Vêtements du quotidien, très fréquents
-    {et:'Shartii',fr:'Le t-shirt',em:'👕'},
-    {et:'Shartii dheeraa',fr:'La chemise',em:'👔'},
-    {et:'Surrii',fr:'Le pantalon',em:'👖'},
-    {et:'Kophee / Shaakaalaa',fr:'Les chaussures / Les baskets',em:'👟'},
-    {et:'Kaalseettii',fr:'Les chaussettes',em:'🧦'},
-    // Niveau 2 — Vêtements courants, un peu plus spécifiques
-    {et:'Uffata dubartii / Qanafee',fr:'La robe / La jupe',em:'👗'},
-    {et:'Surrii gabaabaa',fr:'Le short',em:'🩳'},
-    {et:'Jaakeetii / Uffata ho\'a',fr:'Le pull',em:'🧥'},
-    {et:'Jaakeetii alaa',fr:'La veste',em:'🧥'},
-    {et:'Kuullaa / Keeppii',fr:'Le chapeau / La casquette',em:'🎩'},
-    // Niveau 3 — Accessoires et vêtements saisonniers
-    {et:'Koobii guddaa',fr:'Le manteau',em:'🧥'},
-    {et:'Shanxii morma',fr:'L\'écharpe',em:'🧣'},
-    {et:'Gantii',fr:'Les gants',em:'🧤'},
-    {et:'Kuullaa ho\'a',fr:'Le bonnet',em:'🎿'},
-    {et:'Buursaa / Fardaa',fr:'Le sac / La poche',em:'👜'},
-    {et:'Uffata bishaan',fr:'Le maillot de bain',em:'🩱'},
-   ]},
-  {id:'pays',level:1,emoji:'🌍',name:'Biyyoota',sub:'Itoophiyaa, Oromiyaa… / Les pays',
-   words:[
-    // Niveau 1 — Pays proches & culturellement importants
-    {et:'Faransaay',fr:'La France',em:'🇫🇷'},
-    {et:'Itoophiyaa',fr:'L\'Éthiopie',em:'🇪🇹'},
-    {et:'Keeniyaa',fr:'Le Kenya',em:'🇰🇪'},
-    {et:'Xaaliyaanii',fr:'L\'Italie',em:'🇮🇹'},
-    {et:'Beljiyoom',fr:'La Belgique',em:'🇧🇪'},
-    {et:'Swiizerlaandii',fr:'La Suisse',em:'🇨🇭'},
-    {et:'Jarman',fr:'L\'Allemagne',em:'🇩🇪'},
-    {et:'Ingliizii',fr:'Le Royaume-Uni',em:'🇬🇧'},
-    // Niveau 2 — Pays africains & francophones proches
-    {et:'Jibuutii',fr:'Djibouti',em:'🇩🇯'},
-    {et:'Somaaliyaa',fr:'La Somalie',em:'🇸🇴'},
-    {et:'Sudaan',fr:'Le Soudan',em:'🇸🇩'},
-    {et:'Braazil',fr:'Le Brésil',em:'🇧🇷'},
-    {et:'Kaanaadaa',fr:'Le Canada',em:'🇨🇦'},
-    {et:'Morokkoo',fr:'Le Maroc',em:'🇲🇦'},
-    // Niveau 3 — Grandes puissances mondiales & pays plus distants
-    {et:'Ameerikaa',fr:'Les États-Unis',em:'🇺🇸'},
-    {et:'Rushiyaa',fr:'La Russie',em:'🇷🇺'},
-    {et:'Chaayinaa',fr:'La Chine',em:'🇨🇳'},
-    {et:'Jaappaan',fr:'Le Japon',em:'🇯🇵'},
-    {et:'Hindii',fr:'L\'Inde',em:'🇮🇳'},
-    {et:'Turkii',fr:'La Turquie',em:'🇹🇷'},
-    {et:'Giriikii',fr:'La Grèce',em:'🇬🇷'},
-    {et:'Awustiraaliyaa',fr:'L\'Australie',em:'🇦🇺'},
-    {et:'Afrikaa Kibbaa',fr:'L\'Afrique du Sud',em:'🇿🇦'},
-   ]},
-  {id:'met',level:1,emoji:'💼',name:'Ogummaa',sub:'Doktora, barsiisaa… / Les professions',
-   words:[
-    // Niveau 1 — Métiers du quotidien, rencontrés très fréquemment
-    {et:'Barataa / Barattuun',fr:'L\'étudiant / L\'étudiante',em:'🎓'},
-    {et:'Barsiisaa / Barsiistuu',fr:'Le professeur / La professeure',em:'👩‍🏫'},
-    {et:'Tajaajilaa / Tajaajiltu',fr:'Le serveur / La serveuse',em:'🍽️'},
-    {et:'Gurgurataa / Gurgurattu',fr:'Le vendeur / La vendeuse',em:'🏪'},
-    {et:'Oofaa taaksii',fr:'Le chauffeur de taxi / La chauffeuse de taxi',em:'🚕'},
-    // Niveau 2 — Métiers courants, contextes santé & service
-    {et:'Doktora',fr:'Le médecin / La médecin',em:'🩺'},
-    {et:'Narsii',fr:'L\'infirmier / L\'infirmière',em:'👨‍⚕️'},
-    {et:'Nyaata bilcheessaa',fr:'Le cuisinier / La cuisinière',em:'👨‍🍳'},
-    // Niveau 3 — Métiers plus spécifiques ou lexicalement complexes
-    {et:'Ogaa bishaan',fr:'Le plombier / La plombière',em:'🔧'},
-    {et:'Ogaa kompiyuutaraa',fr:'L\'informaticien / L\'informaticienne',em:'💻'},
-   ]},
-  {id:'anim',level:1,emoji:'🐘',name:'Bineeldota',sub:'Saree, adurree, sangaa… / Les animaux',
-   words:[
-    // Niveau 1 — Animaux familiers & de la ferme, très connus
-    {et:'Saree',fr:'Le chien',em:'🐶'},
-    {et:'Adurree',fr:'Le chat',em:'🐱'},
-    {et:'Simbiraa',fr:'L\'oiseau',em:'🐦'},
-    {et:'Qurxummii',fr:'Le poisson (vivant)',em:'🐟'},
-    {et:'Farda',fr:'Le cheval',em:'🐴'},
-    {et:'Loon / Saree loon',fr:'La vache',em:'🐮'},
-    {et:'Booyee',fr:'Le cochon',em:'🐷'},
-    {et:'Lukkuu',fr:'La poule',em:'🐔'},
-    {et:'Illeena',fr:'Le lapin',em:'🐰'},
-    // Niveau 2 — Animaux courants (ferme, nature, sauvages connus)
-    {et:'Qurxummii nyaataa',fr:'Le poisson (dans l\'assiette)',em:'🐟🍽️'},
-    {et:'Sangaa',fr:'Le taureau',em:'🐂'},
-    {et:'Molgaa',fr:'Le canard',em:'🦆'},
-    {et:'Kormaa lukkuu',fr:'Le coq',em:'🐓'},
-    {et:'Hoolaa / Hoolii',fr:'L\'agneau',em:'🐑'},
-    {et:'Re\'ee',fr:'La chèvre',em:'🐐'},
-    {et:'Harree',fr:'L\'âne',em:'🫏'},
-    {et:'Arba',fr:'L\'éléphant',em:'🐘'},
-    {et:'Baalee',fr:'L\'ours',em:'🐻'},
-    {et:'Qeerransaa',fr:'Le tigre',em:'🐯'},
-    // Niveau 3 — Animaux plus rares, insectes, reptiles & lexique spécifique
-    {et:'Qurxummii bishaaniin jiraatuu',fr:'Le dauphin',em:'🐬'},
-    {et:'Harootii guddaa',fr:'La baleine',em:'🐳'},
-    {et:'Ardiitii / Gombisuu',fr:'L\'aigle',em:'🦅'},
-    {et:'Buraayyoo',fr:'Le papillon',em:'🦋'},
-    {et:'Bofaa xixiqqaa',fr:'La grenouille',em:'🐸'},
-    {et:'Bofa',fr:'Le serpent',em:'🐍'},
-    {et:'Bofa lafa',fr:'Le lézard',em:'🦎'},
-    {et:'Saappanaa',fr:'L\'araignée',em:'🕷️'},
-    {et:'Hiyyeessa / Bineeldota xixiqqaa',fr:'Le moustique',em:'🦟'},
-    {et:'Dirreetti',fr:'La fourmi',em:'🐜'},
-   ]},
-  {id:'plan',level:1,emoji:'🌿',name:'Biqiltoota',sub:'Adaraa, muka, bosonaa… / Les plantes',
-   words:[
-    // Niveau 1 — Éléments naturels de base, très visuels
-    {et:'Adaraa / Daadhii',fr:'La fleur',em:'🌸'},
-    {et:'Muka',fr:'L\'arbre',em:'🌳'},
-    {et:'Caasee',fr:'La feuille',em:'🍃'},
-    {et:'Marga',fr:'L\'herbe',em:'🌱'},
-    // 🟡 Niveau 2 — Espaces & végétaux plus spécifiques
-    {et:'Bakkee miidhagoo',fr:'Le jardin',em:'🏡'},
-    {et:'Daadhii diimaa',fr:'La rose',em:'🌹'},
-    {et:'Bosonaa',fr:'La forêt',em:'🌲'},
-    // 🔴 Niveau 3 — Vocabulaire plus précis ou contextuel
-    {et:'Marga miidhagoo',fr:'La pelouse / Le gazon',em:'⛳'},
-   ]},
 
-  {id:'routine',level:1,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'Ka\'uu, rafuu, hojjechuu… / La vie quotidienne',
+  {id:'cal',level:1,emoji:'📅',name:'Sanaata fi Guyyoota',sub:'Guyyaa, ji\'aa, bara… / Le calendrier',
    words:[
-    {et:'Ka\'uu / Dammaquu',fr:'Se lever / Se réveiller',em:'⏰'},
-    {et:'Dhiqachuu',fr:'Se doucher / Se laver',em:'🚿'},
-    {et:'Fuula dhiqachuu',fr:'Se laver le visage',em:'🧼'},
-    {et:'Ilkaan eebuu',fr:'Se brosser les dents',em:'🦷'},
-    {et:'Uffachuu',fr:'S\'habiller',em:'👕'},
-    {et:'Ciree nyaachuu',fr:'Prendre le petit-déjeuner',em:'🍳'},
-    {et:'Hojjechuu',fr:'Travailler',em:'💼'},
-    {et:'Barumsaaf deemuu',fr:'Aller à l\'cole / Aller étudier',em:'🎒'},
-    {et:'Baha manaa deemuu',fr:'Sortir de la maison',em:'🚪'},
-    {et:'Bitachuu / Gabaa deemuu',fr:'Faire les courses',em:'🛒'},
-    {et:'Nyaata bilcheessuu / Daakuu hojjechuu',fr:'Faire la cuisine / Cuisiner',em:'🍳'},
-    {et:'Uffata dhiquu',fr:'Laver le linge',em:'🧺'},
-    {et:'Uffata miicuu',fr:'Étendre / Repasser le linge',em:'👕'},
-    {et:'Mana qulqulleessuu',fr:'Nettoyer la maison / Faire le ménage',em:'🧹'},
-    {et:'Meeshaalee dhiquu',fr:'Faire la vaisselle',em:'🍽️'},
-    {et:'Saree oofuu',fr:'Sortir le chien',em:'🐕'},
-    {et:'Bifa cireen duraa nyaachuu',fr:'Déjeuner',em:'🥗'},
-    {et:'Halkan nyaachuu',fr:'Dîner',em:'🍽️'},
-    {et:'Boqochuu',fr:'Se reposer',em:'😮‍💨'},
-    {et:'Telefishina ilaalu',fr:'Regarder la télé',em:'📺'},
-    {et:'Kitaaba dubbisuu',fr:'Lire un livre',em:'📖'},
-    {et:'Ciisuu / Rafuu',fr:'Se coucher / Dormir',em:'🛏️'},
+    // Jours de la semaine
+    {et:'Guyyaa torbee',fr:'La semaine',em:'📆'},
+    {et:'Wiixata',fr:'Lundi',em:'1️⃣'},
+    {et:'Kibxata',fr:'Mardi',em:'2️⃣'},
+    {et:'Roobii',fr:'Mercredi',em:'3️⃣'},
+    {et:'Kamiisa',fr:'Jeudi',em:'4️⃣'},
+    {et:'Jimaata',fr:'Vendredi',em:'5️⃣'},
+    {et:'Sanbata',fr:'Samedi',em:'6️⃣'},
+    {et:'Dilbata',fr:'Dimanche',em:'7️⃣'},
+    // Moments clés
+    {et:'Har\'aa',fr:'Aujourd\'hui',em:'📅'},
+    {et:'Boruu',fr:'Demain',em:'➡️'},
+    {et:'Kaleessa',fr:'Hier',em:'⬅️'},
+    {et:'Torban kana',fr:'Cette semaine',em:'📆'},
+    {et:'Torban darbee',fr:'La semaine dernière',em:'⬅️'},
+    {et:'Torban itti aanu',fr:'La semaine prochaine',em:'➡️'},
+    // Mois
+    {et:'Ji\'a',fr:'Le mois',em:'🗓️'},
+    {et:'Amajjii',fr:'Janvier',em:'❄️'},
+    {et:'Guraandhala',fr:'Février',em:'💝'},
+    {et:'Bitootessa',fr:'Mars',em:'🌱'},
+    {et:'Ebla',fr:'Avril',em:'🌸'},
+    {et:'Caamsaa',fr:'Mai',em:'🌺'},
+    {et:'Waxabajjii',fr:'Juin',em:'☀️'},
+    {et:'Adoolessa',fr:'Juillet',em:'🏖️'},
+    {et:'Hagayya',fr:'Août',em:'🌻'},
+    {et:'Fuulbana',fr:'Septembre',em:'🍂'},
+    {et:'Onkoloolessa',fr:'Octobre',em:'🎃'},
+    {et:'Sadaasa',fr:'Novembre',em:'🍁'},
+    {et:'Muddee',fr:'Décembre',em:'🎄'},
+    // Année et dates
+    {et:'Bara / Waggaa',fr:'L\'année',em:'🗓️'},
+    {et:'Bara darbe',fr:'L\'année dernière',em:'⬅️'},
+    {et:'Bara itti aanu',fr:'L\'année prochaine',em:'➡️'},
+    // Calendrier éthiopien (spécificité culturelle)
+    {et:'Guyyaa dhaloota',fr:'L\'anniversaire',em:'🎂'},
+    {et:'Ayyaana Fulbaanaa',fr:'La fête du Nouvel An éthiopien (Enkutatash)',em:'🎊'},
    ]},
 
   {id:'temps',level:1,emoji:'🕐',name:'Sa\'atii fi Qilleensa',sub:'Yeroo, guyyaa, ji\'aa… / L\'heure, la météo',
@@ -699,6 +244,568 @@ var LEVEL1_THEMES_FR=[
     {et:'Digrii',fr:'Les degrés',em:'🌡️'},
    ]},
 
+  {id:'verb',level:1,emoji:'📝',name:'Yakkawwan',sub:'Ta\'uu, qabaachuu, deemuu… / Les verbes principaux',
+   words:[
+   {et:'Ta\'uu / Jiraachuu',fr:'Être',em:'🧑',conj:{et:['Ani nan ta\'a / jira','Ati ni ta\'a / jirta','Inni/Isheen ni ta\'a / jira','Nuti ni taana / jirra','Isin ni taastu / jirtu','Isaan ni ta\'u / jiru'],fr:['Je suis','Tu es','Il/Elle est','Nous sommes','Vous êtes','Ils/Elles sont']}},
+    {et:'Qabaachuu',fr:'Avoir',em:'🤲',conj:{et:['Ani nan qabaadha','Ati ni qabaatta','Inni/Isheen ni qabaata','Nuti ni qabaanna','Isin ni qabaastu','Isaan ni qabaatu'],fr:['J\'ai','Tu as','Il/Elle a','Nous avons','Vous avez','Ils/Elles ont']}},
+    {et:'Dubbachuu',fr:'Parler',em:'🗣️',conj:{et:['Ani nan dubbadha','Ati ni dubbatta','Inni/Isheen ni dubbata','Nuti ni dubbanna','Isin ni dubbastu','Isaan ni dubbatu'],fr:['Je parle','Tu parles','Il/Elle parle','Nous parlons','Vous parlez','Ils/Elles parlent']}},
+    {et:'Jiraachuu',fr:'Habiter',em:'🏠',conj:{et:['Ani nan jiraadha','Ati ni jiraatta','Inni/Isheen ni jiraata','Nuti ni jiraanna','Isin ni jiraastu','Isaan ni jiraatu'],fr:['J\'habite','Tu habites','Il/Elle habite','Nous habitons','Vous habitez','Ils/Elles habitent']}},
+    {et:'Deemuu',fr:'Aller',em:'🚶',conj:{et:['Ani nan deema','Ati ni deemta','Inni/Isheen ni deema','Nuti ni deemna','Isin ni deemtu','Isaan ni deemu'],fr:['Je vais','Tu vas','Il/Elle va','Nous allons','Vous allez','Ils/Elles vont']}},
+    {et:'Jaalachuu',fr:'Aimer',em:'❤️',conj:{et:['Nan jaalladha','Ni jaallataa','Ni jaallata','Ni jaallannaа','Ni jaallattu','Ni jaallatu'],fr:['J\'aime','Tu aimes','Il/Elle aime','Nous aimons','Vous aimez','Ils/Elles aiment']}},
+    {et:'Nyaachuu',fr:'Manger',em:'🍽️',conj:{et:['Ani nan nyaadha','Ati ni nyaatta','Inni/Isheen ni nyaata','Nuti ni nyaanna','Isin ni nyaastu','Isaan ni nyaatu'],fr:['Je mange','Tu manges','Il/Elle mange','Nous mangeons','Vous mangez','Ils/Elles mangent']}},
+    {et:'Dhuguu',fr:'Boire',em:'🥤',conj:{et:['Ani nan dhuga','Ati ni dhugta','Inni/Isheen ni dhuga','Nuti ni dhugna','Isin ni dhugtu','Isaan ni dhugu'],fr:['Je bois','Tu bois','Il/Elle boit','Nous buvons','Vous buvez','Ils/Elles boivent']}},
+    {et:'Rafuu',fr:'Dormir',em:'😴',conj:{et:['Ani nan rafaa','Ati ni rafta','Inni/Isheen ni rafa','Nuti ni rafna','Isin ni raftu','Isaan ni rafu'],fr:['Je dors','Tu dors','Il/Elle dort','Nous dormons','Vous dormez','Ils/Elles dorment']}},
+    {et:'Deemuu miila',fr:'Marcher',em:'🚶‍♂️',conj:{et:['Ani nan deema miila','Ati ni deemta miila','Inni/Isheen ni deema miila','Nuti ni deemna miila','Isin ni deemtu miila','Isaan ni deemu miila'],fr:['Je marche','Tu marches','Il/Elle marche','Nous marchons','Vous marchez','Ils/Elles marchent']}},
+    {et:'Fiiguu',fr:'Courir',em:'🏃‍♂️',conj:{et:['Ani nan fiiga','Ati ni fiigta','Inni/Isheen ni fiiga','Nuti ni fiigna','Isin ni fiigtu','Isaan ni fiigu'],fr:['Je cours','Tu cours','Il/Elle court','Nous courons','Vous courez','Ils/Elles courent']}},
+    {et:'Dubbisuu',fr:'Lire',em:'📖',conj:{et:['Ani nan dubbisa','Ati ni dubbista','Inni/Isheen ni dubbisa','Nuti ni dubbisna','Isin ni dubbistu','Isaan ni dubbisu'],fr:['Je lis','Tu lis','Il/Elle lit','Nous lisons','Vous lisez','Ils/Elles lisent']}},
+    {et:'Barreessuu',fr:'Écrire',em:'✍️',conj:{et:['Ani nan barreessa','Ati ni barreesta','Inni/Isheen ni barreessa','Nuti ni barreessina','Isin ni barreestu','Isaan ni barreesu'],fr:['J\'écris','Tu écris','Il/Elle écrit','Nous écrivons','Vous écrivez','Ils/Elles écrivent']}},
+    {et:'Dhaggeeffachuu',fr:'Écouter',em:'🎧',conj:{et:['Ani nan dhaggeeffadha','Ati ni dhaggeeffatta','Inni/Isheen ni dhaggeeffata','Nuti ni dhaggeeffanna','Isin ni dhaggeeffastu','Isaan ni dhaggeeffatu'],fr:['J\'écoute','Tu écoutes','Il/Elle écoute','Nous écoutons','Vous écoutez','Ils/Elles écoutent']}},
+    {et:'Ilaaluu',fr:'Regarder',em:'👀',conj:{et:['Ani nan ilaala','Ati ni ilaalta','Inni/Isheen ni ilaala','Nuti ni ilaalana','Isin ni ilaaltuu','Isaan ni ilaalu'],fr:['Je regarde','Tu regardes','Il/Elle regarde','Nous regardons','Vous regardez','Ils/Elles regardent']}},
+    {et:'Barachuu',fr:'Apprendre',em:'🧠',conj:{et:['Ani nan baradha','Ati ni baratta','Inni/Isheen ni barata','Nuti ni baranna','Isin ni barastu','Isaan ni baratu'],fr:['J\'apprends','Tu apprends','Il/Elle apprend','Nous apprenons','Vous apprenez','Ils/Elles apprennent']}},
+    {et:'Yaaduu',fr:'Penser',em:'🤔',conj:{et:['Ani nan yaada','Ati ni yaadda','Inni/Isheen ni yaada','Nuti ni yaadna','Isin ni yaaddu','Isaan ni yaadu'],fr:['Je pense','Tu penses','Il/Elle pense','Nous pensons','Vous pensez','Ils/Elles pensent']}},
+    {et:'Misoomsuu / Kolfuu',fr:'Sourire',em:'😊',conj:{et:['Ani nan misoomsa','Ati ni misoosta','Inni/Isheen ni misooma','Nuti ni misoomsina','Isin ni misoostu','Isaan ni misoomu'],fr:['Je souris','Tu souris','Il/Elle sourit','Nous sourions','Vous souriez','Ils/Elles sourient']}},
+    {et:'Fudhachuu',fr:'Prendre',em:'🤲',conj:{et:['Ani nan fudhadha','Ati ni fudhatta','Inni/Isheen ni fudhata','Nuti ni fudhanna','Isin ni fudhastu','Isaan ni fudhatu'],fr:['Je prends','Tu prends','Il/Elle prend','Nous prenons','Vous prenez','Ils/Elles prennent']}},
+    {et:'Kennuu',fr:'Donner',em:'🤲',conj:{et:['Ani nan kenna','Ati ni kenta','Inni/Isheen ni kenna','Nuti ni kennina','Isin ni kentu','Isaan ni kennu'],fr:['Je donne','Tu donnes','Il/Elle donne','Nous donnons','Vous donnez','Ils/Elles donnent']}},
+    {et:'Barbaaduu',fr:'Chercher',em:'🔍',conj:{et:['Ani nan barbaada','Ati ni barbaadda','Inni/Isheen ni barbaada','Nuti ni barbaadna','Isin ni barbaaddu','Isaan ni barbaadu'],fr:['Je cherche','Tu cherches','Il/Elle cherche','Nous cherchons','Vous cherchez','Ils/Elles cherchent']}},
+    {et:'Bituu',fr:'Acheter',em:'🛒',conj:{et:['Ani nan bita','Ati ni bitta','Inni/Isheen ni bita','Nuti ni bitna','Isin ni bittu','Isaan ni bitu'],fr:['J\'achète','Tu achètes','Il/Elle achète','Nous achetons','Vous achetez','Ils/Elles achètent']}},
+    {et:'Gurguruu',fr:'Vendre',em:'💰',conj:{et:['Ani nan gurgura','Ati ni gurgurta','Inni/Isheen ni gurgura','Nuti ni gurgurna','Isin ni gurgurtu','Isaan ni gurguru'],fr:['Je vends','Tu vends','Il/Elle vend','Nous vendons','Vous vendez','Ils/Elles vendent']}},
+    {et:'Kaffaltii kaffaluu',fr:'Payer',em:'💳',conj:{et:['Ani nan kaffala','Ati ni kaffalda','Inni/Isheen ni kaffala','Nuti ni kaffalina','Isin ni kaffaltu','Isaan ni kaffalu'],fr:['Je paie','Tu paies','Il/Elle paie','Nous payons','Vous payez','Ils/Elles paient']}},
+    {et:'Hojjechuu',fr:'Travailler',em:'💼',conj:{et:['Ani nan hojjedha','Ati ni hojjetta','Inni/Isheen ni hojjeta','Nuti ni hojjenna','Isin ni hojjestu','Isaan ni hojjetu'],fr:['Je travaille','Tu travailles','Il/Elle travaille','Nous travaillons','Vous travaillez','Ils/Elles travaillent']}},
+    {et:'Nyaata bilcheessuu',fr:'Cuisiner',em:'🍳',conj:{et:['Ani nan bilcheessa','Ati ni bilcheesta','Inni/Isheen ni bilcheessa','Nuti ni bilcheessina','Isin ni bilcheestu','Isaan ni bilcheesu'],fr:['Je cuisine','Tu cuisines','Il/Elle cuisine','Nous cuisinons','Vous cuisinez','Ils/Elles cuisinent']}},
+    {et:'Qulqulleessuu',fr:'Nettoyer',em:'🧹',conj:{et:['Ani nan qulqulleessa','Ati ni qulqulleesta','Inni/Isheen ni qulqulleessa','Nuti ni qulqulleessina','Isin ni qulqulleestu','Isaan ni qulqulleesu'],fr:['Je nettoie','Tu nettoies','Il/Elle nettoie','Nous nettoyons','Vous nettoyez','Ils/Elles nettoient']}},
+    {et:'Dhiqachuu',fr:'Se doucher',em:'🧼',conj:{et:['Ani nan dhiqadha','Ati ni dhiqatta','Inni/Isheen ni dhiqata','Nuti ni dhiqanna','Isin ni dhiqastu','Isaan ni dhiqatu'],fr:['Je me douche','Tu te douches','Il/Elle se douche','Nous nous douchons','Vous vous douchez','Ils/Elles se douchent']}},
+    {et:'Ba\'uu / Deemuu',fr:'Partir',em:'🚪',conj:{et:['Ani nan ba\'a','Ati ni baata','Inni/Isheen ni ba\'a','Nuti ni baana','Isin ni baatu','Isaan ni ba\'u'],fr:['Je pars','Tu pars','Il/Elle part','Nous partons','Vous partez','Ils/Elles partent']}},
+    {et:'Ga\'uu / Dhufuu',fr:'Arriver',em:'🛬',conj:{et:['Ani nan dhufa','Ati ni dhufta','Inni/Isheen ni dhufa','Nuti ni dhufna','Isin ni dhuftu','Isaan ni dhufu'],fr:['J\'arrive','Tu arrives','Il/Elle arrive','Nous arrivons','Vous arrivez','Ils/Elles arrivent']}},
+    {et:'Waamuu',fr:'Appeler',em:'📞',conj:{et:['Ani nan waama','Ati ni waamta','Inni/Isheen ni waama','Nuti ni waamna','Isin ni waamtu','Isaan ni waamu'],fr:['J\'appelle','Tu appelles','Il/Elle appelle','Nous appelons','Vous appelez','Ils/Elles appellent']}},
+    {et:'Gaafachuu',fr:'Demander',em:'🙋‍♂️',conj:{et:['Ani nan gaafadha','Ati ni gaafatta','Inni/Isheen ni gaafata','Nuti ni gaafanna','Isin ni gaafastu','Isaan ni gaafatu'],fr:['Je demande','Tu demandes','Il/Elle demande','Nous demandons','Vous demandez','Ils/Elles demandent']}},
+    {et:'Konkolaachisuu',fr:'Conduire',em:'🚗',conj:{et:['Ani nan konkolaachisa','Ati ni konkolaachista','Inni/Isheen ni konkolaachisa','Nuti ni konkolaachisina','Isin ni konkolaachistuu','Isaan ni konkolaachisu'],fr:['Je conduis','Tu conduis','Il/Elle conduit','Nous conduisons','Vous conduisez','Ils/Elles conduisent']}},
+    {et:'Baay\'ee jaalladha',fr:'Adorer',em:'😍',conj:{et:['Nan baay\'ee jaalladha','Ni baay\'ee jaallataa','Ni baay\'ee jaallata','Ni baay\'ee jaallannaа','Ni baay\'ee jaallattu','Ni baay\'ee jaallatu'],fr:['J\'adore','Tu adores','Il/Elle adore','Nous adorons','Vous adorez','Ils/Elles adorent']}}
+  ]},
+
+  {id:'emot',level:1,emoji:'😄',name:'Miira',sub:'Gammaduu, dadhabuu… / Les émotions',
+   words:[
+    {et:'Gammadaa / Gammatti',fr:'Content / Contente',em:'😊'},
+    {et:'Baayyee gammadaa / Gammatti',fr:'Heureux / Heureuse',em:'😊'},
+    {et:'Koolu / Kooltuu',fr:'Joyeux / Joyeuse',em:'😄'},
+    {et:'Gadda / Gadditi',fr:'Triste / Triste',em:'😢'},
+    {et:'Dadhabaa / Dadhabduu',fr:'Fatigué / Fatiguée',em:'😴'},
+    {et:'Dallansuu / Dallantuu',fr:'Fâché / Fâchée',em:'😠'},
+    {et:'Rifaatuu / Rifatii',fr:'Surpris / Choqué(e)',em:'😲'},
+    {et:'Sodaachuu',fr:'Avoir peur / Avoir peur',em:'😨'},
+    {et:'Dhukkubsataa / Dhukkubsattuu',fr:'Malade / Malade',em:'🤒'},
+    {et:'Xiqqoo dhukkubsataa',fr:'Pas très bien / Un peu souffrant',em:'🤒'},
+    {et:'Yaaddoo / Yaaddoftuu',fr:'Inquiet / Inquiète',em:'😟'},
+    {et:'Yaaddoo jabaa',fr:'Inquiet / Inquiète',em:'😟'},
+    {et:'Dhiphina / Dhibaa',fr:'Stressé / Stressée',em:'😰'},
+    {et:'Baay\'ee dhiphina',fr:'Stressé / Stressée',em:'😰'},
+    {et:'Abdii kutaa / Manooftuu',fr:'Déçu / Déçue',em:'😞'},
+    {et:'Jibba / Jibbitu',fr:'Haineux / Haineuse',em:'😤'},
+    {et:'Jaallachuu / Jaallattuu',fr:'Amoureux / Amoureuse',em:'😍'},
+    {et:'Baay\'ee gaarii! / Roorroo!',fr:'C\'est super ! / C\'est cool !',em:'🌟'}
+   ]},
+
+  {id:'col',level:1,emoji:'🎨',name:'Halluu',sub:'Diimaa, magariisa, keelloo… / Les couleurs',
+   words:[
+    {et:'Diimaa',fr:'Rouge',em:'❤️'},{et:'Cuquliisa',fr:'Bleu',em:'💙'},{et:'Magariisa',fr:'Vert',em:'💚'},
+    {et:'Keelloo',fr:'Jaune',em:'💛'},{et:'Burtukaana',fr:'Orange',em:'🧡'},{et:'Adii',fr:'Blanc',em:'🤍'},
+    {et:'Gurraacha',fr:'Noir',em:'🖤'},{et:'Roozii',fr:'Rose',em:'🩷'},
+    {et:'Daallatii / Diimtuuja',fr:'Violet',em:'💜'},{et:'Bunii',fr:'Marron',em:'🤎'},
+    {et:'Garaa garaa / Dulluma',fr:'Gris',em:'🩶'}
+   ]},
+
+  {id:'fam',level:1,emoji:'👨‍👩‍👧',name:'Maatii',sub:'Abbaa, haadha, ilma… / La famille',
+   words:[
+   {et:'Haadha / Haadha manaa',fr:'La mère / La maman',em:'👩'},
+    {et:'Abbaa / Abbaa manaa',fr:'Le père / Le papa',em:'👨'},
+    {et:'Intala',fr:'La fille',em:'👧'},
+    {et:'Ilma',fr:'Le fils',em:'👦'},
+    {et:'Obboleettii',fr:'La sœur',em:'👧'},
+    {et:'Obboleessa',fr:'Le frère',em:'🧑'},
+    {et:'Akoo / Awoo',fr:'La grand-mère',em:'👵'},
+    {et:'Akaakayyuu / Awoo Abbaa',fr:'Le grand-père',em:'👴'},
+    {et:'Niitii / Haadha manaa',fr:'La femme',em:'💑'},
+    {et:'Abbaa warraa / Dhiirsa',fr:'Le mari',em:'💍'},
+    {et:'Adaadaa (haadha abbaa) / Adda (obboleessa abbaa)',fr:'La tante (côté père) / L\'oncle',em:'👨‍👩‍👧'}
+   ]},
+
+  {id:'corps',level:1,emoji:'🧍',name:'Qaamaa',sub:'Mataa, harkaa, miila… / Le corps',
+   words:[
+    {et:'Mataa',fr:'La tête',em:'🗣️'},
+    {et:'Rifeensa',fr:'Les cheveux',em:'💇‍♂️'},
+    {et:'Ija / Ijaan',fr:'L\'œil / Les yeux',em:'👀'},
+    {et:'Funyaan',fr:'Le nez',em:'👃'},
+    {et:'Gurra / Gurraan',fr:'L\'oreille / Les oreilles',em:'👂'},
+    {et:'Afaan',fr:'La bouche',em:'👄'},
+    {et:'Hidhii',fr:'Les lèvres',em:'💋'},
+    {et:'Arraba',fr:'La langue',em:'👅'},
+    {et:'Ilkaan',fr:'La dent / Les dents',em:'🦷'},
+    {et:'Morma',fr:'Le cou',em:''},
+    {et:'Harka gubbaa',fr:'Le bras / Les bras',em:'💪'},
+    {et:'Harka / Harkaan',fr:'La main / Les mains',em:'✋'},
+    {et:'Quba / Qubaan',fr:'Le doigt / Les doigts',em:'☝️'},
+    {et:'Quba miila / Ciltuu',fr:'L\'orteil / L\'ongle',em:'💅'},
+    {et:'Dugda',fr:'Le dos',em:''},
+    {et:'Garaa',fr:'Le ventre',em:'🫃'},
+    {et:'Miila / Miilaan',fr:'La jambe / Les jambes',em:'🦵'},
+    {et:'Miila jalaa / Miilaafi',fr:'Le pied / Les pieds',em:'🦶'},
+    {et:'Onnee',fr:'Le cœur',em:'❤️'},
+    {et:'Sammuu',fr:'Le cerveau',em:'🧠'},
+    {et:'Lafee / Lafaan',fr:'L\'os / Les os',em:'🦴'}
+   ]},
+
+  {id:'nour',level:1,emoji:'🍽️',name:'Nyaata',sub:'Buddeena, muduraa, injera… / La nourriture',
+   words:[
+    // Catégories générales d'abord
+    {et:'Muduraa',fr:'Les fruits',em:'🍉'},
+    {et:'Kuduraa',fr:'Les légumes',em:'🥦'},
+    // Féculents / base
+    {et:'Buddeena',fr:'Le pain',em:'🍞'},
+    {et:'Ruzii',fr:'Le riz',em:'🍚'},
+    {et:'Maakiirooni',fr:'Les pâtes',em:'🍝'},
+    {et:'Dinnichi / Foonii dinnichaa',fr:'La pomme de terre / Les frites',em:'🥔'},
+    // Protéines
+    {et:'Foon',fr:'La viande',em:'🥩'},
+    {et:'Lukkuu',fr:'Le poulet',em:'🍗'},
+    {et:'Qurxummii',fr:'Le poisson',em:'🐟'},
+    {et:'Foon garbuu / Tibs',fr:'Le tibs (viande grillée)',em:'🥩'},
+    {et:'Berbere',fr:'Le berbéré (mélange d\'épices)',em:'🌶️'},
+    {et:'Hanqaaquu',fr:'L\'œuf',em:'🥚'},
+    // Produits laitiers
+    {et:'Baadaa',fr:'Le fromage',em:'🧀'},
+    {et:'Dhadhaa',fr:'Le beurre',em:'🧈'},
+    // Fruits
+    {et:'Pomii',fr:'La pomme',em:'🍎'},
+    {et:'Muuzii',fr:'La banane',em:'🍌'},
+    {et:'Burtukaana',fr:'L\'orange',em:'🍊'},
+    {et:'Liimoo',fr:'Le citron',em:'🍋'},
+    {et:'Mukarroo',fr:'La fraise',em:'🍓'},
+    {et:'Harbuu',fr:'La pastèque',em:'🍉'},
+    // Légumes
+    {et:'Timaatimii',fr:'La tomate',em:'🍅'},
+    {et:'Karootii',fr:'La carotte',em:'🥕'},
+    {et:'Qullubbii / Laasuna',fr:'L\'oignon',em:'🧅'},
+    {et:'Turunfaa',fr:'L\'ail',em:'🧄'},
+    {et:'Salaaxi',fr:'Le concombre',em:'🥒'},
+    {et:'Salaaditii',fr:'La salade',em:'🥗'},
+    // Condiments / épicerie
+    {et:'Zeyitii / Eelaa',fr:'L\'huile d\'olive',em:'🫒'},
+    {et:'Citaa',fr:'Le sel',em:'🧂'},
+    {et:'Barbaree',fr:'Le poivre',em:'🌶️'},
+    {et:'Damma',fr:'Le miel',em:'🍯'},
+    {et:'Chokolaatii',fr:'Le chocolat',em:'🍫'},
+   ]},
+
+  {id:'bois',level:1,emoji:'🥤',name:'Dhugaatii',sub:'Bishaan, buna, shaayii… / Les boissons',
+   words:[
+    // Essentiels
+    {et:'Bishaan',fr:'L\'eau',em:'💧'},
+    {et:'Bishaan gaazii qaba',fr:'L\'eau gazeuse',em:'🫧'},
+    {et:'Aannaan',fr:'Le lait',em:'🥛'},
+    {et:'Jiisii (Burtukaanaa)',fr:'Le jus (d\'orange)',em:'🍊'},
+    {et:'Sodaa / Gasiyoozaa',fr:'Le soda',em:'🥤'},
+    // Cafés
+    {et:'Buna (qullayyoo)',fr:'Le café noir',em:'☕'},
+    {et:'Buna aannaan waliin',fr:'Le café au lait',em:'☕'},
+    {et:'Buna nannoo aannaan xinnoo',fr:'Le café avec un nuage de lait',em:'☕'},
+    {et:'Shaayii',fr:'Le thé',em:'🍵'},
+    // Alcools
+    {et:'Koonjoo (diimaa / adii)',fr:'Le vin (rouge / blanc)',em:'🍷'},
+    {et:'Biiraa',fr:'La bière',em:'🍺'},
+    {et:'Araqee',fr:'L\'araqé (alcool éthiopien)',em:'🍶'},
+   ]},
+
+  {id:'lieux',level:1,emoji:'🏙️',name:'Bakkoota Barbaachisoo',sub:'Gabaa, daandii, bunaa… / Les lieux importants',
+   words:[
+    // Lieux de vie / nature
+    {et:'Magaalaa',fr:'La ville',em:'🏙️'},
+    {et:'Ganda',fr:'Le village',em:'🏡'},
+    {et:'Baadiyyaa',fr:'La campagne',em:'🌾'},
+    {et:'Tullu / Gaara',fr:'La montagne / La chaîne de montagnes',em:'⛰️'},
+    {et:'Galaana / Haroo',fr:'La mer / L\'océan',em:'🌊'},
+    {et:'Qorichee / Qixxee qilleensaa',fr:'La plage',em:'🏖️'},
+    {et:'Laga',fr:'La rivière',em:'🏞️'},
+    {et:'Meeshaa bashannannaa',fr:'Le parc',em:'🌳'},
+    {et:'Bulee / Daaqqoo',fr:'La place publique',em:'⛲'},
+    {et:'Daandii / Karaa',fr:'La rue / L\'avenue',em:'🛣️'},
+    {et:'Naannoo manaa',fr:'Le pâté de maisons',em:'🏘️'},
+    // Services publics
+    {et:'Mana bulchiinsaa',fr:'La mairie',em:'🏛️'},
+    {et:'Hospitaala',fr:'L\'hôpital',em:'🏥'},
+    {et:'Farmaasiitii',fr:'La pharmacie',em:'💊'},
+    {et:'Baankii',fr:'La banque',em:'🏦'},
+    {et:'Kiilistiyaana / Masjiida',fr:'L\'église / La mosquée',em:'⛪🕌'},
+    // Commerces
+    {et:'Suupaarmaarkeeti',fr:'Le supermarché',em:'🛒'},
+    {et:'Buna mana / Bunaa',fr:'Le bar / Le café',em:'☕'},
+    {et:'Gabaa / Suuqii',fr:'Le marché / La boutique',em:'🛍️'},
+    // Éducation
+    {et:'Mana barumsaa daa\'immanii',fr:'L\'école maternelle',em:'🧸'},
+    {et:'Mana barumsaa sadarkaa duraatii',fr:'L\'école primaire',em:'🎒'},
+    {et:'Mana barumsaa sadarkaa lammaffaa',fr:'Le collège',em:'📚'},
+    {et:'Mana barumsaa ol\'aanaa',fr:'Le lycée',em:'🎓'},
+    {et:'Yuniversitii',fr:'L\'université',em:'🏛️'},
+   ]},
+
+  {id:'orient',level:1,emoji:'🧭',name:'Karaa Barbaaduu',sub:'Bitaa, mirga… / S\'orienter',
+   words:[
+   // Directions
+    {et:'Kallattii itti fufi',fr:'Tout droit',em:'⬆️'},
+    {et:'Bitatti',fr:'À gauche',em:'⬅️'},
+    {et:'Mirgatti',fr:'À droite',em:'➡️'},
+    // Position relative
+    {et:'Fuuldura',fr:'Devant',em:'🔜'},
+    {et:'Duuba',fr:'Derrière',em:'🔙'},
+    {et:'Cinaa',fr:'À côté',em:'↔️'},
+    {et:'Fuuldura / Eegalan',fr:'En face',em:'🔄'},
+    // Distance
+    {et:'Dhiyoo',fr:'Près',em:'📍'},
+    {et:'Fagoo',fr:'Loin',em:'🌅'},
+    // Outil
+    {et:'Kaartaa',fr:'Le plan / La carte',em:'🗺️'},
+    ]},
+
+  {id:'trans',level:1,emoji:'🚌',name:'Geejjiba',sub:'Baasii, gaarii, konkolaataa… / Les transports',
+   words:[
+    // Transports en commun
+    {et:'Baasii / Konkolaataa ummataa',fr:'Le bus',em:'🚌'},
+    {et:'Meetiroo',fr:'Le métro',em:'🚇'},
+    {et:'Tiraamii',fr:'Le tramway',em:'🚊'},
+    {et:'Gaarii sibii',fr:'Le train',em:'🚂'},
+    {et:'Xiyyaara',fr:'L\'avion',em:'✈️'},
+    {et:'Taaksii',fr:'Le taxi',em:'🚕'},
+    // Transports individuels
+    {et:'Konkolaataa',fr:'La voiture',em:'🚗'},
+    {et:'Mootoorisikkilii',fr:'La moto',em:'🏍️'},
+    {et:'Biskileetii',fr:'Le vélo',em:'🚴'},
+    // Titre de transport
+    {et:'Tikeeta',fr:'Le billet',em:'🎫'},
+   ]},
+
+  {id:'rest',level:1,emoji:'🍽️',name:'Mana Nyaataa',sub:'Menuu, kafaltii, teessoo… / Au restaurant',
+   words:[
+      // Arrivée
+    {et:'Balbala alaa',fr:'La terrasse',em:'☀️'},
+    {et:'Teessoo',fr:'La table',em:'🪑'},
+    {et:'Teessoon kun duwwaa dha?',fr:'Cette table est libre ?',em:'🪑'},
+    // Commander
+    {et:'Tajaajilaa / Tajaajiltu',fr:'Le serveur / La serveuse',em:'🧑‍🍳'},
+    {et:'Liistii nyaataa',fr:'La carte',em:'📋'},
+    {et:'Menuu guyyaa',fr:'Le menu du jour',em:'🍱'},
+    {et:'Gaafachuu',fr:'Commander',em:'🙋'},
+    {et:'Maal yaaddu?',fr:'Que recommandez-vous ?',em:'👨‍🍳'},
+    // Régimes
+    {et:'Gluten hin qabu',fr:'Sans gluten',em:'🌾'},
+    {et:'Foon hin nyaatu',fr:'Végétarien / Végétarienne',em:'🥦'},
+    // Repas
+    {et:'Fuullaa xinnoo',fr:'L\'amuse-bouche',em:'🫒'},
+    {et:'Fuullaa dura',fr:'L\'entrée',em:'🥗'},
+    {et:'Nyaata ijoo',fr:'Le plat principal',em:'🍖'},
+    {et:'Dhaamsa nyaataa',fr:'Le dessert',em:'🍮'},
+    {et:'Saandiwichii / Buddeena',fr:'Le sandwich',em:'🥖'},
+    {et:'Fudhachuuf',fr:'À emporter',em:'🥡'},
+    // Addition
+    {et:'Baasii nyaataa',fr:'L\'addition',em:'💶'},
+    {et:'Qarshii dabalataa',fr:'Le pourboire',em:'💰'},
+    {et:'Qarshii dabalataan dabalamee jira',fr:'Le pourboire est inclus',em:'✅'},
+   ]},
+
+  {id:'log',level:1,emoji:'🏠',name:'Mana Jireenyaa',sub:'Dabtaroo, daakuu… / Le logement',
+   words:[
+        // Types de logement
+    {et:'Mana',fr:'La maison',em:'🏠'},
+    {et:'Apartamaantii',fr:'L\'appartement',em:'🏢'},
+    // Pièces principales
+    {et:'Seensa / Galma dura',fr:'L\'entrée',em:'🚪'},
+    {et:'Galma / Mana nyaataa',fr:'Le salon / la salle à manger',em:'🛋️'},
+    {et:'Daakuu',fr:'La cuisine',em:'🍳'},
+    {et:'Kutaa ciisichaa',fr:'La chambre',em:'🛏️'},
+    {et:'Mana fincaanii / Dhiqachuu',fr:'La salle de bain',em:'🚿'},
+    {et:'Mana fincaanii',fr:'Les toilettes',em:'🚽'},
+    {et:'Mana konkolaataa',fr:'Le garage',em:'🚗'},
+   ]},
+
+  {id:'objets',level:1,emoji:'🔑',name:'Meeshaalee Guyyaatii',sub:'Bilbila, hirnaa… / Objets du quotidien',
+   words:[
+        // Technologie
+    {et:'Bilbila',fr:'Le téléphone',em:'☎️'},
+    {et:'Bilbila harkaa',fr:'Le portable',em:'📱'},
+    {et:'Kompiyuutara',fr:'L\'ordinateur',em:'💻'},
+    {et:'Chaajjara',fr:'Le chargeur',em:'🔌'},
+    // Temps
+    {et:'Sa\'atii harkaa',fr:'La montre',em:'⌚'},
+    {et:'Sa\'atii',fr:'L\'horloge / la pendule',em:'🕐'},
+    // Accessoires personnels
+    {et:'Hirnaa',fr:'Les clés',em:'🔑'},
+    {et:'Fardaa qarshii / Baankii xinnoo',fr:'Le portefeuille / le porte-monnaie',em:'👛'},
+    {et:'Bursuusaa dugdaa',fr:'Le sac à dos',em:'🎒'},
+    {et:'Miidhagina ija',fr:'Les lunettes',em:'👓'},
+    {et:'Aanoo roobaa',fr:'Le parapluie',em:'☂️'},
+    // Papeterie
+    {et:'Waraqaa',fr:'Le papier',em:'📄'},
+    {et:'Qalama / Biiroo',fr:'Le stylo / le bic',em:'🖊️'},
+    {et:'Mishira',fr:'Les ciseaux',em:'✂️'},
+    // Vaisselle
+    {et:'Xaa\'oo',fr:'L\'assiette',em:'🍽️'},
+    {et:'Kilaasii',fr:'Le verre',em:'🥛'},
+    {et:'Kubboo buna',fr:'La tasse',em:'☕'},
+    {et:'Simiintoo',fr:'La cuillère',em:'🥄'},
+    {et:'Forkii',fr:'La fourchette',em:'🍴'},
+    {et:'Bilaa',fr:'Le couteau',em:'🔪'},
+    {et:'Booteelaa',fr:'La bouteille',em:'🍶'},
+    // Salle de bain / chambre
+    {et:'Iyyaanoo',fr:'Le miroir',em:'🪞'},
+    {et:'Tuwaallii',fr:'La serviette',em:'🛁'},
+    {et:'Saabunaa',fr:'Le savon',em:'🧼'},
+    {et:'Kaafiyaa',fr:'L\'oreiller',em:''},
+   ]},
+
+  {id:'muebles_equipamiento', level:1, emoji:'🪑', name:'Meeshaalee Manaa', sub:'Soofa, siree, firiijiidara… / Meubles et équipements',
+ words:[
+    // Salon
+    {et:'Soofa',fr:'Le canapé',em:'🛋️'},
+    {et:'Teessoo qofaa',fr:'Le fauteuil',em:'💺'},
+    {et:'Teessoo',fr:'La table',em:''},
+    {et:'Sannaddaa',fr:'La chaise',em:'🪑'},
+    {et:'Ibsaa',fr:'La lampe',em:'💡'},
+    {et:'Mudaa kitaabaa',fr:'L\'étagère',em:''},
+    // Chambre
+    {et:'Siree',fr:'Le lit',em:'🛏️'},
+    {et:'Amaaroo uffataa',fr:'L\'armoire',em:'🗄️'},
+    {et:'Maardiima / Barrumsaa',fr:'Le bureau',em:'🖊️'},
+    // Cuisine
+    {et:'Friijiidara',fr:'Le réfrigérateur',em:'🧊'},
+    {et:'Aawoo',fr:'Le four',em:'🔥'},
+    {et:'Maaykirooweevii',fr:'Le micro-ondes',em:'🔲♨️'},
+    {et:'Dhiqa meeshaa',fr:'L\'évier',em:'🚰'},
+    // Salle de bain
+    {et:'Dhiqa fuulaa',fr:'Le lavabo',em:'🚰'},
+    {et:'Kuubii dhiqachuu',fr:'La baignoire',em:'🛁'},
+    {et:'Shawara',fr:'La douche',em:'🚿'},
+  ]},
+
+  {id:'routine',level:1,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'Ka\'uu, rafuu, hojjechuu… / La vie quotidienne',
+   words:[
+    {et:'Ka\'uu / Dammaquu',fr:'Se lever / Se réveiller',em:'⏰'},
+    {et:'Dhiqachuu',fr:'Se doucher / Se laver',em:'🚿'},
+    {et:'Fuula dhiqachuu',fr:'Se laver le visage',em:'🧼'},
+    {et:'Ilkaan eebuu',fr:'Se brosser les dents',em:'🦷'},
+    {et:'Uffachuu',fr:'S\'habiller',em:'👕'},
+    {et:'Ciree nyaachuu',fr:'Prendre le petit-déjeuner',em:'🍳'},
+    {et:'Hojjechuu',fr:'Travailler',em:'💼'},
+    {et:'Barumsaaf deemuu',fr:'Aller à l\'cole / Aller étudier',em:'🎒'},
+    {et:'Baha manaa deemuu',fr:'Sortir de la maison',em:'🚪'},
+    {et:'Bitachuu / Gabaa deemuu',fr:'Faire les courses',em:'🛒'},
+    {et:'Nyaata bilcheessuu / Daakuu hojjechuu',fr:'Faire la cuisine / Cuisiner',em:'🍳'},
+    {et:'Uffata dhiquu',fr:'Laver le linge',em:'🧺'},
+    {et:'Uffata miicuu',fr:'Étendre / Repasser le linge',em:'👕'},
+    {et:'Mana qulqulleessuu',fr:'Nettoyer la maison / Faire le ménage',em:'🧹'},
+    {et:'Meeshaalee dhiquu',fr:'Faire la vaisselle',em:'🍽️'},
+    {et:'Saree oofuu',fr:'Sortir le chien',em:'🐕'},
+    {et:'Bifa cireen duraa nyaachuu',fr:'Déjeuner',em:'🥗'},
+    {et:'Halkan nyaachuu',fr:'Dîner',em:'🍽️'},
+    {et:'Boqochuu',fr:'Se reposer',em:'😮‍💨'},
+    {et:'Telefishina ilaalu',fr:'Regarder la télé',em:'📺'},
+    {et:'Kitaaba dubbisuu',fr:'Lire un livre',em:'📖'},
+    {et:'Ciisuu / Rafuu',fr:'Se coucher / Dormir',em:'🛏️'},
+   ]},
+
+  {id:'veth',level:1,emoji:'👗',name:'Uffata',sub:'Shartii, surrii… / Les vêtements',
+   words:[
+    // Niveau 1 — Vêtements du quotidien, très fréquents
+    {et:'Shartii',fr:'Le t-shirt',em:'👕'},
+    {et:'Shartii dheeraa',fr:'La chemise',em:'👔'},
+    {et:'Surrii',fr:'Le pantalon',em:'👖'},
+    {et:'Kophee / Shaakaalaa',fr:'Les chaussures / Les baskets',em:'👟'},
+    {et:'Kaalseettii',fr:'Les chaussettes',em:'🧦'},
+    // Niveau 2 — Vêtements courants, un peu plus spécifiques
+    {et:'Uffata dubartii / Qanafee',fr:'La robe / La jupe',em:'👗'},
+    {et:'Surrii gabaabaa',fr:'Le short',em:'🩳'},
+    {et:'Jaakeetii / Uffata ho\'a',fr:'Le pull',em:'🧥'},
+    {et:'Jaakeetii alaa',fr:'La veste',em:'🧥'},
+    {et:'Kuullaa / Keeppii',fr:'Le chapeau / La casquette',em:'🎩'},
+    // Niveau 3 — Accessoires et vêtements saisonniers
+    {et:'Koobii guddaa',fr:'Le manteau',em:'🧥'},
+    {et:'Shanxii morma',fr:'L\'écharpe',em:'🧣'},
+    {et:'Gantii',fr:'Les gants',em:'🧤'},
+    {et:'Kuullaa ho\'a',fr:'Le bonnet',em:'🎿'},
+    {et:'Buursaa / Fardaa',fr:'Le sac / La poche',em:'👜'},
+    {et:'Uffata bishaan',fr:'Le maillot de bain',em:'🩱'},
+   ]},
+
+  {id:'met',level:1,emoji:'💼',name:'Ogummaa',sub:'Doktora, barsiisaa… / Les professions',
+   words:[
+    // Niveau 1 — Métiers du quotidien, rencontrés très fréquemment
+    {et:'Barataa / Barattuun',fr:'L\'étudiant / L\'étudiante',em:'🎓'},
+    {et:'Barsiisaa / Barsiistuu',fr:'Le professeur / La professeure',em:'👩‍🏫'},
+    {et:'Tajaajilaa / Tajaajiltu',fr:'Le serveur / La serveuse',em:'🍽️'},
+    {et:'Gurgurataa / Gurgurattu',fr:'Le vendeur / La vendeuse',em:'🏪'},
+    {et:'Oofaa taaksii',fr:'Le chauffeur de taxi / La chauffeuse de taxi',em:'🚕'},
+    // Niveau 2 — Métiers courants, contextes santé & service
+    {et:'Doktora',fr:'Le médecin / La médecin',em:'🩺'},
+    {et:'Narsii',fr:'L\'infirmier / L\'infirmière',em:'👨‍⚕️'},
+    {et:'Nyaata bilcheessaa',fr:'Le cuisinier / La cuisinière',em:'👨‍🍳'},
+    // Niveau 3 — Métiers plus spécifiques ou lexicalement complexes
+    {et:'Ogaa bishaan',fr:'Le plombier / La plombière',em:'🔧'},
+    {et:'Ogaa kompiyuutaraa',fr:'L\'informaticien / L\'informaticienne',em:'💻'},
+   ]},
+
+  {id:'sante',level:1,emoji:'🏥',name:'Fayyaa',sub:'Doktora, farmaasiitii… / La santé',
+   words:[
+    {et:'Dhukkubbii / Nan dhukkuba',fr:'Faire mal / j\'ai mal (j\'ai mal à la tête)',em:'🤕'},
+    {et:'Dhukkubbii qabaachuu',fr:'Avoir une douleur (plus formel)',em:'😣'},
+    {et:'Ho\'a qaamaa',fr:'La fièvre',em:'🌡️'},
+    {et:'Qufaa',fr:'La toux',em:'😮‍💨'},
+    {et:'Xuruura fuulaa',fr:'Le mouchoir',em:'🤧'},
+    {et:'Meeshaa ho\'a safaruu',fr:'Le thermomètre',em:'🌡️'},
+    {et:'Beellama',fr:'Le rendez-vous',em:'📅'},
+    {et:'Doktora / Doktoricha',fr:'Le médecin / La médecin',em:'🩺'},
+    {et:'Dhukkubsataa',fr:'Le/la patient(e)',em:'🛏️'},
+    {et:'Gorsaa fayyaa',fr:'La consultation médicale',em:'📋'},
+    {et:'Narsii / Narsicha',fr:'L\'infirmier / L\'infirmière',em:'👨‍⚕️'},
+    {et:'Hospitaala',fr:'L\'hôpital',em:'🏥'},
+    {et:'Reseeptii / Ajaja qorichaa',fr:'L\'ordonnance',em:'📋'},
+    {et:'Farmaasiitii',fr:'La pharmacie',em:'🏪'},
+    {et:'Qoricha',fr:'Le médicament',em:'💊'},
+    {et:'Haaphii qoricha',fr:'Le comprimé',em:'💊'},
+    {et:'Vaaksiniifi',fr:'Le vaccin',em:'💉'},
+    {et:'Mallattoo madaa',fr:'Le pansement adhésif',em:'🩹'},
+    {et:'Xaxaa madaa',fr:'Le bandage',em:'🩼'},
+    {et:'Ambulaansii',fr:'L\'ambulance',em:'🚑'},
+    {et:'Bakka ariifachiisaa',fr:'Les urgences',em:'🆘'}
+   ]},
+
+  {id:'viaje',level:1,emoji:'🧳',name:'Deemsa',sub:'Baggaajii, hooteela, paaspoortiifi… / Le voyage',
+   words:[
+   // Préparation
+    {et:'Paaspoortiifi',fr:'Le passeport',em:'🛂'},
+    {et:'Baggaajii',fr:'La valise',em:'🧳'},
+    {et:'Qabeenya deemsa',fr:'Les bagages',em:'🎒'},
+    {et:'Tikeeta',fr:'Le billet',em:'🎫'},
+    {et:'Reserveeshina',fr:'La réservation',em:'📋'},
+    {et:'Ejensii deemsa',fr:'L\'agence de voyages',em:'🗺️'},
+    {et:'Inshuraansii deemsa',fr:'L\'assurance voyage',em:'📄'},
+    // Transport
+    {et:'Xiyyaara',fr:'L\'avion',em:'✈️'},
+    {et:'Buufata xiyyaaraa',fr:'L\'aéroport',em:'🛫'},
+    {et:'Ba\'uu',fr:'Le départ',em:'🚪'},
+    {et:'Ga\'uu',fr:'L\'arrivée',em:'🛬'},
+    {et:'Koostamii',fr:'La douane',em:'🛃'},
+    {et:'Doonii guddaa',fr:'La croisière',em:'🚢'},
+    // Hébergement
+    {et:'Hooteela',fr:'L\'hôtel',em:'🏨'},
+    {et:'Kutaa lama yookiin tokko',fr:'La chambre double ou simple',em:'🛏️'},
+    // Destinations
+    {et:'Qorichee laga',fr:'La plage',em:'🏖️'},
+    {et:'Tullu',fr:'La montagne',em:'⛰️'},
+    {et:'Daawwataa',fr:'Le touriste',em:'📸'},
+   ]},
+
+  {id:'pays',level:1,emoji:'🌍',name:'Biyyoota',sub:'Itoophiyaa, Oromiyaa… / Les pays',
+   words:[
+    // Niveau 1 — Pays proches & culturellement importants
+    {et:'Faransaay',fr:'La France',em:'🇫🇷'},
+    {et:'Itoophiyaa',fr:'L\'Éthiopie',em:'🇪🇹'},
+    {et:'Keeniyaa',fr:'Le Kenya',em:'🇰🇪'},
+    {et:'Xaaliyaanii',fr:'L\'Italie',em:'🇮🇹'},
+    {et:'Beljiyoom',fr:'La Belgique',em:'🇧🇪'},
+    {et:'Swiizerlaandii',fr:'La Suisse',em:'🇨🇭'},
+    {et:'Jarman',fr:'L\'Allemagne',em:'🇩🇪'},
+    {et:'Ingliizii',fr:'Le Royaume-Uni',em:'🇬🇧'},
+    // Niveau 2 — Pays africains & francophones proches
+    {et:'Jibuutii',fr:'Djibouti',em:'🇩🇯'},
+    {et:'Somaaliyaa',fr:'La Somalie',em:'🇸🇴'},
+    {et:'Sudaan',fr:'Le Soudan',em:'🇸🇩'},
+    {et:'Braazil',fr:'Le Brésil',em:'🇧🇷'},
+    {et:'Kaanaadaa',fr:'Le Canada',em:'🇨🇦'},
+    {et:'Morokkoo',fr:'Le Maroc',em:'🇲🇦'},
+    // Niveau 3 — Grandes puissances mondiales & pays plus distants
+    {et:'Ameerikaa',fr:'Les États-Unis',em:'🇺🇸'},
+    {et:'Rushiyaa',fr:'La Russie',em:'🇷🇺'},
+    {et:'Chaayinaa',fr:'La Chine',em:'🇨🇳'},
+    {et:'Jaappaan',fr:'Le Japon',em:'🇯🇵'},
+    {et:'Hindii',fr:'L\'Inde',em:'🇮🇳'},
+    {et:'Turkii',fr:'La Turquie',em:'🇹🇷'},
+    {et:'Giriikii',fr:'La Grèce',em:'🇬🇷'},
+    {et:'Awustiraaliyaa',fr:'L\'Australie',em:'🇦🇺'},
+    {et:'Afrikaa Kibbaa',fr:'L\'Afrique du Sud',em:'🇿🇦'},
+   ]},
+
+  {id:'ocio', level:1, emoji:'⛰️', name:'Boqonnaa fi Bashannannaa', sub:'Ispoortii, dubbisuu, muuziqaa… / Les loisirs',
+  words:[
+    // Loisirs culturels
+    {et:'Dubbisuu',fr:'La lecture',em:'📚'},
+    {et:'Kitaaba',fr:'Le livre',em:'📖'},
+    {et:'Muuziqaa',fr:'La musique',em:'🎵'},
+    {et:'Siinimaa',fr:'Le cinéma',em:'🎬'},
+    {et:'Tiyaatira',fr:'Le théâtre',em:'🎭'},
+    // Sport général
+    {et:'Ispoortii',fr:'Le sport',em:''},
+    {et:'Kora miilaa',fr:'Le football',em:'⚽'},
+    {et:'Daakuu bishaan',fr:'La natation',em:'🏊'},
+    {et:'Biskileetii oofuu',fr:'Le cyclisme',em:'🚴'},
+    {et:'Fiigichaa',fr:'L\'athlétisme',em:'🏃'},
+    // Plein air
+    {et:'Deemsa tulluutti',fr:'La randonnée',em:'🥾'},
+    {et:'Deemsa karaa',fr:'La marche nordique',em:''},
+    {et:'Naqata / Seenaa',fr:'La promenade',em:'🌳'},
+    // Verbes utiles
+    {et:'Taphaachuu',fr:'Jouer',em:'🎮'},
+    {et:'Leenjii hojjechuu',fr:'Pratiquer',em:'💪'},
+    {et:'Boqachuu',fr:'Se reposer',em:'😴'},
+    {et:'Gammachuun fayyadamuu',fr:'Profiter / Apprécier',em:'😊'},
+  ]
+},
+
+  {id:'plan',level:1,emoji:'🌿',name:'Biqiltoota',sub:'Adaraa, muka, bosonaa… / Les plantes',
+   words:[
+    // Niveau 1 — Éléments naturels de base, très visuels
+    {et:'Adaraa / Daadhii',fr:'La fleur',em:'🌸'},
+    {et:'Muka',fr:'L\'arbre',em:'🌳'},
+    {et:'Caasee',fr:'La feuille',em:'🍃'},
+    {et:'Marga',fr:'L\'herbe',em:'🌱'},
+    // 🟡 Niveau 2 — Espaces & végétaux plus spécifiques
+    {et:'Bakkee miidhagoo',fr:'Le jardin',em:'🏡'},
+    {et:'Daadhii diimaa',fr:'La rose',em:'🌹'},
+    {et:'Bosonaa',fr:'La forêt',em:'🌲'},
+    // 🔴 Niveau 3 — Vocabulaire plus précis ou contextuel
+    {et:'Marga miidhagoo',fr:'La pelouse / Le gazon',em:'⛳'},
+   ]},
+
+  {id:'anim',level:1,emoji:'🐘',name:'Bineeldota',sub:'Saree, adurree, sangaa… / Les animaux',
+   words:[
+    // Niveau 1 — Animaux familiers & de la ferme, très connus
+    {et:'Saree',fr:'Le chien',em:'🐶'},
+    {et:'Adurree',fr:'Le chat',em:'🐱'},
+    {et:'Simbiraa',fr:'L\'oiseau',em:'🐦'},
+    {et:'Qurxummii',fr:'Le poisson (vivant)',em:'🐟'},
+    {et:'Farda',fr:'Le cheval',em:'🐴'},
+    {et:'Loon / Saree loon',fr:'La vache',em:'🐮'},
+    {et:'Booyee',fr:'Le cochon',em:'🐷'},
+    {et:'Lukkuu',fr:'La poule',em:'🐔'},
+    {et:'Illeena',fr:'Le lapin',em:'🐰'},
+    // Niveau 2 — Animaux courants (ferme, nature, sauvages connus)
+    {et:'Qurxummii nyaataa',fr:'Le poisson (dans l\'assiette)',em:'🐟🍽️'},
+    {et:'Sangaa',fr:'Le taureau',em:'🐂'},
+    {et:'Molgaa',fr:'Le canard',em:'🦆'},
+    {et:'Kormaa lukkuu',fr:'Le coq',em:'🐓'},
+    {et:'Hoolaa / Hoolii',fr:'L\'agneau',em:'🐑'},
+    {et:'Re\'ee',fr:'La chèvre',em:'🐐'},
+    {et:'Harree',fr:'L\'âne',em:'🫏'},
+    {et:'Arba',fr:'L\'éléphant',em:'🐘'},
+    {et:'Baalee',fr:'L\'ours',em:'🐻'},
+    {et:'Qeerransaa',fr:'Le tigre',em:'🐯'},
+    // Niveau 3 — Animaux plus rares, insectes, reptiles & lexique spécifique
+    {et:'Qurxummii bishaaniin jiraatuu',fr:'Le dauphin',em:'🐬'},
+    {et:'Harootii guddaa',fr:'La baleine',em:'🐳'},
+    {et:'Ardiitii / Gombisuu',fr:'L\'aigle',em:'🦅'},
+    {et:'Buraayyoo',fr:'Le papillon',em:'🦋'},
+    {et:'Bofaa xixiqqaa',fr:'La grenouille',em:'🐸'},
+    {et:'Bofa',fr:'Le serpent',em:'🐍'},
+    {et:'Bofa lafa',fr:'Le lézard',em:'🦎'},
+    {et:'Saappanaa',fr:'L\'araignée',em:'🕷️'},
+    {et:'Hiyyeessa / Bineeldota xixiqqaa',fr:'Le moustique',em:'🦟'},
+    {et:'Dirreetti',fr:'La fourmi',em:'🐜'},
+   ]},
 
   {id:'agri',level:1,emoji:'🌾',name:'Qonnaa fi Horsiisee',sub:'Lafa, biqiltuu, loon… / Agriculture et élevage',
    note:'📍 Contexte : région de Shashamané, terres fertiles du Rift éthiopien, caféiculture, élevage bovin traditionnel',
@@ -734,18 +841,11 @@ var LEVEL1_THEMES_FR=[
     {et:'Arfasaa (bonni)',fr:'Saison des grandes pluies (mars-mai)',em:'🌧️'},
     {et:'Hagayya (rooba xiqqaa)',fr:'Saison des petites pluies (août)',em:'🌦️'},
     {et:'Bona (ganna)',fr:'Grande saison sèche (jan-fév)',em:'☀️'},
-   ]},
+   ]}
 ];
 
-  /* ========================================
-   Afaan Oromoo → Français 🇫🇷 – Niveau 2
-   14 situations de dialogues — Niveau A1
-   Français débutant en Oromia
-   © 2026 Sébastien Godet
-======================================== */
- 
 var LEVEL2_THEMES_FR = [
- 
+
   /* 1 ── Saluer et prendre des nouvelles */
   {id:'salut2',level:2,emoji:'👋',name:'Nagaa gaafachuu',sub:'Saluer quelqu\'un',type:'dialog',
    situations:[
@@ -779,7 +879,7 @@ var LEVEL2_THEMES_FR = [
     {q:'Afaan Oromootti "Je suis désolé" akkamiin jedha?',opts:['Galatoomi','Dhiifama','Nagaan','Dhiisi'],ans:1},
     {q:'Jechuun "Haga wal arginu!" maal jechuudha?',opts:['Bonjour !','Merci !','À plus !','S\'il vous plaît !'],ans:2}
    ]},
- 
+
   /* 2 ── Se présenter */
   {id:'pres2',level:2,emoji:'🙋',name:'Ofbeeksisuu',sub:'Se présenter',type:'dialog',
    situations:[
@@ -814,7 +914,7 @@ var LEVEL2_THEMES_FR = [
     {q:'Jechuun "Lammii kamii?" maal jechuudha?',opts:['Comment tu t\'appelles ?','Quel âge tu as ?','Tu es d\'où ?','Tu habites où ?'],ans:2},
     {q:'Afaan Oromootti "Enchanté" akkamiin jedha?',opts:['Galatoomi','Dhiifama','Nagaan','Gammadeen si arge!'],ans:3}
    ]},
- 
+
   /* 3 ── Demander son chemin */
   {id:'chemin2',level:2,emoji:'🗺️',name:'Karaa gaafachuu',sub:'Demander son chemin',type:'dialog',
    situations:[
@@ -849,7 +949,7 @@ var LEVEL2_THEMES_FR = [
     {q:'Jechuun "Farmaasinni dhiyotti jiraa?" maal jechuudha?',opts:['La pharmacie est fermée','Il y a une pharmacie près d\'ici ?','Où est la pharmacie ?','La pharmacie est loin ?'],ans:1},
     {q:'Afaan Oromootti "À gauche" akkamiin jedha?',opts:['Kallattiin','Mirgutti','Duubatti','Bitaatti'],ans:3}
    ]},
- 
+
   /* 4 ── Au bar */
   {id:'bar2',level:2,emoji:'☕',name:'Kaafee keessatti',sub:'Commander au café',type:'dialog',
    situations:[
@@ -884,7 +984,7 @@ var LEVEL2_THEMES_FR = [
     {q:'Jechuun "Kafaltii, maaloo" maal jechuudha?',opts:['Le menu, s\'il vous plaît','L\'addition, s\'il vous plaît','Un café, s\'il vous plaît','L\'eau, s\'il vous plaît'],ans:1},
     {q:'Afaan Oromootti "C\'est combien ?" akkamiin jedha?',opts:['Eessa jira?','Maaltu jira?','Meeqadha?','Maqaan isaanii eenyu?'],ans:2}
    ]},
- 
+
   /* 5 ── Au restaurant */
   {id:'resto2',level:2,emoji:'🍽️',name:'Mana nyaataa keessatti',sub:'Commander un repas',type:'dialog',
    situations:[
@@ -919,7 +1019,7 @@ var LEVEL2_THEMES_FR = [
     {q:'Afaan Oromootti "En entrée" akkamiin jedha?',opts:['Mi\'eessaa','Booda','Dhugaatiif','Jalqaba'],ans:3},
     {q:'Jechuun "Foon malee" maal jechuudha?',opts:['Avec de la viande','Sans poisson','Sans viande','Avec du poulet'],ans:2}
    ]},
- 
+
   /* 6 ── Faire des courses */
   {id:'compras2',level:2,emoji:'🛍️',name:'Bitachuu',sub:'Faire ses courses',type:'dialog',
    situations:[
@@ -954,7 +1054,7 @@ var LEVEL2_THEMES_FR = [
     {q:'Jechuun "Kan biraa hoo?" maal jechuudha?',opts:['C\'est tout ?','Autre chose ?','Vous avez ça ?','C\'est combien ?'],ans:1},
     {q:'Afaan Oromootti "La taille" (uffata) akkamiin jedha?',opts:['Halluu','Gatii','Saayizii','Lakkoofsa'],ans:2}
    ]},
- 
+
   /* 7 ── Prendre les transports */
   {id:'transp2',level:2,emoji:'🚌',name:'Geejjiba fayyadamuu',sub:'Se déplacer',type:'dialog',
    situations:[
@@ -989,43 +1089,8 @@ var LEVEL2_THEMES_FR = [
     {q:'Jechuun "Buufata" maal jechuudha?',opts:['Le billet','La ligne','L\'arrêt','Le quai'],ans:2},
     {q:'Afaan Oromootti "Descendre à Adama" akkamiin jedha?',opts:['Adaamaatti ol ba\'uu','Adaama deemuu','Adaamaatti bu\'uu','Adaama fudhachuu'],ans:2}
    ]},
- 
-  /* 8 ── À la pharmacie */
-  {id:'farmacia2',level:2,emoji:'💊',name:'Farmaasiitti',sub:'À la pharmacie',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Mal de tête',img:'🤕',dialogue:[
-      {s:'Maamilaa',et:'Akkam. Mataan natti dhukkuba. Waa qabduu?',fr:'Bonjour. J\'ai mal à la tête. Qu\'est-ce que vous avez ?',side:'left'},
-      {s:'Farmaasiistuu',et:'Qorichatti waan dhukkubsan qabdaa?',fr:'Vous êtes allergique à un médicament ?',side:'right'},
-      {s:'Maamilaa',et:'Lakki, waan dhukkubsamu hin qabu.',fr:'Non, je ne suis pas allergique.',side:'left'},
-      {s:'Farmaasiistuu',et:'Ayibuprofen siif kennaa. Nyaata wajjin tokko fudhu.',fr:'Je vous donne un ibuprofène. Prenez-en un avec de la nourriture.',side:'right'},
-      {s:'Maamilaa',et:'Guyyaatti si\'a meeqa?',fr:'Combien de fois par jour ?',side:'left'},
-      {s:'Farmaasiistuu',et:'Guyyaatti si\'a sadii, hanga ol.',fr:'Trois fois par jour, maximum.',side:'right'}
-    ]},
-    {label:'Sit. 2',title:'Trouver la pharmacie de garde',img:'🌙',dialogue:[
-      {s:'Daawwataa',et:'Dhiifama, farmaasinni amma banama jiruudha?',fr:'Pardon, il y a une pharmacie ouverte maintenant ?',side:'left'},
-      {s:'Ollittuu',et:'Farmaasiileen cufamaniiru. Farmaasiitti kutaa waardiyaa deemuu qabda.',fr:'Les pharmacies sont fermées. Tu as besoin de la pharmacie de garde.',side:'right'},
-      {s:'Daawwataa',et:'Eessa jira?',fr:'Elle est où ?',side:'left'},
-      {s:'Ollittuu',et:'Farmaasiitti maxxanfame ilaaladhu. Isa banama jiru ibsa.',fr:'Regarde l\'affiche de cette pharmacie. Elle indique laquelle est ouverte.',side:'right'},
-      {s:'Daawwataa',et:'Aah, gadi fageenyaan! Galatoomi.',fr:'Ah, je comprends ! Merci.',side:'left'},
-      {s:'Ollittuu',et:'Nagaan!',fr:'De rien !',side:'right'}
-    ]},
-    {label:'Sit. 3',title:'Acheter un médicament',img:'💉',dialogue:[
-      {s:'Maamilaa',et:'Akkam. Qufaaf waa qabduu?',fr:'Bonjour. Vous avez quelque chose pour la toux ?',side:'left'},
-      {s:'Farmaasiistuu',et:'Eeyyeen. Gurraachaa moo daa\'imaaf?',fr:'Oui. C\'est pour un adulte ou un enfant ?',side:'right'},
-      {s:'Maamilaa',et:'Gurraachaaf.',fr:'Pour un adulte.',side:'left'},
-      {s:'Farmaasiistuu',et:'Siiraabii kana fudhu. Saanikoo lama, guyyaatti si\'a sadii.',fr:'Prenez ce sirop. Deux cuillères, trois fois par jour.',side:'right'},
-      {s:'Maamilaa',et:'Meeqadha?',fr:'Ça coûte combien ?',side:'left'},
-      {s:'Farmaasiistuu',et:'Birraa shan fi saddet.',fr:'Cinq euros quatre-vingt.',side:'right'}
-    ]}
-   ],
-   vocab:['Mataan natti dhukkuba = J\'ai mal à la tête','Qoonqoon natti dhukkuba = J\'ai mal à la gorge','Farmaasiitti waardiyaa = La pharmacie de garde','Waan dhukkubsamu hin qabu = Je ne suis pas allergique','Siiraabii = Le sirop','Guyyaatti si\'a sadii = Trois fois par jour','Maxxanfame = L\'affiche'],
-   quiz:[
-    {q:'Afaan Oromootti "J\'ai mal à la tête" akkamiin jedha?',opts:['Ho\'a qaba','Garaan natti dhukkuba','Mataan natti dhukkuba','Dadhabee jira'],ans:2},
-    {q:'"Farmaasiitti waardiyaa" maal jechuudha?',opts:['La grande pharmacie','La pharmacie de garde ouverte la nuit','La pharmacie de l\'hôpital','La pharmacie pour touristes'],ans:1},
-    {q:'Afaan Oromootti "Trois fois par jour" akkamiin jedha?',opts:['Guyyaatti si\'a lama','Guyyaatti si\'a tokko','Guyyaatti si\'a sadii','Guyyaatti si\'a afur'],ans:2}
-   ]},
- 
-  /* 9 ── À l'hôtel */
+
+  /* 8 ── À l'hôtel */
   {id:'hotel2',level:2,emoji:'🏨',name:'Hootelatti',sub:'Arriver à l\'hôtel',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Arrivée à la réception',img:'🛎️',dialogue:[
@@ -1059,78 +1124,8 @@ var LEVEL2_THEMES_FR = [
     {q:'Jechuun "Hin hojjetu" maal jechuudha?',opts:['C\'est fermé','Ça ne marche pas','C\'est cassé','Je ne sais pas'],ans:1},
     {q:'Afaan Oromootti "La clé" akkamiin jedha?',opts:['Balbala','Mana','Cufaa','Ol ba\'aa'],ans:2}
    ]},
- 
-  /* 10 ── Chez le médecin */
-  {id:'medico2',level:2,emoji:'🩺',name:'Doktoratti',sub:'Chez le médecin',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Expliquer ses symptômes',img:'🤒',dialogue:[
-      {s:'Doktora',et:'Nagaan bulte! Maal sitti dhiphise?',fr:'Bonjour ! Qu\'est-ce qui ne va pas ?',side:'right'},
-      {s:'Dhukkubsataa',et:'Ho\'a qabaa qoonqoos natti dhukkuba.',fr:'J\'ai de la fièvre et j\'ai mal à la gorge.',side:'left'},
-      {s:'Doktora',et:'Yoomii irraa?',fr:'Depuis quand ?',side:'right'},
-      {s:'Dhukkubsataa',et:'Kaleessa irraa.',fr:'Depuis hier.',side:'left'},
-      {s:'Doktora',et:'Qufas qabdaa?',fr:'Vous avez aussi de la toux ?',side:'right'},
-      {s:'Dhukkubsataa',et:'Eeyyeen, xiqqoo.',fr:'Oui, un peu.',side:'left'}
-    ]},
-    {label:'Sit. 2',title:'Comprendre le médecin',img:'💊',dialogue:[
-      {s:'Doktora',et:'Infekshinii qabda. Antibaayootiki siif barreessa.',fr:'Vous avez une infection. Je vous prescris un antibiotique.',side:'right'},
-      {s:'Dhukkubsataa',et:'Qoricha yoom fudha?',fr:'Quand est-ce que je prends le médicament ?',side:'left'},
-      {s:'Doktora',et:'Tokkoo ganamaatti fi tokkoo halkan.',fr:'Un le matin et un le soir.',side:'right'},
-      {s:'Dhukkubsataa',et:'Guyyaa meeqa?',fr:'Pendant combien de jours ?',side:'left'},
-      {s:'Doktora',et:'Guyyaa torba. Bishaan baay\'ee dhugi.',fr:'Sept jours. Et buvez beaucoup d\'eau.',side:'right'},
-      {s:'Dhukkubsataa',et:'Galatoomi, doktera.',fr:'Merci, docteur.',side:'left'}
-    ]},
-    {label:'Sit. 3',title:'Appeler le médecin',img:'📞',dialogue:[
-      {s:'Dhukkubsataa',et:'Akkam, doktora beellama barbaada.',fr:'Bonjour, je veux un rendez-vous avec le médecin.',side:'left'},
-      {s:'Simataa',et:'Yoom?',fr:'Pour quand ?',side:'right'},
-      {s:'Dhukkubsataa',et:'Har\'a yoo danda\'ame. Baay\'ee dhukkubsadha.',fr:'Pour aujourd\'hui si c\'est possible. Je suis très malade.',side:'left'},
-      {s:'Simataa',et:'Ho\'a qabduu?',fr:'Vous avez de la fièvre ?',side:'right'},
-      {s:'Dhukkubsataa',et:'Eeyyeen, digdama sagal digrii.',fr:'Oui, trente-neuf degrés.',side:'left'},
-      {s:'Simataa',et:'Sa\'aatii afuritti kottaa. Paaspoortii fidadhu.',fr:'Venez à seize heures. Apportez votre passeport.',side:'right'}
-    ]}
-   ],
-   vocab:['Maal sitti dhiphise? = Qu\'est-ce qui ne va pas ?','Ho\'a qabaa = J\'ai de la fièvre','Qoonqoon natti dhukkuba = J\'ai mal à la gorge','Kaleessa irraa = Depuis hier','Qufa = La toux','Beellama = Un rendez-vous','Baay\'ee dhukkubsadha = Je suis très malade'],
-   quiz:[
-    {q:'Afaan Oromootti "J\'ai de la fièvre" akkamiin jedha?',opts:['Qorraan natti dhiphise','Ho\'a qabaa','Qufaa qabaa','Dhukkuba qabaa'],ans:1},
-    {q:'Jechuun "Qoonqoon natti dhukkuba" maal jechuudha?',opts:['J\'ai mal à la tête','J\'ai mal au ventre','J\'ai mal à la gorge','J\'ai mal au dos'],ans:2},
-    {q:'Afaan Oromootti "Un rendez-vous" akkamiin jedha?',opts:['Dirqama','Beellama','Mootummaa','Daawwannaa'],ans:1}
-   ]},
- 
-  /* 11 ── La météo */
-  {id:'meteo2',level:2,emoji:'☀️',name:'Qilleensa',sub:'Parler de la météo',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Parler du temps',img:'🌤️',dialogue:[
-      {s:'Tulluu',et:'Har\'a baay\'ee ho\'aa!',fr:'Quelle chaleur aujourd\'hui !',side:'left'},
-      {s:'Romain',et:'Eeyyeen, baay\'ee ho\'aa. Digrii meeqa?',fr:'Oui, il fait très chaud. Il fait combien de degrés ?',side:'right'},
-      {s:'Tulluu',et:'Digrii soddomaa fi shan.',fr:'Trente-cinq degrés.',side:'left'},
-      {s:'Romain',et:'Baay\'ee dha! As bishaan dhaabbataa jiraa?',fr:'C\'est beaucoup ! Il y a une piscine ici ?',side:'right'},
-      {s:'Tulluu',et:'Eeyyeen, hootelatti jira.',fr:'Oui, elle est à l\'hôtel.',side:'left'},
-      {s:'Romain',et:'Haa deemuun!',fr:'Allons-y !',side:'right'}
-    ]},
-    {label:'Sit. 2',title:'Prévoir la sortie',img:'🌧️',dialogue:[
-      {s:'Birraa',et:'Har\'a bahuun?',fr:'On sort aujourd\'hui ?',side:'left'},
-      {s:'Camille',et:'Hin beeku. Qilleensi akkam?',fr:'Je ne sais pas. Il fait quel temps ?',side:'right'},
-      {s:'Birraa',et:'Xiqqoo roobu.',fr:'Il pleut un peu.',side:'left'},
-      {s:'Camille',et:'Arfasaa qabdaa?',fr:'Tu as un parapluie ?',side:'right'},
-      {s:'Birraa',et:'Lakki. Atis?',fr:'Non. Et toi ?',side:'left'},
-      {s:'Camille',et:'Ani qabaa. Waloon haa deemnu!',fr:'Moi oui. Allons-y ensemble !',side:'right'}
-    ]},
-    {label:'Sit. 3',title:'Parler des seasons',img:'🍂',dialogue:[
-      {s:'Caaltuu',et:'Yeroon bareedaan kee kami?',fr:'Quelle est ta saison préférée ?',side:'right'},
-      {s:'Théo',et:'Gannaa. Aduu fi ho\'a jaalladha.',fr:'L\'été. J\'aime le soleil et la chaleur.',side:'left'},
-      {s:'Caaltuu',et:'Ani birraa jaalladha. Hin qorruu hin ho\'u.',fr:'Moi je préfère l\'automne. Il ne fait ni chaud ni froid.',side:'right'},
-      {s:'Théo',et:'Oromiyaa keessaas? Gannaa baay\'ee qorraa?',fr:'Et en Oromia ? Il fait très froid en hiver ?',side:'left'},
-      {s:'Caaltuu',et:'Irratti. Shaashamanneetti eeyyeen, Adaamaatti miti.',fr:'Ça dépend. À Shashemene oui, à Adama non.',side:'right'},
-      {s:'Théo',et:'Baay\'ee nama barsiisa!',fr:'Comme c\'est intéressant !',side:'left'}
-    ]}
-   ],
-   vocab:['Ho\'aa! = Quelle chaleur !','Qorraa = Il fait froid','Ho\'aa = Il fait chaud','Roobu = Il pleut','Arfasaa = Le parapluie','Gannaa = L\'été','Bona = L\'hiver'],
-   quiz:[
-    {q:'Afaan Oromootti "Il fait froid" akkamiin jedha?',opts:['Ho\'aa','Aduu jira','Roobu','Qorraa'],ans:3},
-    {q:'Jechuun "Ho\'aa baay\'ee!" maal jechuudha?',opts:['Quelle chance !','Quelle chaleur !','Quel froid !','Quel vent !'],ans:1},
-    {q:'Afaan Oromootti "Le parapluie" akkamiin jedha?',opts:['Uffata ciicha','Haguugoo','Arfasaa','Kofii'],ans:2}
-   ]},
- 
-  /* 12 ── Trouver un logement */
+
+  /* 9 ── Trouver un logement */
   {id:'logement2',level:2,emoji:'🏠',name:'Mana barbaaduu',sub:'Chercher un logement',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Appeler pour une maison',img:'📱',dialogue:[
@@ -1164,7 +1159,114 @@ var LEVEL2_THEMES_FR = [
     {q:'Afaan Oromootti "Le plombier" akkamiin jedha?',opts:['Ibsaa hojjetaa','Hidhaata bishaan','Muka hojjetaa','Barreessaa'],ans:1},
     {q:'Jechuun "Kiraa" maal jechuudha?',opts:['La vente','Le loyer','La maison','Le contrat'],ans:1}
    ]},
- 
+
+  /* 10 ── La météo */
+  {id:'meteo2',level:2,emoji:'☀️',name:'Qilleensa',sub:'Parler de la météo',type:'dialog',
+   situations:[
+    {label:'Sit. 1',title:'Parler du temps',img:'🌤️',dialogue:[
+      {s:'Tulluu',et:'Har\'a baay\'ee ho\'aa!',fr:'Quelle chaleur aujourd\'hui !',side:'left'},
+      {s:'Romain',et:'Eeyyeen, baay\'ee ho\'aa. Digrii meeqa?',fr:'Oui, il fait très chaud. Il fait combien de degrés ?',side:'right'},
+      {s:'Tulluu',et:'Digrii soddomaa fi shan.',fr:'Trente-cinq degrés.',side:'left'},
+      {s:'Romain',et:'Baay\'ee dha! As bishaan dhaabbataa jiraa?',fr:'C\'est beaucoup ! Il y a une piscine ici ?',side:'right'},
+      {s:'Tulluu',et:'Eeyyeen, hootelatti jira.',fr:'Oui, elle est à l\'hôtel.',side:'left'},
+      {s:'Romain',et:'Haa deemuun!',fr:'Allons-y !',side:'right'}
+    ]},
+    {label:'Sit. 2',title:'Prévoir la sortie',img:'🌧️',dialogue:[
+      {s:'Birraa',et:'Har\'a bahuun?',fr:'On sort aujourd\'hui ?',side:'left'},
+      {s:'Camille',et:'Hin beeku. Qilleensi akkam?',fr:'Je ne sais pas. Il fait quel temps ?',side:'right'},
+      {s:'Birraa',et:'Xiqqoo roobu.',fr:'Il pleut un peu.',side:'left'},
+      {s:'Camille',et:'Arfasaa qabdaa?',fr:'Tu as un parapluie ?',side:'right'},
+      {s:'Birraa',et:'Lakki. Atis?',fr:'Non. Et toi ?',side:'left'},
+      {s:'Camille',et:'Ani qabaa. Waloon haa deemnu!',fr:'Moi oui. Allons-y ensemble !',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Parler des seasons',img:'🍂',dialogue:[
+      {s:'Caaltuu',et:'Yeroon bareedaan kee kami?',fr:'Quelle est ta saison préférée ?',side:'right'},
+      {s:'Théo',et:'Gannaa. Aduu fi ho\'a jaalladha.',fr:'L\'été. J\'aime le soleil et la chaleur.',side:'left'},
+      {s:'Caaltuu',et:'Ani birraa jaalladha. Hin qorruu hin ho\'u.',fr:'Moi je préfère l\'automne. Il ne fait ni chaud ni froid.',side:'right'},
+      {s:'Théo',et:'Oromiyaa keessaas? Gannaa baay\'ee qorraa?',fr:'Et en Oromia ? Il fait très froid en hiver ?',side:'left'},
+      {s:'Caaltuu',et:'Irratti. Shaashamanneetti eeyyeen, Adaamaatti miti.',fr:'Ça dépend. À Shashemene oui, à Adama non.',side:'right'},
+      {s:'Théo',et:'Baay\'ee nama barsiisa!',fr:'Comme c\'est intéressant !',side:'left'}
+    ]}
+   ],
+   vocab:['Ho\'aa! = Quelle chaleur !','Qorraa = Il fait froid','Ho\'aa = Il fait chaud','Roobu = Il pleut','Arfasaa = Le parapluie','Gannaa = L\'été','Bona = L\'hiver'],
+   quiz:[
+    {q:'Afaan Oromootti "Il fait froid" akkamiin jedha?',opts:['Ho\'aa','Aduu jira','Roobu','Qorraa'],ans:3},
+    {q:'Jechuun "Ho\'aa baay\'ee!" maal jechuudha?',opts:['Quelle chance !','Quelle chaleur !','Quel froid !','Quel vent !'],ans:1},
+    {q:'Afaan Oromootti "Le parapluie" akkamiin jedha?',opts:['Uffata ciicha','Haguugoo','Arfasaa','Kofii'],ans:2}
+   ]},
+
+  /* 11 ── L'heure et la météo */
+  {id:'temps2',level:2,emoji:'🕐',name:'Sa\'atii fi Qilleensa',sub:'L\'heure et la météo',type:'dialog',
+   note:'📍 Attention : en Oromia, l\'heure éthiopienne (sa\'atii Itoophiyaa) commence à 6h du matin (notre 6h = leur 12h). La journée à Shashamané est rythmée par le soleil, pas par les horloges !',
+   situations:[
+    {label:'Sit. 1',title:'Quelle heure est-il ?',img:'⏰',dialogue:[
+      {s:'Marc',et:'Dhiifama, sa\'atii meeqa?',fr:'Pardon, quelle heure est-il ?',side:'left'},
+      {s:'Caaltuu',et:'Sa\'atii sadii fi walakkaa.',fr:'Il est trois heures et demie.',side:'right'},
+      {s:'Marc',et:'Baankiin amma banama jiraa?',fr:'La banque est encore ouverte ?',side:'left'},
+      {s:'Caaltuu',et:'Eeyyeen, hanga shan banama.',fr:'Oui, elle est ouverte jusqu\'à cinq heures.',side:'right'},
+      {s:'Marc',et:'Galatoomi! Ariifadhee deema.',fr:'Merci ! Je dois me dépêcher.',side:'left'},
+      {s:'Caaltuu',et:'Ariifi! Nagaan!',fr:'Vas-y ! Bonne chance !',side:'right'}
+    ]},
+    {label:'Sit. 2',title:'Parler de la météo',img:'🌤️',dialogue:[
+      {s:'Sophie',et:'Qilleensi har\'a akkam?',fr:'Il fait quel temps aujourd\'hui ?',side:'left'},
+      {s:'Lamma',et:'Ganama ho\'aa, garuu galgala roobu dandaa.',fr:'Il fait chaud le matin, mais il peut pleuvoir le soir.',side:'right'},
+      {s:'Sophie',et:'Shaashamanneetti yeroo maraan akkana?',fr:'À Shashamané c\'est souvent comme ça ?',side:'left'},
+      {s:'Lamma',et:'Arfasaatti eeyyeen. Roobni guyyaa guyyaa dhufa.',fr:'En saison des pluies oui. Il pleut tous les jours.',side:'right'},
+      {s:'Sophie',et:'Faransaayitti garuu bona qofaaa.',fr:'En France c\'est seulement en hiver.',side:'left'},
+      {s:'Lamma',et:'Baay\'ee adda! As ho\'a baay\'ee jaalladha.',fr:'C\'est très différent ! Ici j\'aime beaucoup la chaleur.',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Planifier selon la météo',img:'🌧️',dialogue:[
+      {s:'Iftu',et:'Boruu gabaa deemna?',fr:'On va au marché demain ?',side:'right'},
+      {s:'Théo',et:'Qilleensi akkam jedha?',fr:'Qu\'est-ce que dit la météo ?',side:'left'},
+      {s:'Iftu',et:'Roobu jetteetti. Aanoo roobaa kaasi!',fr:'Elle dit qu\'il va pleuvoir. Prends ton parapluie !',side:'right'},
+      {s:'Théo',et:'Tolee. Sa\'atii meeqatti deemna?',fr:'D\'accord. On y va à quelle heure ?',side:'left'},
+      {s:'Iftu',et:'Ganama sa\'atii saddeet. Roobni dura deemuun wayya.',fr:'À huit heures du matin. Mieux vaut partir avant la pluie.',side:'right'},
+      {s:'Théo',et:'Eeyyeen! Ganamaas ko\'otni baay\'ee jiru.',fr:'Oui ! Et le matin il y a plus de choix au marché.',side:'left'}
+    ]}
+   ],
+   vocab:['Sa\'atii meeqa? = Quelle heure est-il ?','Hanga ... banama = Ouvert jusqu\'à...','Ariifi! = Dépêche-toi !','Qilleensi akkam? = Quel temps fait-il ?','Arfasaatti = En saison des pluies','Roobni dhufa = Il va pleuvoir','Aanoo roobaa kaasi = Prends ton parapluie'],
+   quiz:[
+    {q:'Afaan Oromootti "Quelle heure est-il ?" akkamiin jedha?',opts:['Guyyaan meeqa?','Sa\'atii meeqa?','Boruu meeqa?','Daqiiqaan meeqa?'],ans:1},
+    {q:'Jechuun "Arfasaatti roobu" maal jechuudha?',opts:['Il neige en hiver','Il fait chaud en été','Il pleut en saison des pluies','Il y a du vent au printemps'],ans:2},
+    {q:'Afaan Oromootti "Dépêche-toi !" akkamiin jedha?',opts:['Boqo!','Deemi!','Ariifi!','Rafuu!'],ans:2}
+   ]},
+
+  /* 12 ── La vie quotidienne */
+  {id:'routine2',level:2,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'La routine / La vie de tous les jours',type:'dialog',
+   note:'📍 En France, on prend rarement le temps d\'une longue cérémonie du café le matin. En Oromia (Shashamané), la cérémonie du buna (café) est un moment social important. Le shor (déjeuner) est le repas principal en France.',
+   situations:[
+    {label:'Sit. 1',title:'La matinée',img:'⏰',dialogue:[
+      {s:'Haadha',et:'Ka\'i! Sa\'atii torba ta\'eera!',fr:'Lève-toi ! Il est sept heures !',side:'right'},
+      {s:'Dargagoo',et:'Eeyyeen, amma kaa\'a. Cireen qophaa\'eeii?',fr:'Oui, je me lève. Le petit-déjeuner est prêt ?',side:'left'},
+      {s:'Haadha',et:'Eeyyeen. Dhiqadhu jalqaba.',fr:'Oui. Douche-toi d\'abord.',side:'right'},
+      {s:'Dargagoo',et:'Tolee. Ilkaanis?',fr:'D\'accord. Les dents aussi ?',side:'left'},
+      {s:'Haadha',et:'Dhugumatti! Ilkaan eebuu dagattee?',fr:'Bien sûr ! Tu as oublié de te brosser les dents ?',side:'right'},
+      {s:'Dargagoo',et:'Lakki lakki, nan yaadadha!',fr:'Non non, je m\'en souviens !',side:'left'}
+    ]},
+    {label:'Sit. 2',title:'Partager les tâches',img:'🧹',dialogue:[
+      {s:'Julie',et:'Kana booda mana qulqulleessina.',fr:'Après on fait le ménage.',side:'left'},
+      {s:'Marc',et:'Tolee. Ani meeshaa dhiqa, ati hoo?',fr:'D\'accord. Je fais la vaisselle, et toi ?',side:'right'},
+      {s:'Julie',et:'Ani daakuu qulqulleessa. Uffatnis?',fr:'Moi je nettoie la cuisine. Et le linge ?',side:'left'},
+      {s:'Marc',et:'Uffata dhiquu hojjedheen jira.',fr:'J\'ai déjà lavé le linge.',side:'right'},
+      {s:'Julie',et:'Baay\'ee gaarii! Xumurree nyaata bilcheessina.',fr:'Super ! Après le ménage on cuisine.',side:'left'},
+      {s:'Marc',et:'Yaada gaarii! Maal bilcheessina?',fr:'Bonne idée ! On fait quoi à manger ?',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Le soir après le travail',img:'🌆',dialogue:[
+      {s:'Tolaa',et:'Hojii irraa dhufe. Dadhabee jira!',fr:'Je rentre du travail. Je suis fatigué !',side:'left'},
+      {s:'Caaltuu',et:'Boqo xiqqoo. Nyaata bilcheessaan jira.',fr:'Repose-toi un peu. Je suis en train de cuisiner.',side:'right'},
+      {s:'Tolaa',et:'Baay\'ee galatoomi. Maal bilcheessita?',fr:'Merci beaucoup. Tu cuisines quoi ?',side:'left'},
+      {s:'Caaltuu',et:'Injera fi atara. Dhukkubsattee?',fr:'De l\'injera et des lentilles. Ça va ?',side:'right'},
+      {s:'Tolaa',et:'Gaarii, baay\'ee beela\'ee jira.',fr:'Ça va, j\'ai très faim.',side:'left'},
+      {s:'Caaltuu',et:'Daqiiqaa kudha booda nyaanna!',fr:'Dans dix minutes on mange !',side:'right'}
+    ]}
+   ],
+   vocab:['Ka\'i! = Lève-toi !','Dhiqadhu = Douche-toi','Ilkaan eebuu = Se brosser les dents','Mana qulqulleessuu = Faire le ménage','Meeshaa dhiquu = Faire la vaisselle','Uffata dhiquu = Laver le linge','Nyaata bilcheessuu = Cuisiner','Dadhabee jira = Je suis fatigué','Boqo = Repose-toi'],
+   quiz:[
+    {q:'Afaan Oromootti "Faire le ménage" akkamiin jedha?',opts:['Mana ijaaruu','Mana qulqulleessuu','Mana bituu','Mana jijjiiruu'],ans:1},
+    {q:'Jechuun "Uffata dhiquu" maal jechuudha?',opts:['Repasser le linge','Étendre le linge','Laver le linge','Porter des vêtements'],ans:2},
+    {q:'Afaan Oromootti "Je suis fatigué" akkamiin jedha?',opts:['Beela\'ee jira','Dheebuu dhabe','Dadhabee jira','Rafee jira'],ans:2}
+   ]},
+
   /* 13 ── Parler de ses goûts */
   {id:'gustos2',level:2,emoji:'❤️',name:'Jaalala fi filannoowwan',sub:'Les loisirs',type:'dialog',
    situations:[
@@ -1199,7 +1301,7 @@ var LEVEL2_THEMES_FR = [
     {q:'Jechuun "Maal dhiyeessaa?" siinimaa keessatti maal jechuudha?',opts:['Ça coûte combien ?','À quelle heure ?','Qu\'est-ce qu\'il y a ?','C\'est où ?'],ans:2},
     {q:'Afaan Oromootti "Le match" akkamiin jedha?',opts:['Ispoortii','Garee','Taphaa','Dirree'],ans:2}
    ]},
- 
+
   /* 14 ── Sortir le soir */
   {id:'fiesta2',level:2,emoji:'🎉',name:'Halkan bahu',sub:'Sortir le soir',type:'dialog',
    situations:[
@@ -1233,86 +1335,77 @@ var LEVEL2_THEMES_FR = [
     {q:'Jechuun "Tolee!" Oromiyaatti maal jechuudha?',opts:['Au revoir !','Allons-y !','D\'accord !','C\'est nul !'],ans:2},
     {q:'Afaan Oromootti "J\'ai faim" akkamiin jedha?',opts:['Dheebuu dhabe','Rafuu barbaada','Qorraa dhabe','Beela\'ee jira'],ans:3},
     {q:'Jechuun "Oromiyaatti halkan bahu" maal jechuudha?',opts:['En Oromia on rentre tard','En Oromia on travaille tard','En Oromia on sort tard','En Oromia on mange tard'],ans:2}
-   ]}
- 
+   ]},
 
-
-  ,
-
-  /* 15 -- La vie quotidienne */
-  {id:'routine2',level:2,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'La routine / La vie de tous les jours',type:'dialog',
-   note:'📍 En France, on prend rarement le temps d\'une longue cérémonie du café le matin. En Oromia (Shashamané), la cérémonie du buna (café) est un moment social important. Le shor (déjeuner) est le repas principal en France.',
+  /* 15 ── À la pharmacie */
+  {id:'farmacia2',level:2,emoji:'💊',name:'Farmaasiitti',sub:'À la pharmacie',type:'dialog',
    situations:[
-    {label:'Sit. 1',title:'La matinée',img:'⏰',dialogue:[
-      {s:'Haadha',et:'Ka\'i! Sa\'atii torba ta\'eera!',fr:'Lève-toi ! Il est sept heures !',side:'right'},
-      {s:'Dargagoo',et:'Eeyyeen, amma kaa\'a. Cireen qophaa\'eeii?',fr:'Oui, je me lève. Le petit-déjeuner est prêt ?',side:'left'},
-      {s:'Haadha',et:'Eeyyeen. Dhiqadhu jalqaba.',fr:'Oui. Douche-toi d\'abord.',side:'right'},
-      {s:'Dargagoo',et:'Tolee. Ilkaanis?',fr:'D\'accord. Les dents aussi ?',side:'left'},
-      {s:'Haadha',et:'Dhugumatti! Ilkaan eebuu dagattee?',fr:'Bien sûr ! Tu as oublié de te brosser les dents ?',side:'right'},
-      {s:'Dargagoo',et:'Lakki lakki, nan yaadadha!',fr:'Non non, je m\'en souviens !',side:'left'}
+    {label:'Sit. 1',title:'Mal de tête',img:'🤕',dialogue:[
+      {s:'Maamilaa',et:'Akkam. Mataan natti dhukkuba. Waa qabduu?',fr:'Bonjour. J\'ai mal à la tête. Qu\'est-ce que vous avez ?',side:'left'},
+      {s:'Farmaasiistuu',et:'Qorichatti waan dhukkubsan qabdaa?',fr:'Vous êtes allergique à un médicament ?',side:'right'},
+      {s:'Maamilaa',et:'Lakki, waan dhukkubsamu hin qabu.',fr:'Non, je ne suis pas allergique.',side:'left'},
+      {s:'Farmaasiistuu',et:'Ayibuprofen siif kennaa. Nyaata wajjin tokko fudhu.',fr:'Je vous donne un ibuprofène. Prenez-en un avec de la nourriture.',side:'right'},
+      {s:'Maamilaa',et:'Guyyaatti si\'a meeqa?',fr:'Combien de fois par jour ?',side:'left'},
+      {s:'Farmaasiistuu',et:'Guyyaatti si\'a sadii, hanga ol.',fr:'Trois fois par jour, maximum.',side:'right'}
     ]},
-    {label:'Sit. 2',title:'Partager les tâches',img:'🧹',dialogue:[
-      {s:'Julie',et:'Kana booda mana qulqulleessina.',fr:'Après on fait le ménage.',side:'left'},
-      {s:'Marc',et:'Tolee. Ani meeshaa dhiqa, ati hoo?',fr:'D\'accord. Je fais la vaisselle, et toi ?',side:'right'},
-      {s:'Julie',et:'Ani daakuu qulqulleessa. Uffatnis?',fr:'Moi je nettoie la cuisine. Et le linge ?',side:'left'},
-      {s:'Marc',et:'Uffata dhiquu hojjedheen jira.',fr:'J\'ai déjà lavé le linge.',side:'right'},
-      {s:'Julie',et:'Baay\'ee gaarii! Xumurree nyaata bilcheessina.',fr:'Super ! Après le ménage on cuisine.',side:'left'},
-      {s:'Marc',et:'Yaada gaarii! Maal bilcheessina?',fr:'Bonne idée ! On fait quoi à manger ?',side:'right'}
+    {label:'Sit. 2',title:'Trouver la pharmacie de garde',img:'🌙',dialogue:[
+      {s:'Daawwataa',et:'Dhiifama, farmaasinni amma banama jiruudha?',fr:'Pardon, il y a une pharmacie ouverte maintenant ?',side:'left'},
+      {s:'Ollittuu',et:'Farmaasiileen cufamaniiru. Farmaasiitti kutaa waardiyaa deemuu qabda.',fr:'Les pharmacies sont fermées. Tu as besoin de la pharmacie de garde.',side:'right'},
+      {s:'Daawwataa',et:'Eessa jira?',fr:'Elle est où ?',side:'left'},
+      {s:'Ollittuu',et:'Farmaasiitti maxxanfame ilaaladhu. Isa banama jiru ibsa.',fr:'Regarde l\'affiche de cette pharmacie. Elle indique laquelle est ouverte.',side:'right'},
+      {s:'Daawwataa',et:'Aah, gadi fageenyaan! Galatoomi.',fr:'Ah, je comprends ! Merci.',side:'left'},
+      {s:'Ollittuu',et:'Nagaan!',fr:'De rien !',side:'right'}
     ]},
-    {label:'Sit. 3',title:'Le soir après le travail',img:'🌆',dialogue:[
-      {s:'Tolaa',et:'Hojii irraa dhufe. Dadhabee jira!',fr:'Je rentre du travail. Je suis fatigué !',side:'left'},
-      {s:'Caaltuu',et:'Boqo xiqqoo. Nyaata bilcheessaan jira.',fr:'Repose-toi un peu. Je suis en train de cuisiner.',side:'right'},
-      {s:'Tolaa',et:'Baay\'ee galatoomi. Maal bilcheessita?',fr:'Merci beaucoup. Tu cuisines quoi ?',side:'left'},
-      {s:'Caaltuu',et:'Injera fi atara. Dhukkubsattee?',fr:'De l\'injera et des lentilles. Ça va ?',side:'right'},
-      {s:'Tolaa',et:'Gaarii, baay\'ee beela\'ee jira.',fr:'Ça va, j\'ai très faim.',side:'left'},
-      {s:'Caaltuu',et:'Daqiiqaa kudha booda nyaanna!',fr:'Dans dix minutes on mange !',side:'right'}
+    {label:'Sit. 3',title:'Acheter un médicament',img:'💉',dialogue:[
+      {s:'Maamilaa',et:'Akkam. Qufaaf waa qabduu?',fr:'Bonjour. Vous avez quelque chose pour la toux ?',side:'left'},
+      {s:'Farmaasiistuu',et:'Eeyyeen. Gurraachaa moo daa\'imaaf?',fr:'Oui. C\'est pour un adulte ou un enfant ?',side:'right'},
+      {s:'Maamilaa',et:'Gurraachaaf.',fr:'Pour un adulte.',side:'left'},
+      {s:'Farmaasiistuu',et:'Siiraabii kana fudhu. Saanikoo lama, guyyaatti si\'a sadii.',fr:'Prenez ce sirop. Deux cuillères, trois fois par jour.',side:'right'},
+      {s:'Maamilaa',et:'Meeqadha?',fr:'Ça coûte combien ?',side:'left'},
+      {s:'Farmaasiistuu',et:'Birraa shan fi saddet.',fr:'Cinq euros quatre-vingt.',side:'right'}
     ]}
    ],
-   vocab:['Ka\'i! = Lève-toi !','Dhiqadhu = Douche-toi','Ilkaan eebuu = Se brosser les dents','Mana qulqulleessuu = Faire le ménage','Meeshaa dhiquu = Faire la vaisselle','Uffata dhiquu = Laver le linge','Nyaata bilcheessuu = Cuisiner','Dadhabee jira = Je suis fatigué','Boqo = Repose-toi'],
+   vocab:['Mataan natti dhukkuba = J\'ai mal à la tête','Qoonqoon natti dhukkuba = J\'ai mal à la gorge','Farmaasiitti waardiyaa = La pharmacie de garde','Waan dhukkubsamu hin qabu = Je ne suis pas allergique','Siiraabii = Le sirop','Guyyaatti si\'a sadii = Trois fois par jour','Maxxanfame = L\'affiche'],
    quiz:[
-    {q:'Afaan Oromootti "Faire le ménage" akkamiin jedha?',opts:['Mana ijaaruu','Mana qulqulleessuu','Mana bituu','Mana jijjiiruu'],ans:1},
-    {q:'Jechuun "Uffata dhiquu" maal jechuudha?',opts:['Repasser le linge','Étendre le linge','Laver le linge','Porter des vêtements'],ans:2},
-    {q:'Afaan Oromootti "Je suis fatigué" akkamiin jedha?',opts:['Beela\'ee jira','Dheebuu dhabe','Dadhabee jira','Rafee jira'],ans:2}
-   ]}
+    {q:'Afaan Oromootti "J\'ai mal à la tête" akkamiin jedha?',opts:['Ho\'a qaba','Garaan natti dhukkuba','Mataan natti dhukkuba','Dadhabee jira'],ans:2},
+    {q:'"Farmaasiitti waardiyaa" maal jechuudha?',opts:['La grande pharmacie','La pharmacie de garde ouverte la nuit','La pharmacie de l\'hôpital','La pharmacie pour touristes'],ans:1},
+    {q:'Afaan Oromootti "Trois fois par jour" akkamiin jedha?',opts:['Guyyaatti si\'a lama','Guyyaatti si\'a tokko','Guyyaatti si\'a sadii','Guyyaatti si\'a afur'],ans:2}
+   ]},
 
-,
-
-  /* 16 -- L'heure et la météo */
-  {id:'temps2',level:2,emoji:'🕐',name:'Sa\'atii fi Qilleensa',sub:'L\'heure et la météo',type:'dialog',
-   note:'📍 Attention : en Oromia, l\'heure éthiopienne (sa\'atii Itoophiyaa) commence à 6h du matin (notre 6h = leur 12h). La journée à Shashamané est rythmée par le soleil, pas par les horloges !',
+  /* 16 ── Chez le médecin */
+  {id:'medico2',level:2,emoji:'🩺',name:'Doktoratti',sub:'Chez le médecin',type:'dialog',
    situations:[
-    {label:'Sit. 1',title:'Quelle heure est-il ?',img:'⏰',dialogue:[
-      {s:'Marc',et:'Dhiifama, sa\'atii meeqa?',fr:'Pardon, quelle heure est-il ?',side:'left'},
-      {s:'Caaltuu',et:'Sa\'atii sadii fi walakkaa.',fr:'Il est trois heures et demie.',side:'right'},
-      {s:'Marc',et:'Baankiin amma banama jiraa?',fr:'La banque est encore ouverte ?',side:'left'},
-      {s:'Caaltuu',et:'Eeyyeen, hanga shan banama.',fr:'Oui, elle est ouverte jusqu\'à cinq heures.',side:'right'},
-      {s:'Marc',et:'Galatoomi! Ariifadhee deema.',fr:'Merci ! Je dois me dépêcher.',side:'left'},
-      {s:'Caaltuu',et:'Ariifi! Nagaan!',fr:'Vas-y ! Bonne chance !',side:'right'}
+    {label:'Sit. 1',title:'Expliquer ses symptômes',img:'🤒',dialogue:[
+      {s:'Doktora',et:'Nagaan bulte! Maal sitti dhiphise?',fr:'Bonjour ! Qu\'est-ce qui ne va pas ?',side:'right'},
+      {s:'Dhukkubsataa',et:'Ho\'a qabaa qoonqoos natti dhukkuba.',fr:'J\'ai de la fièvre et j\'ai mal à la gorge.',side:'left'},
+      {s:'Doktora',et:'Yoomii irraa?',fr:'Depuis quand ?',side:'right'},
+      {s:'Dhukkubsataa',et:'Kaleessa irraa.',fr:'Depuis hier.',side:'left'},
+      {s:'Doktora',et:'Qufas qabdaa?',fr:'Vous avez aussi de la toux ?',side:'right'},
+      {s:'Dhukkubsataa',et:'Eeyyeen, xiqqoo.',fr:'Oui, un peu.',side:'left'}
     ]},
-    {label:'Sit. 2',title:'Parler de la météo',img:'🌤️',dialogue:[
-      {s:'Sophie',et:'Qilleensi har\'a akkam?',fr:'Il fait quel temps aujourd\'hui ?',side:'left'},
-      {s:'Lamma',et:'Ganama ho\'aa, garuu galgala roobu dandaa.',fr:'Il fait chaud le matin, mais il peut pleuvoir le soir.',side:'right'},
-      {s:'Sophie',et:'Shaashamanneetti yeroo maraan akkana?',fr:'À Shashamané c\'est souvent comme ça ?',side:'left'},
-      {s:'Lamma',et:'Arfasaatti eeyyeen. Roobni guyyaa guyyaa dhufa.',fr:'En saison des pluies oui. Il pleut tous les jours.',side:'right'},
-      {s:'Sophie',et:'Faransaayitti garuu bona qofaaa.',fr:'En France c\'est seulement en hiver.',side:'left'},
-      {s:'Lamma',et:'Baay\'ee adda! As ho\'a baay\'ee jaalladha.',fr:'C\'est très différent ! Ici j\'aime beaucoup la chaleur.',side:'right'}
+    {label:'Sit. 2',title:'Comprendre le médecin',img:'💊',dialogue:[
+      {s:'Doktora',et:'Infekshinii qabda. Antibaayootiki siif barreessa.',fr:'Vous avez une infection. Je vous prescris un antibiotique.',side:'right'},
+      {s:'Dhukkubsataa',et:'Qoricha yoom fudha?',fr:'Quand est-ce que je prends le médicament ?',side:'left'},
+      {s:'Doktora',et:'Tokkoo ganamaatti fi tokkoo halkan.',fr:'Un le matin et un le soir.',side:'right'},
+      {s:'Dhukkubsataa',et:'Guyyaa meeqa?',fr:'Pendant combien de jours ?',side:'left'},
+      {s:'Doktora',et:'Guyyaa torba. Bishaan baay\'ee dhugi.',fr:'Sept jours. Et buvez beaucoup d\'eau.',side:'right'},
+      {s:'Dhukkubsataa',et:'Galatoomi, doktera.',fr:'Merci, docteur.',side:'left'}
     ]},
-    {label:'Sit. 3',title:'Planifier selon la météo',img:'🌧️',dialogue:[
-      {s:'Iftu',et:'Boruu gabaa deemna?',fr:'On va au marché demain ?',side:'right'},
-      {s:'Théo',et:'Qilleensi akkam jedha?',fr:'Qu\'est-ce que dit la météo ?',side:'left'},
-      {s:'Iftu',et:'Roobu jetteetti. Aanoo roobaa kaasi!',fr:'Elle dit qu\'il va pleuvoir. Prends ton parapluie !',side:'right'},
-      {s:'Théo',et:'Tolee. Sa\'atii meeqatti deemna?',fr:'D\'accord. On y va à quelle heure ?',side:'left'},
-      {s:'Iftu',et:'Ganama sa\'atii saddeet. Roobni dura deemuun wayya.',fr:'À huit heures du matin. Mieux vaut partir avant la pluie.',side:'right'},
-      {s:'Théo',et:'Eeyyeen! Ganamaas ko\'otni baay\'ee jiru.',fr:'Oui ! Et le matin il y a plus de choix au marché.',side:'left'}
+    {label:'Sit. 3',title:'Appeler le médecin',img:'📞',dialogue:[
+      {s:'Dhukkubsataa',et:'Akkam, doktora beellama barbaada.',fr:'Bonjour, je veux un rendez-vous avec le médecin.',side:'left'},
+      {s:'Simataa',et:'Yoom?',fr:'Pour quand ?',side:'right'},
+      {s:'Dhukkubsataa',et:'Har\'a yoo danda\'ame. Baay\'ee dhukkubsadha.',fr:'Pour aujourd\'hui si c\'est possible. Je suis très malade.',side:'left'},
+      {s:'Simataa',et:'Ho\'a qabduu?',fr:'Vous avez de la fièvre ?',side:'right'},
+      {s:'Dhukkubsataa',et:'Eeyyeen, digdama sagal digrii.',fr:'Oui, trente-neuf degrés.',side:'left'},
+      {s:'Simataa',et:'Sa\'aatii afuritti kottaa. Paaspoortii fidadhu.',fr:'Venez à seize heures. Apportez votre passeport.',side:'right'}
     ]}
    ],
-   vocab:['Sa\'atii meeqa? = Quelle heure est-il ?','Hanga ... banama = Ouvert jusqu\'à...','Ariifi! = Dépêche-toi !','Qilleensi akkam? = Quel temps fait-il ?','Arfasaatti = En saison des pluies','Roobni dhufa = Il va pleuvoir','Aanoo roobaa kaasi = Prends ton parapluie'],
+   vocab:['Maal sitti dhiphise? = Qu\'est-ce qui ne va pas ?','Ho\'a qabaa = J\'ai de la fièvre','Qoonqoon natti dhukkuba = J\'ai mal à la gorge','Kaleessa irraa = Depuis hier','Qufa = La toux','Beellama = Un rendez-vous','Baay\'ee dhukkubsadha = Je suis très malade'],
    quiz:[
-    {q:'Afaan Oromootti "Quelle heure est-il ?" akkamiin jedha?',opts:['Guyyaan meeqa?','Sa\'atii meeqa?','Boruu meeqa?','Daqiiqaan meeqa?'],ans:1},
-    {q:'Jechuun "Arfasaatti roobu" maal jechuudha?',opts:['Il neige en hiver','Il fait chaud en été','Il pleut en saison des pluies','Il y a du vent au printemps'],ans:2},
-    {q:'Afaan Oromootti "Dépêche-toi !" akkamiin jedha?',opts:['Boqo!','Deemi!','Ariifi!','Rafuu!'],ans:2}
-   ]}
-
+    {q:'Afaan Oromootti "J\'ai de la fièvre" akkamiin jedha?',opts:['Qorraan natti dhiphise','Ho\'a qabaa','Qufaa qabaa','Dhukkuba qabaa'],ans:1},
+    {q:'Jechuun "Qoonqoon natti dhukkuba" maal jechuudha?',opts:['J\'ai mal à la tête','J\'ai mal au ventre','J\'ai mal à la gorge','J\'ai mal au dos'],ans:2},
+    {q:'Afaan Oromootti "Un rendez-vous" akkamiin jedha?',opts:['Dirqama','Beellama','Mootummaa','Daawwannaa'],ans:1}
+   ]},
 ];
 
 var ALL_THEMES_FR=LEVEL1_THEMES_FR.concat(LEVEL2_THEMES_FR);
@@ -1324,7 +1417,8 @@ var ALL_THEMES_FR=LEVEL1_THEMES_FR.concat(LEVEL2_THEMES_FR);
 ======================================== */
 
 var LEVEL1_THEMES_OR=[
- {id: 'alpha',
+
+  {id: 'alpha',
   level:1,
   emoji: '🔤',
   name: 'Qubee',
@@ -1376,6 +1470,7 @@ var LEVEL1_THEMES_OR=[
     {q: 'Quelle lettre ou combinaison entendez-vous ?', audio: 'PH', opts: ['P', 'B', 'PH', 'F'], ans: 2}
   ]
 },
+
   {id:'salut',level:1,emoji:'👋',name:'Nagaa Gaafachuu',sub:'Akkam, galatoomaa… / Les salutations',
    words:[
     {et:'Akkam bulte / Akkam boolte',fr:'Bonjour (le matin)',em:'🌅'},{et:'Akkam ooltee',fr:'Bon après-midi',em:'🌆'},
@@ -1393,6 +1488,48 @@ var LEVEL1_THEMES_OR=[
     {et:'Dafqaan jira / Fayyaa miti',fr:'Je ne vais pas bien / Je n\'ai pas la forme',em:'😔'},
     {et:'Baay\'ee gaarii! / Roorroo!',fr:'Très bien ! / Super !',em:'🌟'}
    ]},
+
+  {id:'expr',level:1,emoji:'💬',name:'Jechi Murteessoo',sub:'Hin galeef, maaloo… / Expressions essentielles',
+   words:[
+    {et:'Hin galeef.',fr:'Je ne comprends pas.',em:'😕'},
+    {et:'Galeef.',fr:'Je comprends.',em:'✅'},
+    {et:'Xiqqoo dubbadhu.',fr:'Parlez plus lentement, s\'il vous plaît.',em:'🐢'},
+    {et:'Irra deebi\'i, maaloo.',fr:'Répétez, s\'il vous plaît.',em:'🔄'},
+    {et:'Maal jechuudha?',fr:'Qu\'est-ce que ça veut dire ?',em:'📖'},
+    {et:'Afaan Faransaayi xiqqoo dubbadha.',fr:'Je parle un peu français.',em:'🇫🇷'},
+    {et:'Afaan Oromoo xiqqoo dubbadha.',fr:'Je parle un peu oromo.',em:'🇪🇹'},
+    {et:'Gargaarsa barbaada.',fr:'J\'ai besoin d\'aide.',em:'🆘'},
+    {et:'Rakkoo hin qabu.',fr:'Pas de problème.',em:'👌'},
+    {et:'Beekaa.',fr:'Je sais.',em:'💡'},
+    {et:'Hin beeku.',fr:'Je ne sais pas.',em:'🤷'},
+    {et:'Yaada gaarii!',fr:'Bonne idée !',em:'💡'},
+    {et:'Anis / Anaanis!',fr:'Moi aussi !',em:'🙋'},
+    {et:'Lakki, galatoomi.',fr:'Non merci.',em:'🙅'},
+    {et:'Baay\'ee gaarii dha!',fr:'C\'est très bien !',em:'🌟'},
+    {et:'Maaloo?',fr:'S\'il vous plaît ? / Pardon ?',em:'🙏'},
+    {et:'Sirriidha!',fr:'C\'est exact ! / C\'est juste !',em:'✔️'},
+    {et:'Sirrii miti.',fr:'Ce n\'est pas exact.',em:'❌'},
+   ]},
+
+  {id:'interro',level:1,emoji:'❓',name:'Gaaffii Addaadaa',sub:'Eessa, yoom, maaliif… / Mots interrogatifs',
+   words:[
+    {et:'Eessa?',fr:'Où ?',em:'📍'},
+    {et:'Yoom?',fr:'Quand ?',em:'📅'},
+    {et:'Maaliif? / Maaf?',fr:'Pourquoi ?',em:'🤔'},
+    {et:'Akkamiin? / Maaliin?',fr:'Comment ?',em:'💬'},
+    {et:'Eenyu?',fr:'Qui ?',em:'🙋'},
+    {et:'Maal? / Maali?',fr:'Quoi ? / Qu\'est-ce que ?',em:'❓'},
+    {et:'Meeqa?',fr:'Combien ?',em:'🔢'},
+    {et:'Kami? / Isa kamii?',fr:'Lequel ? / Laquelle ?',em:'👆'},
+    {et:'Eessa jira?',fr:'Où est… ?',em:'🗺️'},
+    {et:'Yoom dhufa?',fr:'Ça arrive quand ?',em:'🕐'},
+    {et:'Maaliif barbaadda?',fr:'Pourquoi tu veux ?',em:'🤷'},
+    {et:'Akkamiin jedha?',fr:'Comment dit-on ?',em:'💬'},
+    {et:'Eenyu kan?',fr:'C\'est qui ?',em:'👤'},
+    {et:'Maal jechuudha?',fr:'Qu\'est-ce que ça veut dire ?',em:'📖'},
+    {et:'Meeqa gatii qaba?',fr:'Ça coûte combien ?',em:'💶'},
+   ]},
+
   {id:'pres',level:1,emoji:'🙋',name:'Ofii Beeksisuu',sub:'Maqaa, dachee, magaalaa… / Se présenter',
    words:[
     {et:'Maqaa abbaaf eeyyee',fr:'Le nom de famille',em:'👨‍👩‍👧'},{et:'Maqaa ofii',fr:'Le prénom',em:'🏷️'},
@@ -1403,114 +1540,8 @@ var LEVEL1_THEMES_OR=[
     {et:'Waggoota ... qabaadha',fr:'J\'ai ... ans',em:'🎈'},{et:'Maqaan koo ...',fr:'Je m\'appelle',em:'👋'},
     {et:'Eessa irraa dhufte?',fr:'D\'où es-tu ?',em:'🌍'},{et:'Shashemaneetti dhufeen',fr:'Je suis de Shashemene',em:'🏙️'}
    ]},
-  {id:'orient',level:1,emoji:'🧭',name:'Karaa Barbaaduu',sub:'Bitaa, mirga… / S\'orienter',
-   words:[
-   // Directions
-    {et:'Kallattii itti fufi',fr:'Tout droit',em:'⬆️'},
-    {et:'Bitatti',fr:'À gauche',em:'⬅️'},
-    {et:'Mirgatti',fr:'À droite',em:'➡️'},
-    // Position relative
-    {et:'Fuuldura',fr:'Devant',em:'🔜'},
-    {et:'Duuba',fr:'Derrière',em:'🔙'},
-    {et:'Cinaa',fr:'À côté',em:'↔️'},
-    {et:'Fuuldura / Eegalan',fr:'En face',em:'🔄'},
-    // Distance
-    {et:'Dhiyoo',fr:'Près',em:'📍'},
-    {et:'Fagoo',fr:'Loin',em:'🌅'},
-    // Outil
-    {et:'Kaartaa',fr:'Le plan / La carte',em:'🗺️'},
-    ]},
-  {id:'lieux',level:1,emoji:'🏙️',name:'Bakkoota Barbaachisoo',sub:'Gabaa, daandii, bunaa… / Les lieux importants',
-   words:[
-    // Lieux de vie / nature
-    {et:'Magaalaa',fr:'La ville',em:'🏙️'},
-    {et:'Ganda',fr:'Le village',em:'🏡'},
-    {et:'Baadiyyaa',fr:'La campagne',em:'🌾'},
-    {et:'Tullu / Gaara',fr:'La montagne / La chaîne de montagnes',em:'⛰️'},
-    {et:'Galaana / Haroo',fr:'La mer / L\'océan',em:'🌊'},
-    {et:'Qorichee / Qixxee qilleensaa',fr:'La plage',em:'🏖️'},
-    {et:'Laga',fr:'La rivière',em:'🏞️'},
-    {et:'Meeshaa bashannannaa',fr:'Le parc',em:'🌳'},
-    {et:'Bulee / Daaqqoo',fr:'La place publique',em:'⛲'},
-    {et:'Daandii / Karaa',fr:'La rue / L\'avenue',em:'🛣️'},
-    {et:'Naannoo manaa',fr:'Le pâté de maisons',em:'🏘️'},
-    // Services publics
-    {et:'Mana bulchiinsaa',fr:'La mairie',em:'🏛️'},
-    {et:'Hospitaala',fr:'L\'hôpital',em:'🏥'},
-    {et:'Farmaasiitii',fr:'La pharmacie',em:'💊'},
-    {et:'Baankii',fr:'La banque',em:'🏦'},
-    {et:'Kiilistiyaana / Masjiida',fr:'L\'église / La mosquée',em:'⛪🕌'},
-    // Commerces
-    {et:'Suupaarmaarkeeti',fr:'Le supermarché',em:'🛒'},
-    {et:'Buna mana / Bunaa',fr:'Le bar / Le café',em:'☕'},
-    {et:'Gabaa / Suuqii',fr:'Le marché / La boutique',em:'🛍️'},
-    // Éducation
-    {et:'Mana barumsaa daa\'immanii',fr:'L\'école maternelle',em:'🧸'},
-    {et:'Mana barumsaa sadarkaa duraatii',fr:'L\'école primaire',em:'🎒'},
-    {et:'Mana barumsaa sadarkaa lammaffaa',fr:'Le collège',em:'📚'},
-    {et:'Mana barumsaa ol\'aanaa',fr:'Le lycée',em:'🎓'},
-    {et:'Yuniversitii',fr:'L\'université',em:'🏛️'},
-   ]},
-  {id:'nour',level:1,emoji:'🍽️',name:'Nyaata',sub:'Buddeena, muduraa, injera… / La nourriture',
-   words:[
-    // Catégories générales d'abord
-    {et:'Muduraa',fr:'Les fruits',em:'🍉'},
-    {et:'Kuduraa',fr:'Les légumes',em:'🥦'},
-    // Féculents / base
-    {et:'Buddeena',fr:'Le pain',em:'🍞'},
-    {et:'Ruzii',fr:'Le riz',em:'🍚'},
-    {et:'Maakiirooni',fr:'Les pâtes',em:'🍝'},
-    {et:'Dinnichi / Foonii dinnichaa',fr:'La pomme de terre / Les frites',em:'🥔'},
-    // Protéines
-    {et:'Foon',fr:'La viande',em:'🥩'},
-    {et:'Lukkuu',fr:'Le poulet',em:'🍗'},
-    {et:'Qurxummii',fr:'Le poisson',em:'🐟'},
-    {et:'Foon garbuu / Tibs',fr:'Le tibs (viande grillée)',em:'🥩'},
-    {et:'Berbere',fr:'Le berbéré (mélange d\'épices)',em:'🌶️'},
-    {et:'Hanqaaquu',fr:'L\'œuf',em:'🥚'},
-    // Produits laitiers
-    {et:'Baadaa',fr:'Le fromage',em:'🧀'},
-    {et:'Dhadhaa',fr:'Le beurre',em:'🧈'},
-    // Fruits
-    {et:'Pomii',fr:'La pomme',em:'🍎'},
-    {et:'Muuzii',fr:'La banane',em:'🍌'},
-    {et:'Burtukaana',fr:'L\'orange',em:'🍊'},
-    {et:'Liimoo',fr:'Le citron',em:'🍋'},
-    {et:'Mukarroo',fr:'La fraise',em:'🍓'},
-    {et:'Harbuu',fr:'La pastèque',em:'🍉'},
-    // Légumes
-    {et:'Timaatimii',fr:'La tomate',em:'🍅'},
-    {et:'Karootii',fr:'La carotte',em:'🥕'},
-    {et:'Qullubbii / Laasuna',fr:'L\'oignon',em:'🧅'},
-    {et:'Turunfaa',fr:'L\'ail',em:'🧄'},
-    {et:'Salaaxi',fr:'Le concombre',em:'🥒'},
-    {et:'Salaaditii',fr:'La salade',em:'🥗'},
-    // Condiments / épicerie
-    {et:'Zeyitii / Eelaa',fr:'L\'huile d\'olive',em:'🫒'},
-    {et:'Citaa',fr:'Le sel',em:'🧂'},
-    {et:'Barbaree',fr:'Le poivre',em:'🌶️'},
-    {et:'Damma',fr:'Le miel',em:'🍯'},
-    {et:'Chokolaatii',fr:'Le chocolat',em:'🍫'},
-   ]},
-  {id:'bois',level:1,emoji:'🥤',name:'Dhugaatii',sub:'Bishaan, buna, shaayii… / Les boissons',
-   words:[
-    // Essentiels
-    {et:'Bishaan',fr:'L\'eau',em:'💧'},
-    {et:'Bishaan gaazii qaba',fr:'L\'eau gazeuse',em:'🫧'},
-    {et:'Aannaan',fr:'Le lait',em:'🥛'},
-    {et:'Jiisii (Burtukaanaa)',fr:'Le jus (d\'orange)',em:'🍊'},
-    {et:'Sodaa / Gasiyoozaa',fr:'Le soda',em:'🥤'},
-    // Cafés
-    {et:'Buna (qullayyoo)',fr:'Le café noir',em:'☕'},
-    {et:'Buna aannaan waliin',fr:'Le café au lait',em:'☕'},
-    {et:'Buna nannoo aannaan xinnoo',fr:'Le café avec un nuage de lait',em:'☕'},
-    {et:'Shaayii',fr:'Le thé',em:'🍵'},
-    // Alcools
-    {et:'Koonjoo (diimaa / adii)',fr:'Le vin (rouge / blanc)',em:'🍷'},
-    {et:'Biiraa',fr:'La bière',em:'🍺'},
-    {et:'Araqee',fr:'L\'araqé (alcool éthiopien)',em:'🍶'},
-   ]},
-{id:'num',level:1,emoji:'🔢',name:'Lakkoofsa',sub:'Zeerroo irraa hanga kuma lamaa / Zéro à deux mille',
+
+  {id:'num',level:1,emoji:'🔢',name:'Lakkoofsa',sub:'Zeerroo irraa hanga kuma lamaa / Zéro à deux mille',
  words:[
   {et:'Zeerroo',fr:'Zéro',em:'0️⃣'},{et:'Tokko',fr:'Un',em:'1️⃣'},{et:'Lama',fr:'Deux',em:'2️⃣'},
   {et:'Sadii',fr:'Trois',em:'3️⃣'},{et:'Afur',fr:'Quatre',em:'4️⃣'},{et:'Shan',fr:'Cinq',em:'5️⃣'},
@@ -1540,440 +1571,46 @@ var LEVEL1_THEMES_OR=[
   {et:'Kuma',fr:'Mille',em:'1️⃣0️⃣0️⃣0️⃣'},
   {et:'Kuma lama',fr:'Deux mille',em:'2️⃣0️⃣0️⃣0️⃣'}
  ]},
-  {id:'col',level:1,emoji:'🎨',name:'Halluu',sub:'Diimaa, magariisa, keelloo… / Les couleurs',
-   words:[
-    {et:'Diimaa',fr:'Rouge',em:'❤️'},{et:'Cuquliisa',fr:'Bleu',em:'💙'},{et:'Magariisa',fr:'Vert',em:'💚'},
-    {et:'Keelloo',fr:'Jaune',em:'💛'},{et:'Burtukaana',fr:'Orange',em:'🧡'},{et:'Adii',fr:'Blanc',em:'🤍'},
-    {et:'Gurraacha',fr:'Noir',em:'🖤'},{et:'Roozii',fr:'Rose',em:'🩷'},
-    {et:'Daallatii / Diimtuuja',fr:'Violet',em:'💜'},{et:'Bunii',fr:'Marron',em:'🤎'},
-    {et:'Garaa garaa / Dulluma',fr:'Gris',em:'🩶'}
-   ]},
-{id:'viaje',level:1,emoji:'🧳',name:'Deemsa',sub:'Baggaajii, hooteela, paaspoortiifi… / Le voyage',
-   words:[
-   // Préparation
-    {et:'Paaspoortiifi',fr:'Le passeport',em:'🛂'},
-    {et:'Baggaajii',fr:'La valise',em:'🧳'},
-    {et:'Qabeenya deemsa',fr:'Les bagages',em:'🎒'},
-    {et:'Tikeeta',fr:'Le billet',em:'🎫'},
-    {et:'Reserveeshina',fr:'La réservation',em:'📋'},
-    {et:'Ejensii deemsa',fr:'L\'agence de voyages',em:'🗺️'},
-    {et:'Inshuraansii deemsa',fr:'L\'assurance voyage',em:'📄'},
-    // Transport
-    {et:'Xiyyaara',fr:'L\'avion',em:'✈️'},
-    {et:'Buufata xiyyaaraa',fr:'L\'aéroport',em:'🛫'},
-    {et:'Ba\'uu',fr:'Le départ',em:'🚪'},
-    {et:'Ga\'uu',fr:'L\'arrivée',em:'🛬'},
-    {et:'Koostamii',fr:'La douane',em:'🛃'},
-    {et:'Doonii guddaa',fr:'La croisière',em:'🚢'},
-    // Hébergement
-    {et:'Hooteela',fr:'L\'hôtel',em:'🏨'},
-    {et:'Kutaa lama yookiin tokko',fr:'La chambre double ou simple',em:'🛏️'},
-    // Destinations
-    {et:'Qorichee laga',fr:'La plage',em:'🏖️'},
-    {et:'Tullu',fr:'La montagne',em:'⛰️'},
-    {et:'Daawwataa',fr:'Le touriste',em:'📸'},
-   ]},
-  {id:'rest',level:1,emoji:'🍽️',name:'Mana Nyaataa',sub:'Menuu, kafaltii, teessoo… / Au restaurant',
-   words:[
-      // Arrivée
-    {et:'Balbala alaa',fr:'La terrasse',em:'☀️'},
-    {et:'Teessoo',fr:'La table',em:'🪑'},
-    {et:'Teessoon kun duwwaa dha?',fr:'Cette table est libre ?',em:'🪑'},
-    // Commander
-    {et:'Tajaajilaa / Tajaajiltu',fr:'Le serveur / La serveuse',em:'🧑‍🍳'},
-    {et:'Liistii nyaataa',fr:'La carte',em:'📋'},
-    {et:'Menuu guyyaa',fr:'Le menu du jour',em:'🍱'},
-    {et:'Gaafachuu',fr:'Commander',em:'🙋'},
-    {et:'Maal yaaddu?',fr:'Que recommandez-vous ?',em:'👨‍🍳'},
-    // Régimes
-    {et:'Gluten hin qabu',fr:'Sans gluten',em:'🌾'},
-    {et:'Foon hin nyaatu',fr:'Végétarien / Végétarienne',em:'🥦'},
-    // Repas
-    {et:'Fuullaa xinnoo',fr:'L\'amuse-bouche',em:'🫒'},
-    {et:'Fuullaa dura',fr:'L\'entrée',em:'🥗'},
-    {et:'Nyaata ijoo',fr:'Le plat principal',em:'🍖'},
-    {et:'Dhaamsa nyaataa',fr:'Le dessert',em:'🍮'},
-    {et:'Saandiwichii / Buddeena',fr:'Le sandwich',em:'🥖'},
-    {et:'Fudhachuuf',fr:'À emporter',em:'🥡'},
-    // Addition
-    {et:'Baasii nyaataa',fr:'L\'addition',em:'💶'},
-    {et:'Qarshii dabalataa',fr:'Le pourboire',em:'💰'},
-    {et:'Qarshii dabalataan dabalamee jira',fr:'Le pourboire est inclus',em:'✅'},
-   ]},
-  {id:'trans',level:1,emoji:'🚌',name:'Geejjiba',sub:'Baasii, gaarii, konkolaataa… / Les transports',
-   words:[
-    // Transports en commun
-    {et:'Baasii / Konkolaataa ummataa',fr:'Le bus',em:'🚌'},
-    {et:'Meetiroo',fr:'Le métro',em:'🚇'},
-    {et:'Tiraamii',fr:'Le tramway',em:'🚊'},
-    {et:'Gaarii sibii',fr:'Le train',em:'🚂'},
-    {et:'Xiyyaara',fr:'L\'avion',em:'✈️'},
-    {et:'Taaksii',fr:'Le taxi',em:'🚕'},
-    // Transports individuels
-    {et:'Konkolaataa',fr:'La voiture',em:'🚗'},
-    {et:'Mootoorisikkilii',fr:'La moto',em:'🏍️'},
-    {et:'Biskileetii',fr:'Le vélo',em:'🚴'},
-    // Titre de transport
-    {et:'Tikeeta',fr:'Le billet',em:'🎫'},
-   ]},
-  {id:'objets',level:1,emoji:'🔑',name:'Meeshaalee Guyyaatii',sub:'Bilbila, hirnaa… / Objets du quotidien',
-   words:[
-        // Technologie
-    {et:'Bilbila',fr:'Le téléphone',em:'☎️'},
-    {et:'Bilbila harkaa',fr:'Le portable',em:'📱'},
-    {et:'Kompiyuutara',fr:'L\'ordinateur',em:'💻'},
-    {et:'Chaajjara',fr:'Le chargeur',em:'🔌'},
-    // Temps
-    {et:'Sa\'atii harkaa',fr:'La montre',em:'⌚'},
-    {et:'Sa\'atii',fr:'L\'horloge / la pendule',em:'🕐'},
-    // Accessoires personnels
-    {et:'Hirnaa',fr:'Les clés',em:'🔑'},
-    {et:'Fardaa qarshii / Baankii xinnoo',fr:'Le portefeuille / le porte-monnaie',em:'👛'},
-    {et:'Bursuusaa dugdaa',fr:'Le sac à dos',em:'🎒'},
-    {et:'Miidhagina ija',fr:'Les lunettes',em:'👓'},
-    {et:'Aanoo roobaa',fr:'Le parapluie',em:'☂️'},
-    // Papeterie
-    {et:'Waraqaa',fr:'Le papier',em:'📄'},
-    {et:'Qalama / Biiroo',fr:'Le stylo / le bic',em:'🖊️'},
-    {et:'Mishira',fr:'Les ciseaux',em:'✂️'},
-    // Vaisselle
-    {et:'Xaa\'oo',fr:'L\'assiette',em:'🍽️'},
-    {et:'Kilaasii',fr:'Le verre',em:'🥛'},
-    {et:'Kubboo buna',fr:'La tasse',em:'☕'},
-    {et:'Simiintoo',fr:'La cuillère',em:'🥄'},
-    {et:'Forkii',fr:'La fourchette',em:'🍴'},
-    {et:'Bilaa',fr:'Le couteau',em:'🔪'},
-    {et:'Booteelaa',fr:'La bouteille',em:'🍶'},
-    // Salle de bain / chambre
-    {et:'Iyyaanoo',fr:'Le miroir',em:'🪞'},
-    {et:'Tuwaallii',fr:'La serviette',em:'🛁'},
-    {et:'Saabunaa',fr:'Le savon',em:'🧼'},
-    {et:'Kaafiyaa',fr:'L\'oreiller',em:''},
-   ]},
-   {id:'log',level:1,emoji:'🏠',name:'Mana Jireenyaa',sub:'Dabtaroo, daakuu… / Le logement',
-   words:[
-        // Types de logement
-    {et:'Mana',fr:'La maison',em:'🏠'},
-    {et:'Apartamaantii',fr:'L\'appartement',em:'🏢'},
-    // Pièces principales
-    {et:'Seensa / Galma dura',fr:'L\'entrée',em:'🚪'},
-    {et:'Galma / Mana nyaataa',fr:'Le salon / la salle à manger',em:'🛋️'},
-    {et:'Daakuu',fr:'La cuisine',em:'🍳'},
-    {et:'Kutaa ciisichaa',fr:'La chambre',em:'🛏️'},
-    {et:'Mana fincaanii / Dhiqachuu',fr:'La salle de bain',em:'🚿'},
-    {et:'Mana fincaanii',fr:'Les toilettes',em:'🚽'},
-    {et:'Mana konkolaataa',fr:'Le garage',em:'🚗'},
-   ]},
-   {id:'muebles_equipamiento', level:1, emoji:'🪑', name:'Meeshaalee Manaa', sub:'Soofa, siree, firiijiidara… / Meubles et équipements',
- words:[
-    // Salon
-    {et:'Soofa',fr:'Le canapé',em:'🛋️'},
-    {et:'Teessoo qofaa',fr:'Le fauteuil',em:'💺'},
-    {et:'Teessoo',fr:'La table',em:''},
-    {et:'Sannaddaa',fr:'La chaise',em:'🪑'},
-    {et:'Ibsaa',fr:'La lampe',em:'💡'},
-    {et:'Mudaa kitaabaa',fr:'L\'étagère',em:''},
-    // Chambre
-    {et:'Siree',fr:'Le lit',em:'🛏️'},
-    {et:'Amaaroo uffataa',fr:'L\'armoire',em:'🗄️'},
-    {et:'Maardiima / Barrumsaa',fr:'Le bureau',em:'🖊️'},
-    // Cuisine
-    {et:'Friijiidara',fr:'Le réfrigérateur',em:'🧊'},
-    {et:'Aawoo',fr:'Le four',em:'🔥'},
-    {et:'Maaykirooweevii',fr:'Le micro-ondes',em:'🔲♨️'},
-    {et:'Dhiqa meeshaa',fr:'L\'évier',em:'🚰'},
-    // Salle de bain
-    {et:'Dhiqa fuulaa',fr:'Le lavabo',em:'🚰'},
-    {et:'Kuubii dhiqachuu',fr:'La baignoire',em:'🛁'},
-    {et:'Shawara',fr:'La douche',em:'🚿'},
-  ]},   
-   {id:'emot',level:1,emoji:'😄',name:'Miira',sub:'Gammaduu, dadhabuu… / Les émotions',
-   words:[
-    {et:'Gammadaa / Gammatti',fr:'Content / Contente',em:'😊'},
-    {et:'Baayyee gammadaa / Gammatti',fr:'Heureux / Heureuse',em:'😊'},
-    {et:'Koolu / Kooltuu',fr:'Joyeux / Joyeuse',em:'😄'},
-    {et:'Gadda / Gadditi',fr:'Triste / Triste',em:'😢'},
-    {et:'Dadhabaa / Dadhabduu',fr:'Fatigué / Fatiguée',em:'😴'},
-    {et:'Dallansuu / Dallantuu',fr:'Fâché / Fâchée',em:'😠'},
-    {et:'Rifaatuu / Rifatii',fr:'Surpris / Choqué(e)',em:'😲'},
-    {et:'Sodaachuu',fr:'Avoir peur / Avoir peur',em:'😨'},
-    {et:'Dhukkubsataa / Dhukkubsattuu',fr:'Malade / Malade',em:'🤒'},
-    {et:'Dhukkubsataa xiqqoo',fr:'Malade / Malade',em:'🤒'},
-    {et:'Yaaddoo / Yaaddoftuu',fr:'Inquiet / Inquiète',em:'😟'},
-    {et:'Yaaddoo jabaa',fr:'Inquiet / Inquiète',em:'😟'},
-    {et:'Dhiphina / Dhibaa',fr:'Stressé / Stressée',em:'😰'},
-    {et:'Baay\'ee dhiphina',fr:'Stressé / Stressée',em:'😰'},
-    {et:'Abdii kutaa / Manooftuu',fr:'Déçu / Déçue',em:'😞'},
-    {et:'Jibba / Jibbitu',fr:'Haineux / Haineuse',em:'😤'},
-    {et:'Jaallachuu / Jaallattuu',fr:'Amoureux / Amoureuse',em:'😍'},
-    {et:'Baay\'ee gaarii! / Roorroo!',fr:'C\'est super ! / C\'est cool !',em:'🌟'}
-   ]},
-  {id:'fam',level:1,emoji:'👨‍👩‍👧',name:'Maatii',sub:'Abbaa, haadha, ilma… / La famille',
-   words:[
-   {et:'Haadha / Haadha manaa',fr:'La mère / La maman',em:'👩'},
-    {et:'Abbaa / Abbaa manaa',fr:'Le père / Le papa',em:'👨'},
-    {et:'Intala',fr:'La fille',em:'👧'},
-    {et:'Ilma',fr:'Le fils',em:'👦'},
-    {et:'Obboleettii',fr:'La sœur',em:'👧'},
-    {et:'Obboleessa',fr:'Le frère',em:'🧑'},
-    {et:'Akoo / Awoo',fr:'La grand-mère',em:'👵'},
-    {et:'Akaakayyuu / Awoo Abbaa',fr:'Le grand-père',em:'👴'},
-    {et:'Niitii / Haadha manaa',fr:'La femme',em:'💑'},
-    {et:'Abbaa warraa / Dhiirsa',fr:'Le mari',em:'💍'},
-    {et:'Adaadaa (haadha abbaa) / Adda (obboleessa abbaa)',fr:'La tante (côté père) / L\'oncle',em:'👨‍👩‍👧'}
-   ]},
-  {id:'verb',level:1,emoji:'📝',name:'Yakkawwan',sub:'Ta\'uu, qabaachuu, deemuu… / Les verbes principaux',
-   words:[
-   {et:'Ta\'uu / Jiraachuu',fr:'Être',em:'🧑',conj:{et:['Ani nan ta\'a / jira','Ati ni ta\'a / jirta','Inni/Isheen ni ta\'a / jira','Nuti ni taana / jirra','Isin ni taastu / jirtu','Isaan ni ta\'u / jiru'],fr:['Je suis','Tu es','Il/Elle est','Nous sommes','Vous êtes','Ils/Elles sont']}},
-    {et:'Qabaachuu',fr:'Avoir',em:'🤲',conj:{et:['Ani nan qabaadha','Ati ni qabaatta','Inni/Isheen ni qabaata','Nuti ni qabaanna','Isin ni qabaastu','Isaan ni qabaatu'],fr:['J\'ai','Tu as','Il/Elle a','Nous avons','Vous avez','Ils/Elles ont']}},
-    {et:'Dubbachuu',fr:'Parler',em:'🗣️',conj:{et:['Ani nan dubbadha','Ati ni dubbatta','Inni/Isheen ni dubbata','Nuti ni dubbanna','Isin ni dubbastu','Isaan ni dubbatu'],fr:['Je parle','Tu parles','Il/Elle parle','Nous parlons','Vous parlez','Ils/Elles parlent']}},
-    {et:'Jiraachuu',fr:'Habiter',em:'🏠',conj:{et:['Ani nan jiraadha','Ati ni jiraatta','Inni/Isheen ni jiraata','Nuti ni jiraanna','Isin ni jiraastu','Isaan ni jiraatu'],fr:['J\'habite','Tu habites','Il/Elle habite','Nous habitons','Vous habitez','Ils/Elles habitent']}},
-    {et:'Deemuu',fr:'Aller',em:'🚶',conj:{et:['Ani nan deema','Ati ni deemta','Inni/Isheen ni deema','Nuti ni deemna','Isin ni deemtu','Isaan ni deemu'],fr:['Je vais','Tu vas','Il/Elle va','Nous allons','Vous allez','Ils/Elles vont']}},
-    {et:'Jaalachuu',fr:'Aimer',em:'❤️',conj:{et:['Nan jaalladha','Ni jaallataa','Ni jaallata','Ni jaallannaа','Ni jaallattu','Ni jaallatu'],fr:['J\'aime','Tu aimes','Il/Elle aime','Nous aimons','Vous aimez','Ils/Elles aiment']}},
-    {et:'Nyaachuu',fr:'Manger',em:'🍽️',conj:{et:['Ani nan nyaadha','Ati ni nyaatta','Inni/Isheen ni nyaata','Nuti ni nyaanna','Isin ni nyaastu','Isaan ni nyaatu'],fr:['Je mange','Tu manges','Il/Elle mange','Nous mangeons','Vous mangez','Ils/Elles mangent']}},
-    {et:'Dhuguu',fr:'Boire',em:'🥤',conj:{et:['Ani nan dhuga','Ati ni dhugta','Inni/Isheen ni dhuga','Nuti ni dhugna','Isin ni dhugtu','Isaan ni dhugu'],fr:['Je bois','Tu bois','Il/Elle boit','Nous buvons','Vous buvez','Ils/Elles boivent']}},
-    {et:'Rafuu',fr:'Dormir',em:'😴',conj:{et:['Ani nan rafaa','Ati ni rafta','Inni/Isheen ni rafa','Nuti ni rafna','Isin ni raftu','Isaan ni rafu'],fr:['Je dors','Tu dors','Il/Elle dort','Nous dormons','Vous dormez','Ils/Elles dorment']}},
-    {et:'Deemuu miila',fr:'Marcher',em:'🚶‍♂️',conj:{et:['Ani nan deema miila','Ati ni deemta miila','Inni/Isheen ni deema miila','Nuti ni deemna miila','Isin ni deemtu miila','Isaan ni deemu miila'],fr:['Je marche','Tu marches','Il/Elle marche','Nous marchons','Vous marchez','Ils/Elles marchent']}},
-    {et:'Fiiguu',fr:'Courir',em:'🏃‍♂️',conj:{et:['Ani nan fiiga','Ati ni fiigta','Inni/Isheen ni fiiga','Nuti ni fiigna','Isin ni fiigtu','Isaan ni fiigu'],fr:['Je cours','Tu cours','Il/Elle court','Nous courons','Vous courez','Ils/Elles courent']}},
-    {et:'Dubbisuu',fr:'Lire',em:'📖',conj:{et:['Ani nan dubbisa','Ati ni dubbista','Inni/Isheen ni dubbisa','Nuti ni dubbisna','Isin ni dubbistu','Isaan ni dubbisu'],fr:['Je lis','Tu lis','Il/Elle lit','Nous lisons','Vous lisez','Ils/Elles lisent']}},
-    {et:'Barreessuu',fr:'Écrire',em:'✍️',conj:{et:['Ani nan barreessa','Ati ni barreesta','Inni/Isheen ni barreessa','Nuti ni barreessina','Isin ni barreestu','Isaan ni barreesu'],fr:['J\'écris','Tu écris','Il/Elle écrit','Nous écrivons','Vous écrivez','Ils/Elles écrivent']}},
-    {et:'Dhaggeeffachuu',fr:'Écouter',em:'🎧',conj:{et:['Ani nan dhaggeeffadha','Ati ni dhaggeeffatta','Inni/Isheen ni dhaggeeffata','Nuti ni dhaggeeffanna','Isin ni dhaggeeffastu','Isaan ni dhaggeeffatu'],fr:['J\'écoute','Tu écoutes','Il/Elle écoute','Nous écoutons','Vous écoutez','Ils/Elles écoutent']}},
-    {et:'Ilaaluu',fr:'Regarder',em:'👀',conj:{et:['Ani nan ilaala','Ati ni ilaalta','Inni/Isheen ni ilaala','Nuti ni ilaalana','Isin ni ilaaltuu','Isaan ni ilaalu'],fr:['Je regarde','Tu regardes','Il/Elle regarde','Nous regardons','Vous regardez','Ils/Elles regardent']}},
-    {et:'Barachuu',fr:'Apprendre',em:'🧠',conj:{et:['Ani nan baradha','Ati ni baratta','Inni/Isheen ni barata','Nuti ni baranna','Isin ni barastu','Isaan ni baratu'],fr:['J\'apprends','Tu apprends','Il/Elle apprend','Nous apprenons','Vous apprenez','Ils/Elles apprennent']}},
-    {et:'Yaaduu',fr:'Penser',em:'🤔',conj:{et:['Ani nan yaada','Ati ni yaadda','Inni/Isheen ni yaada','Nuti ni yaadna','Isin ni yaaddu','Isaan ni yaadu'],fr:['Je pense','Tu penses','Il/Elle pense','Nous pensons','Vous pensez','Ils/Elles pensent']}},
-    {et:'Misoomsuu / Kolfuu',fr:'Sourire',em:'😊',conj:{et:['Ani nan misoomsa','Ati ni misoosta','Inni/Isheen ni misooma','Nuti ni misoomsina','Isin ni misoostu','Isaan ni misoomu'],fr:['Je souris','Tu souris','Il/Elle sourit','Nous sourions','Vous souriez','Ils/Elles sourient']}},
-    {et:'Fudhachuu',fr:'Prendre',em:'🤲',conj:{et:['Ani nan fudhadha','Ati ni fudhatta','Inni/Isheen ni fudhata','Nuti ni fudhanna','Isin ni fudhastu','Isaan ni fudhatu'],fr:['Je prends','Tu prends','Il/Elle prend','Nous prenons','Vous prenez','Ils/Elles prennent']}},
-    {et:'Kennuu',fr:'Donner',em:'🤲',conj:{et:['Ani nan kenna','Ati ni kenta','Inni/Isheen ni kenna','Nuti ni kennina','Isin ni kentu','Isaan ni kennu'],fr:['Je donne','Tu donnes','Il/Elle donne','Nous donnons','Vous donnez','Ils/Elles donnent']}},
-    {et:'Barbaaduu',fr:'Chercher',em:'🔍',conj:{et:['Ani nan barbaada','Ati ni barbaadda','Inni/Isheen ni barbaada','Nuti ni barbaadna','Isin ni barbaaddu','Isaan ni barbaadu'],fr:['Je cherche','Tu cherches','Il/Elle cherche','Nous cherchons','Vous cherchez','Ils/Elles cherchent']}},
-    {et:'Bituu',fr:'Acheter',em:'🛒',conj:{et:['Ani nan bita','Ati ni bitta','Inni/Isheen ni bita','Nuti ni bitna','Isin ni bittu','Isaan ni bitu'],fr:['J\'achète','Tu achètes','Il/Elle achète','Nous achetons','Vous achetez','Ils/Elles achètent']}},
-    {et:'Gurguruu',fr:'Vendre',em:'💰',conj:{et:['Ani nan gurgura','Ati ni gurgurta','Inni/Isheen ni gurgura','Nuti ni gurgurna','Isin ni gurgurtu','Isaan ni gurguru'],fr:['Je vends','Tu vends','Il/Elle vend','Nous vendons','Vous vendez','Ils/Elles vendent']}},
-    {et:'Kaffaltii kaffaluu',fr:'Payer',em:'💳',conj:{et:['Ani nan kaffala','Ati ni kaffalda','Inni/Isheen ni kaffala','Nuti ni kaffalina','Isin ni kaffaltu','Isaan ni kaffalu'],fr:['Je paie','Tu paies','Il/Elle paie','Nous payons','Vous payez','Ils/Elles paient']}},
-    {et:'Hojjechuu',fr:'Travailler',em:'💼',conj:{et:['Ani nan hojjedha','Ati ni hojjetta','Inni/Isheen ni hojjeta','Nuti ni hojjenna','Isin ni hojjestu','Isaan ni hojjetu'],fr:['Je travaille','Tu travailles','Il/Elle travaille','Nous travaillons','Vous travaillez','Ils/Elles travaillent']}},
-    {et:'Nyaata bilcheessuu',fr:'Cuisiner',em:'🍳',conj:{et:['Ani nan bilcheessa','Ati ni bilcheesta','Inni/Isheen ni bilcheessa','Nuti ni bilcheessina','Isin ni bilcheestu','Isaan ni bilcheesu'],fr:['Je cuisine','Tu cuisines','Il/Elle cuisine','Nous cuisinons','Vous cuisinez','Ils/Elles cuisinent']}},
-    {et:'Qulqulleessuu',fr:'Nettoyer',em:'🧹',conj:{et:['Ani nan qulqulleessa','Ati ni qulqulleesta','Inni/Isheen ni qulqulleessa','Nuti ni qulqulleessina','Isin ni qulqulleestu','Isaan ni qulqulleesu'],fr:['Je nettoie','Tu nettoies','Il/Elle nettoie','Nous nettoyons','Vous nettoyez','Ils/Elles nettoient']}},
-    {et:'Dhiqachuu',fr:'Se doucher',em:'🧼',conj:{et:['Ani nan dhiqadha','Ati ni dhiqatta','Inni/Isheen ni dhiqata','Nuti ni dhiqanna','Isin ni dhiqastu','Isaan ni dhiqatu'],fr:['Je me douche','Tu te douches','Il/Elle se douche','Nous nous douchons','Vous vous douchez','Ils/Elles se douchent']}},
-    {et:'Ba\'uu / Deemuu',fr:'Partir',em:'🚪',conj:{et:['Ani nan ba\'a','Ati ni baata','Inni/Isheen ni ba\'a','Nuti ni baana','Isin ni baatu','Isaan ni ba\'u'],fr:['Je pars','Tu pars','Il/Elle part','Nous partons','Vous partez','Ils/Elles partent']}},
-    {et:'Ga\'uu / Dhufuu',fr:'Arriver',em:'🛬',conj:{et:['Ani nan dhufa','Ati ni dhufta','Inni/Isheen ni dhufa','Nuti ni dhufna','Isin ni dhuftu','Isaan ni dhufu'],fr:['J\'arrive','Tu arrives','Il/Elle arrive','Nous arrivons','Vous arrivez','Ils/Elles arrivent']}},
-    {et:'Waamuu',fr:'Appeler',em:'📞',conj:{et:['Ani nan waama','Ati ni waamta','Inni/Isheen ni waama','Nuti ni waamna','Isin ni waamtu','Isaan ni waamu'],fr:['J\'appelle','Tu appelles','Il/Elle appelle','Nous appelons','Vous appelez','Ils/Elles appellent']}},
-    {et:'Gaafachuu',fr:'Demander',em:'🙋‍♂️',conj:{et:['Ani nan gaafadha','Ati ni gaafatta','Inni/Isheen ni gaafata','Nuti ni gaafanna','Isin ni gaafastu','Isaan ni gaafatu'],fr:['Je demande','Tu demandes','Il/Elle demande','Nous demandons','Vous demandez','Ils/Elles demandent']}},
-    {et:'Konkolaachisuu',fr:'Conduire',em:'🚗',conj:{et:['Ani nan konkolaachisa','Ati ni konkolaachista','Inni/Isheen ni konkolaachisa','Nuti ni konkolaachisina','Isin ni konkolaachistuu','Isaan ni konkolaachisu'],fr:['Je conduis','Tu conduis','Il/Elle conduit','Nous conduisons','Vous conduisez','Ils/Elles conduisent']}},
-    {et:'Baay\'ee jaalladha',fr:'Adorer',em:'😍',conj:{et:['Nan baay\'ee jaalladha','Ni baay\'ee jaallataa','Ni baay\'ee jaallata','Ni baay\'ee jaallannaа','Ni baay\'ee jaallattu','Ni baay\'ee jaallatu'],fr:['J\'adore','Tu adores','Il/Elle adore','Nous adorons','Vous adorez','Ils/Elles adorent']}}
-  ]},
-  {id:'corps',level:1,emoji:'🧍',name:'Qaamaa',sub:'Mataa, harkaa, miila… / Le corps',
-   words:[
-    {et:'Mataa',fr:'La tête',em:'🗣️'},
-    {et:'Rifeensa',fr:'Les cheveux',em:'💇‍♂️'},
-    {et:'Ija / Ijaan',fr:'L\'œil / Les yeux',em:'👀'},
-    {et:'Funyaan',fr:'Le nez',em:'👃'},
-    {et:'Gurra / Gurraan',fr:'L\'oreille / Les oreilles',em:'👂'},
-    {et:'Afaan',fr:'La bouche',em:'👄'},
-    {et:'Hidhii',fr:'Les lèvres',em:'💋'},
-    {et:'Arraba',fr:'La langue',em:'👅'},
-    {et:'Ilkaan',fr:'La dent / Les dents',em:'🦷'},
-    {et:'Morma',fr:'Le cou',em:''},
-    {et:'Harka gubbaa',fr:'Le bras / Les bras',em:'💪'},
-    {et:'Harka / Harkaan',fr:'La main / Les mains',em:'✋'},
-    {et:'Quba / Qubaan',fr:'Le doigt / Les doigts',em:'☝️'},
-    {et:'Quba miila / Ciltuu',fr:'L\'orteil / L\'ongle',em:'💅'},
-    {et:'Dugda',fr:'Le dos',em:''},
-    {et:'Garaa',fr:'Le ventre',em:'🫃'},
-    {et:'Miila / Miilaan',fr:'La jambe / Les jambes',em:'🦵'},
-    {et:'Miila jalaa / Miilaafi',fr:'Le pied / Les pieds',em:'🦶'},
-    {et:'Onnee',fr:'Le cœur',em:'❤️'},
-    {et:'Sammuu',fr:'Le cerveau',em:'🧠'},
-    {et:'Lafee / Lafaan',fr:'L\'os / Les os',em:'🦴'}
-   ]},
-  {id:'sante',level:1,emoji:'🏥',name:'Fayyaa',sub:'Doktora, farmaasiitii… / La santé',
-   words:[
-    {et:'Dhukkubbii / Nan dhukkuba',fr:'Faire mal / j\'ai mal (j\'ai mal à la tête)',em:'🤕'},
-    {et:'Dhukkubbii qabaachuu',fr:'Avoir une douleur (plus formel)',em:'😣'},
-    {et:'Ho\'a qaamaa',fr:'La fièvre',em:'🌡️'},
-    {et:'Qufaa',fr:'La toux',em:'😮‍💨'},
-    {et:'Xuruura fuulaa',fr:'Le mouchoir',em:'🤧'},
-    {et:'Meeshaa ho\'a safaruu',fr:'Le thermomètre',em:'🌡️'},
-    {et:'Beellama',fr:'Le rendez-vous',em:'📅'},
-    {et:'Doktora / Doktoricha',fr:'Le médecin / La médecin',em:'🩺'},
-    {et:'Dhukkubsataa',fr:'Le/la patient(e)',em:'🛏️'},
-    {et:'Gorsaa fayyaa',fr:'La consultation médicale',em:'📋'},
-    {et:'Narsii / Narsicha',fr:'L\'infirmier / L\'infirmière',em:'👨‍⚕️'},
-    {et:'Hospitaala',fr:'L\'hôpital',em:'🏥'},
-    {et:'Reseeptii / Ajaja qorichaa',fr:'L\'ordonnance',em:'📋'},
-    {et:'Farmaasiitii',fr:'La pharmacie',em:'🏪'},
-    {et:'Qoricha',fr:'Le médicament',em:'💊'},
-    {et:'Haaphii qoricha',fr:'Le comprimé',em:'💊'},
-    {et:'Vaaksiniifi',fr:'Le vaccin',em:'💉'},
-    {et:'Mallattoo madaa',fr:'Le pansement adhésif',em:'🩹'},
-    {et:'Xaxaa madaa',fr:'Le bandage',em:'🩼'},
-    {et:'Ambulaansii',fr:'L\'ambulance',em:'🚑'},
-    {et:'Bakka ariifachiisaa',fr:'Les urgences',em:'🆘'}
-   ]},
-  {id:'ocio', level:1, emoji:'⛰️', name:'Boqonnaa fi Bashannannaa', sub:'Ispoortii, dubbisuu, muuziqaa… / Les loisirs',
-  words:[
-    // Loisirs culturels
-    {et:'Dubbisuu',fr:'La lecture',em:'📚'},
-    {et:'Kitaaba',fr:'Le livre',em:'📖'},
-    {et:'Muuziqaa',fr:'La musique',em:'🎵'},
-    {et:'Siinimaa',fr:'Le cinéma',em:'🎬'},
-    {et:'Tiyaatira',fr:'Le théâtre',em:'🎭'},
-    // Sport général
-    {et:'Ispoortii',fr:'Le sport',em:''},
-    {et:'Kora miilaa',fr:'Le football',em:'⚽'},
-    {et:'Daakuu bishaan',fr:'La natation',em:'🏊'},
-    {et:'Biskileetii oofuu',fr:'Le cyclisme',em:'🚴'},
-    {et:'Fiigichaa',fr:'L\'athlétisme',em:'🏃'},
-    // Plein air
-    {et:'Deemsa tulluutti',fr:'La randonnée',em:'🥾'},
-    {et:'Deemsa karaa',fr:'La marche nordique',em:''},
-    {et:'Naqata / Seenaa',fr:'La promenade',em:'🌳'},
-    // Verbes utiles
-    {et:'Taphaachuu',fr:'Jouer',em:'🎮'},
-    {et:'Leenjii hojjechuu',fr:'Pratiquer',em:'💪'},
-    {et:'Boqachuu',fr:'Se reposer',em:'😴'},
-    {et:'Gammachuun fayyadamuu',fr:'Profiter / Apprécier',em:'😊'},
-  ]
-},  
-   {id:'veth',level:1,emoji:'👗',name:'Uffata',sub:'Shartii, surrii… / Les vêtements',
-   words:[
-    // Niveau 1 — Vêtements du quotidien, très fréquents
-    {et:'Shartii',fr:'Le t-shirt',em:'👕'},
-    {et:'Shartii dheeraa',fr:'La chemise',em:'👔'},
-    {et:'Surrii',fr:'Le pantalon',em:'👖'},
-    {et:'Kophee / Shaakaalaa',fr:'Les chaussures / Les baskets',em:'👟'},
-    {et:'Kaalseettii',fr:'Les chaussettes',em:'🧦'},
-    // Niveau 2 — Vêtements courants, un peu plus spécifiques
-    {et:'Uffata dubartii / Qanafee',fr:'La robe / La jupe',em:'👗'},
-    {et:'Surrii gabaabaa',fr:'Le short',em:'🩳'},
-    {et:'Jaakeetii / Uffata ho\'a',fr:'Le pull',em:'🧥'},
-    {et:'Jaakeetii alaa',fr:'La veste',em:'🧥'},
-    {et:'Kuullaa / Keeppii',fr:'Le chapeau / La casquette',em:'🎩'},
-    // Niveau 3 — Accessoires et vêtements saisonniers
-    {et:'Koobii guddaa',fr:'Le manteau',em:'🧥'},
-    {et:'Shanxii morma',fr:'L\'écharpe',em:'🧣'},
-    {et:'Gantii',fr:'Les gants',em:'🧤'},
-    {et:'Kuullaa ho\'a',fr:'Le bonnet',em:'🎿'},
-    {et:'Buursaa / Fardaa',fr:'Le sac / La poche',em:'👜'},
-    {et:'Uffata bishaan',fr:'Le maillot de bain',em:'🩱'},
-   ]},
-  {id:'pays',level:1,emoji:'🌍',name:'Biyyoota',sub:'Itoophiyaa, Oromiyaa… / Les pays',
-   words:[
-    // Niveau 1 — Pays proches & culturellement importants
-    {et:'Faransaay',fr:'La France',em:'🇫🇷'},
-    {et:'Itoophiyaa',fr:'L\'Éthiopie',em:'🇪🇹'},
-    {et:'Keeniyaa',fr:'Le Kenya',em:'🇰🇪'},
-    {et:'Xaaliyaanii',fr:'L\'Italie',em:'🇮🇹'},
-    {et:'Beljiyoom',fr:'La Belgique',em:'🇧🇪'},
-    {et:'Swiizerlaandii',fr:'La Suisse',em:'🇨🇭'},
-    {et:'Jarman',fr:'L\'Allemagne',em:'🇩🇪'},
-    {et:'Ingliizii',fr:'Le Royaume-Uni',em:'🇬🇧'},
-    // Niveau 2 — Pays africains & francophones proches
-    {et:'Jibuutii',fr:'Djibouti',em:'🇩🇯'},
-    {et:'Somaaliyaa',fr:'La Somalie',em:'🇸🇴'},
-    {et:'Sudaan',fr:'Le Soudan',em:'🇸🇩'},
-    {et:'Braazil',fr:'Le Brésil',em:'🇧🇷'},
-    {et:'Kaanaadaa',fr:'Le Canada',em:'🇨🇦'},
-    {et:'Morokkoo',fr:'Le Maroc',em:'🇲🇦'},
-    // Niveau 3 — Grandes puissances mondiales & pays plus distants
-    {et:'Ameerikaa',fr:'Les États-Unis',em:'🇺🇸'},
-    {et:'Rushiyaa',fr:'La Russie',em:'🇷🇺'},
-    {et:'Chaayinaa',fr:'La Chine',em:'🇨🇳'},
-    {et:'Jaappaan',fr:'Le Japon',em:'🇯🇵'},
-    {et:'Hindii',fr:'L\'Inde',em:'🇮🇳'},
-    {et:'Turkii',fr:'La Turquie',em:'🇹🇷'},
-    {et:'Giriikii',fr:'La Grèce',em:'🇬🇷'},
-    {et:'Awustiraaliyaa',fr:'L\'Australie',em:'🇦🇺'},
-    {et:'Afrikaa Kibbaa',fr:'L\'Afrique du Sud',em:'🇿🇦'},
-   ]},
-  {id:'met',level:1,emoji:'💼',name:'Ogummaa',sub:'Doktora, barsiisaa… / Les professions',
-   words:[
-    // Niveau 1 — Métiers du quotidien, rencontrés très fréquemment
-    {et:'Barataa / Barattuun',fr:'L\'étudiant / L\'étudiante',em:'🎓'},
-    {et:'Barsiisaa / Barsiistuu',fr:'Le professeur / La professeure',em:'👩‍🏫'},
-    {et:'Tajaajilaa / Tajaajiltu',fr:'Le serveur / La serveuse',em:'🍽️'},
-    {et:'Gurgurataa / Gurgurattu',fr:'Le vendeur / La vendeuse',em:'🏪'},
-    {et:'Oofaa taaksii',fr:'Le chauffeur de taxi / La chauffeuse de taxi',em:'🚕'},
-    // Niveau 2 — Métiers courants, contextes santé & service
-    {et:'Doktora',fr:'Le médecin / La médecin',em:'🩺'},
-    {et:'Narsii',fr:'L\'infirmier / L\'infirmière',em:'👨‍⚕️'},
-    {et:'Nyaata bilcheessaa',fr:'Le cuisinier / La cuisinière',em:'👨‍🍳'},
-    // Niveau 3 — Métiers plus spécifiques ou lexicalement complexes
-    {et:'Ogaa bishaan',fr:'Le plombier / La plombière',em:'🔧'},
-    {et:'Ogaa kompiyuutaraa',fr:'L\'informaticien / L\'informaticienne',em:'💻'},
-   ]},
-  {id:'anim',level:1,emoji:'🐘',name:'Bineeldota',sub:'Saree, adurree, sangaa… / Les animaux',
-   words:[
-    // Niveau 1 — Animaux familiers & de la ferme, très connus
-    {et:'Saree',fr:'Le chien',em:'🐶'},
-    {et:'Adurree',fr:'Le chat',em:'🐱'},
-    {et:'Simbiraa',fr:'L\'oiseau',em:'🐦'},
-    {et:'Qurxummii',fr:'Le poisson (vivant)',em:'🐟'},
-    {et:'Farda',fr:'Le cheval',em:'🐴'},
-    {et:'Loon / Saree loon',fr:'La vache',em:'🐮'},
-    {et:'Booyee',fr:'Le cochon',em:'🐷'},
-    {et:'Lukkuu',fr:'La poule',em:'🐔'},
-    {et:'Illeena',fr:'Le lapin',em:'🐰'},
-    // Niveau 2 — Animaux courants (ferme, nature, sauvages connus)
-    {et:'Qurxummii nyaataa',fr:'Le poisson (dans l\'assiette)',em:'🐟🍽️'},
-    {et:'Sangaa',fr:'Le taureau',em:'🐂'},
-    {et:'Molgaa',fr:'Le canard',em:'🦆'},
-    {et:'Kormaa lukkuu',fr:'Le coq',em:'🐓'},
-    {et:'Hoolaa / Hoolii',fr:'L\'agneau',em:'🐑'},
-    {et:'Re\'ee',fr:'La chèvre',em:'🐐'},
-    {et:'Harree',fr:'L\'âne',em:'🫏'},
-    {et:'Arba',fr:'L\'éléphant',em:'🐘'},
-    {et:'Baalee',fr:'L\'ours',em:'🐻'},
-    {et:'Qeerransaa',fr:'Le tigre',em:'🐯'},
-    // Niveau 3 — Animaux plus rares, insectes, reptiles & lexique spécifique
-    {et:'Qurxummii bishaaniin jiraatuu',fr:'Le dauphin',em:'🐬'},
-    {et:'Harootii guddaa',fr:'La baleine',em:'🐳'},
-    {et:'Ardiitii / Gombisuu',fr:'L\'aigle',em:'🦅'},
-    {et:'Buraayyoo',fr:'Le papillon',em:'🦋'},
-    {et:'Bofaa xixiqqaa',fr:'La grenouille',em:'🐸'},
-    {et:'Bofa',fr:'Le serpent',em:'🐍'},
-    {et:'Bofa lafa',fr:'Le lézard',em:'🦎'},
-    {et:'Saappanaa',fr:'L\'araignée',em:'🕷️'},
-    {et:'Hiyyeessa / Bineeldota xixiqqaa',fr:'Le moustique',em:'🦟'},
-    {et:'Dirreetti',fr:'La fourmi',em:'🐜'},
-   ]},
-  {id:'plan',level:1,emoji:'🌿',name:'Biqiltoota',sub:'Adaraa, muka, bosonaa… / Les plantes',
-   words:[
-    // Niveau 1 — Éléments naturels de base, très visuels
-    {et:'Adaraa / Daadhii',fr:'La fleur',em:'🌸'},
-    {et:'Muka',fr:'L\'arbre',em:'🌳'},
-    {et:'Caasee',fr:'La feuille',em:'🍃'},
-    {et:'Marga',fr:'L\'herbe',em:'🌱'},
-    // 🟡 Niveau 2 — Espaces & végétaux plus spécifiques
-    {et:'Bakkee miidhagoo',fr:'Le jardin',em:'🏡'},
-    {et:'Daadhii diimaa',fr:'La rose',em:'🌹'},
-    {et:'Bosonaa',fr:'La forêt',em:'🌲'},
-    // 🔴 Niveau 3 — Vocabulaire plus précis ou contextuel
-    {et:'Marga miidhagoo',fr:'La pelouse / Le gazon',em:'⛳'},
-   ]},  
 
-
-  {id:'routine',level:1,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'Ka\'uu, rafuu, hojjechuu… / La vie quotidienne',
-   note:'📍 Journée type à Shashamané : cérémonie du café le matin, marché hebdomadaire, vie communautaire',
+  {id:'cal',level:1,emoji:'📅',name:'Sanaata fi Guyyoota',sub:'Guyyaa, ji\'aa, bara… / Le calendrier',
    words:[
-    {et:'Ka\'uu / Dammaquu',fr:'Se lever / Se réveiller',em:'⏰'},
-    {et:'Dhiqachuu',fr:'Se doucher / Se laver',em:'🚿'},
-    {et:'Fuula dhiqachuu',fr:'Se laver le visage',em:'🧼'},
-    {et:'Ilkaan eebuu',fr:'Se brosser les dents',em:'🦷'},
-    {et:'Uffachuu',fr:'S\'habiller',em:'👔'},
-    {et:'Ciree nyaachuu',fr:'Prendre le petit-déjeuner',em:'🍳'},
-    {et:'Buna dhuguuf ta\'uu',fr:'Prendre le café du matin',em:'☕'},
-    {et:'Hojjechuu',fr:'Travailler',em:'💼'},
-    {et:'Barumsaaf deemuu',fr:'Aller à l\'école / Aller étudier',em:'🎒'},
-    {et:'Baha manaa deemuu',fr:'Sortir de la maison',em:'🚪'},
-    {et:'Bitachuu / Gabaa deemuu',fr:'Faire les courses / Aller au marché',em:'🛒'},
-    {et:'Nyaata bilcheessuu / Daakuu hojjechuu',fr:'Faire la cuisine / Cuisiner',em:'🍳'},
-    {et:'Uffata dhiquu',fr:'Laver le linge',em:'🧺'},
-    {et:'Mana qulqulleessuu',fr:'Nettoyer la maison / Faire le ménage',em:'🧹'},
-    {et:'Meeshaalee dhiquu',fr:'Faire la vaisselle',em:'🍽️'},
-    {et:'Irbaata nyaachuu',fr:'Déjeuner',em:'🥙'},
-    {et:'Halkan nyaachuu',fr:'Dîner',em:'🍽️'},
-    {et:'Boqochuu',fr:'Se reposer',em:'😌'},
-    {et:'Telefishina ilaalu',fr:'Regarder la télé',em:'📺'},
-    {et:'Kitaaba dubbisuu',fr:'Lire un livre',em:'📖'},
-    {et:'Ciisuu / Rafuu',fr:'Se coucher / Dormir',em:'🛏️'},
+    // Jours de la semaine
+    {et:'Guyyaa torbee',fr:'La semaine',em:'📆'},
+    {et:'Wiixata',fr:'Lundi',em:'1️⃣'},
+    {et:'Kibxata',fr:'Mardi',em:'2️⃣'},
+    {et:'Roobii',fr:'Mercredi (jour de marché à Shashamané !)',em:'🛒'},
+    {et:'Kamiisa',fr:'Jeudi',em:'4️⃣'},
+    {et:'Jimaata',fr:'Vendredi (jour de prière)',em:'🕌'},
+    {et:'Sanbata',fr:'Samedi',em:'6️⃣'},
+    {et:'Dilbata',fr:'Dimanche (jour de repos)',em:'⛪'},
+    // Moments clés
+    {et:'Har\'aa',fr:'Aujourd\'hui',em:'📅'},
+    {et:'Boruu',fr:'Demain',em:'➡️'},
+    {et:'Kaleessa',fr:'Hier',em:'⬅️'},
+    {et:'Torban kana',fr:'Cette semaine',em:'📆'},
+    {et:'Torban darbee',fr:'La semaine dernière',em:'⬅️'},
+    {et:'Torban itti aanu',fr:'La semaine prochaine',em:'➡️'},
+    // Mois (calendrier grégorien en usage courant)
+    {et:'Ji\'a',fr:'Le mois',em:'🗓️'},
+    {et:'Amajjii',fr:'Janvier',em:'❄️'},
+    {et:'Guraandhala',fr:'Février',em:'💝'},
+    {et:'Bitootessa',fr:'Mars',em:'🌱'},
+    {et:'Ebla',fr:'Avril',em:'🌸'},
+    {et:'Caamsaa',fr:'Mai',em:'🌺'},
+    {et:'Waxabajjii',fr:'Juin',em:'☀️'},
+    {et:'Adoolessa',fr:'Juillet',em:'🏖️'},
+    {et:'Hagayya',fr:'Août',em:'🌻'},
+    {et:'Fuulbana',fr:'Septembre',em:'🍂'},
+    {et:'Onkoloolessa',fr:'Octobre',em:'🎃'},
+    {et:'Sadaasa',fr:'Novembre',em:'🍁'},
+    {et:'Muddee',fr:'Décembre',em:'🎄'},
+    // Année et dates
+    {et:'Bara / Waggaa',fr:'L\'année',em:'🗓️'},
+    {et:'Bara darbe',fr:'L\'année dernière',em:'⬅️'},
+    {et:'Bara itti aanu',fr:'L\'année prochaine',em:'➡️'},
+    // Calendrier éthiopien (spécificité culturelle)
+    {et:'Guyyaa dhaloota',fr:'L\'anniversaire',em:'🎂'},
+    {et:'Ayyaana Fulbaanaa',fr:'La fête du Nouvel An éthiopien (Enkutatash)',em:'🎊'},
    ]},
 
   {id:'temps',level:1,emoji:'🕐',name:'Sa\'atii fi Qilleensa',sub:'Yeroo, guyyaa, ji\'aa… / L\'heure, la météo',
@@ -2031,6 +1668,569 @@ var LEVEL1_THEMES_OR=[
     {et:'Digrii',fr:'Les degrés',em:'🌡️'},
    ]},
 
+  {id:'verb',level:1,emoji:'📝',name:'Yakkawwan',sub:'Ta\'uu, qabaachuu, deemuu… / Les verbes principaux',
+   words:[
+   {et:'Ta\'uu / Jiraachuu',fr:'Être',em:'🧑',conj:{et:['Ani nan ta\'a / jira','Ati ni ta\'a / jirta','Inni/Isheen ni ta\'a / jira','Nuti ni taana / jirra','Isin ni taastu / jirtu','Isaan ni ta\'u / jiru'],fr:['Je suis','Tu es','Il/Elle est','Nous sommes','Vous êtes','Ils/Elles sont']}},
+    {et:'Qabaachuu',fr:'Avoir',em:'🤲',conj:{et:['Ani nan qabaadha','Ati ni qabaatta','Inni/Isheen ni qabaata','Nuti ni qabaanna','Isin ni qabaastu','Isaan ni qabaatu'],fr:['J\'ai','Tu as','Il/Elle a','Nous avons','Vous avez','Ils/Elles ont']}},
+    {et:'Dubbachuu',fr:'Parler',em:'🗣️',conj:{et:['Ani nan dubbadha','Ati ni dubbatta','Inni/Isheen ni dubbata','Nuti ni dubbanna','Isin ni dubbastu','Isaan ni dubbatu'],fr:['Je parle','Tu parles','Il/Elle parle','Nous parlons','Vous parlez','Ils/Elles parlent']}},
+    {et:'Jiraachuu',fr:'Habiter',em:'🏠',conj:{et:['Ani nan jiraadha','Ati ni jiraatta','Inni/Isheen ni jiraata','Nuti ni jiraanna','Isin ni jiraastu','Isaan ni jiraatu'],fr:['J\'habite','Tu habites','Il/Elle habite','Nous habitons','Vous habitez','Ils/Elles habitent']}},
+    {et:'Deemuu',fr:'Aller',em:'🚶',conj:{et:['Ani nan deema','Ati ni deemta','Inni/Isheen ni deema','Nuti ni deemna','Isin ni deemtu','Isaan ni deemu'],fr:['Je vais','Tu vas','Il/Elle va','Nous allons','Vous allez','Ils/Elles vont']}},
+    {et:'Jaalachuu',fr:'Aimer',em:'❤️',conj:{et:['Nan jaalladha','Ni jaallataa','Ni jaallata','Ni jaallannaа','Ni jaallattu','Ni jaallatu'],fr:['J\'aime','Tu aimes','Il/Elle aime','Nous aimons','Vous aimez','Ils/Elles aiment']}},
+    {et:'Nyaachuu',fr:'Manger',em:'🍽️',conj:{et:['Ani nan nyaadha','Ati ni nyaatta','Inni/Isheen ni nyaata','Nuti ni nyaanna','Isin ni nyaastu','Isaan ni nyaatu'],fr:['Je mange','Tu manges','Il/Elle mange','Nous mangeons','Vous mangez','Ils/Elles mangent']}},
+    {et:'Dhuguu',fr:'Boire',em:'🥤',conj:{et:['Ani nan dhuga','Ati ni dhugta','Inni/Isheen ni dhuga','Nuti ni dhugna','Isin ni dhugtu','Isaan ni dhugu'],fr:['Je bois','Tu bois','Il/Elle boit','Nous buvons','Vous buvez','Ils/Elles boivent']}},
+    {et:'Rafuu',fr:'Dormir',em:'😴',conj:{et:['Ani nan rafaa','Ati ni rafta','Inni/Isheen ni rafa','Nuti ni rafna','Isin ni raftu','Isaan ni rafu'],fr:['Je dors','Tu dors','Il/Elle dort','Nous dormons','Vous dormez','Ils/Elles dorment']}},
+    {et:'Deemuu miila',fr:'Marcher',em:'🚶‍♂️',conj:{et:['Ani nan deema miila','Ati ni deemta miila','Inni/Isheen ni deema miila','Nuti ni deemna miila','Isin ni deemtu miila','Isaan ni deemu miila'],fr:['Je marche','Tu marches','Il/Elle marche','Nous marchons','Vous marchez','Ils/Elles marchent']}},
+    {et:'Fiiguu',fr:'Courir',em:'🏃‍♂️',conj:{et:['Ani nan fiiga','Ati ni fiigta','Inni/Isheen ni fiiga','Nuti ni fiigna','Isin ni fiigtu','Isaan ni fiigu'],fr:['Je cours','Tu cours','Il/Elle court','Nous courons','Vous courez','Ils/Elles courent']}},
+    {et:'Dubbisuu',fr:'Lire',em:'📖',conj:{et:['Ani nan dubbisa','Ati ni dubbista','Inni/Isheen ni dubbisa','Nuti ni dubbisna','Isin ni dubbistu','Isaan ni dubbisu'],fr:['Je lis','Tu lis','Il/Elle lit','Nous lisons','Vous lisez','Ils/Elles lisent']}},
+    {et:'Barreessuu',fr:'Écrire',em:'✍️',conj:{et:['Ani nan barreessa','Ati ni barreesta','Inni/Isheen ni barreessa','Nuti ni barreessina','Isin ni barreestu','Isaan ni barreesu'],fr:['J\'écris','Tu écris','Il/Elle écrit','Nous écrivons','Vous écrivez','Ils/Elles écrivent']}},
+    {et:'Dhaggeeffachuu',fr:'Écouter',em:'🎧',conj:{et:['Ani nan dhaggeeffadha','Ati ni dhaggeeffatta','Inni/Isheen ni dhaggeeffata','Nuti ni dhaggeeffanna','Isin ni dhaggeeffastu','Isaan ni dhaggeeffatu'],fr:['J\'écoute','Tu écoutes','Il/Elle écoute','Nous écoutons','Vous écoutez','Ils/Elles écoutent']}},
+    {et:'Ilaaluu',fr:'Regarder',em:'👀',conj:{et:['Ani nan ilaala','Ati ni ilaalta','Inni/Isheen ni ilaala','Nuti ni ilaalana','Isin ni ilaaltuu','Isaan ni ilaalu'],fr:['Je regarde','Tu regardes','Il/Elle regarde','Nous regardons','Vous regardez','Ils/Elles regardent']}},
+    {et:'Barachuu',fr:'Apprendre',em:'🧠',conj:{et:['Ani nan baradha','Ati ni baratta','Inni/Isheen ni barata','Nuti ni baranna','Isin ni barastu','Isaan ni baratu'],fr:['J\'apprends','Tu apprends','Il/Elle apprend','Nous apprenons','Vous apprenez','Ils/Elles apprennent']}},
+    {et:'Yaaduu',fr:'Penser',em:'🤔',conj:{et:['Ani nan yaada','Ati ni yaadda','Inni/Isheen ni yaada','Nuti ni yaadna','Isin ni yaaddu','Isaan ni yaadu'],fr:['Je pense','Tu penses','Il/Elle pense','Nous pensons','Vous pensez','Ils/Elles pensent']}},
+    {et:'Misoomsuu / Kolfuu',fr:'Sourire',em:'😊',conj:{et:['Ani nan misoomsa','Ati ni misoosta','Inni/Isheen ni misooma','Nuti ni misoomsina','Isin ni misoostu','Isaan ni misoomu'],fr:['Je souris','Tu souris','Il/Elle sourit','Nous sourions','Vous souriez','Ils/Elles sourient']}},
+    {et:'Fudhachuu',fr:'Prendre',em:'🤲',conj:{et:['Ani nan fudhadha','Ati ni fudhatta','Inni/Isheen ni fudhata','Nuti ni fudhanna','Isin ni fudhastu','Isaan ni fudhatu'],fr:['Je prends','Tu prends','Il/Elle prend','Nous prenons','Vous prenez','Ils/Elles prennent']}},
+    {et:'Kennuu',fr:'Donner',em:'🤲',conj:{et:['Ani nan kenna','Ati ni kenta','Inni/Isheen ni kenna','Nuti ni kennina','Isin ni kentu','Isaan ni kennu'],fr:['Je donne','Tu donnes','Il/Elle donne','Nous donnons','Vous donnez','Ils/Elles donnent']}},
+    {et:'Barbaaduu',fr:'Chercher',em:'🔍',conj:{et:['Ani nan barbaada','Ati ni barbaadda','Inni/Isheen ni barbaada','Nuti ni barbaadna','Isin ni barbaaddu','Isaan ni barbaadu'],fr:['Je cherche','Tu cherches','Il/Elle cherche','Nous cherchons','Vous cherchez','Ils/Elles cherchent']}},
+    {et:'Bituu',fr:'Acheter',em:'🛒',conj:{et:['Ani nan bita','Ati ni bitta','Inni/Isheen ni bita','Nuti ni bitna','Isin ni bittu','Isaan ni bitu'],fr:['J\'achète','Tu achètes','Il/Elle achète','Nous achetons','Vous achetez','Ils/Elles achètent']}},
+    {et:'Gurguruu',fr:'Vendre',em:'💰',conj:{et:['Ani nan gurgura','Ati ni gurgurta','Inni/Isheen ni gurgura','Nuti ni gurgurna','Isin ni gurgurtu','Isaan ni gurguru'],fr:['Je vends','Tu vends','Il/Elle vend','Nous vendons','Vous vendez','Ils/Elles vendent']}},
+    {et:'Kaffaltii kaffaluu',fr:'Payer',em:'💳',conj:{et:['Ani nan kaffala','Ati ni kaffalda','Inni/Isheen ni kaffala','Nuti ni kaffalina','Isin ni kaffaltu','Isaan ni kaffalu'],fr:['Je paie','Tu paies','Il/Elle paie','Nous payons','Vous payez','Ils/Elles paient']}},
+    {et:'Hojjechuu',fr:'Travailler',em:'💼',conj:{et:['Ani nan hojjedha','Ati ni hojjetta','Inni/Isheen ni hojjeta','Nuti ni hojjenna','Isin ni hojjestu','Isaan ni hojjetu'],fr:['Je travaille','Tu travailles','Il/Elle travaille','Nous travaillons','Vous travaillez','Ils/Elles travaillent']}},
+    {et:'Nyaata bilcheessuu',fr:'Cuisiner',em:'🍳',conj:{et:['Ani nan bilcheessa','Ati ni bilcheesta','Inni/Isheen ni bilcheessa','Nuti ni bilcheessina','Isin ni bilcheestu','Isaan ni bilcheesu'],fr:['Je cuisine','Tu cuisines','Il/Elle cuisine','Nous cuisinons','Vous cuisinez','Ils/Elles cuisinent']}},
+    {et:'Qulqulleessuu',fr:'Nettoyer',em:'🧹',conj:{et:['Ani nan qulqulleessa','Ati ni qulqulleesta','Inni/Isheen ni qulqulleessa','Nuti ni qulqulleessina','Isin ni qulqulleestu','Isaan ni qulqulleesu'],fr:['Je nettoie','Tu nettoies','Il/Elle nettoie','Nous nettoyons','Vous nettoyez','Ils/Elles nettoient']}},
+    {et:'Dhiqachuu',fr:'Se doucher',em:'🧼',conj:{et:['Ani nan dhiqadha','Ati ni dhiqatta','Inni/Isheen ni dhiqata','Nuti ni dhiqanna','Isin ni dhiqastu','Isaan ni dhiqatu'],fr:['Je me douche','Tu te douches','Il/Elle se douche','Nous nous douchons','Vous vous douchez','Ils/Elles se douchent']}},
+    {et:'Ba\'uu / Deemuu',fr:'Partir',em:'🚪',conj:{et:['Ani nan ba\'a','Ati ni baata','Inni/Isheen ni ba\'a','Nuti ni baana','Isin ni baatu','Isaan ni ba\'u'],fr:['Je pars','Tu pars','Il/Elle part','Nous partons','Vous partez','Ils/Elles partent']}},
+    {et:'Ga\'uu / Dhufuu',fr:'Arriver',em:'🛬',conj:{et:['Ani nan dhufa','Ati ni dhufta','Inni/Isheen ni dhufa','Nuti ni dhufna','Isin ni dhuftu','Isaan ni dhufu'],fr:['J\'arrive','Tu arrives','Il/Elle arrive','Nous arrivons','Vous arrivez','Ils/Elles arrivent']}},
+    {et:'Waamuu',fr:'Appeler',em:'📞',conj:{et:['Ani nan waama','Ati ni waamta','Inni/Isheen ni waama','Nuti ni waamna','Isin ni waamtu','Isaan ni waamu'],fr:['J\'appelle','Tu appelles','Il/Elle appelle','Nous appelons','Vous appelez','Ils/Elles appellent']}},
+    {et:'Gaafachuu',fr:'Demander',em:'🙋‍♂️',conj:{et:['Ani nan gaafadha','Ati ni gaafatta','Inni/Isheen ni gaafata','Nuti ni gaafanna','Isin ni gaafastu','Isaan ni gaafatu'],fr:['Je demande','Tu demandes','Il/Elle demande','Nous demandons','Vous demandez','Ils/Elles demandent']}},
+    {et:'Konkolaachisuu',fr:'Conduire',em:'🚗',conj:{et:['Ani nan konkolaachisa','Ati ni konkolaachista','Inni/Isheen ni konkolaachisa','Nuti ni konkolaachisina','Isin ni konkolaachistuu','Isaan ni konkolaachisu'],fr:['Je conduis','Tu conduis','Il/Elle conduit','Nous conduisons','Vous conduisez','Ils/Elles conduisent']}},
+    {et:'Baay\'ee jaalladha',fr:'Adorer',em:'😍',conj:{et:['Nan baay\'ee jaalladha','Ni baay\'ee jaallataa','Ni baay\'ee jaallata','Ni baay\'ee jaallannaа','Ni baay\'ee jaallattu','Ni baay\'ee jaallatu'],fr:['J\'adore','Tu adores','Il/Elle adore','Nous adorons','Vous adorez','Ils/Elles adorent']}}
+  ]},
+
+  {id:'emot',level:1,emoji:'😄',name:'Miira',sub:'Gammaduu, dadhabuu… / Les émotions',
+   words:[
+    {et:'Gammadaa / Gammatti',fr:'Content / Contente',em:'😊'},
+    {et:'Baayyee gammadaa / Gammatti',fr:'Heureux / Heureuse',em:'😊'},
+    {et:'Koolu / Kooltuu',fr:'Joyeux / Joyeuse',em:'😄'},
+    {et:'Gadda / Gadditi',fr:'Triste / Triste',em:'😢'},
+    {et:'Dadhabaa / Dadhabduu',fr:'Fatigué / Fatiguée',em:'😴'},
+    {et:'Dallansuu / Dallantuu',fr:'Fâché / Fâchée',em:'😠'},
+    {et:'Rifaatuu / Rifatii',fr:'Surpris / Choqué(e)',em:'😲'},
+    {et:'Sodaachuu',fr:'Avoir peur / Avoir peur',em:'😨'},
+    {et:'Dhukkubsataa / Dhukkubsattuu',fr:'Malade / Malade',em:'🤒'},
+    {et:'Dhukkubsataa xiqqoo',fr:'Malade / Malade',em:'🤒'},
+    {et:'Yaaddoo / Yaaddoftuu',fr:'Inquiet / Inquiète',em:'😟'},
+    {et:'Yaaddoo jabaa',fr:'Inquiet / Inquiète',em:'😟'},
+    {et:'Dhiphina / Dhibaa',fr:'Stressé / Stressée',em:'😰'},
+    {et:'Baay\'ee dhiphina',fr:'Stressé / Stressée',em:'😰'},
+    {et:'Abdii kutaa / Manooftuu',fr:'Déçu / Déçue',em:'😞'},
+    {et:'Jibba / Jibbitu',fr:'Haineux / Haineuse',em:'😤'},
+    {et:'Jaallachuu / Jaallattuu',fr:'Amoureux / Amoureuse',em:'😍'},
+    {et:'Baay\'ee gaarii! / Roorroo!',fr:'C\'est super ! / C\'est cool !',em:'🌟'}
+   ]},
+
+  {id:'col',level:1,emoji:'🎨',name:'Halluu',sub:'Diimaa, magariisa, keelloo… / Les couleurs',
+   words:[
+    {et:'Diimaa',fr:'Rouge',em:'❤️'},{et:'Cuquliisa',fr:'Bleu',em:'💙'},{et:'Magariisa',fr:'Vert',em:'💚'},
+    {et:'Keelloo',fr:'Jaune',em:'💛'},{et:'Burtukaana',fr:'Orange',em:'🧡'},{et:'Adii',fr:'Blanc',em:'🤍'},
+    {et:'Gurraacha',fr:'Noir',em:'🖤'},{et:'Roozii',fr:'Rose',em:'🩷'},
+    {et:'Daallatii / Diimtuuja',fr:'Violet',em:'💜'},{et:'Bunii',fr:'Marron',em:'🤎'},
+    {et:'Garaa garaa / Dulluma',fr:'Gris',em:'🩶'}
+   ]},
+
+  {id:'fam',level:1,emoji:'👨‍👩‍👧',name:'Maatii',sub:'Abbaa, haadha, ilma… / La famille',
+   words:[
+   {et:'Haadha / Haadha manaa',fr:'La mère / La maman',em:'👩'},
+    {et:'Abbaa / Abbaa manaa',fr:'Le père / Le papa',em:'👨'},
+    {et:'Intala',fr:'La fille',em:'👧'},
+    {et:'Ilma',fr:'Le fils',em:'👦'},
+    {et:'Obboleettii',fr:'La sœur',em:'👧'},
+    {et:'Obboleessa',fr:'Le frère',em:'🧑'},
+    {et:'Akoo / Awoo',fr:'La grand-mère',em:'👵'},
+    {et:'Akaakayyuu / Awoo Abbaa',fr:'Le grand-père',em:'👴'},
+    {et:'Niitii / Haadha manaa',fr:'La femme',em:'💑'},
+    {et:'Abbaa warraa / Dhiirsa',fr:'Le mari',em:'💍'},
+    {et:'Adaadaa (haadha abbaa) / Adda (obboleessa abbaa)',fr:'La tante (côté père) / L\'oncle',em:'👨‍👩‍👧'}
+   ]},
+
+  {id:'corps',level:1,emoji:'🧍',name:'Qaamaa',sub:'Mataa, harkaa, miila… / Le corps',
+   words:[
+    {et:'Mataa',fr:'La tête',em:'🗣️'},
+    {et:'Rifeensa',fr:'Les cheveux',em:'💇‍♂️'},
+    {et:'Ija / Ijaan',fr:'L\'œil / Les yeux',em:'👀'},
+    {et:'Funyaan',fr:'Le nez',em:'👃'},
+    {et:'Gurra / Gurraan',fr:'L\'oreille / Les oreilles',em:'👂'},
+    {et:'Afaan',fr:'La bouche',em:'👄'},
+    {et:'Hidhii',fr:'Les lèvres',em:'💋'},
+    {et:'Arraba',fr:'La langue',em:'👅'},
+    {et:'Ilkaan',fr:'La dent / Les dents',em:'🦷'},
+    {et:'Morma',fr:'Le cou',em:''},
+    {et:'Harka gubbaa',fr:'Le bras / Les bras',em:'💪'},
+    {et:'Harka / Harkaan',fr:'La main / Les mains',em:'✋'},
+    {et:'Quba / Qubaan',fr:'Le doigt / Les doigts',em:'☝️'},
+    {et:'Quba miila / Ciltuu',fr:'L\'orteil / L\'ongle',em:'💅'},
+    {et:'Dugda',fr:'Le dos',em:''},
+    {et:'Garaa',fr:'Le ventre',em:'🫃'},
+    {et:'Miila / Miilaan',fr:'La jambe / Les jambes',em:'🦵'},
+    {et:'Miila jalaa / Miilaafi',fr:'Le pied / Les pieds',em:'🦶'},
+    {et:'Onnee',fr:'Le cœur',em:'❤️'},
+    {et:'Sammuu',fr:'Le cerveau',em:'🧠'},
+    {et:'Lafee / Lafaan',fr:'L\'os / Les os',em:'🦴'}
+   ]},
+
+  {id:'nour',level:1,emoji:'🍽️',name:'Nyaata',sub:'Buddeena, muduraa, injera… / La nourriture',
+   words:[
+    // Catégories générales d'abord
+    {et:'Muduraa',fr:'Les fruits',em:'🍉'},
+    {et:'Kuduraa',fr:'Les légumes',em:'🥦'},
+    // Féculents / base
+    {et:'Buddeena',fr:'Le pain',em:'🍞'},
+    {et:'Ruzii',fr:'Le riz',em:'🍚'},
+    {et:'Maakiirooni',fr:'Les pâtes',em:'🍝'},
+    {et:'Dinnichi / Foonii dinnichaa',fr:'La pomme de terre / Les frites',em:'🥔'},
+    // Protéines
+    {et:'Foon',fr:'La viande',em:'🥩'},
+    {et:'Lukkuu',fr:'Le poulet',em:'🍗'},
+    {et:'Qurxummii',fr:'Le poisson',em:'🐟'},
+    {et:'Foon garbuu / Tibs',fr:'Le tibs (viande grillée)',em:'🥩'},
+    {et:'Berbere',fr:'Le berbéré (mélange d\'épices)',em:'🌶️'},
+    {et:'Hanqaaquu',fr:'L\'œuf',em:'🥚'},
+    // Produits laitiers
+    {et:'Baadaa',fr:'Le fromage',em:'🧀'},
+    {et:'Dhadhaa',fr:'Le beurre',em:'🧈'},
+    // Fruits
+    {et:'Pomii',fr:'La pomme',em:'🍎'},
+    {et:'Muuzii',fr:'La banane',em:'🍌'},
+    {et:'Burtukaana',fr:'L\'orange',em:'🍊'},
+    {et:'Liimoo',fr:'Le citron',em:'🍋'},
+    {et:'Mukarroo',fr:'La fraise',em:'🍓'},
+    {et:'Harbuu',fr:'La pastèque',em:'🍉'},
+    // Légumes
+    {et:'Timaatimii',fr:'La tomate',em:'🍅'},
+    {et:'Karootii',fr:'La carotte',em:'🥕'},
+    {et:'Qullubbii / Laasuna',fr:'L\'oignon',em:'🧅'},
+    {et:'Turunfaa',fr:'L\'ail',em:'🧄'},
+    {et:'Salaaxi',fr:'Le concombre',em:'🥒'},
+    {et:'Salaaditii',fr:'La salade',em:'🥗'},
+    // Condiments / épicerie
+    {et:'Zeyitii / Eelaa',fr:'L\'huile d\'olive',em:'🫒'},
+    {et:'Citaa',fr:'Le sel',em:'🧂'},
+    {et:'Barbaree',fr:'Le poivre',em:'🌶️'},
+    {et:'Damma',fr:'Le miel',em:'🍯'},
+    {et:'Chokolaatii',fr:'Le chocolat',em:'🍫'},
+   ]},
+
+  {id:'bois',level:1,emoji:'🥤',name:'Dhugaatii',sub:'Bishaan, buna, shaayii… / Les boissons',
+   words:[
+    // Essentiels
+    {et:'Bishaan',fr:'L\'eau',em:'💧'},
+    {et:'Bishaan gaazii qaba',fr:'L\'eau gazeuse',em:'🫧'},
+    {et:'Aannaan',fr:'Le lait',em:'🥛'},
+    {et:'Jiisii (Burtukaanaa)',fr:'Le jus (d\'orange)',em:'🍊'},
+    {et:'Sodaa / Gasiyoozaa',fr:'Le soda',em:'🥤'},
+    // Cafés
+    {et:'Buna (qullayyoo)',fr:'Le café noir',em:'☕'},
+    {et:'Buna aannaan waliin',fr:'Le café au lait',em:'☕'},
+    {et:'Buna nannoo aannaan xinnoo',fr:'Le café avec un nuage de lait',em:'☕'},
+    {et:'Shaayii',fr:'Le thé',em:'🍵'},
+    // Alcools
+    {et:'Koonjoo (diimaa / adii)',fr:'Le vin (rouge / blanc)',em:'🍷'},
+    {et:'Biiraa',fr:'La bière',em:'🍺'},
+    {et:'Araqee',fr:'L\'araqé (alcool éthiopien)',em:'🍶'},
+   ]},
+
+  {id:'lieux',level:1,emoji:'🏙️',name:'Bakkoota Barbaachisoo',sub:'Gabaa, daandii, bunaa… / Les lieux importants',
+   words:[
+    // Lieux de vie / nature
+    {et:'Magaalaa',fr:'La ville',em:'🏙️'},
+    {et:'Ganda',fr:'Le village',em:'🏡'},
+    {et:'Baadiyyaa',fr:'La campagne',em:'🌾'},
+    {et:'Tullu / Gaara',fr:'La montagne / La chaîne de montagnes',em:'⛰️'},
+    {et:'Galaana / Haroo',fr:'La mer / L\'océan',em:'🌊'},
+    {et:'Qorichee / Qixxee qilleensaa',fr:'La plage',em:'🏖️'},
+    {et:'Laga',fr:'La rivière',em:'🏞️'},
+    {et:'Meeshaa bashannannaa',fr:'Le parc',em:'🌳'},
+    {et:'Bulee / Daaqqoo',fr:'La place publique',em:'⛲'},
+    {et:'Daandii / Karaa',fr:'La rue / L\'avenue',em:'🛣️'},
+    {et:'Naannoo manaa',fr:'Le pâté de maisons',em:'🏘️'},
+    // Services publics
+    {et:'Mana bulchiinsaa',fr:'La mairie',em:'🏛️'},
+    {et:'Hospitaala',fr:'L\'hôpital',em:'🏥'},
+    {et:'Farmaasiitii',fr:'La pharmacie',em:'💊'},
+    {et:'Baankii',fr:'La banque',em:'🏦'},
+    {et:'Kiilistiyaana / Masjiida',fr:'L\'église / La mosquée',em:'⛪🕌'},
+    // Commerces
+    {et:'Suupaarmaarkeeti',fr:'Le supermarché',em:'🛒'},
+    {et:'Buna mana / Bunaa',fr:'Le bar / Le café',em:'☕'},
+    {et:'Gabaa / Suuqii',fr:'Le marché / La boutique',em:'🛍️'},
+    // Éducation
+    {et:'Mana barumsaa daa\'immanii',fr:'L\'école maternelle',em:'🧸'},
+    {et:'Mana barumsaa sadarkaa duraatii',fr:'L\'école primaire',em:'🎒'},
+    {et:'Mana barumsaa sadarkaa lammaffaa',fr:'Le collège',em:'📚'},
+    {et:'Mana barumsaa ol\'aanaa',fr:'Le lycée',em:'🎓'},
+    {et:'Yuniversitii',fr:'L\'université',em:'🏛️'},
+   ]},
+
+  {id:'orient',level:1,emoji:'🧭',name:'Karaa Barbaaduu',sub:'Bitaa, mirga… / S\'orienter',
+   words:[
+   // Directions
+    {et:'Kallattii itti fufi',fr:'Tout droit',em:'⬆️'},
+    {et:'Bitatti',fr:'À gauche',em:'⬅️'},
+    {et:'Mirgatti',fr:'À droite',em:'➡️'},
+    // Position relative
+    {et:'Fuuldura',fr:'Devant',em:'🔜'},
+    {et:'Duuba',fr:'Derrière',em:'🔙'},
+    {et:'Cinaa',fr:'À côté',em:'↔️'},
+    {et:'Fuuldura / Eegalan',fr:'En face',em:'🔄'},
+    // Distance
+    {et:'Dhiyoo',fr:'Près',em:'📍'},
+    {et:'Fagoo',fr:'Loin',em:'🌅'},
+    // Outil
+    {et:'Kaartaa',fr:'Le plan / La carte',em:'🗺️'},
+    ]},
+
+  {id:'trans',level:1,emoji:'🚌',name:'Geejjiba',sub:'Baasii, gaarii, konkolaataa… / Les transports',
+   words:[
+    // Transports en commun
+    {et:'Baasii / Konkolaataa ummataa',fr:'Le bus',em:'🚌'},
+    {et:'Meetiroo',fr:'Le métro',em:'🚇'},
+    {et:'Tiraamii',fr:'Le tramway',em:'🚊'},
+    {et:'Gaarii sibii',fr:'Le train',em:'🚂'},
+    {et:'Xiyyaara',fr:'L\'avion',em:'✈️'},
+    {et:'Taaksii',fr:'Le taxi',em:'🚕'},
+    // Transports individuels
+    {et:'Konkolaataa',fr:'La voiture',em:'🚗'},
+    {et:'Mootoorisikkilii',fr:'La moto',em:'🏍️'},
+    {et:'Biskileetii',fr:'Le vélo',em:'🚴'},
+    // Titre de transport
+    {et:'Tikeeta',fr:'Le billet',em:'🎫'},
+   ]},
+
+  {id:'rest',level:1,emoji:'🍽️',name:'Mana Nyaataa',sub:'Menuu, kafaltii, teessoo… / Au restaurant',
+   words:[
+      // Arrivée
+    {et:'Balbala alaa',fr:'La terrasse',em:'☀️'},
+    {et:'Teessoo',fr:'La table',em:'🪑'},
+    {et:'Teessoon kun duwwaa dha?',fr:'Cette table est libre ?',em:'🪑'},
+    // Commander
+    {et:'Tajaajilaa / Tajaajiltu',fr:'Le serveur / La serveuse',em:'🧑‍🍳'},
+    {et:'Liistii nyaataa',fr:'La carte',em:'📋'},
+    {et:'Menuu guyyaa',fr:'Le menu du jour',em:'🍱'},
+    {et:'Gaafachuu',fr:'Commander',em:'🙋'},
+    {et:'Maal yaaddu?',fr:'Que recommandez-vous ?',em:'👨‍🍳'},
+    // Régimes
+    {et:'Gluten hin qabu',fr:'Sans gluten',em:'🌾'},
+    {et:'Foon hin nyaatu',fr:'Végétarien / Végétarienne',em:'🥦'},
+    // Repas
+    {et:'Fuullaa xinnoo',fr:'L\'amuse-bouche',em:'🫒'},
+    {et:'Fuullaa dura',fr:'L\'entrée',em:'🥗'},
+    {et:'Nyaata ijoo',fr:'Le plat principal',em:'🍖'},
+    {et:'Dhaamsa nyaataa',fr:'Le dessert',em:'🍮'},
+    {et:'Saandiwichii / Buddeena',fr:'Le sandwich',em:'🥖'},
+    {et:'Fudhachuuf',fr:'À emporter',em:'🥡'},
+    // Addition
+    {et:'Baasii nyaataa',fr:'L\'addition',em:'💶'},
+    {et:'Qarshii dabalataa',fr:'Le pourboire',em:'💰'},
+    {et:'Qarshii dabalataan dabalamee jira',fr:'Le pourboire est inclus',em:'✅'},
+   ]},
+
+  {id:'log',level:1,emoji:'🏠',name:'Mana Jireenyaa',sub:'Dabtaroo, daakuu… / Le logement',
+   words:[
+        // Types de logement
+    {et:'Mana',fr:'La maison',em:'🏠'},
+    {et:'Apartamaantii',fr:'L\'appartement',em:'🏢'},
+    // Pièces principales
+    {et:'Seensa / Galma dura',fr:'L\'entrée',em:'🚪'},
+    {et:'Galma / Mana nyaataa',fr:'Le salon / la salle à manger',em:'🛋️'},
+    {et:'Daakuu',fr:'La cuisine',em:'🍳'},
+    {et:'Kutaa ciisichaa',fr:'La chambre',em:'🛏️'},
+    {et:'Mana fincaanii / Dhiqachuu',fr:'La salle de bain',em:'🚿'},
+    {et:'Mana fincaanii',fr:'Les toilettes',em:'🚽'},
+    {et:'Mana konkolaataa',fr:'Le garage',em:'🚗'},
+   ]},
+
+  {id:'objets',level:1,emoji:'🔑',name:'Meeshaalee Guyyaatii',sub:'Bilbila, hirnaa… / Objets du quotidien',
+   words:[
+        // Technologie
+    {et:'Bilbila',fr:'Le téléphone',em:'☎️'},
+    {et:'Bilbila harkaa',fr:'Le portable',em:'📱'},
+    {et:'Kompiyuutara',fr:'L\'ordinateur',em:'💻'},
+    {et:'Chaajjara',fr:'Le chargeur',em:'🔌'},
+    // Temps
+    {et:'Sa\'atii harkaa',fr:'La montre',em:'⌚'},
+    {et:'Sa\'atii',fr:'L\'horloge / la pendule',em:'🕐'},
+    // Accessoires personnels
+    {et:'Hirnaa',fr:'Les clés',em:'🔑'},
+    {et:'Fardaa qarshii / Baankii xinnoo',fr:'Le portefeuille / le porte-monnaie',em:'👛'},
+    {et:'Bursuusaa dugdaa',fr:'Le sac à dos',em:'🎒'},
+    {et:'Miidhagina ija',fr:'Les lunettes',em:'👓'},
+    {et:'Aanoo roobaa',fr:'Le parapluie',em:'☂️'},
+    // Papeterie
+    {et:'Waraqaa',fr:'Le papier',em:'📄'},
+    {et:'Qalama / Biiroo',fr:'Le stylo / le bic',em:'🖊️'},
+    {et:'Mishira',fr:'Les ciseaux',em:'✂️'},
+    // Vaisselle
+    {et:'Xaa\'oo',fr:'L\'assiette',em:'🍽️'},
+    {et:'Kilaasii',fr:'Le verre',em:'🥛'},
+    {et:'Kubboo buna',fr:'La tasse',em:'☕'},
+    {et:'Simiintoo',fr:'La cuillère',em:'🥄'},
+    {et:'Forkii',fr:'La fourchette',em:'🍴'},
+    {et:'Bilaa',fr:'Le couteau',em:'🔪'},
+    {et:'Booteelaa',fr:'La bouteille',em:'🍶'},
+    // Salle de bain / chambre
+    {et:'Iyyaanoo',fr:'Le miroir',em:'🪞'},
+    {et:'Tuwaallii',fr:'La serviette',em:'🛁'},
+    {et:'Saabunaa',fr:'Le savon',em:'🧼'},
+    {et:'Kaafiyaa',fr:'L\'oreiller',em:''},
+   ]},
+
+  {id:'muebles_equipamiento', level:1, emoji:'🪑', name:'Meeshaalee Manaa', sub:'Soofa, siree, firiijiidara… / Meubles et équipements',
+ words:[
+    // Salon
+    {et:'Soofa',fr:'Le canapé',em:'🛋️'},
+    {et:'Teessoo qofaa',fr:'Le fauteuil',em:'💺'},
+    {et:'Teessoo',fr:'La table',em:''},
+    {et:'Sannaddaa',fr:'La chaise',em:'🪑'},
+    {et:'Ibsaa',fr:'La lampe',em:'💡'},
+    {et:'Mudaa kitaabaa',fr:'L\'étagère',em:''},
+    // Chambre
+    {et:'Siree',fr:'Le lit',em:'🛏️'},
+    {et:'Amaaroo uffataa',fr:'L\'armoire',em:'🗄️'},
+    {et:'Maardiima / Barrumsaa',fr:'Le bureau',em:'🖊️'},
+    // Cuisine
+    {et:'Friijiidara',fr:'Le réfrigérateur',em:'🧊'},
+    {et:'Aawoo',fr:'Le four',em:'🔥'},
+    {et:'Maaykirooweevii',fr:'Le micro-ondes',em:'🔲♨️'},
+    {et:'Dhiqa meeshaa',fr:'L\'évier',em:'🚰'},
+    // Salle de bain
+    {et:'Dhiqa fuulaa',fr:'Le lavabo',em:'🚰'},
+    {et:'Kuubii dhiqachuu',fr:'La baignoire',em:'🛁'},
+    {et:'Shawara',fr:'La douche',em:'🚿'},
+  ]},
+
+  {id:'routine',level:1,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'Ka\'uu, rafuu, hojjechuu… / La vie quotidienne',
+   note:'📍 Journée type à Shashamané : cérémonie du café le matin, marché hebdomadaire, vie communautaire',
+   words:[
+    {et:'Ka\'uu / Dammaquu',fr:'Se lever / Se réveiller',em:'⏰'},
+    {et:'Dhiqachuu',fr:'Se doucher / Se laver',em:'🚿'},
+    {et:'Fuula dhiqachuu',fr:'Se laver le visage',em:'🧼'},
+    {et:'Ilkaan eebuu',fr:'Se brosser les dents',em:'🦷'},
+    {et:'Uffachuu',fr:'S\'habiller',em:'👔'},
+    {et:'Ciree nyaachuu',fr:'Prendre le petit-déjeuner',em:'🍳'},
+    {et:'Buna dhuguuf ta\'uu',fr:'Prendre le café du matin',em:'☕'},
+    {et:'Hojjechuu',fr:'Travailler',em:'💼'},
+    {et:'Barumsaaf deemuu',fr:'Aller à l\'école / Aller étudier',em:'🎒'},
+    {et:'Baha manaa deemuu',fr:'Sortir de la maison',em:'🚪'},
+    {et:'Bitachuu / Gabaa deemuu',fr:'Faire les courses / Aller au marché',em:'🛒'},
+    {et:'Nyaata bilcheessuu / Daakuu hojjechuu',fr:'Faire la cuisine / Cuisiner',em:'🍳'},
+    {et:'Uffata dhiquu',fr:'Laver le linge',em:'🧺'},
+    {et:'Mana qulqulleessuu',fr:'Nettoyer la maison / Faire le ménage',em:'🧹'},
+    {et:'Meeshaalee dhiquu',fr:'Faire la vaisselle',em:'🍽️'},
+    {et:'Irbaata nyaachuu',fr:'Déjeuner',em:'🥙'},
+    {et:'Halkan nyaachuu',fr:'Dîner',em:'🍽️'},
+    {et:'Boqochuu',fr:'Se reposer',em:'😌'},
+    {et:'Telefishina ilaalu',fr:'Regarder la télé',em:'📺'},
+    {et:'Kitaaba dubbisuu',fr:'Lire un livre',em:'📖'},
+    {et:'Ciisuu / Rafuu',fr:'Se coucher / Dormir',em:'🛏️'},
+   ]},
+
+  {id:'veth',level:1,emoji:'👗',name:'Uffata',sub:'Shartii, surrii… / Les vêtements',
+   words:[
+    // Niveau 1 — Vêtements du quotidien, très fréquents
+    {et:'Shartii',fr:'Le t-shirt',em:'👕'},
+    {et:'Shartii dheeraa',fr:'La chemise',em:'👔'},
+    {et:'Surrii',fr:'Le pantalon',em:'👖'},
+    {et:'Kophee / Shaakaalaa',fr:'Les chaussures / Les baskets',em:'👟'},
+    {et:'Kaalseettii',fr:'Les chaussettes',em:'🧦'},
+    // Niveau 2 — Vêtements courants, un peu plus spécifiques
+    {et:'Uffata dubartii / Qanafee',fr:'La robe / La jupe',em:'👗'},
+    {et:'Surrii gabaabaa',fr:'Le short',em:'🩳'},
+    {et:'Jaakeetii / Uffata ho\'a',fr:'Le pull',em:'🧥'},
+    {et:'Jaakeetii alaa',fr:'La veste',em:'🧥'},
+    {et:'Kuullaa / Keeppii',fr:'Le chapeau / La casquette',em:'🎩'},
+    // Niveau 3 — Accessoires et vêtements saisonniers
+    {et:'Koobii guddaa',fr:'Le manteau',em:'🧥'},
+    {et:'Shanxii morma',fr:'L\'écharpe',em:'🧣'},
+    {et:'Gantii',fr:'Les gants',em:'🧤'},
+    {et:'Kuullaa ho\'a',fr:'Le bonnet',em:'🎿'},
+    {et:'Buursaa / Fardaa',fr:'Le sac / La poche',em:'👜'},
+    {et:'Uffata bishaan',fr:'Le maillot de bain',em:'🩱'},
+   ]},
+
+  {id:'met',level:1,emoji:'💼',name:'Ogummaa',sub:'Doktora, barsiisaa… / Les professions',
+   words:[
+    // Niveau 1 — Métiers du quotidien, rencontrés très fréquemment
+    {et:'Barataa / Barattuun',fr:'L\'étudiant / L\'étudiante',em:'🎓'},
+    {et:'Barsiisaa / Barsiistuu',fr:'Le professeur / La professeure',em:'👩‍🏫'},
+    {et:'Tajaajilaa / Tajaajiltu',fr:'Le serveur / La serveuse',em:'🍽️'},
+    {et:'Gurgurataa / Gurgurattu',fr:'Le vendeur / La vendeuse',em:'🏪'},
+    {et:'Oofaa taaksii',fr:'Le chauffeur de taxi / La chauffeuse de taxi',em:'🚕'},
+    // Niveau 2 — Métiers courants, contextes santé & service
+    {et:'Doktora',fr:'Le médecin / La médecin',em:'🩺'},
+    {et:'Narsii',fr:'L\'infirmier / L\'infirmière',em:'👨‍⚕️'},
+    {et:'Nyaata bilcheessaa',fr:'Le cuisinier / La cuisinière',em:'👨‍🍳'},
+    // Niveau 3 — Métiers plus spécifiques ou lexicalement complexes
+    {et:'Ogaa bishaan',fr:'Le plombier / La plombière',em:'🔧'},
+    {et:'Ogaa kompiyuutaraa',fr:'L\'informaticien / L\'informaticienne',em:'💻'},
+   ]},
+
+  {id:'sante',level:1,emoji:'🏥',name:'Fayyaa',sub:'Doktora, farmaasiitii… / La santé',
+   words:[
+    {et:'Dhukkubbii / Nan dhukkuba',fr:'Faire mal / j\'ai mal (j\'ai mal à la tête)',em:'🤕'},
+    {et:'Dhukkubbii qabaachuu',fr:'Avoir une douleur (plus formel)',em:'😣'},
+    {et:'Ho\'a qaamaa',fr:'La fièvre',em:'🌡️'},
+    {et:'Qufaa',fr:'La toux',em:'😮‍💨'},
+    {et:'Xuruura fuulaa',fr:'Le mouchoir',em:'🤧'},
+    {et:'Meeshaa ho\'a safaruu',fr:'Le thermomètre',em:'🌡️'},
+    {et:'Beellama',fr:'Le rendez-vous',em:'📅'},
+    {et:'Doktora / Doktoricha',fr:'Le médecin / La médecin',em:'🩺'},
+    {et:'Dhukkubsataa',fr:'Le/la patient(e)',em:'🛏️'},
+    {et:'Gorsaa fayyaa',fr:'La consultation médicale',em:'📋'},
+    {et:'Narsii / Narsicha',fr:'L\'infirmier / L\'infirmière',em:'👨‍⚕️'},
+    {et:'Hospitaala',fr:'L\'hôpital',em:'🏥'},
+    {et:'Reseeptii / Ajaja qorichaa',fr:'L\'ordonnance',em:'📋'},
+    {et:'Farmaasiitii',fr:'La pharmacie',em:'🏪'},
+    {et:'Qoricha',fr:'Le médicament',em:'💊'},
+    {et:'Haaphii qoricha',fr:'Le comprimé',em:'💊'},
+    {et:'Vaaksiniifi',fr:'Le vaccin',em:'💉'},
+    {et:'Mallattoo madaa',fr:'Le pansement adhésif',em:'🩹'},
+    {et:'Xaxaa madaa',fr:'Le bandage',em:'🩼'},
+    {et:'Ambulaansii',fr:'L\'ambulance',em:'🚑'},
+    {et:'Bakka ariifachiisaa',fr:'Les urgences',em:'🆘'}
+   ]},
+
+  {id:'viaje',level:1,emoji:'🧳',name:'Deemsa',sub:'Baggaajii, hooteela, paaspoortiifi… / Le voyage',
+   words:[
+   // Préparation
+    {et:'Paaspoortiifi',fr:'Le passeport',em:'🛂'},
+    {et:'Baggaajii',fr:'La valise',em:'🧳'},
+    {et:'Qabeenya deemsa',fr:'Les bagages',em:'🎒'},
+    {et:'Tikeeta',fr:'Le billet',em:'🎫'},
+    {et:'Reserveeshina',fr:'La réservation',em:'📋'},
+    {et:'Ejensii deemsa',fr:'L\'agence de voyages',em:'🗺️'},
+    {et:'Inshuraansii deemsa',fr:'L\'assurance voyage',em:'📄'},
+    // Transport
+    {et:'Xiyyaara',fr:'L\'avion',em:'✈️'},
+    {et:'Buufata xiyyaaraa',fr:'L\'aéroport',em:'🛫'},
+    {et:'Ba\'uu',fr:'Le départ',em:'🚪'},
+    {et:'Ga\'uu',fr:'L\'arrivée',em:'🛬'},
+    {et:'Koostamii',fr:'La douane',em:'🛃'},
+    {et:'Doonii guddaa',fr:'La croisière',em:'🚢'},
+    // Hébergement
+    {et:'Hooteela',fr:'L\'hôtel',em:'🏨'},
+    {et:'Kutaa lama yookiin tokko',fr:'La chambre double ou simple',em:'🛏️'},
+    // Destinations
+    {et:'Qorichee laga',fr:'La plage',em:'🏖️'},
+    {et:'Tullu',fr:'La montagne',em:'⛰️'},
+    {et:'Daawwataa',fr:'Le touriste',em:'📸'},
+   ]},
+
+  {id:'pays',level:1,emoji:'🌍',name:'Biyyoota',sub:'Itoophiyaa, Oromiyaa… / Les pays',
+   words:[
+    // Niveau 1 — Pays proches & culturellement importants
+    {et:'Faransaay',fr:'La France',em:'🇫🇷'},
+    {et:'Itoophiyaa',fr:'L\'Éthiopie',em:'🇪🇹'},
+    {et:'Keeniyaa',fr:'Le Kenya',em:'🇰🇪'},
+    {et:'Xaaliyaanii',fr:'L\'Italie',em:'🇮🇹'},
+    {et:'Beljiyoom',fr:'La Belgique',em:'🇧🇪'},
+    {et:'Swiizerlaandii',fr:'La Suisse',em:'🇨🇭'},
+    {et:'Jarman',fr:'L\'Allemagne',em:'🇩🇪'},
+    {et:'Ingliizii',fr:'Le Royaume-Uni',em:'🇬🇧'},
+    // Niveau 2 — Pays africains & francophones proches
+    {et:'Jibuutii',fr:'Djibouti',em:'🇩🇯'},
+    {et:'Somaaliyaa',fr:'La Somalie',em:'🇸🇴'},
+    {et:'Sudaan',fr:'Le Soudan',em:'🇸🇩'},
+    {et:'Braazil',fr:'Le Brésil',em:'🇧🇷'},
+    {et:'Kaanaadaa',fr:'Le Canada',em:'🇨🇦'},
+    {et:'Morokkoo',fr:'Le Maroc',em:'🇲🇦'},
+    // Niveau 3 — Grandes puissances mondiales & pays plus distants
+    {et:'Ameerikaa',fr:'Les États-Unis',em:'🇺🇸'},
+    {et:'Rushiyaa',fr:'La Russie',em:'🇷🇺'},
+    {et:'Chaayinaa',fr:'La Chine',em:'🇨🇳'},
+    {et:'Jaappaan',fr:'Le Japon',em:'🇯🇵'},
+    {et:'Hindii',fr:'L\'Inde',em:'🇮🇳'},
+    {et:'Turkii',fr:'La Turquie',em:'🇹🇷'},
+    {et:'Giriikii',fr:'La Grèce',em:'🇬🇷'},
+    {et:'Awustiraaliyaa',fr:'L\'Australie',em:'🇦🇺'},
+    {et:'Afrikaa Kibbaa',fr:'L\'Afrique du Sud',em:'🇿🇦'},
+   ]},
+
+  {id:'ocio', level:1, emoji:'⛰️', name:'Boqonnaa fi Bashannannaa', sub:'Ispoortii, dubbisuu, muuziqaa… / Les loisirs',
+  words:[
+    // Loisirs culturels
+    {et:'Dubbisuu',fr:'La lecture',em:'📚'},
+    {et:'Kitaaba',fr:'Le livre',em:'📖'},
+    {et:'Muuziqaa',fr:'La musique',em:'🎵'},
+    {et:'Siinimaa',fr:'Le cinéma',em:'🎬'},
+    {et:'Tiyaatira',fr:'Le théâtre',em:'🎭'},
+    // Sport général
+    {et:'Ispoortii',fr:'Le sport',em:''},
+    {et:'Kora miilaa',fr:'Le football',em:'⚽'},
+    {et:'Daakuu bishaan',fr:'La natation',em:'🏊'},
+    {et:'Biskileetii oofuu',fr:'Le cyclisme',em:'🚴'},
+    {et:'Fiigichaa',fr:'L\'athlétisme',em:'🏃'},
+    // Plein air
+    {et:'Deemsa tulluutti',fr:'La randonnée',em:'🥾'},
+    {et:'Deemsa karaa',fr:'La marche nordique',em:''},
+    {et:'Naqata / Seenaa',fr:'La promenade',em:'🌳'},
+    // Verbes utiles
+    {et:'Taphaachuu',fr:'Jouer',em:'🎮'},
+    {et:'Leenjii hojjechuu',fr:'Pratiquer',em:'💪'},
+    {et:'Boqachuu',fr:'Se reposer',em:'😴'},
+    {et:'Gammachuun fayyadamuu',fr:'Profiter / Apprécier',em:'😊'},
+  ]
+},
+
+  {id:'plan',level:1,emoji:'🌿',name:'Biqiltoota',sub:'Adaraa, muka, bosonaa… / Les plantes',
+   words:[
+    // Niveau 1 — Éléments naturels de base, très visuels
+    {et:'Adaraa / Daadhii',fr:'La fleur',em:'🌸'},
+    {et:'Muka',fr:'L\'arbre',em:'🌳'},
+    {et:'Caasee',fr:'La feuille',em:'🍃'},
+    {et:'Marga',fr:'L\'herbe',em:'🌱'},
+    // 🟡 Niveau 2 — Espaces & végétaux plus spécifiques
+    {et:'Bakkee miidhagoo',fr:'Le jardin',em:'🏡'},
+    {et:'Daadhii diimaa',fr:'La rose',em:'🌹'},
+    {et:'Bosonaa',fr:'La forêt',em:'🌲'},
+    // 🔴 Niveau 3 — Vocabulaire plus précis ou contextuel
+    {et:'Marga miidhagoo',fr:'La pelouse / Le gazon',em:'⛳'},
+   ]},
+
+  {id:'anim',level:1,emoji:'🐘',name:'Bineeldota',sub:'Saree, adurree, sangaa… / Les animaux',
+   words:[
+    // Niveau 1 — Animaux familiers & de la ferme, très connus
+    {et:'Saree',fr:'Le chien',em:'🐶'},
+    {et:'Adurree',fr:'Le chat',em:'🐱'},
+    {et:'Simbiraa',fr:'L\'oiseau',em:'🐦'},
+    {et:'Qurxummii',fr:'Le poisson (vivant)',em:'🐟'},
+    {et:'Farda',fr:'Le cheval',em:'🐴'},
+    {et:'Loon / Saree loon',fr:'La vache',em:'🐮'},
+    {et:'Booyee',fr:'Le cochon',em:'🐷'},
+    {et:'Lukkuu',fr:'La poule',em:'🐔'},
+    {et:'Illeena',fr:'Le lapin',em:'🐰'},
+    // Niveau 2 — Animaux courants (ferme, nature, sauvages connus)
+    {et:'Qurxummii nyaataa',fr:'Le poisson (dans l\'assiette)',em:'🐟🍽️'},
+    {et:'Sangaa',fr:'Le taureau',em:'🐂'},
+    {et:'Molgaa',fr:'Le canard',em:'🦆'},
+    {et:'Kormaa lukkuu',fr:'Le coq',em:'🐓'},
+    {et:'Hoolaa / Hoolii',fr:'L\'agneau',em:'🐑'},
+    {et:'Re\'ee',fr:'La chèvre',em:'🐐'},
+    {et:'Harree',fr:'L\'âne',em:'🫏'},
+    {et:'Arba',fr:'L\'éléphant',em:'🐘'},
+    {et:'Baalee',fr:'L\'ours',em:'🐻'},
+    {et:'Qeerransaa',fr:'Le tigre',em:'🐯'},
+    // Niveau 3 — Animaux plus rares, insectes, reptiles & lexique spécifique
+    {et:'Qurxummii bishaaniin jiraatuu',fr:'Le dauphin',em:'🐬'},
+    {et:'Harootii guddaa',fr:'La baleine',em:'🐳'},
+    {et:'Ardiitii / Gombisuu',fr:'L\'aigle',em:'🦅'},
+    {et:'Buraayyoo',fr:'Le papillon',em:'🦋'},
+    {et:'Bofaa xixiqqaa',fr:'La grenouille',em:'🐸'},
+    {et:'Bofa',fr:'Le serpent',em:'🐍'},
+    {et:'Bofa lafa',fr:'Le lézard',em:'🦎'},
+    {et:'Saappanaa',fr:'L\'araignée',em:'🕷️'},
+    {et:'Hiyyeessa / Bineeldota xixiqqaa',fr:'Le moustique',em:'🦟'},
+    {et:'Dirreetti',fr:'La fourmi',em:'🐜'},
+   ]},
+
   {id:'agri',level:1,emoji:'🌾',name:'Qonnaa fi Horsiisee',sub:'Lafa, biqiltuu, loon… / Agriculture et élevage',
    note:'📍 Contexte : région de Shashamané, terres fertiles du Rift éthiopien, caféiculture, élevage bovin traditionnel',
    words:[
@@ -2065,96 +2265,11 @@ var LEVEL1_THEMES_OR=[
     {et:'Arfasaa (bonni)',fr:'Saison des grandes pluies (mars-mai)',em:'🌧️'},
     {et:'Hagayya (rooba xiqqaa)',fr:'Saison des petites pluies (août)',em:'🌦️'},
     {et:'Bona (ganna)',fr:'Grande saison sèche (jan-fév)',em:'☀️'},
-   ]},
-
-
-  ,
-
-  /* 15 -- La vie quotidienne */
-  {id:'routine2',level:2,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'La routine / La vie de tous les jours',type:'dialog',
-   note:'📍 En France, on prend rarement le temps d\'une longue cérémonie du café le matin. En Oromia (Shashamané), la cérémonie du buna (café) est un moment social important. Le shor (déjeuner) est le repas principal en France.',
-   situations:[
-    {label:'Sit. 1',title:'La matinée',img:'⏰',dialogue:[
-      {s:'Haadha',et:'Ka\'i! Sa\'atii torba ta\'eera!',fr:'Lève-toi ! Il est sept heures !',side:'right'},
-      {s:'Dargagoo',et:'Eeyyeen, amma kaa\'a. Cireen qophaa\'eeii?',fr:'Oui, je me lève. Le petit-déjeuner est prêt ?',side:'left'},
-      {s:'Haadha',et:'Eeyyeen. Dhiqadhu jalqaba.',fr:'Oui. Douche-toi d\'abord.',side:'right'},
-      {s:'Dargagoo',et:'Tolee. Ilkaanis?',fr:'D\'accord. Les dents aussi ?',side:'left'},
-      {s:'Haadha',et:'Dhugumatti! Ilkaan eebuu dagattee?',fr:'Bien sûr ! Tu as oublié de te brosser les dents ?',side:'right'},
-      {s:'Dargagoo',et:'Lakki lakki, nan yaadadha!',fr:'Non non, je m\'en souviens !',side:'left'}
-    ]},
-    {label:'Sit. 2',title:'Partager les tâches',img:'🧹',dialogue:[
-      {s:'Julie',et:'Kana booda mana qulqulleessina.',fr:'Après on fait le ménage.',side:'left'},
-      {s:'Marc',et:'Tolee. Ani meeshaa dhiqa, ati hoo?',fr:'D\'accord. Je fais la vaisselle, et toi ?',side:'right'},
-      {s:'Julie',et:'Ani daakuu qulqulleessa. Uffatnis?',fr:'Moi je nettoie la cuisine. Et le linge ?',side:'left'},
-      {s:'Marc',et:'Uffata dhiquu hojjedheen jira.',fr:'J\'ai déjà lavé le linge.',side:'right'},
-      {s:'Julie',et:'Baay\'ee gaarii! Xumurree nyaata bilcheessina.',fr:'Super ! Après le ménage on cuisine.',side:'left'},
-      {s:'Marc',et:'Yaada gaarii! Maal bilcheessina?',fr:'Bonne idée ! On fait quoi à manger ?',side:'right'}
-    ]},
-    {label:'Sit. 3',title:'Le soir après le travail',img:'🌆',dialogue:[
-      {s:'Tolaa',et:'Hojii irraa dhufe. Dadhabee jira!',fr:'Je rentre du travail. Je suis fatigué !',side:'left'},
-      {s:'Caaltuu',et:'Boqo xiqqoo. Nyaata bilcheessaan jira.',fr:'Repose-toi un peu. Je suis en train de cuisiner.',side:'right'},
-      {s:'Tolaa',et:'Baay\'ee galatoomi. Maal bilcheessita?',fr:'Merci beaucoup. Tu cuisines quoi ?',side:'left'},
-      {s:'Caaltuu',et:'Injera fi atara. Dhukkubsattee?',fr:'De l\'injera et des lentilles. Ça va ?',side:'right'},
-      {s:'Tolaa',et:'Gaarii, baay\'ee beela\'ee jira.',fr:'Ça va, j\'ai très faim.',side:'left'},
-      {s:'Caaltuu',et:'Daqiiqaa kudha booda nyaanna!',fr:'Dans dix minutes on mange !',side:'right'}
-    ]}
-   ],
-   vocab:['Ka\'i! = Lève-toi !','Dhiqadhu = Douche-toi','Ilkaan eebuu = Se brosser les dents','Mana qulqulleessuu = Faire le ménage','Meeshaa dhiquu = Faire la vaisselle','Uffata dhiquu = Laver le linge','Nyaata bilcheessuu = Cuisiner','Dadhabee jira = Je suis fatigué','Boqo = Repose-toi'],
-   quiz:[
-    {q:'Afaan Oromootti "Faire le ménage" akkamiin jedha?',opts:['Mana ijaaruu','Mana qulqulleessuu','Mana bituu','Mana jijjiiruu'],ans:1},
-    {q:'Jechuun "Uffata dhiquu" maal jechuudha?',opts:['Repasser le linge','Étendre le linge','Laver le linge','Porter des vêtements'],ans:2},
-    {q:'Afaan Oromootti "Je suis fatigué" akkamiin jedha?',opts:['Beela\'ee jira','Dheebuu dhabe','Dadhabee jira','Rafee jira'],ans:2}
    ]}
-
-,
-
-  /* 16 -- L'heure et la météo */
-  {id:'temps2',level:2,emoji:'🕐',name:'Sa\'atii fi Qilleensa',sub:'L\'heure et la météo',type:'dialog',
-   note:'📍 Attention : en Oromia, l\'heure éthiopienne (sa\'atii Itoophiyaa) commence à 6h du matin (notre 6h = leur 12h). La journée à Shashamané est rythmée par le soleil, pas par les horloges !',
-   situations:[
-    {label:'Sit. 1',title:'Quelle heure est-il ?',img:'⏰',dialogue:[
-      {s:'Marc',et:'Dhiifama, sa\'atii meeqa?',fr:'Pardon, quelle heure est-il ?',side:'left'},
-      {s:'Caaltuu',et:'Sa\'atii sadii fi walakkaa.',fr:'Il est trois heures et demie.',side:'right'},
-      {s:'Marc',et:'Baankiin amma banama jiraa?',fr:'La banque est encore ouverte ?',side:'left'},
-      {s:'Caaltuu',et:'Eeyyeen, hanga shan banama.',fr:'Oui, elle est ouverte jusqu\'à cinq heures.',side:'right'},
-      {s:'Marc',et:'Galatoomi! Ariifadhee deema.',fr:'Merci ! Je dois me dépêcher.',side:'left'},
-      {s:'Caaltuu',et:'Ariifi! Nagaan!',fr:'Vas-y ! Bonne chance !',side:'right'}
-    ]},
-    {label:'Sit. 2',title:'Parler de la météo',img:'🌤️',dialogue:[
-      {s:'Sophie',et:'Qilleensi har\'a akkam?',fr:'Il fait quel temps aujourd\'hui ?',side:'left'},
-      {s:'Lamma',et:'Ganama ho\'aa, garuu galgala roobu dandaa.',fr:'Il fait chaud le matin, mais il peut pleuvoir le soir.',side:'right'},
-      {s:'Sophie',et:'Shaashamanneetti yeroo maraan akkana?',fr:'À Shashamané c\'est souvent comme ça ?',side:'left'},
-      {s:'Lamma',et:'Arfasaatti eeyyeen. Roobni guyyaa guyyaa dhufa.',fr:'En saison des pluies oui. Il pleut tous les jours.',side:'right'},
-      {s:'Sophie',et:'Faransaayitti garuu bona qofaaa.',fr:'En France c\'est seulement en hiver.',side:'left'},
-      {s:'Lamma',et:'Baay\'ee adda! As ho\'a baay\'ee jaalladha.',fr:'C\'est très différent ! Ici j\'aime beaucoup la chaleur.',side:'right'}
-    ]},
-    {label:'Sit. 3',title:'Planifier selon la météo',img:'🌧️',dialogue:[
-      {s:'Iftu',et:'Boruu gabaa deemna?',fr:'On va au marché demain ?',side:'right'},
-      {s:'Théo',et:'Qilleensi akkam jedha?',fr:'Qu\'est-ce que dit la météo ?',side:'left'},
-      {s:'Iftu',et:'Roobu jetteetti. Aanoo roobaa kaasi!',fr:'Elle dit qu\'il va pleuvoir. Prends ton parapluie !',side:'right'},
-      {s:'Théo',et:'Tolee. Sa\'atii meeqatti deemna?',fr:'D\'accord. On y va à quelle heure ?',side:'left'},
-      {s:'Iftu',et:'Ganama sa\'atii saddeet. Roobni dura deemuun wayya.',fr:'À huit heures du matin. Mieux vaut partir avant la pluie.',side:'right'},
-      {s:'Théo',et:'Eeyyeen! Ganamaas ko\'otni baay\'ee jiru.',fr:'Oui ! Et le matin il y a plus de choix au marché.',side:'left'}
-    ]}
-   ],
-   vocab:['Sa\'atii meeqa? = Quelle heure est-il ?','Hanga ... banama = Ouvert jusqu\'à...','Ariifi! = Dépêche-toi !','Qilleensi akkam? = Quel temps fait-il ?','Arfasaatti = En saison des pluies','Roobni dhufa = Il va pleuvoir','Aanoo roobaa kaasi = Prends ton parapluie'],
-   quiz:[
-    {q:'Afaan Oromootti "Quelle heure est-il ?" akkamiin jedha?',opts:['Guyyaan meeqa?','Sa\'atii meeqa?','Boruu meeqa?','Daqiiqaan meeqa?'],ans:1},
-    {q:'Jechuun "Arfasaatti roobu" maal jechuudha?',opts:['Il neige en hiver','Il fait chaud en été','Il pleut en saison des pluies','Il y a du vent au printemps'],ans:2},
-    {q:'Afaan Oromootti "Dépêche-toi !" akkamiin jedha?',opts:['Boqo!','Deemi!','Ariifi!','Rafuu!'],ans:2}
-   ]}
-
 ];
 
-  /* ========================================
-   Afaan Oromoo → Français 🇪🇹 – Niveau 2
-   14 situations de dialogues — Niveau A1
-   Français débutant en Oromia
-   © 2026 Sébastien Godet
-======================================== */
- 
 var LEVEL2_THEMES_OR = [
- 
+
   /* 1 ── Saluer et prendre des nouvelles */
   {id:'salut2',level:2,emoji:'👋',name:'Nagaa gaafachuu',sub:'Saluer quelqu\'un / Dire bonjour en Oromia',type:'dialog',
    situations:[
@@ -2188,7 +2303,7 @@ var LEVEL2_THEMES_OR = [
     {q:'Afaan Oromootti "Je suis désolé" akkamiin jedha?',opts:['Galatoomi','Dhiifama','Nagaan','Dhiisi'],ans:1},
     {q:'Jechuun "Haga wal arginu!" maal jechuudha?',opts:['Bonjour !','Merci !','À plus !','S\'il vous plaît !'],ans:2}
    ]},
- 
+
   /* 2 ── Se présenter */
   {id:'pres2',level:2,emoji:'🙋',name:'Ofbeeksisuu',sub:'Dire son nom, son pays / Se présenter',type:'dialog',
    situations:[
@@ -2223,7 +2338,7 @@ var LEVEL2_THEMES_OR = [
     {q:'Jechuun "Lammii kamii?" maal jechuudha?',opts:['Comment tu t\'appelles ?','Quel âge tu as ?','Tu es d\'où ?','Tu habites où ?'],ans:2},
     {q:'Afaan Oromootti "Enchanté" akkamiin jedha?',opts:['Galatoomi','Dhiifama','Nagaan','Gammadeen si arge!'],ans:3}
    ]},
- 
+
   /* 3 ── Demander son chemin */
   {id:'chemin2',level:2,emoji:'🗺️',name:'Karaa gaafachuu',sub:'Demander son chemin / S\'orienter en ville',type:'dialog',
    situations:[
@@ -2258,7 +2373,7 @@ var LEVEL2_THEMES_OR = [
     {q:'Jechuun "Farmaasinni dhiyotti jiraa?" maal jechuudha?',opts:['La pharmacie est fermée','Il y a une pharmacie près d\'ici ?','Où est la pharmacie ?','La pharmacie est loin ?'],ans:1},
     {q:'Afaan Oromootti "À gauche" akkamiin jedha?',opts:['Kallattiin','Mirgutti','Duubatti','Bitaatti'],ans:3}
    ]},
- 
+
   /* 4 ── Au bar */
   {id:'bar2',level:2,emoji:'☕',name:'Kaafee keessatti',sub:'Commander au café oromo / Buna et injera',type:'dialog',
    situations:[
@@ -2293,7 +2408,7 @@ var LEVEL2_THEMES_OR = [
     {q:'Jechuun "Kafaltii, maaloo" maal jechuudha?',opts:['Le menu, s\'il vous plaît','L\'addition, s\'il vous plaît','Un café, s\'il vous plaît','L\'eau, s\'il vous plaît'],ans:1},
     {q:'Afaan Oromootti "C\'est combien ?" akkamiin jedha?',opts:['Eessa jira?','Maaltu jira?','Meeqadha?','Maqaan isaanii eenyu?'],ans:2}
    ]},
- 
+
   /* 5 ── Au restaurant */
   {id:'resto2',level:2,emoji:'🍽️',name:'Mana nyaataa keessatti',sub:'Commander un repas / Au restaurant en Oromia',type:'dialog',
    situations:[
@@ -2328,7 +2443,7 @@ var LEVEL2_THEMES_OR = [
     {q:'Afaan Oromootti "En entrée" akkamiin jedha?',opts:['Mi\'eessaa','Booda','Dhugaatiif','Jalqaba'],ans:3},
     {q:'Jechuun "Foon malee" maal jechuudha?',opts:['Avec de la viande','Sans poisson','Sans viande','Avec du poulet'],ans:2}
    ]},
- 
+
   /* 6 ── Faire des courses */
   {id:'compras2',level:2,emoji:'🛍️',name:'Bitachuu',sub:'Acheter des choses / Faire ses courses',type:'dialog',
    situations:[
@@ -2363,7 +2478,7 @@ var LEVEL2_THEMES_OR = [
     {q:'Jechuun "Kan biraa hoo?" maal jechuudha?',opts:['C\'est tout ?','Autre chose ?','Vous avez ça ?','C\'est combien ?'],ans:1},
     {q:'Afaan Oromootti "La taille" (uffata) akkamiin jedha?',opts:['Halluu','Gatii','Saayizii','Lakkoofsa'],ans:2}
    ]},
- 
+
   /* 7 ── Prendre les transports */
   {id:'transp2',level:2,emoji:'🚌',name:'Geejjiba fayyadamuu',sub:'Prendre le bus et les transports / Se déplacer',type:'dialog',
    situations:[
@@ -2398,43 +2513,8 @@ var LEVEL2_THEMES_OR = [
     {q:'Jechuun "Buufata" maal jechuudha?',opts:['Le billet','La ligne','L\'arrêt','Le quai'],ans:2},
     {q:'Afaan Oromootti "Descendre à Adama" akkamiin jedha?',opts:['Adaamaatti ol ba\'uu','Adaama deemuu','Adaamaatti bu\'uu','Adaama fudhachuu'],ans:2}
    ]},
- 
-  /* 8 ── À la pharmacie */
-  {id:'farmacia2',level:2,emoji:'💊',name:'Farmaasiitti',sub:'Acheter des médicaments / À la pharmacie',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Mal de tête',img:'🤕',dialogue:[
-      {s:'Maamilaa',et:'Akkam. Mataan natti dhukkuba. Waa qabduu?',fr:'Bonjour. J\'ai mal à la tête. Qu\'est-ce que vous avez ?',side:'left'},
-      {s:'Farmaasiistuu',et:'Qorichatti waan dhukkubsan qabdaa?',fr:'Vous êtes allergique à un médicament ?',side:'right'},
-      {s:'Maamilaa',et:'Lakki, waan dhukkubsamu hin qabu.',fr:'Non, je ne suis pas allergique.',side:'left'},
-      {s:'Farmaasiistuu',et:'Ayibuprofen siif kennaa. Nyaata wajjin tokko fudhu.',fr:'Je vous donne un ibuprofène. Prenez-en un avec de la nourriture.',side:'right'},
-      {s:'Maamilaa',et:'Guyyaatti si\'a meeqa?',fr:'Combien de fois par jour ?',side:'left'},
-      {s:'Farmaasiistuu',et:'Guyyaatti si\'a sadii, hanga ol.',fr:'Trois fois par jour, maximum.',side:'right'}
-    ]},
-    {label:'Sit. 2',title:'Trouver la pharmacie de garde',img:'🌙',dialogue:[
-      {s:'Daawwataa',et:'Dhiifama, farmaasinni amma banama jiruudha?',fr:'Pardon, il y a une pharmacie ouverte maintenant ?',side:'left'},
-      {s:'Ollittuu',et:'Farmaasiileen cufamaniiru. Farmaasiitti kutaa waardiyaa deemuu qabda.',fr:'Les pharmacies sont fermées. Tu as besoin de la pharmacie de garde.',side:'right'},
-      {s:'Daawwataa',et:'Eessa jira?',fr:'Elle est où ?',side:'left'},
-      {s:'Ollittuu',et:'Farmaasiitti maxxanfame ilaaladhu. Isa banama jiru ibsa.',fr:'Regarde l\'affiche de cette pharmacie. Elle indique laquelle est ouverte.',side:'right'},
-      {s:'Daawwataa',et:'Aah, gadi fageenyaan! Galatoomi.',fr:'Ah, je comprends ! Merci.',side:'left'},
-      {s:'Ollittuu',et:'Nagaan!',fr:'De rien !',side:'right'}
-    ]},
-    {label:'Sit. 3',title:'Acheter un médicament',img:'💉',dialogue:[
-      {s:'Maamilaa',et:'Akkam. Qufaaf waa qabduu?',fr:'Bonjour. Vous avez quelque chose pour la toux ?',side:'left'},
-      {s:'Farmaasiistuu',et:'Eeyyeen. Gurraachaa moo daa\'imaaf?',fr:'Oui. C\'est pour un adulte ou un enfant ?',side:'right'},
-      {s:'Maamilaa',et:'Gurraachaaf.',fr:'Pour un adulte.',side:'left'},
-      {s:'Farmaasiistuu',et:'Siiraabii kana fudhu. Saanikoo lama, guyyaatti si\'a sadii.',fr:'Prenez ce sirop. Deux cuillères, trois fois par jour.',side:'right'},
-      {s:'Maamilaa',et:'Meeqadha?',fr:'Ça coûte combien ?',side:'left'},
-      {s:'Farmaasiistuu',et:'Birraa shan fi saddet.',fr:'Cinq euros quatre-vingt.',side:'right'}
-    ]}
-   ],
-   vocab:['Mataan natti dhukkuba = J\'ai mal à la tête','Qoonqoon natti dhukkuba = J\'ai mal à la gorge','Farmaasiitti waardiyaa = La pharmacie de garde','Waan dhukkubsamu hin qabu = Je ne suis pas allergique','Siiraabii = Le sirop','Guyyaatti si\'a sadii = Trois fois par jour','Maxxanfame = L\'affiche'],
-   quiz:[
-    {q:'Afaan Oromootti "J\'ai mal à la tête" akkamiin jedha?',opts:['Ho\'a qaba','Garaan natti dhukkuba','Mataan natti dhukkuba','Dadhabee jira'],ans:2},
-    {q:'"Farmaasiitti waardiyaa" maal jechuudha?',opts:['La grande pharmacie','La pharmacie de garde ouverte la nuit','La pharmacie de l\'hôpital','La pharmacie pour touristes'],ans:1},
-    {q:'Afaan Oromootti "Trois fois par jour" akkamiin jedha?',opts:['Guyyaatti si\'a lama','Guyyaatti si\'a tokko','Guyyaatti si\'a sadii','Guyyaatti si\'a afur'],ans:2}
-   ]},
- 
-  /* 9 ── À l'hôtel */
+
+  /* 8 ── À l'hôtel */
   {id:'hotel2',level:2,emoji:'🏨',name:'Hootelatti',sub:'Arriver à l\'hôtel / S\'installer',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Arrivée à la réception',img:'🛎️',dialogue:[
@@ -2468,78 +2548,8 @@ var LEVEL2_THEMES_OR = [
     {q:'Jechuun "Hin hojjetu" maal jechuudha?',opts:['C\'est fermé','Ça ne marche pas','C\'est cassé','Je ne sais pas'],ans:1},
     {q:'Afaan Oromootti "La clé" akkamiin jedha?',opts:['Balbala','Mana','Cufaa','Ol ba\'aa'],ans:2}
    ]},
- 
-  /* 10 ── Chez le médecin */
-  {id:'medico2',level:2,emoji:'🩺',name:'Doktoratti',sub:'Expliquer ce qui ne va pas / Chez le médecin',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Expliquer ses symptômes',img:'🤒',dialogue:[
-      {s:'Doktora',et:'Nagaan bulte! Maal sitti dhiphise?',fr:'Bonjour ! Qu\'est-ce qui ne va pas ?',side:'right'},
-      {s:'Dhukkubsataa',et:'Ho\'a qabaa qoonqoos natti dhukkuba.',fr:'J\'ai de la fièvre et j\'ai mal à la gorge.',side:'left'},
-      {s:'Doktora',et:'Yoomii irraa?',fr:'Depuis quand ?',side:'right'},
-      {s:'Dhukkubsataa',et:'Kaleessa irraa.',fr:'Depuis hier.',side:'left'},
-      {s:'Doktora',et:'Qufas qabdaa?',fr:'Vous avez aussi de la toux ?',side:'right'},
-      {s:'Dhukkubsataa',et:'Eeyyeen, xiqqoo.',fr:'Oui, un peu.',side:'left'}
-    ]},
-    {label:'Sit. 2',title:'Comprendre le médecin',img:'💊',dialogue:[
-      {s:'Doktora',et:'Infekshinii qabda. Antibaayootiki siif barreessa.',fr:'Vous avez une infection. Je vous prescris un antibiotique.',side:'right'},
-      {s:'Dhukkubsataa',et:'Qoricha yoom fudha?',fr:'Quand est-ce que je prends le médicament ?',side:'left'},
-      {s:'Doktora',et:'Tokkoo ganamaatti fi tokkoo halkan.',fr:'Un le matin et un le soir.',side:'right'},
-      {s:'Dhukkubsataa',et:'Guyyaa meeqa?',fr:'Pendant combien de jours ?',side:'left'},
-      {s:'Doktora',et:'Guyyaa torba. Bishaan baay\'ee dhugi.',fr:'Sept jours. Et buvez beaucoup d\'eau.',side:'right'},
-      {s:'Dhukkubsataa',et:'Galatoomi, doktera.',fr:'Merci, docteur.',side:'left'}
-    ]},
-    {label:'Sit. 3',title:'Appeler le médecin',img:'📞',dialogue:[
-      {s:'Dhukkubsataa',et:'Akkam, doktora beellama barbaada.',fr:'Bonjour, je veux un rendez-vous avec le médecin.',side:'left'},
-      {s:'Simataa',et:'Yoom?',fr:'Pour quand ?',side:'right'},
-      {s:'Dhukkubsataa',et:'Har\'a yoo danda\'ame. Baay\'ee dhukkubsadha.',fr:'Pour aujourd\'hui si c\'est possible. Je suis très malade.',side:'left'},
-      {s:'Simataa',et:'Ho\'a qabduu?',fr:'Vous avez de la fièvre ?',side:'right'},
-      {s:'Dhukkubsataa',et:'Eeyyeen, digdama sagal digrii.',fr:'Oui, trente-neuf degrés.',side:'left'},
-      {s:'Simataa',et:'Sa\'aatii afuritti kottaa. Paaspoortii fidadhu.',fr:'Venez à seize heures. Apportez votre passeport.',side:'right'}
-    ]}
-   ],
-   vocab:['Maal sitti dhiphise? = Qu\'est-ce qui ne va pas ?','Ho\'a qabaa = J\'ai de la fièvre','Qoonqoon natti dhukkuba = J\'ai mal à la gorge','Kaleessa irraa = Depuis hier','Qufa = La toux','Beellama = Un rendez-vous','Baay\'ee dhukkubsadha = Je suis très malade'],
-   quiz:[
-    {q:'Afaan Oromootti "J\'ai de la fièvre" akkamiin jedha?',opts:['Qorraan natti dhiphise','Ho\'a qabaa','Qufaa qabaa','Dhukkuba qabaa'],ans:1},
-    {q:'Jechuun "Qoonqoon natti dhukkuba" maal jechuudha?',opts:['J\'ai mal à la tête','J\'ai mal au ventre','J\'ai mal à la gorge','J\'ai mal au dos'],ans:2},
-    {q:'Afaan Oromootti "Un rendez-vous" akkamiin jedha?',opts:['Dirqama','Beellama','Mootummaa','Daawwannaa'],ans:1}
-   ]},
- 
-  /* 11 ── La météo */
-  {id:'meteo2',level:2,emoji:'☀️',name:'Qilleensa',sub:'Parler de la météo / Qu\'est-ce qu\'il fait ?',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Parler du temps',img:'🌤️',dialogue:[
-      {s:'Tulluu',et:'Har\'a baay\'ee ho\'aa!',fr:'Quelle chaleur aujourd\'hui !',side:'left'},
-      {s:'Romain',et:'Eeyyeen, baay\'ee ho\'aa. Digrii meeqa?',fr:'Oui, il fait très chaud. Il fait combien de degrés ?',side:'right'},
-      {s:'Tulluu',et:'Digrii soddomaa fi shan.',fr:'Trente-cinq degrés.',side:'left'},
-      {s:'Romain',et:'Baay\'ee dha! As bishaan dhaabbataa jiraa?',fr:'C\'est beaucoup ! Il y a une piscine ici ?',side:'right'},
-      {s:'Tulluu',et:'Eeyyeen, hootelatti jira.',fr:'Oui, elle est à l\'hôtel.',side:'left'},
-      {s:'Romain',et:'Haa deemuun!',fr:'Allons-y !',side:'right'}
-    ]},
-    {label:'Sit. 2',title:'Prévoir la sortie',img:'🌧️',dialogue:[
-      {s:'Birraa',et:'Har\'a bahuun?',fr:'On sort aujourd\'hui ?',side:'left'},
-      {s:'Camille',et:'Hin beeku. Qilleensi akkam?',fr:'Je ne sais pas. Il fait quel temps ?',side:'right'},
-      {s:'Birraa',et:'Xiqqoo roobu.',fr:'Il pleut un peu.',side:'left'},
-      {s:'Camille',et:'Arfasaa qabdaa?',fr:'Tu as un parapluie ?',side:'right'},
-      {s:'Birraa',et:'Lakki. Atis?',fr:'Non. Et toi ?',side:'left'},
-      {s:'Camille',et:'Ani qabaa. Waloon haa deemnu!',fr:'Moi oui. Allons-y ensemble !',side:'right'}
-    ]},
-    {label:'Sit. 3',title:'Parler des seasons',img:'🍂',dialogue:[
-      {s:'Caaltuu',et:'Yeroon bareedaan kee kami?',fr:'Quelle est ta saison préférée ?',side:'right'},
-      {s:'Théo',et:'Gannaa. Aduu fi ho\'a jaalladha.',fr:'L\'été. J\'aime le soleil et la chaleur.',side:'left'},
-      {s:'Caaltuu',et:'Ani birraa jaalladha. Hin qorruu hin ho\'u.',fr:'Moi je préfère l\'automne. Il ne fait ni chaud ni froid.',side:'right'},
-      {s:'Théo',et:'Oromiyaa keessaas? Gannaa baay\'ee qorraa?',fr:'Et en Oromia ? Il fait très froid en hiver ?',side:'left'},
-      {s:'Caaltuu',et:'Irratti. Shaashamanneetti eeyyeen, Adaamaatti miti.',fr:'Ça dépend. À Shashemene oui, à Adama non.',side:'right'},
-      {s:'Théo',et:'Baay\'ee nama barsiisa!',fr:'Comme c\'est intéressant !',side:'left'}
-    ]}
-   ],
-   vocab:['Ho\'aa! = Quelle chaleur !','Qorraa = Il fait froid','Ho\'aa = Il fait chaud','Roobu = Il pleut','Arfasaa = Le parapluie','Gannaa = L\'été','Bona = L\'hiver'],
-   quiz:[
-    {q:'Afaan Oromootti "Il fait froid" akkamiin jedha?',opts:['Ho\'aa','Aduu jira','Roobu','Qorraa'],ans:3},
-    {q:'Jechuun "Ho\'aa baay\'ee!" maal jechuudha?',opts:['Quelle chance !','Quelle chaleur !','Quel froid !','Quel vent !'],ans:1},
-    {q:'Afaan Oromootti "Le parapluie" akkamiin jedha?',opts:['Uffata ciicha','Haguugoo','Arfasaa','Kofii'],ans:2}
-   ]},
- 
-  /* 12 ── Trouver un logement */
+
+  /* 9 ── Trouver un logement */
   {id:'logement2',level:2,emoji:'🏠',name:'Mana barbaaduu',sub:'Chercher un logement / Louer une maison',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Appeler pour une maison',img:'📱',dialogue:[
@@ -2573,7 +2583,113 @@ var LEVEL2_THEMES_OR = [
     {q:'Afaan Oromootti "Le plombier" akkamiin jedha?',opts:['Ibsaa hojjetaa','Hidhaata bishaan','Muka hojjetaa','Barreessaa'],ans:1},
     {q:'Jechuun "Kiraa" maal jechuudha?',opts:['La vente','Le loyer','La maison','Le contrat'],ans:1}
    ]},
- 
+
+  /* 10 ── La météo */
+  {id:'meteo2',level:2,emoji:'☀️',name:'Qilleensa',sub:'Parler de la météo / Qu\'est-ce qu\'il fait ?',type:'dialog',
+   situations:[
+    {label:'Sit. 1',title:'Parler du temps',img:'🌤️',dialogue:[
+      {s:'Tulluu',et:'Har\'a baay\'ee ho\'aa!',fr:'Quelle chaleur aujourd\'hui !',side:'left'},
+      {s:'Romain',et:'Eeyyeen, baay\'ee ho\'aa. Digrii meeqa?',fr:'Oui, il fait très chaud. Il fait combien de degrés ?',side:'right'},
+      {s:'Tulluu',et:'Digrii soddomaa fi shan.',fr:'Trente-cinq degrés.',side:'left'},
+      {s:'Romain',et:'Baay\'ee dha! As bishaan dhaabbataa jiraa?',fr:'C\'est beaucoup ! Il y a une piscine ici ?',side:'right'},
+      {s:'Tulluu',et:'Eeyyeen, hootelatti jira.',fr:'Oui, elle est à l\'hôtel.',side:'left'},
+      {s:'Romain',et:'Haa deemuun!',fr:'Allons-y !',side:'right'}
+    ]},
+    {label:'Sit. 2',title:'Prévoir la sortie',img:'🌧️',dialogue:[
+      {s:'Birraa',et:'Har\'a bahuun?',fr:'On sort aujourd\'hui ?',side:'left'},
+      {s:'Camille',et:'Hin beeku. Qilleensi akkam?',fr:'Je ne sais pas. Il fait quel temps ?',side:'right'},
+      {s:'Birraa',et:'Xiqqoo roobu.',fr:'Il pleut un peu.',side:'left'},
+      {s:'Camille',et:'Arfasaa qabdaa?',fr:'Tu as un parapluie ?',side:'right'},
+      {s:'Birraa',et:'Lakki. Atis?',fr:'Non. Et toi ?',side:'left'},
+      {s:'Camille',et:'Ani qabaa. Waloon haa deemnu!',fr:'Moi oui. Allons-y ensemble !',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Parler des seasons',img:'🍂',dialogue:[
+      {s:'Caaltuu',et:'Yeroon bareedaan kee kami?',fr:'Quelle est ta saison préférée ?',side:'right'},
+      {s:'Théo',et:'Gannaa. Aduu fi ho\'a jaalladha.',fr:'L\'été. J\'aime le soleil et la chaleur.',side:'left'},
+      {s:'Caaltuu',et:'Ani birraa jaalladha. Hin qorruu hin ho\'u.',fr:'Moi je préfère l\'automne. Il ne fait ni chaud ni froid.',side:'right'},
+      {s:'Théo',et:'Oromiyaa keessaas? Gannaa baay\'ee qorraa?',fr:'Et en Oromia ? Il fait très froid en hiver ?',side:'left'},
+      {s:'Caaltuu',et:'Irratti. Shaashamanneetti eeyyeen, Adaamaatti miti.',fr:'Ça dépend. À Shashemene oui, à Adama non.',side:'right'},
+      {s:'Théo',et:'Baay\'ee nama barsiisa!',fr:'Comme c\'est intéressant !',side:'left'}
+    ]}
+   ],
+   vocab:['Ho\'aa! = Quelle chaleur !','Qorraa = Il fait froid','Ho\'aa = Il fait chaud','Roobu = Il pleut','Arfasaa = Le parapluie','Gannaa = L\'été','Bona = L\'hiver'],
+   quiz:[
+    {q:'Afaan Oromootti "Il fait froid" akkamiin jedha?',opts:['Ho\'aa','Aduu jira','Roobu','Qorraa'],ans:3},
+    {q:'Jechuun "Ho\'aa baay\'ee!" maal jechuudha?',opts:['Quelle chance !','Quelle chaleur !','Quel froid !','Quel vent !'],ans:1},
+    {q:'Afaan Oromootti "Le parapluie" akkamiin jedha?',opts:['Uffata ciicha','Haguugoo','Arfasaa','Kofii'],ans:2}
+   ]},
+
+  /* 11 ── L'heure et la météo */
+  {id:'temps2',level:2,emoji:'🕐',name:'Sa\'atii fi Qilleensa',sub:'L\'heure et la météo / Parler du temps',type:'dialog',
+   note:'📍 En France, la météo est un sujet de conversation très courant ! Les saisons françaises (printemps, été, automne, hiver) sont très marquées, contrairement à Shashamané où les variations sont surtout liées à la pluie.',
+   situations:[
+    {label:'Sit. 1',title:'Quelle heure est-il ?',img:'⏰',dialogue:[
+      {s:'Marc',et:'Dhiifama, sa\'atii meeqa?',fr:'Pardon, quelle heure est-il ?',side:'left'},
+      {s:'Caaltuu',et:'Sa\'atii sadii fi walakkaa.',fr:'Il est trois heures et demie.',side:'right'},
+      {s:'Marc',et:'Baankiin amma banama jiraa?',fr:'La banque est encore ouverte ?',side:'left'},
+      {s:'Caaltuu',et:'Eeyyeen, hanga shan banama.',fr:'Oui, elle est ouverte jusqu\'à cinq heures.',side:'right'},
+      {s:'Marc',et:'Galatoomi! Ariifadhee deema.',fr:'Merci ! Je dois me dépêcher.',side:'left'},
+      {s:'Caaltuu',et:'Ariifi! Nagaan!',fr:'Vas-y ! Bonne chance !',side:'right'}
+    ]},
+    {label:'Sit. 2',title:'Parler de la météo',img:'🌤️',dialogue:[
+      {s:'Sophie',et:'Qilleensi har\'a akkam?',fr:'Il fait quel temps aujourd\'hui ?',side:'left'},
+      {s:'Lamma',et:'Ganama ho\'aa, garuu galgala roobu dandaa.',fr:'Il fait chaud le matin, mais il peut pleuvoir le soir.',side:'right'},
+      {s:'Sophie',et:'Shaashamanneetti yeroo maraan akkana?',fr:'À Shashamané c\'est souvent comme ça ?',side:'left'},
+      {s:'Lamma',et:'Arfasaatti eeyyeen. Roobni guyyaa guyyaa dhufa.',fr:'En saison des pluies oui. Il pleut tous les jours.',side:'right'},
+      {s:'Sophie',et:'Faransaayitti garuu bona qofaa.',fr:'En France c\'est seulement en hiver.',side:'left'},
+      {s:'Lamma',et:'Baay\'ee adda! As ho\'a baay\'ee jaalladha.',fr:'C\'est très différent ! Ici j\'aime beaucoup la chaleur.',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Planifier selon la météo',img:'🌧️',dialogue:[
+      {s:'Iftu',et:'Boruu gabaa deemna?',fr:'On va au marché demain ?',side:'right'},
+      {s:'Théo',et:'Qilleensi akkam jedha?',fr:'Qu\'est-ce que dit la météo ?',side:'left'},
+      {s:'Iftu',et:'Roobu jetteetti. Aanoo roobaa kaasi!',fr:'Elle dit qu\'il va pleuvoir. Prends ton parapluie !',side:'right'},
+      {s:'Théo',et:'Tolee. Sa\'atii meeqatti deemna?',fr:'D\'accord. On y va à quelle heure ?',side:'left'},
+      {s:'Iftu',et:'Ganama sa\'atii saddeet. Roobni dura deemuun wayya.',fr:'À huit heures du matin. Mieux vaut partir avant la pluie.',side:'right'},
+      {s:'Théo',et:'Eeyyeen! Ganamaas ko\'otni baay\'ee jiru.',fr:'Oui ! Et le matin il y a plus de choix au marché.',side:'left'}
+    ]}
+   ],
+   vocab:['Sa\'atii meeqa? = Quelle heure est-il ?','Hanga ... banama = Ouvert jusqu\'à...','Ariifi! = Dépêche-toi !','Qilleensi akkam? = Quel temps fait-il ?','Arfasaatti = En saison des pluies','Roobni dhufa = Il va pleuvoir','Aanoo roobaa kaasi = Prends ton parapluie'],
+   quiz:[
+    {q:'Afaan Oromootti "Quelle heure est-il ?" akkamiin jedha?',opts:['Guyyaan meeqa?','Sa\'atii meeqa?','Boruu meeqa?','Daqiiqaan meeqa?'],ans:1},
+    {q:'Jechuun "Arfasaatti roobu" maal jechuudha?',opts:['Il neige en hiver','Il fait chaud en été','Il pleut en saison des pluies','Il y a du vent au printemps'],ans:2},
+    {q:'Afaan Oromootti "Dépêche-toi !" akkamiin jedha?',opts:['Boqo!','Deemi!','Ariifi!','Rafuu!'],ans:2}
+   ]},
+
+  /* 12 ── La vie quotidienne */
+  {id:'routine2',level:2,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'La routine / La vie de tous les jours',type:'dialog',
+   situations:[
+    {label:'Sit. 1',title:'La matinée',img:'⏰',dialogue:[
+      {s:'Haadha',et:'Ka\'i! Sa\'atii torba ta\'eera!',fr:'Lève-toi ! Il est sept heures !',side:'right'},
+      {s:'Dargagoo',et:'Eeyyeen, amma kaa\'a. Cireen qophaa\'eeii?',fr:'Oui, je me lève. Le petit-déjeuner est prêt ?',side:'left'},
+      {s:'Haadha',et:'Eeyyeen. Dhiqadhu jalqaba.',fr:'Oui. Douche-toi d\'abord.',side:'right'},
+      {s:'Dargagoo',et:'Tolee. Ilkaanis?',fr:'D\'accord. Les dents aussi ?',side:'left'},
+      {s:'Haadha',et:'Dhugumatti! Ilkaan eebuu dagattee?',fr:'Bien sûr ! Tu as oublié de te brosser les dents ?',side:'right'},
+      {s:'Dargagoo',et:'Lakki lakki, nan yaadadha!',fr:'Non non, je m\'en souviens !',side:'left'}
+    ]},
+    {label:'Sit. 2',title:'Partager les tâches',img:'🧹',dialogue:[
+      {s:'Julie',et:'Kana booda mana qulqulleessina.',fr:'Après on fait le ménage.',side:'left'},
+      {s:'Marc',et:'Tolee. Ani meeshaa dhiqa, ati hoo?',fr:'D\'accord. Je fais la vaisselle, et toi ?',side:'right'},
+      {s:'Julie',et:'Ani daakuu qulqulleessa. Uffatnis?',fr:'Moi je nettoie la cuisine. Et le linge ?',side:'left'},
+      {s:'Marc',et:'Uffata dhiquu hojjedheen jira.',fr:'J\'ai déjà lavé le linge.',side:'right'},
+      {s:'Julie',et:'Baay\'ee gaarii! Xumurree nyaata bilcheessina.',fr:'Super ! Après le ménage on cuisine.',side:'left'},
+      {s:'Marc',et:'Yaada gaarii! Maal bilcheessina?',fr:'Bonne idée ! On fait quoi à manger ?',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Le soir après le travail',img:'🌆',dialogue:[
+      {s:'Tolaa',et:'Hojii irraa dhufe. Dadhabee jira!',fr:'Je rentre du travail. Je suis fatigué !',side:'left'},
+      {s:'Caaltuu',et:'Boqo xiqqoo. Nyaata bilcheessaan jira.',fr:'Repose-toi un peu. Je suis en train de cuisiner.',side:'right'},
+      {s:'Tolaa',et:'Baay\'ee galatoomi. Maal bilcheessita?',fr:'Merci beaucoup. Tu cuisines quoi ?',side:'left'},
+      {s:'Caaltuu',et:'Injera fi atara. Dhukkubsattee?',fr:'De l\'injera et des lentilles. Ça va ?',side:'right'},
+      {s:'Tolaa',et:'Gaarii, baay\'ee beela\'ee jira.',fr:'Ça va, j\'ai très faim.',side:'left'},
+      {s:'Caaltuu',et:'Daqiiqaa kudha booda nyaanna!',fr:'Dans dix minutes on mange !',side:'right'}
+    ]}
+   ],
+   vocab:['Ka\'i! = Lève-toi !','Dhiqadhu = Douche-toi','Ilkaan eebuu = Se brosser les dents','Mana qulqulleessuu = Faire le ménage','Meeshaa dhiquu = Faire la vaisselle','Uffata dhiquu = Laver le linge','Nyaata bilcheessuu = Cuisiner','Dadhabee jira = Je suis fatigué','Boqo = Repose-toi'],
+   quiz:[
+    {q:'Afaan Oromootti "Faire le ménage" akkamiin jedha?',opts:['Mana ijaaruu','Mana qulqulleessuu','Mana bituu','Mana jijjiiruu'],ans:1},
+    {q:'Jechuun "Uffata dhiquu" maal jechuudha?',opts:['Repasser le linge','tendre le linge','Laver le linge','Porter des vêtements'],ans:2},
+    {q:'Afaan Oromootti "Je suis fatigué" akkamiin jedha?',opts:['Beela\'ee jira','Dheebuu dhabe','Dadhabee jira','Rafee jira'],ans:2}
+   ]},
+
   /* 13 ── Parler de ses goûts */
   {id:'gustos2',level:2,emoji:'❤️',name:'Jaalala fi filannoowwan',sub:'Parler de ce qu\'on aime / Les loisirs',type:'dialog',
    situations:[
@@ -2608,7 +2724,7 @@ var LEVEL2_THEMES_OR = [
     {q:'Jechuun "Maal dhiyeessaa?" siinimaa keessatti maal jechuudha?',opts:['Ça coûte combien ?','À quelle heure ?','Qu\'est-ce qu\'il y a ?','C\'est où ?'],ans:2},
     {q:'Afaan Oromootti "Le match" akkamiin jedha?',opts:['Ispoortii','Garee','Taphaa','Dirree'],ans:2}
    ]},
- 
+
   /* 14 ── Sortir le soir */
   {id:'fiesta2',level:2,emoji:'🎉',name:'Halkan bahu',sub:'Sortir le soir / Vie sociale en Oromia',type:'dialog',
    situations:[
@@ -2642,84 +2758,77 @@ var LEVEL2_THEMES_OR = [
     {q:'Jechuun "Tolee!" Oromiyaatti maal jechuudha?',opts:['Au revoir !','Allons-y !','D\'accord !','C\'est nul !'],ans:2},
     {q:'Afaan Oromootti "J\'ai faim" akkamiin jedha?',opts:['Dheebuu dhabe','Rafuu barbaada','Qorraa dhabe','Beela\'ee jira'],ans:3},
     {q:'Jechuun "Oromiyaatti halkan bahu" maal jechuudha?',opts:['En Oromia on rentre tard','En Oromia on travaille tard','En Oromia on sort tard','En Oromia on mange tard'],ans:2}
-   ]}
- ,
+   ]},
 
-  /* 15 -- La vie quotidienne */
-  {id:'routine2',level:2,emoji:'🌅',name:'Guyyaa Guyyaa',sub:'La routine / La vie de tous les jours',type:'dialog',
+  /* 15 ── À la pharmacie */
+  {id:'farmacia2',level:2,emoji:'💊',name:'Farmaasiitti',sub:'Acheter des médicaments / À la pharmacie',type:'dialog',
    situations:[
-    {label:'Sit. 1',title:'La matinée',img:'⏰',dialogue:[
-      {s:'Haadha',et:'Ka\'i! Sa\'atii torba ta\'eera!',fr:'Lève-toi ! Il est sept heures !',side:'right'},
-      {s:'Dargagoo',et:'Eeyyeen, amma kaa\'a. Cireen qophaa\'eeii?',fr:'Oui, je me lève. Le petit-déjeuner est prêt ?',side:'left'},
-      {s:'Haadha',et:'Eeyyeen. Dhiqadhu jalqaba.',fr:'Oui. Douche-toi d\'abord.',side:'right'},
-      {s:'Dargagoo',et:'Tolee. Ilkaanis?',fr:'D\'accord. Les dents aussi ?',side:'left'},
-      {s:'Haadha',et:'Dhugumatti! Ilkaan eebuu dagattee?',fr:'Bien sûr ! Tu as oublié de te brosser les dents ?',side:'right'},
-      {s:'Dargagoo',et:'Lakki lakki, nan yaadadha!',fr:'Non non, je m\'en souviens !',side:'left'}
+    {label:'Sit. 1',title:'Mal de tête',img:'🤕',dialogue:[
+      {s:'Maamilaa',et:'Akkam. Mataan natti dhukkuba. Waa qabduu?',fr:'Bonjour. J\'ai mal à la tête. Qu\'est-ce que vous avez ?',side:'left'},
+      {s:'Farmaasiistuu',et:'Qorichatti waan dhukkubsan qabdaa?',fr:'Vous êtes allergique à un médicament ?',side:'right'},
+      {s:'Maamilaa',et:'Lakki, waan dhukkubsamu hin qabu.',fr:'Non, je ne suis pas allergique.',side:'left'},
+      {s:'Farmaasiistuu',et:'Ayibuprofen siif kennaa. Nyaata wajjin tokko fudhu.',fr:'Je vous donne un ibuprofène. Prenez-en un avec de la nourriture.',side:'right'},
+      {s:'Maamilaa',et:'Guyyaatti si\'a meeqa?',fr:'Combien de fois par jour ?',side:'left'},
+      {s:'Farmaasiistuu',et:'Guyyaatti si\'a sadii, hanga ol.',fr:'Trois fois par jour, maximum.',side:'right'}
     ]},
-    {label:'Sit. 2',title:'Partager les tâches',img:'🧹',dialogue:[
-      {s:'Julie',et:'Kana booda mana qulqulleessina.',fr:'Après on fait le ménage.',side:'left'},
-      {s:'Marc',et:'Tolee. Ani meeshaa dhiqa, ati hoo?',fr:'D\'accord. Je fais la vaisselle, et toi ?',side:'right'},
-      {s:'Julie',et:'Ani daakuu qulqulleessa. Uffatnis?',fr:'Moi je nettoie la cuisine. Et le linge ?',side:'left'},
-      {s:'Marc',et:'Uffata dhiquu hojjedheen jira.',fr:'J\'ai déjà lavé le linge.',side:'right'},
-      {s:'Julie',et:'Baay\'ee gaarii! Xumurree nyaata bilcheessina.',fr:'Super ! Après le ménage on cuisine.',side:'left'},
-      {s:'Marc',et:'Yaada gaarii! Maal bilcheessina?',fr:'Bonne idée ! On fait quoi à manger ?',side:'right'}
+    {label:'Sit. 2',title:'Trouver la pharmacie de garde',img:'🌙',dialogue:[
+      {s:'Daawwataa',et:'Dhiifama, farmaasinni amma banama jiruudha?',fr:'Pardon, il y a une pharmacie ouverte maintenant ?',side:'left'},
+      {s:'Ollittuu',et:'Farmaasiileen cufamaniiru. Farmaasiitti kutaa waardiyaa deemuu qabda.',fr:'Les pharmacies sont fermées. Tu as besoin de la pharmacie de garde.',side:'right'},
+      {s:'Daawwataa',et:'Eessa jira?',fr:'Elle est où ?',side:'left'},
+      {s:'Ollittuu',et:'Farmaasiitti maxxanfame ilaaladhu. Isa banama jiru ibsa.',fr:'Regarde l\'affiche de cette pharmacie. Elle indique laquelle est ouverte.',side:'right'},
+      {s:'Daawwataa',et:'Aah, gadi fageenyaan! Galatoomi.',fr:'Ah, je comprends ! Merci.',side:'left'},
+      {s:'Ollittuu',et:'Nagaan!',fr:'De rien !',side:'right'}
     ]},
-    {label:'Sit. 3',title:'Le soir après le travail',img:'🌆',dialogue:[
-      {s:'Tolaa',et:'Hojii irraa dhufe. Dadhabee jira!',fr:'Je rentre du travail. Je suis fatigué !',side:'left'},
-      {s:'Caaltuu',et:'Boqo xiqqoo. Nyaata bilcheessaan jira.',fr:'Repose-toi un peu. Je suis en train de cuisiner.',side:'right'},
-      {s:'Tolaa',et:'Baay\'ee galatoomi. Maal bilcheessita?',fr:'Merci beaucoup. Tu cuisines quoi ?',side:'left'},
-      {s:'Caaltuu',et:'Injera fi atara. Dhukkubsattee?',fr:'De l\'injera et des lentilles. Ça va ?',side:'right'},
-      {s:'Tolaa',et:'Gaarii, baay\'ee beela\'ee jira.',fr:'Ça va, j\'ai très faim.',side:'left'},
-      {s:'Caaltuu',et:'Daqiiqaa kudha booda nyaanna!',fr:'Dans dix minutes on mange !',side:'right'}
+    {label:'Sit. 3',title:'Acheter un médicament',img:'💉',dialogue:[
+      {s:'Maamilaa',et:'Akkam. Qufaaf waa qabduu?',fr:'Bonjour. Vous avez quelque chose pour la toux ?',side:'left'},
+      {s:'Farmaasiistuu',et:'Eeyyeen. Gurraachaa moo daa\'imaaf?',fr:'Oui. C\'est pour un adulte ou un enfant ?',side:'right'},
+      {s:'Maamilaa',et:'Gurraachaaf.',fr:'Pour un adulte.',side:'left'},
+      {s:'Farmaasiistuu',et:'Siiraabii kana fudhu. Saanikoo lama, guyyaatti si\'a sadii.',fr:'Prenez ce sirop. Deux cuillères, trois fois par jour.',side:'right'},
+      {s:'Maamilaa',et:'Meeqadha?',fr:'Ça coûte combien ?',side:'left'},
+      {s:'Farmaasiistuu',et:'Birraa shan fi saddet.',fr:'Cinq euros quatre-vingt.',side:'right'}
     ]}
    ],
-   vocab:['Ka\'i! = Lève-toi !','Dhiqadhu = Douche-toi','Ilkaan eebuu = Se brosser les dents','Mana qulqulleessuu = Faire le ménage','Meeshaa dhiquu = Faire la vaisselle','Uffata dhiquu = Laver le linge','Nyaata bilcheessuu = Cuisiner','Dadhabee jira = Je suis fatigué','Boqo = Repose-toi'],
+   vocab:['Mataan natti dhukkuba = J\'ai mal à la tête','Qoonqoon natti dhukkuba = J\'ai mal à la gorge','Farmaasiitti waardiyaa = La pharmacie de garde','Waan dhukkubsamu hin qabu = Je ne suis pas allergique','Siiraabii = Le sirop','Guyyaatti si\'a sadii = Trois fois par jour','Maxxanfame = L\'affiche'],
    quiz:[
-    {q:'Afaan Oromootti "Faire le ménage" akkamiin jedha?',opts:['Mana ijaaruu','Mana qulqulleessuu','Mana bituu','Mana jijjiiruu'],ans:1},
-    {q:'Jechuun "Uffata dhiquu" maal jechuudha?',opts:['Repasser le linge','tendre le linge','Laver le linge','Porter des vêtements'],ans:2},
-    {q:'Afaan Oromootti "Je suis fatigué" akkamiin jedha?',opts:['Beela\'ee jira','Dheebuu dhabe','Dadhabee jira','Rafee jira'],ans:2}
-   ]}
+    {q:'Afaan Oromootti "J\'ai mal à la tête" akkamiin jedha?',opts:['Ho\'a qaba','Garaan natti dhukkuba','Mataan natti dhukkuba','Dadhabee jira'],ans:2},
+    {q:'"Farmaasiitti waardiyaa" maal jechuudha?',opts:['La grande pharmacie','La pharmacie de garde ouverte la nuit','La pharmacie de l\'hôpital','La pharmacie pour touristes'],ans:1},
+    {q:'Afaan Oromootti "Trois fois par jour" akkamiin jedha?',opts:['Guyyaatti si\'a lama','Guyyaatti si\'a tokko','Guyyaatti si\'a sadii','Guyyaatti si\'a afur'],ans:2}
+   ]},
 
-
-
-,
-
-  /* 16 -- L'heure et la météo */
-  {id:'temps2',level:2,emoji:'🕐',name:'Sa\'atii fi Qilleensa',sub:'L\'heure et la météo / Parler du temps',type:'dialog',
-   note:'📍 En France, la météo est un sujet de conversation très courant ! Les saisons françaises (printemps, été, automne, hiver) sont très marquées, contrairement à Shashamané où les variations sont surtout liées à la pluie.',
+  /* 16 ── Chez le médecin */
+  {id:'medico2',level:2,emoji:'🩺',name:'Doktoratti',sub:'Expliquer ce qui ne va pas / Chez le médecin',type:'dialog',
    situations:[
-    {label:'Sit. 1',title:'Quelle heure est-il ?',img:'⏰',dialogue:[
-      {s:'Marc',et:'Dhiifama, sa\'atii meeqa?',fr:'Pardon, quelle heure est-il ?',side:'left'},
-      {s:'Caaltuu',et:'Sa\'atii sadii fi walakkaa.',fr:'Il est trois heures et demie.',side:'right'},
-      {s:'Marc',et:'Baankiin amma banama jiraa?',fr:'La banque est encore ouverte ?',side:'left'},
-      {s:'Caaltuu',et:'Eeyyeen, hanga shan banama.',fr:'Oui, elle est ouverte jusqu\'à cinq heures.',side:'right'},
-      {s:'Marc',et:'Galatoomi! Ariifadhee deema.',fr:'Merci ! Je dois me dépêcher.',side:'left'},
-      {s:'Caaltuu',et:'Ariifi! Nagaan!',fr:'Vas-y ! Bonne chance !',side:'right'}
+    {label:'Sit. 1',title:'Expliquer ses symptômes',img:'🤒',dialogue:[
+      {s:'Doktora',et:'Nagaan bulte! Maal sitti dhiphise?',fr:'Bonjour ! Qu\'est-ce qui ne va pas ?',side:'right'},
+      {s:'Dhukkubsataa',et:'Ho\'a qabaa qoonqoos natti dhukkuba.',fr:'J\'ai de la fièvre et j\'ai mal à la gorge.',side:'left'},
+      {s:'Doktora',et:'Yoomii irraa?',fr:'Depuis quand ?',side:'right'},
+      {s:'Dhukkubsataa',et:'Kaleessa irraa.',fr:'Depuis hier.',side:'left'},
+      {s:'Doktora',et:'Qufas qabdaa?',fr:'Vous avez aussi de la toux ?',side:'right'},
+      {s:'Dhukkubsataa',et:'Eeyyeen, xiqqoo.',fr:'Oui, un peu.',side:'left'}
     ]},
-    {label:'Sit. 2',title:'Parler de la météo',img:'🌤️',dialogue:[
-      {s:'Sophie',et:'Qilleensi har\'a akkam?',fr:'Il fait quel temps aujourd\'hui ?',side:'left'},
-      {s:'Lamma',et:'Ganama ho\'aa, garuu galgala roobu dandaa.',fr:'Il fait chaud le matin, mais il peut pleuvoir le soir.',side:'right'},
-      {s:'Sophie',et:'Shaashamanneetti yeroo maraan akkana?',fr:'À Shashamané c\'est souvent comme ça ?',side:'left'},
-      {s:'Lamma',et:'Arfasaatti eeyyeen. Roobni guyyaa guyyaa dhufa.',fr:'En saison des pluies oui. Il pleut tous les jours.',side:'right'},
-      {s:'Sophie',et:'Faransaayitti garuu bona qofaa.',fr:'En France c\'est seulement en hiver.',side:'left'},
-      {s:'Lamma',et:'Baay\'ee adda! As ho\'a baay\'ee jaalladha.',fr:'C\'est très différent ! Ici j\'aime beaucoup la chaleur.',side:'right'}
+    {label:'Sit. 2',title:'Comprendre le médecin',img:'💊',dialogue:[
+      {s:'Doktora',et:'Infekshinii qabda. Antibaayootiki siif barreessa.',fr:'Vous avez une infection. Je vous prescris un antibiotique.',side:'right'},
+      {s:'Dhukkubsataa',et:'Qoricha yoom fudha?',fr:'Quand est-ce que je prends le médicament ?',side:'left'},
+      {s:'Doktora',et:'Tokkoo ganamaatti fi tokkoo halkan.',fr:'Un le matin et un le soir.',side:'right'},
+      {s:'Dhukkubsataa',et:'Guyyaa meeqa?',fr:'Pendant combien de jours ?',side:'left'},
+      {s:'Doktora',et:'Guyyaa torba. Bishaan baay\'ee dhugi.',fr:'Sept jours. Et buvez beaucoup d\'eau.',side:'right'},
+      {s:'Dhukkubsataa',et:'Galatoomi, doktera.',fr:'Merci, docteur.',side:'left'}
     ]},
-    {label:'Sit. 3',title:'Planifier selon la météo',img:'🌧️',dialogue:[
-      {s:'Iftu',et:'Boruu gabaa deemna?',fr:'On va au marché demain ?',side:'right'},
-      {s:'Théo',et:'Qilleensi akkam jedha?',fr:'Qu\'est-ce que dit la météo ?',side:'left'},
-      {s:'Iftu',et:'Roobu jetteetti. Aanoo roobaa kaasi!',fr:'Elle dit qu\'il va pleuvoir. Prends ton parapluie !',side:'right'},
-      {s:'Théo',et:'Tolee. Sa\'atii meeqatti deemna?',fr:'D\'accord. On y va à quelle heure ?',side:'left'},
-      {s:'Iftu',et:'Ganama sa\'atii saddeet. Roobni dura deemuun wayya.',fr:'À huit heures du matin. Mieux vaut partir avant la pluie.',side:'right'},
-      {s:'Théo',et:'Eeyyeen! Ganamaas ko\'otni baay\'ee jiru.',fr:'Oui ! Et le matin il y a plus de choix au marché.',side:'left'}
+    {label:'Sit. 3',title:'Appeler le médecin',img:'📞',dialogue:[
+      {s:'Dhukkubsataa',et:'Akkam, doktora beellama barbaada.',fr:'Bonjour, je veux un rendez-vous avec le médecin.',side:'left'},
+      {s:'Simataa',et:'Yoom?',fr:'Pour quand ?',side:'right'},
+      {s:'Dhukkubsataa',et:'Har\'a yoo danda\'ame. Baay\'ee dhukkubsadha.',fr:'Pour aujourd\'hui si c\'est possible. Je suis très malade.',side:'left'},
+      {s:'Simataa',et:'Ho\'a qabduu?',fr:'Vous avez de la fièvre ?',side:'right'},
+      {s:'Dhukkubsataa',et:'Eeyyeen, digdama sagal digrii.',fr:'Oui, trente-neuf degrés.',side:'left'},
+      {s:'Simataa',et:'Sa\'aatii afuritti kottaa. Paaspoortii fidadhu.',fr:'Venez à seize heures. Apportez votre passeport.',side:'right'}
     ]}
    ],
-   vocab:['Sa\'atii meeqa? = Quelle heure est-il ?','Hanga ... banama = Ouvert jusqu\'à...','Ariifi! = Dépêche-toi !','Qilleensi akkam? = Quel temps fait-il ?','Arfasaatti = En saison des pluies','Roobni dhufa = Il va pleuvoir','Aanoo roobaa kaasi = Prends ton parapluie'],
+   vocab:['Maal sitti dhiphise? = Qu\'est-ce qui ne va pas ?','Ho\'a qabaa = J\'ai de la fièvre','Qoonqoon natti dhukkuba = J\'ai mal à la gorge','Kaleessa irraa = Depuis hier','Qufa = La toux','Beellama = Un rendez-vous','Baay\'ee dhukkubsadha = Je suis très malade'],
    quiz:[
-    {q:'Afaan Oromootti "Quelle heure est-il ?" akkamiin jedha?',opts:['Guyyaan meeqa?','Sa\'atii meeqa?','Boruu meeqa?','Daqiiqaan meeqa?'],ans:1},
-    {q:'Jechuun "Arfasaatti roobu" maal jechuudha?',opts:['Il neige en hiver','Il fait chaud en été','Il pleut en saison des pluies','Il y a du vent au printemps'],ans:2},
-    {q:'Afaan Oromootti "Dépêche-toi !" akkamiin jedha?',opts:['Boqo!','Deemi!','Ariifi!','Rafuu!'],ans:2}
-   ]}
-
+    {q:'Afaan Oromootti "J\'ai de la fièvre" akkamiin jedha?',opts:['Qorraan natti dhiphise','Ho\'a qabaa','Qufaa qabaa','Dhukkuba qabaa'],ans:1},
+    {q:'Jechuun "Qoonqoon natti dhukkuba" maal jechuudha?',opts:['J\'ai mal à la tête','J\'ai mal au ventre','J\'ai mal à la gorge','J\'ai mal au dos'],ans:2},
+    {q:'Afaan Oromootti "Un rendez-vous" akkamiin jedha?',opts:['Dirqama','Beellama','Mootummaa','Daawwannaa'],ans:1}
+   ]},
 ];
 
 var ALL_THEMES_OR=LEVEL1_THEMES_OR.concat(LEVEL2_THEMES_OR);
