@@ -155,8 +155,27 @@ var LEVEL1_THEMES_FR=[
   {et:'Kuma lama',fr:'Deux mille',em:'2️⃣0️⃣0️⃣0️⃣'}
  ]},
 
-  {id:'cal',level:1,emoji:'📅',name:'Sanaata fi Guyyoota',sub:'Guyyaa, ji\'aa, bara… / Le calendrier',
+  
+
+  {id:'temps',level:1,emoji:'🕐',name:'Sa\'atii fi Sanaata',sub:'Sa\'atii, guyyaa, ji\'aa… / L\'heure et le calendrier',
    words:[
+    // L'heure
+    {et:'Sa\'atii meeqa?',fr:'Quelle heure est-il ?',em:'🕐'},
+    {et:'Walakkaa',fr:'Et demie',em:'🕧'},
+    {et:'Daqiiqaa',fr:'La minute',em:'⏱️'},
+    {et:'Sa\'atii',fr:'L\'heure',em:'⏰'},
+    // Moments de la journée
+    {et:'Ganama',fr:'Le matin',em:'🌅'},
+    {et:'Guyyaa',fr:'L\'après-midi',em:'☀️'},
+    {et:'Galgala',fr:'Le soir',em:'🌆'},
+    {et:'Halkan',fr:'La nuit',em:'🌙'},
+    // Repères temporels proches
+    {et:'Har\'aa',fr:'Aujourd\'hui',em:'📅'},
+    {et:'Boruu',fr:'Demain',em:'➡️'},
+    {et:'Kaleessa',fr:'Hier',em:'⬅️'},
+    {et:'Torban kana',fr:'Cette semaine',em:'📆'},
+    {et:'Torban darbee',fr:'La semaine dernière',em:'⬅️'},
+    {et:'Torban itti aanu',fr:'La semaine prochaine',em:'➡️'},
     // Jours de la semaine
     {et:'Guyyaa torbee',fr:'La semaine',em:'📆'},
     {et:'Wiixata',fr:'Lundi',em:'1️⃣'},
@@ -166,13 +185,6 @@ var LEVEL1_THEMES_FR=[
     {et:'Jimaata',fr:'Vendredi',em:'5️⃣'},
     {et:'Sanbata',fr:'Samedi',em:'6️⃣'},
     {et:'Dilbata',fr:'Dimanche',em:'7️⃣'},
-    // Moments clés
-    {et:'Har\'aa',fr:'Aujourd\'hui',em:'📅'},
-    {et:'Boruu',fr:'Demain',em:'➡️'},
-    {et:'Kaleessa',fr:'Hier',em:'⬅️'},
-    {et:'Torban kana',fr:'Cette semaine',em:'📆'},
-    {et:'Torban darbee',fr:'La semaine dernière',em:'⬅️'},
-    {et:'Torban itti aanu',fr:'La semaine prochaine',em:'➡️'},
     // Mois
     {et:'Ji\'a',fr:'Le mois',em:'🗓️'},
     {et:'Amajjii',fr:'Janvier',em:'❄️'},
@@ -187,61 +199,34 @@ var LEVEL1_THEMES_FR=[
     {et:'Onkoloolessa',fr:'Octobre',em:'🎃'},
     {et:'Sadaasa',fr:'Novembre',em:'🍁'},
     {et:'Muddee',fr:'Décembre',em:'🎄'},
-    // Année et dates
+    // Année
     {et:'Bara / Waggaa',fr:'L\'année',em:'🗓️'},
     {et:'Bara darbe',fr:'L\'année dernière',em:'⬅️'},
     {et:'Bara itti aanu',fr:'L\'année prochaine',em:'➡️'},
-    // Calendrier éthiopien (spécificité culturelle)
+    // Fête & anniversaire
     {et:'Guyyaa dhaloota',fr:'L\'anniversaire',em:'🎂'},
     {et:'Ayyaana Fulbaanaa',fr:'La fête du Nouvel An éthiopien (Enkutatash)',em:'🎊'},
    ]},
 
-  {id:'temps',level:1,emoji:'🕐',name:'Sa\'atii fi Qilleensa',sub:'Yeroo, guyyaa, ji\'aa… / L\'heure, la météo',
+  {id:'meteo',level:1,emoji:'🌤️',name:'Qilleensa fi Haala Biraa',sub:'Ho\'aa, qorraa, rooba… / La météo et le climat',
    words:[
-    {et:'Sa\'atii meeqa?',fr:'Quelle heure est-il ?',em:'🕐'},
-    {et:'Walakkaa',fr:'Et demie',em:'🕧'},
-    {et:'Daqiiqaa',fr:'La minute',em:'⏱️'},
-    {et:'Sa\'atii',fr:'L\'heure',em:'⏰'},
-    {et:'Ganama',fr:'Le matin',em:'🌅'},
-    {et:'Guyyaa',fr:'L\'après-midi',em:'☀️'},
-    {et:'Galgala',fr:'Le soir',em:'🌆'},
-    {et:'Halkan',fr:'La nuit',em:'🌙'},
-    {et:'Har\'aa',fr:'Aujourd\'hui',em:'📅'},
-    {et:'Boruu',fr:'Demain',em:'➡️'},
-    {et:'Kaleessa',fr:'Hier',em:'⬅️'},
-    {et:'Wiixata',fr:'Lundi',em:'1️⃣'},
-    {et:'Kibxata',fr:'Mardi',em:'2️⃣'},
-    {et:'Roobii',fr:'Mercredi',em:'3️⃣'},
-    {et:'Kamiisa',fr:'Jeudi',em:'4️⃣'},
-    {et:'Jimaata',fr:'Vendredi',em:'5️⃣'},
-    {et:'Sanbata',fr:'Samedi',em:'6️⃣'},
-    {et:'Dilbata',fr:'Dimanche',em:'7️⃣'},
-    {et:'Amajjii',fr:'Janvier',em:'❄️'},
-    {et:'Guraandhala',fr:'Février',em:'💝'},
-    {et:'Bitootessa',fr:'Mars',em:'🌱'},
-    {et:'Ebla',fr:'Avril',em:'🌸'},
-    {et:'Caamsaa',fr:'Mai',em:'🌺'},
-    {et:'Waxabajjii',fr:'Juin',em:'☀️'},
-    {et:'Adoolessa',fr:'Juillet',em:'🏖️'},
-    {et:'Hagayya',fr:'Août',em:'🌻'},
-    {et:'Fuulbana',fr:'Septembre',em:'🍂'},
-    {et:'Onkoloolessa',fr:'Octobre',em:'🎃'},
-    {et:'Sadaasa',fr:'Novembre',em:'🍁'},
-    {et:'Muddee',fr:'Décembre',em:'🎄'},
-    {et:'Arfasaa',fr:'Le printemps / La saison des pluies',em:'🌧️'},
-    {et:'Gannaa',fr:'L\'té / La grande saison sèche',em:'☀️'},
-    {et:'Birraa',fr:'L\'automne / La petite saison sèche',em:'🍂'},
-    {et:'Bona',fr:'L\'hiver / La saison fraîche',em:'❄️'},
-    {et:'Qilleensa akkam?',fr:'Quel temps fait-il ?',em:'🌤️'},
+    // Questions météo
+    {et:'Qilleensa akkam?',fr:'Quel temps fait-il ?',em:'🌤️'},
+    {et:'Ho\'a qilleensaa',fr:'La température',em:'🌡️'},
+    {et:'Digrii',fr:'Les degrés',em:'🌡️'},
+    // Conditions météo
     {et:'Ho\'aa',fr:'Il fait chaud',em:'🔥'},
     {et:'Qorraa',fr:'Il fait froid',em:'🥶'},
     {et:'Roobu / Roobni jira',fr:'Il pleut',em:'🌧️'},
     {et:'Urjiin jira',fr:'Il y a des nuages',em:'☁️'},
     {et:'Aduu jira',fr:'Il y a du soleil',em:'☀️'},
     {et:'Qilleensi jabaan jira',fr:'Il y a du vent',em:'💨'},
-    {et:'Arfasaa (cimdii)',fr:'Le parapluie',em:'☂️'},
-    {et:'Ho\'a qilleensaa',fr:'La température',em:'🌡️'},
-    {et:'Digrii',fr:'Les degrés',em:'🌡️'},
+    {et:'Aanoo roobaa',fr:'Le parapluie',em:'☂️'},
+    // Saisons Oromo (≠ saisons françaises)
+    {et:'Arfasaa',fr:'Saison des pluies / Le printemps français',em:'🌧️'},
+    {et:'Gannaa',fr:'Grande saison sèche / L\'été français',em:'☀️'},
+    {et:'Birraa',fr:'Petite saison sèche / L\'automne français',em:'🍂'},
+    {et:'Bona',fr:'Saison fraîche / L\'hiver français',em:'❄️'},
    ]},
 
   {id:'verb',level:1,emoji:'📝',name:'Yakkawwan',sub:'Ta\'uu, qabaachuu, deemuu… / Les verbes principaux',
@@ -353,47 +338,47 @@ var LEVEL1_THEMES_FR=[
     {et:'Lafee / Lafaan',fr:'L\'os / Les os',em:'🦴'}
    ]},
 
-  {id:'nour',level:1,emoji:'🍽️',name:'Nyaata',sub:'Buddeena, muduraa, injera… / La nourriture',
-   words:[
-    // Catégories générales d'abord
+{id:'nour',level:1,emoji:'🍽️',name:'Nyaata',sub:'Buddeena, muduraa, injera… / La nourriture',
+ words:[
+    // 🟢 Niveau 1 — Catégories générales & Base de l'alimentation
     {et:'Muduraa',fr:'Les fruits',em:'🍉'},
     {et:'Kuduraa',fr:'Les légumes',em:'🥦'},
-    // Féculents / base
-    {et:'Buddeena',fr:'Le pain',em:'🍞'},
+    {et:'Buddeena / Injeeraa',fr:'L\'injera / La galette',em:'🫓'},
+    {et:'Daabboo',fr:'Le pain',em:'🍞'},
     {et:'Ruzii',fr:'Le riz',em:'🍚'},
     {et:'Maakiirooni',fr:'Les pâtes',em:'🍝'},
-    {et:'Dinnichi / Foonii dinnichaa',fr:'La pomme de terre / Les frites',em:'🥔'},
-    // Protéines
+    {et:'Dinnichi',fr:'La pomme de terre',em:'🥔'},
+    {et:'Foonii dinnichaa',fr:'Les frites',em:'🍟'},
+
+    // 🟡 Niveau 2 — Protéines, plats locaux & produits laitiers
     {et:'Foon',fr:'La viande',em:'🥩'},
     {et:'Lukkuu',fr:'Le poulet',em:'🍗'},
     {et:'Qurxummii',fr:'Le poisson',em:'🐟'},
-    {et:'Foon garbuu / Tibs',fr:'Le tibs (viande grillée)',em:'🥩'},
-    {et:'Berbere',fr:'Le berbéré (mélange d\'épices)',em:'🌶️'},
+    {et:'Tibs',fr:'Le tibs (viande grillée)',em:'🥩'},
+    {et:'Kochoo',fr:'Le kotcho (pain de faux-bananier)',em:'🫓'},
     {et:'Hanqaaquu',fr:'L\'œuf',em:'🥚'},
-    // Produits laitiers
     {et:'Baadaa',fr:'Le fromage',em:'🧀'},
     {et:'Dhadhaa',fr:'Le beurre',em:'🧈'},
-    // Fruits
-    {et:'Pomii',fr:'La pomme',em:'🍎'},
-    {et:'Muuzii',fr:'La banane',em:'🍌'},
+    {et:'Buna',fr:'Le café (boisson)',em:'☕'},
+
+    // 🔴 Niveau 3 — Épices, fruits, légumes & condiments du marché
+    {et:'Berbere',fr:'Le berbéré (piment rouge)',em:'🌶️'},
+    {et:'Maangoo',fr:'La mangue',em:'🥭'},
+    {et:'Muzii',fr:'La banane',em:'🍌'},
     {et:'Burtukaana',fr:'L\'orange',em:'🍊'},
-    {et:'Liimoo',fr:'Le citron',em:'🍋'},
-    {et:'Mukarroo',fr:'La fraise',em:'🍓'},
-    {et:'Harbuu',fr:'La pastèque',em:'🍉'},
-    // Légumes
+    {et:'Limiin',fr:'Le citron',em:'🍋'},
+    {et:'Avokaadoo',fr:'L\'avocat',em:'🥑'},
     {et:'Timaatimii',fr:'La tomate',em:'🍅'},
     {et:'Karootii',fr:'La carotte',em:'🥕'},
-    {et:'Qullubbii / Laasuna',fr:'L\'oignon',em:'🧅'},
-    {et:'Turunfaa',fr:'L\'ail',em:'🧄'},
-    {et:'Salaaxi',fr:'Le concombre',em:'🥒'},
-    {et:'Salaaditii',fr:'La salade',em:'🥗'},
-    // Condiments / épicerie
-    {et:'Zeyitii / Eelaa',fr:'L\'huile d\'olive',em:'🫒'},
-    {et:'Citaa',fr:'Le sel',em:'🧂'},
-    {et:'Barbaree',fr:'Le poivre',em:'🌶️'},
+    {et:'Qullubbii diimaa',fr:'L\'oignon rouge',em:'🧅'},
+    {et:'Qullubbii adiikaa / Tumee',fr:'L\'ail',em:'🧄'},
+    {et:'Khyaar',fr:'Le concombre',em:'🥒'},
+    {et:'Salaata',fr:'La salade / Laitue',em:'🥗'},
+    {et:'Zeyitii',fr:'L\'huile de cuisson',em:'🍾'},
+    {et:'Sogidda',fr:'Le sel',em:'🧂'},
     {et:'Damma',fr:'Le miel',em:'🍯'},
-    {et:'Chokolaatii',fr:'Le chocolat',em:'🍫'},
-   ]},
+    {et:'Chokolaatii',fr:'Le chocolat',em:'🍫'}
+ ]},
 
   {id:'bois',level:1,emoji:'🥤',name:'Dhugaatii',sub:'Bishaan, buna, shaayii… / Les boissons',
    words:[
@@ -808,40 +793,40 @@ var LEVEL1_THEMES_FR=[
    ]},
 
   {id:'agri',level:1,emoji:'🌾',name:'Qonnaa fi Horsiisee',sub:'Lafa, biqiltuu, loon… / Agriculture et élevage',
-   note:'📍 Contexte : région de Shashamané, terres fertiles du Rift éthiopien, caféiculture, élevage bovin traditionnel',
-   words:[
-    // Terres et milieu naturel
-    {et:'Lafa',fr:'La terre / Le champ',em:'🌍'},
-    {et:'Midhaanii / Qonnaan bulaa',fr:'Le champ cultivé / La ferme',em:'🌾'},
-    {et:'Laga / Burqaa',fr:'La rivière / La source',em:'💧'},
-    {et:'Rooba',fr:'La pluie',em:'🌧️'},
-    {et:'Biyyoo',fr:'Le sol',em:'🪨'},
-    // Cultures principales (région Shashamané)
-    {et:'Buna',fr:'Le café',em:'☕'},
-    {et:'Qamadii',fr:'Le blé',em:'🌾'},
-    {et:'Masarii / Boqqolloo',fr:'Le maïs / Le sorgho',em:'🌽'},
-    {et:'Enseetee',fr:'L\'ensète (faux bananier)',em:'🌿'},
-    {et:'Xaafii',fr:'Le teff (céréale éthiopienne)',em:'🌾'},
-    {et:'Karootiifi / Tikimtii',fr:'Les légumes du jardin',em:'🥕'},
-    // Élevage
-    {et:'Loon',fr:'Le bétail',em:'🐄'},
-    {et:'Sangaa / Farda',fr:'Le bœuf / Le cheval (de trait)',em:'🐂'},
+ note:'📍 Contexte : région de Shashamané, terres fertiles du Rift éthiopien, caféiculture, élevage bovin traditionnel',
+ words:[
+    // 🟢 Niveau 1 — La ferme, la terre et le bétail de base
+    {et:'Qonnaan bulaa',fr:'L\'agriculteur / Le fermier',em:'👨‍🌾'},
+    {et:'Oyruu / Maasii',fr:'Le champ cultivé',em:'🌾'},
+    {et:'Lafa',fr:'La terre / Le domaine',em:'🌍'},
+    {et:'Biyyoo',fr:'Le sol / La terre arable',em:'🪨'},
+    {et:'Loon',fr:'Le bétail / Les vaches',em:'🐄'},
+    {et:'Farda',fr:'Le cheval',em:'🐎'},
     {et:'Harree',fr:'L\'âne (bête de somme)',em:'🫏'},
-    {et:'Re\'ee / Hoolaa',fr:'La chèvre / Le mouton',em:'🐐'},
+
+    // 🟡 Niveau 2 — Les grandes cultures locales & Petit élevage
+    {et:'Buna',fr:'La culture du café',em:'☕'},
+    {et:'Xaafii',fr:'Le teff (céréale locale)',em:'🌾'},
+    {et:'Boqqolloo',fr:'Le maïs',em:'🌽'},
+    {et:'Qamadii',fr:'Le blé',em:'🌾'},
+    {et:'Warqee / Qoccoo',fr:'La plantation d\'Ensete',em:'🌴'},
+    {et:'Sangaa',fr:'Le bœuf de trait',em:'🐂'},
+    {et:'Hoolaa / Re\'ee',fr:'Le mouton / La chèvre',em:'🐐'},
     {et:'Lukkuu',fr:'La volaille / La poule',em:'🐔'},
-    // Outils et travaux
-    {et:'Qottoo',fr:'La charrue',em:'🪵'},
-    {et:'Mootora qonnaa',fr:'Le tracteur',em:'🚜'},
-    {et:'Dhiiqaa / Hirmaata',fr:'La faucille / La faux',em:'🌾'},
-    {et:'Roobni barbaachisaa dha',fr:'La pluie est nécessaire',em:'🌧️'},
-    {et:'Qonnaan buluu',fr:'Cultiver / Faire l\'agriculture',em:'👨‍🌾'},
-    {et:'Sassabuu',fr:'Récolter / Ramasser',em:'🧺'},
-    {et:'Gabaa geessuu',fr:'Apporter au marché',em:'🛒'},
-    // Saisons agricoles oromo
-    {et:'Arfasaa (bonni)',fr:'Saison des grandes pluies (mars-mai)',em:'🌧️'},
-    {et:'Hagayya (rooba xiqqaa)',fr:'Saison des petites pluies (août)',em:'🌦️'},
-    {et:'Bona (ganna)',fr:'Grande saison sèche (jan-fév)',em:'☀️'},
-   ]}
+    {et:'Laga / Burqaa',fr:'La rivière / La source d\'eau',em:'💧'},
+
+    // 🔴 Niveau 3 — Outils, actions de la ferme & Saisons du Rift
+    {et:'Gindee / Muka marfoo',fr:'La charrue traditionnelle',em:'🪵'},
+    {et:'Moteera qonnaa',fr:'Le tracteur',em:'🚜'},
+    {et:'Haamtuu',fr:'La faucille',em:'🌾'},
+    {et:'Qonnaan buluu',fr:'Cultiver la terre',em:'🚜'},
+    {et:'Sassabuu / Makuruu',fr:'Récolter / Moissonner',em:'🧺'},
+    {et:'Gabaa geessuu',fr:'Apporter la récolte au marché',em:'🛒'},
+    {et:'Rooba',fr:'La pluie',em:'🌧️'},
+    {et:'Arfaasaa',fr:'Saison des petites pluies (mars-mai)',em:'🌦️'},
+    {et:'Ganna',fr:'Saison des grandes pluies (juin-sept)',em:'🌧️'},
+    {et:'Bona',fr:'La saison sèche (oct-fév)',em:'☀️'}
+ ]}
 ];
 
 var LEVEL2_THEMES_FR = [
@@ -1572,8 +1557,28 @@ var LEVEL1_THEMES_OR=[
   {et:'Kuma lama',fr:'Deux mille',em:'2️⃣0️⃣0️⃣0️⃣'}
  ]},
 
-  {id:'cal',level:1,emoji:'📅',name:'Sanaata fi Guyyoota',sub:'Guyyaa, ji\'aa, bara… / Le calendrier',
+  
+
+  {id:'temps',level:1,emoji:'🕐',name:'Sa\'atii fi Sanaata',sub:'Sa\'atii, guyyaa, ji\'aa… / L\'heure et le calendrier',
+   note:'📍 En Oromia, la journée est découpée différemment : le café est bu dès l\'aube, le marché de Shashamané est hebdomadaire (mercredi), les saisons oromo diffèrent du calendrier français.',
    words:[
+    // L'heure
+    {et:'Sa\'atii meeqa?',fr:'Quelle heure est-il ?',em:'🕐'},
+    {et:'Walakkaa',fr:'Et demie',em:'🕕'},
+    {et:'Daqiiqaa',fr:'La minute',em:'⏱️'},
+    {et:'Sa\'atii',fr:'L\'heure',em:'⏰'},
+    // Moments de la journée
+    {et:'Ganama',fr:'Le matin (6h-11h)',em:'🌅'},
+    {et:'Guyyaa',fr:'L\'après-midi (12h-17h)',em:'☀️'},
+    {et:'Galgala',fr:'Le soir (18h-20h)',em:'🌆'},
+    {et:'Halkan',fr:'La nuit',em:'🌙'},
+    // Repères temporels proches
+    {et:'Har\'aa',fr:'Aujourd\'hui',em:'📅'},
+    {et:'Boruu',fr:'Demain',em:'➡️'},
+    {et:'Kaleessa',fr:'Hier',em:'⬅️'},
+    {et:'Torban kana',fr:'Cette semaine',em:'📆'},
+    {et:'Torban darbee',fr:'La semaine dernière',em:'⬅️'},
+    {et:'Torban itti aanu',fr:'La semaine prochaine',em:'➡️'},
     // Jours de la semaine
     {et:'Guyyaa torbee',fr:'La semaine',em:'📆'},
     {et:'Wiixata',fr:'Lundi',em:'1️⃣'},
@@ -1583,13 +1588,6 @@ var LEVEL1_THEMES_OR=[
     {et:'Jimaata',fr:'Vendredi (jour de prière)',em:'🕌'},
     {et:'Sanbata',fr:'Samedi',em:'6️⃣'},
     {et:'Dilbata',fr:'Dimanche (jour de repos)',em:'⛪'},
-    // Moments clés
-    {et:'Har\'aa',fr:'Aujourd\'hui',em:'📅'},
-    {et:'Boruu',fr:'Demain',em:'➡️'},
-    {et:'Kaleessa',fr:'Hier',em:'⬅️'},
-    {et:'Torban kana',fr:'Cette semaine',em:'📆'},
-    {et:'Torban darbee',fr:'La semaine dernière',em:'⬅️'},
-    {et:'Torban itti aanu',fr:'La semaine prochaine',em:'➡️'},
     // Mois (calendrier grégorien en usage courant)
     {et:'Ji\'a',fr:'Le mois',em:'🗓️'},
     {et:'Amajjii',fr:'Janvier',em:'❄️'},
@@ -1604,59 +1602,23 @@ var LEVEL1_THEMES_OR=[
     {et:'Onkoloolessa',fr:'Octobre',em:'🎃'},
     {et:'Sadaasa',fr:'Novembre',em:'🍁'},
     {et:'Muddee',fr:'Décembre',em:'🎄'},
-    // Année et dates
+    // Année
     {et:'Bara / Waggaa',fr:'L\'année',em:'🗓️'},
     {et:'Bara darbe',fr:'L\'année dernière',em:'⬅️'},
     {et:'Bara itti aanu',fr:'L\'année prochaine',em:'➡️'},
-    // Calendrier éthiopien (spécificité culturelle)
+    // Fête & anniversaire
     {et:'Guyyaa dhaloota',fr:'L\'anniversaire',em:'🎂'},
     {et:'Ayyaana Fulbaanaa',fr:'La fête du Nouvel An éthiopien (Enkutatash)',em:'🎊'},
    ]},
 
-  {id:'temps',level:1,emoji:'🕐',name:'Sa\'atii fi Qilleensa',sub:'Yeroo, guyyaa, ji\'aa… / L\'heure, la météo',
-   note:'📍 En Oromia, la journée est découpée différemment : le café est bu dès l\'aube, le marché de Shashamané est hebdomadaire (mercredi), les saisons oromo diffèrent du calendrier français.',
+  {id:'meteo',level:1,emoji:'🌤️',name:'Qilleensa fi Haala Biraa',sub:'Ho\'aa, qorraa, rooba… / La météo et le climat',
+   note:'📍 En Oromia (Shashamané), la saison des pluies (arfasaa) dure de mars à mai. Les saisons oromo ne correspondent pas aux saisons françaises.',
    words:[
-    // Heure
-    {et:'Sa\'atii meeqa?',fr:'Quelle heure est-il ?',em:'🕐'},
-    {et:'Walakkaa',fr:'Et demie',em:'🕕'},
-    {et:'Daqiiqaa',fr:'La minute',em:'⏱️'},
-    {et:'Sa\'atii',fr:'L\'heure',em:'⏰'},
-    // Moments de la journée
-    {et:'Ganama',fr:'Le matin (6h-11h)',em:'🌅'},
-    {et:'Guyyaa',fr:'L\'après-midi (12h-17h)',em:'☀️'},
-    {et:'Galgala',fr:'Le soir (18h-20h)',em:'🌆'},
-    {et:'Halkan',fr:'La nuit',em:'🌙'},
-    // Jours
-    {et:'Har\'aa',fr:'Aujourd\'hui',em:'📅'},
-    {et:'Boruu',fr:'Demain',em:'➡️'},
-    {et:'Kaleessa',fr:'Hier',em:'⬅️'},
-    {et:'Wiixata',fr:'Lundi',em:'1️⃣'},
-    {et:'Kibxata',fr:'Mardi',em:'2️⃣'},
-    {et:'Roobii',fr:'Mercredi (jour de marché à Shashamané !)',em:'🛒'},
-    {et:'Kamiisa',fr:'Jeudi',em:'4️⃣'},
-    {et:'Jimaata',fr:'Vendredi (jour de prière)',em:'🕌'},
-    {et:'Sanbata',fr:'Samedi',em:'6️⃣'},
-    {et:'Dilbata',fr:'Dimanche (jour de repos)',em:'⛪'},
-    // Mois (calendrier grégorien en usage courant)
-    {et:'Amajjii',fr:'Janvier',em:'❄️'},
-    {et:'Guraandhala',fr:'Février',em:'💝'},
-    {et:'Bitootessa',fr:'Mars',em:'🌱'},
-    {et:'Ebla',fr:'Avril',em:'🌸'},
-    {et:'Caamsaa',fr:'Mai',em:'🌺'},
-    {et:'Waxabajjii',fr:'Juin',em:'☀️'},
-    {et:'Adoolessa',fr:'Juillet',em:'🏖️'},
-    {et:'Hagayya',fr:'Août',em:'🌻'},
-    {et:'Fuulbana',fr:'Septembre',em:'🍂'},
-    {et:'Onkoloolessa',fr:'Octobre',em:'🎃'},
-    {et:'Sadaasa',fr:'Novembre',em:'🍁'},
-    {et:'Muddee',fr:'Décembre',em:'🎄'},
-    // Saisons Oromo (≠ saisons françaises)
-    {et:'Arfasaa',fr:'Saison des pluies / Le printemps français',em:'🌧️'},
-    {et:'Gannaa',fr:'Grande saison sèche / L\'été français',em:'☀️'},
-    {et:'Birraa',fr:'Petite saison sèche / L\'automne français',em:'🍂'},
-    {et:'Bona',fr:'Saison fraîche / L\'hiver français',em:'❄️'},
-    // Météo
+    // Questions météo
     {et:'Qilleensa akkam?',fr:'Quel temps fait-il ?',em:'🌤️'},
+    {et:'Ho\'a qilleensaa',fr:'La température',em:'🌡️'},
+    {et:'Digrii',fr:'Les degrés',em:'🌡️'},
+    // Conditions météo
     {et:'Ho\'aa',fr:'Il fait chaud',em:'🔥'},
     {et:'Qorraa',fr:'Il fait froid',em:'🥶'},
     {et:'Roobu / Roobni jira',fr:'Il pleut',em:'🌧️'},
@@ -1664,8 +1626,11 @@ var LEVEL1_THEMES_OR=[
     {et:'Aduu jira',fr:'Il y a du soleil',em:'☀️'},
     {et:'Qilleensi jabaan jira',fr:'Il y a du vent',em:'💨'},
     {et:'Aanoo roobaa',fr:'Le parapluie',em:'☂️'},
-    {et:'Ho\'a qilleensaa',fr:'La température',em:'🌡️'},
-    {et:'Digrii',fr:'Les degrés',em:'🌡️'},
+    // Saisons Oromo (≠ saisons françaises)
+    {et:'Arfasaa',fr:'Saison des pluies / Le printemps français',em:'🌧️'},
+    {et:'Gannaa',fr:'Grande saison sèche / L\'été français',em:'☀️'},
+    {et:'Birraa',fr:'Petite saison sèche / L\'automne français',em:'🍂'},
+    {et:'Bona',fr:'Saison fraîche / L\'hiver français',em:'❄️'},
    ]},
 
   {id:'verb',level:1,emoji:'📝',name:'Yakkawwan',sub:'Ta\'uu, qabaachuu, deemuu… / Les verbes principaux',
@@ -1778,46 +1743,47 @@ var LEVEL1_THEMES_OR=[
    ]},
 
   {id:'nour',level:1,emoji:'🍽️',name:'Nyaata',sub:'Buddeena, muduraa, injera… / La nourriture',
-   words:[
-    // Catégories générales d'abord
+ words:[
+    // 🟢 Niveau 1 — Catégories générales & Base de l'alimentation
     {et:'Muduraa',fr:'Les fruits',em:'🍉'},
     {et:'Kuduraa',fr:'Les légumes',em:'🥦'},
-    // Féculents / base
-    {et:'Buddeena',fr:'Le pain',em:'🍞'},
+    {et:'Buddeena / Injeeraa',fr:'L\'injera / La galette',em:'🫓'},
+    {et:'Daabboo',fr:'Le pain',em:'🍞'},
     {et:'Ruzii',fr:'Le riz',em:'🍚'},
     {et:'Maakiirooni',fr:'Les pâtes',em:'🍝'},
-    {et:'Dinnichi / Foonii dinnichaa',fr:'La pomme de terre / Les frites',em:'🥔'},
-    // Protéines
+    {et:'Dinnichi',fr:'La pomme de terre',em:'🥔'},
+    {et:'Foonii dinnichaa',fr:'Les frites',em:'🍟'},
+
+    // 🟡 Niveau 2 — Protéines, produits laitiers & spécialités locales
     {et:'Foon',fr:'La viande',em:'🥩'},
     {et:'Lukkuu',fr:'Le poulet',em:'🍗'},
     {et:'Qurxummii',fr:'Le poisson',em:'🐟'},
-    {et:'Foon garbuu / Tibs',fr:'Le tibs (viande grillée)',em:'🥩'},
-    {et:'Berbere',fr:'Le berbéré (mélange d\'épices)',em:'🌶️'},
+    {et:'Tibs',fr:'Le tibs (viande grillée)',em:'🥩'},
+    {et:'Kochoo',fr:'Le kotcho (pain de faux-bananier)',em:'🫓'},
     {et:'Hanqaaquu',fr:'L\'œuf',em:'🥚'},
-    // Produits laitiers
     {et:'Baadaa',fr:'Le fromage',em:'🧀'},
     {et:'Dhadhaa',fr:'Le beurre',em:'🧈'},
-    // Fruits
-    {et:'Pomii',fr:'La pomme',em:'🍎'},
-    {et:'Muuzii',fr:'La banane',em:'🍌'},
+    {et:'Buna',fr:'Le café (boisson)',em:'☕'},
+
+    // 🔴 Niveau 3 — Fruits, légumes, condiments & épices du marché
+    {et:'Berbere',fr:'Le berbéré (piment rouge)',em:'🌶️'},
+    {et:'Maangoo',fr:'La mangue',em:'🥭'},
+    {et:'Muzii',fr:'La banane',em:'🍌'},
     {et:'Burtukaana',fr:'L\'orange',em:'🍊'},
-    {et:'Liimoo',fr:'Le citron',em:'🍋'},
-    {et:'Mukarroo',fr:'La fraise',em:'🍓'},
-    {et:'Harbuu',fr:'La pastèque',em:'🍉'},
-    // Légumes
+    {et:'Limiin',fr:'Le citron',em:'🍋'},
+    {et:'Avokaadoo',fr:'L\'avocat',em:'🥑'},
+    {et:'Pomii',fr:'La pomme',em:'🍎'},
     {et:'Timaatimii',fr:'La tomate',em:'🍅'},
     {et:'Karootii',fr:'La carotte',em:'🥕'},
-    {et:'Qullubbii / Laasuna',fr:'L\'oignon',em:'🧅'},
-    {et:'Turunfaa',fr:'L\'ail',em:'🧄'},
-    {et:'Salaaxi',fr:'Le concombre',em:'🥒'},
-    {et:'Salaaditii',fr:'La salade',em:'🥗'},
-    // Condiments / épicerie
-    {et:'Zeyitii / Eelaa',fr:'L\'huile d\'olive',em:'🫒'},
-    {et:'Citaa',fr:'Le sel',em:'🧂'},
-    {et:'Barbaree',fr:'Le poivre',em:'🌶️'},
+    {et:'Qullubbii diimaa',fr:'L\'oignon rouge',em:'🧅'},
+    {et:'Qullubbii adiikaa / Tumee',fr:'L\'ail',em:'🧄'},
+    {et:'Khyaar',fr:'Le concombre',em:'🥒'},
+    {et:'Salaata',fr:'La salade / Laitue',em:'🥗'},
+    {et:'Zeyitii',fr:'L\'huile de cuisson',em:'🍾'},
+    {et:'Sogidda',fr:'Le sel',em:'🧂'},
     {et:'Damma',fr:'Le miel',em:'🍯'},
-    {et:'Chokolaatii',fr:'Le chocolat',em:'🍫'},
-   ]},
+    {et:'Chokolaatii',fr:'Le chocolat',em:'🍫'}
+ ]},
 
   {id:'bois',level:1,emoji:'🥤',name:'Dhugaatii',sub:'Bishaan, buna, shaayii… / Les boissons',
    words:[
@@ -2181,19 +2147,34 @@ var LEVEL1_THEMES_OR=[
 },
 
   {id:'plan',level:1,emoji:'🌿',name:'Biqiltoota',sub:'Adaraa, muka, bosonaa… / Les plantes',
-   words:[
-    // Niveau 1 — Éléments naturels de base, très visuels
+ words:[
+    // 🟢 Niveau 1 — Éléments naturels de base, très visuels
     {et:'Adaraa / Daadhii',fr:'La fleur',em:'🌸'},
     {et:'Muka',fr:'L\'arbre',em:'🌳'},
     {et:'Caasee',fr:'La feuille',em:'🍃'},
     {et:'Marga',fr:'L\'herbe',em:'🌱'},
-    // 🟡 Niveau 2 — Espaces & végétaux plus spécifiques
+    {et:'Hidda',fr:'La racine',em:'🪵'},
+    {et:'Ija muka',fr:'Le fruit (sur l\'arbre)',em:'🍎'},
+    {et:'Sanyii',fr:'La graine',em:'🌻'},
+
+    // 🟡 Niveau 2 — Espaces & Arbres cultivés (La flore utile)
     {et:'Bakkee miidhagoo',fr:'Le jardin',em:'🏡'},
     {et:'Daadhii diimaa',fr:'La rose',em:'🌹'},
     {et:'Bosonaa',fr:'La forêt',em:'🌲'},
-    // 🔴 Niveau 3 — Vocabulaire plus précis ou contextuel
+    {et:'Muka Maangoo',fr:'Le manguier',em:'🥭'},
+    {et:'Muka Paappaayaa',fr:'Le papayer',em:'🍈'},
+    {et:'Muka Avokaadoo',fr:'L\'avocatier',em:'🥑'},
+    {et:'Qoccoo / Warqee',fr:'L\'Ensete / Faux-bananier',em:'🌴'},
+    {et:'Biqiltuu',fr:'La jeune pousse / Le plant',em:'🌱'},
+
+    // 🔴 Niveau 3 — Vocabulaire précis ou à forte valeur culturelle
     {et:'Marga miidhagoo',fr:'La pelouse / Le gazon',em:'⛳'},
-   ]},
+    {et:'Odaa',fr:'Le sycomore (Arbre sacré Oromo)',em:'🌳'},
+    {et:'Ejersa',fr:'L\'olivier sauvage d\'Afrique',em:'🫒'},
+    {et:'Heexoo',fr:'Le kousso (arbre médicinal)',em:'🌿'},
+    {et:'Oyruu / Maasii',fr:'Le champ cultivé',em:'👨‍🌾'},
+    {et:'Qoraan',fr:'Le bois de chauffage',em:'🪵'}
+ ]},
 
   {id:'anim',level:1,emoji:'🐘',name:'Bineeldota',sub:'Saree, adurree, sangaa… / Les animaux',
    words:[
@@ -2232,40 +2213,40 @@ var LEVEL1_THEMES_OR=[
    ]},
 
   {id:'agri',level:1,emoji:'🌾',name:'Qonnaa fi Horsiisee',sub:'Lafa, biqiltuu, loon… / Agriculture et élevage',
-   note:'📍 Contexte : région de Shashamané, terres fertiles du Rift éthiopien, caféiculture, élevage bovin traditionnel',
-   words:[
-    // Terres et milieu naturel
-    {et:'Lafa',fr:'La terre / Le champ',em:'🌍'},
-    {et:'Midhaanii / Qonnaan bulaa',fr:'Le champ cultivé / La ferme',em:'🌾'},
-    {et:'Laga / Burqaa',fr:'La rivière / La source',em:'💧'},
-    {et:'Rooba',fr:'La pluie',em:'🌧️'},
-    {et:'Biyyoo',fr:'Le sol',em:'🪨'},
-    // Cultures principales (région Shashamané)
-    {et:'Buna',fr:'Le café',em:'☕'},
-    {et:'Qamadii',fr:'Le blé',em:'🌾'},
-    {et:'Masarii / Boqqolloo',fr:'Le maïs / Le sorgho',em:'🌽'},
-    {et:'Enseetee',fr:'L\'ensète (faux bananier éthiopien)',em:'🌿'},
-    {et:'Xaafii',fr:'Le teff (céréale éthiopienne de base)',em:'🌾'},
-    {et:'Karootiifi / Tikimtii',fr:'Les légumes du jardin',em:'🥕'},
-    // Élevage
-    {et:'Loon',fr:'Le bétail',em:'🐄'},
-    {et:'Sangaa / Farda',fr:'Le bœuf / Le cheval (de trait)',em:'🐂'},
+ note:'📍 Contexte : région de Shashamané, terres fertiles du Rift éthiopien, caféiculture, élevage bovin traditionnel',
+ words:[
+    // 🟢 Niveau 1 — La ferme, la terre et le bétail de base
+    {et:'Qonnaan bulaa',fr:'L\'agriculteur / Le fermier',em:'👨‍🌾'},
+    {et:'Oyruu / Maasii',fr:'Le champ cultivé',em:'🌾'},
+    {et:'Lafa',fr:'La terre / Le domaine',em:'🌍'},
+    {et:'Biyyoo',fr:'Le sol / La terre arable',em:'🪨'},
+    {et:'Loon',fr:'Le bétail / Les vaches',em:'🐄'},
+    {et:'Farda',fr:'Le cheval',em:'🐎'},
     {et:'Harree',fr:'L\'âne (bête de somme)',em:'🫏'},
-    {et:'Re\'ee / Hoolaa',fr:'La chèvre / Le mouton',em:'🐐'},
+
+    // 🟡 Niveau 2 — Les grandes cultures locales & Petit élevage
+    {et:'Buna',fr:'La culture du café',em:'☕'},
+    {et:'Xaafii',fr:'Le teff (céréale de base)',em:'🌾'},
+    {et:'Boqqolloo',fr:'Le maïs',em:'🌽'},
+    {et:'Qamadii',fr:'Le blé',em:'🌾'},
+    {et:'Warqee / Qoccoo',fr:'La plantation d\'Ensete',em:'🌴'},
+    {et:'Sangaa',fr:'Le bœuf de trait',em:'🐂'},
+    {et:'Hoolaa / Re\'ee',fr:'Le mouton / La chèvre',em:'🐐'},
     {et:'Lukkuu',fr:'La volaille / La poule',em:'🐔'},
-    // Outils et travaux
-    {et:'Qottoo',fr:'La charrue traditionnelle',em:'🪵'},
-    {et:'Mootora qonnaa',fr:'Le tracteur',em:'🚜'},
-    {et:'Dhiiqaa / Hirmaata',fr:'La faucille / La faux',em:'🌾'},
-    {et:'Roobni barbaachisaa dha',fr:'La pluie est nécessaire',em:'🌧️'},
-    {et:'Qonnaan buluu',fr:'Cultiver / Faire l\'agriculture',em:'👨‍🌾'},
-    {et:'Sassabuu',fr:'Récolter / Ramasser',em:'🧺'},
-    {et:'Gabaa geessuu',fr:'Apporter au marché',em:'🛒'},
-    // Saisons agricoles oromo
-    {et:'Arfasaa (bonni)',fr:'Saison des grandes pluies (mars-mai)',em:'🌧️'},
-    {et:'Hagayya (rooba xiqqaa)',fr:'Saison des petites pluies (août)',em:'🌦️'},
-    {et:'Bona (ganna)',fr:'Grande saison sèche (jan-fév)',em:'☀️'},
-   ]}
+    {et:'Laga / Burqaa',fr:'La rivière / La source d\'eau',em:'💧'},
+
+    // 🔴 Niveau 3 — Outils, actions de la ferme & Saisons du Rift
+    {et:'Gindee / Muka marfoo',fr:'La charrue traditionnelle',em:'🪵'},
+    {et:'Moteera qonnaa',fr:'Le tracteur',em:'🚜'},
+    {et:'Haamtuu',fr:'La faucille',em:'🌾'},
+    {et:'Qonnaan buluu',fr:'Cultiver la terre',em:'🚜'},
+    {et:'Sassabuu / Makuruu',fr:'Récolter / Moissonner',em:'🧺'},
+    {et:'Gabaa geessuu',fr:'Apporter la récolte au marché',em:'🛒'},
+    {et:'Rooba',fr:'La pluie',em:'🌧️'},
+    {et:'Arfaasaa',fr:'Saison des petites pluies (mars-mai)',em:'🌦️'},
+    {et:'Ganna',fr:'Saison des grandes pluies (juin-sept)',em:'🌧️'},
+    {et:'Bona',fr:'La saison sèche (oct-fév)',em:'☀️'}
+ ]}
 ];
 
 var LEVEL2_THEMES_OR = [
