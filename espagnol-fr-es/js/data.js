@@ -2062,7 +2062,7 @@ var LEVEL1_THEMES_ES=[
    {es:'La tirita',fr:'Le pansement adhésif',em:'🩹',
     variants:{MX:'La curita',VE:'La curita',AR:'La curita',EC:'La curita',PE:'La curita',CO:'La curita'}},
    {es:'El vendaje / La venda',fr:'Le bandage',em:'🩼'},
-   {es:'La ambulancia',fr:'L\'ambulance',em:'¼'},
+   {es:'La ambulancia',fr:'L\'ambulance',em:'🚑'},
    {es:'Las urgencias',fr:'Les urgences',em:'🆘',
     variants:{MX:'Emergencias',VE:'Emergencias',AR:'La guardia',EC:'Emergencias',PE:'Emergencias',CO:'Urgencias / Emergencias'}}
  ]},
