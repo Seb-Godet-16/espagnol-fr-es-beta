@@ -18,7 +18,8 @@ body{font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;font-size:16px
 ══════════════════════════════════════════ */
 
 #app-launcher{
-  background:#f5f5f0;
+  background: linear-gradient(135deg, #f5f7fa 0%, #eeeefb 50%, #e8f5e9 100%) no-gradient;
+  background-image: linear-gradient(135deg, #f5f7fa 0%, #eeeefb 50%, #e8f5e9 100%);
   align-items:center;
   justify-content:center;
   padding:24px 20px 80px;
@@ -579,4 +580,4 @@ html.theme-oromo body{background:#f4f9f4}
 }
 .home-back-btn:active{background:rgba(255,255,255,.4)}
 
-body{background:#f5f5f0}  /* écran lanceur uniquement */
+body{background:#f5f7fa}  /* écran lanceur uniquement */
