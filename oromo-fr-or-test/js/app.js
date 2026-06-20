@@ -524,27 +524,31 @@ function _buildThemeCard(t) {
   var mainTitle = '';
   var subLine   = '';
 
+  // Détermination des titres selon le mode choisi
   if (currentMode === 'learn_french') {
-    /* En mode learn_french, le titre principal est le mot français */
-    var subText = t.sub || '';
-    if (t.id === 'alpha' || t.type === 'alpha') {
-      mainTitle = "L'Alphabet";
-      subLine   = 'Alphabet Faransaayii (A-Z) / Qubee';
-    } else if (subText.includes('/')) {
-      var parts = subText.split('/');
-      mainTitle = parts[1].trim();
-      subLine   = parts[0].trim() + ' / ' + t.name;
-    } else {
-      mainTitle = t.sub;
-      subLine   = t.name;
-    }
-    /* Capitaliser la première lettre */
-    if (mainTitle) mainTitle = mainTitle.charAt(0).toUpperCase() + mainTitle.slice(1);
-
-  } else {
-    /* En mode learn_oromo, le titre principal est le mot Oromo */
+    // J'apprends le français : Principal = Français (t.name), Sous-titre = Oromo (t.sub)
     mainTitle = t.name;
     subLine   = t.sub;
+  } else {
+    // J'apprends l'oromo : Principal = Oromo (t.sub), Sous-titre = Français (t.name)
+    mainTitle = t.sub;
+    subLine   = t.name;
+  }
+
+  // Cas particulier pour l'alphabet
+  if (t.id === 'alpha' || t.type === 'alpha') {
+    if (currentMode === 'learn_french') {
+      mainTitle = "L'Alphabet";
+      subLine   = "Qubeewwan";
+    } else {
+      mainTitle = "Qubeewwan";
+      subLine   = "L'Alphabet";
+    }
+  }
+
+  /* Capitaliser la première lettre du titre principal s'il existe */
+  if (mainTitle) {
+    mainTitle = mainTitle.charAt(0).toUpperCase() + mainTitle.slice(1);
   }
 
   /* Bouton de réinitialisation (visible uniquement si le thème est validé) */
@@ -563,7 +567,7 @@ function _buildThemeCard(t) {
   }).join('');
 
   return '<div class="theme-card' + (isDone(t.id) ? ' done' : '') + '" onclick="openTheme(\'' + t.id + '\')">'
-    + '<div class="t-emoji">'  + t.emoji    + '</div>'
+    + '<div class="t-emoji">'   + t.emoji    + '</div>'
     + '<div class="t-name">'   + mainTitle  + '</div>'
     + '<div class="t-sub">'    + subLine    + '</div>'
     + '<div class="t-stars" style="letter-spacing:2px">' + starsStr + '</div>'
@@ -597,19 +601,20 @@ function openTheme(id) {
 
   var lessonTitle = '';
   if (currentMode === 'learn_french') {
-    var subText = CT.sub || '';
-    var titreFr = '';
-    if (CT.id === 'alpha' || CT.type === 'alpha') {
-      titreFr = "L'Alphabet";
-    } else if (subText.includes('/')) {
-      titreFr = subText.split('/')[1].trim();
-    } else {
-      titreFr = CT.sub;
-    }
-    if (titreFr) titreFr = titreFr.charAt(0).toUpperCase() + titreFr.slice(1);
-    lessonTitle = titreFr + ' — ' + CT.name;
+    // Mode J'apprends le français : Français — Oromo
+    var titreFr = (CT.id === 'alpha' || CT.type === 'alpha') ? "L'Alphabet" : CT.name;
+    var titreOr = (CT.id === 'alpha' || CT.type === 'alpha') ? "Qubeewwan" : CT.sub;
+    lessonTitle = titreFr + ' — ' + titreOr;
   } else {
-    lessonTitle = CT.name + ' — ' + CT.sub;
+    // Mode J'apprends l'oromo : Oromo — Français
+    var titreOr = (CT.id === 'alpha' || CT.type === 'alpha') ? "Qubeewwan" : CT.sub;
+    var titreFr = (CT.id === 'alpha' || CT.type === 'alpha') ? "L'Alphabet" : CT.name;
+    lessonTitle = titreOr + ' — ' + titreFr;
+  }
+  
+  /* Capitaliser la première lettre du titre complet */
+  if (lessonTitle) {
+    lessonTitle = lessonTitle.charAt(0).toUpperCase() + lessonTitle.slice(1);
   }
   document.getElementById('lessonTitle').textContent = lessonTitle;
 
