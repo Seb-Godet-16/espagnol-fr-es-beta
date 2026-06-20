@@ -108,7 +108,7 @@ function initApp(mode) {
     /* Les menus sont écrits en Afaan Oromoo (langue cible de l'apprenant) */
     _setUI({
       homeFlagRow    : '🇪🇹',
-      homeTitle      : 'Afaan Faransaayii barachuu',
+      homeTitle      : 'Afaan Oromoo barachuu',
       homeSubtitle   : 'Fuuldura Afaan Oromo · Duuba Afaan Faransaay',
       homeStartBtn   : '▶ Jalqabi',
       sectionsBackBtn: '← Gara duubaatti',
