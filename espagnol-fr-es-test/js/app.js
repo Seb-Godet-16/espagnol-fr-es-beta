@@ -115,7 +115,7 @@ function initApp(mode) {
 
     _setUI({
       homeFlagRow    : '🇫🇷',
-      homeTitle      : 'Apprendre le Français<br><span class="translation-sub">Aprender Francés</span>',
+      homeTitle      : 'Apprendre le Français',
       homeStartBtn   : '▶ Commencer<br><span class="translation-sub">Empezar</span>',
       sectionsBackBtn: '← Retour<br><span class="translation-sub">Volver</span>',
       sectionsTitle  : '📚 Modules',
@@ -135,7 +135,7 @@ function initApp(mode) {
 
     _setUI({
       homeFlagRow    : activeFlag,           // Drapeau dynamique selon la région mémorisée
-      homeTitle      : 'Aprender Español<br><span class="translation-sub">Apprendre l\'Espagnol</span>',
+      homeTitle      : 'Aprender Español',
       homeStartBtn   : '▶ Empezar<br><span class="translation-sub">Commencer</span>',
       sectionsBackBtn: '← Volver<br><span class="translation-sub">Retour</span>',
       sectionsTitle  : '📚 Módulos',
