@@ -1362,3 +1362,24 @@ function showCredits() {
   var modal = document.getElementById('credits-modal');
   if (modal) modal.style.display = 'flex';
 }
+
+
+/* ============================================================
+   15. INITIALISATION DU LAUNCHER
+   ============================================================
+   Branche les clics sur les cartes de sélection de langue.
+   Les boutons du launcher portent un attribut data-lang dont la
+   valeur est transmise directement à initApp().
+
+   Ce bloc remplace les anciens onclick inline qui ont été retirés
+   du HTML lors de l'optimisation (séparation structure / comportement).
+
+   Les scripts étant chargés en fin de <body>, le DOM est déjà
+   entièrement parsé à ce stade — aucun DOMContentLoaded nécessaire.
+   ============================================================ */
+
+document.querySelectorAll('.lang-card[data-lang]').forEach(function(card) {
+  card.addEventListener('click', function() {
+    initApp(card.getAttribute('data-lang'));
+  });
+});
