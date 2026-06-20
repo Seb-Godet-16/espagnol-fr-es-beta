@@ -524,39 +524,35 @@ function _buildThemeCard(t) {
   var mainTitle = '', subLine = '';
 
   if (currentMode === 'learn_french') {
-    // ─── MODE FRANÇAIS : Français en premier (Grand) / Espagnol en second (Petit) ───
+    // ─── MODE FRANÇAIS : Français en Premier (Grand) / Espagnol en Second (Petit) ───
     if (t.id === 'alpha' || t.type === 'alpha') {
       mainTitle = "L'Alphabet";
       subLine = 'El Alfabeto';
     } else {
-      var subText = t.sub || '';
-      if (subText.includes('/')) {
-        var parts = subText.split('/');
-        mainTitle = parts[1].trim(); // Le Français après le '/' -> Titre principal
-        subLine = parts[0].trim();   // L'Espagnol avant le '/'  -> Sous-titre
-      } else {
-        mainTitle = t.sub;
-        subLine = t.name;
-      }
+      mainTitle = t.name; // Déjà en Français !
+      subLine = t.sub;    // Déjà en Espagnol !
     }
   } else {
-    // ─── MODE ESPAGNOL : Espagnol en premier (Grand) / Français en second (Petit) ───
-    mainTitle = t.name;
-    var subES = t.sub || '';
-    
+    // ─── MODE ESPAGNOL : Espagnol en Premier (Grand) / Français en Second (Petit) ───
     if (t.id === 'alpha' || t.type === 'alpha') {
       mainTitle = 'El Alfabeto';
       subLine = "L'Alphabet";
-    } else if (subES.includes('/')) {
-      subLine = subES.split('/')[1].trim(); // Le Français après le '/' -> Sous-titre
     } else {
-      subLine = subES;
+      mainTitle = t.name; // Déjà en Espagnol !
+      
+      // Sécurité si t.sub contient un slash dans ce mode
+      var subText = t.sub || '';
+      if (subText.includes('/')) {
+        subLine = subText.split('/')[1].trim(); // On ne garde que la partie Française
+      } else {
+        subLine = subText;
+      }
     }
   }
 
-  // Capitalisation de la première lettre pour les deux titres
-  if (mainTitle) mainTitle = mainTitle.charAt(0).toUpperCase() + mainTitle.slice(1);
-  if (subLine) subLine = subLine.charAt(0).toUpperCase() + subLine.slice(1);
+  // Capitalisation de sécurité (Première lettre en majuscule)
+  if (mainTitle) mainTitle = mainTitle.trim().charAt(0).toUpperCase() + mainTitle.trim().slice(1);
+  if (subLine) subLine = subLine.trim().charAt(0).toUpperCase() + subLine.trim().slice(1);
 
   // Configuration du bouton de réinitialisation
   var resetBtn = isDone(t.id)
@@ -614,19 +610,39 @@ function openTheme(id) {
   // Injection de l'emoji dans l'en-tête de leçon
   document.getElementById('lessonEmoji').textContent = CT.emoji;
 
-  // Construction du titre bilingue (Titre Principal — Traduction)
-  var lessonTitle = '';
-  var mainTitle = CT.name || '';
-  var subTitle = CT.sub || '';
+  // Construction du titre de l'écran leçon
+  var mainTitle = '';
+  var subTitle = '';
 
-  // Sécurité de capitalisation pour l'affichage
+  if (currentMode === 'learn_french') {
+    if (CT.id === 'alpha' || CT.type === 'alpha') {
+      mainTitle = "L'Alphabet";
+      subTitle = 'El Alfabeto';
+    } else {
+      mainTitle = CT.name || '';
+      subTitle = CT.sub || '';
+    }
+  } else {
+    if (CT.id === 'alpha' || CT.type === 'alpha') {
+      mainTitle = 'El Alfabeto';
+      subTitle = "L'Alphabet";
+    } else {
+      mainTitle = CT.name || '';
+      var subTextES = CT.sub || '';
+      if (subTextES.includes('/')) {
+        subTitle = subTextES.split('/')[1].trim();
+      } else {
+        subTitle = subTextES;
+      }
+    }
+  }
+
+  // Nettoyage et capitalisation
   if (mainTitle) mainTitle = mainTitle.trim().charAt(0).toUpperCase() + mainTitle.trim().slice(1);
   if (subTitle)  subTitle  = subTitle.trim().charAt(0).toUpperCase() + subTitle.trim().slice(1);
 
-  // Le titre de la leçon affiche toujours le titre principal suivi de sa traduction
-  lessonTitle = mainTitle + ' — ' + subTitle;
-  
-  document.getElementById('lessonTitle').textContent = lessonTitle;
+  // Génération finale du titre : "Langue Apprise — Langue Source"
+  document.getElementById('lessonTitle').textContent = mainTitle + ' — ' + subTitle;
 
   showScreen('lesson');
 
@@ -646,7 +662,7 @@ function openTheme(id) {
       : [{k:'flash',lbl:'🃏 Cartes'}, {k:'quiz10',lbl:'❓ Quiz'}];
   }
 
-  // Rendu des boutons d'onglets (le premier est actif par défaut)
+  // Rendu des boutons d'onglets
   document.getElementById('lessonTabs').innerHTML = tabs.map(function(t, i) {
     return '<button class="tab' + (i === 0 ? ' active' : '')
       + '" data-tab="' + t.k + '" onclick="switchTab(\'' + t.k + '\')">' + t.lbl + '</button>';
