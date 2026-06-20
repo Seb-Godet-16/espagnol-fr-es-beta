@@ -1,7 +1,7 @@
 /* ============================================================
    Language App 🇫🇷🇪🇸 — Moteur applicatif unifié
    Mode : Français ↔ Espagnol (bidirectionnel)
-   © Juin 2026 – Sébastien Godet · IA Claude Sonnet 4.6
+   © Juin 2026 – Sébastien Godet · IA Claude Sonnet 4.6 et Gemini 3.5 Flash
 
    STRUCTURE DU FICHIER
    ─────────────────────────────────────────────────────────────
