@@ -538,8 +538,15 @@ function _buildThemeCard(t) {
     }
     if (mainTitle) mainTitle = mainTitle.charAt(0).toUpperCase() + mainTitle.slice(1);
   } else {
-    // En mode Espagnol : le titre principal est le nom espagnol (t.name)
-    mainTitle = t.name; subLine = t.sub;
+    // En mode Espagnol : titre principal = t.name (espagnol)
+    // sous-titre = partie française extraite de t.sub (avant le '/')
+    mainTitle = t.name;
+    var subES = t.sub || '';
+    if (subES.includes('/')) {
+      subLine = subES.split('/')[0].trim();
+    } else {
+      subLine = subES;
+    }
   }
 
   // Bouton "Recommencer" visible uniquement sur les modules validés
