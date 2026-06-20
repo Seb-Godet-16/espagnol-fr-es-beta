@@ -21,9 +21,7 @@
    14. UTILITAIRES — Résultats, échappement, helpers
    15. VARIANTES RÉGIONALES — Sélecteur de pays hispanophone
    16. REMERCIEMENTS — Modale de crédits
-   ─────────────────────────────────────────────────────────────
-*/
-
+   ───────────────────────────────────────────────────────────── */
 
 /* ═══════════════════════════════════════════════════════════
    1. VARIABLES D'ÉTAT GLOBALES

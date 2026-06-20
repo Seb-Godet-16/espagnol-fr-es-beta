@@ -73,8 +73,7 @@
    Règle de priorité dans app.js :
      1. card.variants[currentRegion]  si défini
      2. card.es                        (castillan par défaut)
-   ─────────────────────────────────────────────────────────────
-*/
+   ─────────────────────────────────────────────────────────── */
 
 /* ═══════════════════════════════════════════════════════════
    1a. LEVEL1_THEMES_FR — Vocabulaire thématique (Niveau 1)
