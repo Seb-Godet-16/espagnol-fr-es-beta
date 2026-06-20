@@ -614,40 +614,17 @@ function openTheme(id) {
   // Injection de l'emoji dans l'en-tête de leçon
   document.getElementById('lessonEmoji').textContent = CT.emoji;
 
-  // Construction du titre de l'écran leçon
+  // Construction du titre bilingue (Titre Principal — Traduction)
   var lessonTitle = '';
-  if (currentMode === 'learn_french') {
-    // ─── MODE FRANÇAIS : Français — Espagnol ───
-    var subText = CT.sub || '';
-    var titreFr = '';
-    
-    if (CT.id === 'alpha' || CT.type === 'alpha') { 
-      titreFr = "L'Alphabet"; 
-    } else if (subText.includes('/')) { 
-      titreFr = subText.split('/')[1].trim(); // Le Français après le '/'
-    } else { 
-      titreFr = CT.sub; 
-    }
-    
-    if (titreFr) titreFr = titreFr.charAt(0).toUpperCase() + titreFr.slice(1);
-    lessonTitle = titreFr + ' — ' + CT.name;
+  var mainTitle = CT.name || '';
+  var subTitle = CT.sub || '';
 
-  } else {
-    // ─── MODE ESPAGNOL : Espagnol — Français (Inchangé et nettoyé si '/') ───
-    var subTextES = CT.sub || '';
-    var subLineFR = '';
-    
-    if (CT.id === 'alpha' || CT.type === 'alpha') {
-      subLineFR = "L'Alphabet";
-    } else if (subTextES.includes('/')) {
-      subLineFR = subTextES.split('/')[1].trim(); // Extrait uniquement la partie française
-    } else {
-      subLineFR = subTextES;
-    }
-    
-    if (subLineFR) subLineFR = subLineFR.charAt(0).toUpperCase() + subLineFR.slice(1);
-    lessonTitle = CT.name + ' — ' + subLineFR;
-  }
+  // Sécurité de capitalisation pour l'affichage
+  if (mainTitle) mainTitle = mainTitle.trim().charAt(0).toUpperCase() + mainTitle.trim().slice(1);
+  if (subTitle)  subTitle  = subTitle.trim().charAt(0).toUpperCase() + subTitle.trim().slice(1);
+
+  // Le titre de la leçon affiche toujours le titre principal suivi de sa traduction
+  lessonTitle = mainTitle + ' — ' + subTitle;
   
   document.getElementById('lessonTitle').textContent = lessonTitle;
 

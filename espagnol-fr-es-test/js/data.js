@@ -86,7 +86,7 @@
 ═══════════════════════════════════════════════════════════ */
 
 var LEVEL1_THEMES_FR=[
-  {id:'alpha',level:1,emoji:'🔤',name:'L\'Alphabet ',sub:'El Alfabeto',type:'alpha',words:[{es:'A',fr:'A',em:'✈️'},{es:'B',fr:'B',em:'🎈'},{es:'C',fr:'C',em:'☕'},{es:'D',fr:'D',em:'💃'},{es:'E',fr:'E',em:'🏫'},{es:'F',fr:'F',em:'🌸'},{es:'G',fr:'G',em:'🚉'},{es:'H',fr:'H',em:'🏨'},{es:'I',fr:'I',em:'🏝️'},{es:'J',fr:'J',em:'🌿'},{es:'K',fr:'K',em:'⚖️'},{es:'L',fr:'L',em:'🦁'},{es:'M',fr:'M',em:'🏠'},{es:'N',fr:'N',em:'🌙'},{es:'O',fr:'O',em:'🐦'},{es:'P',fr:'P',em:'🍞'},{es:'Q',fr:'Q',em:'🏘️'},{es:'R',fr:'R',em:'🌹'},{es:'S',fr:'S',em:'☀️'},{es:'T',fr:'T',em:'🚂'},{es:'U',fr:'U',em:'1️⃣'},{es:'V',fr:'V',em:'🌆'},{es:'W',fr:'W',em:'🚃'},{es:'X',fr:'X',em:'🎵'},{es:'Y',fr:'Y',em:'🥛'},{es:'Z',fr:'Z',em:'0️⃣'}],quiz10:[{q:'¿Qué letra escuchas?',audio:'J',opts:['L','G','J','V'],ans:2},{q:'¿Qué letra escuchas?',audio:'F',opts:['Z','P','H','F'],ans:3},{q:'¿Qué letra escuchas?',audio:'U',opts:['M','U','I','J'],ans:1},{q:'¿Qué letra escuchas?',audio:'I',opts:['O','A','I','Y'],ans:2},{q:'¿Qué letra escuchas?',audio:'H',opts:['B','F','X','H'],ans:3},{q:'¿Qué letra escuchas?',audio:'Y',opts:['L','P','Y','Z'],ans:2},{q:'¿Qué letra escuchas?',audio:'G',opts:['K','T','G','N'],ans:2},{q:'¿Qué letra escuchas?',audio:'R',opts:['V','M','B','R'],ans:3},{q:'¿Qué letra escuchas?',audio:'Z',opts:['B','M','G','Z'],ans:3},{q:'¿Qué letra escuchas?',audio:'S',opts:['T','S','Y','D'],ans:1},{q:'¿Qué letra escuchas?',audio:'N',opts:['L','M','D','N'],ans:3},{q:'¿Qué letra escuchas?',audio:'X',opts:['X','C','W','N'],ans:0}]},
+  {id:'alpha',level:1,emoji:'🔤',name:'L\'Alphabet',sub:'El Alfabeto',type:'alpha',words:[{es:'A',fr:'A',em:'✈️'},{es:'B',fr:'B',em:'🎈'},{es:'C',fr:'C',em:'☕'},{es:'D',fr:'D',em:'💃'},{es:'E',fr:'E',em:'🏫'},{es:'F',fr:'F',em:'🌸'},{es:'G',fr:'G',em:'🚉'},{es:'H',fr:'H',em:'🏨'},{es:'I',fr:'I',em:'🏝️'},{es:'J',fr:'J',em:'🌿'},{es:'K',fr:'K',em:'⚖️'},{es:'L',fr:'L',em:'🦁'},{es:'M',fr:'M',em:'🏠'},{es:'N',fr:'N',em:'🌙'},{es:'O',fr:'O',em:'🐦'},{es:'P',fr:'P',em:'🍞'},{es:'Q',fr:'Q',em:'🏘️'},{es:'R',fr:'R',em:'🌹'},{es:'S',fr:'S',em:'☀️'},{es:'T',fr:'T',em:'🚂'},{es:'U',fr:'U',em:'1️⃣'},{es:'V',fr:'V',em:'🌆'},{es:'W',fr:'W',em:'🚃'},{es:'X',fr:'X',em:'🎵'},{es:'Y',fr:'Y',em:'🥛'},{es:'Z',fr:'Z',em:'0️⃣'}],quiz10:[{q:'¿Qué letra escuchas?',audio:'J',opts:['L','G','J','V'],ans:2},{q:'¿Qué letra escuchas?',audio:'F',opts:['Z','P','H','F'],ans:3},{q:'¿Qué letra escuchas?',audio:'U',opts:['M','U','I','J'],ans:1},{q:'¿Qué letra escuchas?',audio:'I',opts:['O','A','I','Y'],ans:2},{q:'¿Qué letra escuchas?',audio:'H',opts:['B','F','X','H'],ans:3},{q:'¿Qué letra escuchas?',audio:'Y',opts:['L','P','Y','Z'],ans:2},{q:'¿Qué letra escuchas?',audio:'G',opts:['K','T','G','N'],ans:2},{q:'¿Qué letra escuchas?',audio:'R',opts:['V','M','B','R'],ans:3},{q:'¿Qué letra escuchas?',audio:'Z',opts:['B','M','G','Z'],ans:3},{q:'¿Qué letra escuchas?',audio:'S',opts:['T','S','Y','D'],ans:1},{q:'¿Qué letra escuchas?',audio:'N',opts:['L','M','D','N'],ans:3},{q:'¿Qué letra escuchas?',audio:'X',opts:['X','C','W','N'],ans:0}]},
   {id:'salut',level:1,emoji:'👋',name:'Les Salutations',sub:'Los Saludos',
  words:[
    {es:'Buenos días / Buen día',fr:'Bonjour (le matin)',em:'🌅'},
@@ -119,7 +119,7 @@ var LEVEL1_THEMES_FR=[
     {es:'Tengo ... años',fr:'J\'ai ... ans',em:'🎈'},{es:'Me llamo',fr:'Je m\'appelle',em:'👋'},
     {es:'¿De dónde eres?',fr:'D\'où es-tu ?',em:'🌍'},{es:'Soy de Madrid',fr:'Je suis de Madrid',em:'🏙️'}
    ]},
-{id:'express',level:1,emoji:'💬',name:'Expressions Essentielles ',sub:'Expresiones Esenciales',
+{id:'express',level:1,emoji:'💬',name:'Expressions Essentielles',sub:'Expresiones Esenciales',
  words:[
   // Accord / désaccord
   {es:'¡Claro!',fr:'Bien sûr !',em:'✅'},
@@ -197,7 +197,7 @@ var LEVEL1_THEMES_FR=[
   { id: 'heure_calendrier',
     level: 1,
     emoji: '📅',
-    name: "L\'Heure et le Calendrier",
+    name: 'L\'Heure et le Calendrier',
     sub: 'La Hora y el Calendario',
     words: [
       // L'heure (La hora)
@@ -251,7 +251,7 @@ var LEVEL1_THEMES_FR=[
   { id: 'meteo_climat',
     level: 1,
     emoji: '🌤️',
-    name: "La Météo et le Climat",
+    name: 'La Météo et le Climat',
     sub: 'El Tiempo y el Clima',
     words: [
       // Météo quotidienne (El tiempo)
@@ -1693,7 +1693,7 @@ var LEVEL1_THEMES_ES=[
   { id: 'heure_calendrier',
     level: 1,
     emoji: '📅',
-    name: "La Hora y el Calendario",
+    name: 'La Hora y el Calendario',
     sub: 'L\'Heure et le Calendrier',
     words: [
       // L'heure (La hora)
@@ -1744,7 +1744,7 @@ var LEVEL1_THEMES_ES=[
   { id: 'meteo_climat',
     level: 1,
     emoji: '🌤️',
-    name: "El Tiempo y el Clima",
+    name: 'El Tiempo y el Clima',
     sub: 'La Météo et le Climat',
     words: [
       // Météo (El tiempo)
@@ -1998,7 +1998,7 @@ var LEVEL1_THEMES_ES=[
 ]},
 {id:'lieux',level:1,emoji:'🏙️',name:'Los Lugares',sub:'Les Lieux',words:[{es:'La ciudad',fr:'La ville',em:'🏙️'},{es:'El pueblo',fr:'Le village',em:'🏡'},{es:'El campo',fr:'La campagne',em:'🌾'},{es:'La montaña',fr:'La montagne',em:'⛰️'},{es:'El mar / El océano',fr:'La mer / L\'océan',em:'🌊'},{es:'La playa',fr:'La plage',em:'🏖️'},{es:'El río',fr:'La rivière',em:'🏞️'},{es:'El parque',fr:'Le parc',em:'🌳'},{es:'La plaza',fr:'La place',em:'⛲'},{es:'La calle / La avenida',fr:'La rue / L\'avenue',em:'🛣️'},{es:'La manzana (de casas)',fr:'Le pâté de maisons',em:'🏘️'},{es:'El ayuntamiento',fr:'La mairie / La commune',em:'🏛️'},{es:'El hospital',fr:'L\'hôpital',em:'🏥'},{es:'La farmacia',fr:'La pharmacie',em:'💊'},{es:'El banco',fr:'La banque',em:'🏦'},{es:'La iglesia',fr:'L\'église',em:'⛪'},{es:'El supermercado',fr:'Le supermarché',em:'🛒'},{es:'El bar / El café',fr:'Le bar / Le café',em:'☕'},{es:'La tienda',fr:'La boutique / Le commerce',em:'🏪'},{es:'La escuela infantil / La guardería',fr:'L\'école maternelle',em:'🧸'},{es:'La escuela primaria / El colegio',fr:'L\'école primaire',em:'🎒'},{es:'El instituto',fr:'Le collège / Le lycée',em:'📚'},{es:'La universidad',fr:'L\'université',em:'🏛️'},
 ]},
-{id:'trans',level:1,emoji:'🚌',name:'Los Transportes',sub:'Les Transports',
+{id:'trans',level:1,emoji:'🚌',name:'El Transporte',sub:'Les Transports',
  words:[
    {es:'El autobús / El bus',fr:'Le bus',em:'🚌',
     variants:{MX:'El camión / El autobús',AR:'El colectivo',CO:'El bus / La buseta',VE:'El autobús / La buseta',PE:'El micro / La combi'}},
