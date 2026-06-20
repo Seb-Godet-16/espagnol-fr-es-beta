@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  Language App 🇫🇷🇪🇹  —  index.html                           ║
+  ║  Auteur   : Sébastien Godet                                     ║
+  ║  Assisté  : Claude Sonnet 4.6 · Gemini 3.5 Flash               ║
+  ║  Version  : Juin 2026                                           ║
+  ╠══════════════════════════════════════════════════════════════════╣
+  ║  RÔLE DE CE FICHIER                                             ║
+  ║  Ce fichier est le point d'entrée unique de l'application.      ║
+  ║  Il déclare la structure HTML des 4 "écrans" (screens) et de   ║
+  ║  la modale. Aucune logique métier n'y est présente : tout le   ║
+  ║  comportement est délégué à js/app.js et js/data.js.           ║
+  ╠══════════════════════════════════════════════════════════════════╣
+  ║  ARCHITECTURE GLOBALE DU PROJET                                 ║
+  ║  ├── index.html   → Structure HTML (ce fichier)                ║
+  ║  ├── css/                                                       ║
+  ║  │   └── style.css  → Mise en forme visuelle                   ║
+  ║  └── js/                                                        ║
+  ║      ├── data.js    → Contenu linguistique (mots, thèmes…)     ║
+  ║      └── app.js     → Logique applicative (navigation, score…) ║
+  ╠══════════════════════════════════════════════════════════════════╣
+  ║  NAVIGATION ENTRE ÉCRANS                                        ║
+  ║  La visibilité des écrans est contrôlée par la classe CSS       ║
+  ║  "active" (gérée dans app.js via showScreen()).                 ║
+  ║  Ordre du parcours utilisateur :                                ║
+  ║    [0] app-launcher → [1] home → [2] sections → [3] lesson     ║
+  ╚══════════════════════════════════════════════════════════════════╝
+-->
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <!--
+    viewport : empêche le zoom manuel (maximum-scale=1.0) pour
+    conserver un affichage stable sur mobile.
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Language App 🇫🇷🇪🇹</title>
+  <!-- Feuille de styles unique — voir css/style.css pour les détails -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!--
+  ┌──────────────────────────────────────────────────────────────────┐
+  │  .app — Conteneur racine                                         │
+  │  Sert de point d'ancrage pour le positionnement CSS de tous      │
+  │  les écrans. Chaque écran enfant direct est une .screen.         │
+  └──────────────────────────────────────────────────────────────────┘
+-->
+<div class="app">
+
+
+  <!-- ════════════════════════════════════════════════════════════════
+       ÉCRAN 0 — LANCEUR D'APPLICATION  (#app-launcher)
+       ────────────────────────────────────────────────────────────────
+       Premier écran affiché au lancement (classe "active" par défaut).
+       Permet à l'utilisateur de choisir sa langue cible :
+         • Apprendre le Français  → appelle initApp('learn_french')
+         • Apprendre l'Oromo     → appelle initApp('learn_oromo')
+       initApp() est défini dans js/app.js ; il initialise le contexte
+       linguistique et affiche l'écran #home.
+       ════════════════════════════════════════════════════════════════ -->
+  <div id="app-launcher" class="screen active">
+
+    <!-- Couche d'arrière-plan décorative (gérée par style.css) -->
+    <div class="launcher-bg"></div>
+
+    <!-- Contenu centré du lanceur -->
+    <div class="launcher-inner">
+      <div class="launcher-logo">🌍</div>
+      <!-- Titre bilingue Français / Oromo -->
+      <h1 class="launcher-title">Choisis ta langue</h1>
+      <p class="launcher-sub">Afaan kee filadhu</p>
+
+      <!-- Cartes de sélection de langue -->
+      <div class="launcher-cards">
+
+        <!--
+          Carte Français
+          • lang-card--fr : variante colorée (voir style.css)
+          • data-lang non utilisé ici ; le clic est géré par l'écouteur
+            d'événements ajouté dans app.js (voir OPTIMISATION ci-dessous)
+          OPTIMISATION : l'attribut onclick inline a été remplacé par un
+          écouteur addEventListener dans app.js afin de séparer
+          strictement le HTML (structure) du JS (comportement).
+        -->
+        <button class="lang-card lang-card--fr" data-lang="learn_french">
+          <div class="lang-card-flag">🇫🇷</div>
+          <div class="lang-card-body">
+            <span class="lang-card-name">Apprendre le Français</span>
+            <span class="lang-card-sub">Afaan Faransaayii Barachuu</span>
+          </div>
+          <div class="lang-card-arrow">›</div>
+        </button>
+
+        <!--
+          Carte Oromo
+          • lang-card--or : variante colorée (voir style.css)
+        -->
+        <button class="lang-card lang-card--or" data-lang="learn_oromo">
+          <div class="lang-card-flag">🇪🇹</div>
+          <div class="lang-card-body">
+            <span class="lang-card-name">Afaan Oromoo Barachuu</span>
+            <span class="lang-card-sub">Apprendre l'Oromo</span>
+          </div>
+          <div class="lang-card-arrow">›</div>
+        </button>
+
+      </div><!-- /.launcher-cards -->
+    </div><!-- /.launcher-inner -->
+
+    <!-- Pied de page propre à cet écran (classe spécifique pour le style) -->
+    <footer class="launcher-footer">
+      © Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
+      sebastien.godet16@gmail.com ·
+      <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
+      <!--
+        showCredits() est défini dans app.js ; il affiche la modale
+        #credits-modal en changeant son display de "none" à "flex".
+        OPTIMISATION : onclick inline conservé ici car c'est un simple
+        déclencheur de modale sans logique propre à la vue.
+      -->
+      <a href="#" onclick="showCredits()">Remerciements</a>
+    </footer>
+
+  </div><!-- /#app-launcher -->
+
+
+  <!-- ════════════════════════════════════════════════════════════════
+       ÉCRAN 1 — ACCUEIL  (#home)
+       ────────────────────────────────────────────────────────────────
+       Affiché après la sélection de langue.
+       Tous les éléments portant un id (ex. #homeTitle, #homeBar…)
+       sont peuplés dynamiquement par app.js selon la langue choisie.
+       La barre de progression (#homeBar) reflète l'avancement global.
+       ════════════════════════════════════════════════════════════════ -->
+  <div id="home" class="screen">
+
+    <!--
+      Bouton retour — renvoie vers #app-launcher.
+      Son comportement est branché dans app.js (addEventListener sur #homeBackBtn).
+    -->
+    <button class="back-btn home-back-btn" id="homeBackBtn">← Retour / Duubatti</button>
+
+    <!-- Zone de drapeau(x) — contenu injecté par app.js -->
+    <div class="flag-row" id="homeFlagRow"></div>
+
+    <!-- Titre de l'écran — injecté par app.js selon la langue active -->
+    <h1 id="homeTitle"></h1>
+
+    <!--
+      Barre de progression globale
+      • La largeur (style="width:0%") est mise à jour en JS via
+        document.getElementById('homeBar').style.width = X + '%'
+      • OPTIMISATION : le style initial width:0% est conservé inline
+        car c'est une valeur dynamique de départ (pas un style statique).
+    -->
+    <div class="home-progress-wrap">
+      <div class="home-progress-bar" id="homeBar" style="width:0%"></div>
+    </div>
+
+    <!-- Libellé textuel de progression — ex. "3 / 12 thèmes complétés" -->
+    <div class="home-progress-label" id="homeBarLabel"></div>
+
+    <!-- Rangée d'étoiles / badges de niveau — injectée par app.js -->
+    <div class="stars-row" id="homeStars"></div>
+
+    <!-- Bouton principal "Commencer" / "Continuer" — libellé injecté par app.js -->
+    <button class="btn-primary" id="homeStartBtn"></button>
+
+    <footer>
+      © Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
+      sebastien.godet16@gmail.com ·
+      <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
+      <a href="#" onclick="showCredits()">Remerciements</a>
+    </footer>
+
+  </div><!-- /#home -->
+
+
+  <!-- ════════════════════════════════════════════════════════════════
+       ÉCRAN 2 — LISTE DES SECTIONS / THÈMES  (#sections)
+       ────────────────────────────────────────────────────────────────
+       Présente la grille des thèmes organisés en deux niveaux.
+       Les grilles #grid1 et #grid2 sont générées dynamiquement par
+       app.js à partir des données de js/data.js.
+       ════════════════════════════════════════════════════════════════ -->
+  <div id="sections" class="screen">
+
+    <div class="sections-header">
+      <!--
+        Bouton retour — renvoie vers #home.
+        OPTIMISATION : onclick inline conservé car il ne fait qu'appeler
+        showScreen(), qui est une fonction utilitaire pure de navigation.
+      -->
+      <button class="back-btn" onclick="showScreen('home')" id="sectionsBackBtn"></button>
+
+      <!-- Titre de l'écran — injecté par app.js (ex. "Thèmes — Français") -->
+      <h2 id="sectionsTitle"></h2>
+
+      <!-- Barre de progression globale (identique à celle de #home) -->
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="globalProgress" style="width:0%"></div>
+      </div>
+
+      <!-- Libellé de progression — ex. "5 / 12 thèmes complétés" -->
+      <div class="progress-label" id="progressLabel"></div>
+    </div><!-- /.sections-header -->
+
+    <div class="sections-body">
+
+      <!--
+        NIVEAU 1 — Débutant
+        • #level1Badge : badge coloré (lettre ou emoji) injecté par app.js
+        • #level1Label : libellé textuel du niveau injecté par app.js
+        • #grid1       : grille de cartes-thèmes injectée par app.js
+      -->
+      <div class="level-block">
+        <div class="level-label">
+          <span class="level-badge" id="level1Badge"></span>
+          <span id="level1Label"></span>
+        </div>
+        <div class="themes-grid" id="grid1"></div>
+      </div>
+
+      <!--
+        NIVEAU 2 — Intermédiaire / Avancé
+        • Même structure que le niveau 1, avec la variante CSS "l2"
+          sur le badge pour une couleur distincte.
+      -->
+      <div class="level-block">
+        <div class="level-label">
+          <span class="level-badge l2" id="level2Badge"></span>
+          <span id="level2Label"></span>
+        </div>
+        <div class="themes-grid" id="grid2"></div>
+      </div>
+
+    </div><!-- /.sections-body -->
+
+    <footer>
+      © Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
+      sebastien.godet16@gmail.com ·
+      <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
+      <a href="#" onclick="showCredits()">Remerciements</a>
+    </footer>
+
+  </div><!-- /#sections -->
+
+
+  <!-- ════════════════════════════════════════════════════════════════
+       ÉCRAN 3 — LEÇON  (#lesson)
+       ────────────────────────────────────────────────────────────────
+       Affiche le contenu d'un thème sélectionné.
+       Structuré en onglets (#lessonTabs) dont le contenu (#tabContent)
+       est entièrement généré par app.js selon le thème actif.
+       ════════════════════════════════════════════════════════════════ -->
+  <div id="lesson" class="screen">
+
+    <div class="lesson-header">
+      <!-- Retour vers la liste des sections -->
+      <button class="back-btn" onclick="showScreen('sections')" id="lessonBackBtn">←</button>
+
+      <!--
+        Emoji du thème courant — injecté par app.js.
+        OPTIMISATION : les styles inline (font-size, margin-right) ont été
+        déplacés dans style.css sous le sélecteur #lessonEmoji
+        pour centraliser la mise en forme.
+      -->
+      <span id="lessonEmoji"></span>
+
+      <!-- Titre du thème courant — injecté par app.js -->
+      <h3 id="lessonTitle"></h3>
+    </div><!-- /.lesson-header -->
+
+    <div class="lesson-body" id="lessonBody">
+      <!--
+        #lessonTabs   : barre d'onglets (Vocabulaire, Quiz, etc.)
+                        générée par app.js
+        #tabContent   : contenu de l'onglet actif, mis à jour par app.js
+                        à chaque changement d'onglet
+      -->
+      <div class="tabs" id="lessonTabs"></div>
+      <div id="tabContent"></div>
+    </div><!-- /.lesson-body -->
+
+    <!--
+      Pas de footer sur cet écran pour maximiser l'espace
+      disponible sur mobile pendant l'apprentissage.
+    -->
+
+  </div><!-- /#lesson -->
+
+
+  <!-- ════════════════════════════════════════════════════════════════
+       MODALE — REMERCIEMENTS  (#credits-modal)
+       ────────────────────────────────────────────────────────────────
+       Fenêtre superposée, cachée par défaut (display:none).
+       Ouverte par showCredits() (app.js) via display:"flex".
+       Fermée par le bouton interne qui rappelle display:"none".
+       OPTIMISATION : tous les styles inline (position, background,
+       border-radius…) ont été déplacés dans style.css sous
+       les sélecteurs .modal et .modal-content pour garder le HTML
+       lisible et la mise en forme centralisée.
+       ════════════════════════════════════════════════════════════════ -->
+  <div id="credits-modal" class="modal">
+
+    <div class="modal-content">
+
+      <h3>Remerciements</h3>
+
+      <p>
+        Un grand merci à <strong>Fédérico Calo</strong>
+        (<a href="https://www.linkedin.com/in/federicocalo/" target="_blank">
+          Architecte Développeur Web</a>)
+        pour son aide technique.<br><br>
+        Merci beaucoup également à <strong>Mussa Sembro</strong>
+        (<a href="https://www.linkedin.com/in/mussa-sembro-137472174/" target="_blank">
+          Traducteur-Interprète en Oromo</a>)
+        et à mes parents pour leur travail de relecture, leurs corrections
+        sur les traductions et leurs conseils sur l'ergonomie de l'application.
+      </p>
+
+      <!-- Fermeture de la modale : remet display à "none" -->
+      <button onclick="document.getElementById('credits-modal').style.display='none'">
+        Fermer
+      </button>
+
+    </div><!-- /.modal-content -->
+
+  </div><!-- /#credits-modal -->
+
+
+</div><!-- /.app -->
+
+
+<!--
+  ══════════════════════════════════════════════════════════════════
+  CHARGEMENT DES SCRIPTS
+  ══════════════════════════════════════════════════════════════════
+  Les scripts sont placés en fin de <body> pour s'assurer que
+  l'intégralité du DOM est parsé avant leur exécution.
+
+  Ordre impératif :
+    1. data.js  — doit être chargé EN PREMIER car app.js dépend
+                  des variables/objets qu'il exporte (vocabulaire,
+                  thèmes, métadonnées des langues…).
+    2. app.js   — initialise l'application et branche tous les
+                  écouteurs d'événements sur les éléments du DOM.
+  ══════════════════════════════════════════════════════════════════
+-->
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
