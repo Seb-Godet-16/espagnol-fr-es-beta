@@ -524,27 +524,33 @@ function _buildThemeCard(t) {
   var mainTitle = '', subLine = '';
 
   if (currentMode === 'learn_french') {
-    // En mode Français : le titre principal est le nom français (extrait de t.sub)
-    var subText = t.sub || '';
+    // ─── MODE FRANÇAIS ───
+    // Titre principal en Français (après le '/') et sous-titre en Espagnol
     if (t.id === 'alpha' || t.type === 'alpha') {
       mainTitle = "L'Alphabet"; subLine = 'El Alfabeto';
-    } else if (subText.includes('/')) {
-      var parts = subText.split('/');
-      mainTitle = parts[1].trim(); subLine = parts[0].trim();
     } else {
-      mainTitle = t.sub; subLine = t.name;
+      var subText = t.sub || '';
+      if (subText.includes('/')) {
+        var parts = subText.split('/');
+        mainTitle = parts[1].trim(); // Le Français après le '/'
+        subLine = parts[0].trim();   // L'Espagnol avant le '/'
+      } else {
+        mainTitle = t.sub; subLine = t.name;
+      }
     }
     if (mainTitle) mainTitle = mainTitle.charAt(0).toUpperCase() + mainTitle.slice(1);
+    if (subLine) subLine = subLine.charAt(0).toUpperCase() + subLine.slice(1);
+
   } else {
-    // Titre principal = t.name (l'espagnol)
+    // ─── MODE ESPAGNOL ───
+    // Titre principal en Espagnol (t.name) et sous-titre en Français
     mainTitle = t.name;
     
     var subES = t.sub || '';
     if (t.id === 'alpha' || t.type === 'alpha') {
       mainTitle = 'El Alfabeto'; subLine = "L'Alphabet";
     } else if (subES.includes('/')) {
-      // Dans "nom_es / nom_fr", le français est APRES le '/' (index 1)
-      subLine = subES.split('/')[1].trim();
+      subLine = subES.split('/')[1].trim(); // Le Français après le '/'
     } else {
       subLine = subES;
     }
@@ -552,7 +558,8 @@ function _buildThemeCard(t) {
     if (subLine) subLine = subLine.charAt(0).toUpperCase() + subLine.slice(1);
   }
 
-  // Bouton "Recommencer" visible uniquement sur les modules validés
+  // Si on apprend le français (interface en espagnol), le bouton doit dire '🔄 Volver a empezar'.
+  // Si on apprend l'espagnol (interface en français), le bouton doit dire '🔄 Recommencer'.
   var resetBtn = isDone(t.id)
     ? '<button onclick="event.stopPropagation();resetTheme(\'' + t.id + '\')" '
       + 'style="margin-top:6px;font-size:.65rem;background:#fff;border:1.5px solid #009A44;'
@@ -569,9 +576,9 @@ function _buildThemeCard(t) {
 
   return '<div class="theme-card' + (isDone(t.id) ? ' done' : '')
     + '" onclick="openTheme(\'' + t.id + '\')">'
-    + '<div class="t-emoji">'  + t.emoji   + '</div>'
-    + '<div class="t-name">'   + mainTitle + '</div>'
-    + '<div class="t-sub">'    + subLine   + '</div>'
+    + '<div class="t-emoji">'   + t.emoji   + '</div>'
+    + '<div class="t-name">'    + mainTitle + '</div>'
+    + '<div class="t-sub">'     + subLine   + '</div>'
     + '<div class="t-stars" style="letter-spacing:2px">' + starsStr + '</div>'
     + resetBtn
     + '</div>';
