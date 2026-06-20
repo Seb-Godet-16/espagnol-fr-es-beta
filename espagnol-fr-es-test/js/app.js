@@ -524,42 +524,41 @@ function _buildThemeCard(t) {
   var mainTitle = '', subLine = '';
 
   if (currentMode === 'learn_french') {
-    // ─── MODE FRANÇAIS ───
-    // Titre principal en Français (après le '/') et sous-titre en Espagnol
+    // ─── MODE FRANÇAIS : Français en premier (Grand) / Espagnol en second (Petit) ───
     if (t.id === 'alpha' || t.type === 'alpha') {
-      mainTitle = "L'Alphabet"; subLine = 'El Alfabeto';
+      mainTitle = "L'Alphabet";
+      subLine = 'El Alfabeto';
     } else {
       var subText = t.sub || '';
       if (subText.includes('/')) {
         var parts = subText.split('/');
-        mainTitle = parts[1].trim(); // Le Français après le '/'
-        subLine = parts[0].trim();   // L'Espagnol avant le '/'
+        mainTitle = parts[1].trim(); // Le Français après le '/' -> Titre principal
+        subLine = parts[0].trim();   // L'Espagnol avant le '/'  -> Sous-titre
       } else {
-        mainTitle = t.sub; subLine = t.name;
+        mainTitle = t.sub;
+        subLine = t.name;
       }
     }
-    if (mainTitle) mainTitle = mainTitle.charAt(0).toUpperCase() + mainTitle.slice(1);
-    if (subLine) subLine = subLine.charAt(0).toUpperCase() + subLine.slice(1);
-
   } else {
-    // ─── MODE ESPAGNOL ───
-    // Titre principal en Espagnol (t.name) et sous-titre en Français
+    // ─── MODE ESPAGNOL : Espagnol en premier (Grand) / Français en second (Petit) ───
     mainTitle = t.name;
-    
     var subES = t.sub || '';
+    
     if (t.id === 'alpha' || t.type === 'alpha') {
-      mainTitle = 'El Alfabeto'; subLine = "L'Alphabet";
+      mainTitle = 'El Alfabeto';
+      subLine = "L'Alphabet";
     } else if (subES.includes('/')) {
-      subLine = subES.split('/')[1].trim(); // Le Français après le '/'
+      subLine = subES.split('/')[1].trim(); // Le Français après le '/' -> Sous-titre
     } else {
       subLine = subES;
     }
-    if (mainTitle) mainTitle = mainTitle.charAt(0).toUpperCase() + mainTitle.slice(1);
-    if (subLine) subLine = subLine.charAt(0).toUpperCase() + subLine.slice(1);
   }
 
-  // Si on apprend le français (interface en espagnol), le bouton doit dire '🔄 Volver a empezar'.
-  // Si on apprend l'espagnol (interface en français), le bouton doit dire '🔄 Recommencer'.
+  // Capitalisation de la première lettre pour les deux titres
+  if (mainTitle) mainTitle = mainTitle.charAt(0).toUpperCase() + mainTitle.slice(1);
+  if (subLine) subLine = subLine.charAt(0).toUpperCase() + subLine.slice(1);
+
+  // Configuration du bouton de réinitialisation
   var resetBtn = isDone(t.id)
     ? '<button onclick="event.stopPropagation();resetTheme(\'' + t.id + '\')" '
       + 'style="margin-top:6px;font-size:.65rem;background:#fff;border:1.5px solid #009A44;'
@@ -568,12 +567,13 @@ function _buildThemeCard(t) {
       + '</button>'
     : '';
 
-  // Génération de l'affichage des étoiles (⭐ remplies, ☆ vides)
+  // Génération de l'affichage des étoiles
   var currentStars = getThemeStars(t.id);
   var starsStr = Array.from({ length: 3 }, function(_, i) {
     return i < currentStars ? '⭐' : '☆';
   }).join('');
 
+  // Rendu de la carte HTML
   return '<div class="theme-card' + (isDone(t.id) ? ' done' : '')
     + '" onclick="openTheme(\'' + t.id + '\')">'
     + '<div class="t-emoji">'   + t.emoji   + '</div>'
@@ -611,22 +611,44 @@ function openTheme(id) {
     ? _generateLevel1Quiz(CT)
     : [];
 
-  // Injection de l'emoji et du titre dans l'en-tête de leçon
+  // Injection de l'emoji dans l'en-tête de leçon
   document.getElementById('lessonEmoji').textContent = CT.emoji;
 
-  // Construction du titre bilingue (titre dans la langue cible — langue source)
+  // Construction du titre de l'écran leçon
   var lessonTitle = '';
   if (currentMode === 'learn_french') {
+    // ─── MODE FRANÇAIS : Français — Espagnol ───
     var subText = CT.sub || '';
     var titreFr = '';
-    if (CT.id === 'alpha' || CT.type === 'alpha') { titreFr = "L'Alphabet"; }
-    else if (subText.includes('/')) { titreFr = subText.split('/')[1].trim(); }
-    else { titreFr = CT.sub; }
+    
+    if (CT.id === 'alpha' || CT.type === 'alpha') { 
+      titreFr = "L'Alphabet"; 
+    } else if (subText.includes('/')) { 
+      titreFr = subText.split('/')[1].trim(); // Le Français après le '/'
+    } else { 
+      titreFr = CT.sub; 
+    }
+    
     if (titreFr) titreFr = titreFr.charAt(0).toUpperCase() + titreFr.slice(1);
     lessonTitle = titreFr + ' — ' + CT.name;
+
   } else {
-    lessonTitle = CT.name + ' — ' + CT.sub;
+    // ─── MODE ESPAGNOL : Espagnol — Français (Inchangé et nettoyé si '/') ───
+    var subTextES = CT.sub || '';
+    var subLineFR = '';
+    
+    if (CT.id === 'alpha' || CT.type === 'alpha') {
+      subLineFR = "L'Alphabet";
+    } else if (subTextES.includes('/')) {
+      subLineFR = subTextES.split('/')[1].trim(); // Extrait uniquement la partie française
+    } else {
+      subLineFR = subTextES;
+    }
+    
+    if (subLineFR) subLineFR = subLineFR.charAt(0).toUpperCase() + subLineFR.slice(1);
+    lessonTitle = CT.name + ' — ' + subLineFR;
   }
+  
   document.getElementById('lessonTitle').textContent = lessonTitle;
 
   showScreen('lesson');
