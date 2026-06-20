@@ -530,21 +530,26 @@ function _buildThemeCard(t) {
       mainTitle = "L'Alphabet"; subLine = 'El Alfabeto';
     } else if (subText.includes('/')) {
       var parts = subText.split('/');
-      mainTitle = parts[1].trim(); subLine = parts[0].trim() + ' / ' + t.name;
+      mainTitle = parts[1].trim(); subLine = parts[0].trim();
     } else {
       mainTitle = t.sub; subLine = t.name;
     }
     if (mainTitle) mainTitle = mainTitle.charAt(0).toUpperCase() + mainTitle.slice(1);
   } else {
-    // En mode Espagnol : titre principal = t.name (espagnol)
-    // sous-titre = partie française extraite de t.sub (avant le '/')
+    // Titre principal = t.name (l'espagnol)
     mainTitle = t.name;
+    
     var subES = t.sub || '';
-    if (subES.includes('/')) {
-      subLine = subES.split('/')[0].trim();
+    if (t.id === 'alpha' || t.type === 'alpha') {
+      mainTitle = 'El Alfabeto'; subLine = "L'Alphabet";
+    } else if (subES.includes('/')) {
+      // Dans "nom_es / nom_fr", le français est APRES le '/' (index 1)
+      subLine = subES.split('/')[1].trim();
     } else {
       subLine = subES;
     }
+    if (mainTitle) mainTitle = mainTitle.charAt(0).toUpperCase() + mainTitle.slice(1);
+    if (subLine) subLine = subLine.charAt(0).toUpperCase() + subLine.slice(1);
   }
 
   // Bouton "Recommencer" visible uniquement sur les modules validés
