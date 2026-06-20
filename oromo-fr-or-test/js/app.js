@@ -530,9 +530,9 @@ function _buildThemeCard(t) {
     mainTitle = t.name;
     subLine   = t.sub;
   } else {
-    // J'apprends l'oromo : Principal = Oromo (t.sub), Sous-titre = Français (t.name)
-    mainTitle = t.sub;
-    subLine   = t.name;
+    // J'apprends l'oromo : Principal = Oromo (t.name), Sous-titre = Français (t.sub)
+    mainTitle = t.name;
+    subLine   = t.sub;
   }
 
   // Cas particulier pour l'alphabet
