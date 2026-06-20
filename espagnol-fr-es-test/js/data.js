@@ -976,7 +976,7 @@ var LEVEL1_THEMES_FR=[
 var LEVEL2_THEMES_FR = [
  
 /* 1 ── Saluer et prendre des nouvelles */
-  {id:'salut2',level:2,emoji:'👋',name:'Saludos',sub:'Saluer quelqu\'un',type:'dialog',
+  {id:'salut2',level:2,emoji:'👋',name:'Saluer quelqu\'un',sub:'Saludar a Alguien',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Dans la rue',img:'🏘️',dialogue:[
       {s:'Lucas',es:'¡Hola! ¿Qué tal?',fr:'Salut ! Ça va ?',side:'left'},
@@ -1010,7 +1010,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 2 ── Se présenter */
-  {id:'pres2',level:2,emoji:'🙋',name:'Presentarse',sub:'Se présenter',type:'dialog',
+  {id:'pres2',level:2,emoji:'🙋',name:'Se Présenter',sub:'Presentarse',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Dans un cours d\'espagnol',img:'📚',dialogue:[
       {s:'Profesora',es:'¡Hola! ¿Cómo te llamas?',fr:'Bonjour ! Tu t\'appelles comment ?',side:'right'},
@@ -1045,7 +1045,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 3 ── Demander son chemin */
-  {id:'chemin2',level:2,emoji:'🗺️',name:'Pedir camino',sub:'Demander son chemin',type:'dialog',
+  {id:'chemin2',level:2,emoji:'🗺️',name:'Demander son Chemin',sub:'Pedir Indicaciones',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Trouver la gare',img:'🚉',dialogue:[
       {s:'Turista',es:'Perdona, ¿dónde está la estación?',fr:'Pardon, où est la gare ?',side:'left'},
@@ -1080,7 +1080,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 4 ── Au bar */
-  {id:'bar2',level:2,emoji:'☕',name:'En el bar',sub:'Commander au bar',type:'dialog',
+  {id:'bar2',level:2,emoji:'☕',name:'Au Café',sub:'En el Café',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Commande simple',img:'☕',dialogue:[
       {s:'Cliente',es:'¡Hola! Un café con leche, por favor.',fr:'Bonjour ! Un café au lait, s\'il vous plaît.',side:'left'},
@@ -1115,7 +1115,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 5 ── Au restaurant */
-  {id:'resto2',level:2,emoji:'🍽️',name:'En el restaurante',sub:'Au restaurant',type:'dialog',
+  {id:'resto2',level:2,emoji:'🍽️',name:'Au Restaurant',sub:'En el Restaurante',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Avoir une table',img:'🪑',dialogue:[
       {s:'Cliente',es:'Hola, ¿tiene una mesa para dos?',fr:'Bonjour, vous avez une table pour deux ?',side:'left'},
@@ -1150,7 +1150,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 6 ── Faire des courses */
-  {id:'compras2',level:2,emoji:'🛍️',name:'De compras',sub:'Acheter des choses / Faire ses courses',type:'dialog',
+  {id:'compras2',level:2,emoji:'🛍️',name:'Faire des Courses',sub:'Hacer la Compra',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Au marché',img:'🧺',dialogue:[
       {s:'Cliente',es:'Buenos días. ¿Cuánto cuestan los tomates?',fr:'Bonjour. Combien coûtent les tomates ?',side:'left'},
@@ -1185,7 +1185,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 7 ── Prendre les transports */
-  {id:'transp2',level:2,emoji:'🚌',name:'El transporte',sub:'Les transports',type:'dialog',
+  {id:'transp2',level:2,emoji:'🚌',name:'Les Transports',sub:'El Transporte',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Dans le métro',img:'🚇',dialogue:[
       {s:'Viajero',es:'Perdona, ¿este metro va al centro?',fr:'Pardon, ce métro va au centre ?',side:'left'},
@@ -1220,7 +1220,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 8 ── À la pharmacie */
-  {id:'farmacia2',level:2,emoji:'💊',name:'En la farmacia',sub:'À la pharmacie',type:'dialog',
+  {id:'farmacia2',level:2,emoji:'💊',name:'À la Pharmacie',sub:'En la Farmacia',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Mal de tête',img:'🤕',dialogue:[
       {s:'Cliente',es:'Hola. Me duele la cabeza. ¿Qué tiene?',fr:'Bonjour. J\'ai mal à la tête. Qu\'est-ce que vous avez ?',side:'left'},
@@ -1255,7 +1255,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 9 ── À l'hôtel */
-  {id:'hotel2',level:2,emoji:'🏨',name:'En el hotel',sub:'Arriver à l\'hôtel',type:'dialog',
+  {id:'hotel2',level:2,emoji:'🏨',name:'À l\'Hôtel',sub:'En el Hotel',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Arrivée à la réception',img:'🛎️',dialogue:[
       {s:'Recepcionista',es:'¡Buenas noches! ¿Tiene reserva?',fr:'Bonsoir ! Vous avez une réservation ?',side:'right'},
@@ -1290,7 +1290,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 10 ── Chez le médecin */
-  {id:'medico2',level:2,emoji:'🩺',name:'En el médico',sub:'Chez le médecin',type:'dialog',
+  {id:'medico2',level:2,emoji:'🩺',name:'Chez le Médecin',sub:'En el Médico',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Expliquer ses symptômes',img:'🤒',dialogue:[
       {s:'Médico',es:'¡Buenos días! ¿Qué le pasa?',fr:'Bonjour ! Qu\'est-ce qui ne va pas ?',side:'right'},
@@ -1325,7 +1325,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 11 ── La météo */
-  {id:'meteo2',level:2,emoji:'☀️',name:'El tiempo',sub:'Parler de la météo',type:'dialog',
+  {id:'meteo2',level:2,emoji:'☀️',name:'La Météo',sub:'El Tiempo',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Parler du temps',img:'🌤️',dialogue:[
       {s:'Marta',es:'¡Qué calor hace hoy!',fr:'Quelle chaleur aujourd\'hui !',side:'left'},
@@ -1360,7 +1360,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 12 ── Trouver un logement */
-  {id:'logement2',level:2,emoji:'🏠',name:'Buscar piso',sub:'Chercher un logement',type:'dialog',
+  {id:'logement2',level:2,emoji:'🏠',name:'Chercher un Logement',sub:'Buscar Vivienda',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Appeler pour un appartement',img:'📱',dialogue:[
       {s:'Cliente',es:'Hola, llamo por el piso en alquiler.',fr:'Bonjour, j\'appelle pour l\'appartement en location.',side:'left'},
@@ -1395,7 +1395,7 @@ var LEVEL2_THEMES_FR = [
    ]},
  
   /* 13 ── Parler de ses goûts */
-  {id:'gustos2',level:2,emoji:'❤️',name:'Gustos y aficiones',sub:'Parler de ce qu\'on aime',type:'dialog',
+  {id:'gustos2',level:2,emoji:'❤️',name:'Goûts et Loisirs',sub:'Gustos y Aficiones',type:'dialog',
    situations:[
     {label:'Sit. 1',title:'Parler de musique',img:'🎵',dialogue:[
       {s:'Lucía',es:'¿Te gusta la música?',fr:'Tu aimes la musique ?',side:'right'},
@@ -1429,44 +1429,8 @@ var LEVEL2_THEMES_FR = [
     {q:'¿Cómo se dice "Le match" en español?',opts:['El deporte','El equipo','El partido','El estadio'],ans:2}
    ]},
  
-  /* 14 ── Sortir le soir */
-  {id:'fiesta2',level:2,emoji:'🎉',name:'Salir de noche',sub:'Sortir le soir',type:'dialog',
-   situations:[
-    {label:'Sit. 1',title:'Organiser une sortie',img:'🎊',dialogue:[
-      {s:'Pablo',es:'¡Hola! ¿Salimos esta noche?',fr:'Salut ! On sort ce soir ?',side:'left'},
-      {s:'Lea',es:'¡Sí! ¿Adónde vamos?',fr:'Oui ! On va où ?',side:'right'},
-      {s:'Pablo',es:'Hay un bar muy chulo en el centro.',fr:'Il y a un bar très sympa au centre.',side:'left'},
-      {s:'Lea',es:'¡Bien! ¿A qué hora?',fr:'Super ! À quelle heure ?',side:'right'},
-      {s:'Pablo',es:'A las diez. En España se sale tarde.',fr:'À dix heures. En Espagne on sort tard.',side:'left'},
-      {s:'Lea',es:'¡Vale! ¡Hasta luego!',fr:'D\'accord ! À plus tard !',side:'right'}
-    ]},
-    {label:'Sit. 2',title:'Au bar le soir',img:'🍺',dialogue:[
-      {s:'Marc',es:'¡Esta música está muy bien! ¿Bailamos?',fr:'Cette musique est super ! On danse ?',side:'left'},
-      {s:'Inés',es:'¡Sí! Me encanta bailar.',fr:'Oui ! J\'adore danser.',side:'right'},
-      {s:'Marc',es:'¿Quieres algo de beber?',fr:'Tu veux quelque chose à boire ?',side:'left'},
-      {s:'Inés',es:'Sí, un agua, por favor. Tengo calor.',fr:'Oui, une eau, s\'il te plaît. J\'ai chaud.',side:'right'},
-      {s:'Marc',es:'¡Ahora vuelvo!',fr:'Je reviens tout de suite !',side:'left'},
-      {s:'Inés',es:'¡Vale!',fr:'D\'accord !',side:'right'}
-    ]},
-    {label:'Sit. 3',title:'Le lendemain',img:'😴',dialogue:[
-      {s:'Carla',es:'¡Hola! ¿Cómo estás? ¡Llegué tarde a casa!',fr:'Salut ! Tu vas bien ? Je suis rentré tard à la maison !',side:'left'},
-      {s:'Tom',es:'¡Yo también! Pero fue una noche muy buena.',fr:'Moi aussi ! Mais c\'était une très bonne soirée.',side:'right'},
-      {s:'Carla',es:'Sí, la gente era muy simpática.',fr:'Oui, les gens étaient très sympas.',side:'left'},
-      {s:'Tom',es:'¿Comemos juntos hoy?',fr:'On mange ensemble aujourd\'hui ?',side:'right'},
-      {s:'Carla',es:'¡Sí! Necesito comer. Tengo mucha hambre.',fr:'Oui ! J\'ai besoin de manger. J\'ai très faim.',side:'left'},
-      {s:'Tom',es:'¡Yo también! ¡La siesta es para después!',fr:'Moi aussi ! La sieste c\'est pour après !',side:'right'}
-    ]}
-   ],
-   vocab:['¡Salimos! = On sort !','¿Adónde vamos? = On va où ?','En España se sale tarde = En Espagne on sort tard','¡Vale! = D\'accord !','Tengo calor = J\'ai chaud','Tengo hambre = J\'ai faim','La siesta = La sieste'],
-   quiz:[
-    {q:'¿Qué significa "¡Vale!" en España?',opts:['Au revoir !','Allons-y !','D\'accord !','C\'est nul !'],ans:2},
-    {q:'¿Cómo se dice "J\'ai faim" en español?',opts:['Tengo sed','Tengo sueño','Tengo frío','Tengo hambre'],ans:3},
-    {q:'¿Qué significa "En España se sale tarde"?',opts:['En Espagne on rentre tard','En Espagne on travaille tard','En Espagne on sort tard','En Espagne on mange tard'],ans:2}
-   ]},
-
-   
-// ── La vie quotidienne (dialogues) ───────────────────
-{id:'viequot2',level:2,emoji:'🏡',name:'Vida cotidiana',sub:'La vie quotidienne',type:'dialog',
+/* 14 ── La vie quotidienne */   
+{id:'viequot2',level:2,emoji:'🏡',name:'La Vie Quotidienne',sub:'La Vida Cotidiana',type:'dialog',
  situations:[
   {label:'Sit. 1',title:'Une matinée typique',img:'🌅',dialogue:[
     {s:'Lucía',es:'¡Buenos días! ¿Has dormido bien?',fr:'Bonjour ! Tu as bien dormi ?',side:'left'},
@@ -1508,9 +1472,9 @@ var LEVEL2_THEMES_FR = [
   {q:'¿Cómo se dice \"Le boulanger\" en español?',opts:['El carnicero','El panadero','El pescadero','El cocinero'],ans:1},
  ]
 },
- 
-// ── Heure et Temps (dialogues) ───────────────────────
-{id:'heuretemp2',level:2,emoji:'⏰',name:'La hora y el tiempo',sub:'Heure et météo / Hora y tiempo',type:'dialog',
+
+/* 15 ── Heure et Météo */ 
+{id:'heuretemp2',level:2,emoji:'⏰',name:'L\'Heure et la Météo',sub:'Hora y Tiempo',type:'dialog',
  situations:[
   {label:'Sit. 1',title:'Organiser un rendez-vous',img:'📅',dialogue:[
     {s:'Elena',es:'¿A qué hora quedamos mañana?',fr:'On se retrouve à quelle heure demain ?',side:'left'},
@@ -1551,7 +1515,42 @@ var LEVEL2_THEMES_FR = [
   {q:'¿Cómo se dice \"Ils ferment à...\" en español?',opts:['Abren a las...','¿Te va bien?','Cierran a las...','Van a ser...'],ans:2},
   {q:'¿Cómo se dice \"On se retrouve à quelle heure ?\" en español?',opts:['¿Te va bien?','Cierran a las...','Van a ser grados','¿A qué hora quedamos?'],ans:3},
  ]
-}
+},
+
+/* 16 ── Sortir le soir */
+  {id:'fiesta2',level:2,emoji:'🎉',name:'Sortir le Soir',sub:'Salir por la Noche',type:'dialog',
+   situations:[
+    {label:'Sit. 1',title:'Organiser une sortie',img:'🎊',dialogue:[
+      {s:'Pablo',es:'¡Hola! ¿Salimos esta noche?',fr:'Salut ! On sort ce soir ?',side:'left'},
+      {s:'Lea',es:'¡Sí! ¿Adónde vamos?',fr:'Oui ! On va où ?',side:'right'},
+      {s:'Pablo',es:'Hay un bar muy chulo en el centro.',fr:'Il y a un bar très sympa au centre.',side:'left'},
+      {s:'Lea',es:'¡Bien! ¿A qué hora?',fr:'Super ! À quelle heure ?',side:'right'},
+      {s:'Pablo',es:'A las diez. En España se sale tarde.',fr:'À dix heures. En Espagne on sort tard.',side:'left'},
+      {s:'Lea',es:'¡Vale! ¡Hasta luego!',fr:'D\'accord ! À plus tard !',side:'right'}
+    ]},
+    {label:'Sit. 2',title:'Au bar le soir',img:'🍺',dialogue:[
+      {s:'Marc',es:'¡Esta música está muy bien! ¿Bailamos?',fr:'Cette musique est super ! On danse ?',side:'left'},
+      {s:'Inés',es:'¡Sí! Me encanta bailar.',fr:'Oui ! J\'adore danser.',side:'right'},
+      {s:'Marc',es:'¿Quieres algo de beber?',fr:'Tu veux quelque chose à boire ?',side:'left'},
+      {s:'Inés',es:'Sí, un agua, por favor. Tengo calor.',fr:'Oui, une eau, s\'il te plaît. J\'ai chaud.',side:'right'},
+      {s:'Marc',es:'¡Ahora vuelvo!',fr:'Je reviens tout de suite !',side:'left'},
+      {s:'Inés',es:'¡Vale!',fr:'D\'accord !',side:'right'}
+    ]},
+    {label:'Sit. 3',title:'Le lendemain',img:'😴',dialogue:[
+      {s:'Carla',es:'¡Hola! ¿Cómo estás? ¡Llegué tarde a casa!',fr:'Salut ! Tu vas bien ? Je suis rentré tard à la maison !',side:'left'},
+      {s:'Tom',es:'¡Yo también! Pero fue una noche muy buena.',fr:'Moi aussi ! Mais c\'était une très bonne soirée.',side:'right'},
+      {s:'Carla',es:'Sí, la gente era muy simpática.',fr:'Oui, les gens étaient très sympas.',side:'left'},
+      {s:'Tom',es:'¿Comemos juntos hoy?',fr:'On mange ensemble aujourd\'hui ?',side:'right'},
+      {s:'Carla',es:'¡Sí! Necesito comer. Tengo mucha hambre.',fr:'Oui ! J\'ai besoin de manger. J\'ai très faim.',side:'left'},
+      {s:'Tom',es:'¡Yo también! ¡La siesta es para después!',fr:'Moi aussi ! La sieste c\'est pour après !',side:'right'}
+    ]}
+   ],
+   vocab:['¡Salimos! = On sort !','¿Adónde vamos? = On va où ?','En España se sale tarde = En Espagne on sort tard','¡Vale! = D\'accord !','Tengo calor = J\'ai chaud','Tengo hambre = J\'ai faim','La siesta = La sieste'],
+   quiz:[
+    {q:'¿Qué significa "¡Vale!" en España?',opts:['Au revoir !','Allons-y !','D\'accord !','C\'est nul !'],ans:2},
+    {q:'¿Cómo se dice "J\'ai faim" en español?',opts:['Tengo sed','Tengo sueño','Tengo frío','Tengo hambre'],ans:3},
+    {q:'¿Qué significa "En España se sale tarde"?',opts:['En Espagne on rentre tard','En Espagne on travaille tard','En Espagne on sort tard','En Espagne on mange tard'],ans:2}
+   ]}
 ];
 
 /* ─────────────────────────────────────────────────────────
