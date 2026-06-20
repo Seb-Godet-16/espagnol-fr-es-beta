@@ -87,7 +87,6 @@ function initApp(mode) {
     _setUI({
       homeFlagRow    : '🇫🇷',
       homeTitle      : 'Apprendre le Français',
-      homeSubtitle   : 'Recto Français · Verso Oromo',
       homeStartBtn   : '▶ Commencer',
       sectionsBackBtn: '← Retour',
       sectionsTitle  : '📚 Modules',
@@ -109,7 +108,6 @@ function initApp(mode) {
     _setUI({
       homeFlagRow    : '🇪🇹',
       homeTitle      : 'Afaan Oromoo barachuu',
-      homeSubtitle   : 'Fuuldura Afaan Oromo · Duuba Afaan Faransaay',
       homeStartBtn   : '▶ Jalqabi',
       sectionsBackBtn: '← Gara duubaatti',
       sectionsTitle  : '📚 Moojuulota',
@@ -136,7 +134,6 @@ function initApp(mode) {
 function _setUI(t) {
   _setText('homeFlagRow',     t.homeFlagRow);
   _setText('homeTitle',       t.homeTitle);
-  _setText('homeSubtitle',    t.homeSubtitle);
   _setText('homeStartBtn',    t.homeStartBtn);
   _setText('sectionsBackBtn', t.sectionsBackBtn);
   _setText('sectionsTitle',   t.sectionsTitle);
