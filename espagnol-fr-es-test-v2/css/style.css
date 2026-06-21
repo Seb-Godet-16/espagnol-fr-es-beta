@@ -1907,3 +1907,33 @@ html.theme-spain.region-VE {
   color: #666;
 }
 .rp-skip-btn:active { background: #ddd; color: #333; }
+
+/* ============================================================
+   AJOUT - BOUTON COPIER E-MAIL (SÉCURISÉ)
+   ============================================================ */
+
+/* 1. Gestion des transitions pour adoucir les changements d'état */
+.guide-contact-callout-btn,
+.guide-bio-link {
+  transition: all 0.2s ease-in-out;
+}
+
+/* 2. État "Copié" pour le gros bouton principal (il devient vert) */
+.guide-contact-callout-btn.copied {
+  background: #28a745 !important;
+  color: #fff !important;
+  border-color: #28a745 !important;
+}
+
+/* 3. État "Copié" pour le petit lien textuel dans la biographie */
+.guide-bio-link.copied {
+  color: #28a745 !important;
+  font-weight: bold;
+}
+
+/* 4. Effet de survol sur le gros bouton principal */
+.guide-contact-callout-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}

@@ -2457,3 +2457,32 @@ function _refreshGuideRegion() {
     if (activeCard) activeCard.classList.add('active');
   }
 }
+
+/* ============================================================
+   FONCTION MAISON - COPIE SÉCURISÉE DE L'E-MAIL
+   ============================================================ */
+function copierEmailSecurise(bouton) {
+    // L'adresse est scindée en morceaux pour être invisible aux robots scanneurs
+    const identifiant = "sebastien.godet16";
+    const extension = "gmail.com";
+    const adresseComplete = identifiant + "@" + extension;
+
+    // Utilisation de l'API Presse-papiers du navigateur
+    navigator.clipboard.writeText(adresseComplete).then(() => {
+        // Sauvegarde du texte initial du bouton
+        const texteInitial = bouton.innerHTML;
+        
+        // Changement visuel temporaire (Vert + Texte mis à jour)
+        bouton.innerHTML = "✅ E-mail copié !";
+        bouton.classList.add("copied");
+
+        // Retour à l'état initial après 2,5 secondes
+        setTimeout(() => {
+            bouton.innerHTML = texteInitial;
+            bouton.classList.remove("copied");
+        }, 2500);
+    }).catch(err => {
+        // Cas de secours si le navigateur bloque l'accès automatique au presse-papiers
+        alert("Sécurité : Veuillez copier manuellement l'adresse suivante : " + adresseComplete);
+    });
+}
