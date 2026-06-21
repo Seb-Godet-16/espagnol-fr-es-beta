@@ -183,6 +183,46 @@ body {
 .launcher-footer a          { color: #888; text-decoration: none; font-weight: 600; }
 .launcher-footer a:hover    { text-decoration: underline; }
 
+/* ── Vue B : sélecteur de variante dans le Launcher ── */
+#launcher-view-variant {
+  width: 100%;
+  max-width: 420px;
+  padding-top: 16px;
+}
+
+/* Bouton retour dans la Vue B */
+.launcher-back-btn {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.85);
+  border: none;
+  border-radius: 50px;
+  padding: 8px 18px;
+  font-size: .95rem;
+  font-weight: 700;
+  color: #333;
+  cursor: pointer;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+}
+.launcher-back-btn:active { transform: scale(.96); }
+
+/* Titre de la Vue B */
+.launcher-variant-title {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #1a1a2e;
+  margin-bottom: 14px;
+  letter-spacing: -.02em;
+  text-align: center;
+}
+
+/* Étoiles dans le header Sections */
+.sections-stars {
+  margin-top: 4px;
+  font-size: .9rem;
+  opacity: .95;
+}
+
 
 /* ════════════════════════════════════════
    §2 — VARIABLES DE THÈME — FALLBACK PAR DÉFAUT

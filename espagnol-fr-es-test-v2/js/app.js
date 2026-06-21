@@ -145,24 +145,106 @@ function _spokenKey(card) {
 /* ═══════════════════════════════════════════════════════════
    3. POINT D'ENTRÉE : initApp(mode)
    ─────────────────────────────────────────────────────────
-   Appelée par les boutons du launcher HTML.
-   Séquence d'actions :
-     1. Réinitialise l'état global (données, voix, grilles)
-     2. Charge la région sauvegardée ou applique ES par défaut
-     3. Configure thème couleur CSS, voix TTS et données
-     4. Injecte les textes bilingues de l'interface (_setUI)
-     5. Charge la progression (loadDone)
-     6. Affiche l'écran Home
-     7. Construit le sélecteur de régions hispaniques
+   Nouveau flux (3 étapes) :
+     Launcher Vue A (cartes) → Launcher Vue B (variante) → Guide → Sections
+
+   showLauncherVariant(mode) — appelée au clic sur une carte de langue.
+     Bascule le Launcher vers la Vue B (sélecteur de variante).
+
+   initApp(mode) — appelée par le bouton "Continuer" de la Vue B.
+     Configure thème, données, progression, puis lance le Guide.
+
+   showLauncher() — retour au Launcher Vue A depuis Sections.
 ═══════════════════════════════════════════════════════════ */
 
 /**
- * Initialise l'application pour un mode d'apprentissage donné.
- * Configure le thème visuel, la voix TTS, les données pédagogiques
- * et l'interface selon le mode choisi, puis affiche l'écran d'accueil.
+ * Appelée au clic sur une carte de langue dans le Launcher.
+ * Bascule le Launcher vers la Vue B : sélecteur de variante + bouton Continuer.
  * @param {'learn_french'|'learn_spain'} mode
- *   'learn_french' — L'apprenant est hispanophone, il apprend le Français
- *   'learn_spain'  — L'apprenant est francophone, il apprend l'Espagnol
+ */
+function showLauncherVariant(mode) {
+  currentMode = mode;
+
+  /* — Restauration de la région préférée depuis localStorage — */
+  var savedRegion = localStorage.getItem('user_preferred_region');
+  currentRegion   = savedRegion || 'ES';
+
+  /* — Thème visuel provisoire (pour que les couleurs du sélecteur soient correctes) — */
+  document.documentElement.className = (mode === 'learn_french') ? 'theme-french' : 'theme-spain';
+
+  /* — Bascule Vue A → Vue B — */
+  document.getElementById('launcher-view-cards').style.display   = 'none';
+  document.getElementById('launcher-view-variant').style.display = 'flex';
+  document.getElementById('launcher-view-variant').style.flexDirection = 'column';
+  document.getElementById('launcher-view-variant').style.alignItems = 'center';
+
+  /* — Drapeau et titre selon le mode — */
+  var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+  var flagRow   = document.getElementById('launcherFlagRow');
+  var titleEl   = document.getElementById('launcherVariantTitle');
+  if (mode === 'learn_french') {
+    if (flagRow)  flagRow.textContent  = '🇫🇷';
+    if (titleEl)  titleEl.textContent  = 'Apprendre le Français';
+  } else {
+    if (flagRow)  flagRow.textContent  = flagEmojis[currentRegion] || '🇪🇸';
+    if (titleEl)  titleEl.textContent  = 'Aprender Español';
+  }
+
+  /* — Génération du sélecteur de variante et de l'encart info — */
+  var selectorWrap = document.getElementById('region-selector-wrap');
+  if (selectorWrap) {
+    selectorWrap.style.display = 'block';
+    var container = document.getElementById('region-select-container');
+    var msgBox    = document.getElementById('region-message-box');
+    if (container) container.innerHTML = '';
+    if (msgBox)    msgBox.innerHTML    = '';
+    renderRegionOptions();
+    pickRegion(currentRegion);
+  }
+
+  /* — Texte du bouton Continuer selon le mode — */
+  var continueBtn = document.getElementById('launcherContinueBtn');
+  if (continueBtn) {
+    continueBtn.innerHTML = (mode === 'learn_french')
+      ? '▶ Commencer<br><span class="translation-sub">Empezar</span>'
+      : '▶ Empezar<br><span class="translation-sub">Commencer</span>';
+    continueBtn.onclick = function() { initApp(mode); };
+  }
+
+  /* — Bouton retour → Vue A — */
+  var backBtn = document.getElementById('launcherBackBtn');
+  if (backBtn) {
+    backBtn.onclick = function() {
+      document.getElementById('launcher-view-variant').style.display = 'none';
+      document.getElementById('launcher-view-cards').style.display   = 'flex';
+      document.getElementById('launcher-view-cards').style.flexDirection = 'column';
+      document.getElementById('launcher-view-cards').style.alignItems = 'center';
+      document.documentElement.className = '';
+    };
+  }
+}
+
+/**
+ * Revient au Launcher (Vue A) depuis l'écran Sections.
+ * Masque tous les écrans et réaffiche le Launcher avec la Vue A.
+ */
+function showLauncher() {
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('launcher-view-variant').style.display = 'none';
+  document.getElementById('launcher-view-cards').style.display   = 'flex';
+  document.getElementById('launcher-view-cards').style.flexDirection = 'column';
+  document.getElementById('launcher-view-cards').style.alignItems = 'center';
+  document.getElementById('app-launcher').classList.add('active');
+  document.documentElement.className = '';
+  window.scrollTo(0, 0);
+}
+
+/**
+ * Initialise l'application pour un mode d'apprentissage donné.
+ * Appelée par le bouton "Continuer" de la Vue B du Launcher.
+ * Configure thème, données, progression, puis ouvre le Guide.
+ * Nouveau flux : Launcher → Guide → Sections (sans écran Home).
+ * @param {'learn_french'|'learn_spain'} mode
  */
 function initApp(mode) {
   currentMode = mode;
@@ -178,11 +260,7 @@ function initApp(mode) {
   _spanishVoice     = undefined;
   _hasNotifiedVoice = false;
 
-  /* — Restauration de la région préférée depuis localStorage (ou Espagne par défaut) — */
-  var savedRegion = localStorage.getItem('user_preferred_region');
-  currentRegion   = savedRegion || 'ES';
-
-  // Dictionnaire emoji drapeaux, utilisé pour l'affichage dynamique
+  /* — La région a déjà été choisie dans showLauncherVariant() — */
   var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
   var activeFlag  = flagEmojis[currentRegion] || '🇪🇸';
 
@@ -230,29 +308,13 @@ function initApp(mode) {
   /* — Chargement de la progression sauvegardée pour ce mode — */
   loadDone();
 
-  /* — Masquer le launcher et naviguer vers l'accueil — */
+  /* — Masquer le launcher et naviguer directement vers Sections — */
   document.getElementById('app-launcher').classList.remove('active');
-  showScreen('home');
-
-  /* — Affichage et construction du sélecteur de variante hispanique (mode Espagnol uniquement) — */
-  /* — Sélecteur de variante hispanique — affiché dans les deux modes.
-       En mode Français, l'apprenant choisit sa variante d'espagnol maternelle
-       (ex : un Mexicain voudra entendre "camión" plutôt que "autobús").
-       En mode Espagnol, il choisit la variante qu'il souhaite apprendre. */
-  var selectorWrap = document.getElementById('region-selector-wrap');
-  if (selectorWrap) {
-    selectorWrap.style.display = 'block';
-    selectorWrap.innerHTML = '<div id="region-select-container"></div>'
-                           + '<div id="region-message-box"></div>';
-    renderRegionOptions();
-    pickRegion(currentRegion);
-  }
+  showScreen('sections');
 
   /* — Première visite : affichage automatique du guide utilisateur —
-       Voir section 17 (GUIDE UTILISATEUR) plus bas dans ce fichier.
-       Le guide ne s'affiche tout seul qu'une unique fois, tous modes confondus
-       (flag global GUIDE_STORAGE_KEY), juste après que l'utilisateur ait
-       choisi sa langue, donc une fois currentMode et currentRegion connus. */
+       Le guide s'affiche juste après le choix de langue + variante.
+       À la fermeture du guide, l'utilisateur se retrouve sur Sections. */
   _maybeAutoShowGuide();
 }
 
@@ -274,9 +336,8 @@ function _setUI(t) {
   _setText('level2Badge',     t.level2Badge);
   _setText('level2Label',     t.level2Label);
 
-  // Branchement du bouton "Démarrer" vers l'écran sections
-  var btn = document.getElementById('homeStartBtn');
-  if (btn) btn.onclick = function() { showScreen('sections'); };
+  // sectionsBackBtn : retour au Launcher (la fonction showLauncher est déjà dans onclick HTML)
+  // homeStartBtn : non utilisé dans le nouveau flux, conservé pour rétro-compatibilité
 }
 
 /* _setText(id, val) — Remplace innerHTML d'un élément par val
@@ -581,7 +642,6 @@ function resetTheme(id) {
   done = done.filter(function(d) { return d.id !== id; });
   saveDone();
   renderSections();
-  renderHome();
 }
 
 /* Retourne true si le module a été complété au moins une fois (≥ 1 étoile). */
@@ -695,23 +755,7 @@ function showScreen(id) {
   });
 
   // Remonte systématiquement en haut de page à chaque changement d'écran.
-  // Indispensable sur mobile : sans ça, l'utilisateur reste à mi-page
-  // après une longue leçon ou un quiz scrollé vers le bas.
   window.scrollTo(0, 0);
-
-  // Cas particulier : bouton "Retour" de l'accueil → relance le launcher
-  if (id === 'home') {
-    var backBtn = document.getElementById('homeBackBtn');
-    if (backBtn) {
-      backBtn.onclick = function() {
-        document.querySelectorAll('.screen').forEach(function(s) {
-          s.classList.remove('active');
-        });
-        document.getElementById('app-launcher').classList.add('active');
-        window.scrollTo(0, 0);
-      };
-    }
-  }
 
   document.getElementById(id).classList.add('active');
 
@@ -780,6 +824,16 @@ function renderSections() {
     n + ' / ' + total + ' módulos — '  + pct + '%'
   );
   document.getElementById('progressLabel').innerHTML = progressLabel;
+
+  // Affichage des étoiles totales dans le header de Sections
+  var totalStarsEarned = done.reduce(function(acc, d) { return acc + d.stars; }, 0);
+  var maxStarsPossible = total * 3;
+  var sectionsStars = document.getElementById('sectionsStars');
+  if (sectionsStars) {
+    sectionsStars.innerHTML =
+      '<span style="font-size:1rem;font-weight:bold;color:rgba(255,255,255,0.95);">⭐ '
+      + totalStarsEarned + ' / ' + maxStarsPossible + '</span>';
+  }
 
   // Génération des grilles pour chaque niveau (1 = vocabulaire, 2 = dialogues)
   ['grid1', 'grid2'].forEach(function(gid) {
@@ -2362,7 +2416,7 @@ function pickRegion(regionId) {
   var flagHtml = '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/'
     + twemojiMap[code] + '.svg" style="width:1.5em;vertical-align:middle;display:inline-block;" alt="flag">';
 
-  // Mise à jour du grand drapeau sur l'écran d'accueil
+  // Mise à jour du grand drapeau sur l'écran d'accueil (home)
   var homeFlagRow = document.getElementById('homeFlagRow');
   if (homeFlagRow) {
     if (currentMode === 'learn_spain') {
@@ -2371,6 +2425,13 @@ function pickRegion(regionId) {
       // Mode Français : drapeau FR toujours fixe
       homeFlagRow.innerHTML = '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1eb-1f1f7.svg" style="width:1.5em;vertical-align:middle;" alt="fr">';
     }
+  }
+
+  // Mise à jour du drapeau dans la Vue B du Launcher (si visible)
+  var launcherFlagRow = document.getElementById('launcherFlagRow');
+  var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+  if (launcherFlagRow && currentMode === 'learn_spain') {
+    launcherFlagRow.textContent = flagEmojis[currentRegion] || '🇪🇸';
   }
 
   // Mise à jour du petit drapeau inline dans les flashcards (section-label)
@@ -2729,10 +2790,12 @@ document.addEventListener('keydown', function(e) {
 /* ════════════════════════════════════════
    INITIALISATION DU LAUNCHER
    Branche les clics des cartes de langue
-   sans onclick inline dans le HTML.
+   sur showLauncherVariant() pour afficher
+   le sélecteur de variante (Vue B).
 ════════════════════════════════════════ */
-document.querySelectorAll('.lang-card[data-lang]').forEach(function(card) {
-  card.addEventListener('click', function() {
-    initApp(card.getAttribute('data-lang'));
-  });
+document.getElementById('card-learn-french') && document.getElementById('card-learn-french').addEventListener('click', function() {
+  showLauncherVariant('learn_french');
+});
+document.getElementById('card-learn-spain') && document.getElementById('card-learn-spain').addEventListener('click', function() {
+  showLauncherVariant('learn_spain');
 });

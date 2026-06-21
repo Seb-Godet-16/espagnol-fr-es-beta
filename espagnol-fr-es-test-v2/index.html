@@ -45,23 +45,27 @@
 
   <!-- ══════════════════════════════════════════
        ÉCRAN 0 — LANCEUR D'APPLICATION
-       Affiché au démarrage. Permet de choisir quelle langue apprendre.
-       initApp('learn_french') ou initApp('learn_spain')
-       est appelé au clic sur les cartes.
+       Vue A : cartes de choix de langue (défaut)
+       Vue B : sélecteur de variante (après clic)
+       La bascule est gérée par initApp() dans app.js
   ══════════════════════════════════════════ -->
   <div id="app-launcher" class="screen active">
 
     <!-- Fond décoratif (défini en CSS, pas interactif) -->
     <div class="launcher-bg"></div>
 
-    <div class="launcher-inner">
-      <div class="launcher-logo">🌍</div>
-      <h1 class="launcher-title">Choisis ta langue</h1>
-      <p class="launcher-sub">Elige tu idioma</p>
+    <!-- ─── VUE A : Sélection de la langue ─── -->
+    <div id="launcher-view-cards" class="launcher-inner">
+      <div class="launcher-logo">🌍🗣️💬</div>
+      <h1 class="launcher-title">
+        <span class="lang-fr">Choisis ta langue</span>
+        <span class="separator"> / </span>
+        <span class="lang-es">Elige tu idioma</span>
+      </h1>
 
-      <!-- Carte Français -->
       <div class="launcher-cards">
-        <button class="lang-card lang-card--fr" data-lang="learn_french">
+        <!-- Carte Français : affiche le sélecteur de variante -->
+        <button class="lang-card lang-card--fr" id="card-learn-french">
           <div class="lang-card-flag">🇫🇷</div>
           <div class="lang-card-body">
             <span class="lang-card-name">Apprendre le Français</span>
@@ -70,8 +74,8 @@
           <div class="lang-card-arrow">›</div>
         </button>
 
-        <!-- Carte Espagnol -->
-        <button class="lang-card lang-card--es" data-lang="learn_spain">
+        <!-- Carte Espagnol : affiche le sélecteur de variante -->
+        <button class="lang-card lang-card--es" id="card-learn-spain">
           <div class="lang-card-flag">🇪🇸</div>
           <div class="lang-card-body">
             <span class="lang-card-name">Aprender Español</span>
@@ -82,12 +86,33 @@
       </div>
     </div>
 
+    <!-- ─── VUE B : Sélecteur de variante (après clic sur une carte) ─── -->
+    <div id="launcher-view-variant" class="launcher-inner" style="display:none;">
+
+      <!-- Bouton retour → revient aux cartes de langue -->
+      <button class="back-btn launcher-back-btn" id="launcherBackBtn">←</button>
+
+      <!-- Drapeau + titre injectés par showLauncherVariant() -->
+      <div class="flag-row" id="launcherFlagRow" style="font-size:3rem;margin:10px 0;"></div>
+      <h1 class="launcher-variant-title" id="launcherVariantTitle"></h1>
+
+      <!-- Sélecteur de variante et encart info : générés par renderRegionOptions() -->
+      <div id="region-selector-wrap" style="width:100%;max-width:400px;margin:0 auto 10px;">
+        <div id="region-select-container"></div>
+        <div id="region-message-box"></div>
+      </div>
+
+      <!-- Bouton Continuer → lance initApp() et affiche le Guide -->
+      <button class="btn-primary" id="launcherContinueBtn" style="margin-top:8px;"></button>
+
+    </div><!-- /launcher-view-variant -->
+
     <!-- Pied de page commun à tous les écrans -->
     <footer class="launcher-footer">
-      © Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
+      © Juin 2026 – Sébastien Godet<br>
       <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
       <a href="#" onclick="showGuide()">Guide / Guía</a> ·
-      <a href="#" onclick="showCredits()">Remerciements</a>
+      <a href="#" onclick="showCredits()">Remerciements / Agradecimientos</a>
     </footer>
   </div><!-- /app-launcher -->
 
@@ -103,7 +128,7 @@
   <div id="home" class="screen">
 
     <!-- Bouton retour → relance le launcher -->
-    <button class="back-btn home-back-btn" id="homeBackBtn">← Retour / Volver</button>
+    <button class="back-btn home-back-btn" id="homeBackBtn">← Volver</button>
 
     <!-- Drapeau dynamique (🇫🇷 ou 🇪🇸 / variante) injecté par JS -->
     <div class="flag-row" id="homeFlagRow"></div>
@@ -145,10 +170,10 @@
     <button class="btn-primary" id="homeStartBtn"></button>
 
     <footer>
-      © Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
+      © Juin 2026 – Sébastien Godet<br>
       <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
       <a href="#" onclick="showGuide()">Guide / Guía</a> ·
-      <a href="#" onclick="showCredits()">Remerciements</a>
+      <a href="#" onclick="showCredits()">Agradecimientos</a>
     </footer>
   </div><!-- /home -->
 
@@ -163,8 +188,8 @@
   <div id="sections" class="screen">
 
     <div class="sections-header">
-      <!-- Retour → écran home -->
-      <button class="back-btn" onclick="showScreen('home')" id="sectionsBackBtn"></button>
+      <!-- Retour → launcher (l'écran Home n'est plus dans le parcours) -->
+      <button class="back-btn" id="sectionsBackBtn" onclick="showLauncher()"></button>
 
       <!-- Titre injecté par JS (ex : "📚 Modules") -->
       <h2 id="sectionsTitle"></h2>
@@ -174,6 +199,9 @@
         <div class="progress-bar" id="globalProgress" style="width:0%"></div>
       </div>
       <div class="progress-label" id="progressLabel"></div>
+
+      <!-- Étoiles totales (injectées par renderSections()) -->
+      <div class="sections-stars" id="sectionsStars"></div>
     </div>
 
     <div class="sections-body">
@@ -226,8 +254,8 @@
       <!-- Retour → écran sections -->
       <button class="back-btn" onclick="showScreen('sections')" id="lessonBackBtn">←</button>
 
-      <!-- Retour direct → écran home (accueil), évite les deux clics -->
-      <button class="back-btn lesson-home-btn" onclick="showScreen('home')" id="lessonHomeBtn" title="Accueil">🏠</button>
+      <!-- Retour direct → écran sections (le home n'est plus dans le parcours) -->
+      <button class="back-btn lesson-home-btn" onclick="showScreen('sections')" id="lessonHomeBtn" title="Modules">🏠</button>
 
       <!-- Emoji et titre du module courant, injectés par openTheme() -->
       <span id="lessonEmoji" style="font-size:1.4rem;margin-right:4px"></span>
