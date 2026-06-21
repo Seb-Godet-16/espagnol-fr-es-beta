@@ -990,7 +990,8 @@ function renderFlash() {
       + '</div>'
       + '<div style="text-align:center;margin-top:10px;">'
       + '<button class="audio-btn-big" onclick="speak(\'' + esc(card.fr) + '\')">🔊 Escuchar audio</button>'
-      + '</div>';
+      + '</div>'
+      + _buildMicZone(card.fr, 'fr-FR');
 
   /* — MODE Espagnol : Recto = ES (variante), Verso = FR — */
   } else {
@@ -1020,7 +1021,8 @@ function renderFlash() {
       + '<span class="fc-counter">' + (fcIdx + 1) + ' / ' + w.length + '</span>'
       + '<button onclick="nextCard()">Suivant →</button>'
       + '</div>'
-      + '<button class="audio-btn-big" onclick="speak(\'' + esc(finalEsWord) + '\')">🔊 Écouter la prononciation</button>';
+      + '<button class="audio-btn-big" onclick="speak(\'' + esc(finalEsWord) + '\')">🔊 Écouter la prononciation</button>'
+      + _buildMicZone(finalEsWord, voiceLang);
   }
 }
 
@@ -1054,6 +1056,158 @@ function flipCard() {
   var fc = document.getElementById('fc');
   if (!fc) return;
   fc.classList.toggle('flipped');
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   9b. RECONNAISSANCE VOCALE — Micro dans les flashcards
+   ─────────────────────────────────────────────────────────
+   Utilise la Web Speech API (SpeechRecognition).
+   Disponible sur Chrome Android, partielle sur Safari iOS.
+
+   Fonctions :
+     _buildMicZone(word, lang) — génère le HTML du bloc micro
+     startMicReco(word, lang)  — lance la reconnaissance
+     _stopMicReco()            — arrête proprement la session
+     _normalizeSpeech(s)       — nettoie la transcription pour
+                                  comparaison souple (accents,
+                                  ponctuation, casse)
+═══════════════════════════════════════════════════════════ */
+
+// Instance SpeechRecognition active (null si aucune)
+var _micReco = null;
+
+/* _normalizeSpeech(s) — Retire accents, ponctuation, casse et espaces
+   superflus pour une comparaison souple entre ce que l'utilisateur a dit
+   et le mot attendu. Ex : "Buenos días" → "buenos dias" */
+function _normalizeSpeech(s) {
+  return s.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // retire les accents
+    .replace(/[^a-z0-9\s]/g, '')                      // retire ponctuation
+    .replace(/\s+/g, ' ').trim();
+}
+
+/* _buildMicZone(word, lang) — Génère le HTML complet du bloc micro
+   (bouton, feedback, hint). word = mot attendu, lang = code BCP-47. */
+function _buildMicZone(word, lang) {
+  var isFR   = (currentMode === 'learn_french');
+  var btnLbl = isFR ? '🎤 Pronunciar' : '🎤 Prononcer';
+  var hint   = isFR
+    ? 'Pulsa el micrófono, luego pronúncialo en voz alta'
+    : 'Appuie sur le micro, puis prononce le mot à voix haute';
+  var unsupported = isFR
+    ? '⚠️ Reconocimiento de voz no disponible en este navegador.'
+    : '⚠️ Reconnaissance vocale non disponible sur ce navigateur.';
+
+  if (!('SpeechRecognition' in window) && !('webkitSpeechRecognition' in window)) {
+    return '<div class="mic-zone mic-zone--unsupported">' + unsupported + '</div>';
+  }
+
+  return '<div class="mic-zone" id="micZone">'
+    + '<button class="mic-btn" id="micBtn" '
+    +   'onclick="startMicReco(\'' + esc(word) + '\',\'' + lang + '\')">'
+    +   btnLbl
+    + '</button>'
+    + '<div class="mic-feedback" id="micFeedback"></div>'
+    + '<div class="mic-hint">' + hint + '</div>'
+    + '</div>';
+}
+
+/* startMicReco(word, lang) — Lance une session de reconnaissance vocale.
+   Compare la transcription obtenue au mot attendu (normalisation souple).
+   Affiche vert ✅ si correct, orange 🔁 sinon, avec le texte reconnu. */
+function startMicReco(word, lang) {
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return;
+
+  // Arrête une session précédente éventuelle
+  _stopMicReco();
+
+  var isFR = (currentMode === 'learn_french');
+
+  // Mise à jour du bouton : état "en écoute"
+  var btn = document.getElementById('micBtn');
+  var fb  = document.getElementById('micFeedback');
+  if (btn) {
+    btn.textContent = isFR ? '⏹ Parar' : '⏹ Arrêter';
+    btn.classList.add('mic-btn--listening');
+    btn.onclick = function() { _stopMicReco(); };
+  }
+  if (fb) {
+    fb.className  = 'mic-feedback mic-feedback--listening';
+    fb.textContent = isFR ? '🎙️ Escuchando…' : '🎙️ Écoute en cours…';
+  }
+
+  // Création et configuration de la session
+  var reco        = new SR();
+  _micReco        = reco;
+  reco.lang       = lang;
+  reco.continuous = false;
+  reco.interimResults = false;
+
+  reco.onresult = function(e) {
+    var transcript = e.results[0][0].transcript;
+    var expected   = _normalizeSpeech(word);
+    var spoken     = _normalizeSpeech(transcript);
+    var ok         = (spoken === expected)
+                  || spoken.indexOf(expected) !== -1
+                  || expected.indexOf(spoken) !== -1;
+
+    var fbEl = document.getElementById('micFeedback');
+    if (fbEl) {
+      if (ok) {
+        fbEl.className  = 'mic-feedback mic-feedback--ok';
+        fbEl.innerHTML  = (isFR ? '✅ ¡Muy bien! ' : '✅ Parfait ! ')
+          + '<span class="mic-transcript">"' + transcript + '"</span>';
+      } else {
+        fbEl.className  = 'mic-feedback mic-feedback--ko';
+        fbEl.innerHTML  = (isFR ? '🔁 Inténtalo otra vez · ' : '🔁 Réessaie · ')
+          + (isFR ? 'Escuchado : ' : 'Entendu : ')
+          + '<span class="mic-transcript">"' + transcript + '"</span>';
+      }
+    }
+    _resetMicBtn(word, lang);
+  };
+
+  reco.onerror = function(e) {
+    var fbEl = document.getElementById('micFeedback');
+    if (fbEl) {
+      // 'no-speech' = silence, pas vraiment une erreur à afficher
+      if (e.error !== 'no-speech') {
+        fbEl.className  = 'mic-feedback mic-feedback--ko';
+        fbEl.textContent = (isFR ? '⚠️ Error: ' : '⚠️ Erreur : ') + e.error;
+      } else {
+        fbEl.className  = 'mic-feedback';
+        fbEl.textContent = '';
+      }
+    }
+    _resetMicBtn(word, lang);
+  };
+
+  reco.onend = function() {
+    _micReco = null;
+    _resetMicBtn(word, lang);
+  };
+
+  reco.start();
+}
+
+/* _stopMicReco() — Arrête proprement la session en cours. */
+function _stopMicReco() {
+  if (_micReco) {
+    try { _micReco.stop(); } catch(e) {}
+    _micReco = null;
+  }
+}
+
+/* _resetMicBtn(word, lang) — Remet le bouton micro en état "prêt". */
+function _resetMicBtn(word, lang) {
+  var btn = document.getElementById('micBtn');
+  if (!btn) return;
+  var isFR = (currentMode === 'learn_french');
+  btn.textContent = isFR ? '🎤 Pronunciar' : '🎤 Prononcer';
+  btn.classList.remove('mic-btn--listening');
+  btn.onclick = function() { startMicReco(word, lang); };
 }
 
 /* nextCard() — Passe à la carte suivante et prononce automatiquement le mot. */

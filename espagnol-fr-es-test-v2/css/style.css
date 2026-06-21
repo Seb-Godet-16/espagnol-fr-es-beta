@@ -571,6 +571,87 @@ body {
 
 
 /* ════════════════════════════════════════
+   RECONNAISSANCE VOCALE — Bloc micro
+   Affiché sous le bouton audio dans les
+   flashcards. Indépendant du thème CSS.
+════════════════════════════════════════ */
+
+.mic-zone {
+  margin-top: 10px;
+  border: 2px solid var(--c-primary);
+  border-radius: 13px;
+  padding: 14px 16px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.mic-zone--unsupported {
+  border-color: #ddd;
+  background: #fafafa;
+  font-size: .78rem;
+  color: #999;
+  text-align: center;
+}
+
+/* Bouton micro principal */
+.mic-btn {
+  width: 100%;
+  padding: 12px;
+  background: #fff;
+  color: var(--c-primary);
+  border: 2px solid var(--c-primary);
+  border-radius: 10px;
+  font-size: .95rem;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 48px;
+  font-family: inherit;
+  transition: background .15s, color .15s;
+}
+.mic-btn:active { background: var(--c-primary); color: #fff; }
+
+/* État écoute active : bouton devient coloré + animation pulse */
+.mic-btn--listening {
+  background: var(--c-primary);
+  color: #fff;
+  animation: mic-pulse 1s ease-in-out infinite;
+}
+@keyframes mic-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .7; }
+}
+
+/* Zone de feedback (résultat de la reconnaissance) */
+.mic-feedback {
+  width: 100%;
+  min-height: 28px;
+  text-align: center;
+  font-size: .84rem;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0 6px;
+  line-height: 1.5;
+}
+.mic-feedback--listening { color: var(--c-primary); }
+.mic-feedback--ok  { color: #2e7d32; background: #e8f5e9; padding: 6px 10px; }
+.mic-feedback--ko  { color: #b26a00; background: #fff8e1; padding: 6px 10px; }
+
+/* Texte transcrit entre guillemets */
+.mic-transcript { font-style: italic; font-weight: 400; }
+
+/* Hint discret sous les boutons */
+.mic-hint {
+  font-size: .72rem;
+  color: #aaa;
+  text-align: center;
+  line-height: 1.4;
+}
+
+
+/* ════════════════════════════════════════
    ALPHABET — grille de lettres + détail
    Grille 4 colonnes de cartes cliquables.
    Chaque carte affiche la lettre principale
