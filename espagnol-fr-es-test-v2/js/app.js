@@ -73,6 +73,45 @@ var done = [];
 
 
 /* ═══════════════════════════════════════════════════════════
+   1b. UTILITAIRES CENTRAUX DE SÉLECTION BILINGUE
+   ─────────────────────────────────────────────────────────
+   L(fr, es)   — retourne `fr` en mode learn_french, `es` sinon.
+                 Remplace tous les blocs if/else de texte bilingue.
+   isFrench()  — raccourci booléen pour les rares cas où une
+                 branche entière dépend du mode.
+   langKeys()  — retourne { src, tgt } pour indexer les objets
+                 { fr, es } dans les cartes et les quiz.
+═══════════════════════════════════════════════════════════ */
+
+/**
+ * Sélecteur bilingue central.
+ * @param {string} fr  – Valeur en mode learn_french (interface ES, langue apprise FR)
+ * @param {string} es  – Valeur en mode learn_spain  (interface FR, langue apprise ES)
+ * @returns {string}
+ */
+function L(fr, es) {
+  return currentMode === 'learn_french' ? fr : es;
+}
+
+/** @returns {boolean} true si le mode actif est learn_french */
+function isFrench() {
+  return currentMode === 'learn_french';
+}
+
+/**
+ * Retourne les clés source/cible selon le mode.
+ * src = langue affichée en premier (recto carte, question quiz)
+ * tgt = langue de la traduction (verso carte, réponse)
+ * @returns {{ src: 'fr'|'es', tgt: 'es'|'fr' }}
+ */
+function langKeys() {
+  return isFrench()
+    ? { src: 'fr', tgt: 'es' }
+    : { src: 'es', tgt: 'fr' };
+}
+
+
+/* ═══════════════════════════════════════════════════════════
    2. POINT D'ENTRÉE : initApp(mode)
    ─────────────────────────────────────────────────────────
    Appelée par les boutons du launcher HTML.
@@ -275,9 +314,10 @@ function _resolveSpanishVoice(callback) {
     // Notification discrète (toast) informant l'utilisateur de la voix configurée
     if (!_hasNotifiedVoice) {
       _hasNotifiedVoice = true;
-      var msg = currentMode === 'learn_french'
-        ? '🎙️ Voz configurada: ' + foundLabel
-        : '🎙️ Voix configurée : ' + foundLabel;
+      var msg = L(
+        '🎙️ Voz configurada: ' + foundLabel,
+        '🎙️ Voix configurée : ' + foundLabel
+      );
       _showToast(msg);
     }
 
@@ -393,9 +433,7 @@ function _showAudioUnavailable() {
       + 'opacity:0;transition:opacity .3s ease;';
     document.body.appendChild(badge);
   }
-  var label = (currentMode === 'learn_french')
-    ? '🔇 Audio no disponible'
-    : '🔇 Audio indisponible';
+  var label = L('🔇 Audio no disponible', '🔇 Audio indisponible');
   badge.textContent = label;
   requestAnimationFrame(function() { badge.style.opacity = '1'; });
 }
@@ -662,13 +700,12 @@ function renderHome() {
   document.getElementById('homeBar').style.width = pct + '%';
 
   // Label bilingue selon le mode actif
-  var label = (currentMode === 'learn_french')
-    ? (n + ' / ' + total + ' modules validés — ' + pct + '%'
-       + '<br><span class="translation-sub">' + n + ' / ' + total
-       + ' módulos completados — ' + pct + '%</span>')
-    : (n + ' / ' + total + ' módulos aprobados — ' + pct + '%'
-       + '<br><span class="translation-sub">' + n + ' / ' + total
-       + ' modules validés — ' + pct + '%</span>');
+  var label = L(
+    n + ' / ' + total + ' modules validés — ' + pct + '%'
+    + '<br><span class="translation-sub">' + n + ' / ' + total + ' módulos completados — ' + pct + '%</span>',
+    n + ' / ' + total + ' módulos aprobados — ' + pct + '%'
+    + '<br><span class="translation-sub">' + n + ' / ' + total + ' modules validés — ' + pct + '%</span>'
+  );
   document.getElementById('homeBarLabel').innerHTML = label;
 
   // Calcul et affichage du total d'étoiles (réel / maximum possible)
@@ -697,9 +734,10 @@ function renderSections() {
 
   // Mise à jour de la barre de progression globale
   document.getElementById('globalProgress').style.width = pct + '%';
-  var progressLabel = (currentMode === 'learn_french')
-    ? (n + ' / ' + total + ' modules — ' + pct + '%')
-    : (n + ' / ' + total + ' módulos — ' + pct + '%');
+  var progressLabel = L(
+    n + ' / ' + total + ' modules — ' + pct + '%',
+    n + ' / ' + total + ' módulos — '  + pct + '%'
+  );
   document.getElementById('progressLabel').innerHTML = progressLabel;
 
   // Génération des grilles pour chaque niveau (1 = vocabulaire, 2 = dialogues)
@@ -754,7 +792,7 @@ function _buildThemeCard(t) {
     ? '<button onclick="event.stopPropagation();resetTheme(\'' + t.id + '\')" '
       + 'style="margin-top:6px;font-size:.65rem;background:#fff;border:1.5px solid #009A44;'
       + 'color:#009A44;border-radius:50px;padding:4px 10px;cursor:pointer;font-weight:700">'
-      + (currentMode === 'learn_french' ? '🔄 Volver a empezar' : '🔄 Recommencer')
+      + L('🔄 Volver a empezar', '🔄 Recommencer')
       + '</button>'
     : '';
 
@@ -848,17 +886,22 @@ function openTheme(id) {
   // Définition des onglets selon le type de thème et le mode courant
   var tabs;
   if (CT.type === 'dialog') {
-    tabs = (currentMode === 'learn_french')
-      ? [{k:'dialog',lbl:'💬 Diálogo'}, {k:'vocab',lbl:'📚 Vocabulario'}, {k:'dquiz',lbl:'❓ Prueba'}]
-      : [{k:'dialog',lbl:'💬 Dialogue'}, {k:'vocab',lbl:'📚 Vocabulaire'}, {k:'dquiz',lbl:'❓ Quiz'}];
+    tabs = [
+      { k:'dialog', lbl: L('💬 Diálogo',     '💬 Dialogue')   },
+      { k:'vocab',  lbl: L('📚 Vocabulario', '📚 Vocabulaire') },
+      { k:'dquiz',  lbl: L('❓ Prueba',       '❓ Quiz')        }
+    ];
   } else if (CT.type === 'alpha') {
-    tabs = (currentMode === 'learn_french')
-      ? [{k:'flash',lbl:'🔤 Alfabeto'}, {k:'quiz10',lbl:'🔊 Prueba Audio'}]
-      : [{k:'flash',lbl:'🔤 Alphabet'}, {k:'quiz10',lbl:'🔊 Quiz Audio'}];
+    tabs = [
+      { k:'flash',  lbl: L('🔤 Alfabeto',     '🔤 Alphabet')    },
+      { k:'quiz10', lbl: L('🔊 Prueba Audio', '🔊 Quiz Audio')  }
+    ];
   } else {
-    tabs = (currentMode === 'learn_french')
-      ? [{k:'flash',lbl:'🃏 Cartas'}, {k:'quiz10',lbl:'❓ Prueba'}, {k:'repeat',lbl:'🎤 Repite'}]
-      : [{k:'flash',lbl:'🃏 Cartes'}, {k:'quiz10',lbl:'❓ Quiz'},   {k:'repeat',lbl:'🎤 Répète'}];
+    tabs = [
+      { k:'flash',  lbl: L('🃏 Cartas', '🃏 Cartes') },
+      { k:'quiz10', lbl: L('❓ Prueba', '❓ Quiz')    },
+      { k:'repeat', lbl: L('🎤 Repite', '🎤 Répète') }
+    ];
   }
 
   // Rendu des boutons d'onglets
@@ -925,15 +968,16 @@ function renderFlash() {
 
   /* ─── Rendu spécifique : Alphabet (grille de lettres) ─── */
   if (CT.type === 'alpha') {
-    var alphaLabel = (currentMode === 'learn_french')
-      ? '¡Haz clic en una letra para escucharla!'
-      : 'Cliquez sur une lettre pour l\'écouter !';
+    var alphaLabel = L(
+      '¡Haz clic en una letra para escucharla!',
+      'Cliquez sur une lettre pour l\'écouter !'
+    );
 
     document.getElementById('tabContent').innerHTML =
       '<div class="section-label">' + alphaLabel + '</div>'
       + '<div class="alpha-grid">' + w.map(function(c, i) {
-          var bigLetter = (currentMode === 'learn_french') ? c.fr : c.es;
-          var smallName = (currentMode === 'learn_french') ? c.es : c.fr;
+          var bigLetter = L(c.fr, c.es);
+          var smallName = L(c.es, c.fr);
           return '<div class="alpha-card" onclick="pickAlpha(' + i + ')">'
             + '<div class="alpha-letter">' + bigLetter + '</div>'
             + '<div class="alpha-name">'   + smallName  + '</div>'
@@ -961,8 +1005,8 @@ function renderFlash() {
   var frontContent, backContent;
 
   /* — MODE Français : Recto = FR, Verso = ES — */
-  if (currentMode === 'learn_french') {
-    var hintFr = 'Haz clic para ver su significado en español';
+  if (isFrench()) {
+    var hintFr = L('Haz clic para ver su significado en español', '');
     if (hasConj) {
       // Carte conjugaison : affiche le tableau de conjugaison des deux côtés
       frontContent = emFr + '<div class="fc-front-word">' + card.fr + '</div>'
@@ -996,7 +1040,7 @@ function renderFlash() {
 
   /* — MODE Espagnol : Recto = ES (variante), Verso = FR — */
   } else {
-    var hintEs = 'Cliquez pour voir la traduction en français';
+    var hintEs = L('', 'Cliquez pour voir la traduction en français');
     if (hasConj) {
       frontContent = emFr + '<div class="fc-front-word">' + finalEsWord + '</div>'
         + '<div class="fc-conj">' + card.conj.es.map(function(l) {
@@ -1030,10 +1074,10 @@ function renderFlash() {
 /* buildAlphaDetail(c) — Construit le panneau de détail d'une lettre de l'alphabet.
    Affiche la lettre en grand, son nom dans l'autre langue, et un bouton audio. */
 function buildAlphaDetail(c) {
-  var bigLetter = (currentMode === 'learn_french') ? c.fr : c.es;
-  var smallName = (currentMode === 'learn_french') ? c.es : c.fr;
-  var btnLabel  = (currentMode === 'learn_french') ? '🔊 Escuchar' : '🔊 Écouter';
-  var spokenKey = (currentMode === 'learn_french') ? c.fr : c.es;
+  var bigLetter = L(c.fr, c.es);
+  var smallName = L(c.es, c.fr);
+  var btnLabel  = L('🔊 Escuchar', '🔊 Écouter');
+  var spokenKey = L(c.fr, c.es);
   return '<div style="font-size:2.5rem;font-weight:900;color:#009A44">' + bigLetter + '</div>'
     + '<div style="color:#555;margin:4px 0;font-size:.85rem">' + smallName + '</div>'
     + '<button onclick="speak(\'' + esc(spokenKey) + '\')" '
@@ -1046,7 +1090,7 @@ function buildAlphaDetail(c) {
 function pickAlpha(i) {
   fcIdx = i;
   var card      = CT.words[i];
-  var spokenKey = (currentMode === 'learn_french') ? card.fr : card.es;
+  var spokenKey = L(card.fr, card.es);
   speak(spokenKey);
   var d = document.getElementById('alphaDetail');
   if (d) d.innerHTML = buildAlphaDetail(card);
@@ -1094,10 +1138,10 @@ function _normalizeSpeech(s) {
    très reconnaissable, et le texte explique en 1 clic comment réactiver
    l'accès (icône cadenas/réglages dans la barre d'adresse). */
 function _micBlockedHtml() {
-  var isFR = (currentMode === 'learn_french');
-  var msg = isFR
-    ? '🚫🎤 Micrófono bloqueado — toca el icono 🔒/⚙️ junto a la dirección del sitio, luego autoriza el micrófono y recarga la página.'
-    : '🚫🎤 Micro bloqué — touche l\'icône 🔒/⚙️ à côté de l\'adresse du site, puis autorise le micro et recharge la page.';
+  var msg = L(
+    '🚫🎤 Micrófono bloqueado — toca el icono 🔒/⚙️ junto a la dirección del sitio, luego autoriza el micrófono y recarga la página.',
+    '🚫🎤 Micro bloqué — touche l\'icône 🔒/⚙️ à côté de l\'adresse du site, puis autorise le micro et recharge la page.'
+  );
   return '<span class="mic-blocked-icon">🚫🎤</span> ' + msg;
 }
 
@@ -1110,14 +1154,15 @@ function _isMicBlockedError(err) {
 /* _buildMicZone(word, lang) — Génère le HTML complet du bloc micro
    (bouton, feedback, hint). word = mot attendu, lang = code BCP-47. */
 function _buildMicZone(word, lang) {
-  var isFR   = (currentMode === 'learn_french');
-  var btnLbl = isFR ? '🎤 Pronunciar' : '🎤 Prononcer';
-  var hint   = isFR
-    ? 'Pulsa el micrófono, luego pronúncialo en voz alta'
-    : 'Appuie sur le micro, puis prononce le mot à voix haute';
-  var unsupported = isFR
-    ? '⚠️ Reconocimiento de voz no disponible en este navegador.'
-    : '⚠️ Reconnaissance vocale non disponible sur ce navigateur.';
+  var btnLbl      = L('🎤 Pronunciar', '🎤 Prononcer');
+  var hint        = L(
+    'Pulsa el micrófono, luego pronúncialo en voz alta',
+    'Appuie sur le micro, puis prononce le mot à voix haute'
+  );
+  var unsupported = L(
+    '⚠️ Reconocimiento de voz no disponible en este navegador.',
+    '⚠️ Reconnaissance vocale non disponible sur ce navigateur.'
+  );
 
   if (!('SpeechRecognition' in window) && !('webkitSpeechRecognition' in window)) {
     return '<div class="mic-zone mic-zone--unsupported">' + unsupported + '</div>';
@@ -1149,13 +1194,13 @@ function startMicReco(word, lang) {
   var btn = document.getElementById('micBtn');
   var fb  = document.getElementById('micFeedback');
   if (btn) {
-    btn.textContent = isFR ? '⏹ Parar' : '⏹ Arrêter';
+    btn.textContent = L('⏹ Parar', '⏹ Arrêter');
     btn.classList.add('mic-btn--listening');
     btn.onclick = function() { _stopMicReco(); };
   }
   if (fb) {
     fb.className  = 'mic-feedback mic-feedback--listening';
-    fb.textContent = isFR ? '🎙️ Escuchando…' : '🎙️ Écoute en cours…';
+    fb.textContent = L('🎙️ Escuchando…', '🎙️ Écoute en cours…');
   }
 
   // Création et configuration de la session
@@ -1177,12 +1222,12 @@ function startMicReco(word, lang) {
     if (fbEl) {
       if (ok) {
         fbEl.className  = 'mic-feedback mic-feedback--ok';
-        fbEl.innerHTML  = (isFR ? '✅ ¡Muy bien! ' : '✅ Parfait ! ')
+        fbEl.innerHTML  = L('✅ ¡Muy bien! ', '✅ Parfait ! ')
           + '<span class="mic-transcript">"' + transcript + '"</span>';
       } else {
         fbEl.className  = 'mic-feedback mic-feedback--ko';
-        fbEl.innerHTML  = (isFR ? '🔁 Inténtalo otra vez · ' : '🔁 Réessaie · ')
-          + (isFR ? 'Escuchado : ' : 'Entendu : ')
+        fbEl.innerHTML  = L('🔁 Inténtalo otra vez · ', '🔁 Réessaie · ')
+          + L('Escuchado : ', 'Entendu : ')
           + '<span class="mic-transcript">"' + transcript + '"</span>';
       }
     }
@@ -1198,7 +1243,7 @@ function startMicReco(word, lang) {
       } else if (e.error !== 'no-speech') {
         // 'no-speech' = silence, pas vraiment une erreur à afficher
         fbEl.className  = 'mic-feedback mic-feedback--ko';
-        fbEl.textContent = (isFR ? '⚠️ Error: ' : '⚠️ Erreur : ') + e.error;
+        fbEl.textContent = L('⚠️ Error: ', '⚠️ Erreur : ') + e.error;
       } else {
         fbEl.className  = 'mic-feedback';
         fbEl.textContent = '';
@@ -1230,10 +1275,9 @@ function _stopMicReco() {
 function _resetMicBtn(word, lang, blocked) {
   var btn = document.getElementById('micBtn');
   if (!btn) return;
-  var isFR = (currentMode === 'learn_french');
   btn.textContent = blocked
-    ? '🚫🎤 ' + (isFR ? 'Bloqueado — toca para reintentar' : 'Bloqué — touche pour réessayer')
-    : (isFR ? '🎤 Pronunciar' : '🎤 Prononcer');
+    ? L('🚫🎤 Bloqueado — toca para reintentar', '🚫🎤 Bloqué — touche pour réessayer')
+    : L('🎤 Pronunciar', '🎤 Prononcer');
   btn.classList.remove('mic-btn--listening');
   btn.classList.toggle('mic-btn--blocked', !!blocked);
   btn.onclick = function() { startMicReco(word, lang); };
@@ -1245,7 +1289,7 @@ function nextCard() {
   renderFlash();
   // Prononce le mot dans la langue cible (avec variante régionale si espagnol)
   var spokenKey;
-  if (currentMode === 'learn_french') {
+  if (isFrench()) {
     spokenKey = CT.words[fcIdx].fr;
   } else {
     spokenKey = (CT.words[fcIdx].variants && CT.words[fcIdx].variants[currentRegion])
@@ -1341,7 +1385,7 @@ function renderRepeat() {
   _rpWords = (CT.words || []).filter(function(w) { return w.fr && w.es; });
 
   if (!_rpWords.length) {
-    var noW = (currentMode === 'learn_french') ? 'No hay palabras disponibles.' : 'Aucun mot disponible.';
+    var noW = L('No hay palabras disponibles.', 'Aucun mot disponible.');
     document.getElementById('tabContent').innerHTML = '<div class="result-box"><p>' + noW + '</p></div>';
     return;
   }
@@ -1358,17 +1402,15 @@ function _rpShowWord() {
     return;
   }
 
-  var isFR   = (currentMode === 'learn_french');
   var total  = _rpWords.length;
   var info   = _rpGetWord(_rpIdx);
   if (!info) { _rpIdx++; _rpShowWord(); return; }
 
-  var micLang = isFR ? 'fr-FR' : voiceLang;
-
-  var counterLbl  = isFR ? 'Palabra' : 'Mot';
-  var scoreLbl    = isFR ? 'Aciertos' : 'Réussites';
-  var skipLbl     = isFR ? '⏭ Saltar' : '⏭ Passer';
-  var rehearLbl   = isFR ? '🔁 Volver a escuchar' : '🔁 Réentendre';
+  var micLang    = isFrench() ? 'fr-FR' : voiceLang;
+  var counterLbl = L('Palabra', 'Mot');
+  var scoreLbl   = L('Aciertos', 'Réussites');
+  var skipLbl    = L('⏭ Saltar', '⏭ Passer');
+  var rehearLbl  = L('🔁 Volver a escuchar', '🔁 Réentendre');
 
   var emojiHtml = info.emoji
     ? '<div class="rp-word-emoji">' + info.emoji + '</div>'
@@ -1400,7 +1442,7 @@ function _rpShowWord() {
     var fbEl = document.getElementById('rpFeedback');
     if (fbEl) {
       fbEl.className   = 'rp-feedback mic-feedback mic-feedback--listening';
-      fbEl.textContent = isFR ? '🎙️ Escuchando…' : '🎙️ Écoute en cours…';
+      fbEl.textContent = L('🎙️ Escuchando…', '🎙️ Écoute en cours…');
     }
     _rpStartMic(info.word, micLang);
   }, _rpMicDelay(info.word));
@@ -1411,18 +1453,17 @@ function _rpStartMic(word, lang) {
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) {
     var fbEl = document.getElementById('rpFeedback');
-    var isFR = (currentMode === 'learn_french');
     if (fbEl) {
       fbEl.className   = 'rp-feedback mic-feedback mic-feedback--ko';
-      fbEl.textContent = isFR
-        ? '⚠️ Reconocimiento de voz no disponible.'
-        : '⚠️ Reconnaissance vocale non disponible.';
+      fbEl.textContent = L(
+        '⚠️ Reconocimiento de voz no disponible.',
+        '⚠️ Reconnaissance vocale non disponible.'
+      );
     }
     return;
   }
   _stopMicReco();
 
-  var isFR = (currentMode === 'learn_french');
   var reco = new SR();
   _micReco = reco;
   reco.lang           = lang;
@@ -1457,14 +1498,14 @@ function _rpStartMic(word, lang) {
         fbEl.className = 'rp-feedback mic-feedback mic-feedback--blocked';
         fbEl.innerHTML = _micBlockedHtml()
           + '<br><button class="mic-btn rp-retry-btn" style="margin-top:8px" '
-          + 'onclick="_rpRehear()">' + (isFR ? '🔁 Reintentar' : '🔁 Réessayer') + '</button>';
+          + 'onclick="_rpRehear()">' + L('🔁 Reintentar', '🔁 Réessayer') + '</button>';
       }
       return; // pas de _rpAutoTimer : on attend l'action de l'apprenant
     }
 
     if (fbEl && e.error !== 'no-speech') {
       fbEl.className   = 'rp-feedback mic-feedback mic-feedback--ko';
-      fbEl.textContent = (isFR ? '⚠️ Error: ' : '⚠️ Erreur : ') + e.error;
+      fbEl.textContent = L('⚠️ Error: ', '⚠️ Erreur : ') + e.error;
     } else if (fbEl) {
       fbEl.className   = 'rp-feedback';
       fbEl.textContent = '';
@@ -1479,16 +1520,15 @@ function _rpStartMic(word, lang) {
 
 /* _rpShowFeedback(ok, transcript, word, lang) — Affiche le feedback et programme l'avancement. */
 function _rpShowFeedback(ok, transcript, word, lang) {
-  var isFR = (currentMode === 'learn_french');
   var fbEl = document.getElementById('rpFeedback');
   if (fbEl) {
     if (ok) {
       fbEl.className = 'rp-feedback mic-feedback mic-feedback--ok';
-      fbEl.innerHTML = (isFR ? '✅ ¡Muy bien! ' : '✅ Parfait ! ')
+      fbEl.innerHTML = L('✅ ¡Muy bien! ', '✅ Parfait ! ')
         + '<span class="mic-transcript">"' + transcript + '"</span>';
     } else {
       fbEl.className = 'rp-feedback mic-feedback mic-feedback--ko';
-      fbEl.innerHTML = (isFR ? '🔁 Inténtalo otra vez · Escuchado : ' : '🔁 Réessaie · Entendu : ')
+      fbEl.innerHTML = L('🔁 Inténtalo otra vez · Escuchado : ', '🔁 Réessaie · Entendu : ')
         + '<span class="mic-transcript">"' + transcript + '"</span>';
     }
   }
@@ -1500,8 +1540,7 @@ function _rpShowFeedback(ok, transcript, word, lang) {
 function _rpRehear() {
   _rpClearTimers();
   _rpAnswered = false;
-  var isFR   = (currentMode === 'learn_french');
-  var micLang = isFR ? 'fr-FR' : voiceLang;
+  var micLang = isFrench() ? 'fr-FR' : voiceLang;
   var info   = _rpGetWord(_rpIdx);
   if (!info) return;
 
@@ -1513,7 +1552,7 @@ function _rpRehear() {
     var fbEl2 = document.getElementById('rpFeedback');
     if (fbEl2) {
       fbEl2.className   = 'rp-feedback mic-feedback mic-feedback--listening';
-      fbEl2.textContent = isFR ? '🎙️ Escuchando…' : '🎙️ Écoute en cours…';
+      fbEl2.textContent = L('🎙️ Escuchando…', '🎙️ Écoute en cours…');
     }
     _rpStartMic(info.word, micLang);
   }, _rpMicDelay(info.word));
@@ -1530,13 +1569,12 @@ function _rpSkip() {
 /* _rpShowEnd() — Affiche l'écran de fin de session avec score et bouton Recommencer. */
 function _rpShowEnd() {
   _rpClearTimers();
-  var isFR   = (currentMode === 'learn_french');
   var total  = _rpWords.length;
   var pct    = total ? Math.round(_rpScore / total * 100) : 0;
 
-  var titleOk  = isFR ? '¡Sesión completada!' : 'Session terminée !';
-  var retryLbl = isFR ? '🔁 Volver a empezar' : '🔁 Recommencer';
-  var scoreLbl = isFR ? 'Resultado' : 'Score';
+  var titleOk  = L('¡Sesión completada!', 'Session terminée !');
+  var retryLbl = L('🔁 Volver a empezar', '🔁 Recommencer');
+  var scoreLbl = L('Resultado', 'Score');
 
   var starsEarned = _calcStars(pct);
   var starsHtml   = Array.from({ length: 3 }, function(_, i) {
@@ -1666,9 +1704,10 @@ function renderQuiz10() {
 
   // Cas : aucune question disponible
   if (!qs || !total) {
-    var noQLabel = (currentMode === 'learn_french')
-      ? 'No hay ningún cuestionario disponible.'
-      : 'Aucun quiz disponible.';
+    var noQLabel = L(
+      'No hay ningún cuestionario disponible.',
+      'Aucun quiz disponible.'
+    );
     document.getElementById('tabContent').innerHTML =
       '<div class="result-box"><p>' + noQLabel + '</p></div>';
     return;
@@ -1711,13 +1750,12 @@ function renderQuiz10() {
 
   /* ─── Quiz audio (alphabet) ─── */
   if (isAlphaQuiz()) {
-    var audioLabel = (currentMode === 'learn_french')
-      ? 'Escucha el sonido y elige la letra correcta'
-      : 'Écoutez le son et choisissez la bonne lettre';
-    var listenHint = (currentMode === 'learn_french') ? 'Haz clic para escuchar' : 'Cliquez pour écouter';
-    var qLabel     = (currentMode === 'learn_french')
-      ? 'Pregunta ' + (q10Step + 1) + '/' + total
-      : 'Question ' + (q10Step + 1) + '/' + total;
+    var audioLabel = L(
+      'Escucha el sonido y elige la letra correcta',
+      'Écoutez le son et choisissez la bonne lettre'
+    );
+    var listenHint = L('Haz clic para escuchar', 'Cliquez pour écouter');
+    var qLabel     = L('Pregunta ', 'Question ') + (q10Step + 1) + '/' + total;
 
     var opts = q.opts.map(function(o, i) {
       return '<button class="quiz-opt" id="q10o' + i
@@ -1740,9 +1778,7 @@ function renderQuiz10() {
   }
 
   /* ─── Quiz standard (vocabulaire) ─── */
-  var qStdLabel = (currentMode === 'learn_french')
-    ? 'Pregunta ' + (q10Step + 1) + '/' + total
-    : 'Question ' + (q10Step + 1) + '/' + total;
+  var qStdLabel = L('Pregunta ', 'Question ') + (q10Step + 1) + '/' + total;
 
   var stdOpts = q.opts.map(function(o, i) {
     return '<button class="quiz-opt" id="q10o' + i
@@ -1805,8 +1841,8 @@ function checkQ10(chosen, correct) {
 
   var correctWord = qs[q10Step].opts[correct];
   var fb = document.getElementById('q10fb');
-  var fbOk  = (currentMode === 'learn_french') ? '✅ ¡Correcto! ¡Enhorabuena!'           : '✅ Correct ! Félicitations !';
-  var fbErr = (currentMode === 'learn_french') ? '❌ Respuesta incorrecta. La solución era: ' : '❌ Mauvaise réponse. La solution était : ';
+  var fbOk  = L('✅ ¡Correcto! ¡Enhorabuena!',           '✅ Correct ! Félicitations !');
+  var fbErr = L('❌ Respuesta incorrecta. La solución era: ', '❌ Mauvaise réponse. La solution était : ');
   fb.textContent = (chosen === correct) ? fbOk : fbErr + correctWord;
   fb.style.color = (chosen === correct) ? '#009A44' : '#c0392b';
 
@@ -1822,7 +1858,7 @@ function checkQ10(chosen, correct) {
     if (match) {
       var finalEsMatch = (match.variants && match.variants[currentRegion])
         ? match.variants[currentRegion] : match.es;
-      speak(currentMode === 'learn_french' ? match.fr : finalEsMatch);
+      speak(L(match.fr, finalEsMatch));
     }
   }
 
@@ -1913,10 +1949,10 @@ function renderDialog() {
       ? ln.variants[currentRegion]
       : _adaptDialogueLine(ln.es);
 
-    var mainMsg   = (currentMode === 'learn_french') ? ln.fr        : finalEsLine;
-    var transMsg  = (currentMode === 'learn_french') ? finalEsLine  : ln.fr;
-    var spokenKey = (currentMode === 'learn_french') ? ln.fr        : finalEsLine;
-    var listenTip = (currentMode === 'learn_french') ? 'Escuchar'   : 'Écouter';
+    var mainMsg   = L(ln.fr, finalEsLine);
+    var transMsg  = L(finalEsLine, ln.fr);
+    var spokenKey = L(ln.fr, finalEsLine);
+    var listenTip = L('Escuchar', 'Écouter');
 
     // Les bulles commencent invisibles et s'affichent via un délai croissant (effet cascade)
     return '<div class="bubble ' + ln.side + '" style="opacity:0;transition:opacity .3s '
@@ -1930,9 +1966,7 @@ function renderDialog() {
       + '</div>';
   }).join('');
 
-  var quizBtnLabel = (currentMode === 'learn_french')
-    ? 'Iniciar el minicuestionario ➜'
-    : 'Lancer le mini quiz ➜';
+  var quizBtnLabel = L('Iniciar el minicuestionario ➜', 'Lancer le mini quiz ➜');
 
   document.getElementById('tabContent').innerHTML =
     '<div class="sit-nav">' + sitBtns + '</div>'
@@ -1985,9 +2019,9 @@ function renderVocab() {
       }
     }
 
-    var mainWord  = (currentMode === 'learn_french') ? fr      : finalEs;
-    var subWord   = (currentMode === 'learn_french') ? finalEs : fr;
-    var spokenKey = (currentMode === 'learn_french') ? fr      : finalEs;
+    var mainWord  = L(fr,      finalEs);
+    var subWord   = L(finalEs, fr);
+    var spokenKey = L(fr,      finalEs);
 
     return '<span class="vocab-chip" style="display:inline-flex;flex-direction:column;align-items:center;text-align:center;" onclick="speak(\'' + esc(spokenKey) + '\')">'
       + '<span class="vocab-item-et" style="font-weight:bold;">' + mainWord + '</span>'
@@ -1995,12 +2029,11 @@ function renderVocab() {
       + '</span>';
   }).join('');
 
-  var vocabTitle   = (currentMode === 'learn_french')
-    ? '📚 Vocabulario básico — ¡Haz clic para escuchar el español!'
-    : '📚 Lexique essentiel — Cliquez pour écouter l\'Espagnol !';
-  var quizBtnLabel = (currentMode === 'learn_french')
-    ? 'Iniciar el minicuestionario ➜'
-    : 'Lancer le mini quiz ➜';
+  var vocabTitle   = L(
+    '📚 Vocabulario básico — ¡Haz clic para escuchar el español!',
+    '📚 Lexique essentiel — Cliquez pour écouter l\'Espagnol !'
+  );
+  var quizBtnLabel = L('Iniciar el minicuestionario ➜', 'Lancer le mini quiz ➜');
 
   document.getElementById('tabContent').innerHTML =
     '<div class="vocab-section">'
@@ -2060,9 +2093,7 @@ function renderDialogQuiz() {
 
   /* ─── Question courante ─── */
   var q      = qs[dqStep];
-  var qLabel = (currentMode === 'learn_french')
-    ? 'Pregunta ' + (dqStep + 1) + '/' + total
-    : 'Question ' + (dqStep + 1) + '/' + total;
+  var qLabel = L('Pregunta ', 'Question ') + (dqStep + 1) + '/' + total;
 
   var opts = q.opts.map(function(o, i) {
     return '<button class="quiz-opt" id="dqo' + i
@@ -2096,8 +2127,8 @@ function checkDQ(chosen, correct) {
   _vibrateFeedback(chosen === correct);
 
   var fb   = document.getElementById('dqfb');
-  var fbOk = (currentMode === 'learn_french') ? '✅ ¡Buena respuesta!'    : '✅ Bonne réponse !';
-  var fbErr= (currentMode === 'learn_french') ? '❌ ¡Inténtalo de nuevo!' : '❌ Essayer de nouveau !';
+  var fbOk = L('✅ ¡Buena respuesta!',    '✅ Bonne réponse !');
+  var fbErr= L('❌ ¡Inténtalo de nuevo!', '❌ Essayer de nouveau !');
   fb.textContent = (chosen === correct) ? fbOk : fbErr;
   fb.style.color = (chosen === correct) ? '#009A44' : '#c0392b';
 
@@ -2123,33 +2154,21 @@ function _quizResultStrings(pct) {
   var stars     = _calcStars(pct);
   var isSuccess = stars > 0;
 
-  if (currentMode === 'learn_french') {
-    var titleFr = '¡Prueba terminada!';
-    if      (stars === 3) titleFr = '¡Perfecto! ⭐⭐⭐';
-    else if (stars === 2) titleFr = '¡Muy bien! ⭐⭐';
-    else if (stars === 1) titleFr = '¡Bien! ⭐';
-    return {
-      title : titleFr,
-      sub   : isSuccess
-              ? '¡Módulo superado! Puedes pasar al siguiente o volver a intentarlo para conseguir más estrellas.'
-              : 'Necesitas al menos un 50 % de respuestas correctas (1⭐) para que cuente. ¡Inténtalo de nuevo!',
-      retry : '🔄 Inténtalo de nuevo',
-      finish: '✓ Finalizar'
-    };
-  } else {
-    var titleEs = 'Quiz terminé !';
-    if      (stars === 3) titleEs = 'Parfait ! ⭐⭐⭐';
-    else if (stars === 2) titleEs = 'Très bien ! ⭐⭐';
-    else if (stars === 1) titleEs = 'Bien ! ⭐';
-    return {
-      title : titleEs,
-      sub   : isSuccess
-              ? 'Module validé ! Vous pouvez passer au suivant ou réessayer pour plus d\'étoiles.'
-              : 'Il vous faut au moins 50% de bonnes réponses (1⭐) pour valider. Réessayez !',
-      retry : '🔄 Réessayer',
-      finish: '✓ Terminer'
-    };
-  }
+  var title = L('¡Prueba terminada!', 'Quiz terminé !');
+  if      (stars === 3) title = L('¡Perfecto! ⭐⭐⭐',  'Parfait ! ⭐⭐⭐');
+  else if (stars === 2) title = L('¡Muy bien! ⭐⭐',    'Très bien ! ⭐⭐');
+  else if (stars === 1) title = L('¡Bien! ⭐',           'Bien ! ⭐');
+
+  return {
+    title : title,
+    sub   : isSuccess
+      ? L('¡Módulo superado! Puedes pasar al siguiente o volver a intentarlo para conseguir más estrellas.',
+          'Module validé ! Vous pouvez passer au suivant ou réessayer pour plus d\'étoiles.')
+      : L('Necesitas al menos un 50 % de respuestas correctas (1⭐) para que cuente. ¡Inténtalo de nuevo!',
+          'Il vous faut au moins 50% de bonnes réponses (1⭐) pour valider. Réessayez !'),
+    retry : L('🔄 Inténtalo de nuevo', '🔄 Réessayer'),
+    finish: L('✓ Finalizar',           '✓ Terminer')
+  };
 }
 
 /* esc(s) — Échappe les caractères spéciaux pour injection dans les onclick="" HTML.
@@ -2195,13 +2214,13 @@ function renderRegionOptions() {
 
   // Liste des régions disponibles avec labels localisés selon le mode
   var regions = [
-    { id:'ES', name:(currentMode === 'learn_french') ? 'España (Castellano)'   : 'Espagne (Castillan)', flag:'🇪🇸' },
-    { id:'AR', name:(currentMode === 'learn_french') ? 'Argentina'              : 'Argentine',           flag:'🇦🇷' },
-    { id:'CO', name:(currentMode === 'learn_french') ? 'Colombia'               : 'Colombie',            flag:'🇨🇴' },
-    { id:'EC', name:(currentMode === 'learn_french') ? 'Ecuador'                : 'Équateur',            flag:'🇪🇨' },
-    { id:'MX', name:(currentMode === 'learn_french') ? 'México'                 : 'Mexique',             flag:'🇲🇽' },
-    { id:'PE', name:(currentMode === 'learn_french') ? 'Perú'                   : 'Pérou',               flag:'🇵🇪' },
-    { id:'VE', name:(currentMode === 'learn_french') ? 'Venezuela'              : 'Venezuela',           flag:'🇻🇪' }
+    { id:'ES', name: L('España (Castellano)', 'Espagne (Castillan)'), flag:'🇪🇸' },
+    { id:'AR', name: L('Argentina',           'Argentine'),           flag:'🇦🇷' },
+    { id:'CO', name: L('Colombia',            'Colombie'),            flag:'🇨🇴' },
+    { id:'EC', name: L('Ecuador',             'Équateur'),            flag:'🇪🇨' },
+    { id:'MX', name: L('México',              'Mexique'),             flag:'🇲🇽' },
+    { id:'PE', name: L('Perú',                'Pérou'),               flag:'🇵🇪' },
+    { id:'VE', name: L('Venezuela',           'Venezuela'),           flag:'🇻🇪' }
   ];
 
   // Construction du <select>
@@ -2219,9 +2238,10 @@ function renderRegionOptions() {
   // Bandeau d'info sur la variante active
   var activeRegion = regions.find(function(r) { return r.id === currentRegion; }) || regions[0];
   if (msgBox) {
-    var bannerMsg = (currentMode === 'learn_french')
-      ? 'ℹ️ Tu aplicación está configurada actualmente con la variante de <strong>' + activeRegion.name + '</strong>.'
-      : 'ℹ️ Votre application est actuellement configurée sur la variante <strong>' + activeRegion.name + '</strong>.';
+    var bannerMsg = L(
+      'ℹ️ Tu aplicación está configurada actualmente con la variante de <strong>' + activeRegion.name + '</strong>.',
+      'ℹ️ Votre application est actuellement configurée sur la variante <strong>' + activeRegion.name + '</strong>.'
+    );
     msgBox.innerHTML = '<div style="margin:5px 10px 15px 10px;padding:12px;background-color:#eef9ff;'
       + 'border-left:4px solid #007bff;border-radius:8px;font-size:0.9rem;color:#333;text-align:left;">'
       + bannerMsg + '</div>';
@@ -2258,25 +2278,27 @@ function pickRegion(regionId) {
   var msgBox = document.getElementById('region-message-box');
   if (msgBox) {
     var regionsNames = {
-      ES:(currentMode === 'learn_french') ? 'España (Castellano)' : 'Espagne (Castillan)',
-      MX:(currentMode === 'learn_french') ? 'México'              : 'Mexique',
-      CO:(currentMode === 'learn_french') ? 'Colombia'            : 'Colombie',
-      PE:(currentMode === 'learn_french') ? 'Perú'                : 'Pérou',
-      VE:(currentMode === 'learn_french') ? 'Venezuela'           : 'Venezuela',
-      AR:(currentMode === 'learn_french') ? 'Argentina'           : 'Argentine',
-      EC:(currentMode === 'learn_french') ? 'Ecuador'             : 'Équateur'
+      ES: L('España (Castellano)', 'Espagne (Castillan)'),
+      MX: L('México',              'Mexique'),
+      CO: L('Colombia',            'Colombie'),
+      PE: L('Perú',                'Pérou'),
+      VE: L('Venezuela',           'Venezuela'),
+      AR: L('Argentina',           'Argentine'),
+      EC: L('Ecuador',             'Équateur')
     };
     var activeName = regionsNames[currentRegion] || currentRegion;
-    var noteAudio  = (currentMode === 'learn_french')
-      ? '<div style="margin-top:5px;font-size:0.75rem;color:#666;font-style:italic;">'
+    var noteAudio  = L(
+      '<div style="margin-top:5px;font-size:0.75rem;color:#666;font-style:italic;">'
         + 'Nota: El acento real depende de las voces instaladas en la configuration de síntesis de voz de tu dispositivo.'
-        + '</div>'
-      : '<div style="margin-top:5px;font-size:0.75rem;color:#666;font-style:italic;">'
+        + '</div>',
+      '<div style="margin-top:5px;font-size:0.75rem;color:#666;font-style:italic;">'
         + 'Note : L\'accent audio dépend des voix espagnoles installées dans les paramètres de synthèse vocale de votre smartphone.'
-        + '</div>';
-    var mainMsg = (currentMode === 'learn_french')
-      ? 'ℹ️ Tu aplicación está configurada actualmente con la variante de <strong>' + activeName + '</strong>.'
-      : 'ℹ️ Votre application est actuellement configurée sur la variante <strong>' + activeName + '</strong>.';
+        + '</div>'
+    );
+    var mainMsg = L(
+      'ℹ️ Tu aplicación está configurada actualmente con la variante de <strong>' + activeName + '</strong>.',
+      'ℹ️ Votre application est actuellement configurée sur la variante <strong>' + activeName + '</strong>.'
+    );
 
     msgBox.innerHTML = '<div style="margin:5px 10px 15px 10px;padding:12px;background-color:#eef9ff;'
       + 'border-left:4px solid #007bff;border-radius:8px;font-size:0.9rem;color:#333;text-align:left;">'
@@ -2618,6 +2640,54 @@ function copierEmailSecurise(bouton) {
         }, 2500);
     }).catch(err => {
         // Cas de secours si le navigateur bloque l'accès automatique au presse-papiers
-        alert("Sécurité : Veuillez copier manuellement l'adresse suivante : " + adresseComplete);
+        _showToast("📋 Copiez manuellement : " + adresseComplete, 5000);
     });
 }
+
+/* ════════════════════════════════════════
+   TOAST — NOTIFICATION NON BLOQUANTE
+   Remplace alert() pour les messages
+   d'information (voix, copie e-mail…).
+   duration : durée d'affichage en ms (défaut 3000)
+════════════════════════════════════════ */
+function _showToast(msg, duration) {
+  duration = duration || 3000;
+  var toast = document.getElementById('app-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'app-toast';
+    toast.className = 'app-toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.classList.add('visible');
+  setTimeout(function() {
+    toast.classList.remove('visible');
+  }, duration);
+}
+
+/* ════════════════════════════════════════
+   ACCESSIBILITÉ CLAVIER — ÉLÉMENTS "BOUTON" NON NATIFS
+   Permet d'activer au clavier (Entrée ou Espace) tous les
+   éléments portant role="button" + tabindex="0"
+   (flashcards, chips vocabulaire, cartes alphabet…).
+   :focus-visible côté CSS complète ce mécanisme JS.
+════════════════════════════════════════ */
+document.addEventListener('keydown', function(e) {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  var target = e.target.closest('[role="button"]');
+  if (!target) return;
+  e.preventDefault();
+  target.click();
+});
+
+/* ════════════════════════════════════════
+   INITIALISATION DU LAUNCHER
+   Branche les clics des cartes de langue
+   sans onclick inline dans le HTML.
+════════════════════════════════════════ */
+document.querySelectorAll('.lang-card[data-lang]').forEach(function(card) {
+  card.addEventListener('click', function() {
+    initApp(card.getAttribute('data-lang'));
+  });
+});

@@ -1694,24 +1694,8 @@ footer a:hover { text-decoration: underline; }
 html.theme-french,
 html:not([class*="theme-"]) {
   --c-primary:           #002395;
-  --c-primary-dark:      #001A6E;
   --c-accent:            #ED2939;
   --c-bg:                #f0f4ff;
-  --c-done:              #4CAF50;
-  --c-progress-bg:       rgba(0,56,147,.2);
-  --c-footer-bg:         #e8ecf8;
-  --c-footer-border:     #d0d8ee;
-  --c-vocab-chip-bg:     #eef0ff;
-  --c-vocab-chip-border: #8090c0;
-  --c-fc-nav-hover:      #e8eeff;
-  --c-grad-home:         linear-gradient(135deg, #002395 0%, #ffffff 50%, #ED2939 100%);
-  --c-grad-sections:     linear-gradient(135deg, #002395, #ED2939);
-  --c-grad-lesson:       linear-gradient(135deg, #002395, #ED2939);
-  --c-grad-fc-back:      linear-gradient(135deg, #002395, #ED2939);
-  --c-grad-alpha-btn:    linear-gradient(135deg, #002395, #ED2939);
-  --c-home-title:          #001A6E;
-  --c-home-subtitle:       #002395;
-  --c-home-progress-label: #002395;
 }
 html.theme-french body { background: #f0f4ff; }
 
@@ -1940,4 +1924,49 @@ html.theme-spain.region-VE {
   opacity: 0.9;
   transform: translateY(-1px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* ════════════════════════════════════════
+   FOCUS CLAVIER — ÉLÉMENTS "BOUTON" NON NATIFS
+   Renforce l'indicateur de focus pour la navigation
+   clavier sur les éléments avec role="button".
+   :focus-visible ignore les clics souris/tactiles.
+════════════════════════════════════════ */
+.theme-card:focus-visible,
+.fc:focus-visible,
+.alpha-card:focus-visible,
+.vocab-chip:focus-visible {
+  outline: 3px solid var(--c-primary);
+  outline-offset: 2px;
+}
+
+/* ════════════════════════════════════════
+   TOAST — NOTIFICATION DISCRÈTE
+   Remplace les alert() natifs bloquants.
+   pointer-events:none → ne bloque jamais
+   les clics sous le toast.
+════════════════════════════════════════ */
+.app-toast {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  max-width: 88%;
+  background: var(--c-primary);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-size: .78rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.4;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  z-index: 10000;
+  opacity: 0;
+  transform: translate(-50%, -16px);
+  transition: opacity .3s ease, transform .3s ease;
+  pointer-events: none;
+}
+.app-toast.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
