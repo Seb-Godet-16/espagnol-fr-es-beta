@@ -1088,6 +1088,25 @@ function _normalizeSpeech(s) {
     .replace(/\s+/g, ' ').trim();
 }
 
+/* _micBlockedHtml() — Retourne le HTML (icône + message clair) à afficher
+   quand le micro est bloqué/refusé par le navigateur (erreurs SpeechRecognition
+   'not-allowed' ou 'service-not-allowed'). L'icône 🚫🎤 est volontairement
+   très reconnaissable, et le texte explique en 1 clic comment réactiver
+   l'accès (icône cadenas/réglages dans la barre d'adresse). */
+function _micBlockedHtml() {
+  var isFR = (currentMode === 'learn_french');
+  var msg = isFR
+    ? '🚫🎤 Micrófono bloqueado — toca el icono 🔒/⚙️ junto a la dirección del sitio, luego autoriza el micrófono y recarga la página.'
+    : '🚫🎤 Micro bloqué — touche l\'icône 🔒/⚙️ à côté de l\'adresse du site, puis autorise le micro et recharge la page.';
+  return '<span class="mic-blocked-icon">🚫🎤</span> ' + msg;
+}
+
+/* _isMicBlockedError(err) — true si l'erreur correspond à un refus de
+   permission micro (et non à un simple silence ou souci réseau). */
+function _isMicBlockedError(err) {
+  return err === 'not-allowed' || err === 'service-not-allowed';
+}
+
 /* _buildMicZone(word, lang) — Génère le HTML complet du bloc micro
    (bouton, feedback, hint). word = mot attendu, lang = code BCP-47. */
 function _buildMicZone(word, lang) {
@@ -1173,8 +1192,11 @@ function startMicReco(word, lang) {
   reco.onerror = function(e) {
     var fbEl = document.getElementById('micFeedback');
     if (fbEl) {
-      // 'no-speech' = silence, pas vraiment une erreur à afficher
-      if (e.error !== 'no-speech') {
+      if (_isMicBlockedError(e.error)) {
+        fbEl.className  = 'mic-feedback mic-feedback--blocked';
+        fbEl.innerHTML  = _micBlockedHtml();
+      } else if (e.error !== 'no-speech') {
+        // 'no-speech' = silence, pas vraiment une erreur à afficher
         fbEl.className  = 'mic-feedback mic-feedback--ko';
         fbEl.textContent = (isFR ? '⚠️ Error: ' : '⚠️ Erreur : ') + e.error;
       } else {
@@ -1182,7 +1204,7 @@ function startMicReco(word, lang) {
         fbEl.textContent = '';
       }
     }
-    _resetMicBtn(word, lang);
+    _resetMicBtn(word, lang, _isMicBlockedError(e.error));
   };
 
   reco.onend = function() {
@@ -1201,13 +1223,19 @@ function _stopMicReco() {
   }
 }
 
-/* _resetMicBtn(word, lang) — Remet le bouton micro en état "prêt". */
-function _resetMicBtn(word, lang) {
+/* _resetMicBtn(word, lang, blocked) — Remet le bouton micro en état "prêt".
+   Si blocked=true (micro refusé par le navigateur), affiche une icône
+   🚫🎤 facilement reconnaissable directement sur le bouton, pour que
+   l'apprenant comprenne immédiatement qu'il doit réautoriser l'accès. */
+function _resetMicBtn(word, lang, blocked) {
   var btn = document.getElementById('micBtn');
   if (!btn) return;
   var isFR = (currentMode === 'learn_french');
-  btn.textContent = isFR ? '🎤 Pronunciar' : '🎤 Prononcer';
+  btn.textContent = blocked
+    ? '🚫🎤 ' + (isFR ? 'Bloqueado — toca para reintentar' : 'Bloqué — touche pour réessayer')
+    : (isFR ? '🎤 Pronunciar' : '🎤 Prononcer');
   btn.classList.remove('mic-btn--listening');
+  btn.classList.toggle('mic-btn--blocked', !!blocked);
   btn.onclick = function() { startMicReco(word, lang); };
 }
 
@@ -1243,7 +1271,10 @@ function isAlphaQuiz() { return CT && CT.type === 'alpha'; }
    Séquence par mot :
      1. Affiche le mot dans la langue cible (+ emoji si dispo)
      2. Lance speak() automatiquement
-     3. Après 1800ms, déclenche startMicReco avec la bonne langue
+     3. Après un délai adapté à la longueur du mot (voir _rpMicDelay :
+        1800ms de base, +1400ms par "/" pour les mots à deux formulations
+        comme "Por favor / De nada", +90ms par mot supplémentaire),
+        déclenche startMicReco avec la bonne langue
      4. Affiche feedback vert/orange identique à l'option A
      5. Après 2500ms de feedback, passe au mot suivant (ou attend le bouton)
    Contrôles permanents : compteur, score, bouton ⏭ Passer, 🔁 Réentendre.
@@ -1271,6 +1302,26 @@ function _rpGetWord(idx) {
   }
   displayEmoji = card.em || '';
   return { card: card, word: targetWord, emoji: displayEmoji };
+}
+
+/* _rpMicDelay(word) — Calcule le délai (ms) avant déclenchement du micro,
+   en fonction de la longueur du mot à prononcer. Certains mots contiennent
+   un "/" car ils proposent deux formulations (ex : "Por favor / De nada"
+   ou "Buenos días / Buen día") : il faut laisser à l'apprenant le temps
+   d'entendre ET de prononcer les deux, donc on augmente le délai de base
+   et on ajoute un supplément par "/" et par mot supplémentaire. */
+function _rpMicDelay(word) {
+  var BASE       = 1800;  // délai standard pour un mot simple
+  var PER_SLASH  = 1400;  // supplément par "/" (mot composé de 2 formulations)
+  var PER_WORD   = 90;    // supplément par mot au-delà du premier (longueur de phrase)
+
+  if (!word) return BASE;
+
+  var slashCount = (word.match(/\//g) || []).length;
+  var wordCount  = word.split(/\s+/).filter(Boolean).length;
+
+  var extra = slashCount * PER_SLASH + Math.max(0, wordCount - 1) * PER_WORD;
+  return BASE + extra;
 }
 
 /* _rpClearTimers() — Annule les timers en cours (changement manuel). */
@@ -1343,7 +1394,8 @@ function _rpShowWord() {
   // 1. Prononce le mot automatiquement
   speak(info.word);
 
-  // 2. Lance la reconnaissance vocale après 1800ms
+  // 2. Lance la reconnaissance vocale après un délai adapté à la longueur
+  //    du mot (plus long si le mot contient "/" : deux formulations à dire)
   _rpMicTimer = setTimeout(function() {
     var fbEl = document.getElementById('rpFeedback');
     if (fbEl) {
@@ -1351,7 +1403,7 @@ function _rpShowWord() {
       fbEl.textContent = isFR ? '🎙️ Escuchando…' : '🎙️ Écoute en cours…';
     }
     _rpStartMic(info.word, micLang);
-  }, 1800);
+  }, _rpMicDelay(info.word));
 }
 
 /* _rpStartMic(word, lang) — Lance la reconnaissance vocale dans le contexte Répète. */
@@ -1396,6 +1448,20 @@ function _rpStartMic(word, lang) {
     if (_rpAnswered) return;
     _rpAnswered = true;
     var fbEl = document.getElementById('rpFeedback');
+
+    if (_isMicBlockedError(e.error)) {
+      // Micro bloqué : on ne fait PAS avancer automatiquement, l'apprenant
+      // doit d'abord réautoriser l'accès. On affiche un message clair avec
+      // une icône facilement reconnaissable et un bouton pour réessayer.
+      if (fbEl) {
+        fbEl.className = 'rp-feedback mic-feedback mic-feedback--blocked';
+        fbEl.innerHTML = _micBlockedHtml()
+          + '<br><button class="mic-btn rp-retry-btn" style="margin-top:8px" '
+          + 'onclick="_rpRehear()">' + (isFR ? '🔁 Reintentar' : '🔁 Réessayer') + '</button>';
+      }
+      return; // pas de _rpAutoTimer : on attend l'action de l'apprenant
+    }
+
     if (fbEl && e.error !== 'no-speech') {
       fbEl.className   = 'rp-feedback mic-feedback mic-feedback--ko';
       fbEl.textContent = (isFR ? '⚠️ Error: ' : '⚠️ Erreur : ') + e.error;
@@ -1450,7 +1516,7 @@ function _rpRehear() {
       fbEl2.textContent = isFR ? '🎙️ Escuchando…' : '🎙️ Écoute en cours…';
     }
     _rpStartMic(info.word, micLang);
-  }, 1800);
+  }, _rpMicDelay(info.word));
 }
 
 /* _rpSkip() — Passe au mot suivant sans réponse (ne compte pas comme réussite). */
@@ -2267,20 +2333,58 @@ function pickRegion(regionId) {
 
 /* toggleAcc(btn) — Ouvre ou ferme un panneau accordéon du guide.
    Paramètre : le bouton .guide-acc-header cliqué.
-   Bascule aria-expanded et la classe .open sur le body frère. */
+   Bascule aria-expanded et la classe .open sur le body frère.
+
+   Le dépliage utilise une max-height CALCULÉE dynamiquement à partir de
+   body.scrollHeight (hauteur réelle du contenu), plutôt qu'une valeur CSS
+   fixe (ex: 2000px). Avec une valeur fixe, les sections longues (ex :
+   « Configurer l'audio », qui contient 3 grandes cartes détaillées) peuvent
+   dépasser cette limite et donc être tronquées visuellement. En mesurant
+   la hauteur réelle à l'ouverture, le panneau se déplie toujours en entier,
+   quel que soit son contenu. */
 function toggleAcc(btn) {
   var isOpen = btn.getAttribute('aria-expanded') === 'true';
   var body   = btn.nextElementSibling;
 
   btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
-  if (body) {
-    if (isOpen) {
+  if (!body) return;
+
+  if (isOpen) {
+    // Fermeture : on repart de la hauteur actuelle pour permettre la
+    // transition CSS, puis on revient à 0 au prochain tick.
+    body.style.maxHeight = body.scrollHeight + 'px';
+    // Force le navigateur à prendre en compte la valeur ci-dessus avant
+    // de la changer, sinon la transition ne se joue pas.
+    body.offsetHeight; // eslint-disable-line no-unused-expressions
+    requestAnimationFrame(function() {
       body.classList.remove('open');
-    } else {
-      body.classList.add('open');
-    }
+      body.style.maxHeight = '0px';
+    });
+  } else {
+    body.classList.add('open');
+    // Mesure la hauteur réelle du contenu et l'applique explicitement,
+    // pour garantir un dépliage complet même sur les sections très longues.
+    body.style.maxHeight = body.scrollHeight + 'px';
   }
 }
+
+/* _resizeOpenAccordions() — Recalcule la max-height de tous les panneaux
+   actuellement ouverts. Utile après un redimensionnement de fenêtre
+   (rotation d'écran mobile) ou un changement de contenu dynamique
+   (ex : _refreshGuideRegion() qui modifie le texte affiché). */
+function _resizeOpenAccordions() {
+  var openBodies = document.querySelectorAll('.guide-acc-body.open');
+  openBodies.forEach(function(body) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+  });
+}
+window.addEventListener('resize', _resizeOpenAccordions);
+
+/* Au chargement du DOM, fixe la max-height réelle de toute section
+   accordéon déjà ouverte par défaut dans le HTML (ex : « Comment ça
+   marche », ouverte au premier affichage), pour éviter tout effet de
+   troncature avant la première interaction utilisateur. */
+document.addEventListener('DOMContentLoaded', _resizeOpenAccordions);
 
 /* ═══════════════════════════════════════════════════════════
    16. REMERCIEMENTS — Modale de crédits
@@ -2360,8 +2464,10 @@ function showGuide() {
   if (blockFR) blockFR.style.display = showFrench ? 'block' : 'none';
   if (blockES) blockES.style.display = showFrench ? 'none'  : 'block';
 
-  // Adapte le bloc espagnol à la variante régionale active, si besoin
-  if (!showFrench) _refreshGuideRegion();
+  // Adapte le titre du bloc affiché à la langue réellement étudiée
+  // (et, côté espagnol, à la variante régionale active)
+  if (showFrench) _refreshGuideHeroFR();
+  else            _refreshGuideRegion();
 
   // Affiche la modale et remonte en haut (au cas où elle a déjà été scrollée)
   modal.classList.add('active');
@@ -2432,9 +2538,17 @@ function _refreshGuideRegion() {
   var region = REGIONS[currentRegion] ? currentRegion : 'ES';
   var r = REGIONS[region];
 
-  // Drapeaux du hero (🇫🇷 🌍 + drapeau régional)
+  // Drapeaux du hero : 🇫🇷 (langue apprise dans ce bloc) 🌍 + drapeau régional
+  // de la variante d'espagnol maternelle de l'apprenant (sert de repère, pas
+  // la langue étudiée — celle-ci est toujours le français dans ce bloc).
   var heroFlags = document.getElementById('guideHeroFlagsES');
   if (heroFlags) heroFlags.textContent = '🇫🇷 🌍 ' + r.flag;
+
+  // Titre du hero : toujours "Apprends le Français" dans ce bloc, avec le
+  // drapeau français (langue réellement étudiée par l'utilisateur), et non
+  // un libellé générique "Apprends une langue".
+  var heroTitle = document.getElementById('guideHeroTitleES');
+  if (heroTitle) heroTitle.innerHTML = 'Aprende Francés 🇫🇷,<br><span>juega, escucha y progresa.</span>';
 
   // Bandeau d'info sous le sous-titre du hero
   var badge = document.getElementById('guideRegionBadgeES');
@@ -2456,6 +2570,27 @@ function _refreshGuideRegion() {
     var activeCard = grid.querySelector('.guide-region-card[data-region="' + region + '"]');
     if (activeCard) activeCard.classList.add('active');
   }
+
+  // Le contenu injecté ci-dessus peut changer la hauteur d'un panneau
+  // accordéon déjà ouvert (ex : section "Variantes régionales") : on
+  // recalcule sa max-height pour éviter toute troncature visuelle.
+  _resizeOpenAccordions();
+}
+
+/* _refreshGuideHeroFR() — Adapte le titre du hero du bloc français du guide
+   (#guideContentFR), affiché quand currentMode === 'learn_spain' (l'utilisateur
+   apprend l'espagnol). Remplace le libellé générique "Apprends une langue"
+   par "Apprends l'Espagnol" + le drapeau de la variante régionale choisie
+   (ex : 🇲🇽 si Mexique), au lieu du systématique 🇪🇸. */
+function _refreshGuideHeroFR() {
+  var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+  var activeFlag  = flagEmojis[currentRegion] || '🇪🇸';
+
+  var heroFlags = document.getElementById('guideHeroFlagsFR');
+  if (heroFlags) heroFlags.textContent = '🇫🇷 🌍 ' + activeFlag;
+
+  var heroTitle = document.getElementById('guideHeroTitleFR');
+  if (heroTitle) heroTitle.innerHTML = 'Apprends l\'Espagnol ' + activeFlag + ',<br><span>joue, écoute, progresse !</span>';
 }
 
 /* ============================================================
