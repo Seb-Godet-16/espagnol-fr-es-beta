@@ -2620,7 +2620,9 @@ function showGuide() {
      dans la langue OPPOSÉE à celle qu'il apprend.
      Si aucun mode n'est encore défini (accès direct improbable,
      sécurité), on retombe par défaut sur le français. */
-  var showFrench = (currentMode === 'learn_spain') || !currentMode;
+  // CORRECTION : Utilisation de state.mode conformément à l'architecture de votre application
+  var activeMode = (typeof state !== 'undefined' && state && state.mode) ? state.mode : '';
+  var showFrench = (activeMode === 'learn_spain') || !activeMode;
 
   if (blockFR) blockFR.style.display = showFrench ? 'block' : 'none';
   if (blockES) blockES.style.display = showFrench ? 'none'  : 'block';
@@ -2672,7 +2674,10 @@ function showGuide() {
 
   // Synchronise toutes les checkboxes "ne plus afficher" avec l'état actuel du flag
   var flagValue = false;
-  try { flagValue = localStorage.getItem(GUIDE_STORAGE_KEY) === '1'; } catch(e) {}
+  // SÉCURITÉ : Remplacement de la constante par une chaîne si GUIDE_STORAGE_KEY n'est pas déclarée globalement
+  var storageKey = (typeof GUIDE_STORAGE_KEY !== 'undefined') ? GUIDE_STORAGE_KEY : 'lang_app_guide_noshow';
+  try { flagValue = localStorage.getItem(storageKey) === '1'; } catch(e) {}
+  
   var allChecks = document.querySelectorAll('.guide-no-show-check');
   allChecks.forEach(function(cb) { cb.checked = flagValue; });
 }

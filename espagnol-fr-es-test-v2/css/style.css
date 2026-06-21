@@ -1727,8 +1727,23 @@ footer a:hover { text-decoration: underline; }
 /* Visibilité gérée par JS via showGuide() — on cache les deux par défaut
    et on laisse le contenu de la topbar s'afficher pour les deux langues
    puisque la topbar est commune */
-.guide-topbar .guide-no-show-fr { display: inline; }
-.guide-topbar .guide-no-show-es { display: inline; }
+/* --- Masquage par défaut --- */
+.guide-topbar .guide-no-show-fr,
+.guide-topbar .guide-no-show-es {
+  display: none;
+}
+
+/* --- Affichage conditionnel selon le mode actif --- */
+
+/* Si l'application est configurée pour un Francophone */
+.guide-topbar--fr .guide-no-show-fr {
+  display: inline;
+}
+
+/* Si l'application est configurée pour un Hispanophone */
+.guide-topbar--es .guide-no-show-es {
+  display: inline;
+}
 
 /* Bloc checkbox du bas (dans .guide-cta-block) */
 .guide-no-show-bottom {
