@@ -223,6 +223,14 @@ body {
   opacity: .95;
 }
 
+/* Sous-titre bilingue sous le titre Sections (Modules / Módulos) */
+.sections-subtitle {
+  font-size: .78rem;
+  opacity: .75;
+  margin-top: -4px;
+  margin-bottom: 2px;
+}
+
 
 /* ════════════════════════════════════════
    §2 — VARIABLES DE THÈME — FALLBACK PAR DÉFAUT
@@ -1598,6 +1606,19 @@ footer a:hover { text-decoration: underline; }
 /* ── Pied de page propre au guide ── */
 .guide-footer { text-align: center; padding: 28px 20px 34px; font-size: .72rem; color: var(--g-muted); line-height: 2; }
 .guide-footer a { color: var(--g-muted); }
+/* Liens du footer guide plus visibles (LinkedIn notamment) */
+.guide-footer-link {
+  color: var(--g-text) !important;
+  font-weight: 700 !important;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+/* Ligne de traduction secondaire dans le footer du guide */
+.guide-footer-sub {
+  font-size: .68rem;
+  opacity: .7;
+  font-style: italic;
+}
 
 
 /* ════════════════════════════════════════

@@ -193,6 +193,8 @@
 
       <!-- Titre injecté par JS (ex : "📚 Modules") -->
       <h2 id="sectionsTitle"></h2>
+      <!-- Sous-titre bilingue injecté par renderSections() -->
+      <div class="sections-subtitle" id="sectionsSubtitle"></div>
 
       <!-- Barre de progression globale (% de modules terminés) -->
       <div class="progress-bar-wrap">
@@ -226,11 +228,8 @@
 
     </div>
 
-    <footer>
-      © Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
-      <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
-      <a href="#" onclick="showGuide()">Guide / Guía</a> ·
-      <a href="#" onclick="showCredits()">Remerciements</a>
+    <footer id="sectionsFooter">
+      <!-- Contenu injecté par renderSections() selon le mode et la variante -->
     </footer>
   </div><!-- /sections -->
 
@@ -339,14 +338,19 @@
   ══════════════════════════════════════════ -->
   <div id="guide-modal" class="guide-modal">
 
-    <!-- Barre supérieure : retour à l'application -->
+    <!-- Barre supérieure : retour à l'application
+         En mode ES (hispanophone), seul le bouton Cerrar est affiché (sans checkbox).
+         En mode FR (francophone), la checkbox "Ne plus afficher" reste visible.
+         La visibilité est gérée par showGuide() via les classes guide-topbar--fr / guide-topbar--es -->
     <div class="guide-topbar">
-      <label class="guide-no-show-label">
+      <!-- Checkbox "Ne plus afficher" — visible uniquement en mode FR -->
+      <label class="guide-no-show-label guide-topbar-noshow">
         <input type="checkbox" class="guide-no-show-check" onchange="toggleGuideNoShow(this)">
         <span class="guide-no-show-text guide-no-show-fr">Ne plus afficher</span>
         <span class="guide-no-show-text guide-no-show-es">No mostrar más</span>
       </label>
-      <button onclick="closeGuide()">✕ Fermer / Cerrar</button>
+      <!-- Bouton fermer — libellé adapté par showGuide() selon le mode -->
+      <button id="guideCloseBtn" onclick="closeGuide()">✕ Fermer / Cerrar</button>
     </div>
 
     <!-- ─────────────────────────────────────────
@@ -799,6 +803,7 @@
 
       <div class="guide-footer">
         © Juin 2026 – Développé par <strong>Sébastien Godet</strong> · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
+        <span class="guide-footer-sub">Desarrollado por <strong>Sébastien Godet</strong> · Asistido por IA Claude Sonnet 4.6 y Gemini 3.5 Flash</span><br>
         <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
         <a href="#" onclick="showCredits()">Remerciements</a>
       </div>
@@ -1249,14 +1254,6 @@
         <div class="guide-cta-block">
           <h2>🚀 ¿Listo para empezar?</h2>
           <p>Sin registro, sin descargas — ¡la app funciona directamente en tu navegador!</p>
-          <!-- Checkbox bas de page (ES) -->
-          <div class="guide-no-show-bottom">
-            <label class="guide-no-show-label guide-no-show-label--light">
-              <input type="checkbox" class="guide-no-show-check" onchange="toggleGuideNoShow(this)">
-              <span>No mostrar esta guía al iniciar la app</span>
-            </label>
-            <p class="guide-no-show-hint">Puedes volver a verla en cualquier momento desde el enlace del pie de página.</p>
-          </div>
           <button class="guide-cta-btn" onclick="closeGuide()">▶ Abrir la app</button>
         </div>
 
@@ -1264,8 +1261,8 @@
 
       <div class="guide-footer">
         © Junio 2026 – Desarrollado por <strong>Sébastien Godet</strong> · Asistido por IA Claude Sonnet 4.6 y Gemini 3.5 Flash<br>
-        <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
-        <a href="#" onclick="showCredits()">Remerciements</a>
+        <a class="guide-footer-link" href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">💼 LinkedIn</a> ·
+        <a class="guide-footer-link" href="#" onclick="showCredits()">Agradecimientos</a>
       </div>
 
     </div><!-- /guideContentES -->

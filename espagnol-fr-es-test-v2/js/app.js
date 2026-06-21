@@ -835,6 +835,39 @@ function renderSections() {
       + totalStarsEarned + ' / ' + maxStarsPossible + '</span>';
   }
 
+  // Sous-titre bilingue sous le titre "Modules / Módulos"
+  // En mode FR (hispanophone) : affiche la traduction espagnole selon la variante
+  // En mode ES (francophone)  : affiche la traduction française simple
+  var subtitle = document.getElementById('sectionsSubtitle');
+  if (subtitle) {
+    if (isFrench()) {
+      // Hispanophone apprenant le français : sous-titre en espagnol
+      subtitle.innerHTML = '<span class="translation-sub">Módulos</span>';
+    } else {
+      // Francophone apprenant l'espagnol : sous-titre en français
+      subtitle.innerHTML = '<span class="translation-sub">Modules</span>';
+    }
+  }
+
+  // Footer dynamique selon le mode
+  var footer = document.getElementById('sectionsFooter');
+  if (footer) {
+    if (isFrench()) {
+      // Hispanophone apprenant le français : footer entièrement en espagnol
+      // "Remerciements" traduit, "Guide" supprimé
+      footer.innerHTML =
+        '© Junio 2026 – Desarrollado por Sébastien Godet · Asistido por IA Claude Sonnet 4.6 y Gemini 3.5 Flash<br>'
+        + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">💼 LinkedIn</a> · '
+        + '<a href="#" onclick="showCredits()">Agradecimientos</a>';
+    } else {
+      // Francophone apprenant l'espagnol : footer en français, "Guide" supprimé
+      footer.innerHTML =
+        '© Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>'
+        + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> · '
+        + '<a href="#" onclick="showCredits()">Remerciements</a>';
+    }
+  }
+
   // Génération des grilles pour chaque niveau (1 = vocabulaire, 2 = dialogues)
   ['grid1', 'grid2'].forEach(function(gid) {
     var lv = gid === 'grid1' ? 1 : 2;
@@ -2591,6 +2624,25 @@ function showGuide() {
 
   if (blockFR) blockFR.style.display = showFrench ? 'block' : 'none';
   if (blockES) blockES.style.display = showFrench ? 'none'  : 'block';
+
+  // ── Adaptation de la topbar selon le mode ──
+  // En mode learn_spain (francophone apprenant l'espagnol) :
+  //   - la checkbox "Ne plus afficher / No mostrar más" est masquée
+  //   - le bouton fermer affiche uniquement "✕ Fermer"
+  // En mode learn_french (hispanophone apprenant le français) :
+  //   - la checkbox est masquée (déjà géré depuis la session précédente)
+  //   - le bouton fermer affiche uniquement "✕ Cerrar"
+  var noShowLabel = document.querySelector('.guide-topbar-noshow');
+  var closeBtn    = document.getElementById('guideCloseBtn');
+  if (showFrench) {
+    // Mode learn_spain : guide en français, on masque la checkbox, bouton = Fermer
+    if (noShowLabel) noShowLabel.style.display = 'none';
+    if (closeBtn)    closeBtn.textContent = '✕ Fermer';
+  } else {
+    // Mode learn_french : guide en espagnol, checkbox masquée, bouton = Cerrar
+    if (noShowLabel) noShowLabel.style.display = 'none';
+    if (closeBtn)    closeBtn.textContent = '✕ Cerrar';
+  }
 
   // Adapte le titre du bloc affiché à la langue réellement étudiée
   // (et, côté espagnol, à la variante régionale active)
