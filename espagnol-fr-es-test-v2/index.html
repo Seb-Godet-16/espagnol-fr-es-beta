@@ -52,8 +52,9 @@
     <!-- Pied de page commun à tous les écrans -->
     <footer class="launcher-footer">
       © Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
-      sebastien.godet16@gmail.com ·
+      <a href="mailto:sebastien.godet16@gmail.com">sebastien.godet16@gmail.com</a> ·
       <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
+      <a href="#" onclick="showGuide()">Guide / Guía</a> ·
       <a href="#" onclick="showCredits()">Remerciements</a>
     </footer>
   </div><!-- /app-launcher -->
@@ -113,7 +114,7 @@
 
     <footer>
       © Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
-      Questions / Suggestions : sebastien.godet16@gmail.com ·
+      <a href="mailto:sebastien.godet16@gmail.com">sebastien.godet16@gmail.com</a> ·
       <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
       <a href="#" onclick="showGuide()">Guide / Guía</a> ·
       <a href="#" onclick="showCredits()">Remerciements</a>
@@ -168,7 +169,7 @@
 
     <footer>
       © Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
-      Questions / Suggestions : sebastien.godet16@gmail.com ·
+      <a href="mailto:sebastien.godet16@gmail.com">sebastien.godet16@gmail.com</a> ·
       <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
       <a href="#" onclick="showGuide()">Guide / Guía</a> ·
       <a href="#" onclick="showCredits()">Remerciements</a>
@@ -211,8 +212,11 @@
       <div id="tabContent"></div>
     </div>
 
-    <!-- Pied de page compact (l'écran leçon n'avait pas de footer jusqu'ici) -->
+    <!-- Pied de page de l'écran leçon -->
     <footer class="lesson-footer">
+      © Juin 2026 – Sébastien Godet ·
+      <a href="mailto:sebastien.godet16@gmail.com">sebastien.godet16@gmail.com</a> ·
+      <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
       <a href="#" onclick="showGuide()">Guide / Guía</a> ·
       <a href="#" onclick="showCredits()">Remerciements</a>
     </footer>
@@ -455,6 +459,27 @@
         </div>
 
 
+        <!-- ═══════ REMERCIEMENTS ═══════ -->
+        <div class="guide-section guide-accordion">
+          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
+            <span class="guide-eyebrow">🙏 Remerciements</span>
+            <span class="guide-acc-arrow">▾</span>
+          </button>
+          <div class="guide-acc-body">
+          <div class="guide-title">Merci à ceux qui <span class="fr">ont rendu ça possible</span></div>
+
+          <div class="guide-card guide-bio-card">
+            <div class="guide-bio-text">
+              <p>Un grand merci à <strong>Fédérico Calo</strong>
+                (<a href="https://www.linkedin.com/in/federicocalo/" target="_blank" style="color:var(--g-fr);font-weight:700;">Architecte Développeur Web</a>)
+                pour son aide technique précieuse tout au long du projet.</p>
+              <p>Merci également à mes <strong>parents</strong> pour leur travail de relecture, leurs corrections sur les traductions et leurs conseils sur l'ergonomie de l'application.</p>
+            </div>
+          </div>
+          </div><!-- /guide-acc-body -->
+        </div>
+
+
         <!-- ═══════ QUI SUIS-JE ═══════ -->
         <div class="guide-section guide-accordion">
           <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
@@ -477,8 +502,8 @@
               <p>Ce projet est né d'une envie d'apprendre à développer en m'appuyant sur l'IA, pour <strong>démontrer mes compétences concrètement</strong>. Mais c'est aussi un outil pensé pour mon entourage : beaucoup d'applications de langues oublient les grands débutants. Ici, tout est conçu pour démarrer de zéro, en douceur, en s'amusant.</p>
             </div>
             <div class="guide-bio-links">
-              <a class="guide-bio-link" href="mailto:sebastien.godet16@gmail.com">✉️ Me contacter</a>
-              <a class="guide-bio-link" href="https://www.linkedin.com/in/sébastien-godet-142ba6145" target="_blank">💼 LinkedIn</a>
+              <a class="guide-bio-link" href="mailto:sebastien.godet16@gmail.com">✉️ sebastien.godet16@gmail.com</a>
+              <a class="guide-bio-link" href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">💼 LinkedIn</a>
             </div>
           </div>
           </div><!-- /guide-acc-body -->
@@ -505,7 +530,8 @@
       <div class="guide-footer">
         © Juin 2026 – Développé par <strong>Sébastien Godet</strong> · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
         <a href="mailto:sebastien.godet16@gmail.com">sebastien.godet16@gmail.com</a> ·
-        <a href="https://www.linkedin.com/in/sébastien-godet-142ba6145" target="_blank">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
+        <a href="#" onclick="showCredits()">Remerciements</a>
       </div>
 
     </div><!-- /guideContentFR -->
@@ -686,6 +712,27 @@
         </div>
 
 
+        <!-- ═══════ AGRADECIMIENTOS ═══════ -->
+        <div class="guide-section guide-accordion">
+          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
+            <span class="guide-eyebrow">🙏 Agradecimientos</span>
+            <span class="guide-acc-arrow">▾</span>
+          </button>
+          <div class="guide-acc-body">
+          <div class="guide-title">Gracias a quienes <span class="es">lo hicieron posible</span></div>
+
+          <div class="guide-card guide-bio-card">
+            <div class="guide-bio-text">
+              <p>Un gran agradecimiento a <strong>Fédérico Calo</strong>
+                (<a href="https://www.linkedin.com/in/federicocalo/" target="_blank" style="color:var(--g-es);font-weight:700;">Arquitecto Desarrollador Web</a>)
+                por su valiosa ayuda técnica a lo largo del proyecto.</p>
+              <p>Gracias también a mis <strong>padres</strong> por su trabajo de corrección, sus ajustes en las traducciones y sus consejos sobre la ergonomía de la aplicación.</p>
+            </div>
+          </div>
+          </div><!-- /guide-acc-body -->
+        </div>
+
+
         <!-- ═══════ QUIÉN SOY ═══════ -->
         <div class="guide-section guide-accordion">
           <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
@@ -708,8 +755,8 @@
               <p>Este proyecto nació de las ganas de aprender a programar apoyándome en la IA, para <strong>demostrar mis habilidades de forma concreta</strong>. Pero también es una herramienta pensada para mi entorno: muchas apps de idiomas se olvidan de los principiantes absolutos. Aquí todo está diseñado para empezar desde cero, sin presión y divirtiéndose.</p>
             </div>
             <div class="guide-bio-links">
-              <a class="guide-bio-link" href="mailto:sebastien.godet16@gmail.com">✉️ Contactarme</a>
-              <a class="guide-bio-link" href="https://www.linkedin.com/in/sébastien-godet-142ba6145" target="_blank">💼 LinkedIn</a>
+              <a class="guide-bio-link" href="mailto:sebastien.godet16@gmail.com">✉️ sebastien.godet16@gmail.com</a>
+              <a class="guide-bio-link" href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">💼 LinkedIn</a>
             </div>
           </div>
           </div><!-- /guide-acc-body -->
@@ -736,7 +783,8 @@
       <div class="guide-footer">
         © Junio 2026 – Desarrollado por <strong>Sébastien Godet</strong> · Asistido por IA Claude Sonnet 4.6 y Gemini 3.5 Flash<br>
         <a href="mailto:sebastien.godet16@gmail.com">sebastien.godet16@gmail.com</a> ·
-        <a href="https://www.linkedin.com/in/sébastien-godet-142ba6145" target="_blank">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
+        <a href="#" onclick="showCredits()">Remerciements</a>
       </div>
 
     </div><!-- /guideContentES -->
