@@ -1,28 +1,34 @@
 /* ============================================================
-   Language App 🇫🇷🇪🇸 — Moteur applicatif unifié
-   Mode : Français ↔ Espagnol (bidirectionnel)
+   Language App 🇫🇷🇪🇸  —  Moteur applicatif unifié
+   Français ↔ Espagnol (bidirectionnel)
    © Juin 2026 – Sébastien Godet · IA Claude Sonnet 4.6 et Gemini 3.5 Flash
+   ============================================================
+   ARCHITECTURE (4 fichiers) :
+     ├─ index.html  → Structure HTML + launcher
+     ├─ style.css   → Thèmes couleur, composants visuels
+     ├─ data.js     → ALL_THEMES_FR / ALL_THEMES_ES (contenu pédagogique)
+     └─ app.js      → Ce fichier : logique applicative complète
 
-   STRUCTURE DU FICHIER
-   ─────────────────────────────────────────────────────────────
-   1.  VARIABLES D'ÉTAT GLOBALES
-   2.  POINT D'ENTRÉE : initApp(mode)
-   3.  SYNTHÈSE VOCALE — Voix espagnole (cascade locale)
-   4.  PERSISTANCE — Système de progression & étoiles
-   5.  NAVIGATION — Changement d'écran
-   6.  ÉCRAN HOME — Barre de progression et étoiles
-   7.  ÉCRAN SECTIONS — Grille des thèmes (niveaux 1 & 2)
-   8.  OUVERTURE D'UN THÈME — Écran leçon + onglets
-   9.  CARTES FLASH — Flashcards (vocabulaire & alphabet)
-   10. QUIZ 10 QUESTIONS — QCM dynamique avec étoiles
-   11. DIALOGUE — Bulles de conversation situationnelles
-   12. VOCABULAIRE — Lexique cliquable (chips)
-   13. QUIZ DIALOGUE — Mini-quiz de fin de dialogue
-   14. UTILITAIRES — Résultats, échappement, helpers
-   15. VARIANTES RÉGIONALES — Sélecteur de pays hispanophone
-   16. REMERCIEMENTS — Modale de crédits
-   17. GUIDE UTILISATEUR — Écran d'aide intégré (FR/ES)
-   ───────────────────────────────────────────────────────────── */
+   SECTIONS DE CE FICHIER :
+     1.  Variables d'état globales
+     2.  Utilitaires centraux de sélection bilingue (L, isFrench, langKeys)
+     3.  Point d'entrée — initApp(mode)
+     4.  Synthèse vocale — voix espagnole (cascade locale)
+     5.  Persistance — système de progression & étoiles
+     6.  Navigation — changement d'écran
+     7.  Écran Home — barre de progression et étoiles
+     8.  Écran Sections — grille des thèmes (niveaux 1 & 2)
+     9.  Ouverture d'un thème — écran leçon + onglets
+    10.  Cartes Flash — flashcards (vocabulaire & alphabet)
+    11.  Quiz 10 questions — QCM dynamique avec étoiles
+    12.  Dialogue — bulles de conversation situationnelles
+    13.  Vocabulaire — lexique cliquable (chips)
+    14.  Quiz Dialogue — mini-quiz de fin de dialogue
+    15.  Utilitaires — résultats, échappement, helpers
+    16.  Variantes régionales — sélecteur de pays hispanophone
+    17.  Remerciements — modale de crédits
+    18.  Guide utilisateur — écran d'aide intégré (FR/ES)
+   ============================================================ */
 
 /* ═══════════════════════════════════════════════════════════
    1. VARIABLES D'ÉTAT GLOBALES
@@ -110,15 +116,36 @@ function langKeys() {
     : { src: 'es', tgt: 'fr' };
 }
 
+/**
+ * Résout le titre d'un thème dans la langue source (nom principal)
+ * et la langue cible (sous-titre), en gérant le cas particulier
+ * de l'alphabet (type:'alpha') dont les libellés sont inversés
+ * selon le mode actif.
+ * @param {Object} t – Objet thème issu de data.js
+ * @returns {{ main: string, sub: string }}
+ */
+function _themeTitle(t) {
+  var isAlpha = (t.id === 'alpha' || t.type === 'alpha');
+  var main = isAlpha ? L("L'Alphabet", 'El Alfabeto') : t.name;
+  var sub  = isAlpha ? L('El Alfabeto', "L'Alphabet") : t.sub;
+  return { main: main, sub: sub };
+}
+
+/**
+ * Retourne le texte "parlé" d'une carte (le mot dans la langue source).
+ * @param {Object} card – Objet mot { fr, es }
+ * @returns {string}
+ */
+function _spokenKey(card) {
+  return L(card.fr, card.es);
+}
+
+
 
 /* ═══════════════════════════════════════════════════════════
-   2. POINT D'ENTRÉE : initApp(mode)
+   3. POINT D'ENTRÉE : initApp(mode)
    ─────────────────────────────────────────────────────────
    Appelée par les boutons du launcher HTML.
-   Paramètre :
-     mode — 'learn_french'  : apprendre le Français (interface en ES)
-             'learn_spain'   : apprendre l'Espagnol  (interface en FR)
-
    Séquence d'actions :
      1. Réinitialise l'état global (données, voix, grilles)
      2. Charge la région sauvegardée ou applique ES par défaut
@@ -129,6 +156,14 @@ function langKeys() {
      7. Construit le sélecteur de régions hispaniques
 ═══════════════════════════════════════════════════════════ */
 
+/**
+ * Initialise l'application pour un mode d'apprentissage donné.
+ * Configure le thème visuel, la voix TTS, les données pédagogiques
+ * et l'interface selon le mode choisi, puis affiche l'écran d'accueil.
+ * @param {'learn_french'|'learn_spain'} mode
+ *   'learn_french' — L'apprenant est hispanophone, il apprend le Français
+ *   'learn_spain'  — L'apprenant est francophone, il apprend l'Espagnol
+ */
 function initApp(mode) {
   currentMode = mode;
 
@@ -659,6 +694,11 @@ function showScreen(id) {
     s.classList.remove('active');
   });
 
+  // Remonte systématiquement en haut de page à chaque changement d'écran.
+  // Indispensable sur mobile : sans ça, l'utilisateur reste à mi-page
+  // après une longue leçon ou un quiz scrollé vers le bas.
+  window.scrollTo(0, 0);
+
   // Cas particulier : bouton "Retour" de l'accueil → relance le launcher
   if (id === 'home') {
     var backBtn = document.getElementById('homeBackBtn');
@@ -668,6 +708,7 @@ function showScreen(id) {
           s.classList.remove('active');
         });
         document.getElementById('app-launcher').classList.add('active');
+        window.scrollTo(0, 0);
       };
     }
   }
@@ -1034,7 +1075,7 @@ function renderFlash() {
       + '<button onclick="nextCard()">Siguiente →</button>'
       + '</div>'
       + '<div style="text-align:center;margin-top:10px;">'
-      + '<button class="audio-btn-big" onclick="speak(\'' + esc(card.fr) + '\')">🔊 Escuchar audio</button>'
+      + '<button class="audio-btn-big" onclick="speak(\'' + esc(card.fr) + '\')" aria-label="' + _escAttr(L("Escuchar : ", "Écouter : ") + card.fr) + '">🔊 Escuchar audio</button>'
       + '</div>'
       + _buildMicZone(card.fr, 'fr-FR');
 
@@ -1066,7 +1107,7 @@ function renderFlash() {
       + '<span class="fc-counter">' + (fcIdx + 1) + ' / ' + w.length + '</span>'
       + '<button onclick="nextCard()">Suivant →</button>'
       + '</div>'
-      + '<button class="audio-btn-big" onclick="speak(\'' + esc(finalEsWord) + '\')">🔊 Écouter la prononciation</button>'
+      + '<button class="audio-btn-big" onclick="speak(\'' + esc(finalEsWord) + '\')" aria-label="' + _escAttr(L("Escuchar : ", "Écouter : ") + finalEsWord) + '">🔊 Écouter la prononciation</button>'
       + _buildMicZone(finalEsWord, voiceLang);
   }
 }
@@ -1077,7 +1118,7 @@ function buildAlphaDetail(c) {
   var bigLetter = L(c.fr, c.es);
   var smallName = L(c.es, c.fr);
   var btnLabel  = L('🔊 Escuchar', '🔊 Écouter');
-  var spokenKey = L(c.fr, c.es);
+  var spokenKey = _spokenKey(c);
   return '<div style="font-size:2.5rem;font-weight:900;color:#009A44">' + bigLetter + '</div>'
     + '<div style="color:#555;margin:4px 0;font-size:.85rem">' + smallName + '</div>'
     + '<button onclick="speak(\'' + esc(spokenKey) + '\')" '
@@ -1090,7 +1131,8 @@ function buildAlphaDetail(c) {
 function pickAlpha(i) {
   fcIdx = i;
   var card      = CT.words[i];
-  var spokenKey = L(card.fr, card.es);
+  // _spokenKey() retourne le mot dans la langue source selon le mode actif
+  var spokenKey = _spokenKey(card);
   speak(spokenKey);
   var d = document.getElementById('alphaDetail');
   if (d) d.innerHTML = buildAlphaDetail(card);
@@ -1952,7 +1994,10 @@ function renderDialog() {
     var mainMsg   = L(ln.fr, finalEsLine);
     var transMsg  = L(finalEsLine, ln.fr);
     var spokenKey = L(ln.fr, finalEsLine);
-    var listenTip = L('Escuchar', 'Écouter');
+    var listenTip    = L('Escuchar', 'Écouter');
+    // aria-label descriptif : nom du locuteur + action + texte prononcé
+    // (pattern repris de l'app Oromo pour l'accessibilité lecteurs d'écran)
+    var ariaListen   = _escAttr(listenTip + ' : ' + ln.s + ' — ' + spokenKey);
 
     // Les bulles commencent invisibles et s'affichent via un délai croissant (effet cascade)
     return '<div class="bubble ' + ln.side + '" style="opacity:0;transition:opacity .3s '
@@ -1960,7 +2005,7 @@ function renderDialog() {
       + '<div class="speaker-name">' + ln.s + '</div>'
       + '<div class="msg-row">'
       + '<div class="msg">' + mainMsg + '</div>'
-      + '<button class="speak-bubble-btn" onclick="speak(\'' + esc(spokenKey) + '\')" title="' + listenTip + '">🔊</button>'
+      + '<button class="speak-bubble-btn" onclick="speak(\'' + esc(spokenKey) + '\')" title="' + listenTip + '" aria-label="' + ariaListen + '">🔊</button>'
       + '</div>'
       + '<div class="bubble-translation">' + transMsg + '</div>'
       + '</div>';

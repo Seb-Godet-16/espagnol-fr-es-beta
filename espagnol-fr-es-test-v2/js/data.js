@@ -1,79 +1,78 @@
-/* ============================================================
-   Language App 🇫🇷🇪🇸 — Données pédagogiques
-   © Juin 2026 – Sébastien Godet · IA Claude Sonnet 4.6 et Gemini 3.5 Flash
-
-   STRUCTURE DU FICHIER
-   ─────────────────────────────────────────────────────────────
-   BLOC 1 — MODE "Apprendre le Français"   (interface en Espagnol)
-            Utilisé quand currentMode === 'learn_french'
-            Source : Espagnol Castillan → Français
-
-     1a. LEVEL1_THEMES_FR  — 28 thèmes de vocabulaire (Niveau 1)
-         Chaque thème contient :
-           id       : identifiant unique (ex : 'salut', 'verb')
-           level    : 1 (vocabulaire)
-           emoji    : icône du thème
-           name     : nom espagnol du thème
-           sub      : "nom_es / nom_fr" (bilingual, séparé par '/')
-           type     : 'alpha' pour l'alphabet, absent pour le reste
-           words[]  : liste de mots { es, fr, em?, conj?, variants? }
-             - es       : mot/phrase en Espagnol Castillan
-             - fr       : traduction française
-             - em       : emoji décoratif (optionnel)
-             - conj     : conjugaisons { es:[], fr:[] } pour les verbes
-             - variants : { MX, AR, CO, PE, VE, EC } — variantes AL
-           quiz10[] : quiz audio pour l'alphabet uniquement
-
-     1b. LEVEL2_THEMES_FR  — 16 dialogues situationnels (Niveau 2)
-         Chaque thème contient :
-           type       : 'dialog'
-           situations[]: [{label, title, img, dialogue:[]}]
-             - dialogue[]: [{s (locuteur), es, fr, side, variants?}]
-           vocab[]    : ['mot_es = traduction_fr', ...]
-           quiz[]     : [{q, opts:[4], ans:index}]
-
-     1c. ALL_THEMES_FR = LEVEL1_THEMES_FR + LEVEL2_THEMES_FR
-
-   ─────────────────────────────────────────────────────────────
-   BLOC 2 — MODE "Apprendre l'Espagnol"   (interface en Français)
-            Utilisé quand currentMode === 'learn_spain'
-            Source : Français → Espagnol (avec variantes hispanophones)
-
-     2a. LEVEL1_THEMES_ES  — 28 thèmes de vocabulaire (Niveau 1)
-         Structure identique à LEVEL1_THEMES_FR.
-         Différences clés :
-           - name  : titre en Français
-           - sub   : "nom_fr / nom_es"
-           - Thème pays adapté à l'Équateur (région par défaut EC)
-           - Alphabet ES inclut la lettre Ñ (absente du mode FR)
-
-     2b. LEVEL2_THEMES_ES  — 16 dialogues situationnels (Niveau 2)
-         Structure identique à LEVEL2_THEMES_FR.
-         Questions quiz formulées en Espagnol
-         (ex : "¿Cómo se dice X en francés ?")
-
-     2c. ALL_THEMES_ES = LEVEL1_THEMES_ES + LEVEL2_THEMES_ES
-
-   ─────────────────────────────────────────────────────────────
-   CONVENTION VARIANTS (variantes régionales)
-   ─────────────────────────────────────────────────────────────
-   Tout mot ou ligne de dialogue peut avoir une propriété `variants`
-   indiquant les équivalents dans les principales variantes d'espagnol :
-
-     variants: {
-       ES: 'castillan (valeur par défaut)',
-       MX: 'mexicain',
-       AR: 'argentin (Río de la Plata)',
-       CO: 'colombien',
-       VE: 'vénézuélien',
-       PE: 'péruvien',
-       EC: 'équatorien'
-     }
-
-   Règle de priorité dans app.js :
-     1. card.variants[currentRegion]  si défini
-     2. card.es                        (castillan par défaut)
-   ─────────────────────────────────────────────────────────── */
+/*
+ * ╔══════════════════════════════════════════════════════════════════╗
+ * ║  Language App 🇫🇷🇪🇸  —  js/data.js                            ║
+ * ║  Auteur   : Sébastien Godet                                     ║
+ * ║  Assisté  : Claude Sonnet 4.6 · Gemini 3.5 Flash               ║
+ * ║  Version  : Juin 2026                                           ║
+ * ╠══════════════════════════════════════════════════════════════════╣
+ * ║  RÔLE DE CE FICHIER                                             ║
+ * ║  Source de données UNIQUE de l'application. Aucune logique     ║
+ * ║  applicative ici : uniquement du contenu linguistique brut      ║
+ * ║  (vocabulaire, quiz, dialogues). Tout est lu et affiché par    ║
+ * ║  js/app.js, qui ne modifie jamais ces données en mémoire.      ║
+ * ╠══════════════════════════════════════════════════════════════════╣
+ * ║  4 TABLEAUX EXPORTÉS (variables globales)                       ║
+ * ║   • LEVEL1_THEMES_FR  → 28 thèmes de vocabulaire (apprenant FR) ║
+ * ║   • LEVEL2_THEMES_FR  → 16 dialogues situationnels (FR)         ║
+ * ║   • LEVEL1_THEMES_ES  → 28 thèmes de vocabulaire (apprenant ES) ║
+ * ║   • LEVEL2_THEMES_ES  → 16 dialogues situationnels (ES)         ║
+ * ║  + 2 tableaux fusionnés, utilisés directement par app.js :     ║
+ * ║   • ALL_THEMES_FR = LEVEL1_THEMES_FR + LEVEL2_THEMES_FR (44)   ║
+ * ║   • ALL_THEMES_ES = LEVEL1_THEMES_ES + LEVEL2_THEMES_ES (44)   ║
+ * ║  "FR" / "ES" désigne la LANGUE D'INTERFACE de l'apprenant :    ║
+ * ║    → ALL_THEMES_FR : apprenant hispanophone qui apprend le FR  ║
+ * ║    → ALL_THEMES_ES : apprenant francophone qui apprend l'ES    ║
+ * ╠══════════════════════════════════════════════════════════════════╣
+ * ║  STRUCTURE D'UN THÈME — NIVEAU 1 (vocabulaire)                  ║
+ * ║   {                                                              ║
+ * ║     id      : identifiant unique (clé de progression)          ║
+ * ║     level   : 1                                                 ║
+ * ║     emoji   : pictogramme affiché sur la carte du thème        ║
+ * ║     name    : titre du thème (langue source de l'apprenant)    ║
+ * ║     sub     : sous-titre (langue cible apprise)                ║
+ * ║     type    : 'alpha' pour l'alphabet (sinon absent)           ║
+ * ║     words   : [{ es, fr, em, conj?, variants? }, …]            ║
+ * ║       • es       : mot en Espagnol Castillan                   ║
+ * ║       • fr       : traduction française                        ║
+ * ║       • em       : emoji illustratif de la flashcard           ║
+ * ║       • conj     : { es:[…6 formes], fr:[…6 formes] }         ║
+ * ║                    conjugaison complète (verbes uniquement)    ║
+ * ║       • variants : { MX, AR, CO, PE, VE, EC }                  ║
+ * ║                    équivalents dans les variantes hispanophones ║
+ * ║     quiz10  : (uniquement type:'alpha') quiz audio fixe        ║
+ * ║               [{ q, audio, opts:[4], ans:index }, …]           ║
+ * ║   }                                                             ║
+ * ║  Pour les thèmes niveau 1 SANS quiz10, app.js génère le quiz   ║
+ * ║  dynamiquement à partir de "words" (_generateQuiz dans app.js).║
+ * ╠══════════════════════════════════════════════════════════════════╣
+ * ║  STRUCTURE D'UN THÈME — NIVEAU 2 (dialogue, type:'dialog')      ║
+ * ║   {                                                              ║
+ * ║     id, level:2, emoji, name, sub, type:'dialog'               ║
+ * ║     situations : [{ label, title, img, dialogue:[…] }, …]      ║
+ * ║       • label    : libellé court de l'onglet (ex. "Sit. 1")    ║
+ * ║       • title    : titre de la mise en situation               ║
+ * ║       • img      : emoji illustrant la scène                   ║
+ * ║       • dialogue : [{ s, es, fr, side, variants? }, …]         ║
+ * ║           s        : nom du personnage qui parle               ║
+ * ║           es       : réplique en Espagnol Castillan            ║
+ * ║           fr       : réplique en français                      ║
+ * ║           side     : 'left' ou 'right' (bulle de dialogue)     ║
+ * ║           variants : variantes régionales de la réplique ES    ║
+ * ║     vocab : ['Espagnol = Français', …]                         ║
+ * ║             lexique clé, séparateur "=" (parsé par app.js)     ║
+ * ║     quiz  : [{ q, opts:[4], ans:index }, …]                    ║
+ * ║             quiz de fin de module (statique)                   ║
+ * ║   }                                                             ║
+ * ╠══════════════════════════════════════════════════════════════════╣
+ * ║  CONVENTION VARIANTS (variantes régionales hispaniques)         ║
+ * ║  Tout mot ou réplique peut avoir une propriété `variants`       ║
+ * ║  indiquant les équivalents régionaux :                          ║
+ * ║    variants: { ES, MX, AR, CO, VE, PE, EC }                    ║
+ * ║  Priorité dans app.js :                                         ║
+ * ║    1. card.variants[currentRegion]  si défini                  ║
+ * ║    2. card.es  (Castillan, valeur par défaut)                  ║
+ * ╚══════════════════════════════════════════════════════════════════╝
+ */
 
 /* ═══════════════════════════════════════════════════════════
    1a. LEVEL1_THEMES_FR — Vocabulaire thématique (Niveau 1)

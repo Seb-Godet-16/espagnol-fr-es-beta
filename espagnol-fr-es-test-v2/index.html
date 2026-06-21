@@ -1,9 +1,42 @@
 <!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  Language App 🇫🇷🇪🇸  —  index.html                           ║
+  ║  Auteur   : Sébastien Godet                                     ║
+  ║  Assisté  : Claude Sonnet 4.6 · Gemini 3.5 Flash               ║
+  ║  Version  : Juin 2026                                           ║
+  ╠══════════════════════════════════════════════════════════════════╣
+  ║  RÔLE DE CE FICHIER                                             ║
+  ║  Ce fichier est le point d'entrée unique de l'application.     ║
+  ║  Il déclare la structure HTML des écrans et des modales.       ║
+  ║  Aucune logique métier n'y est présente : tout le comportement ║
+  ║  est délégué à js/app.js et js/data.js.                       ║
+  ╠══════════════════════════════════════════════════════════════════╣
+  ║  ARCHITECTURE GLOBALE DU PROJET                                 ║
+  ║  ├── index.html   → Structure HTML (ce fichier)                ║
+  ║  ├── css/                                                       ║
+  ║  │   └── style.css  → Mise en forme visuelle                   ║
+  ║  └── js/                                                        ║
+  ║      ├── data.js    → Contenu linguistique (mots, thèmes…)     ║
+  ║      └── app.js     → Logique applicative (navigation, score…) ║
+  ╠══════════════════════════════════════════════════════════════════╣
+  ║  NAVIGATION ENTRE ÉCRANS                                        ║
+  ║  La visibilité des écrans est contrôlée par la classe CSS      ║
+  ║  "active" (gérée dans app.js via showScreen()).                ║
+  ║  Ordre du parcours utilisateur :                               ║
+  ║    [0] app-launcher → [1] home → [2] sections → [3] lesson    ║
+  ╚══════════════════════════════════════════════════════════════════╝
+-->
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <!--
+    viewport : maximum-scale=5.0 autorise le zoom utilisateur
+    (WCAG 1.4.4 — critère d'accessibilité).
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>Language App 🇫🇷🇪🇸</title>
+  <!-- Feuille de styles unique — voir css/style.css pour les détails -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -1213,7 +1246,21 @@
 
 </div><!-- /app -->
 
-<!-- ── Scripts JS : data.js doit être chargé AVANT app.js ── -->
+<!--
+  ══════════════════════════════════════════════════════════════════
+  CHARGEMENT DES SCRIPTS
+  ══════════════════════════════════════════════════════════════════
+  Les scripts sont placés en fin de <body> pour s'assurer que
+  l'intégralité du DOM est parsé avant leur exécution.
+
+  Ordre impératif :
+    1. data.js  — doit être chargé EN PREMIER car app.js dépend
+                  des variables/objets qu'il exporte (vocabulaire,
+                  thèmes, métadonnées des langues…).
+    2. app.js   — initialise l'application et branche tous les
+                  écouteurs d'événements sur les éléments du DOM.
+  ══════════════════════════════════════════════════════════════════
+-->
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
 </body>

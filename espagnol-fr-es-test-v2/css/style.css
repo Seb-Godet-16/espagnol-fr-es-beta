@@ -1,11 +1,48 @@
-/* ============================================================
-   Language App 🇫🇷🇪🇸 — Feuille de styles unifiée
-   Couvre : lanceur, accueil, sections, leçon, flashcards,
-            quiz, dialogues, vocabulaire, alphabet.
-   Thèmes dynamiques via variables CSS injectées par JS
-   sur l'élément <html> (classe theme-french / theme-spain).
-   © Juin 2026 – Sébastien Godet
-============================================================ */
+/*
+ * ╔══════════════════════════════════════════════════════════════════╗
+ * ║  Language App 🇫🇷🇪🇸  —  css/style.css                        ║
+ * ║  Auteur   : Sébastien Godet                                     ║
+ * ║  Assisté  : Claude Sonnet 4.6 · Gemini 3.5 Flash               ║
+ * ║  Version  : Juin 2026                                           ║
+ * ╠══════════════════════════════════════════════════════════════════╣
+ * ║  RÔLE DE CE FICHIER                                             ║
+ * ║  Feuille de styles UNIQUE de l'application. Couvre :           ║
+ * ║    1. Reset & base globale                                      ║
+ * ║    2. Variables de thème (tokens CSS) — Français & Espagnol    ║
+ * ║    3. Styles par écran (lanceur, home, sections, leçon)        ║
+ * ║    4. Composants réutilisables (boutons, onglets, flashcards…)  ║
+ * ║    5. Variantes régionales hispaniques (7 pays)                 ║
+ * ║    6. Modales (Guide utilisateur, Remerciements)                ║
+ * ╠══════════════════════════════════════════════════════════════════╣
+ * ║  SYSTÈME DE THÈME DYNAMIQUE                                     ║
+ * ║  initApp() dans app.js pose une classe sur <html> :            ║
+ * ║    • html.theme-french  → couleurs bleu-blanc-rouge (🇫🇷)      ║
+ * ║    • html.theme-spain   → couleurs rouge-or (🇪🇸)              ║
+ * ║  Les variantes régionales ajoutent une classe supplémentaire :  ║
+ * ║    • html.theme-spain.region-MX / AR / CO / PE / VE / EC      ║
+ * ║  Tous les composants utilisent var(--c-*) ; il suffit de       ║
+ * ║  changer la classe sur <html> pour basculer le rendu visuel.   ║
+ * ╠══════════════════════════════════════════════════════════════════╣
+ * ║  PLAN DU FICHIER                                                ║
+ * ║   §1  Reset & base                          ligne ~  40         ║
+ * ║   §2  Variables de thème (:root / fallback) ligne ~  75         ║
+ * ║   §3  Thème Français (html.theme-french)    ligne ~ 190         ║
+ * ║   §4  Thème Espagnol (html.theme-spain)     ligne ~ 215         ║
+ * ║   §5  Écran 0 — Lanceur                     ligne ~ 245         ║
+ * ║   §6  Écran 1 — Accueil #home               ligne ~ 330         ║
+ * ║   §7  Écran 2 — Sections                    ligne ~ 420         ║
+ * ║   §8  Écran 3 — Leçon                       ligne ~ 490         ║
+ * ║   §9  Composants : Flashcards               ligne ~ 530         ║
+ * ║   §10 Composants : Alphabet                 ligne ~ 610         ║
+ * ║   §11 Composants : Quiz                     ligne ~ 660         ║
+ * ║   §12 Composants : Dialogues / Situations   ligne ~ 730         ║
+ * ║   §13 Composants : Vocabulaire              ligne ~ 800         ║
+ * ║   §14 Onglet Répète                         ligne ~ 850         ║
+ * ║   §15 Variantes régionales hispaniques      ligne ~ 920         ║
+ * ║   §16 Modales (Guide + Remerciements)       ligne ~ 990         ║
+ * ║   §17 Footer commun                         ligne ~ 1700        ║
+ * ╚══════════════════════════════════════════════════════════════════╝
+ */
 
 
 /* ════════════════════════════════════════
@@ -148,12 +185,14 @@ body {
 
 
 /* ════════════════════════════════════════
-   VARIABLES DE THÈME DYNAMIQUES
-   Définies ici avec des valeurs Français par
-   défaut. Elles sont ensuite surchargées par
-   les blocs html.theme-french / html.theme-spain
-   plus bas.
-   Usage dans le CSS : var(--c-primary) etc.
+   §2 — VARIABLES DE THÈME — FALLBACK PAR DÉFAUT
+   ══════════════════════════════════════════════
+   Ces valeurs correspondent au thème Français et
+   s'appliquent avant que initApp() soit appelé.
+   IMPORTANT : html.theme-french (§3) ne redéclare
+   QUE les variables nécessaires pour la spécificité
+   CSS — le reste est hérité de :root.
+   Usage dans tout le CSS : var(--c-primary) etc.
 ════════════════════════════════════════ */
 :root {
   --c-primary:          #002395;
@@ -1687,9 +1726,13 @@ footer a:hover { text-decoration: underline; }
 
 
 /* ════════════════════════════════════════
-   THÈME FRANÇAIS  html.theme-french
-   Bleu / blanc / rouge tricolore.
-   Appliqué par JS via initApp('learn_french').
+   §3 — THÈME FRANÇAIS  html.theme-french
+   ══════════════════════════════════════════
+   Activé par initApp('learn_french') dans app.js.
+   Palette bleu / blanc / rouge (🇫🇷 tricolore).
+   Ne redéclare QUE les variables qui nécessitent
+   une spécificité CSS supérieure à :root.
+   Le reste est hérité automatiquement de :root.
 ════════════════════════════════════════ */
 html.theme-french,
 html:not([class*="theme-"]) {
@@ -1701,9 +1744,12 @@ html.theme-french body { background: #f0f4ff; }
 
 
 /* ════════════════════════════════════════
-   THÈME ESPAGNOL  html.theme-spain
-   Rouge / or (couleurs du drapeau espagnol).
-   Appliqué par JS via initApp('learn_spain').
+   §4 — THÈME ESPAGNOL  html.theme-spain
+   ══════════════════════════════════════════
+   Activé par initApp('learn_spain') dans app.js.
+   Palette rouge / or (🇪🇸 drapeau espagnol).
+   Surcharge l'intégralité des variables car la
+   palette est radicalement différente du thème FR.
 ════════════════════════════════════════ */
 html.theme-spain {
   --c-primary:           #C60B1E;   /* rouge espagnol */
