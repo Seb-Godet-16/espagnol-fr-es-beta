@@ -1858,6 +1858,23 @@ function pickRegion(regionId) {
 }
 
 
+/* toggleAcc(btn) — Ouvre ou ferme un panneau accordéon du guide.
+   Paramètre : le bouton .guide-acc-header cliqué.
+   Bascule aria-expanded et la classe .open sur le body frère. */
+function toggleAcc(btn) {
+  var isOpen = btn.getAttribute('aria-expanded') === 'true';
+  var body   = btn.nextElementSibling;
+
+  btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+  if (body) {
+    if (isOpen) {
+      body.classList.remove('open');
+    } else {
+      body.classList.add('open');
+    }
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════
    16. REMERCIEMENTS — Modale de crédits
    ─────────────────────────────────────────────────────────
@@ -1943,17 +1960,37 @@ function showGuide() {
   modal.classList.add('active');
   modal.scrollTop = 0;
 
-  // Marque le guide comme vu dès son ouverture (auto ou manuelle) :
-  // il ne se relancera plus jamais tout seul après ce premier affichage.
-  try { localStorage.setItem(GUIDE_STORAGE_KEY, '1'); } catch (e) {}
+  // Synchronise toutes les checkboxes "ne plus afficher" avec l'état actuel du flag
+  var flagValue = false;
+  try { flagValue = localStorage.getItem(GUIDE_STORAGE_KEY) === '1'; } catch(e) {}
+  var allChecks = document.querySelectorAll('.guide-no-show-check');
+  allChecks.forEach(function(cb) { cb.checked = flagValue; });
 }
 
 /* closeGuide() — Referme la modale du guide.
-   Le flag "déjà vu" a déjà été posé par showGuide() à l'ouverture ;
-   fermer ne fait que masquer l'écran, sans logique supplémentaire. */
+   Le flag "ne plus afficher" n'est posé que par la checkbox,
+   pas ici : fermer sans cocher = guide réaffiché à la prochaine visite. */
 function closeGuide() {
   var modal = document.getElementById('guide-modal');
   if (modal) modal.classList.remove('active');
+}
+
+/* toggleGuideNoShow(cb) — Appelée au clic sur n'importe quelle checkbox
+   "Ne plus afficher". Pose ou retire le flag localStorage et synchronise
+   toutes les autres checkboxes (les 4 au total : haut+bas × FR+ES). */
+function toggleGuideNoShow(cb) {
+  var checked = cb.checked;
+  // Synchronise toutes les checkboxes sœurs
+  var allChecks = document.querySelectorAll('.guide-no-show-check');
+  allChecks.forEach(function(c) { c.checked = checked; });
+  // Pose ou retire le flag
+  try {
+    if (checked) {
+      localStorage.setItem(GUIDE_STORAGE_KEY, '1');
+    } else {
+      localStorage.removeItem(GUIDE_STORAGE_KEY);
+    }
+  } catch(e) {}
 }
 
 /* _maybeAutoShowGuide() — Déclenche l'affichage automatique du guide

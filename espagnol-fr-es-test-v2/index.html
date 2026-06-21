@@ -280,6 +280,11 @@
 
     <!-- Barre supérieure : retour à l'application -->
     <div class="guide-topbar">
+      <label class="guide-no-show-label">
+        <input type="checkbox" class="guide-no-show-check" onchange="toggleGuideNoShow(this)">
+        <span class="guide-no-show-text guide-no-show-fr">Ne plus afficher</span>
+        <span class="guide-no-show-text guide-no-show-es">No mostrar más</span>
+      </label>
       <button onclick="closeGuide()">✕ Fermer / Cerrar</button>
     </div>
 
@@ -306,8 +311,12 @@
       <div class="guide-wrap">
 
         <!-- ═══════ COMMENT ÇA MARCHE ═══════ -->
-        <div class="guide-section">
-          <div class="guide-eyebrow">📖 Comment ça marche</div>
+        <div class="guide-section guide-accordion">
+          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="true">
+            <span class="guide-eyebrow">📖 Comment ça marche</span>
+            <span class="guide-acc-arrow">▾</span>
+          </button>
+          <div class="guide-acc-body open">
           <div class="guide-title">4 étapes,<br><span class="fr">et c'est parti !</span></div>
           <p class="guide-sub">Aucune inscription, aucun téléchargement : ça marche directement dans ton navigateur.</p>
 
@@ -354,12 +363,17 @@
               </div>
             </div>
           </div>
+          </div><!-- /guide-acc-body -->
         </div>
 
 
         <!-- ═══════ POINTS FORTS ═══════ -->
-        <div class="guide-section">
-          <div class="guide-eyebrow">✨ Points forts</div>
+        <div class="guide-section guide-accordion">
+          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
+            <span class="guide-eyebrow">✨ Points forts</span>
+            <span class="guide-acc-arrow">▾</span>
+          </button>
+          <div class="guide-acc-body">
           <div class="guide-title">Ce qui rend l'appli <span class="fr">unique</span></div>
 
           <div class="guide-grid-3">
@@ -394,12 +408,17 @@
               <div class="guide-feat-desc">Ton avancement est <strong>conservé automatiquement</strong> sur ton appareil.</div>
             </div>
           </div>
+          </div><!-- /guide-acc-body -->
         </div>
 
 
         <!-- ═══════ EN CHIFFRES ═══════ -->
-        <div class="guide-section">
-          <div class="guide-eyebrow">🗂️ En chiffres</div>
+        <div class="guide-section guide-accordion">
+          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
+            <span class="guide-eyebrow">🗂️ En chiffres</span>
+            <span class="guide-acc-arrow">▾</span>
+          </button>
+          <div class="guide-acc-body">
           <div class="guide-title">Tout le contenu, <span class="es">d'un coup d'œil</span></div>
 
           <div class="guide-stats-row">
@@ -409,12 +428,17 @@
             <div class="guide-stat"><div class="guide-stat-num">7</div><div class="guide-stat-label">Variantes ES</div></div>
             <div class="guide-stat"><div class="guide-stat-num">★★★</div><div class="guide-stat-label">Max / module</div></div>
           </div>
+          </div><!-- /guide-acc-body -->
         </div>
 
 
         <!-- ═══════ VARIANTES RÉGIONALES ═══════ -->
-        <div class="guide-section">
-          <div class="guide-eyebrow">🌎 Variantes régionales</div>
+        <div class="guide-section guide-accordion">
+          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
+            <span class="guide-eyebrow">🌎 Variantes régionales</span>
+            <span class="guide-acc-arrow">▾</span>
+          </button>
+          <div class="guide-acc-body">
           <div class="guide-title">Ton espagnol, <span class="es">pas juste « le castillan » !</span></div>
           <p class="guide-sub">Choisis ta variante préférée depuis l'écran d'accueil — vocabulaire et audio s'adaptent.</p>
 
@@ -427,12 +451,17 @@
             <div class="guide-region-card"><span class="guide-region-flag">🇵🇪</span>Pérou</div>
             <div class="guide-region-card"><span class="guide-region-flag">🇪🇨</span>Équateur</div>
           </div>
+          </div><!-- /guide-acc-body -->
         </div>
 
 
         <!-- ═══════ QUI SUIS-JE ═══════ -->
-        <div class="guide-section">
-          <div class="guide-eyebrow">🙋 À propos</div>
+        <div class="guide-section guide-accordion">
+          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
+            <span class="guide-eyebrow">🙋 À propos</span>
+            <span class="guide-acc-arrow">▾</span>
+          </button>
+          <div class="guide-acc-body">
           <div class="guide-title">Qui suis-je, <span class="fr">et pourquoi cette appli ?</span></div>
 
           <div class="guide-card guide-bio-card">
@@ -452,6 +481,7 @@
               <a class="guide-bio-link" href="https://www.linkedin.com/in/sébastien-godet-142ba6145" target="_blank">💼 LinkedIn</a>
             </div>
           </div>
+          </div><!-- /guide-acc-body -->
         </div>
 
 
@@ -459,6 +489,14 @@
         <div class="guide-cta-block">
           <h2>🚀 Prêt à commencer ?</h2>
           <p>Aucune inscription, aucun téléchargement — l'application fonctionne directement dans ton navigateur !</p>
+          <!-- Checkbox bas de page (FR) -->
+          <div class="guide-no-show-bottom">
+            <label class="guide-no-show-label guide-no-show-label--light">
+              <input type="checkbox" class="guide-no-show-check" onchange="toggleGuideNoShow(this)">
+              <span>Ne plus afficher ce guide au démarrage</span>
+            </label>
+            <p class="guide-no-show-hint">Tu peux le revoir à tout moment via le lien en bas de page.</p>
+          </div>
           <button class="guide-cta-btn" onclick="closeGuide()">▶ Ouvrir l'application</button>
         </div>
 
@@ -502,8 +540,12 @@
       <div class="guide-wrap">
 
         <!-- ═══════ CÓMO FUNCIONA ═══════ -->
-        <div class="guide-section">
-          <div class="guide-eyebrow">📖 Cómo funciona</div>
+        <div class="guide-section guide-accordion">
+          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="true">
+            <span class="guide-eyebrow">📖 Cómo funciona</span>
+            <span class="guide-acc-arrow">▾</span>
+          </button>
+          <div class="guide-acc-body open">
           <div class="guide-title">4 pasos, <span class="es">¡y ya está!</span></div>
           <p class="guide-sub">Sin registro, sin descargas: funciona directamente en tu navegador.</p>
 
@@ -550,12 +592,17 @@
               </div>
             </div>
           </div>
+          </div><!-- /guide-acc-body -->
         </div>
 
 
         <!-- ═══════ PUNTOS FUERTES ═══════ -->
-        <div class="guide-section">
-          <div class="guide-eyebrow">✨ Puntos fuertes</div>
+        <div class="guide-section guide-accordion">
+          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
+            <span class="guide-eyebrow">✨ Puntos fuertes</span>
+            <span class="guide-acc-arrow">▾</span>
+          </button>
+          <div class="guide-acc-body">
           <div class="guide-title">Lo que hace la app <span class="es">única</span></div>
 
           <div class="guide-grid-3">
@@ -590,12 +637,17 @@
               <div class="guide-feat-desc">Tu avance se <strong>guarda automáticamente</strong> en tu dispositivo.</div>
             </div>
           </div>
+          </div><!-- /guide-acc-body -->
         </div>
 
 
         <!-- ═══════ EN CIFRAS ═══════ -->
-        <div class="guide-section">
-          <div class="guide-eyebrow">🗂️ En cifras</div>
+        <div class="guide-section guide-accordion">
+          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
+            <span class="guide-eyebrow">🗂️ En cifras</span>
+            <span class="guide-acc-arrow">▾</span>
+          </button>
+          <div class="guide-acc-body">
           <div class="guide-title">Todo el contenido, <span class="fr">de un vistazo</span></div>
 
           <div class="guide-stats-row">
@@ -605,12 +657,17 @@
             <div class="guide-stat"><div class="guide-stat-num">7</div><div class="guide-stat-label">Variantes ES</div></div>
             <div class="guide-stat"><div class="guide-stat-num">★★★</div><div class="guide-stat-label">Máx. / módulo</div></div>
           </div>
+          </div><!-- /guide-acc-body -->
         </div>
 
 
         <!-- ═══════ VARIANTES REGIONALES ═══════ -->
-        <div class="guide-section">
-          <div class="guide-eyebrow">🌎 Variantes regionales</div>
+        <div class="guide-section guide-accordion">
+          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
+            <span class="guide-eyebrow">🌎 Variantes regionales</span>
+            <span class="guide-acc-arrow">▾</span>
+          </button>
+          <div class="guide-acc-body">
           <div class="guide-title">Tu español, <span class="fr">no solo «el castellano»</span></div>
           <p class="guide-sub">Elige tu variante preferida desde la pantalla de inicio — el vocabulario y el audio se adaptan.</p>
 
@@ -625,12 +682,17 @@
           </div>
 
           <div class="guide-card guide-region-example" id="guideRegionExampleES"></div>
+          </div><!-- /guide-acc-body -->
         </div>
 
 
         <!-- ═══════ QUIÉN SOY ═══════ -->
-        <div class="guide-section">
-          <div class="guide-eyebrow">🙋 Sobre mí</div>
+        <div class="guide-section guide-accordion">
+          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
+            <span class="guide-eyebrow">🙋 Sobre mí</span>
+            <span class="guide-acc-arrow">▾</span>
+          </button>
+          <div class="guide-acc-body">
           <div class="guide-title">¿Quién soy <span class="es">y por qué esta app?</span></div>
 
           <div class="guide-card guide-bio-card">
@@ -650,6 +712,7 @@
               <a class="guide-bio-link" href="https://www.linkedin.com/in/sébastien-godet-142ba6145" target="_blank">💼 LinkedIn</a>
             </div>
           </div>
+          </div><!-- /guide-acc-body -->
         </div>
 
 
@@ -657,6 +720,14 @@
         <div class="guide-cta-block">
           <h2>🚀 ¿Listo para empezar?</h2>
           <p>Sin registro, sin descargas — ¡la app funciona directamente en tu navegador!</p>
+          <!-- Checkbox bas de page (ES) -->
+          <div class="guide-no-show-bottom">
+            <label class="guide-no-show-label guide-no-show-label--light">
+              <input type="checkbox" class="guide-no-show-check" onchange="toggleGuideNoShow(this)">
+              <span>No mostrar esta guía al iniciar la app</span>
+            </label>
+            <p class="guide-no-show-hint">Puedes volver a verla en cualquier momento desde el enlace del pie de página.</p>
+          </div>
           <button class="guide-cta-btn" onclick="closeGuide()">▶ Abrir la app</button>
         </div>
 
