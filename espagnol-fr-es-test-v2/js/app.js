@@ -21,6 +21,7 @@
    14. UTILITAIRES — Résultats, échappement, helpers
    15. VARIANTES RÉGIONALES — Sélecteur de pays hispanophone
    16. REMERCIEMENTS — Modale de crédits
+   17. GUIDE UTILISATEUR — Écran d'aide intégré (FR/ES)
    ───────────────────────────────────────────────────────────── */
 
 /* ═══════════════════════════════════════════════════════════
@@ -172,6 +173,13 @@ function initApp(mode) {
     renderRegionOptions();
     pickRegion(currentRegion);
   }
+
+  /* — Première visite : affichage automatique du guide utilisateur —
+       Voir section 17 (GUIDE UTILISATEUR) plus bas dans ce fichier.
+       Le guide ne s'affiche tout seul qu'une unique fois, tous modes confondus
+       (flag global GUIDE_STORAGE_KEY), juste après que l'utilisateur ait
+       choisi sa langue, donc une fois currentMode et currentRegion connus. */
+  _maybeAutoShowGuide();
 }
 
 
@@ -1838,6 +1846,15 @@ function pickRegion(regionId) {
     if (at === 'dialog') renderDialog();
     if (at === 'flash')  renderFlash();
   }
+
+  // Rafraîchissement du guide utilisateur si la modale est actuellement ouverte
+  // sur son bloc espagnol (cas : changement de variante depuis l'écran home
+  // pendant que le guide reste accessible en arrière-plan via une autre action).
+  var guideModal = document.getElementById('guide-modal');
+  if (guideModal && guideModal.classList.contains('active')) {
+    var guideES = document.getElementById('guideContentES');
+    if (guideES && guideES.style.display !== 'none') _refreshGuideRegion();
+  }
 }
 
 
@@ -1850,4 +1867,149 @@ function pickRegion(regionId) {
 
 function showCredits() {
   document.getElementById('credits-modal').style.display = 'flex';
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   17. GUIDE UTILISATEUR — Écran d'aide intégré (FR/ES)
+   ─────────────────────────────────────────────────────────
+   Reprend le contenu des 3 anciennes pages HTML séparées
+   (language-app-user-guide.html / -fr.html / -es.html),
+   désormais fusionné directement dans index.html sous forme
+   d'une modale plein écran #guide-modal, contenant deux blocs
+   de contenu (#guideContentFR / #guideContentES).
+
+   Comportement :
+     - Première visite : le guide s'affiche automatiquement,
+       juste après le clic sur une carte de langue (donc une
+       fois currentMode connu), dans la langue D'INTERFACE
+       opposée à la langue choisie — exactement comme le reste
+       de l'application bilingue (cf. _setUI dans initApp) :
+         • mode 'learn_french' (apprendre le français)
+           → utilisateur hispanophone → guide en ESPAGNOL
+         • mode 'learn_spain' (apprendre l'espagnol)
+           → utilisateur francophone  → guide en FRANÇAIS
+     - Le flag "déjà vu" est GLOBAL (un seul affichage auto,
+       tous modes confondus) : une fois fermé une première fois,
+       quel que soit le mode, le guide ne se relance plus tout seul.
+     - Accès permanent ensuite via le lien "Guide / Guía" présent
+       dans les pieds de page (home, sections, lesson), sur le
+       modèle du lien "Remerciements" déjà existant.
+
+   Fonctions :
+     showGuide()            — affiche la modale, choisit le bloc
+                               de langue à montrer, rafraîchit la
+                               variante régionale, marque le flag vu
+     closeGuide()            — masque la modale (ne touche pas au flag,
+                               déjà posé par showGuide())
+     _maybeAutoShowGuide()    — appelée en fin d'initApp() ; déclenche
+                               showGuide() uniquement si jamais vu
+     _refreshGuideRegion()    — adapte le bloc ES à currentRegion
+                               (drapeau, bandeau d'info, exemple de
+                               vocabulaire régional, carte active),
+                               reprise du <script> de l'ancienne page
+                               language-app-user-guide-es.html
+═══════════════════════════════════════════════════════════ */
+
+// Clé localStorage du flag "guide déjà vu" — globale, indépendante du mode
+var GUIDE_STORAGE_KEY = 'pe_guide_seen_v1';
+
+/* showGuide() — Point d'entrée principal pour afficher le guide.
+   Appelée automatiquement à la première visite (_maybeAutoShowGuide)
+   ou manuellement via le lien "Guide / Guía" en pied de page. */
+function showGuide() {
+  var modal = document.getElementById('guide-modal');
+  if (!modal) return;
+
+  var blockFR = document.getElementById('guideContentFR');
+  var blockES = document.getElementById('guideContentES');
+
+  /* — Sélection du bloc de langue à afficher —
+       Logique identique à celle de _setUI() dans initApp() :
+       l'interface (ici, celle du guide) est toujours présentée
+       dans la langue MATERNELLE supposée de l'apprenant, donc
+       dans la langue OPPOSÉE à celle qu'il apprend.
+       Si aucun mode n'est encore défini (accès direct improbable,
+       sécurité), on retombe par défaut sur le français. */
+  var showFrench = (currentMode === 'learn_spain') || !currentMode;
+
+  if (blockFR) blockFR.style.display = showFrench ? 'block' : 'none';
+  if (blockES) blockES.style.display = showFrench ? 'none'  : 'block';
+
+  // Adapte le bloc espagnol à la variante régionale active, si besoin
+  if (!showFrench) _refreshGuideRegion();
+
+  // Affiche la modale et remonte en haut (au cas où elle a déjà été scrollée)
+  modal.classList.add('active');
+  modal.scrollTop = 0;
+
+  // Marque le guide comme vu dès son ouverture (auto ou manuelle) :
+  // il ne se relancera plus jamais tout seul après ce premier affichage.
+  try { localStorage.setItem(GUIDE_STORAGE_KEY, '1'); } catch (e) {}
+}
+
+/* closeGuide() — Referme la modale du guide.
+   Le flag "déjà vu" a déjà été posé par showGuide() à l'ouverture ;
+   fermer ne fait que masquer l'écran, sans logique supplémentaire. */
+function closeGuide() {
+  var modal = document.getElementById('guide-modal');
+  if (modal) modal.classList.remove('active');
+}
+
+/* _maybeAutoShowGuide() — Déclenche l'affichage automatique du guide
+   uniquement lors de la toute première visite (flag absent).
+   Appelée en fin d'initApp(), donc juste après le choix de langue. */
+function _maybeAutoShowGuide() {
+  var alreadySeen = false;
+  try { alreadySeen = localStorage.getItem(GUIDE_STORAGE_KEY) === '1'; }
+  catch (e) { alreadySeen = false; }
+
+  if (!alreadySeen) showGuide();
+}
+
+/* _refreshGuideRegion() — Adapte le bloc espagnol du guide (#guideContentES)
+   à la variante régionale active (currentRegion). Reprend la logique du
+   <script> embarqué dans l'ancienne page language-app-user-guide-es.html :
+   drapeau du héros, bandeau "Tu app está configurada en…", exemple de
+   vocabulaire régional (t-shirt / bus), et surbrillance de la carte active
+   dans la grille des variantes régionales. */
+function _refreshGuideRegion() {
+  // Table de correspondance région → infos d'affichage (drapeau, nom, exemples)
+  var REGIONS = {
+    ES: { flag:'🇪🇸', name:'España (Castellano)', shirt:'la camiseta', bus:'el autobús' },
+    MX: { flag:'🇲🇽', name:'México',               shirt:'la playera',  bus:'el camión' },
+    AR: { flag:'🇦🇷', name:'Argentina',            shirt:'la remera',   bus:'el colectivo' },
+    CO: { flag:'🇨🇴', name:'Colombia',             shirt:'la camiseta', bus:'el bus / la buseta' },
+    VE: { flag:'🇻🇪', name:'Venezuela',            shirt:'la franela',  bus:'la buseta' },
+    PE: { flag:'🇵🇪', name:'Perú',                 shirt:'el polo',     bus:'la combi' },
+    EC: { flag:'🇪🇨', name:'Ecuador',              shirt:'la camiseta', bus:'el autobús' }
+  };
+
+  var region = REGIONS[currentRegion] ? currentRegion : 'ES';
+  var r = REGIONS[region];
+
+  // Drapeaux du hero (🇫🇷 🌍 + drapeau régional)
+  var heroFlags = document.getElementById('guideHeroFlagsES');
+  if (heroFlags) heroFlags.textContent = '🇫🇷 🌍 ' + r.flag;
+
+  // Bandeau d'info sous le sous-titre du hero
+  var badge = document.getElementById('guideRegionBadgeES');
+  if (badge) badge.innerHTML = 'Tu app está configurada en <strong>' + r.flag + ' ' + r.name + '</strong>';
+
+  // Exemple de vocabulaire régional dans la section "Variantes regionales"
+  var example = document.getElementById('guideRegionExampleES');
+  if (example) {
+    example.innerHTML = '💡 Ejemplo con tu variante — así se dice en <strong>' + r.name + '</strong>: '
+      + r.flag + ' <strong>' + r.shirt + '</strong> (camiseta) · <strong>' + r.bus + '</strong> (autobús)'
+      + '<br><span style="font-size:.75rem;color:var(--g-muted);">Puedes cambiar tu variante en cualquier momento desde la pantalla de inicio de la app.</span>';
+  }
+
+  // Surbrillance de la carte de la région active dans la grille
+  var grid = document.getElementById('guideRegionGridES');
+  if (grid) {
+    var cards = grid.querySelectorAll('.guide-region-card');
+    cards.forEach(function(c) { c.classList.remove('active'); });
+    var activeCard = grid.querySelector('.guide-region-card[data-region="' + region + '"]');
+    if (activeCard) activeCard.classList.add('active');
+  }
 }
