@@ -1177,6 +1177,248 @@ footer a:hover { text-decoration: underline; }
 }
 .guide-region-example strong { color: var(--g-es); }
 
+/* ── Bloc Changelog / Nouveautés ── */
+.guide-changelog {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+.guide-changelog-entry {
+  padding: 16px 18px;
+  position: relative;
+}
+.guide-changelog-badge {
+  display: inline-block;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 50px;
+  margin-bottom: 8px;
+}
+.guide-changelog-badge.new {
+  background: var(--g-fr-lt);
+  color: var(--g-fr);
+}
+#guideContentES .guide-changelog-badge.new {
+  background: var(--g-es-lt);
+  color: var(--g-es);
+}
+.guide-changelog-badge.existing {
+  background: #f0f0f0;
+  color: #777;
+}
+.guide-changelog-title {
+  font-size: .92rem;
+  font-weight: 800;
+  color: var(--g-text);
+  margin-bottom: 6px;
+}
+.guide-changelog-desc {
+  font-size: .82rem;
+  color: #555;
+  line-height: 1.65;
+}
+.guide-changelog-list {
+  margin: 8px 0 0 16px;
+  padding: 0;
+}
+.guide-changelog-list li {
+  margin-bottom: 5px;
+}
+
+/* ── Tableau de comparaison ── */
+.guide-vs-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1.5px solid #e5e5e0;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+.guide-vs-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 1fr;
+  gap: 0;
+  border-bottom: 1px solid #e5e5e0;
+}
+.guide-vs-row:last-child { border-bottom: none; }
+.guide-vs-header {
+  background: #f7f7f4;
+  font-size: .72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--g-muted);
+}
+.guide-vs-col-method,
+.guide-vs-col-plus,
+.guide-vs-col-minus {
+  padding: 12px 12px;
+  font-size: .78rem;
+  line-height: 1.55;
+  border-right: 1px solid #e5e5e0;
+}
+.guide-vs-col-minus { border-right: none; }
+.guide-vs-col-method {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #fafaf8;
+  gap: 4px;
+}
+.guide-vs-method-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+.guide-vs-method-name {
+  font-size: .7rem;
+  font-weight: 800;
+  color: var(--g-text);
+  line-height: 1.2;
+}
+.guide-vs-col-plus {
+  color: #2e7d32;
+  background: #f6fcf6;
+  font-size: .76rem;
+}
+.guide-vs-col-minus {
+  color: #7a4f00;
+  background: #fffbf2;
+  font-size: .76rem;
+}
+.guide-vs-tip {
+  margin-top: 14px;
+  padding: 14px 16px;
+  font-size: .83rem;
+  color: #444;
+  line-height: 1.65;
+  border-left: 3px solid var(--g-fr);
+}
+#guideContentES .guide-vs-tip {
+  border-left-color: var(--g-es);
+}
+
+/* ── Rubrique Configurer l'audio ── */
+.guide-audio-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+.guide-audio-card {
+  padding: 18px 18px 14px;
+}
+.guide-audio-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.guide-audio-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+.guide-audio-os {
+  font-size: .96rem;
+  font-weight: 900;
+  color: var(--g-text);
+}
+.guide-audio-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.guide-audio-step {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: .82rem;
+  color: #444;
+  line-height: 1.6;
+}
+.guide-audio-step-num {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--g-fr-lt);
+  color: var(--g-fr);
+  font-size: .72rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+#guideContentES .guide-audio-step-num {
+  background: var(--g-es-lt);
+  color: var(--g-es);
+}
+.guide-audio-tip {
+  font-size: .76rem;
+  color: #666;
+  background: #f7f7f4;
+  border-radius: 8px;
+  padding: 9px 12px;
+  line-height: 1.55;
+  border-left: 3px solid #ddd;
+}
+/* Bloc "Toujours un problème / Sigues con problemas" */
+.guide-audio-help {
+  margin-top: 14px;
+  padding: 18px 18px 16px;
+}
+.guide-audio-help-title {
+  font-size: .92rem;
+  font-weight: 900;
+  color: var(--g-text);
+  margin-bottom: 10px;
+}
+.guide-audio-help-desc {
+  font-size: .81rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+.guide-audio-contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.guide-audio-contact-btn {
+  display: inline-block;
+  font-size: .76rem;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 50px;
+  background: var(--g-fr-lt);
+  color: var(--g-fr);
+  text-decoration: none;
+  transition: background .15s;
+  white-space: nowrap;
+}
+#guideContentES .guide-audio-contact-btn {
+  background: var(--g-es-lt);
+  color: var(--g-es);
+}
+.guide-audio-contact-btn:active {
+  opacity: .8;
+}
+.guide-audio-help-hint {
+  font-size: .75rem;
+  color: #888;
+  line-height: 1.55;
+  font-style: italic;
+}
+
 /* ── Bloc biographie "Qui suis-je" ── */
 .guide-bio-card { padding: 24px 22px; }
 .guide-bio-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
@@ -1198,6 +1440,63 @@ footer a:hover { text-decoration: underline; }
 }
 /* En mode Espagnol, les liens reprennent l'accent rouge */
 #guideContentES .guide-bio-link { color: var(--g-es); background: var(--g-es-lt); }
+
+/* ── Encart "Une suggestion / Una sugerencia ?" ── */
+.guide-contact-callout {
+  margin-top: 16px;
+  background: var(--g-fr-lt);
+  border-radius: 12px;
+  padding: 16px 18px;
+  border-left: 3px solid var(--g-fr);
+}
+#guideContentES .guide-contact-callout {
+  background: var(--g-es-lt);
+  border-left-color: var(--g-es);
+}
+.guide-contact-callout-title {
+  font-size: .9rem;
+  font-weight: 900;
+  color: var(--g-fr);
+  margin-bottom: 8px;
+}
+#guideContentES .guide-contact-callout-title {
+  color: var(--g-es);
+}
+.guide-contact-callout-desc {
+  font-size: .81rem;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+.guide-contact-callout-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.guide-contact-callout-btn {
+  display: inline-block;
+  font-size: .78rem;
+  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: 50px;
+  background: var(--g-fr);
+  color: #fff;
+  text-decoration: none;
+  transition: opacity .15s;
+}
+#guideContentES .guide-contact-callout-btn {
+  background: var(--g-es);
+}
+.guide-contact-callout-btn:active { opacity: .8; }
+.guide-contact-callout-btn--secondary {
+  background: #fff;
+  color: var(--g-fr);
+  border: 2px solid var(--g-fr);
+}
+#guideContentES .guide-contact-callout-btn--secondary {
+  color: var(--g-es);
+  border-color: var(--g-es);
+}
 
 /* ── Bloc d'appel à l'action final (fermer le guide) ── */
 .guide-cta-block {
@@ -1515,3 +1814,96 @@ html.theme-spain.region-VE {
   --c-grad-fc-back:   linear-gradient(135deg, #CF142B, #00247D);
   --c-grad-alpha-btn: linear-gradient(135deg, #FFCC00, #00247D);
 }
+
+
+/* ════════════════════════════════════════
+   ONGLET RÉPÈTE — Répétition orale guidée
+   Styles spécifiques au mode 🎤 Répète
+   (Niveau 1 uniquement, section 9c app.js)
+════════════════════════════════════════ */
+
+/* Conteneur principal de la session */
+.rp-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 6px 0 16px;
+}
+
+/* Ligne compteur / score */
+.rp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f5f5f0;
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: .82rem;
+  font-weight: 600;
+  color: #555;
+}
+.rp-counter { color: var(--c-primary); }
+.rp-score   { color: #333; }
+
+/* Boîte d'affichage du mot */
+.rp-word-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 2.5px solid var(--c-primary);
+  border-radius: 18px;
+  padding: 28px 20px 22px;
+  min-height: 140px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.07);
+  text-align: center;
+}
+
+/* Emoji décoratif au-dessus du mot */
+.rp-word-emoji {
+  font-size: 2.4rem;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+/* Mot dans la langue cible */
+.rp-word {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--c-primary);
+  letter-spacing: -.01em;
+  line-height: 1.15;
+}
+
+/* Zone de feedback (réutilise mic-feedback) */
+.rp-feedback {
+  width: 100%;
+  min-height: 36px;
+  text-align: center;
+  font-size: .88rem;
+  font-weight: 600;
+  border-radius: 10px;
+  line-height: 1.5;
+  transition: background .2s;
+}
+
+/* Boutons de contrôle (Réentendre + Passer) */
+.rp-controls {
+  display: flex;
+  gap: 10px;
+}
+.rp-rehear-btn,
+.rp-skip-btn {
+  flex: 1;
+  font-size: .85rem;
+  padding: 11px 8px;
+  min-height: 44px;
+}
+/* Passer : style discret grisé */
+.rp-skip-btn {
+  background: #f0f0f0;
+  border-color: #ccc;
+  color: #666;
+}
+.rp-skip-btn:active { background: #ddd; color: #333; }

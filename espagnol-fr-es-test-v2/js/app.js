@@ -857,8 +857,8 @@ function openTheme(id) {
       : [{k:'flash',lbl:'🔤 Alphabet'}, {k:'quiz10',lbl:'🔊 Quiz Audio'}];
   } else {
     tabs = (currentMode === 'learn_french')
-      ? [{k:'flash',lbl:'🃏 Cartas'}, {k:'quiz10',lbl:'❓ Prueba'}]
-      : [{k:'flash',lbl:'🃏 Cartes'}, {k:'quiz10',lbl:'❓ Quiz'}];
+      ? [{k:'flash',lbl:'🃏 Cartas'}, {k:'quiz10',lbl:'❓ Prueba'}, {k:'repeat',lbl:'🎤 Repite'}]
+      : [{k:'flash',lbl:'🃏 Cartes'}, {k:'quiz10',lbl:'❓ Quiz'},   {k:'repeat',lbl:'🎤 Répète'}];
   }
 
   // Rendu des boutons d'onglets
@@ -904,6 +904,7 @@ function switchTab(tab) {
     _clearQuizSession();
     renderDialogQuiz();
   }
+  else if (tab === 'repeat') { renderRepeat(); }
 }
 
 
@@ -1234,6 +1235,258 @@ function prevCard() {
 
 /* isAlphaQuiz() — Retourne true si le thème courant est de type alphabet. */
 function isAlphaQuiz() { return CT && CT.type === 'alpha'; }
+
+
+/* ═══════════════════════════════════════════════════════════
+   9c. ONGLET RÉPÈTE — Répétition orale guidée (Niveau 1 uniquement)
+   ─────────────────────────────────────────────────────────
+   Séquence par mot :
+     1. Affiche le mot dans la langue cible (+ emoji si dispo)
+     2. Lance speak() automatiquement
+     3. Après 1800ms, déclenche startMicReco avec la bonne langue
+     4. Affiche feedback vert/orange identique à l'option A
+     5. Après 2500ms de feedback, passe au mot suivant (ou attend le bouton)
+   Contrôles permanents : compteur, score, bouton ⏭ Passer, 🔁 Réentendre.
+   Fin de session : écran récap avec score X/total + bouton Recommencer.
+═══════════════════════════════════════════════════════════ */
+
+// Variables d'état de la session Répète
+var _rpIdx       = 0;    // Index du mot courant
+var _rpScore     = 0;    // Nombre de réussites
+var _rpWords     = [];   // Liste des mots (filtrés fr+es)
+var _rpAnswered  = false; // Empêche le double-déclenchement
+var _rpAutoTimer = null; // Timer pour l'avancement automatique
+var _rpMicTimer  = null; // Timer pour le délai avant micro
+
+/* _rpGetWord(idx) — Retourne le mot courant avec sa forme cible résolue. */
+function _rpGetWord(idx) {
+  var card = _rpWords[idx];
+  if (!card) return null;
+  var targetWord, displayEmoji;
+  if (currentMode === 'learn_french') {
+    targetWord   = card.fr;
+  } else {
+    targetWord = (card.variants && card.variants[currentRegion])
+      ? card.variants[currentRegion] : card.es;
+  }
+  displayEmoji = card.em || '';
+  return { card: card, word: targetWord, emoji: displayEmoji };
+}
+
+/* _rpClearTimers() — Annule les timers en cours (changement manuel). */
+function _rpClearTimers() {
+  if (_rpAutoTimer) { clearTimeout(_rpAutoTimer); _rpAutoTimer = null; }
+  if (_rpMicTimer)  { clearTimeout(_rpMicTimer);  _rpMicTimer  = null; }
+  _stopMicReco();
+}
+
+/* renderRepeat() — Point d'entrée : initialise la session et affiche le premier mot. */
+function renderRepeat() {
+  _rpClearTimers();
+  _rpIdx      = 0;
+  _rpScore    = 0;
+  _rpAnswered = false;
+  // Filtre les mots ayant fr ET es
+  _rpWords = (CT.words || []).filter(function(w) { return w.fr && w.es; });
+
+  if (!_rpWords.length) {
+    var noW = (currentMode === 'learn_french') ? 'No hay palabras disponibles.' : 'Aucun mot disponible.';
+    document.getElementById('tabContent').innerHTML = '<div class="result-box"><p>' + noW + '</p></div>';
+    return;
+  }
+  _rpShowWord();
+}
+
+/* _rpShowWord() — Affiche le mot courant et lance la séquence audio + micro. */
+function _rpShowWord() {
+  _rpClearTimers();
+  _rpAnswered = false;
+
+  if (_rpIdx >= _rpWords.length) {
+    _rpShowEnd();
+    return;
+  }
+
+  var isFR   = (currentMode === 'learn_french');
+  var total  = _rpWords.length;
+  var info   = _rpGetWord(_rpIdx);
+  if (!info) { _rpIdx++; _rpShowWord(); return; }
+
+  var micLang = isFR ? 'fr-FR' : voiceLang;
+
+  var counterLbl  = isFR ? 'Palabra' : 'Mot';
+  var scoreLbl    = isFR ? 'Aciertos' : 'Réussites';
+  var skipLbl     = isFR ? '⏭ Saltar' : '⏭ Passer';
+  var rehearLbl   = isFR ? '🔁 Volver a escuchar' : '🔁 Réentendre';
+
+  var emojiHtml = info.emoji
+    ? '<div class="rp-word-emoji">' + info.emoji + '</div>'
+    : '';
+
+  document.getElementById('tabContent').innerHTML =
+    '<div class="rp-wrap">'
+    + '<div class="rp-header">'
+    +   '<span class="rp-counter">' + counterLbl + ' ' + (_rpIdx + 1) + ' / ' + total + '</span>'
+    +   '<span class="rp-score">' + scoreLbl + ' : <strong>' + _rpScore + '</strong></span>'
+    + '</div>'
+    + '<div class="rp-word-box">'
+    +   emojiHtml
+    +   '<div class="rp-word">' + info.word + '</div>'
+    + '</div>'
+    + '<div class="rp-feedback" id="rpFeedback"></div>'
+    + '<div class="rp-controls">'
+    +   '<button class="mic-btn rp-rehear-btn" id="rpRehearBtn" onclick="_rpRehear()">' + rehearLbl + '</button>'
+    +   '<button class="mic-btn rp-skip-btn"   id="rpSkipBtn"   onclick="_rpSkip()">'   + skipLbl   + '</button>'
+    + '</div>'
+    + '</div>';
+
+  // 1. Prononce le mot automatiquement
+  speak(info.word);
+
+  // 2. Lance la reconnaissance vocale après 1800ms
+  _rpMicTimer = setTimeout(function() {
+    var fbEl = document.getElementById('rpFeedback');
+    if (fbEl) {
+      fbEl.className   = 'rp-feedback mic-feedback mic-feedback--listening';
+      fbEl.textContent = isFR ? '🎙️ Escuchando…' : '🎙️ Écoute en cours…';
+    }
+    _rpStartMic(info.word, micLang);
+  }, 1800);
+}
+
+/* _rpStartMic(word, lang) — Lance la reconnaissance vocale dans le contexte Répète. */
+function _rpStartMic(word, lang) {
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    var fbEl = document.getElementById('rpFeedback');
+    var isFR = (currentMode === 'learn_french');
+    if (fbEl) {
+      fbEl.className   = 'rp-feedback mic-feedback mic-feedback--ko';
+      fbEl.textContent = isFR
+        ? '⚠️ Reconocimiento de voz no disponible.'
+        : '⚠️ Reconnaissance vocale non disponible.';
+    }
+    return;
+  }
+  _stopMicReco();
+
+  var isFR = (currentMode === 'learn_french');
+  var reco = new SR();
+  _micReco = reco;
+  reco.lang           = lang;
+  reco.continuous     = false;
+  reco.interimResults = false;
+
+  reco.onresult = function(e) {
+    if (_rpAnswered) return;
+    _rpAnswered = true;
+    var transcript = e.results[0][0].transcript;
+    var expected   = _normalizeSpeech(word);
+    var spoken     = _normalizeSpeech(transcript);
+    var ok = (spoken === expected)
+          || spoken.indexOf(expected) !== -1
+          || expected.indexOf(spoken) !== -1;
+
+    if (ok) _rpScore++;
+    _vibrateFeedback(ok);
+    _rpShowFeedback(ok, transcript, word, lang);
+  };
+
+  reco.onerror = function(e) {
+    if (_rpAnswered) return;
+    _rpAnswered = true;
+    var fbEl = document.getElementById('rpFeedback');
+    if (fbEl && e.error !== 'no-speech') {
+      fbEl.className   = 'rp-feedback mic-feedback mic-feedback--ko';
+      fbEl.textContent = (isFR ? '⚠️ Error: ' : '⚠️ Erreur : ') + e.error;
+    } else if (fbEl) {
+      fbEl.className   = 'rp-feedback';
+      fbEl.textContent = '';
+    }
+    // Passe au mot suivant après un silence
+    _rpAutoTimer = setTimeout(function() { _rpIdx++; _rpShowWord(); }, 2000);
+  };
+
+  reco.onend = function() { _micReco = null; };
+  reco.start();
+}
+
+/* _rpShowFeedback(ok, transcript, word, lang) — Affiche le feedback et programme l'avancement. */
+function _rpShowFeedback(ok, transcript, word, lang) {
+  var isFR = (currentMode === 'learn_french');
+  var fbEl = document.getElementById('rpFeedback');
+  if (fbEl) {
+    if (ok) {
+      fbEl.className = 'rp-feedback mic-feedback mic-feedback--ok';
+      fbEl.innerHTML = (isFR ? '✅ ¡Muy bien! ' : '✅ Parfait ! ')
+        + '<span class="mic-transcript">"' + transcript + '"</span>';
+    } else {
+      fbEl.className = 'rp-feedback mic-feedback mic-feedback--ko';
+      fbEl.innerHTML = (isFR ? '🔁 Inténtalo otra vez · Escuchado : ' : '🔁 Réessaie · Entendu : ')
+        + '<span class="mic-transcript">"' + transcript + '"</span>';
+    }
+  }
+  // Avancement automatique après 2500ms
+  _rpAutoTimer = setTimeout(function() { _rpIdx++; _rpShowWord(); }, 2500);
+}
+
+/* _rpRehear() — Prononce à nouveau le mot courant et relance le micro. */
+function _rpRehear() {
+  _rpClearTimers();
+  _rpAnswered = false;
+  var isFR   = (currentMode === 'learn_french');
+  var micLang = isFR ? 'fr-FR' : voiceLang;
+  var info   = _rpGetWord(_rpIdx);
+  if (!info) return;
+
+  var fbEl = document.getElementById('rpFeedback');
+  if (fbEl) { fbEl.className = 'rp-feedback'; fbEl.textContent = ''; }
+
+  speak(info.word);
+  _rpMicTimer = setTimeout(function() {
+    var fbEl2 = document.getElementById('rpFeedback');
+    if (fbEl2) {
+      fbEl2.className   = 'rp-feedback mic-feedback mic-feedback--listening';
+      fbEl2.textContent = isFR ? '🎙️ Escuchando…' : '🎙️ Écoute en cours…';
+    }
+    _rpStartMic(info.word, micLang);
+  }, 1800);
+}
+
+/* _rpSkip() — Passe au mot suivant sans réponse (ne compte pas comme réussite). */
+function _rpSkip() {
+  _rpClearTimers();
+  _rpAnswered = true;
+  _rpIdx++;
+  _rpShowWord();
+}
+
+/* _rpShowEnd() — Affiche l'écran de fin de session avec score et bouton Recommencer. */
+function _rpShowEnd() {
+  _rpClearTimers();
+  var isFR   = (currentMode === 'learn_french');
+  var total  = _rpWords.length;
+  var pct    = total ? Math.round(_rpScore / total * 100) : 0;
+
+  var titleOk  = isFR ? '¡Sesión completada!' : 'Session terminée !';
+  var retryLbl = isFR ? '🔁 Volver a empezar' : '🔁 Recommencer';
+  var scoreLbl = isFR ? 'Resultado' : 'Score';
+
+  var starsEarned = _calcStars(pct);
+  var starsHtml   = Array.from({ length: 3 }, function(_, i) {
+    return i < starsEarned ? '⭐' : '☆';
+  }).join('');
+
+  document.getElementById('tabContent').innerHTML =
+    '<div class="result-box">'
+    + '<div style="font-size:2rem;margin-bottom:5px;">' + starsHtml + '</div>'
+    + '<h3>' + titleOk + '</h3>'
+    + '<div class="score-num">' + _rpScore + ' / ' + total + '</div>'
+    + '<div style="font-size:.9rem;color:#666;margin:6px 0">' + scoreLbl + ' : ' + pct + '%</div>'
+    + '<button class="retry-btn" style="margin-top:14px;background:#888" onclick="renderRepeat()">'
+    + retryLbl + '</button>'
+    + '</div>';
+}
 
 
 /* ═══════════════════════════════════════════════════════════
