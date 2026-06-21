@@ -2620,9 +2620,8 @@ function showGuide() {
      dans la langue OPPOSÉE à celle qu'il apprend.
      Si aucun mode n'est encore défini (accès direct improbable,
      sécurité), on retombe par défaut sur le français. */
-  // CORRECTION : Utilisation de state.mode conformément à l'architecture de votre application
-  var activeMode = (typeof state !== 'undefined' && state && state.mode) ? state.mode : '';
-  var showFrench = (activeMode === 'learn_spain') || !activeMode;
+  // Utilise la variable d'état globale réelle de l'application (cf. section 1)
+  var showFrench = (currentMode === 'learn_spain') || !currentMode;
 
   if (blockFR) blockFR.style.display = showFrench ? 'block' : 'none';
   if (blockES) blockES.style.display = showFrench ? 'none'  : 'block';
