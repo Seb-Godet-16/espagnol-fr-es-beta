@@ -1579,14 +1579,20 @@ footer a:hover { text-decoration: underline; }
   background: var(--g-es);
 }
 .guide-contact-callout-btn:active { opacity: .8; }
+/* --- Version Française (Apprenant l'espagnol) --- */
+/* Reste identique à votre design d'origine : fond blanc, écriture et bordure bleues */
 .guide-contact-callout-btn--secondary {
   background: #fff;
   color: var(--g-fr);
   border: 2px solid var(--g-fr);
 }
+
+/* --- Version Espagnole (Apprenant le français) --- */
+/* Devient blanc pur et transparent pour ressortir parfaitement sur le fond rouge */
 #guideContentES .guide-contact-callout-btn--secondary {
-  color: var(--g-es);
-  border-color: var(--g-es);
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff !important;
+  border-color: #ffffff;
 }
 
 /* ── Bloc d'appel à l'action final (fermer le guide) ── */

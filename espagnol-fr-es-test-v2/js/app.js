@@ -2614,34 +2614,51 @@ function showGuide() {
   var blockES = document.getElementById('guideContentES');
 
   /* — Sélection du bloc de langue à afficher —
-       Logique identique à celle de _setUI() dans initApp() :
-       l'interface (ici, celle du guide) est toujours présentée
-       dans la langue MATERNELLE supposée de l'apprenant, donc
-       dans la langue OPPOSÉE à celle qu'il apprend.
-       Si aucun mode n'est encore défini (accès direct improbable,
-       sécurité), on retombe par défaut sur le français. */
+     Logique identique à celle de _setUI() dans initApp() :
+     l'interface (ici, celle du guide) est toujours présentée
+     dans la langue MATERNELLE supposée de l'apprenant, donc
+     dans la langue OPPOSÉE à celle qu'il apprend.
+     Si aucun mode n'est encore défini (accès direct improbable,
+     sécurité), on retombe par défaut sur le français. */
   var showFrench = (currentMode === 'learn_spain') || !currentMode;
 
   if (blockFR) blockFR.style.display = showFrench ? 'block' : 'none';
   if (blockES) blockES.style.display = showFrench ? 'none'  : 'block';
 
   // ── Adaptation de la topbar selon le mode ──
-  // En mode learn_spain (francophone apprenant l'espagnol) :
-  //   - la checkbox "Ne plus afficher / No mostrar más" est masquée
-  //   - le bouton fermer affiche uniquement "✕ Fermer"
-  // En mode learn_french (hispanophone apprenant le français) :
-  //   - la checkbox est masquée (déjà géré depuis la session précédente)
-  //   - le bouton fermer affiche uniquement "✕ Cerrar"
   var noShowLabel = document.querySelector('.guide-topbar-noshow');
   var closeBtn    = document.getElementById('guideCloseBtn');
+  var topbar      = document.getElementById('guideTopbar') || document.querySelector('.guide-topbar');
+
+  // La checkbox (noShowLabel) doit être affichée dans les deux modes
+  if (noShowLabel) {
+    noShowLabel.style.display = 'flex';
+  }
+
+  // Récupération des spans de texte à l'intérieur du label pour ajuster la traduction
+  var textFr = document.querySelector('.guide-no-show-fr');
+  var textEs = document.querySelector('.guide-no-show-es');
+
   if (showFrench) {
-    // Mode learn_spain : guide en français, on masque la checkbox, bouton = Fermer
-    if (noShowLabel) noShowLabel.style.display = 'none';
-    if (closeBtn)    closeBtn.textContent = '✕ Fermer';
+    // Mode learn_spain (Francophone) : bouton = Fermer, texte = Ne plus afficher
+    if (closeBtn) closeBtn.textContent = '✕ Fermer';
+    if (textFr) textFr.style.display = 'inline';
+    if (textEs) textEs.style.display = 'none';
+    
+    if (topbar) {
+      topbar.classList.add('guide-topbar--fr');
+      topbar.classList.remove('guide-topbar--es');
+    }
   } else {
-    // Mode learn_french : guide en espagnol, checkbox masquée, bouton = Cerrar
-    if (noShowLabel) noShowLabel.style.display = 'none';
-    if (closeBtn)    closeBtn.textContent = '✕ Cerrar';
+    // Mode learn_french (Hispanophone) : bouton = Cerrar, texte = No mostrar más
+    if (closeBtn) closeBtn.textContent = '✕ Cerrar';
+    if (textFr) textFr.style.display = 'none';
+    if (textEs) textEs.style.display = 'inline';
+    
+    if (topbar) {
+      topbar.classList.add('guide-topbar--es');
+      topbar.classList.remove('guide-topbar--fr');
+    }
   }
 
   // Adapte le titre du bloc affiché à la langue réellement étudiée
