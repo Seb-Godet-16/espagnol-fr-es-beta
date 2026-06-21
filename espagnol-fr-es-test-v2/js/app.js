@@ -220,7 +220,42 @@ function showLauncherVariant(mode) {
       document.getElementById('launcher-view-cards').style.flexDirection = 'column';
       document.getElementById('launcher-view-cards').style.alignItems = 'center';
       document.documentElement.className = '';
+      _setLauncherFooterLang(null);
     };
+  }
+
+  /* — Traduction du footer selon le mode (langue d'interface = langue opposée à celle apprise) — */
+  _setLauncherFooterLang(mode);
+}
+
+/**
+ * Adapte la langue du pied de page du Launcher.
+ * mode === 'learn_french' (hispanophone) → footer en espagnol
+ * mode === 'learn_spain'  (francophone)  → footer en français
+ * mode === null (Vue A, aucune langue choisie) → bilingue mixte par défaut
+ */
+function _setLauncherFooterLang(mode) {
+  var footer = document.getElementById('launcherFooter');
+  if (!footer) return;
+
+  if (mode === 'learn_french') {
+    footer.innerHTML =
+      '© Junio 2026 – Sébastien Godet<br>' +
+      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> · ' +
+      '<a href="#" onclick="showGuide()">Guía</a> · ' +
+      '<a href="#" onclick="showCredits()">Agradecimientos</a>';
+  } else if (mode === 'learn_spain') {
+    footer.innerHTML =
+      '© Juin 2026 – Sébastien Godet<br>' +
+      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> · ' +
+      '<a href="#" onclick="showGuide()">Guide</a> · ' +
+      '<a href="#" onclick="showCredits()">Remerciements</a>';
+  } else {
+    footer.innerHTML =
+      '© Juin 2026 – Sébastien Godet<br>' +
+      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> · ' +
+      '<a href="#" onclick="showGuide()">Guide / Guía</a> · ' +
+      '<a href="#" onclick="showCredits()">Remerciements / Agradecimientos</a>';
   }
 }
 
@@ -236,6 +271,7 @@ function showLauncher() {
   document.getElementById('launcher-view-cards').style.alignItems = 'center';
   document.getElementById('app-launcher').classList.add('active');
   document.documentElement.className = '';
+  _setLauncherFooterLang(null);
   window.scrollTo(0, 0);
 }
 
@@ -277,6 +313,7 @@ function initApp(mode) {
       homeStartBtn   : '▶ Commencer<br><span class="translation-sub">Empezar</span>',
       sectionsBackBtn: '← Retour<br><span class="translation-sub">Volver</span>',
       sectionsTitle  : '📚 Modules',
+      sectionsFlag   : '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1eb-1f1f7.svg" style="width:1.5em;vertical-align:middle;" alt="fr">',
       lessonBackBtn  : '← Modules<br><span class="translation-sub">Módulos</span>',
       level1Badge    : '1',
       level1Label    : '<span>Niveau 1 — Vocabulaire</span>',
@@ -297,6 +334,7 @@ function initApp(mode) {
       homeStartBtn   : '▶ Empezar<br><span class="translation-sub">Commencer</span>',
       sectionsBackBtn: '← Volver<br><span class="translation-sub">Retour</span>',
       sectionsTitle  : '📚 Módulos',
+      sectionsFlag   : activeFlag,           // Drapeau de la variante régionale apprise
       lessonBackBtn  : '← Módulos<br><span class="translation-sub">Modules</span>',
       level1Badge    : '1',
       level1Label    : '<span>Nivel 1 — Vocabulario</span>',
@@ -330,6 +368,7 @@ function _setUI(t) {
   _setText('homeStartBtn',    t.homeStartBtn);
   _setText('sectionsBackBtn', t.sectionsBackBtn);
   _setText('sectionsTitle',   t.sectionsTitle);
+  _setText('sectionsFlag',    t.sectionsFlag);
   _setText('lessonBackBtn',   t.lessonBackBtn);
   _setText('level1Badge',     t.level1Badge);
   _setText('level1Label',     t.level1Label);
@@ -2467,6 +2506,12 @@ function pickRegion(regionId) {
     launcherFlagRow.textContent = flagEmojis[currentRegion] || '🇪🇸';
   }
 
+  // Mise à jour du drapeau de l'écran Sections (variante régionale apprise)
+  var sectionsFlag = document.getElementById('sectionsFlag');
+  if (sectionsFlag && currentMode === 'learn_spain') {
+    sectionsFlag.innerHTML = flagHtml;
+  }
+
   // Mise à jour du petit drapeau inline dans les flashcards (section-label)
   var flagSpan = document.getElementById('current-lang-flag');
   if (flagSpan) flagSpan.innerHTML = flagHtml;
@@ -2636,15 +2681,15 @@ function showGuide() {
     noShowLabel.style.display = 'flex';
   }
 
-  // Récupération des spans de texte à l'intérieur du label pour ajuster la traduction
-  var textFr = document.querySelector('.guide-no-show-fr');
-  var textEs = document.querySelector('.guide-no-show-es');
+  // Récupération de TOUS les spans de texte fr/es (topbar + bas de page)
+  var textsFr = document.querySelectorAll('.guide-no-show-fr');
+  var textsEs = document.querySelectorAll('.guide-no-show-es');
 
   if (showFrench) {
     // Mode learn_spain (Francophone) : bouton = Fermer, texte = Ne plus afficher
     if (closeBtn) closeBtn.textContent = '✕ Fermer';
-    if (textFr) textFr.style.display = 'inline';
-    if (textEs) textEs.style.display = 'none';
+    textsFr.forEach(function(el) { el.style.display = 'inline'; });
+    textsEs.forEach(function(el) { el.style.display = 'none'; });
     
     if (topbar) {
       topbar.classList.add('guide-topbar--fr');
@@ -2653,8 +2698,8 @@ function showGuide() {
   } else {
     // Mode learn_french (Hispanophone) : bouton = Cerrar, texte = No mostrar más
     if (closeBtn) closeBtn.textContent = '✕ Cerrar';
-    if (textFr) textFr.style.display = 'none';
-    if (textEs) textEs.style.display = 'inline';
+    textsFr.forEach(function(el) { el.style.display = 'none'; });
+    textsEs.forEach(function(el) { el.style.display = 'inline'; });
     
     if (topbar) {
       topbar.classList.add('guide-topbar--es');

@@ -396,6 +396,30 @@ body {
 }
 .sections-header h2 { font-size: 1rem !important; font-weight: 800; margin-bottom: 2px; }
 
+/* Ligne du haut : bouton retour + titre à gauche, drapeau à droite */
+.sections-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  text-align: left;
+  margin-bottom: 4px;
+}
+.sections-top-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+.sections-top-left .back-btn {
+  padding: 4px 0;
+}
+.sections-flag {
+  font-size: 2.4rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
 /* Barre de progression en blanc translucide */
 .progress-bar-wrap  { background: rgba(255,255,255,.3); border-radius: 20px; height: 8px; margin: 8px 0 4px; }
 .progress-bar       { background: #fff; height: 8px; border-radius: 20px; transition: width .4s; }
@@ -1588,11 +1612,11 @@ footer a:hover { text-decoration: underline; }
 }
 
 /* --- Version Espagnole (Apprenant le français) --- */
-/* Devient blanc pur et transparent pour ressortir parfaitement sur le fond rouge */
+/* Même fond rouge plein que le bouton principal "Copiar mi correo" */
 #guideContentES .guide-contact-callout-btn--secondary {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--g-es);
   color: #ffffff !important;
-  border-color: #ffffff;
+  border-color: var(--g-es);
 }
 
 /* ── Bloc d'appel à l'action final (fermer le guide) ── */

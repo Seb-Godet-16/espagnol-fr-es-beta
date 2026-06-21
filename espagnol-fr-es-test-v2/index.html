@@ -108,7 +108,7 @@
     </div><!-- /launcher-view-variant -->
 
     <!-- Pied de page commun à tous les écrans -->
-    <footer class="launcher-footer">
+    <footer class="launcher-footer" id="launcherFooter">
       © Juin 2026 – Sébastien Godet<br>
       <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
       <a href="#" onclick="showGuide()">Guide / Guía</a> ·
@@ -188,13 +188,21 @@
   <div id="sections" class="screen">
 
     <div class="sections-header">
-      <!-- Retour → launcher (l'écran Home n'est plus dans le parcours) -->
-      <button class="back-btn" id="sectionsBackBtn" onclick="showLauncher()"></button>
+      <!-- Ligne du haut : Retour + Titre à gauche, drapeau de la langue apprise à droite -->
+      <div class="sections-top-row">
+        <div class="sections-top-left">
+          <!-- Retour → launcher (l'écran Home n'est plus dans le parcours) -->
+          <button class="back-btn" id="sectionsBackBtn" onclick="showLauncher()"></button>
 
-      <!-- Titre injecté par JS (ex : "📚 Modules") -->
-      <h2 id="sectionsTitle"></h2>
-      <!-- Sous-titre bilingue injecté par renderSections() -->
-      <div class="sections-subtitle" id="sectionsSubtitle"></div>
+          <!-- Titre injecté par JS (ex : "📚 Modules") -->
+          <h2 id="sectionsTitle"></h2>
+          <!-- Sous-titre bilingue injecté par renderSections() -->
+          <div class="sections-subtitle" id="sectionsSubtitle"></div>
+        </div>
+
+        <!-- Drapeau de la langue apprise (FR fixe, ou variante régionale ES) -->
+        <div class="sections-flag" id="sectionsFlag"></div>
+      </div>
 
       <!-- Barre de progression globale (% de modules terminés) -->
       <div class="progress-bar-wrap">
@@ -341,7 +349,8 @@
     <div class="guide-topbar" id="guideTopbar">
       <label class="guide-no-show-label guide-topbar-noshow" id="guideNoShowLabel">
         <input type="checkbox" class="guide-no-show-check" onchange="toggleGuideNoShow(this)">
-        <span class="guide-no-show-text">Ne plus afficher</span>
+        <span class="guide-no-show-text guide-no-show-fr">Ne plus afficher</span>
+        <span class="guide-no-show-text guide-no-show-es" style="display:none;">No volver a mostrar</span>
       </label>
       <button id="guideCloseBtn" onclick="closeGuide()">✕ Fermer</button>
     </div>
