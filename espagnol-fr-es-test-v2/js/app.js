@@ -2570,8 +2570,8 @@ function _refreshGuideRegion() {
   // drapeau français (langue réellement étudiée par l'utilisateur), et non
   // un libellé générique "Apprends une langue".
   var heroTitle = document.getElementById('guideHeroTitleES');
-  if (heroTitle) heroTitle.innerHTML = 'Aprende Francés 🇫🇷,<br><span>juega, escucha y progresa.</span>';
-
+  if (heroTitle) heroTitle.innerHTML = 'Aprende Francés 🇫🇷';
+ 
   // Bandeau d'info sous le sous-titre du hero
   var badge = document.getElementById('guideRegionBadgeES');
   if (badge) badge.innerHTML = 'Tu app está configurada en <strong>' + r.flag + ' ' + r.name + '</strong>';
@@ -2612,7 +2612,7 @@ function _refreshGuideHeroFR() {
   if (heroFlags) heroFlags.textContent = '🇫🇷 🌍 ' + activeFlag;
 
   var heroTitle = document.getElementById('guideHeroTitleFR');
-  if (heroTitle) heroTitle.innerHTML = 'Apprends l\'Espagnol ' + activeFlag + ',<br><span>joue, écoute, progresse !</span>';
+  if (heroTitle) heroTitle.innerHTML = 'Apprends l\'Espagnol ' + activeFlag;
 }
 
 /* ============================================================
