@@ -121,8 +121,30 @@ body {
   text-align: center;
 }
 
-.launcher-logo      { font-size: 3.4rem; margin-bottom: 14px; filter: drop-shadow(0 4px 12px rgba(0,0,0,.15)); }
-.launcher-title     { font-size: 1.8rem; font-weight: 900; color: #1a1a2e; margin-bottom: 6px; letter-spacing: -.02em; }
+.launcher-logo      { width: 100%; margin-bottom: 10px; }
+.launcher-logo-img  {
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 12px;
+  filter: drop-shadow(0 4px 16px rgba(0,0,0,.18));
+}
+.launcher-logo-fallback {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0 6px;
+}
+.launcher-subtitle  {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.03em;
+  margin-bottom: 18px;
+  text-align: center;
+}
 .launcher-sub       { font-size: .9rem; color: #888; font-weight: 500; margin-bottom: 32px; }
 
 /* ── Cartes de sélection de langue ── */

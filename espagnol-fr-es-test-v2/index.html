@@ -56,12 +56,33 @@
 
     <!-- ─── VUE A : Sélection de la langue ─── -->
     <div id="launcher-view-cards" class="launcher-inner">
-      <div class="launcher-logo">🌍🗣️💬</div>
-      <h1 class="launcher-title">
-        <span class="lang-fr">Choisis ta langue</span>
-        <span class="separator"> / </span>
-        <span class="lang-es">Elige tu idioma</span>
-      </h1>
+      <!-- Logo VACHÉBO — PNG servi depuis GitHub, fallback SVG si pas de connexion -->
+      <div class="launcher-logo" id="launcherLogo">
+        <img
+          src="https://raw.githubusercontent.com/Seb-Godet-16/applications-langues/main/espagnol-fr-es-test-v2/img/Logo-appli-es-fr.png"
+          alt="VACHÉBO — ¡Oh la vache, qué chévère, boludo!"
+          class="launcher-logo-img"
+          onerror="this.style.display='none'; document.getElementById('launcherLogoFallback').style.display='flex';"
+        >
+        <!-- Fallback affiché si le PNG ne charge pas (pas de connexion internet) -->
+        <div id="launcherLogoFallback" class="launcher-logo-fallback" style="display:none;">
+          <svg width="260" height="80" viewBox="0 0 260 80" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="lgFallback" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%"   stop-color="#042C53"/>
+                <stop offset="50%"  stop-color="#8B1A1A"/>
+                <stop offset="100%" stop-color="#C0392B"/>
+              </linearGradient>
+            </defs>
+            <text x="130" y="48" text-anchor="middle" font-family="Arial Black, Arial" font-weight="900"
+                  font-size="40" fill="url(#lgFallback)" letter-spacing="-1">VACHÉBO</text>
+            <text x="130" y="70" text-anchor="middle" font-family="Arial" font-style="italic"
+                  font-size="13" fill="#555552">¡Oh la vache, qué chévère, boludo!</text>
+          </svg>
+        </div>
+      </div>
+
+      <p class="launcher-subtitle">Choisis ta langue · Elige tu idioma</p>
 
       <div class="launcher-cards">
         <!-- Carte Français : affiche le sélecteur de variante -->
