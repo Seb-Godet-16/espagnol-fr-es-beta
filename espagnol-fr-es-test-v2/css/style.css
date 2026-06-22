@@ -62,7 +62,7 @@ body {
   font-family: 'Segoe UI', system-ui, sans-serif;
   min-height: 100vh;
   font-size: 16px;
-  background: #f5f2e8; /* crème chaud — même teinte que le fond du logo */
+  background: #FCFFEE; /* crème exact du logo (RVB 252,255,238) */
 }
 
 /* Conteneur principal (largeur max mobile-first) */
@@ -90,7 +90,7 @@ body {
    verticalement sur mobile.
 ════════════════════════════════════════ */
 #app-launcher {
-  background: #f5f2e8; /* crème chaud — unifié avec le fond du logo */
+  background: #FCFFEE; /* crème exact du logo (RVB 252,255,238) */
   align-items: center;
   justify-content: space-between; /* répartit logo + cartes + footer sur la hauteur dispo */
   padding: 16px 20px 12px;
@@ -307,11 +307,13 @@ body {
   background-blend-mode: overlay;
   align-items: center;
   justify-content: center;
-  padding: 24px;
-  padding-bottom: 80px;
+  padding: 24px 24px 80px;
   text-align: center;
   position: relative;
   overflow: hidden;
+  height: 100vh;
+  height: 100dvh;
+  box-sizing: border-box;
 }
 
 /* Motif losanges décoratifs */
@@ -409,11 +411,6 @@ body {
 ════════════════════════════════════════ */
 #sections {
   background: var(--c-bg);
-  height: 100vh;
-  height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
 }
 
 .sections-header {
@@ -458,9 +455,6 @@ body {
 
 .sections-body {
   padding: 10px 14px;
-  flex: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 .level-block { margin-bottom: 20px; }
 
@@ -573,11 +567,6 @@ body {
 ════════════════════════════════════════ */
 #lesson {
   background: var(--c-bg);
-  height: 100vh;
-  height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
 }
 
 .lesson-header {
@@ -600,9 +589,6 @@ body {
 
 .lesson-body {
   padding: 14px;
-  flex: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 
