@@ -22,6 +22,7 @@
     10.  Quiz 10 questions — avec étoiles progressives
     11.  Dialogue — scènes de situation
     12.  Vocabulaire — lexique visuel cliquable
+    13b. Onglet Répète — reconnaissance vocale (Speech Recognition)
     13.  Quiz Dialogue — questions sur le dialogue
     14.  Utilitaires & chaînes de résultats bilingues
    ============================================================ */
@@ -135,66 +136,129 @@ function _spokenKey(card) {
    2. POINT D'ENTRÉE — initApp(mode)
    ============================================================
    Appelée par les boutons du launcher HTML (index.html).
-   Configure le thème visuel, la voix, les données et l'UI
-   selon le mode choisi, puis affiche l'écran d'accueil.
+   Charge dynamiquement le fichier de données correspondant au
+   mode choisi (data-fr.js OU data-or.js), puis configure le
+   thème visuel, la voix et l'UI, et affiche l'écran d'accueil.
+
+   CHARGEMENT CONDITIONNEL :
+   Au lieu de charger les 4 tableaux (~2700 lignes) en mémoire
+   au démarrage, on injecte un <script> uniquement pour le mode
+   sélectionné. Chaque fichier contient ~1350 lignes, soit ~50%
+   de la mémoire initiale. Le gain est particulièrement sensible
+   sur mobile et si le contenu Oromo continue de grossir.
    ============================================================ */
 
 /**
+ * Cache des scripts de données déjà injectés dans le DOM.
+ * Clé : nom du fichier (ex. 'data-fr.js') — Valeur : true.
+ * Évite de réinjecter le même <script> si l'utilisateur revient
+ * sur le launcher et rechoisit le même mode.
+ */
+var _loadedDataFiles = {};
+
+/**
+ * Injecte dynamiquement un script de données et appelle le callback
+ * une fois le script exécuté. Si le script est déjà chargé, le
+ * callback est appelé immédiatement (synchrone).
+ *
+ * @param {string}   filename - Nom du fichier JS (ex. 'data-fr.js')
+ * @param {Function} callback - Appelé sans argument quand le script est prêt
+ */
+function _loadDataScript(filename, callback) {
+  /* Script déjà injecté et exécuté → rappel direct, sans ré-injection */
+  if (_loadedDataFiles[filename]) {
+    callback();
+    return;
+  }
+
+  var script    = document.createElement('script');
+  script.src    = 'js/' + filename;
+  script.async  = false;   /* false = ordre d'exécution garanti dans le DOM */
+
+  script.onload = function() {
+    _loadedDataFiles[filename] = true;
+    callback();
+  };
+
+  script.onerror = function() {
+    /* Affiche un message d'erreur non bloquant si le fichier est introuvable */
+    _showToast('⚠️ Erreur : impossible de charger ' + filename);
+  };
+
+  document.head.appendChild(script);
+}
+
+/**
  * Initialise l'application pour un mode d'apprentissage donné.
+ * Le chargement des données est asynchrone (injection dynamique du script),
+ * mais l'utilisateur voit immédiatement le thème et le spinner de transition.
  * @param {'learn_french'|'learn_oromo'} mode
  */
 function initApp(mode) {
   currentMode = mode;
 
+  /* ── Appliquer immédiatement le thème visuel et masquer le launcher ── */
   if (mode === 'learn_french') {
-    /* ── L'apprenant est Oromo, il apprend le Français ── */
     document.documentElement.className = 'theme-french';
     voiceLang   = 'fr-FR';
-    ALL_THEMES  = ALL_THEMES_FR;          // défini dans data.js
-    STORAGE_KEY = 'pe_om_fr_done_v1';    // clé originale app_francais
-
-    /* Les menus sont écrits en Afaan Oromoo (langue de l'apprenant) */
-    _setUI({
-      homeFlagRow    : '🇫🇷',
-      homeTitle      : 'Apprendre le Français',
-      homeStartBtn   : '▶ Commencer',
-      sectionsBackBtn: '← Retour',
-      sectionsTitle  : '📚 Modules',
-      lessonBackBtn  : '← Modules',
-      level1Badge    : '1',
-      level1Label    : 'Niveau 1 — Vocabulaire',
-      level2Badge    : '2',
-      level2Label    : 'Niveau 2 — Phrases simples'
-    });
-
-  } else if (mode === 'learn_oromo') {
-    /* ── L'apprenant est Francophone, il apprend l'Afaan Oromoo ── */
+    STORAGE_KEY = 'pe_om_fr_done_v1';
+  } else {
     document.documentElement.className = 'theme-oromo';
     voiceLang   = 'om-ET';
-    ALL_THEMES  = ALL_THEMES_OR;          // défini dans data.js
-    STORAGE_KEY = 'pe_fr_om_done_v1';    // clé originale app_oromo
-
-    /* Les menus sont écrits en Afaan Oromoo (langue cible de l'apprenant) */
-    _setUI({
-      homeFlagRow    : '🇪🇹',
-      homeTitle      : 'Afaan Oromoo barachuu',
-      homeStartBtn   : '▶ Jalqabi',
-      sectionsBackBtn: '← Gara duubaatti',
-      sectionsTitle  : '📚 Moojuulota',
-      lessonBackBtn  : '← Moojuulota',
-      level1Badge    : '1',
-      level1Label    : 'Sadarkaa 1 — Jechoota',
-      level2Badge    : '2',
-      level2Label    : 'Sadarkaa 2 — Himoota salphaa'
-    });
+    STORAGE_KEY = 'pe_fr_om_done_v1';
   }
 
-  /* Charger la progression sauvegardée pour ce mode */
-  loadDone();
-
-  /* Masquer le launcher et afficher l'accueil */
+  /* Masquer le launcher pendant le chargement (feedback immédiat) */
   document.getElementById('app-launcher').classList.remove('active');
-  showScreen('home');
+
+  /* ── Déterminer le fichier de données à charger ── */
+  var dataFile = (mode === 'learn_french') ? 'data-fr.js' : 'data-or.js';
+
+  _loadDataScript(dataFile, function() {
+    /* Callback : données disponibles en mémoire → finaliser l'initialisation */
+
+    if (mode === 'learn_french') {
+      ALL_THEMES = ALL_THEMES_FR;   /* défini dans data-fr.js */
+
+      _setUI({
+        homeFlagRow    : '🇫🇷',
+        homeTitle      : 'Apprendre le Français',
+        homeStartBtn   : '▶ Commencer',
+        sectionsBackBtn: '← Retour',
+        sectionsTitle  : '📚 Modules',
+        lessonBackBtn  : '← Modules',
+        level1Badge    : '1',
+        level1Label    : 'Niveau 1 — Vocabulaire',
+        level2Badge    : '2',
+        level2Label    : 'Niveau 2 — Phrases simples'
+      });
+
+    } else {
+      ALL_THEMES = ALL_THEMES_OR;   /* défini dans data-or.js */
+
+      _setUI({
+        homeFlagRow    : '🇪🇹',
+        homeTitle      : 'Afaan Oromoo barachuu',
+        homeStartBtn   : '▶ Jalqabi',
+        sectionsBackBtn: '← Gara duubaatti',
+        sectionsTitle  : '📚 Moojuulota',
+        lessonBackBtn  : '← Moojuulota',
+        level1Badge    : '1',
+        level1Label    : 'Sadarkaa 1 — Jechoota',
+        level2Badge    : '2',
+        level2Label    : 'Sadarkaa 2 — Himoota salphaa'
+      });
+    }
+
+    /* Charger la progression sauvegardée pour ce mode */
+    loadDone();
+
+    /* Afficher l'écran d'accueil */
+    showScreen('home');
+
+    /* Afficher le guide utilisateur à la première visite (une fois par mode) */
+    _maybeShowOnboarding();
+  });
 }
 
 /**
@@ -820,7 +884,8 @@ function openTheme(id) {
     tabs = [
       { k: 'dialog', lbl: L('💬 Maree',    '💬 Dialogue')   },
       { k: 'vocab',  lbl: L('📚 Jechoota', '📚 Vocabulaire') },
-      { k: 'dquiz',  lbl: L('❓ Gaaffilee', '❓ Quiz')        }
+      { k: 'dquiz',  lbl: L('❓ Gaaffilee', '❓ Quiz')        },
+      { k: 'repeat', lbl: L('🎙️ Irraddeessi', '🎙️ Répète')   }
     ];
   } else if (CT.type === 'alpha') {
     tabs = [
@@ -829,8 +894,9 @@ function openTheme(id) {
     ];
   } else {
     tabs = [
-      { k: 'flash',  lbl: L('🃏 Kaardota', '🃏 Cartes') },
-      { k: 'quiz10', lbl: L('❓ Gaaffilee', '❓ Quiz')   }
+      { k: 'flash',  lbl: L('🃏 Kaardota', '🃏 Cartes')      },
+      { k: 'quiz10', lbl: L('❓ Gaaffilee', '❓ Quiz')         },
+      { k: 'repeat', lbl: L('🎙️ Irraddeessi', '🎙️ Répète')   }
     ];
   }
 
@@ -843,18 +909,22 @@ function openTheme(id) {
 
 /**
  * Active un onglet et déclenche le rendu du contenu correspondant.
- * @param {'flash'|'quiz10'|'dialog'|'vocab'|'dquiz'} tab
+ * @param {'flash'|'quiz10'|'dialog'|'vocab'|'dquiz'|'repeat'} tab
  */
 function switchTab(tab) {
   document.querySelectorAll('#lessonTabs .tab').forEach(function(b) {
     b.classList.toggle('active', b.dataset.tab === tab);
   });
 
+  /* Arrêter toute reconnaissance vocale en cours si on quitte l'onglet Répète */
+  if (tab !== 'repeat') _stopRepeat();
+
   if      (tab === 'flash')  { renderFlash(); }
   else if (tab === 'quiz10') { q10Step = 0; q10Score = 0; q10Answered = false; _q10Questions = null; if (!_restoreQuizSession()) renderQuiz10(); }
   else if (tab === 'dialog') { renderDialog(); }
   else if (tab === 'vocab')  { renderVocab(); }
   else if (tab === 'dquiz')  { dqStep = 0; dqScore = 0; dqAnswered = false; if (!_restoreQuizSession()) renderDialogQuiz(); }
+  else if (tab === 'repeat') { renderRepeat(); }
 }
 
 
@@ -1347,6 +1417,548 @@ function renderVocab() {
 
 
 /* ============================================================
+   13b. ONGLET RÉPÈTE — RECONNAISSANCE VOCALE
+   ============================================================
+   L'utilisateur entend un mot (TTS), puis le répète à voix haute.
+   La Web Speech API (SpeechRecognition) compare ce qui a été dit
+   au mot attendu et donne un feedback visuel immédiat.
+
+   Cascade de langues pour la reconnaissance Oromo :
+     1. om-ET  (Oromo natif — rare mais idéal)
+     2. so-SO  (Somali — phonétiquement proche)
+     3. am-ET  (Amharique — même région)
+     4. ha-NG  (Haoussa — voyelles proches)
+     5. sw-KE  (Swahili — africain oriental)
+     6. es-ES  (Espagnol — voyelles similaires)
+     7. it-IT  (Italien — voyelles similaires)
+   Si aucune n'est acceptée par le navigateur : message explicatif.
+
+   En mode learn_french : fr-FR uniquement.
+   Si le navigateur ne supporte pas SpeechRecognition : message.
+   ============================================================ */
+
+/* ── Variables d'état de l'onglet Répète ── */
+var _repeatIdx        = 0;       // Index du mot courant dans la liste
+var _repeatWords      = [];      // Liste des mots de la session
+var _repeatScore      = 0;       // Bonnes réponses sur la session
+var _repeatTotal      = 0;       // Total de mots dans la session
+var _repeatRecognizer = null;    // Instance SpeechRecognition en cours
+var _repeatLangUsed   = null;    // Langue réellement utilisée pour la reco
+var _repeatLangLabel  = null;    // Libellé lisible de cette langue
+
+/**
+ * Cascade de langues de reconnaissance pour l'Oromo.
+ * Classées de la plus pertinente à la moins pertinente.
+ */
+var REPEAT_OROMO_LANGS = [
+  { lang: 'om-ET', label: 'Oromo (om-ET)' },
+  { lang: 'so-SO', label: 'Somali (so-SO)' },
+  { lang: 'am-ET', label: 'Amharique (am-ET)' },
+  { lang: 'ha-NG', label: 'Haoussa (ha-NG)' },
+  { lang: 'sw-KE', label: 'Swahili (sw-KE)' },
+  { lang: 'es-ES', label: 'Espagnol (es-ES)' },
+  { lang: 'it-IT', label: 'Italien (it-IT)' }
+];
+
+/**
+ * Arrête proprement la reconnaissance en cours, sans lever d'erreur.
+ */
+function _stopRepeat() {
+  if (_repeatRecognizer) {
+    try { _repeatRecognizer.abort(); } catch(e) {}
+    _repeatRecognizer = null;
+  }
+}
+
+/**
+ * Normalise un texte pour la comparaison :
+ * minuscules, sans accents, sans ponctuation superflue.
+ * @param {string} s
+ * @returns {string}
+ */
+function _normalizeRepeat(s) {
+  return (s || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')  // supprime les diacritiques
+    .replace(/[^a-z0-9\s']/g, ' ')   // ponctuation → espace
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Teste si la transcription contient le mot attendu (tolérance partielle :
+ * le mot attendu doit apparaître quelque part dans la transcription,
+ * ce qui absorbe les mots parasites courants du speech-to-text).
+ * @param {string} transcript
+ * @param {string} expected
+ * @returns {boolean}
+ */
+function _matchRepeat(transcript, expected) {
+  var t = _normalizeRepeat(transcript);
+  var e = _normalizeRepeat(expected);
+  /* Correspondance exacte ou contenue */
+  if (t === e || t.indexOf(e) !== -1) return true;
+  /* Tolérance sur les mots très courts (≤3 car) : comparaison stricte seulement */
+  if (e.length <= 3) return t === e;
+  /* Pour les mots plus longs : on accepte si ≥ 75% des caractères matchent
+     (distance de Levenshtein simplifiée non implémentée — on reste sur indexOf
+     pour ne pas sur-compliquer, mais cette règle absorbe les fins de mots) */
+  return false;
+}
+
+/**
+ * Tente d'instancier SpeechRecognition avec la langue donnée.
+ * Retourne l'instance ou null si non supporté/refusé.
+ * @param {string} lang  - BCP-47 (ex. 'fr-FR', 'om-ET')
+ * @returns {SpeechRecognition|null}
+ */
+function _makeRecognizer(lang) {
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return null;
+  try {
+    var r = new SR();
+    r.lang          = lang;
+    r.continuous    = false;
+    r.interimResults = false;
+    r.maxAlternatives = 3;
+    return r;
+  } catch(e) { return null; }
+}
+
+/**
+ * Construit la liste des mots de la session Répète selon le type de thème.
+ * Pour les dialogues, on extrait les répliques de la langue source.
+ * @returns {Array<{word:string, hint:string}>}
+ *   word  = texte à prononcer (langue source)
+ *   hint  = traduction (langue cible)
+ */
+function _buildRepeatWords() {
+  var keys = langKeys();
+  var list = [];
+
+  if (CT.type === 'dialog') {
+    /* Thème dialogue : on prend le vocabulaire clé (CT.vocab) */
+    (CT.vocab || []).forEach(function(v) {
+      var parts = v.split('=');
+      var et = parts[0] ? parts[0].trim() : '';
+      var fr = parts[1] ? parts[1].trim() : '';
+      var word = { fr: fr, et: et };
+      var mainWord = word[keys.src];
+      var hintWord = word[keys.tgt];
+      if (mainWord) list.push({ word: mainWord, hint: hintWord });
+    });
+  } else {
+    /* Thème vocabulaire standard : CT.words */
+    (CT.words || []).forEach(function(w) {
+      var mainWord = w[keys.src];
+      var hintWord = w[keys.tgt];
+      if (mainWord) list.push({ word: mainWord, hint: hintWord, em: w.em || '' });
+    });
+  }
+  return list;
+}
+
+/**
+ * Affiche l'onglet Répète.
+ * Détecte la disponibilité de la reconnaissance vocale, résout la langue,
+ * puis affiche l'interface de répétition ou un message d'indisponibilité.
+ */
+function renderRepeat() {
+  _stopRepeat();
+  _repeatWords = _buildRepeatWords();
+  _repeatIdx   = 0;
+  _repeatScore = 0;
+  _repeatTotal = _repeatWords.length;
+
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  /* ── SpeechRecognition non supporté ── */
+  if (!SR) {
+    _renderRepeatUnavailable(
+      L('🎙️ Afaan kee dubbisuuf tajaajilli sagalee kun browser kee irratti hin deeggaramu.',
+        '🎙️ La reconnaissance vocale n\'est pas disponible sur ce navigateur.'),
+      L('Chrome yookiin Edge fayyadami.',
+        'Essayez Chrome ou Edge sur Android/Windows/Mac.')
+    );
+    return;
+  }
+
+  if (isFrench()) {
+    /* ── Mode learn_french : fr-FR uniquement ── */
+    _repeatLangUsed  = 'fr-FR';
+    _repeatLangLabel = 'Français (fr-FR)';
+    _renderRepeatUI(null, null);
+
+  } else {
+    /* ── Mode learn_oromo : cascade de langues ── */
+    _resolveRepeatLangOromo(function(lang, label) {
+      if (!lang) {
+        _renderRepeatUnavailable(
+          '🎙️ Aucune langue de reconnaissance compatible avec l\'Oromo n\'est disponible sur ce navigateur.',
+          'Essayez Chrome sur Android ou sur PC. La langue Somali ou Espagnole peut aussi aider.'
+        );
+        return;
+      }
+      _repeatLangUsed  = lang;
+      _repeatLangLabel = label;
+      var isNative = (lang === 'om-ET');
+      var altMsg = isNative ? null : (
+        '⚠️ Pas de reconnaissance Oromo native. Utilisation de : <strong>' + label + '</strong><br>'
+        + '<small>La reconnaissance sera approximative. Parlez lentement et clairement.</small>'
+      );
+      _renderRepeatUI(altMsg, null);
+    });
+  }
+}
+
+/**
+ * Teste en cascade les langues Oromo disponibles pour la reconnaissance.
+ * Appelle callback(lang, label) avec la première langue acceptée,
+ * ou callback(null, null) si aucune ne fonctionne.
+ * @param {Function} callback
+ */
+function _resolveRepeatLangOromo(callback) {
+  var idx = 0;
+
+  function tryNext() {
+    if (idx >= REPEAT_OROMO_LANGS.length) {
+      callback(null, null);
+      return;
+    }
+    var candidate = REPEAT_OROMO_LANGS[idx];
+    idx++;
+
+    var r = _makeRecognizer(candidate.lang);
+    if (!r) { tryNext(); return; }
+
+    /* On teste avec un timeout : si start() ne déclenche pas d'erreur
+       en 400ms, on considère la langue comme acceptée par le navigateur. */
+    var resolved = false;
+
+    r.onerror = function(e) {
+      if (resolved) return;
+      /* 'language-not-supported' → on passe à la suivante */
+      if (e.error === 'language-not-supported' || e.error === 'network') {
+        try { r.abort(); } catch(_) {}
+        tryNext();
+      } else {
+        /* Autre erreur (micro refusé, etc.) → on accepte quand même cette langue */
+        resolved = true;
+        try { r.abort(); } catch(_) {}
+        callback(candidate.lang, candidate.label);
+      }
+    };
+
+    r.onstart = function() {
+      if (resolved) return;
+      resolved = true;
+      try { r.abort(); } catch(_) {}
+      callback(candidate.lang, candidate.label);
+    };
+
+    /* Fallback timeout : si rien ne se passe en 600ms, on accepte */
+    setTimeout(function() {
+      if (resolved) return;
+      resolved = true;
+      try { r.abort(); } catch(_) {}
+      callback(candidate.lang, candidate.label);
+    }, 600);
+
+    try { r.start(); } catch(e) { if (!resolved) { resolved = true; callback(candidate.lang, candidate.label); } }
+  }
+
+  tryNext();
+}
+
+/**
+ * Affiche un message d'indisponibilité dans l'onglet Répète.
+ * @param {string} mainMsg
+ * @param {string} tip
+ */
+function _renderRepeatUnavailable(mainMsg, tip) {
+  document.getElementById('tabContent').innerHTML =
+    '<div class="repeat-unavailable">'
+    + '<div class="repeat-unavail-icon">🎙️</div>'
+    + '<p class="repeat-unavail-main">' + mainMsg + '</p>'
+    + (tip ? '<p class="repeat-unavail-tip">' + tip + '</p>' : '')
+    + '</div>';
+}
+
+/**
+ * Affiche l'interface principale de l'onglet Répète.
+ * @param {string|null} altLangMsg  - Message d'avertissement langue alternative (HTML)
+ * @param {string|null} _unused
+ */
+function _renderRepeatUI(altLangMsg) {
+  if (!_repeatWords.length) {
+    document.getElementById('tabContent').innerHTML =
+      '<div class="repeat-unavailable"><p>'
+      + L('Jechoota hin argamne.', 'Aucun mot disponible pour cet exercice.')
+      + '</p></div>';
+    return;
+  }
+
+  var altBanner = altLangMsg
+    ? '<div class="repeat-alt-lang">' + altLangMsg + '</div>'
+    : '';
+
+  var langInfo = '<div class="repeat-lang-info">🌐 '
+    + L('Af-dubbii : ', 'Reconnaissance : ')
+    + '<strong>' + _repeatLangLabel + '</strong></div>';
+
+  document.getElementById('tabContent').innerHTML =
+    altBanner
+    + langInfo
+    + '<div id="repeat-card" class="repeat-card"></div>'
+    + '<div id="repeat-feedback" class="repeat-feedback"></div>'
+    + '<div id="repeat-controls" class="repeat-controls"></div>'
+    + '<div id="repeat-progress" class="repeat-progress-wrap"></div>';
+
+  _renderRepeatCard();
+}
+
+/**
+ * Affiche la carte du mot courant et les contrôles.
+ */
+function _renderRepeatCard() {
+  if (_repeatIdx >= _repeatTotal) {
+    _renderRepeatResult();
+    return;
+  }
+
+  var item    = _repeatWords[_repeatIdx];
+  var counter = (_repeatIdx + 1) + ' / ' + _repeatTotal;
+  var emoji   = item.em ? '<div class="repeat-card-emoji">' + item.em + '</div>' : '';
+
+  /* Carte mot */
+  document.getElementById('repeat-card').innerHTML =
+    emoji
+    + '<div class="repeat-card-counter">' + counter + '</div>'
+    + '<div class="repeat-card-word">' + item.word + '</div>'
+    + (item.hint ? '<div class="repeat-card-hint">' + item.hint + '</div>' : '');
+
+  /* Zone feedback */
+  document.getElementById('repeat-feedback').innerHTML = '';
+
+  /* Contrôles */
+  var listenLbl = L('🔊 Dhaggeeffadhu', '🔊 Écouter');
+  var micLbl    = L('🎙️ Dubbadhu',      '🎙️ Parler');
+  var skipLbl   = L('⏭ Irra darbii',   '⏭ Passer');
+
+  document.getElementById('repeat-controls').innerHTML =
+    '<button class="repeat-btn repeat-btn--listen" onclick="repeatListen()">' + listenLbl + '</button>'
+    + '<button class="repeat-btn repeat-btn--mic"    id="repeat-mic-btn" onclick="repeatRecord()">' + micLbl + '</button>'
+    + '<button class="repeat-btn repeat-btn--skip"   onclick="repeatSkip()">' + skipLbl + '</button>';
+
+  /* Barre de progression */
+  var pct = Math.round(_repeatIdx / _repeatTotal * 100);
+  document.getElementById('repeat-progress').innerHTML =
+    '<div class="repeat-progress-bar"><div class="repeat-progress-fill" style="width:' + pct + '%"></div></div>'
+    + '<div class="repeat-progress-label">' + _repeatScore + ' ✅ / ' + _repeatIdx + ' ' + L('yaaliitiin', 'tentatives') + '</div>';
+
+  /* Lecture automatique à l'affichage de la première carte */
+  if (_repeatIdx === 0) {
+    setTimeout(function() { repeatListen(); }, 400);
+  }
+}
+
+/**
+ * Lit le mot courant à voix haute (TTS).
+ */
+function repeatListen() {
+  var item = _repeatWords[_repeatIdx];
+  if (!item) return;
+  speak(item.word);
+
+  /* Animation du bouton écoute */
+  var btn = document.getElementById('repeat-controls');
+  if (btn) {
+    var listenBtn = btn.querySelector('.repeat-btn--listen');
+    if (listenBtn) {
+      listenBtn.classList.add('repeat-btn--pulse');
+      setTimeout(function() { listenBtn.classList.remove('repeat-btn--pulse'); }, 600);
+    }
+  }
+}
+
+/**
+ * Lance l'enregistrement et la reconnaissance vocale pour le mot courant.
+ */
+function repeatRecord() {
+  _stopRepeat();
+
+  var item = _repeatWords[_repeatIdx];
+  if (!item) return;
+
+  var micBtn = document.getElementById('repeat-mic-btn');
+  if (micBtn) {
+    micBtn.textContent = L('⏺ Sagalee dhageessuu...', '⏺ Écoute en cours...');
+    micBtn.classList.add('repeat-btn--recording');
+    micBtn.disabled = true;
+  }
+
+  var fbEl = document.getElementById('repeat-feedback');
+  if (fbEl) {
+    fbEl.className = 'repeat-feedback repeat-feedback--listening';
+    fbEl.textContent = L('🎙️ Dubbadhu...', '🎙️ Parlez maintenant...');
+  }
+
+  _repeatRecognizer = _makeRecognizer(_repeatLangUsed);
+  if (!_repeatRecognizer) {
+    _renderRepeatUnavailable(
+      L('Sagalee addabaasuu hin danda\'amu.', 'Impossible de démarrer la reconnaissance vocale.'),
+      ''
+    );
+    return;
+  }
+
+  _repeatRecognizer.onresult = function(e) {
+    var transcripts = [];
+    for (var i = 0; i < e.results[0].length; i++) {
+      transcripts.push(e.results[0][i].transcript);
+    }
+    _handleRepeatResult(transcripts, item.word);
+  };
+
+  _repeatRecognizer.onerror = function(e) {
+    _resetMicBtn();
+    var fbEl2 = document.getElementById('repeat-feedback');
+    if (!fbEl2) return;
+
+    if (e.error === 'not-allowed' || e.error === 'permission-denied') {
+      fbEl2.className = 'repeat-feedback repeat-feedback--error';
+      fbEl2.innerHTML = L(
+        '🔒 Hayyama maaykiroofooniif kenni (browser settings).',
+        '🔒 Autorisez le microphone dans les paramètres du navigateur.'
+      );
+    } else if (e.error === 'no-speech') {
+      fbEl2.className = 'repeat-feedback repeat-feedback--neutral';
+      fbEl2.textContent = L('Sagalee hin dhagahanne. Ammas yaali.', 'Aucun son détecté. Réessayez.');
+    } else if (e.error === 'language-not-supported') {
+      fbEl2.className = 'repeat-feedback repeat-feedback--error';
+      fbEl2.innerHTML = L(
+        '⚠️ Afaan kuni browser keetin hin deeggararamu.',
+        '⚠️ Langue non supportée par ce navigateur pour la reconnaissance.'
+      );
+    } else {
+      fbEl2.className = 'repeat-feedback repeat-feedback--neutral';
+      fbEl2.textContent = L('Dogoggora: ' + e.error, 'Erreur : ' + e.error);
+    }
+  };
+
+  _repeatRecognizer.onend = function() {
+    _resetMicBtn();
+  };
+
+  try {
+    _repeatRecognizer.start();
+  } catch(e) {
+    _resetMicBtn();
+    var fbElCatch = document.getElementById('repeat-feedback');
+    if (fbElCatch) {
+      fbElCatch.className = 'repeat-feedback repeat-feedback--error';
+      fbElCatch.textContent = L('Maaykiroofoona jalqabuu dadhabeera.', 'Impossible de démarrer le microphone.');
+    }
+  }
+}
+
+/**
+ * Remet le bouton micro dans son état initial.
+ */
+function _resetMicBtn() {
+  var micBtn = document.getElementById('repeat-mic-btn');
+  if (micBtn) {
+    micBtn.textContent = L('🎙️ Dubbadhu', '🎙️ Parler');
+    micBtn.classList.remove('repeat-btn--recording');
+    micBtn.disabled = false;
+  }
+}
+
+/**
+ * Traite le résultat de la reconnaissance : compare avec le mot attendu
+ * et affiche le feedback approprié.
+ * @param {string[]} transcripts  - Alternatives retournées par la reco
+ * @param {string}   expected     - Mot attendu
+ */
+function _handleRepeatResult(transcripts, expected) {
+  var matched = transcripts.some(function(t) { return _matchRepeat(t, expected); });
+  var best    = transcripts[0] || '';
+
+  var fbEl = document.getElementById('repeat-feedback');
+  if (!fbEl) return;
+
+  if (matched) {
+    _repeatScore++;
+    _vibrateFeedback('correct');
+    fbEl.className = 'repeat-feedback repeat-feedback--correct';
+    fbEl.innerHTML =
+      '<span class="repeat-fb-icon">✅</span> '
+      + L('Sirrii dha! Baay\'ee gaarii!', 'Correct ! Bravo !')
+      + (best ? '<div class="repeat-fb-heard">'
+          + L('Dhageenyee: ', 'Entendu : ')
+          + '<em>' + best + '</em></div>' : '');
+
+    /* Passe au mot suivant automatiquement après 1,5 s */
+    setTimeout(function() {
+      _repeatIdx++;
+      _renderRepeatCard();
+    }, 1500);
+
+  } else {
+    _vibrateFeedback('wrong');
+    fbEl.className = 'repeat-feedback repeat-feedback--wrong';
+    fbEl.innerHTML =
+      '<span class="repeat-fb-icon">❌</span> '
+      + L('Irra deebi\'i yaalii godhi. Jechan: ', 'Pas tout à fait. Mot attendu : ')
+      + '<strong>' + expected + '</strong>'
+      + (best ? '<div class="repeat-fb-heard">'
+          + L('Dhageenyee: ', 'Entendu : ')
+          + '<em>' + best + '</em></div>' : '');
+  }
+}
+
+/**
+ * Passe le mot courant sans le valider.
+ */
+function repeatSkip() {
+  _stopRepeat();
+  _repeatIdx++;
+  _renderRepeatCard();
+}
+
+/**
+ * Affiche l'écran de résultats à la fin de la session Répète.
+ */
+function _renderRepeatResult() {
+  var pct  = _repeatTotal > 0 ? Math.round(_repeatScore / _repeatTotal * 100) : 0;
+  var emoji = pct === 100 ? '🎉🎉🎉' : pct >= 75 ? '⭐⭐' : pct >= 50 ? '⭐' : '😅';
+
+  document.getElementById('repeat-card').innerHTML = '';
+  document.getElementById('repeat-feedback').innerHTML = '';
+  document.getElementById('repeat-progress').innerHTML = '';
+  document.getElementById('repeat-controls').innerHTML =
+    '<div class="result-box">'
+    + '<div style="font-size:2rem;margin-bottom:8px">' + emoji + '</div>'
+    + '<h3 style="color:var(--c-primary)">'
+    + L('Shaakallii xumurameera!', 'Exercice terminé !')
+    + '</h3>'
+    + '<div class="score-num">' + _repeatScore + ' / ' + _repeatTotal + '</div>'
+    + '<div style="font-size:.85rem;color:#666;margin:8px 0">'
+    + pct + '% ' + L('si\'aa sirriin dubbachiiste', 'de réussite')
+    + '</div>'
+    + '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px">'
+    + '<button class="retry-btn" style="background:#888" onclick="renderRepeat()">'
+    + L('🔄 Irra deebi\'i', '🔄 Recommencer')
+    + '</button>'
+    + '<button class="retry-btn" onclick="switchTab(\'flash\')">'
+    + L('🃏 Kaardota', '🃏 Cartes')
+    + '</button>'
+    + '</div></div>';
+}
+
+
+/* ============================================================
    13. QUIZ DIALOGUE — QUESTIONS SUR LE DIALOGUE
    ============================================================
    Quiz statique chargé depuis CT.quiz (défini dans data.js).
@@ -1486,6 +2098,271 @@ function _escAttr(s) {
   return (s || '')
     .replaceAll('&', '&amp;')
     .replaceAll('"', '&quot;');
+}
+
+
+/* ============================================================
+   17. GUIDE UTILISATEUR — ONBOARDING (première visite par mode)
+   ============================================================
+   Affiché UNE SEULE FOIS par mode d'apprentissage, au premier
+   lancement, juste après l'affichage de l'écran #home.
+
+   PERSISTANCE : deux clés localStorage indépendantes :
+     • 'tm_onboarded_fr' → mode learn_french déjà vu
+     • 'tm_onboarded_or' → mode learn_oromo déjà vu
+   Ainsi, un utilisateur bilingue qui passe d'un mode à l'autre
+   voit le guide pour chaque mode la première fois.
+
+   ARCHITECTURE :
+     _maybeShowOnboarding()  → point d'entrée appelé par initApp()
+     _buildOnboardingContent() → injecte les textes selon le mode
+     _closeOnboarding()      → ferme + marque vu dans localStorage
+     showOnboardingGuide()   → fonction publique (lien "Relire")
+
+   ACCORDÉONS : utilise <details>/<summary> natifs — zéro JS pour
+   l'ouverture/fermeture, juste du CSS (voir §19 de style.css).
+   ============================================================ */
+
+/** Clés localStorage des flags d'onboarding (une par mode) */
+var _OB_KEY_FR = 'tm_onboarded_fr';
+var _OB_KEY_OR = 'tm_onboarded_or';
+
+/**
+ * Vérifie si l'onboarding doit être affiché pour le mode actif.
+ * Appelée par initApp() dans le callback, après showScreen('home').
+ * Affiche le guide seulement si le flag localStorage est absent.
+ */
+function _maybeShowOnboarding() {
+  var key = (currentMode === 'learn_french') ? _OB_KEY_FR : _OB_KEY_OR;
+  try {
+    if (localStorage.getItem(key)) return;   /* déjà vu → on ne fait rien */
+  } catch(e) { /* localStorage indisponible (mode privé) → on n'affiche pas */ return; }
+
+  /* Léger délai : laisse le temps à l'écran home de s'afficher visuellement */
+  setTimeout(function() {
+    _buildOnboardingContent();
+    var overlay = document.getElementById('onboarding-modal');
+    if (overlay) overlay.classList.add('ob-visible');
+  }, 400);
+}
+
+/**
+ * Ferme la modale et enregistre le flag "déjà vu" dans localStorage.
+ * Appelée par le bouton CTA et par le clic sur le fond.
+ */
+function _closeOnboarding() {
+  var overlay = document.getElementById('onboarding-modal');
+  if (!overlay) return;
+
+  /* Animation de sortie : retire la classe visible puis cache */
+  overlay.classList.remove('ob-visible');
+
+  /* Marquer comme vu pour ce mode */
+  var key = (currentMode === 'learn_french') ? _OB_KEY_FR : _OB_KEY_OR;
+  try { localStorage.setItem(key, '1'); } catch(e) {}
+}
+
+/**
+ * Ouvre le guide utilisateur depuis le lien "Relire" dans les footers.
+ * Fonction publique — appelée via onclick dans index.html.
+ * Ne pose PAS le flag localStorage (l'utilisateur demande explicitement).
+ */
+function showOnboardingGuide() {
+  _buildOnboardingContent();
+  var overlay = document.getElementById('onboarding-modal');
+  if (overlay) overlay.classList.add('ob-visible');
+}
+
+/**
+ * Construit et injecte le contenu de la modale selon le mode actif.
+ * Textes entièrement bilingues : langue principale + langue secondaire
+ * en italique pour que les deux types d'apprenants se repèrent.
+ */
+function _buildOnboardingContent() {
+  var isFr = isFrench();
+
+  /* ── Textes de l'en-tête ── */
+  var title    = isFr
+    ? 'Bienvenue dans Taphad\'Meuh !'
+    : 'Baga nagaan dhufte Taphad\'Meuh !';
+  var subtitle = isFr
+    ? 'Apprenez le Français pas à pas · Afaan Faransaayii tarkaanfiin baradhu'
+    : 'Afaan Oromoo harʼa jalqabi · Commencez l\'Oromo dès aujourd\'hui';
+
+  /* ── Texte du bouton CTA ── */
+  var startLabel = isFr
+    ? '▶ Commencer l\'aventure !'
+    : '▶ Jalqabi waltajjii kana !';
+
+  /* ── Texte du hint "relire" ── */
+  var rereadHint = isFr
+    ? 'Vous pourrez relire ce guide depuis le lien <a onclick="showOnboardingGuide()">Aide</a> en bas de chaque page.'
+    : 'Gargaarsa kana booda irra deebʼanii <a onclick="showOnboardingGuide()">Gargaarsa</a> jedhu cuqaasuun dubbisuu dandeessu.';
+
+  /* ── Définition des sections accordéon ── */
+  var sections = [
+    {
+      icon : '🗺️',
+      title: isFr ? 'Comment naviguer dans l\'app'    : 'Appiin keessa akkamiin deemna',
+      sub  : isFr ? 'Comment naviguer dans l\'app'    : 'Comment naviguer dans l\'app',
+      body : isFr
+        ? '<ul>'
+          + '<li><strong>Écran d\'accueil</strong> : votre tableau de bord — progression globale et étoiles gagnées.</li>'
+          + '<li><strong>Modules (📚)</strong> : 32 thèmes de vocabulaire (Niveau 1) + 16 dialogues de situation (Niveau 2).</li>'
+          + '<li><strong>Dans chaque module</strong>, plusieurs onglets : <em>Cartes, Vocabulaire, Quiz, Dialogue, Répète</em>.</li>'
+          + '<li>Le bouton <strong>←</strong> remonte toujours d\'un niveau.</li>'
+          + '</ul>'
+          + '<div class="ob-tip">💡 Commencez par le Niveau 1 — les dialogues du Niveau 2 seront plus faciles ensuite !</div>'
+        : '<ul>'
+          + '<li><strong>Fuula duraa</strong> : daashboordii keessan — tartiiba guutuu fi urjii argattan agarsiisa.</li>'
+          + '<li><strong>Moojuulota (📚)</strong> : jechoota sadarkaa 1 (thèmes 32) + himoota sadarkaa 2 (dialogues 16).</li>'
+          + '<li><strong>Moojuula tokko tokkoon</strong> keessa: <em>Kaardota, Jechootaa, Quiz, Dubbii, Irra deebʼi</em>.</li>'
+          + '<li>Fuula <strong>←</strong> irra deebiʼuuf fayyadami.</li>'
+          + '</ul>'
+          + '<div class="ob-tip">💡 Sadarkaa 1 irraa jalqabi — booda sadarkaa 2 salphaa ta\'a !</div>'
+    },
+    {
+      icon : '🃏',
+      title: isFr ? 'Les Cartes Flash'         : 'Kaardota (Cartes Flash)',
+      sub  : isFr ? 'Kaardota (Cartes Flash)'  : 'Les Cartes Flash',
+      body : isFr
+        ? '<p>Chaque carte montre un mot en Français. <strong>Tapez dessus</strong> pour voir la traduction en Oromo et entendre la prononciation.</p>'
+          + '<ul>'
+          + '<li>Bouton <strong>🔊</strong> : écouter le mot prononcé.</li>'
+          + '<li>Boutons <strong>‹ ›</strong> : passer à la carte suivante ou précédente.</li>'
+          + '<li>La carte se <strong>retourne</strong> pour révéler la traduction.</li>'
+          + '</ul>'
+          + '<div class="ob-tip">💡 Écoutez plusieurs fois avant de passer au Quiz !</div>'
+        : '<p>Kaardni tokko jecha Oromoo agarsiisa. <strong>Cuqaasi</strong> sagalee dhageeffachuu fi hiika Faransaayii argachuuf.</p>'
+          + '<ul>'
+          + '<li>Caancala <strong>🔊</strong> : sagalee dhageeffadhu.</li>'
+          + '<li>Caancalota <strong>‹ ›</strong> : kaardii itti aanu yookiin kan darbee ilaali.</li>'
+          + '<li>Kaardiin <strong>garagalti</strong> hiika agarsisuuf.</li>'
+          + '</ul>'
+          + '<div class="ob-tip">💡 Dura sagalee dhageeffadhu, booda Quiz gali !</div>'
+    },
+    {
+      icon : '🎯',
+      title: isFr ? 'Le Quiz et les Étoiles ⭐'    : 'Quiz fi Urjiin ⭐',
+      sub  : isFr ? 'Quiz fi Urjiin ⭐'             : 'Le Quiz et les Étoiles ⭐',
+      body : isFr
+        ? '<p>Après les cartes, testez-vous avec le <strong>Quiz 10 questions</strong>. Choisissez la bonne réponse parmi 4 options.</p>'
+          + '<ul>'
+          + '<li><strong>⭐</strong> : ≥ 50% de bonnes réponses → module validé !</li>'
+          + '<li><strong>⭐⭐</strong> : ≥ 75% — Très bien !</li>'
+          + '<li><strong>⭐⭐⭐</strong> : 100% — Parfait ! 🎉</li>'
+          + '</ul>'
+          + '<p>Les étoiles ne <strong>diminuent jamais</strong> : seul votre meilleur score est conservé.</p>'
+          + '<div class="ob-tip">💡 Il faut au moins ⭐ (50%) pour valider un module et débloquer la barre de progression.</div>'
+        : '<p>Kaardota booda, <strong>Quiz gaafii 10</strong> waliin of-qori. Deebii sirrii 4 keessaa tokko filadhu.</p>'
+          + '<ul>'
+          + '<li><strong>⭐</strong> : ≥ 50% sirrii → kutaan darbe !</li>'
+          + '<li><strong>⭐⭐</strong> : ≥ 75% — Baayʼee gaari !</li>'
+          + '<li><strong>⭐⭐⭐</strong> : 100% — Baayʼee bareedaa ! 🎉</li>'
+          + '</ul>'
+          + '<p>Urjiilee <strong>hir\'atan hin beekani</strong> : madaala keessan gaarii ta\'e qofti yaadatama.</p>'
+          + '<div class="ob-tip">💡 Kutaa darbuuf xiqqaate ⭐ (50%) barbaachisa.</div>'
+    },
+    {
+      icon : '🔊',
+      title: isFr ? 'La Synthèse Vocale'         : 'Sagalee (Synthèse Vocale)',
+      sub  : isFr ? 'Sagalee (Synthèse Vocale)'  : 'La Synthèse Vocale',
+      body : isFr
+        ? '<p>Chaque mot peut être <strong>écouté</strong> en cliquant sur le bouton 🔊. La prononciation française est lue par votre navigateur.</p>'
+          + '<div class="ob-tip">💡 Si le bouton 🔊 ne fonctionne pas, vérifiez que le son de votre appareil est activé et que votre navigateur supporte la synthèse vocale (Chrome et Firefox recommandés).</div>'
+        : '<p>Jecha tokko tokko <strong>dhageeffachuu</strong> ni dandʼama — caancala 🔊 cuqaasi. Sagaleen Oromoo sagalee jechoota Oromoo dhiyeessuf fayyadama.</p>'
+          + '<p>Sagaleen sirrii ta\'uu ishee garanteessuu hin danda\'amu, garuu sagalee Afaan Oromootti dhiyoo kan argame fayyadamna.</p>'
+          + '<div class="ob-tip">💡 Caancalli 🔊 hin hojjenne yoo taʼe: suursagalee meeshaa kee ilaali, Chrome yookiin Firefox fayyadami.</div>'
+    },
+    {
+      icon : '🎙️',
+      title: isFr ? 'L\'onglet Répète'         : 'Onglet Irra deebʼi',
+      sub  : isFr ? 'Onglet Irra deebʼi'      : 'L\'onglet Répète',
+      body : isFr
+        ? '<p>L\'onglet <strong>Répète</strong> utilise le microphone de votre appareil pour vous faire pratiquer la prononciation :</p>'
+          + '<ul>'
+          + '<li>Appuyez sur <strong>🔊 Écouter</strong> pour entendre le mot.</li>'
+          + '<li>Appuyez sur <strong>🎙️ Parler</strong> et prononcez le mot.</li>'
+          + '<li>L\'app compare votre prononciation et donne un retour immédiat.</li>'
+          + '</ul>'
+          + '<div class="ob-tip">💡 Cette fonctionnalité nécessite l\'autorisation d\'accès au microphone. Elle peut ne pas être disponible sur tous les navigateurs.</div>'
+        : '<p>Onglet <strong>Irra deebʼi</strong> qoʼannaa sagalee gargaaruuf maaykiroofoonii meeshaa kee fayyadama :</p>'
+          + '<ul>'
+          + '<li><strong>🔊 Dhageeffadhu</strong> cuqaasi — jecha dhaggeeffadhu.</li>'
+          + '<li><strong>🎙️ Dubbadhu</strong> cuqaasi — jecha dubbadhuu.</li>'
+          + '<li>Appiin sagalee kee madaalu, deebii ariifataa kenni.</li>'
+          + '</ul>'
+          + '<div class="ob-tip">💡 Hojii kanaaf hayyama maaykiroofoonii barbaachisa. Browser mara irratti hin hojjetu.</div>'
+    },
+    {
+      icon : '📱',
+      title: isFr ? 'Installer l\'app (hors-ligne)'   : 'App gara meeshaa irratti buusi',
+      sub  : isFr ? 'App gara meeshaa irratti buusi'  : 'Installer l\'app (hors-ligne)',
+      body : isFr
+        ? '<p>Taphad\'Meuh peut être <strong>installée sur votre téléphone</strong> comme une vraie app, sans passer par un store :</p>'
+          + '<ul>'
+          + '<li><strong>Android / Chrome</strong> : touchez le menu ⋮ puis <em>"Ajouter à l\'écran d\'accueil"</em>.</li>'
+          + '<li><strong>iOS / Safari</strong> : touchez 🔗 puis <em>"Sur l\'écran d\'accueil"</em>.</li>'
+          + '</ul>'
+          + '<p>Une fois installée, l\'app fonctionne <strong>entièrement hors-ligne</strong> — idéal pour apprendre sans connexion !</p>'
+        : '<p>Taphad\'Meuh bilbila kee irratti <strong>app dhugaa ta\'ee</strong> buusuun danda\'ama, store malee :</p>'
+          + '<ul>'
+          + '<li><strong>Android / Chrome</strong> : ⋮ cuqaasi booda <em>"Fuula jalqabarratti ida\'i"</em>.</li>'
+          + '<li><strong>iOS / Safari</strong> : 🔗 cuqaasi booda <em>"Fuula jalqabarratti"</em>.</li>'
+          + '</ul>'
+          + '<p>Erga buufamee booda, interneetii malee <strong>hojjeta</strong> — barachuu iddoo kamittiyyuu !</p>'
+    }
+  ];
+
+  /* ── Injection du titre et sous-titre ── */
+  var titleEl = document.getElementById('ob-title');
+  var subEl   = titleEl ? titleEl.nextElementSibling : null;
+  if (titleEl) titleEl.textContent = title;
+  if (subEl)   subEl.textContent   = subtitle;
+
+  /* ── Injection des accordéons dans #ob-body ── */
+  var body = document.getElementById('ob-body');
+  if (body) {
+    body.innerHTML = sections.map(function(s) {
+      return '<details class="ob-section">'
+        + '<summary>'
+        + '<span class="ob-icon">' + s.icon + '</span>'
+        + '<span class="ob-section-label">'
+        + s.title
+        + '<span class="ob-section-sub">' + s.sub + '</span>'
+        + '</span>'
+        + '</summary>'
+        + '<div class="ob-detail">' + s.body + '</div>'
+        + '</details>';
+    }).join('');
+  }
+
+  /* ── Bouton CTA ── */
+  var startBtn = document.getElementById('ob-start-btn');
+  if (startBtn) {
+    startBtn.textContent = startLabel;
+    startBtn.onclick     = _closeOnboarding;
+  }
+
+  /* ── Hint de relecture ── */
+  var hint = document.getElementById('ob-reread-hint');
+  if (hint) hint.innerHTML = rereadHint;
+
+  /* ── Fermeture au clic sur le fond (overlay) ── */
+  var overlay = document.getElementById('onboarding-modal');
+  if (overlay) {
+    overlay.onclick = function(e) {
+      /* Ferme uniquement si le clic est sur le fond, pas sur le panneau */
+      if (e.target === overlay) _closeOnboarding();
+    };
+  }
+
+  /* ── Fermeture au clavier Échap ── */
+  document._obKeyHandler = document._obKeyHandler || function(e) {
+    if (e.key === 'Escape') _closeOnboarding();
+  };
+  document.removeEventListener('keydown', document._obKeyHandler);
+  document.addEventListener('keydown', document._obKeyHandler);
 }
 
 

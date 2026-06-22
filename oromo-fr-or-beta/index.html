@@ -70,7 +70,23 @@
 
     <!-- Contenu centré du lanceur -->
     <div class="launcher-inner">
-      <div class="launcher-logo">🌍</div>
+      <!--
+        Logo principal — image landscape (1408×768) du projet.
+        • width:100%  → s'adapte à la largeur du .launcher-inner (max 420px)
+        • height:auto → conserve le ratio 16:9 (~0.545 × largeur)
+        • max-width   → limite sur grands écrans (voir style.css .launcher-logo)
+        • alt bilingue pour l'accessibilité
+        • loading="eager" car c'est la ressource visuelle principale de l'écran 0
+      -->
+      <img
+        class="launcher-logo"
+        src="img/Logo-appli-or-fr.png"
+        alt="Taphad'Meuh — vache tricolore parlant français et oromo / Taphad'Meuh — sa'a trikolore Faransaayii fi Oromoo dubbatu"
+        width="1408"
+        height="768"
+        loading="eager"
+        decoding="async"
+      >
       <!-- Titre bilingue Français / Oromo -->
       <h1 class="launcher-title">Choisis ta langue</h1>
       <p class="launcher-sub">Afaan kee filadhu</p>
@@ -175,7 +191,8 @@
       © Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
       sebastien.godet16@gmail.com ·
       <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
-      <a href="#" onclick="showCredits()">Remerciements</a>
+      <a href="#" onclick="showCredits()">Remerciements</a> ·
+      <a href="#" onclick="showOnboardingGuide()">Aide / Gargaarsa</a>
     </footer>
 
   </div><!-- /#home -->
@@ -245,7 +262,8 @@
       © Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
       sebastien.godet16@gmail.com ·
       <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
-      <a href="#" onclick="showCredits()">Remerciements</a>
+      <a href="#" onclick="showCredits()">Remerciements</a> ·
+      <a href="#" onclick="showOnboardingGuide()">Aide / Gargaarsa</a>
     </footer>
 
   </div><!-- /#sections -->
@@ -334,6 +352,56 @@
   </div><!-- /#credits-modal -->
 
 
+  <!-- ════════════════════════════════════════════════════════════════
+       MODALE — GUIDE UTILISATEUR  (#onboarding-modal)
+       ────────────────────────────────────────────────────────────────
+       Affiché automatiquement à la PREMIÈRE visite de chaque mode
+       (flag localStorage 'tm_onboarded_fr' / 'tm_onboarded_or').
+       Le contenu (texte, titre, langue) est injecté par app.js via
+       _buildOnboardingContent() selon le mode actif.
+
+       STRUCTURE :
+         .ob-overlay        Fond semi-transparent (ferme au clic outside)
+         .ob-sheet          Panneau blanc scrollable centré
+           .ob-header       Bandeau dégradé (emoji + titre bilingue)
+           .ob-body         Corps : sections accordéon (<details>)
+           .ob-footer       Bouton "Commencer" + lien relecture
+       ════════════════════════════════════════════════════════════════ -->
+  <div id="onboarding-modal" class="ob-overlay" aria-modal="true" role="dialog" aria-labelledby="ob-title">
+
+    <div class="ob-sheet">
+
+      <!-- En-tête dégradé (identité visuelle de l'app) -->
+      <div class="ob-header">
+        <div class="ob-header-emoji" aria-hidden="true">🐄</div>
+        <h2 class="ob-title" id="ob-title">
+          <!-- Titre injecté par app.js -->
+        </h2>
+        <p class="ob-subtitle">
+          <!-- Sous-titre injecté par app.js -->
+        </p>
+      </div>
+
+      <!-- Corps : accordéons d'aide -->
+      <div class="ob-body" id="ob-body">
+        <!-- Sections injectées dynamiquement par _buildOnboardingContent() -->
+      </div>
+
+      <!-- Pied de page : CTA principal + lien de relecture -->
+      <div class="ob-footer">
+        <button class="ob-start-btn" id="ob-start-btn">
+          <!-- Libellé injecté par app.js -->
+        </button>
+        <p class="ob-reread-hint" id="ob-reread-hint">
+          <!-- Hint "relire plus tard" injecté par app.js -->
+        </p>
+      </div>
+
+    </div><!-- /.ob-sheet -->
+
+  </div><!-- /#onboarding-modal -->
+
+
 </div><!-- /.app -->
 
 
@@ -344,15 +412,19 @@
   Les scripts sont placés en fin de <body> pour s'assurer que
   l'intégralité du DOM est parsé avant leur exécution.
 
-  Ordre impératif :
-    1. data.js  — doit être chargé EN PREMIER car app.js dépend
-                  des variables/objets qu'il exporte (vocabulaire,
-                  thèmes, métadonnées des langues…).
-    2. app.js   — initialise l'application et branche tous les
-                  écouteurs d'événements sur les éléments du DOM.
+  ARCHITECTURE DE CHARGEMENT (depuis Juin 2026) :
+    1. app.js   — moteur applicatif. Contient _loadDataScript(),
+                  qui injecte dynamiquement le bon fichier de
+                  données au moment du choix de langue :
+                    • learn_french → js/data-fr.js  (~1 350 lignes)
+                    • learn_oromo  → js/data-or.js  (~1 350 lignes)
+
+  AVANTAGE : seul le dataset du mode choisi est chargé en mémoire
+  (~50% vs l'ancien data.js monolithique de 2 700 lignes).
+  data-fr.js et data-or.js sont aussi mis en cache par le Service
+  Worker après leur premier téléchargement.
   ══════════════════════════════════════════════════════════════════
 -->
-<script src="js/data.js"></script>
 <script src="js/app.js"></script>
 
 </body>
