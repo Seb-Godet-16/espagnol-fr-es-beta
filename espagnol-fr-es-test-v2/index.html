@@ -237,22 +237,32 @@
 
     <div class="sections-body">
 
-      <!-- Niveau 1 : Vocabulaire — grille générée par JS -->
-      <div class="level-block">
-        <div class="level-label">
-          <span class="level-badge" id="level1Badge"></span>
-          <span id="level1Label"></span>
+      <!-- Niveau 1 : Vocabulaire — accordéon déroulant -->
+      <div class="level-accordion">
+        <button class="level-acc-header" onclick="toggleLevelAcc(this)" aria-expanded="true">
+          <div class="level-label">
+            <span class="level-badge" id="level1Badge"></span>
+            <span id="level1Label"></span>
+          </div>
+          <span class="level-acc-arrow">▾</span>
+        </button>
+        <div class="level-acc-body open">
+          <div class="themes-grid" id="grid1"></div>
         </div>
-        <div class="themes-grid" id="grid1"></div>
       </div>
 
-      <!-- Niveau 2 : Phrases simples — grille générée par JS -->
-      <div class="level-block">
-        <div class="level-label">
-          <span class="level-badge l2" id="level2Badge"></span>
-          <span id="level2Label"></span>
+      <!-- Niveau 2 : Dialogues — accordéon déroulant -->
+      <div class="level-accordion">
+        <button class="level-acc-header" onclick="toggleLevelAcc(this)" aria-expanded="true">
+          <div class="level-label">
+            <span class="level-badge l2" id="level2Badge"></span>
+            <span id="level2Label"></span>
+          </div>
+          <span class="level-acc-arrow">▾</span>
+        </button>
+        <div class="level-acc-body open">
+          <div class="themes-grid" id="grid2"></div>
         </div>
-        <div class="themes-grid" id="grid2"></div>
       </div>
 
     </div>

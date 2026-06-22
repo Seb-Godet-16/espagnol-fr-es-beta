@@ -915,6 +915,12 @@ function renderSections() {
       .map(function(t) { return _buildThemeCard(t); })
       .join('');
   });
+
+  // Recalcule la max-height des accordéons de niveau maintenant que les grilles
+  // sont remplies (au moment du clic initial les corps étaient encore vides)
+  document.querySelectorAll('.level-acc-body.open').forEach(function(body) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+  });
 }
 
 /* _buildThemeCard(t) — Construit le HTML d'une carte de module.
@@ -2556,20 +2562,36 @@ function toggleAcc(btn) {
   if (!body) return;
 
   if (isOpen) {
-    // Fermeture : on repart de la hauteur actuelle pour permettre la
-    // transition CSS, puis on revient à 0 au prochain tick.
     body.style.maxHeight = body.scrollHeight + 'px';
-    // Force le navigateur à prendre en compte la valeur ci-dessus avant
-    // de la changer, sinon la transition ne se joue pas.
-    body.offsetHeight; // eslint-disable-line no-unused-expressions
+    body.offsetHeight;
     requestAnimationFrame(function() {
       body.classList.remove('open');
       body.style.maxHeight = '0px';
     });
   } else {
     body.classList.add('open');
-    // Mesure la hauteur réelle du contenu et l'applique explicitement,
-    // pour garantir un dépliage complet même sur les sections très longues.
+    body.style.maxHeight = body.scrollHeight + 'px';
+  }
+}
+
+/* toggleLevelAcc(btn) — Ouvre ou ferme un niveau (Niveau 1 / Niveau 2)
+   dans l'écran Sections. Même principe que toggleAcc() du guide. */
+function toggleLevelAcc(btn) {
+  var isOpen = btn.getAttribute('aria-expanded') === 'true';
+  var body   = btn.nextElementSibling;
+
+  btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+  if (!body) return;
+
+  if (isOpen) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.offsetHeight;
+    requestAnimationFrame(function() {
+      body.classList.remove('open');
+      body.style.maxHeight = '0px';
+    });
+  } else {
+    body.classList.add('open');
     body.style.maxHeight = body.scrollHeight + 'px';
   }
 }
