@@ -439,7 +439,7 @@ function initApp(mode) {
       level1Badge    : '1',
       level1Label    : '<span>Nivel 1 — Vocabulario</span>',
       level2Badge    : '2',
-      level2Label    : '<span>Nivel 2 — Phrases simples</span>'
+      level2Label    : '<span>Nivel 2 — Frases sencillas</span>'
     });
   }
 
