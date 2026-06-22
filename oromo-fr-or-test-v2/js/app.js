@@ -412,6 +412,28 @@ function _doSpeak(txt, voiceObj, rate) {
 
 
 /* ============================================================
+   3b. RETOUR HAPTIQUE — _vibrateFeedback()
+   ============================================================
+   Déclenche une vibration courte (succès) ou longue (erreur)
+   sur les appareils mobiles qui supportent l'API Vibration.
+   Sans effet silencieux sur les plateformes non compatibles.
+   ============================================================ */
+
+/**
+ * Vibration de retour haptique lors de la validation d'une réponse.
+ * @param {'correct'|'wrong'} type
+ */
+function _vibrateFeedback(type) {
+  if (!navigator.vibrate) return;
+  if (type === 'correct') {
+    navigator.vibrate(40);            // courte impulsion : succès
+  } else {
+    navigator.vibrate([60, 40, 60]); // double impulsion : erreur
+  }
+}
+
+
+/* ============================================================
    4. PERSISTANCE DE LA PROGRESSION (SYSTÈME D'ÉTOILES ⭐)
    ============================================================
    Chaque thème complété est sauvegardé sous la forme :
@@ -456,18 +478,25 @@ function _calcStars(pct) {
 
 /**
  * Enregistre (ou améliore) la progression d'un thème.
- * Ne fait rien si le score est insuffisant pour obtenir au moins 1 étoile.
- * @param {string} id  - Identifiant du thème
- * @param {number} pct - Pourcentage de réussite (0–100)
+ * REGLE DE NON-RETROGRADATION (formalisee) :
+ *   Le nombre d'etoiles d'un theme ne peut qu'augmenter.
+ *   Un nouveau score inferieur au meilleur score existant
+ *   est ignore silencieusement — jamais ecrase.
+ *   Cela garantit que l'utilisateur conserve toujours son
+ *   meilleur resultat, meme s'il rejoue et obtient moins bien.
+ * Ne fait rien si le score est insuffisant pour obtenir au moins 1 etoile.
+ * @param {string} id  - Identifiant du theme
+ * @param {number} pct - Pourcentage de reussite (0-100)
  */
 function markDone(id, pct) {
   var newStars = _calcStars(pct);
-  if (newStars === 0) return;   // En dessous de 50% : on ne mémorise pas
+  if (newStars === 0) return;   // En dessous de 50% : on ne memorise pas
 
   var existing = done.find(function(d) { return d.id === id; });
   if (existing) {
-    /* On ne descend jamais le score : on conserve le meilleur résultat */
-    if (newStars > existing.stars) existing.stars = newStars;
+    /* GARDE ANTI-RETROGRADATION : on n'ecrase que si le nouveau score est strictement superieur */
+    if (newStars <= existing.stars) return;  // meilleur score deja en memoire -> on ne touche a rien
+    existing.stars = newStars;
   } else {
     done.push({ id: id, stars: newStars });
   }
@@ -502,6 +531,106 @@ function getThemeStars(id) {
   return found ? found.stars : 0;
 }
 
+
+
+/* ============================================================
+   4b. RESTAURATION DE SESSION QUIZ (sessionStorage)
+   ============================================================
+   Problème : si l'utilisateur quitte l'application en cours
+   de quiz (appel entrant, changement d'appli, rafraîchissement
+   accidentel), toute sa progression dans le quiz est perdue.
+
+   Solution : on persiste l'état complet du quiz dans
+   sessionStorage après chaque réponse validée.
+   sessionStorage est vidé après fermeture complète du navigateur
+   (contrairement à localStorage), ce qui garantit qu'une session
+   reprise le lendemain ne propose pas de "continuer" un vieux quiz.
+
+   Clé : 'quiz_session' — valeur JSON :
+     {
+       mode     : 'learn_french' | 'learn_oromo',
+       themeId  : string,
+       quizType : 'q10' | 'dq',
+       step     : number,
+       score    : number,
+       questions: Array   // questions générées (pour le quiz standard)
+     }
+   ============================================================ */
+
+/** Clé sessionStorage unique pour la session quiz en cours. */
+var SESSION_KEY = 'quiz_session';
+
+/**
+ * Sauvegarde l'état courant du quiz dans sessionStorage.
+ * @param {'q10'|'dq'} quizType
+ */
+function _saveQuizSession(quizType) {
+  try {
+    var state = {
+      mode     : currentMode,
+      themeId  : CT ? CT.id : null,
+      quizType : quizType,
+      step     : quizType === 'q10' ? q10Step  : dqStep,
+      score    : quizType === 'q10' ? q10Score : dqScore,
+      questions: quizType === 'q10' ? (_q10Questions || []) : null
+    };
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(state));
+  } catch(e) { /* session privée ou quota dépassé : on ignore */ }
+}
+
+/**
+ * Tente de restaurer une session quiz interrompue depuis sessionStorage.
+ * Retourne true si une session a été restaurée et affichée, false sinon.
+ * @returns {boolean}
+ */
+function _restoreQuizSession() {
+  try {
+    var raw = sessionStorage.getItem(SESSION_KEY);
+    if (!raw) return false;
+
+    var state = JSON.parse(raw);
+
+    /* Vérifications de cohérence : même mode, même thème, session non terminée */
+    if (!state
+        || state.mode    !== currentMode
+        || state.themeId !== (CT ? CT.id : null)
+        || state.step    === 0) {
+      return false;
+    }
+
+    if (state.quizType === 'q10') {
+      if (state.step >= (state.questions || []).length) return false;
+      /* Restauration du quiz standard */
+      q10Step       = state.step;
+      q10Score      = state.score;
+      q10Answered   = false;
+      _q10Questions = state.questions;
+      _showToast(L('Gaaffiin itti fufameera (hatattamaan dhiissite)', 'Quiz restauré depuis votre dernière session'), 3500);
+      renderQuiz10();
+      return true;
+    }
+
+    if (state.quizType === 'dq') {
+      if (!CT.quiz || state.step >= CT.quiz.length) return false;
+      /* Restauration du quiz dialogue */
+      dqStep     = state.step;
+      dqScore    = state.score;
+      dqAnswered = false;
+      _showToast(L('Gaaffiin itti fufameera (hatattamaan dhiissite)', 'Quiz restauré depuis votre dernière session'), 3500);
+      renderDialogQuiz();
+      return true;
+    }
+  } catch(e) { /* données corrompues : on ignore et on repart de zéro */ }
+  return false;
+}
+
+/**
+ * Efface la session quiz sauvegardée (appelée à la fin du quiz ou
+ * quand l'utilisateur démarre un nouveau thème).
+ */
+function _clearQuizSession() {
+  try { sessionStorage.removeItem(SESSION_KEY); } catch(e) {}
+}
 
 /* ============================================================
    5. NAVIGATION ENTRE ÉCRANS
@@ -666,6 +795,7 @@ function openTheme(id) {
   dqStep = 0; dqScore = 0; dqAnswered = false;
   sitIdx = 0;
   q10Step = 0; q10Score = 0; q10Answered = false; _q10Questions = null;
+  _clearQuizSession();   /* nouvelle session : on efface toute session interrompue */
 
   document.getElementById('lessonEmoji').textContent = CT.emoji;
 
@@ -721,10 +851,10 @@ function switchTab(tab) {
   });
 
   if      (tab === 'flash')  { renderFlash(); }
-  else if (tab === 'quiz10') { q10Step = 0; q10Score = 0; q10Answered = false; _q10Questions = null; renderQuiz10(); }
+  else if (tab === 'quiz10') { q10Step = 0; q10Score = 0; q10Answered = false; _q10Questions = null; if (!_restoreQuizSession()) renderQuiz10(); }
   else if (tab === 'dialog') { renderDialog(); }
   else if (tab === 'vocab')  { renderVocab(); }
-  else if (tab === 'dquiz')  { dqStep = 0; dqScore = 0; dqAnswered = false; renderDialogQuiz(); }
+  else if (tab === 'dquiz')  { dqStep = 0; dqScore = 0; dqAnswered = false; if (!_restoreQuizSession()) renderDialogQuiz(); }
 }
 
 
@@ -994,6 +1124,7 @@ function renderQuiz10() {
 
   /* ── Écran de résultats ── */
   if (q10Step >= total) {
+    _clearQuizSession();   /* quiz terminé : on nettoie la session */
     var pct         = Math.round(q10Score / total * 100);
     var earnedStars = _calcStars(pct);
     if (earnedStars > 0) markDone(CT.id, pct);
@@ -1090,7 +1221,7 @@ function checkQ10(chosen, correct) {
     else if (i === chosen && chosen !== correct) b.classList.add('wrong');
   });
 
-  if (chosen === correct) q10Score++;
+  if (chosen === correct) { q10Score++; _vibrateFeedback('correct'); } else { _vibrateFeedback('wrong'); }
 
   var correctWord = qs[q10Step].opts[correct];
   var fb  = document.getElementById('q10fb');
@@ -1108,6 +1239,7 @@ function checkQ10(chosen, correct) {
     }
   }
 
+  _saveQuizSession('q10');
   setTimeout(function() { q10Step++; renderQuiz10(); }, 1600);
 }
 
@@ -1230,6 +1362,7 @@ function renderDialogQuiz() {
 
   /* ── Écran de résultats ── */
   if (dqStep >= total) {
+    _clearQuizSession();   /* quiz terminé : on nettoie la session */
     var pct         = Math.round(dqScore / total * 100);
     var earnedStars = _calcStars(pct);
     if (earnedStars > 0) markDone(CT.id, pct);
@@ -1286,7 +1419,7 @@ function checkDQ(chosen, correct) {
     else if (i === chosen && chosen !== correct) b.classList.add('wrong');
   });
 
-  if (chosen === correct) dqScore++;
+  if (chosen === correct) { dqScore++; _vibrateFeedback('correct'); } else { _vibrateFeedback('wrong'); }
 
   var fb = document.getElementById('dqfb');
   fb.textContent = (chosen === correct)
@@ -1294,6 +1427,7 @@ function checkDQ(chosen, correct) {
     : L('❌ Deebistee yaali!',   '❌ Essayer de nouveau !');
   fb.style.color = (chosen === correct) ? '#009A44' : '#c0392b';
 
+  _saveQuizSession('dq');
   setTimeout(function() { dqStep++; renderDialogQuiz(); }, 1500);
 }
 
