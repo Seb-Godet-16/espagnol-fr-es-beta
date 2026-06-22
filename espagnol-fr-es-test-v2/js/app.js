@@ -326,7 +326,7 @@ function initApp(mode) {
 
   /* ─── MODE : Apprendre l'Espagnol (interface présentée en Français) ─── */
   } else if (mode === 'learn_spain') {
-    document.documentElement.className = 'theme-spain';
+    document.documentElement.className = 'theme-spain region-' + currentRegion;
     voiceLang  = 'es-ES';
     ALL_THEMES = ALL_THEMES_ES;
     STORAGE_KEY = 'pe_fr_es_done_v1';
