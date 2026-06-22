@@ -172,11 +172,12 @@ function showLauncherVariant(mode) {
   /* — Thème visuel provisoire (pour que les couleurs du sélecteur soient correctes) — */
   document.documentElement.className = (mode === 'learn_french') ? 'theme-french' : 'theme-spain';
 
-  /* — Bascule Vue A → Vue B — */
+  /* — Bascule Vue A → Vue B + fond dégradé pays — */
   document.getElementById('launcher-view-cards').style.display   = 'none';
   document.getElementById('launcher-view-variant').style.display = 'flex';
   document.getElementById('launcher-view-variant').style.flexDirection = 'column';
   document.getElementById('launcher-view-variant').style.alignItems = 'center';
+  document.getElementById('app-launcher').classList.add('variant-active');
 
   /* — Drapeau et titre selon le mode — */
   var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
@@ -219,6 +220,7 @@ function showLauncherVariant(mode) {
       document.getElementById('launcher-view-cards').style.display   = 'flex';
       document.getElementById('launcher-view-cards').style.flexDirection = 'column';
       document.getElementById('launcher-view-cards').style.alignItems = 'center';
+      document.getElementById('app-launcher').classList.remove('variant-active');
       document.documentElement.className = '';
       _setLauncherFooterLang(null);
     };
@@ -270,6 +272,7 @@ function showLauncher() {
   document.getElementById('launcher-view-cards').style.flexDirection = 'column';
   document.getElementById('launcher-view-cards').style.alignItems = 'center';
   document.getElementById('app-launcher').classList.add('active');
+  document.getElementById('app-launcher').classList.remove('variant-active');
   document.documentElement.className = '';
   _setLauncherFooterLang(null);
   window.scrollTo(0, 0);

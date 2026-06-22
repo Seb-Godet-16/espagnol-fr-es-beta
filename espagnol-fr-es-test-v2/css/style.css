@@ -101,15 +101,12 @@ body {
   box-sizing: border-box;
 }
 
-/* Motif radial de fond (non interactif) */
-.launcher-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 15% 20%, rgba(0,35,149,.07)   0%, transparent 45%),
-    radial-gradient(circle at 85% 75%, rgba(0,154,68,.07)   0%, transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(237,41,57,.04)  0%, transparent 60%);
-  pointer-events: none;
+/* Fond uni — même crème que le logo, sans halo */
+.launcher-bg { display: none; }
+
+/* Vue B : fond dégradé aux couleurs du pays sélectionné */
+#app-launcher.variant-active {
+  background: var(--c-grad-home);
 }
 
 .launcher-inner {
