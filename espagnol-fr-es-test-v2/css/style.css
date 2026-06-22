@@ -72,6 +72,66 @@ body {
   width: 100%;
 }
 
+/* ════════════════════════════════════════
+   LAYOUT TABLET / DESKTOP  (≥ 768 px)
+   ─────────────────────────────────────
+   Sur grand écran, l'app n'est plus une
+   colonne flottante sans contexte : le body
+   reçoit un fond doux et la colonne .app
+   est présentée comme une "carte" avec une
+   légère ombre portée, centrée verticalement.
+   Cela corrige l'effet "îlot étroit sur fond
+   blanc" visible à partir de ~ 800 px.
+════════════════════════════════════════ */
+@media (min-width: 768px) {
+  body {
+    /* Fond quadrillé discret façon papier pointillé */
+    background-color: #e8ecf4;
+    background-image:
+      radial-gradient(circle, rgba(0,35,149,.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .app {
+    /* La colonne .app devient une carte flottante */
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,.06),
+      0 8px 32px rgba(0,0,0,.14),
+      0 2px 8px  rgba(0,0,0,.08);
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Le lanceur et chaque écran occupent toute la hauteur de la carte */
+  #app-launcher,
+  .screen.active {
+    min-height: 100vh;
+  }
+}
+
+/* Adaptation du fond body au thème français sur desktop */
+@media (min-width: 768px) {
+  html.theme-french body {
+    background-color: #dce3f6;
+    background-image:
+      radial-gradient(circle, rgba(0,35,149,.09) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Adaptation du fond body au thème espagnol sur desktop */
+  html.theme-spain body {
+    background-color: #f2e8e8;
+    background-image:
+      radial-gradient(circle, rgba(198,11,30,.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+}
+
 /* Chaque écran est masqué par défaut ; .active l'affiche en flex */
 .screen {
   display: none;
@@ -2191,7 +2251,198 @@ html.theme-spain.region-VE {
   transition: opacity .3s ease, transform .3s ease;
   pointer-events: none;
 }
-.app-toast.visible {
-  opacity: 1;
-  transform: translate(-50%, 0);
+/* ════════════════════════════════════════
+   DARK MODE  @media (prefers-color-scheme: dark)
+   ─────────────────────────────────────
+   Stratégie : on redéfinit les tokens CSS
+   (--c-*, --g-*) sous la media query sombre.
+   Tous les composants qui utilisent var(--c-*)
+   basculent automatiquement.
+   Les couleurs de marque (drapeaux, dégradés)
+   sont assombries mais conservent leur identité.
+════════════════════════════════════════ */
+@media (prefers-color-scheme: dark) {
+
+  /* ── Tokens de base (thème Français par défaut) ── */
+  :root {
+    --c-primary:          #5b84e8;   /* bleu adouci sur fond sombre */
+    --c-primary-dark:     #3a66d4;
+    --c-accent:           #f05060;
+    --c-accent2:          #fff;
+    --c-bg:               #1a1d2e;   /* fond écrans sections/leçon */
+    --c-done:             #4caf50;
+    --c-progress-bg:      rgba(91,132,232,.22);
+    --c-footer-bg:        #14172a;
+    --c-footer-border:    #2a2e46;
+    --c-vocab-chip-bg:    #1f2540;
+    --c-vocab-chip-border:#3a4878;
+    --c-fc-nav-hover:     #1e2544;
+    --c-grad-home:        linear-gradient(135deg, #001466 0%, #2a2a3a 50%, #7a0f1a 100%);
+    --c-grad-sections:    linear-gradient(135deg, #001466, #7a0f1a);
+    --c-grad-lesson:      linear-gradient(135deg, #001466, #7a0f1a);
+    --c-grad-fc-back:     linear-gradient(135deg, #001466, #7a0f1a);
+    --c-grad-alpha-btn:   linear-gradient(135deg, #001466, #7a0f1a);
+    --c-home-title:          #a0b8f8;
+    --c-home-subtitle:       #8aaaf0;
+    --c-home-progress:       #5b84e8;
+    --c-home-progress-label: #8aaaf0;
+  }
+
+  /* ── Fond global body ── */
+  body { background: #0f111c; }
+
+  /* ── Fond du lanceur en mode sans thème sélectionné ── */
+  #app-launcher { background: #13162a; }
+
+  /* Sous-titre du launcher */
+  .launcher-subtitle { color: rgba(255,255,255,.4); }
+
+  /* ── Fond fond desktop ── */
+  @media (min-width: 768px) {
+    body {
+      background-color: #0a0c18;
+      background-image:
+        radial-gradient(circle, rgba(91,132,232,.10) 1px, transparent 1px);
+    }
+    .app {
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.06),
+        0 8px 32px rgba(0,0,0,.5),
+        0 2px 8px  rgba(0,0,0,.3);
+    }
+  }
+
+  /* ── Cartes de thème ── */
+  .theme-card {
+    background: #1e2236;
+    box-shadow: 0 2px 8px rgba(0,0,0,.35);
+  }
+  .theme-card.done { border-color: #4caf50; }
+  .t-name  { color: #e0e4f8; }
+  .t-sub   { color: #666a90; }
+
+  /* ── Accordéon de niveau ── */
+  .level-accordion  { background: #1a1d30; }
+  .level-acc-header { background: rgba(255,255,255,.04); }
+  .level-acc-header:hover { background: rgba(255,255,255,.08); }
+
+  /* ── Flashcard face avant (fond blanc → sombre) ── */
+  .fc-front { background: #1e2236; box-shadow: 0 4px 20px rgba(0,0,0,.45); }
+  .fc-front-word  { color: var(--c-primary); }
+  .fc-front-hint  { color: #555a7a; }
+  .fc-front .fc-conj-line { color: #c0c8e8; border-bottom-color: rgba(255,255,255,.08); }
+
+  /* ── Navigation flashcard ── */
+  .fc-nav button { background: #1e2236; border-color: var(--c-primary); color: var(--c-primary); }
+  .fc-nav button:active { background: #252a48; }
+  .fc-counter { color: #8890b8; }
+
+  /* ── Onglets ── */
+  .tab { background: #1e2236; color: var(--c-primary); border-color: var(--c-primary); }
+  .tab.active { background: var(--c-primary); color: #fff; }
+
+  /* ── Quiz options ── */
+  .quiz-opt { background: #1e2236; color: var(--c-primary); border-color: var(--c-primary); }
+  .quiz-opt:active:not(.disabled) { background: #252a48; }
+  .quiz-q .q-text { color: #ccd0ee; }
+  .quiz-feedback { color: #ccd0ee; }
+  .result-box { background: #1e2236; }
+  .result-box h3 { color: var(--c-primary); }
+  .score-num  { color: var(--c-primary); }
+
+  /* ── Dialogues ── */
+  .dialogue-box { background: #1e2236; border-color: #2a2e46; }
+  .bubble.left .msg { background: #252a48; color: #dde0f4; }
+
+  /* ── Vocabulaire ── */
+  .vocab-section { background: #1e2236; border-color: #2a2e46; }
+  .vocab-title   { color: #8890b8; }
+
+  /* ── Blocs micro ── */
+  .mic-zone { background: #1e2236; border-color: var(--c-primary); }
+  .mic-btn  { background: #1e2236; color: var(--c-primary); border-color: var(--c-primary); }
+
+  /* ── Alphabet ── */
+  .alpha-card  { background: #1e2236; border-color: var(--c-primary); }
+  .alpha-card:active { background: var(--c-primary); }
+  .alpha-letter { color: var(--c-primary); }
+  .alpha-name   { color: #666a90; }
+  .alpha-detail { background: #1e2236; box-shadow: 0 2px 8px rgba(0,0,0,.35); }
+
+  /* ── Situation + sit-btn ── */
+  .sit-btn { background: #1e2236; color: var(--c-primary); border-color: var(--c-primary); }
+  .sit-btn.active { background: var(--c-primary); color: #fff; }
+
+  /* ── Répète ── */
+  .rp-header   { background: #252a48; color: #8890b8; }
+  .rp-word-box { background: #1e2236; border-color: var(--c-primary); }
+  .rp-word     { color: var(--c-primary); }
+  .rp-skip-btn { background: #252a48; border-color: #3a3e60; color: #8890b8; }
+
+  /* ── Section label ── */
+  .section-label { color: #666a90; }
+
+  /* ── Footer ── */
+  footer { background: #14172a; border-top-color: #2a2e46; color: #666a90; }
+  footer a { color: var(--c-primary); }
+  .lesson-footer { background: #14172a; border-top-color: #2a2e46; color: #666a90; }
+  .lesson-footer a { color: var(--c-primary); }
+  .launcher-footer { color: #555a7a; }
+  .launcher-footer a { color: #777aaa; }
+
+  /* ── Guide (variables propres --g-*) ── */
+  :root {
+    --g-bg:     #121420;
+    --g-text:   #dde0f4;
+    --g-muted:  #666a90;
+    --g-border: #2a2e46;
+  }
+  .guide-modal { background: var(--g-bg); }
+  .guide-accordion { background: #1a1d30; border-color: #2a2e46; }
+  .guide-card  { background: #1a1d30; border-color: #2a2e46; }
+  .guide-acc-header:hover { background: rgba(255,255,255,.04); }
+  .guide-topbar { background: rgba(5,5,20,.92); }
+
+  /* ── Overlay remerciements ── */
+  .modal-content { background: #1e2236 !important; color: #dde0f4 !important; }
+
+  /* ── Toast ── */
+  .app-toast { background: #2a2e50; }
+
+  /* ── Sélecteur de région ── */
+  #regionSelector {
+    background: #1e2236;
+    color: #dde0f4;
+    border-color: #3a3e60;
+  }
+}
+
+/* ── Surcharges dark pour html.theme-french ── */
+@media (prefers-color-scheme: dark) {
+  html.theme-french body { background: #0f111c; }
+  html.theme-french #app-launcher.variant-active { background: var(--c-grad-home); }
+}
+
+/* ── Surcharges dark pour html.theme-spain ── */
+@media (prefers-color-scheme: dark) {
+  html.theme-spain {
+    --c-primary:           #e85060;
+    --c-primary-dark:      #c0192b;
+    --c-accent:            #e8a800;
+    --c-bg:                #1e1610;
+    --c-footer-bg:         #171008;
+    --c-footer-border:     #2e2010;
+    --c-vocab-chip-bg:     #1e160a;
+    --c-vocab-chip-border: #4a3010;
+    --c-fc-nav-hover:      #281a08;
+    --c-grad-home:         linear-gradient(135deg, #6e0610 0%, #1a1208 50%, #7a5200 100%);
+    --c-grad-sections:     linear-gradient(135deg, #6e0610, #7a5200, #6e0610);
+    --c-grad-lesson:       linear-gradient(135deg, #6e0610, #7a5200);
+    --c-grad-fc-back:      linear-gradient(135deg, #7a5200, #6e0610);
+    --c-grad-alpha-btn:    linear-gradient(135deg, #6e0610, #7a5200);
+    --c-home-title:          #f08090;
+    --c-home-subtitle:       #c08840;
+    --c-home-progress-label: #f08090;
+  }
+  html.theme-spain body { background: #100c04; }
 }

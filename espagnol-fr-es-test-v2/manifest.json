@@ -1,0 +1,23 @@
+{
+  "name": "VACHÉBO — Apprendre Français & Espagnol",
+  "short_name": "VACHÉBO",
+  "description": "Application bilingue Français ↔ Espagnol — flashcards, quiz, dialogues, 7 variantes d'espagnol.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FCFFEE",
+  "theme_color": "#002395",
+  "categories": ["education", "utilities"],
+  "icons": [
+    {
+      "src": "img/Logo-appli-es-fr.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}

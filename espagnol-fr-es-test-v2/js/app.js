@@ -3,13 +3,15 @@
    Français ↔ Espagnol (bidirectionnel)
    © Juin 2026 – Sébastien Godet · IA Claude Sonnet 4.6 et Gemini 3.5 Flash
    ============================================================
-   ARCHITECTURE (4 fichiers) :
+   ARCHITECTURE (5 fichiers) :
      ├─ index.html  → Structure HTML + launcher
      ├─ style.css   → Thèmes couleur, composants visuels
-     ├─ data.js     → ALL_THEMES_FR / ALL_THEMES_ES (contenu pédagogique)
+     ├─ data-fr.js  → ALL_THEMES_FR (contenu mode learn_french)  — chargé à la demande
+     ├─ data-es.js  → ALL_THEMES_ES (contenu mode learn_spain)   — chargé à la demande
      └─ app.js      → Ce fichier : logique applicative complète
 
    SECTIONS DE CE FICHIER :
+     0.  Chargement conditionnel des données — loadDataForMode()
      1.  Variables d'état globales
      2.  Utilitaires centraux de sélection bilingue (L, isFrench, langKeys)
      3.  Point d'entrée — initApp(mode)
@@ -31,6 +33,58 @@
    ============================================================ */
 
 /* ═══════════════════════════════════════════════════════════
+   0. CHARGEMENT CONDITIONNEL DES DONNÉES
+   ─────────────────────────────────────────────────────────
+   data.js a été séparé en data-fr.js (~106 Ko) et data-es.js
+   (~96 Ko). Seul le fichier utile au mode choisi est injecté,
+   ce qui réduit de ~50 % le volume de données parsé au démarrage.
+
+   loadDataForMode(mode, callback) :
+     • Vérifie si les variables du mode sont déjà présentes en
+       mémoire (cas : l'utilisateur revient au Launcher et choisit
+       la même langue → pas de rechargement inutile).
+     • Sinon, crée une balise <script> pointant vers le bon fichier,
+       l'injecte dans <head> et appelle callback() à son onload.
+     • En cas d'erreur réseau, affiche un toast et bloque initApp.
+
+   Appelée par showLauncherVariant() juste avant initApp().
+═══════════════════════════════════════════════════════════ */
+
+/**
+ * Charge dynamiquement data-fr.js ou data-es.js selon le mode,
+ * puis appelle callback() une fois les données disponibles.
+ * Si les données sont déjà en mémoire, callback() est appelé immédiatement.
+ *
+ * @param {'learn_french'|'learn_spain'} mode
+ * @param {Function} callback  — fonction à exécuter quand les données sont prêtes
+ */
+function loadDataForMode(mode, callback) {
+  var alreadyLoaded = (mode === 'learn_french')
+    ? (typeof ALL_THEMES_FR !== 'undefined')
+    : (typeof ALL_THEMES_ES !== 'undefined');
+
+  if (alreadyLoaded) {
+    callback();
+    return;
+  }
+
+  var src = (mode === 'learn_french') ? 'js/data-fr.js' : 'js/data-es.js';
+  var script = document.createElement('script');
+  script.src = src;
+
+  script.onload = function() {
+    callback();
+  };
+
+  script.onerror = function() {
+    _showToast('⚠️ Erreur de chargement des données (' + src + '). Vérifiez votre connexion.', 5000);
+  };
+
+  document.head.appendChild(script);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
    1. VARIABLES D'ÉTAT GLOBALES
    ─────────────────────────────────────────────────────────
    Ces variables sont partagées entre toutes les fonctions.
@@ -39,43 +93,43 @@
 ═══════════════════════════════════════════════════════════ */
 
 // Mode courant : 'learn_french' (Espagnol → Français) ou 'learn_spain' (Français → Espagnol)
-var currentMode = '';
+let currentMode = '';
 
 // Variante hispanique sélectionnée (codes ISO pays) ; par défaut : Espagne castillane
 // Valeurs possibles : 'ES' | 'MX' | 'CO' | 'PE' | 'VE' | 'AR' | 'EC'
-var currentRegion = 'ES';
+let currentRegion = 'ES';
 
 // Code BCP-47 utilisé par la Web Speech API pour la synthèse vocale.
 // Initialisé à vide ; assigné par initApp() selon le mode sélectionné.
-var voiceLang = '';
+let voiceLang = '';
 
 // Tableau de tous les thèmes actifs, rempli par initApp() depuis data.js
-var ALL_THEMES = [];
+let ALL_THEMES = [];
 
 // Clé localStorage distincte par mode, pour conserver deux progressions indépendantes
-var STORAGE_KEY = '';
+let STORAGE_KEY = '';
 
 // ─── Variables de session (réinitialisées à chaque ouverture de thème) ───
-var CT          = null;   // Thème courant (Current Theme)
-var fcIdx       = 0;       // Index de la carte flash active
-var dqStep      = 0;       // Étape du quiz dialogue
-var dqScore     = 0;       // Score du quiz dialogue
-var dqAnswered  = false;   // Anti double-clic sur les options du quiz dialogue
-var sitIdx      = 0;       // Index de la situation active dans un dialogue
-var q10Step     = 0;       // Étape du quiz 10 questions
-var q10Score    = 0;       // Score du quiz 10 questions
-var q10Answered = false;   // Anti double-clic sur les options du quiz 10
+let CT          = null;   // Thème courant (Current Theme)
+let fcIdx       = 0;       // Index de la carte flash active
+let dqStep      = 0;       // Étape du quiz dialogue
+let dqScore     = 0;       // Score du quiz dialogue
+let dqAnswered  = false;   // Anti double-clic sur les options du quiz dialogue
+let sitIdx      = 0;       // Index de la situation active dans un dialogue
+let q10Step     = 0;       // Étape du quiz 10 questions
+let q10Score    = 0;       // Score du quiz 10 questions
+let q10Answered = false;   // Anti double-clic sur les options du quiz 10
 
 // Cache des questions générées dynamiquement pour le quiz de Niveau 1
 // Régénéré à chaque ouverture d'onglet Quiz pour garantir la variété
-var _currentDynQuiz = [];
+let _currentDynQuiz = [];
 
 // Clé sessionStorage utilisée pour mémoriser la position dans un quiz en cours
 // (perdue à la fermeture de l'onglet, conservée si on quitte/revient sur la leçon)
-var QUIZ_SESSION_KEY = 'pe_quiz_session_v1';
+const QUIZ_SESSION_KEY = 'pe_quiz_session_v1';
 
 // Progression persistante : tableau d'objets { id: string, stars: 1|2|3 }
-var done = [];
+let done = [];
 
 
 /* ═══════════════════════════════════════════════════════════
@@ -118,17 +172,36 @@ function langKeys() {
 
 /**
  * Résout le titre d'un thème dans la langue source (nom principal)
- * et la langue cible (sous-titre), en gérant le cas particulier
- * de l'alphabet (type:'alpha') dont les libellés sont inversés
- * selon le mode actif.
+ * et la langue cible (sous-titre), en gérant :
+ *   - le cas particulier de l'alphabet (type:'alpha') dont les libellés
+ *     sont inversés selon le mode actif ;
+ *   - les sous-titres contenant un '/' en mode learn_spain (on ne garde
+ *     que la partie française, à droite du slash) ;
+ *   - la capitalisation de sécurité (première lettre en majuscule).
+ * Fonction unique de référence — utilisée par _buildThemeCard et openTheme.
  * @param {Object} t – Objet thème issu de data.js
  * @returns {{ main: string, sub: string }}
  */
 function _themeTitle(t) {
-  var isAlpha = (t.id === 'alpha' || t.type === 'alpha');
-  var main = isAlpha ? L("L'Alphabet", 'El Alfabeto') : t.name;
-  var sub  = isAlpha ? L('El Alfabeto', "L'Alphabet") : t.sub;
-  return { main: main, sub: sub };
+  const isAlpha = (t.id === 'alpha' || t.type === 'alpha');
+  let main, sub;
+
+  if (isAlpha) {
+    main = L("L'Alphabet", 'El Alfabeto');
+    sub  = L('El Alfabeto', "L'Alphabet");
+  } else {
+    main = t.name || '';
+    const rawSub = t.sub || '';
+    // En mode learn_spain, certains sous-titres contiennent "ES / FR" :
+    // on ne conserve que la partie française (après le slash).
+    sub = (!isFrench() && rawSub.includes('/'))
+      ? rawSub.split('/')[1].trim()
+      : rawSub;
+  }
+
+  // Capitalisation de sécurité (première lettre en majuscule)
+  const _cap = s => s ? s.trim().charAt(0).toUpperCase() + s.trim().slice(1) : s;
+  return { main: _cap(main), sub: _cap(sub) };
 }
 
 /**
@@ -203,19 +276,42 @@ function showLauncherVariant(mode) {
     pickRegion(currentRegion);
   }
 
-  /* — Texte du bouton Continuer selon le mode — */
-  var continueBtn = document.getElementById('launcherContinueBtn');
+  /* — Texte et handler du bouton Continuer selon le mode —
+     On attache un handler nommé pour pouvoir le retirer proprement
+     si showLauncherVariant() est rappelée (changement de mode). */
+  const continueBtn = document.getElementById('launcherContinueBtn');
   if (continueBtn) {
     continueBtn.innerHTML = (mode === 'learn_french')
       ? '▶ Commencer<br><span class="translation-sub">Empezar</span>'
       : '▶ Empezar<br><span class="translation-sub">Commencer</span>';
-    continueBtn.onclick = function() { initApp(mode); };
+    // Supprime l'éventuel handler précédent avant d'en attacher un nouveau
+    if (continueBtn._launcherHandler) {
+      continueBtn.removeEventListener('click', continueBtn._launcherHandler);
+    }
+    continueBtn._launcherHandler = function() {
+      /* — Chargement conditionnel : injecte data-fr.js ou data-es.js
+           seulement si ce n'est pas déjà fait, puis lance initApp(). — */
+      var btn = this;
+      var originalHTML = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '\u23f3 Chargement\u2026';
+      loadDataForMode(mode, function() {
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+        initApp(mode);
+      });
+    };
+    continueBtn.addEventListener('click', continueBtn._launcherHandler);
   }
 
-  /* — Bouton retour → Vue A — */
-  var backBtn = document.getElementById('launcherBackBtn');
+  /* — Handler du bouton retour → Vue A —
+     Même pattern : handler nommé stocké sur l'élément. */
+  const backBtn = document.getElementById('launcherBackBtn');
   if (backBtn) {
-    backBtn.onclick = function() {
+    if (backBtn._launcherHandler) {
+      backBtn.removeEventListener('click', backBtn._launcherHandler);
+    }
+    backBtn._launcherHandler = function() {
       document.getElementById('launcher-view-variant').style.display = 'none';
       document.getElementById('launcher-view-cards').style.display   = 'flex';
       document.getElementById('launcher-view-cards').style.flexDirection = 'column';
@@ -224,6 +320,7 @@ function showLauncherVariant(mode) {
       document.documentElement.className = '';
       _setLauncherFooterLang(null);
     };
+    backBtn.addEventListener('click', backBtn._launcherHandler);
   }
 
   /* — Traduction du footer selon le mode (langue d'interface = langue opposée à celle apprise) — */
@@ -404,9 +501,9 @@ function _setText(id, val) {
 ═══════════════════════════════════════════════════════════ */
 
 // Voix espagnole résolue (undefined = non encore cherchée, null = introuvable)
-var _spanishVoice     = undefined;
+let _spanishVoice     = undefined;
 // Empêche la répétition de l'alerte de configuration audio
-var _hasNotifiedVoice = false;
+let _hasNotifiedVoice = false;
 
 /* Résout de façon asynchrone la meilleure voix espagnole disponible sur l'appareil.
    Cascade : voix exacte (ex: es-EC) → tout espagnol disponible → voix[0]
@@ -552,7 +649,7 @@ function _doSpeak(txt, voiceObj, rate) {
 ───────────────────────────────────────────────────────── */
 
 // Empêche les notifications répétées tant que l'indicateur est déjà affiché
-var _audioUnavailableShown = false;
+let _audioUnavailableShown = false;
 
 /* Affiche un badge discret "🔇 Audio indisponible" en bas d'écran. */
 function _showAudioUnavailable() {
@@ -930,38 +1027,8 @@ function renderSections() {
    Gère l'affichage du titre dans la langue cible selon currentMode,
    les étoiles (remplies/vides) et le bouton de réinitialisation. */
 function _buildThemeCard(t) {
-  var mainTitle = '', subLine = '';
-
-  if (currentMode === 'learn_french') {
-    // ─── MODE FRANÇAIS : Français en Premier (Grand) / Espagnol en Second (Petit) ───
-    if (t.id === 'alpha' || t.type === 'alpha') {
-      mainTitle = "L'Alphabet";
-      subLine = 'El Alfabeto';
-    } else {
-      mainTitle = t.name; // Déjà en Français !
-      subLine = t.sub;    // Déjà en Espagnol !
-    }
-  } else {
-    // ─── MODE ESPAGNOL : Espagnol en Premier (Grand) / Français en Second (Petit) ───
-    if (t.id === 'alpha' || t.type === 'alpha') {
-      mainTitle = 'El Alfabeto';
-      subLine = "L'Alphabet";
-    } else {
-      mainTitle = t.name; // Déjà en Espagnol !
-      
-      // Sécurité si t.sub contient un slash dans ce mode
-      var subText = t.sub || '';
-      if (subText.includes('/')) {
-        subLine = subText.split('/')[1].trim(); // On ne garde que la partie Française
-      } else {
-        subLine = subText;
-      }
-    }
-  }
-
-  // Capitalisation de sécurité (Première lettre en majuscule)
-  if (mainTitle) mainTitle = mainTitle.trim().charAt(0).toUpperCase() + mainTitle.trim().slice(1);
-  if (subLine) subLine = subLine.trim().charAt(0).toUpperCase() + subLine.trim().slice(1);
+  // Délègue entièrement la résolution du titre à _themeTitle()
+  const { main: mainTitle, sub: subLine } = _themeTitle(t);
 
   // Configuration du bouton de réinitialisation
   var resetBtn = isDone(t.id)
@@ -978,13 +1045,25 @@ function _buildThemeCard(t) {
     return i < currentStars ? '⭐' : '☆';
   }).join('');
 
+  // Libellé accessible : titre principal + statut étoiles
+  const starsLabel = currentStars > 0
+    ? ' — ' + currentStars + L(' étoile(s)', ' estrella(s)')
+    : '';
+  const doneLabel  = isDone(t.id)
+    ? L(' (completado)', ' (complété)')
+    : '';
+
   // Rendu de la carte HTML
+  // role="button" + tabindex="0" : rend la div navigable au clavier
+  // (le keydown global dans app.js déclenche .click() sur Entrée/Espace)
   return '<div class="theme-card' + (isDone(t.id) ? ' done' : '')
-    + '" onclick="openTheme(\'' + t.id + '\')">'
-    + '<div class="t-emoji">'   + t.emoji   + '</div>'
+    + '" role="button" tabindex="0"'
+    + ' aria-label="' + _escAttr(mainTitle + starsLabel + doneLabel) + '"'
+    + ' onclick="openTheme(\'' + t.id + '\')">'
+    + '<div class="t-emoji" aria-hidden="true">' + t.emoji   + '</div>'
     + '<div class="t-name">'    + mainTitle + '</div>'
     + '<div class="t-sub">'     + subLine   + '</div>'
-    + '<div class="t-stars" style="letter-spacing:2px">' + starsStr + '</div>'
+    + '<div class="t-stars" aria-hidden="true" style="letter-spacing:2px">' + starsStr + '</div>'
     + resetBtn
     + '</div>';
 }
@@ -1023,38 +1102,10 @@ function openTheme(id) {
   // Injection de l'emoji dans l'en-tête de leçon
   document.getElementById('lessonEmoji').textContent = CT.emoji;
 
-  // Construction du titre de l'écran leçon
-  var mainTitle = '';
-  var subTitle = '';
+  // Construction du titre de l'écran leçon via _themeTitle() (source unique de vérité)
+  const { main: mainTitle, sub: subTitle } = _themeTitle(CT);
 
-  if (currentMode === 'learn_french') {
-    if (CT.id === 'alpha' || CT.type === 'alpha') {
-      mainTitle = "L'Alphabet";
-      subTitle = 'El Alfabeto';
-    } else {
-      mainTitle = CT.name || '';
-      subTitle = CT.sub || '';
-    }
-  } else {
-    if (CT.id === 'alpha' || CT.type === 'alpha') {
-      mainTitle = 'El Alfabeto';
-      subTitle = "L'Alphabet";
-    } else {
-      mainTitle = CT.name || '';
-      var subTextES = CT.sub || '';
-      if (subTextES.includes('/')) {
-        subTitle = subTextES.split('/')[1].trim();
-      } else {
-        subTitle = subTextES;
-      }
-    }
-  }
-
-  // Nettoyage et capitalisation
-  if (mainTitle) mainTitle = mainTitle.trim().charAt(0).toUpperCase() + mainTitle.trim().slice(1);
-  if (subTitle)  subTitle  = subTitle.trim().charAt(0).toUpperCase() + subTitle.trim().slice(1);
-
-  // Génération finale du titre : "Langue Apprise — Langue Source"
+  // Génération finale du titre : "Titre principal — Sous-titre"
   document.getElementById('lessonTitle').textContent = mainTitle + ' — ' + subTitle;
 
   showScreen('lesson');
@@ -1297,7 +1348,7 @@ function flipCard() {
 ═══════════════════════════════════════════════════════════ */
 
 // Instance SpeechRecognition active (null si aucune)
-var _micReco = null;
+let _micReco = null;
 
 /* _normalizeSpeech(s) — Retire accents, ponctuation, casse et espaces
    superflus pour une comparaison souple entre ce que l'utilisateur a dit
@@ -2357,6 +2408,17 @@ function esc(s) {
   return (s || '').replaceAll('\\', '\\\\').replaceAll("'", "\\'").replaceAll('"', '&quot;');
 }
 
+/* _escAttr(s) — Échappe une chaîne pour injection dans un attribut HTML (aria-label, title…).
+   Remplace les guillemets doubles et les caractères HTML sensibles.
+   Différent de esc() qui cible les contextes onclick="…" JS. */
+function _escAttr(s) {
+  return (s || '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('"', '&quot;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;');
+}
+
 
 /* ═══════════════════════════════════════════════════════════
    15. VARIANTES RÉGIONALES — Sélecteur de pays hispanophones
@@ -2671,7 +2733,7 @@ function showCredits() {
 ═══════════════════════════════════════════════════════════ */
 
 // Clé localStorage du flag "guide déjà vu" — globale, indépendante du mode
-var GUIDE_STORAGE_KEY = 'pe_guide_seen_v1';
+const GUIDE_STORAGE_KEY = 'pe_guide_seen_v1';
 
 /* showGuide() — Point d'entrée principal pour afficher le guide.
    Appelée automatiquement à la première visite (_maybeAutoShowGuide)
@@ -2924,7 +2986,7 @@ function _showToast(msg, duration) {
 ════════════════════════════════════════ */
 document.addEventListener('keydown', function(e) {
   if (e.key !== 'Enter' && e.key !== ' ') return;
-  var target = e.target.closest('[role="button"]');
+  const target = e.target.closest('[role="button"]');
   if (!target) return;
   e.preventDefault();
   target.click();
@@ -2935,10 +2997,24 @@ document.addEventListener('keydown', function(e) {
    Branche les clics des cartes de langue
    sur showLauncherVariant() pour afficher
    le sélecteur de variante (Vue B).
+
+   Note sur la stratégie de gestion des événements :
+   • Les éléments STATIQUES du DOM (présents dès le chargement de
+     index.html, comme les cartes de langue ci-dessous et le bouton
+     retour du launcher) utilisent addEventListener() — c'est la
+     méthode préférable, car elle permet plusieurs listeners et évite
+     les réassignations silencieuses.
+   • Les éléments DYNAMIQUES (onglets de leçon, cartes de modules,
+     boutons de quiz…) sont générés via innerHTML et utilisent donc
+     onclick="..." en attribut HTML — c'est inévitable dans ce
+     contexte sans framework, et ce comportement est documenté ici
+     pour éviter toute confusion lors de la maintenance.
 ════════════════════════════════════════ */
-document.getElementById('card-learn-french') && document.getElementById('card-learn-french').addEventListener('click', function() {
+const cardFR = document.getElementById('card-learn-french');
+if (cardFR) cardFR.addEventListener('click', function() {
   showLauncherVariant('learn_french');
 });
-document.getElementById('card-learn-spain') && document.getElementById('card-learn-spain').addEventListener('click', function() {
+const cardES = document.getElementById('card-learn-spain');
+if (cardES) cardES.addEventListener('click', function() {
   showLauncherVariant('learn_spain');
 });

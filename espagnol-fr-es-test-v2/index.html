@@ -10,14 +10,15 @@
   ║  Ce fichier est le point d'entrée unique de l'application.     ║
   ║  Il déclare la structure HTML des écrans et des modales.       ║
   ║  Aucune logique métier n'y est présente : tout le comportement ║
-  ║  est délégué à js/app.js et js/data.js.                       ║
+  ║  est délégué à js/app.js, js/data-fr.js et js/data-es.js.    ║
   ╠══════════════════════════════════════════════════════════════════╣
   ║  ARCHITECTURE GLOBALE DU PROJET                                 ║
   ║  ├── index.html   → Structure HTML (ce fichier)                ║
   ║  ├── css/                                                       ║
   ║  │   └── style.css  → Mise en forme visuelle                   ║
   ║  └── js/                                                        ║
-  ║      ├── data.js    → Contenu linguistique (mots, thèmes…)     ║
+  ║      ├── data-fr.js → Contenu mode learn_french (chargé à la demande) ║
+  ║      ├── data-es.js → Contenu mode learn_spain  (chargé à la demande) ║
   ║      └── app.js     → Logique applicative (navigation, score…) ║
   ╠══════════════════════════════════════════════════════════════════╣
   ║  NAVIGATION ENTRE ÉCRANS                                        ║
@@ -35,7 +36,24 @@
     (WCAG 1.4.4 — critère d'accessibilité).
   -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>Language App 🇫🇷🇪🇸</title>
+  <title>VACHÉBO — Apprendre Français &amp; Espagnol</title>
+
+  <!--
+    PWA — Progressive Web App
+    Ces trois balises permettent l'installation sur écran d'accueil
+    et définissent l'apparence de l'app en mode standalone.
+
+    manifest.json  → nom, icône, couleurs, start_url, orientation
+    theme-color    → couleur de la barre de statut du navigateur
+                     (bleu FR par défaut ; app.js peut la changer via
+                      <meta name="theme-color"> si nécessaire)
+    apple-touch-icon → icône sur écran d'accueil iOS (Safari ne lit
+                        pas le manifest pour l'icône)
+  -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#002395">
+  <link rel="apple-touch-icon" href="img/Logo-appli-es-fr.png">
+
   <!-- Feuille de styles unique — voir css/style.css pour les détails -->
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -86,23 +104,25 @@
 
       <div class="launcher-cards">
         <!-- Carte Français : affiche le sélecteur de variante -->
-        <button class="lang-card lang-card--fr" id="card-learn-french">
-          <div class="lang-card-flag">🇫🇷</div>
+        <button class="lang-card lang-card--fr" id="card-learn-french"
+                aria-label="Apprendre le Français — Aprender Francés">
+          <div class="lang-card-flag" aria-hidden="true">🇫🇷</div>
           <div class="lang-card-body">
             <span class="lang-card-name">Apprendre le Français</span>
             <span class="lang-card-sub">Aprender Francés</span>
           </div>
-          <div class="lang-card-arrow">›</div>
+          <div class="lang-card-arrow" aria-hidden="true">›</div>
         </button>
 
         <!-- Carte Espagnol : affiche le sélecteur de variante -->
-        <button class="lang-card lang-card--es" id="card-learn-spain">
-          <div class="lang-card-flag">🇪🇸</div>
+        <button class="lang-card lang-card--es" id="card-learn-spain"
+                aria-label="Aprender Español — Apprendre l'Espagnol">
+          <div class="lang-card-flag" aria-hidden="true">🇪🇸</div>
           <div class="lang-card-body">
             <span class="lang-card-name">Aprender Español</span>
             <span class="lang-card-sub">Apprendre l'Espagnol</span>
           </div>
-          <div class="lang-card-arrow">›</div>
+          <div class="lang-card-arrow" aria-hidden="true">›</div>
         </button>
       </div>
     </div>
@@ -111,7 +131,8 @@
     <div id="launcher-view-variant" class="launcher-inner" style="display:none;">
 
       <!-- Bouton retour → revient aux cartes de langue -->
-      <button class="back-btn launcher-back-btn" id="launcherBackBtn">←</button>
+      <button class="back-btn launcher-back-btn" id="launcherBackBtn"
+              aria-label="Retour au choix de langue / Volver a la selección de idioma">←</button>
 
       <!-- Drapeau + titre injectés par showLauncherVariant() -->
       <div class="flag-row" id="launcherFlagRow" style="font-size:3rem;margin:10px 0;"></div>
@@ -149,7 +170,8 @@
   <div id="home" class="screen">
 
     <!-- Bouton retour → relance le launcher -->
-    <button class="back-btn home-back-btn" id="homeBackBtn">← Volver</button>
+    <button class="back-btn home-back-btn" id="homeBackBtn"
+            aria-label="Retour au choix de langue / Volver a la selección de idioma">← Volver</button>
 
     <!-- Drapeau dynamique (🇫🇷 ou 🇪🇸 / variante) injecté par JS -->
     <div class="flag-row" id="homeFlagRow"></div>
@@ -213,7 +235,8 @@
       <div class="sections-top-row">
         <div class="sections-top-left">
           <!-- Retour → launcher (l'écran Home n'est plus dans le parcours) -->
-          <button class="back-btn" id="sectionsBackBtn" onclick="showLauncher()"></button>
+          <button class="back-btn" id="sectionsBackBtn" onclick="showLauncher()"
+                  aria-label="Retour au choix de langue / Volver a la selección de idioma"></button>
 
           <!-- Titre injecté par JS (ex : "📚 Modules") -->
           <h2 id="sectionsTitle"></h2>
@@ -290,10 +313,12 @@
 
     <div class="lesson-header">
       <!-- Retour → écran sections -->
-      <button class="back-btn" onclick="showScreen('sections')" id="lessonBackBtn">←</button>
+      <button class="back-btn" onclick="showScreen('sections')" id="lessonBackBtn"
+              aria-label="Retour aux modules / Volver a los módulos">←</button>
 
       <!-- Retour direct → écran sections (le home n'est plus dans le parcours) -->
-      <button class="back-btn lesson-home-btn" onclick="showScreen('sections')" id="lessonHomeBtn" title="Modules">🏠</button>
+      <button class="back-btn lesson-home-btn" onclick="showScreen('sections')" id="lessonHomeBtn"
+              title="Modules" aria-label="Accueil des modules / Inicio de módulos">🏠</button>
 
       <!-- Emoji et titre du module courant, injectés par openTheme() -->
       <span id="lessonEmoji" style="font-size:1.4rem;margin-right:4px"></span>
@@ -404,6 +429,7 @@
           <span class="guide-hero-chip">🔊 Audio inclus</span>
           <span class="guide-hero-chip">🌎 7 variantes d'espagnol</span>
           <span class="guide-hero-chip">🎤 Répétition orale</span>
+          <span class="guide-hero-chip">📲 Installable hors-ligne</span>
         </div>
       </div>
 
@@ -417,7 +443,7 @@
           </button>
           <div class="guide-acc-body">
           <div class="guide-title">4 étapes,<br><span class="fr">et c'est parti !</span></div>
-          <p class="guide-sub">Aucune inscription, aucun téléchargement : ça marche directement dans ton navigateur.</p>
+          <p class="guide-sub">Aucune inscription, aucun téléchargement obligatoire : ça marche directement dans ton navigateur — et tu peux aussi l'<strong>installer sur ton écran d'accueil</strong> pour y accéder comme une vraie application.</p>
 
           <div class="guide-grid-2" style="margin-bottom:14px;">
             <div class="guide-mode-card fr">
@@ -514,6 +540,11 @@
               <div class="guide-feat-icon">📈</div>
               <div class="guide-feat-title">Progression sauvegardée</div>
               <div class="guide-feat-desc">Ton avancement est <strong>conservé automatiquement</strong> sur ton appareil.</div>
+            </div>
+            <div class="guide-card guide-feat-card">
+              <div class="guide-feat-icon">📲</div>
+              <div class="guide-feat-title">Installable sur écran d'accueil</div>
+              <div class="guide-feat-desc">Ajoute l'appli à ton écran d'accueil comme une vraie application — <strong>fonctionne hors-ligne</strong>, sans passer par le navigateur.</div>
             </div>
           </div>
           </div><!-- /guide-acc-body -->
@@ -815,7 +846,7 @@
         <!-- ═══════ CTA ═══════ -->
         <div class="guide-cta-block">
           <h2>🚀 Prêt à commencer ?</h2>
-          <p>Aucune inscription, aucun téléchargement — l'application fonctionne directement dans ton navigateur !</p>
+          <p>Aucune inscription, aucun téléchargement obligatoire — l'application fonctionne directement dans ton navigateur, et tu peux l'<strong>installer sur ton écran d'accueil</strong> pour un accès encore plus rapide !</p>
           <div class="guide-no-show-bottom">
             <label class="guide-no-show-label guide-no-show-label--light">
               <input type="checkbox" class="guide-no-show-check" onchange="toggleGuideNoShow(this)">
@@ -861,6 +892,7 @@
           <span class="guide-hero-chip">🔊 Audio incluido</span>
           <span class="guide-hero-chip">🌎 7 variantes de español</span>
           <span class="guide-hero-chip">🎤 Repetición oral</span>
+          <span class="guide-hero-chip">📲 Instalable sin conexión</span>
         </div>
       </div>
 
@@ -874,7 +906,7 @@
           </button>
           <div class="guide-acc-body">
           <div class="guide-title">4 pasos, <span class="es">¡y ya está!</span></div>
-          <p class="guide-sub">Sin registro, sin descargas: funciona directamente en tu navegador.</p>
+          <p class="guide-sub">Sin registro, sin descargas obligatorias: funciona directamente en tu navegador — y también puedes <strong>instalarla en tu pantalla de inicio</strong> para acceder a ella como una app de verdad.</p>
 
           <div class="guide-grid-2" style="margin-bottom:14px;">
             <div class="guide-mode-card fr">
@@ -971,6 +1003,11 @@
               <div class="guide-feat-icon">📈</div>
               <div class="guide-feat-title">Progreso guardado</div>
               <div class="guide-feat-desc">Tu avance se <strong>guarda automáticamente</strong> en tu dispositivo.</div>
+            </div>
+            <div class="guide-card guide-feat-card">
+              <div class="guide-feat-icon">📲</div>
+              <div class="guide-feat-title">Instalable en pantalla de inicio</div>
+              <div class="guide-feat-desc">Añade la app a tu pantalla de inicio como una aplicación real — <strong>funciona sin conexión</strong>, sin pasar por el navegador.</div>
             </div>
           </div>
           </div><!-- /guide-acc-body -->
@@ -1274,7 +1311,7 @@
         <!-- ═══════ CTA ═══════ -->
         <div class="guide-cta-block">
           <h2>🚀 ¿Listo para empezar?</h2>
-          <p>Sin registro, sin descargas — ¡la app funciona directamente en tu navegador!</p>
+          <p>Sin registro, sin descargas obligatorias — ¡la app funciona directamente en tu navegador, y puedes <strong>instalarla en tu pantalla de inicio</strong> para un acceso aún más rápido!</p>
           <div class="guide-no-show-bottom">
             <label class="guide-no-show-label guide-no-show-label--light">
               <input type="checkbox" class="guide-no-show-check" onchange="toggleGuideNoShow(this)">
@@ -1306,15 +1343,47 @@
   Les scripts sont placés en fin de <body> pour s'assurer que
   l'intégralité du DOM est parsé avant leur exécution.
 
-  Ordre impératif :
-    1. data.js  — doit être chargé EN PREMIER car app.js dépend
-                  des variables/objets qu'il exporte (vocabulaire,
-                  thèmes, métadonnées des langues…).
-    2. app.js   — initialise l'application et branche tous les
-                  écouteurs d'événements sur les éléments du DOM.
+  Ordre de chargement :
+    1. app.js   — chargé seul au démarrage. Il embarque loadDataForMode()
+                  qui injecte dynamiquement data-fr.js ou data-es.js
+                  au moment où l'utilisateur choisit sa langue.
+                  Cela réduit de ~50 % le volume JS parsé à l'ouverture.
+
+  Anciennement data.js (monolithique 2 400 lignes) → remplacé par :
+    • js/data-fr.js  (~106 Ko) — chargé uniquement si mode learn_french
+    • js/data-es.js  (~96 Ko)  — chargé uniquement si mode learn_spain
   ══════════════════════════════════════════════════════════════════
 -->
-<script src="js/data.js"></script>
 <script src="js/app.js"></script>
+
+<!--
+  ══════════════════════════════════════════════════════════════════
+  ENREGISTREMENT DU SERVICE WORKER (PWA)
+  ══════════════════════════════════════════════════════════════════
+  Le Service Worker (sw.js) doit être enregistré APRÈS le chargement
+  de app.js pour ne pas bloquer le démarrage de l'interface.
+
+  Comportement :
+    • Premier chargement   : SW installé, shell mis en cache.
+    • Visites suivantes    : app servie depuis le cache (instantané).
+    • Hors-ligne           : app pleinement fonctionnelle.
+    • Mise à jour déployée : SW se met à jour en arrière-plan ;
+                             nouveau cache actif à la prochaine ouverture.
+
+  Portée (scope) : './' → tout le dossier de l'app.
+  Le SW est placé à la racine du projet pour avoir la portée maximale.
+  ══════════════════════════════════════════════════════════════════
+-->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('./sw.js', { scope: './' })
+        .catch(function(err) {
+          /* Échec silencieux : l'app fonctionne sans SW */
+          console.warn('[SW] Enregistrement échoué :', err);
+        });
+    });
+  }
+</script>
 </body>
 </html>
