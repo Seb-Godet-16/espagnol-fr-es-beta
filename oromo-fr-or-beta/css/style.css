@@ -224,45 +224,45 @@ html.theme-oromo body{background:#f4f9f4}
 /* ══════════════════════════════════════════════════════════════════
    §5 — ÉCRAN 0 : LANCEUR D'APPLICATION  (#app-launcher)
    ══════════════════════════════════════════════════════════════════
-   Premier écran visible. Fond crème neutre, motif de dégradé
-   discret pour rappeler les deux drapeaux sans imposer un thème.
+   Premier écran visible. Fond noisette lacté (Option 2A), motif de 
+   dégradé discret pour rappeler les deux drapeaux sans imposer un thème.
    ══════════════════════════════════════════════════════════════════ */
 #app-launcher{
-  background:#f5f5f0;
-  align-items:center;
-  justify-content:center;
-  padding:24px 20px 80px; /* padding-bottom réservé au footer absolu */
-  position:relative;
-  overflow:hidden;
-  min-height:100vh;
+  background: #F4EFEA; /* Option 2A : Noisette lacté doux */
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px 80px; /* padding-bottom réservé au footer absolu */
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
 }
 
 /*
-  Couche décorative de fond :
-  Trois dégradés radiaux superposés évoquent subtilement le bleu
-  français (haut-gauche), le vert éthiopien (bas-droite) et
-  le rouge partagé (centre). pointer-events:none → non cliquable.
+   Couche décorative de fond :
+   Trois dégradés radiaux superposés évoquent subtilement le bleu
+   français (haut-gauche), le vert éthiopien (bas-droite) et
+   le rouge partagé (centre). pointer-events:none → non cliquable.
 */
 .launcher-bg{
-  position:absolute;
-  inset:0;
+  position: absolute;
+  inset: 0;
   background:
     radial-gradient(circle at 15% 20%, rgba(0,35,149,.07)   0%, transparent 45%),
     radial-gradient(circle at 85% 75%, rgba(0,154,68,.07)   0%, transparent 45%),
     radial-gradient(circle at 50% 50%, rgba(237,41,57,.04)  0%, transparent 60%);
-  pointer-events:none;
+  pointer-events: none;
 }
 
 /* Contenu centré — z-index:1 pour passer au-dessus de .launcher-bg */
 .launcher-inner{
-  position:relative;
-  z-index:1;
-  width:100%;
-  max-width:420px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  text-align:center;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 /* Logo bannière horizontale (1408×768) — remplace l'emoji globe.
@@ -274,160 +274,159 @@ html.theme-oromo body{background:#f4f9f4}
    • margin-bottom réduit : l'image est déjà imposante, on resserre.
    • drop-shadow conservé pour la profondeur, renforcé légèrement. */
 .launcher-logo{
-  display:block;
-  width:100%;
-  max-width:420px;
-  height:auto;
-  border-radius:16px;
-  margin-bottom:18px;
-  box-shadow:0 6px 28px rgba(0,0,0,.18);
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  border-radius: 16px;
+  margin-bottom: 18px;
+  box-shadow: 0 6px 28px rgba(0,0,0,.18);
   /* Empêche le glissement de l'image sur iOS */
-  -webkit-user-drag:none;
-  user-select:none;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
-/* Titre bilingue principal */
+/* Titre bilingue principal sur la même ligne (Style Espagne) */
 .launcher-title{
-  font-size:1.8rem;
-  font-weight:900;
-  color:#1a1a2e;
-  margin-bottom:6px;
-  letter-spacing:-.02em;
+  font-size: 1rem; /* Taille épurée identique à la version Espagne */
+  font-weight: normal; /* Normal comme sur la version Espagne */
+  color: #4A3E3D; /* Marron très foncé */
+  margin-top: 15px;
+  margin-bottom: 25px;
+  letter-spacing: -.01em;
+  text-align: center;
 }
 
-/* Sous-titre en Oromo */
-.launcher-sub{
-  font-size:.9rem;
-  color:#888;
-  font-weight:500;
-  margin-bottom:32px;
+/* Traduction Oromo à la suite du titre principal sur la même ligne */
+.launcher-title-translation {
+  color: #7D6B69; /* Marron plus doux et discret pour la traduction */
+  font-weight: normal;
 }
 
 /* ── Cartes de sélection de langue ──────────────────────────────── */
 
 /* Colonne de cartes */
 .launcher-cards{
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-  width:100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
 }
 
 /*
-  Carte de base :
-  • overflow:hidden + border-radius → le dégradé ne déborde pas
-  • position:relative → pour le ::before (effet lumineux au tap)
-  • transition sur transform + box-shadow → feedback visuel fluide
+   Carte de base :
+   • overflow:hidden + border-radius → le dégradé ne déborde pas
+   • position:relative → pour le ::before (effet lumineux au tap)
+   • transition sur transform + box-shadow → feedback visuel fluide
 */
 .lang-card{
-  display:flex;
-  align-items:center;
-  gap:16px;
-  width:100%;
-  padding:20px 22px;
-  border:none;
-  border-radius:20px;
-  cursor:pointer;
-  text-align:left;
-  box-shadow:0 6px 24px rgba(0,0,0,.1);
-  transition:transform .15s ease, box-shadow .15s ease;
-  position:relative;
-  overflow:hidden;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 20px 22px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 6px 24px rgba(0,0,0,.1);
+  transition: transform .15s ease, box-shadow .15s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 /*
-  Voile blanc semi-transparent révélé au tap (::before) :
-  simule un "highlight" sans changer la couleur de fond.
+   Voile blanc semi-transparent révélé au tap (::before) :
+   simule un "highlight" sans changer la couleur de fond.
 */
 .lang-card::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:rgba(255,255,255,.12);
-  opacity:0;
-  transition:opacity .15s;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,.12);
+  opacity: 0;
+  transition: opacity .15s;
 }
 .lang-card:active{
-  transform:scale(.97);
-  box-shadow:0 3px 12px rgba(0,0,0,.12);
+  transform: scale(.97);
+  box-shadow: 0 3px 12px rgba(0,0,0,.12);
 }
-.lang-card:active::before{opacity:1}
+.lang-card:active::before{ opacity: 1 }
 
 /* Variante Français — dégradé bleu-blanc-rouge */
 .lang-card--fr{
-  background:linear-gradient(135deg,#002395 0%,#1a3a9f 50%,#c0192b 100%);
-  color:#fff;
+  background: linear-gradient(135deg,#002395 0%,#1a3a9f 50%,#c0192b 100%);
+  color: #fff;
 }
 
 /* Variante Oromo — dégradé vert-or */
 .lang-card--or{
-  background:linear-gradient(135deg,#007a35 0%,#009A44 45%,#c8960a 100%);
-  color:#fff;
+  background: linear-gradient(135deg,#007a35 0%,#009A44 45%,#c8960a 100%);
+  color: #fff;
 }
 
 /* Drapeau emoji, non rétréci si l'espace manque */
 .lang-card-flag{
-  font-size:2.8rem;
-  flex-shrink:0;
-  filter:drop-shadow(0 2px 6px rgba(0,0,0,.25));
-  line-height:1;
+  font-size: 2.8rem;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
+  line-height: 1;
 }
 
 /* Zone texte (s'étire pour prendre tout l'espace disponible) */
 .lang-card-body{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  gap:4px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 /* Libellé principal de la carte */
 .lang-card-name{
-  font-size:1.05rem;
-  font-weight:800;
-  line-height:1.2;
-  color:#fff;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #fff;
 }
 
 /* Traduction en italique sous le libellé */
 .lang-card-sub{
-  font-size:.72rem;
-  color:rgba(255,255,255,.75);
-  font-weight:500;
-  font-style:italic;
-  line-height:1.3;
+  font-size: .72rem;
+  color: rgba(255,255,255,.75);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.3;
 }
 
 /* Chevron décoratif à droite */
 .lang-card-arrow{
-  font-size:2rem;
-  font-weight:300;
-  color:rgba(255,255,255,.6);
-  flex-shrink:0;
-  line-height:1;
-  margin-left:4px;
+  font-size: 2rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.6);
+  flex-shrink: 0;
+  line-height: 1;
+  margin-left: 4px;
 }
 
 /* ── Footer du lanceur ───────────────────────────────────────────── */
 /*
-  Position:absolute + bottom:0 → colle au bas de #app-launcher
-  sans pousser le contenu vers le bas (d'où le padding-bottom:80px
-  sur #app-launcher pour éviter le chevauchement).
+   Position:absolute + bottom:0 → colle au bas de #app-launcher
+   sans pousser le contenu vers le bas (d'où le padding-bottom:80px
+   sur #app-launcher pour éviter le chevauchement).
 */
 .launcher-footer{
-  position:absolute;
-  bottom:0; left:0; right:0;
-  text-align:center;
-  padding:14px 12px;
-  font-size:.68rem;
-  color:#aaa;
-  background:transparent;
-  line-height:1.7;
-  z-index:1;
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  text-align: center;
+  padding: 14px 12px;
+  font-size: .68rem;
+  color: #aaa;
+  background: transparent;
+  line-height: 1.7;
+  z-index: 1;
 }
-.launcher-footer a{color:#888;text-decoration:none;font-weight:600}
-.launcher-footer a:hover{text-decoration:underline}
-
+.launcher-footer a{ color: #888; text-decoration: none; font-weight: 600 }
+.launcher-footer a:hover{ text-decoration: underline }
 
 /* ══════════════════════════════════════════════════════════════════
    §6 — ÉCRAN 1 : ACCUEIL  (#home)
