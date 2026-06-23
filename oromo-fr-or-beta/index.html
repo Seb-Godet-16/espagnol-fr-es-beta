@@ -167,46 +167,43 @@
 
 
   <!-- ════════════════════════════════════════════════════════════════
-       ÉCRAN 1 — ACCUEIL  (#home)
+       ÉCRAN 1 — GUIDE / ONBOARDING  (#home)
        ────────────────────────────────────────────────────────────────
-       Affiché après la sélection de langue.
-       Tous les éléments portant un id (ex. #homeTitle, #homeBar…)
-       sont peuplés dynamiquement par app.js selon la langue choisie.
-       La barre de progression (#homeBar) reflète l'avancement global.
+       Affiché après la sélection de langue (remplace l'ancien Home).
+       Contenu injecté dynamiquement par app.js via _buildHomeGuide().
+       Langue : Oromo si l'apprenant apprend le Français, et vice versa.
+       Checkbox "Ne plus afficher" → flag localStorage par mode.
        ════════════════════════════════════════════════════════════════ -->
   <div id="home" class="screen">
 
-    <!--
-      Bouton retour — renvoie vers #app-launcher.
-      Son comportement est branché dans app.js (addEventListener sur #homeBackBtn).
-    -->
+    <!-- Bouton retour → launcher -->
     <button class="back-btn home-back-btn" id="homeBackBtn">← Retour / Duubatti</button>
 
-    <!-- Zone de drapeau(x) — contenu injecté par app.js -->
-    <div class="flag-row" id="homeFlagRow"></div>
+    <!-- En-tête coloré selon le mode -->
+    <div class="home-guide-header" id="homeGuideHeader">
+      <div class="home-guide-flags" id="homeGuideFlagsRow"></div>
+      <h1 class="home-guide-title" id="homeTitle"></h1>
+      <p class="home-guide-subtitle" id="homeGuideSubtitle"></p>
 
-    <!-- Titre de l'écran — injecté par app.js selon la langue active -->
-    <h1 id="homeTitle"></h1>
-
-    <!--
-      Barre de progression globale
-      • La largeur (style="width:0%") est mise à jour en JS via
-        document.getElementById('homeBar').style.width = X + '%'
-      • OPTIMISATION : le style initial width:0% est conservé inline
-        car c'est une valeur dynamique de départ (pas un style statique).
-    -->
-    <div class="home-progress-wrap">
-      <div class="home-progress-bar" id="homeBar" style="width:0%"></div>
+      <!-- Badges fonctionnalités -->
+      <div class="home-guide-badges" id="homeGuideBadges"></div>
     </div>
 
-    <!-- Libellé textuel de progression — ex. "3 / 12 thèmes complétés" -->
-    <div class="home-progress-label" id="homeBarLabel"></div>
+    <!-- Corps : accordéons d'aide — injectés par app.js -->
+    <div class="home-guide-body" id="homeGuideBody"></div>
 
-    <!-- Rangée d'étoiles / badges de niveau — injectée par app.js -->
-    <div class="stars-row" id="homeStars"></div>
+    <!-- Checkbox "Ne plus afficher" -->
+    <div class="home-guide-noshow">
+      <label class="noshow-label" id="homeNoshowLabel">
+        <input type="checkbox" id="homeNoshowChk">
+        <span id="homeNoshowText"></span>
+      </label>
+    </div>
 
-    <!-- Bouton principal "Commencer" / "Continuer" — libellé injecté par app.js -->
-    <button class="btn-primary" id="homeStartBtn"></button>
+    <!-- Bouton principal "Commencer" -->
+    <div class="home-guide-cta">
+      <button class="btn-primary" id="homeStartBtn"></button>
+    </div>
 
     <footer>
       © Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
@@ -220,62 +217,55 @@
 
 
   <!-- ════════════════════════════════════════════════════════════════
-       ÉCRAN 2 — LISTE DES SECTIONS / THÈMES  (#sections)
+       ÉCRAN 2 — LISTE DES MODULES  (#sections)
        ────────────────────────────────────────────────────────────────
-       Présente la grille des thèmes organisés en deux niveaux.
-       Les grilles #grid1 et #grid2 sont générées dynamiquement par
-       app.js à partir des données de js/data-fr.js ou js/data-or.js.
+       Header : retour + titre + progression (gauche) + drapeau (droite).
+       Niveaux 1 et 2 en mode déroulant (<details> natif), ouverts par défaut.
+       Les grilles #grid1 et #grid2 sont générées dynamiquement par app.js.
        ════════════════════════════════════════════════════════════════ -->
   <div id="sections" class="screen">
 
+    <!-- ── Header sticky ── -->
     <div class="sections-header">
-      <!--
-        Bouton retour — renvoie vers #home.
-        OPTIMISATION : onclick inline conservé car il ne fait qu'appeler
-        showScreen(), qui est une fonction utilitaire pure de navigation.
-      -->
-      <button class="back-btn" onclick="showScreen('home')" id="sectionsBackBtn"></button>
 
-      <!-- Titre de l'écran — injecté par app.js (ex. "Thèmes — Français") -->
-      <h2 id="sectionsTitle"></h2>
-
-      <!-- Barre de progression globale (identique à celle de #home) -->
-      <div class="progress-bar-wrap">
-        <div class="progress-bar" id="globalProgress" style="width:0%"></div>
+      <!-- Ligne gauche : retour + titre + progression + étoiles -->
+      <div class="sections-header-left">
+        <button class="back-btn" onclick="showScreen('home')" id="sectionsBackBtn"></button>
+        <h2 id="sectionsTitle"></h2>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar" id="globalProgress" style="width:0%"></div>
+        </div>
+        <div class="progress-label" id="progressLabel"></div>
+        <!-- Étoiles récupérées depuis l'ancien Home -->
+        <div class="sections-stars" id="sectionsStars"></div>
       </div>
 
-      <!-- Libellé de progression — ex. "5 / 12 thèmes complétés" -->
-      <div class="progress-label" id="progressLabel"></div>
+      <!-- Drapeau en haut à droite -->
+      <div class="sections-flag" id="sectionsFlagRight"></div>
+
     </div><!-- /.sections-header -->
 
     <div class="sections-body">
 
-      <!--
-        NIVEAU 1 — Débutant
-        • #level1Badge : badge coloré (lettre ou emoji) injecté par app.js
-        • #level1Label : libellé textuel du niveau injecté par app.js
-        • #grid1       : grille de cartes-thèmes injectée par app.js
-      -->
-      <div class="level-block">
-        <div class="level-label">
+      <!-- NIVEAU 1 — déroulant, ouvert par défaut -->
+      <details class="level-details" id="level1Details" open>
+        <summary class="level-summary">
           <span class="level-badge" id="level1Badge"></span>
           <span id="level1Label"></span>
-        </div>
+          <span class="level-chevron">▼</span>
+        </summary>
         <div class="themes-grid" id="grid1"></div>
-      </div>
+      </details>
 
-      <!--
-        NIVEAU 2 — Intermédiaire / Avancé
-        • Même structure que le niveau 1, avec la variante CSS "l2"
-          sur le badge pour une couleur distincte.
-      -->
-      <div class="level-block">
-        <div class="level-label">
+      <!-- NIVEAU 2 — déroulant, ouvert par défaut -->
+      <details class="level-details" id="level2Details" open>
+        <summary class="level-summary">
           <span class="level-badge l2" id="level2Badge"></span>
           <span id="level2Label"></span>
-        </div>
+          <span class="level-chevron">▼</span>
+        </summary>
         <div class="themes-grid" id="grid2"></div>
-      </div>
+      </details>
 
     </div><!-- /.sections-body -->
 

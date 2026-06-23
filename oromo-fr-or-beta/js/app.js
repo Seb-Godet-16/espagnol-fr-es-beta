@@ -253,7 +253,6 @@ function initApp(mode) {
     ALL_THEMES = isFrench() ? ALL_THEMES_FR : ALL_THEMES_OR;
 
     _setUI({
-      homeFlagRow    : L('🇫🇷',                    '🇪🇹'),
       homeTitle      : L('Apprendre le Français',  'Afaan Oromoo barachuu'),
       homeStartBtn   : L('▶ Commencer',             '▶ Jalqabi'),
       sectionsBackBtn: L('← Retour',               '← Gara duubaatti'),
@@ -264,6 +263,9 @@ function initApp(mode) {
       level2Badge    : '2',
       level2Label    : L('Niveau 2 — Phrases simples', 'Sadarkaa 2 — Himoota salphaa')
     });
+
+    /* ── Construire le contenu du Guide/Home (Écran 2 redesigné) ── */
+    _buildHomeGuide();
 
     /* Charger la progression sauvegardée pour ce mode */
     loadDone();
@@ -284,7 +286,6 @@ function initApp(mode) {
  * @param {Object} t - Dictionnaire { idElement: valeurTexte }
  */
 function _setUI(t) {
-  _setText('homeFlagRow',     t.homeFlagRow);
   _setText('homeTitle',       t.homeTitle);
   _setText('homeStartBtn',    t.homeStartBtn);
   _setText('sectionsBackBtn', t.sectionsBackBtn);
@@ -795,18 +796,18 @@ function _getProgress() {
 }
 
 function renderHome() {
+  /* L'écran home est désormais le Guide/Onboarding — rien à re-rendre ici
+     (le contenu est injecté une fois par _buildHomeGuide() dans initApp).
+     On garde la fonction pour compatibilité avec les appels existants. */
   if (!ALL_THEMES.length) return;
-
-  var p = _getProgress();
-
-  document.getElementById('homeBar').style.width = p.pct + '%';
-
-  document.getElementById('homeBarLabel').textContent =
-    p.n + ' / ' + p.total + ' ' + L('modules validés', 'kutaalee darban') + ' — ' + p.pct + '%';
-
-  document.getElementById('homeStars').innerHTML =
-    '<span style="font-size:1.1rem; font-weight:bold; color:var(--c-star);">⭐ '
-    + p.starsEarned + ' / ' + p.starsMax + '</span>';
+  /* Mise à jour du bouton Commencer selon si déjà commencé */
+  var p   = _getProgress();
+  var btn = document.getElementById('homeStartBtn');
+  if (btn) {
+    btn.textContent = p.n > 0
+      ? L('▶ Continuer', '▶ Itti fufi')
+      : L('▶ Commencer', '▶ Jalqabi');
+  }
 }
 
 
@@ -828,6 +829,18 @@ function renderSections() {
   document.getElementById('globalProgress').style.width = p.pct + '%';
   document.getElementById('progressLabel').textContent =
     p.n + ' / ' + p.total + ' ' + L('modules', 'kutaalee') + ' — ' + p.pct + '%';
+
+  /* ── Étoiles dans le header sections (récupérées depuis l'ancien Home) ── */
+  var starsEl = document.getElementById('sectionsStars');
+  if (starsEl) {
+    starsEl.innerHTML =
+      '<span class="sections-stars-inner">⭐ '
+      + p.starsEarned + ' / ' + p.starsMax + '</span>';
+  }
+
+  /* ── Drapeau de la langue apprise (haut droite) ── */
+  var flagEl = document.getElementById('sectionsFlagRight');
+  if (flagEl) flagEl.textContent = L('🇫🇷', '🇪🇹');
 
   ['grid1', 'grid2'].forEach(function(gid) {
     var level = (gid === 'grid1') ? 1 : 2;
@@ -2224,50 +2237,230 @@ function _escAttr(s) {
 var _OB_KEY_FR = 'tm_onboarded_fr';
 var _OB_KEY_OR = 'tm_onboarded_or';
 
+/* ============================================================
+   ÉCRAN 2 — GUIDE / HOME (remplace l'ancien écran Home)
+   ============================================================
+   _buildHomeGuide() : injecte dans #home le guide d'utilisation
+   bilingue avec badges, accordéons et checkbox "Ne plus afficher".
+   Appelée une fois par initApp() après _setUI().
+
+   Logique "Ne plus afficher" :
+   • Si le flag localStorage est posé ET que ce n'est pas un
+     appel depuis "Aide" → on saute directement à sections.
+   • La checkbox dans l'écran permet de poser/retirer le flag.
+   • showOnboardingGuide() : force l'affichage depuis le footer
+     (écran home) sans toucher au flag.
+   ============================================================ */
+
 /**
- * Vérifie si l'onboarding doit être affiché pour le mode actif.
- * Appelée par initApp() dans le callback, après showScreen('home').
- * Affiche le guide seulement si le flag localStorage est absent.
+ * Construit et injecte le contenu du Guide dans l'écran #home.
+ * Appelée par initApp() et showOnboardingGuide().
+ */
+function _buildHomeGuide() {
+  var isFr = isFrench();
+
+  /* ── Flags bilingues dans l'en-tête ── */
+  var flagsEl = document.getElementById('homeGuideFlagsRow');
+  if (flagsEl) flagsEl.textContent = isFr ? '🇪🇹 🌍 🇫🇷' : '🇫🇷 🌍 🇪🇹';
+
+  /* ── Titre & sous-titre ── */
+  var titleEl = document.getElementById('homeTitle');
+  if (titleEl) titleEl.textContent = isFr
+    ? 'Apprendre le Français 🇫🇷'
+    : 'Afaan Oromoo barachuu 🇪🇹';
+
+  var subEl = document.getElementById('homeGuideSubtitle');
+  if (subEl) subEl.textContent = isFr
+    ? 'App gratuite, idéale pour débuter depuis zéro · Bilisaa, duruma'
+    : 'App bilisaa, calqalbaa irraa jalqabuuf ideal · App gratuite, idéale pour débuter';
+
+  /* ── Badges de fonctionnalités ── */
+  var badgesEl = document.getElementById('homeGuideBadges');
+  if (badgesEl) {
+    var badges = isFr
+      ? ['✅ Gratuit', '📱 Mobile & Bureau', '🔊 Audio inclus', '🎤 Répétition orale', '📲 Hors-ligne']
+      : ['✅ Bilisaa', '📱 Bilbila & Kompiyuutara', '🔊 Sagalee', '🎤 Irra deebʼi', '📲 Interneetii malee'];
+    badgesEl.innerHTML = badges.map(function(b) {
+      return '<span class="hg-badge">' + b + '</span>';
+    }).join('');
+  }
+
+  /* ── Accordéons ── */
+  var sections = [
+    {
+      icon : '🗺️',
+      title: isFr ? 'Comment naviguer dans l\'app'    : 'Appiin keessa akkamiin deemna',
+      body : isFr
+        ? '<ul>'
+          + '<li>Cet écran <strong>Guide</strong> s\'affiche à chaque visite — cochez "Ne plus afficher" pour l\'ignorer.</li>'
+          + '<li><strong>Modules (📚)</strong> : 32 thèmes de vocabulaire (Niveau 1) + 16 dialogues de situation (Niveau 2).</li>'
+          + '<li><strong>Dans chaque module</strong> : <em>Cartes, Vocabulaire, Quiz, Dialogue, Répète</em>.</li>'
+          + '<li>Le bouton <strong>←</strong> remonte toujours d\'un niveau.</li>'
+          + '</ul>'
+          + '<div class="ob-tip">💡 Commencez par le Niveau 1 — les dialogues du Niveau 2 seront plus faciles ensuite !</div>'
+        : '<ul>'
+          + '<li>Fuula <strong>Gargaarsa</strong> kun daawwannaa hunda ni mul\'ata — "Hin agarsiisin" cuqaasi hanqisuuf.</li>'
+          + '<li><strong>Moojuulota (📚)</strong> : jechoota sadarkaa 1 (32) + himoota sadarkaa 2 (16).</li>'
+          + '<li><strong>Moojuula tokko tokkoon</strong> keessa: <em>Kaardota, Jechootaa, Quiz, Dubbii, Irra deebʼi</em>.</li>'
+          + '<li>Fuula <strong>←</strong> irra deebiʼuuf fayyadami.</li>'
+          + '</ul>'
+          + '<div class="ob-tip">💡 Sadarkaa 1 irraa jalqabi — booda sadarkaa 2 salphaa ta\'a !</div>'
+    },
+    {
+      icon : '🃏',
+      title: isFr ? 'Les Cartes Flash' : 'Kaardota (Cartes Flash)',
+      body : isFr
+        ? '<p>Chaque carte montre un mot. <strong>Tapez dessus</strong> pour voir la traduction et entendre la prononciation.</p>'
+          + '<ul>'
+          + '<li>🔊 : écouter le mot · ‹ › : carte suivante/précédente · La carte se <strong>retourne</strong>.</li>'
+          + '</ul>'
+          + '<div class="ob-tip">💡 Écoutez plusieurs fois avant de passer au Quiz !</div>'
+        : '<p>Kaardni tokko jecha agarsiisa. <strong>Cuqaasi</strong> sagalee dhageeffachuu fi hiika argachuuf.</p>'
+          + '<ul>'
+          + '<li>🔊 : sagalee dhageeffadhu · ‹ › : kaardii itti aanu · Kaardiin <strong>garagalti</strong>.</li>'
+          + '</ul>'
+          + '<div class="ob-tip">💡 Dura sagalee dhageeffadhu, booda Quiz gali !</div>'
+    },
+    {
+      icon : '🎯',
+      title: isFr ? 'Le Quiz et les Étoiles ⭐' : 'Quiz fi Urjiin ⭐',
+      body : isFr
+        ? '<p><strong>Quiz 10 questions</strong> après les cartes. Choisissez la bonne réponse parmi 4.</p>'
+          + '<ul>'
+          + '<li>⭐ : ≥ 50% → module validé !  · ⭐⭐ : ≥ 75%  · ⭐⭐⭐ : 100% 🎉</li>'
+          + '</ul>'
+          + '<p>Les étoiles ne <strong>diminuent jamais</strong> — votre meilleur score est conservé.</p>'
+          + '<div class="ob-tip">💡 Votre score total ⭐ est visible en haut de l\'écran Modules.</div>'
+        : '<p>Kaardota booda <strong>Quiz gaafii 10</strong>. Deebii sirrii 4 keessaa tokko filadhu.</p>'
+          + '<ul>'
+          + '<li>⭐ : ≥ 50% darbe !  · ⭐⭐ : ≥ 75%  · ⭐⭐⭐ : 100% 🎉</li>'
+          + '</ul>'
+          + '<p>Urjiilee <strong>hir\'atan hin beekani</strong> — madaala gaarii ta\'e qofti yaadatama.</p>'
+          + '<div class="ob-tip">💡 Madaali keessan ⭐ fuula Moojuulota irraa mul\'ata.</div>'
+    },
+    {
+      icon : '🔊',
+      title: isFr ? 'La Synthèse Vocale' : 'Sagalee (Synthèse Vocale)',
+      body : isFr
+        ? '<p>Cliquez sur 🔊 pour écouter chaque mot prononcé par votre navigateur.</p>'
+          + '<div class="ob-tip">💡 Si 🔊 ne fonctionne pas, vérifiez le son de votre appareil — Chrome et Firefox recommandés.</div>'
+        : '<p>Caancala 🔊 cuqaasi — sagaleen browser keessan jechoota dubbisa.</p>'
+          + '<div class="ob-tip">💡 🔊 hin hojjenne yoo taʼe: suursagalee ilaali, Chrome yookiin Firefox fayyadami.</div>'
+    },
+    {
+      icon : '🎙️',
+      title: isFr ? 'L\'onglet Répète' : 'Onglet Irra deebʼi',
+      body : isFr
+        ? '<p>Pratiquez la prononciation avec votre microphone : <strong>🔊 Écouter</strong> puis <strong>🎙️ Parler</strong>.</p>'
+          + '<div class="ob-tip">💡 Nécessite l\'autorisation microphone — peut ne pas fonctionner sur tous les navigateurs.</div>'
+        : '<p>Sagalee maaykiroofooniin shaakali : <strong>🔊 Dhageeffadhu</strong> booda <strong>🎙️ Dubbadhu</strong>.</p>'
+          + '<div class="ob-tip">💡 Hayyama maaykiroofoonii barbaachisa — browser mara irratti hin hojjetu.</div>'
+    },
+    {
+      icon : '📲',
+      title: isFr ? 'Installer l\'app (hors-ligne)' : 'App gara meeshaa irratti buusi',
+      body : isFr
+        ? '<ul>'
+          + '<li><strong>Android / Chrome</strong> : menu ⋮ → <em>"Ajouter à l\'écran d\'accueil"</em></li>'
+          + '<li><strong>iOS / Safari</strong> : 🔗 → <em>"Sur l\'écran d\'accueil"</em></li>'
+          + '</ul>'
+          + '<p>Une fois installée, l\'app fonctionne <strong>entièrement hors-ligne</strong> !</p>'
+        : '<ul>'
+          + '<li><strong>Android / Chrome</strong> : ⋮ cuqaasi → <em>"Fuula jalqabarratti ida\'i"</em></li>'
+          + '<li><strong>iOS / Safari</strong> : 🔗 cuqaasi → <em>"Fuula jalqabarratti"</em></li>'
+          + '</ul>'
+          + '<p>Erga buufamee booda interneetii malee <strong>hojjeta</strong> !</p>'
+    }
+  ];
+
+  var bodyEl = document.getElementById('homeGuideBody');
+  if (bodyEl) {
+    bodyEl.innerHTML = sections.map(function(s) {
+      return '<details class="hg-section" open>'
+        + '<summary class="hg-summary">'
+        + '<span class="hg-icon">' + s.icon + '</span>'
+        + '<span class="hg-label">' + s.title + '</span>'
+        + '<span class="hg-chevron">▼</span>'
+        + '</summary>'
+        + '<div class="hg-detail">' + s.body + '</div>'
+        + '</details>';
+    }).join('');
+  }
+
+  /* ── Checkbox "Ne plus afficher" ── */
+  var noshowText = document.getElementById('homeNoshowText');
+  if (noshowText) {
+    noshowText.textContent = isFr
+      ? 'Ne plus afficher ce guide au démarrage'
+      : 'Ka\'umsa irratti gargaarsa kana hin agarsiifin';
+  }
+  /* Synchroniser l'état de la checkbox avec localStorage */
+  var chk = document.getElementById('homeNoshowChk');
+  var key = (currentMode === 'learn_french') ? _OB_KEY_FR : _OB_KEY_OR;
+  try {
+    if (chk) chk.checked = !!localStorage.getItem(key);
+  } catch(e) {}
+  if (chk) {
+    chk.onchange = function() {
+      try {
+        if (chk.checked) {
+          localStorage.setItem(key, '1');
+        } else {
+          localStorage.removeItem(key);
+        }
+      } catch(e) {}
+    };
+  }
+
+  /* ── Bouton Commencer / Continuer ── */
+  var btn = document.getElementById('homeStartBtn');
+  if (btn) {
+    btn.textContent = L('▶ Commencer', '▶ Jalqabi');
+    btn.onclick = function() { showScreen('sections'); };
+  }
+}
+
+/**
+ * Point d'entrée : après initApp(), vérifie si le flag "Ne plus afficher"
+ * est posé. Si oui → saute directement à sections. Sinon → reste sur home.
+ * (L'écran home = guide est déjà affiché par showScreen('home') dans initApp.)
  */
 function _maybeShowOnboarding() {
   var key = (currentMode === 'learn_french') ? _OB_KEY_FR : _OB_KEY_OR;
   try {
-    if (localStorage.getItem(key)) return;   /* déjà vu → on ne fait rien */
-  } catch(e) { /* localStorage indisponible (mode privé) → on n'affiche pas */ return; }
-
-  /* Léger délai : laisse le temps à l'écran home de s'afficher visuellement */
-  setTimeout(function() {
-    _buildOnboardingContent();
-    var overlay = document.getElementById('onboarding-modal');
-    if (overlay) overlay.classList.add('ob-visible');
-  }, 400);
+    if (localStorage.getItem(key)) {
+      /* Flag posé → passer directement aux modules */
+      showScreen('sections');
+      return;
+    }
+  } catch(e) {}
+  /* Pas de flag → rester sur l'écran Guide/Home (déjà affiché) */
 }
 
 /**
- * Ferme la modale et enregistre le flag "déjà vu" dans localStorage.
- * Appelée par le bouton CTA et par le clic sur le fond.
+ * Ferme la modale onboarding legacy (gardée pour compatibilité).
  */
 function _closeOnboarding() {
   var overlay = document.getElementById('onboarding-modal');
   if (!overlay) return;
-
-  /* Animation de sortie : retire la classe visible puis cache */
   overlay.classList.remove('ob-visible');
-
-  /* Marquer comme vu pour ce mode */
   var key = (currentMode === 'learn_french') ? _OB_KEY_FR : _OB_KEY_OR;
   try { localStorage.setItem(key, '1'); } catch(e) {}
+  /* Synchroniser la checkbox sur l'écran home */
+  var chk = document.getElementById('homeNoshowChk');
+  if (chk) chk.checked = true;
 }
 
 /**
- * Ouvre le guide utilisateur depuis le lien "Relire" dans les footers.
- * Fonction publique — appelée via onclick dans index.html.
- * Ne pose PAS le flag localStorage (l'utilisateur demande explicitement).
+ * Ouvre le guide depuis le lien "Aide" dans les footers.
+ * Affiche l'écran #home (guide) sans toucher au flag.
  */
 function showOnboardingGuide() {
-  _buildOnboardingContent();
-  var overlay = document.getElementById('onboarding-modal');
-  if (overlay) overlay.classList.add('ob-visible');
+  showScreen('home');
+  /* Re-synchroniser la checkbox car le flag peut avoir changé */
+  var chk = document.getElementById('homeNoshowChk');
+  var key = (currentMode === 'learn_french') ? _OB_KEY_FR : _OB_KEY_OR;
+  try { if (chk) chk.checked = !!localStorage.getItem(key); } catch(e) {}
 }
 
 /**
