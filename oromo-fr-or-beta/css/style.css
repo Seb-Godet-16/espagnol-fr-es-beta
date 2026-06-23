@@ -136,6 +136,13 @@ body{
   --c-home-subtitle:#002395;
   --c-home-progress:#002395;          /* utilisé si besoin en JS */
   --c-home-progress-label:#002395;
+
+  /* ── Couleurs sémantiques — lues par app.js via getComputedStyle ──
+     Centraliser ici évite les couleurs hardcodées dans le JS.
+     Pour changer la palette, modifier UNIQUEMENT ce bloc :root.     */
+  --c-success:#009A44;   /* feedback correct (quiz, répète)           */
+  --c-error:#c0392b;     /* feedback incorrect                        */
+  --c-star:#f1c40f;      /* étoiles ⭐ (progression, résultats)       */
 }
 
 
@@ -681,6 +688,32 @@ html.theme-oromo body{background:#f4f9f4}
 .t-name{font-size:.8rem;font-weight:700;color:#333;margin-top:4px;line-height:1.2}
 .t-sub{font-size:.65rem;color:#aaa;margin-top:2px}
 .t-stars{font-size:.8rem;margin-top:3px}
+/* Bouton reset d'un thème (anciennement styles inline dans app.js) */
+.btn-reset-theme{
+  display:inline-block;
+  margin-top:6px;
+  font-size:.65rem;
+  background:#fff;
+  border:1.5px solid #009A44;
+  color:#009A44;
+  border-radius:50px;
+  padding:4px 10px;
+  cursor:pointer;
+  font-weight:700;
+  transition:background .15s, color .15s;
+}
+.btn-reset-theme:hover{
+  background:#009A44;
+  color:#fff;
+}
+.theme-french .btn-reset-theme{
+  border-color:var(--c-primary);
+  color:var(--c-primary);
+}
+.theme-french .btn-reset-theme:hover{
+  background:var(--c-primary);
+  color:#fff;
+}
 
 
 /* ══════════════════════════════════════════════════════════════════
@@ -930,6 +963,37 @@ html.theme-oromo body{background:#f4f9f4}
   text-align:center;
   box-shadow:0 2px 8px #0001;
   margin-top:4px;
+}
+
+/*
+  Classes générées par buildAlphaDetail() dans app.js.
+  Remplacent les styles inline hardcodés (#009A44, #555…).
+  La couleur principale suit var(--c-primary) : elle s'adapte
+  automatiquement au thème actif (Français/Oromo).
+*/
+.alpha-detail-letter{
+  font-size:2.5rem;
+  font-weight:900;
+  color:var(--c-primary);
+}
+.alpha-detail-name{
+  color:#555;
+  margin:4px 0;
+  font-size:.85rem;
+}
+.alpha-detail-btn{
+  margin-top:10px;
+  background:var(--c-primary);
+  color:#fff;
+  border:none;
+  border-radius:50px;
+  padding:9px 18px;
+  cursor:pointer;
+  font-weight:700;
+  min-height:44px;
+}
+.alpha-detail-btn:active{
+  background:var(--c-primary-dark);
 }
 
 /* Quiz audio de l'alphabet */
@@ -1827,3 +1891,132 @@ footer a:hover{text-decoration:underline}
   cursor:pointer;
 }
 .ob-reread-hint a:hover{text-decoration:underline}
+
+/* ════════════════════════════════════════════════════════════════
+   §20 — SPINNER DE CHARGEMENT (.app-loading)
+   ════════════════════════════════════════════════════════════════ */
+.app-loading{
+  position:fixed;
+  inset:0;
+  background:rgba(255,255,255,.92);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  opacity:0;
+  transition:opacity .2s ease;
+}
+.app-loading--visible{opacity:1;}
+.app-loading-inner{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:18px;
+}
+.app-loading-spinner{
+  width:48px;
+  height:48px;
+  border:5px solid var(--c-progress-bg);
+  border-top-color:var(--c-primary);
+  border-radius:50%;
+  animation:spin .75s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.app-loading-label{
+  font-size:.9rem;
+  color:var(--c-primary);
+  font-weight:600;
+  letter-spacing:.02em;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   §21 — MODE SOMBRE  @media (prefers-color-scheme: dark)
+   ════════════════════════════════════════════════════════════════
+   Ajuste uniquement les surfaces de fond et les couleurs de texte
+   neutres. Les couleurs primaires (bleu FR, vert OR) restent
+   identiques pour conserver l'identité visuelle.
+   ════════════════════════════════════════════════════════════════ */
+@media (prefers-color-scheme: dark) {
+
+  /* ── Fond global ── */
+  body, .app{background:#1a1a1f;}
+
+  /* ── Écrans ── */
+  .screen{background:#1a1a1f;}
+
+  /* ── En-tête home & sections ── */
+  .home-header, .sections-header, .lesson-header{
+    background:var(--c-primary);   /* conservé — contraste suffisant */
+  }
+
+  /* ── Cartes thème ── */
+  .theme-card{
+    background:#26262e;
+    border-color:#38383f;
+    color:#e8e8e8;
+  }
+  .theme-card.done{background:#1e2e22;border-color:#2d4a30;}
+  .t-name{color:#f0f0f0;}
+  .t-sub{color:#aaa;}
+
+  /* ── Onglets (tabs) ── */
+  .tab{background:#26262e;color:#ccc;border-color:#38383f;}
+  .tab.active{background:var(--c-primary);color:#fff;}
+
+  /* ── Contenu des onglets ── */
+  #tabContent{background:#1a1a1f;color:#e0e0e0;}
+
+  /* ── Cartes flash ── */
+  .fc-front,.fc-back{
+    background:#26262e;
+    color:#f0f0f0;
+    border-color:#38383f;
+  }
+  .fc-front-word,.fc-back-word{color:#f0f0f0;}
+  .fc-front-hint{color:#aaa;}
+  .fc-conj-line{color:#bbb;}
+
+  /* ── Quiz ── */
+  .quiz-opt{
+    background:#26262e;
+    color:#e0e0e0;
+    border-color:#444;
+  }
+  .quiz-opt.correct{background:#1a3a22;color:#6fcf97;border-color:#27ae60;}
+  .quiz-opt.wrong{background:#3a1a1a;color:#eb5757;border-color:#c0392b;}
+  .quiz-opt.disabled{opacity:.6;}
+  .result-box{background:#26262e;color:#e0e0e0;}
+
+  /* ── Dialogues ── */
+  .bubble{background:#26262e;}
+  .bubble.left{background:#1e2e22;}
+  .msg{color:#e0e0e0;}
+  .bubble-translation{color:#aaa;}
+
+  /* ── Vocabulaire chips ── */
+  .vocab-chip{background:#26262e;color:#e0e0e0;border-color:#444;}
+
+  /* ── Onglet Répète ── */
+  .repeat-card{background:#26262e;color:#f0f0f0;}
+  .repeat-progress-bar{background:#38383f;}
+
+  /* ── Modales ── */
+  .modal-content{background:#26262e;color:#e0e0e0;}
+  .ob-sheet{background:#1f1f26;}
+  .ob-body{background:#1f1f26;}
+  .ob-section summary{background:#26262e;color:#e0e0e0;}
+  .ob-section[open] summary{background:#2a2a34;}
+  .ob-detail{background:#1f1f26;color:#ccc;}
+  .ob-tip{background:#2a2a1a;color:#d4b84a;border-left-color:#d4b84a;}
+  .ob-feat-card,.ob-stat,.ob-vs-card,.ob-audio-block,.ob-bio-card,.ob-audio-help{
+    background:#26262e;border-color:#38383f;
+  }
+  .ob-feat-desc,.ob-vs-chip,.ob-audio-step{color:#bbb;}
+
+  /* ── Toast ── */
+  .app-toast{background:#26262e;color:#e0e0e0;border:1px solid #444;}
+
+  /* ── Spinner ── */
+  .app-loading{background:rgba(26,26,31,.94);}
+  .app-loading-label{color:#e0e0e0;}
+}

@@ -1,19 +1,22 @@
 /* ============================================================
-   Language App 🇫🇷🇪🇹  —  Moteur applicatif unifié
+   Taphad'Meuh 🐄  —  Moteur applicatif unifié
    Français ↔ Afaan Oromoo
    © Juin 2026 – Sébastien Godet · IA Claude
    ============================================================
-   ARCHITECTURE (4 fichiers) :
-     ├─ index.html  → Structure HTML + launcher
-     ├─ style.css   → Thèmes couleur, composants visuels
-     ├─ data.js     → ALL_THEMES_FR / ALL_THEMES_OR (contenu pédagogique)
-     └─ app.js      → Ce fichier : logique applicative complète
+   ARCHITECTURE (5 fichiers) :
+     ├─ index.html   → Structure HTML + launcher
+     ├─ style.css    → Thèmes couleur, composants visuels
+     ├─ data-fr.js   → ALL_THEMES_FR (contenu — mode Français)
+     ├─ data-or.js   → ALL_THEMES_OR (contenu — mode Oromo)
+     └─ app.js       → Ce fichier : logique applicative complète
 
    SECTIONS DE CE FICHIER :
      1.  Variables d'état globales
      2.  Point d'entrée — initApp(mode)
      3.  Synthèse vocale + prononciation Oromo (cascade de voix)
+     3b. Retour haptique — _vibrateFeedback()
      4.  Persistance de la progression (système d'étoiles ⭐)
+     4b. Restauration de session quiz (sessionStorage)
      5.  Navigation entre écrans
      6.  Écran Home — rendu de la barre de progression
      7.  Écran Sections — grille des thèmes
@@ -22,9 +25,15 @@
     10.  Quiz 10 questions — avec étoiles progressives
     11.  Dialogue — scènes de situation
     12.  Vocabulaire — lexique visuel cliquable
-    13b. Onglet Répète — reconnaissance vocale (Speech Recognition)
     13.  Quiz Dialogue — questions sur le dialogue
+    13b. Onglet Répète — reconnaissance vocale (Speech Recognition)
     14.  Utilitaires & chaînes de résultats bilingues
+    15.  Initialisation du launcher
+    16.  Accessibilité clavier
+    17.  Guide utilisateur — Onboarding (première visite par mode)
+    18.  Crédits — showCredits()
+    19.  Spinner de chargement des données
+    20.  Enregistrement du Service Worker (PWA / Hors-ligne)
    ============================================================ */
 
 
@@ -39,7 +48,7 @@
 /* ── Configuration du mode actif ── */
 var currentMode = '';       // 'learn_french' | 'learn_oromo'
 var voiceLang   = 'fr-FR';  // Langue de la synthèse vocale (mise à jour par initApp)
-var ALL_THEMES  = [];       // Tableau des thèmes actifs, rempli par initApp() depuis data.js
+var ALL_THEMES  = [];       // Tableau des thèmes actifs, rempli par initApp() depuis data-fr.js ou data-or.js
 var STORAGE_KEY = '';       // Clé localStorage séparée par mode (deux progressions indépendantes)
 
 /* ── Session en cours (réinitialisées à chaque ouverture de thème) ── */
@@ -200,16 +209,35 @@ function initApp(mode) {
   /* ── Appliquer immédiatement le thème visuel et masquer le launcher ── */
   if (mode === 'learn_french') {
     document.documentElement.className = 'theme-french';
+    /*
+      lang HTML : en mode learn_french, l'apprenant EST oromophone.
+      L'interface s'affiche en Oromo → lang="om" pour les lecteurs d'écran et la synthèse vocale système.
+    */
+    document.documentElement.lang = 'om';
     voiceLang   = 'fr-FR';
     STORAGE_KEY = 'pe_om_fr_done_v1';
+    /* Synchroniser la meta theme-color avec la couleur française */
+    var tcMeta = document.getElementById('meta-theme-color');
+    if (tcMeta) tcMeta.setAttribute('content', '#002395');
   } else {
     document.documentElement.className = 'theme-oromo';
+    /*
+      lang HTML : en mode learn_oromo, l'apprenant EST francophone.
+      L'interface s'affiche en Français → lang="fr".
+    */
+    document.documentElement.lang = 'fr';
     voiceLang   = 'om-ET';
     STORAGE_KEY = 'pe_fr_om_done_v1';
+    /* Synchroniser la meta theme-color avec la couleur oromo */
+    var tcMeta = document.getElementById('meta-theme-color');
+    if (tcMeta) tcMeta.setAttribute('content', '#009A44');
   }
 
   /* Masquer le launcher pendant le chargement (feedback immédiat) */
   document.getElementById('app-launcher').classList.remove('active');
+
+  /* Afficher le spinner de chargement pendant le fetch de data-*.js */
+  _showLoadingSpinner();
 
   /* ── Déterminer le fichier de données à charger ── */
   var dataFile = (mode === 'learn_french') ? 'data-fr.js' : 'data-or.js';
@@ -217,41 +245,31 @@ function initApp(mode) {
   _loadDataScript(dataFile, function() {
     /* Callback : données disponibles en mémoire → finaliser l'initialisation */
 
-    if (mode === 'learn_french') {
-      ALL_THEMES = ALL_THEMES_FR;   /* défini dans data-fr.js */
+    /*
+      REFACTORING (Archi) : les deux blocs if/else identiques avec _setUI()
+      sont fusionnés en un seul appel, chaque valeur étant sélectionnée via L().
+      Avantage : ajouter un libellé = 1 ligne au lieu de 2.
+    */
+    ALL_THEMES = isFrench() ? ALL_THEMES_FR : ALL_THEMES_OR;
 
-      _setUI({
-        homeFlagRow    : '🇫🇷',
-        homeTitle      : 'Apprendre le Français',
-        homeStartBtn   : '▶ Commencer',
-        sectionsBackBtn: '← Retour',
-        sectionsTitle  : '📚 Modules',
-        lessonBackBtn  : '← Modules',
-        level1Badge    : '1',
-        level1Label    : 'Niveau 1 — Vocabulaire',
-        level2Badge    : '2',
-        level2Label    : 'Niveau 2 — Phrases simples'
-      });
-
-    } else {
-      ALL_THEMES = ALL_THEMES_OR;   /* défini dans data-or.js */
-
-      _setUI({
-        homeFlagRow    : '🇪🇹',
-        homeTitle      : 'Afaan Oromoo barachuu',
-        homeStartBtn   : '▶ Jalqabi',
-        sectionsBackBtn: '← Gara duubaatti',
-        sectionsTitle  : '📚 Moojuulota',
-        lessonBackBtn  : '← Moojuulota',
-        level1Badge    : '1',
-        level1Label    : 'Sadarkaa 1 — Jechoota',
-        level2Badge    : '2',
-        level2Label    : 'Sadarkaa 2 — Himoota salphaa'
-      });
-    }
+    _setUI({
+      homeFlagRow    : L('🇫🇷',                    '🇪🇹'),
+      homeTitle      : L('Apprendre le Français',  'Afaan Oromoo barachuu'),
+      homeStartBtn   : L('▶ Commencer',             '▶ Jalqabi'),
+      sectionsBackBtn: L('← Retour',               '← Gara duubaatti'),
+      sectionsTitle  : L('📚 Modules',              '📚 Moojuulota'),
+      lessonBackBtn  : L('← Modules',              '← Moojuulota'),
+      level1Badge    : '1',
+      level1Label    : L('Niveau 1 — Vocabulaire',  'Sadarkaa 1 — Jechoota'),
+      level2Badge    : '2',
+      level2Label    : L('Niveau 2 — Phrases simples', 'Sadarkaa 2 — Himoota salphaa')
+    });
 
     /* Charger la progression sauvegardée pour ce mode */
     loadDone();
+
+    /* Masquer le spinner de chargement avant d'afficher l'écran home */
+    _hideLoadingSpinner();
 
     /* Afficher l'écran d'accueil */
     showScreen('home');
@@ -572,6 +590,18 @@ function markDone(id, pct) {
  * @param {string} id - Identifiant du thème à réinitialiser
  */
 function resetTheme(id) {
+  /*
+    UX — Confirmation avant effacement de la progression.
+    Un utilisateur peut toucher "Recommencer" par erreur sur mobile.
+    On utilise window.confirm() (natif, accessible, sans dépendance).
+    Le message est bilingue selon le mode actif.
+  */
+  var msg = L(
+    'Dhugumaan tartiiba kutaa kana haquuf barbaaddaa ? ⭐ Urjiilee argatte ni dhaban.',
+    'Voulez-vous vraiment réinitialiser ce module ? Vos ⭐ étoiles seront perdues.'
+  );
+  if (!window.confirm(msg)) return;
+
   done = done.filter(function(d) { return d.id !== id; });
   saveDone();
   renderSections();
@@ -746,24 +776,37 @@ function showScreen(id) {
 /**
  * Met à jour la barre de progression et le compteur d'étoiles sur l'écran home.
  */
+/**
+ * Calcule la progression globale en un seul endroit.
+ * Utilisé par renderHome() ET renderSections() pour éviter la duplication.
+ * @returns {{ total: number, n: number, pct: number,
+ *             starsEarned: number, starsMax: number }}
+ */
+function _getProgress() {
+  var total = ALL_THEMES.length;
+  var n     = done.length;
+  return {
+    total      : total,
+    n          : n,
+    pct        : total > 0 ? Math.round(n / total * 100) : 0,
+    starsEarned: done.reduce(function(acc, d) { return acc + d.stars; }, 0),
+    starsMax   : total * 3
+  };
+}
+
 function renderHome() {
   if (!ALL_THEMES.length) return;
 
-  var total = ALL_THEMES.length;
-  var n     = done.length;
-  var pct   = Math.round(n / total * 100);
+  var p = _getProgress();
 
-  document.getElementById('homeBar').style.width = pct + '%';
+  document.getElementById('homeBar').style.width = p.pct + '%';
 
   document.getElementById('homeBarLabel').textContent =
-    n + ' / ' + total + ' ' + L('modules validés', 'kutaalee darban') + ' — ' + pct + '%';
-
-  var totalStarsEarned = done.reduce(function(acc, d) { return acc + d.stars; }, 0);
-  var maxStarsPossible = total * 3;
+    p.n + ' / ' + p.total + ' ' + L('modules validés', 'kutaalee darban') + ' — ' + p.pct + '%';
 
   document.getElementById('homeStars').innerHTML =
-    '<span style="font-size:1.1rem; font-weight:bold; color:#f1c40f;">⭐ '
-    + totalStarsEarned + ' / ' + maxStarsPossible + '</span>';
+    '<span style="font-size:1.1rem; font-weight:bold; color:var(--c-star);">⭐ '
+    + p.starsEarned + ' / ' + p.starsMax + '</span>';
 }
 
 
@@ -780,13 +823,11 @@ function renderHome() {
 function renderSections() {
   if (!ALL_THEMES.length) return;
 
-  var total = ALL_THEMES.length;
-  var n     = done.length;
-  var pct   = Math.round(n / total * 100);
+  var p = _getProgress();
 
-  document.getElementById('globalProgress').style.width = pct + '%';
+  document.getElementById('globalProgress').style.width = p.pct + '%';
   document.getElementById('progressLabel').textContent =
-    n + ' / ' + total + ' ' + L('modules', 'kutaalee') + ' — ' + pct + '%';
+    p.n + ' / ' + p.total + ' ' + L('modules', 'kutaalee') + ' — ' + p.pct + '%';
 
   ['grid1', 'grid2'].forEach(function(gid) {
     var level = (gid === 'grid1') ? 1 : 2;
@@ -809,9 +850,8 @@ function _buildThemeCard(t) {
     : '';
 
   var resetBtn = isDone(t.id)
-    ? '<button onclick="event.stopPropagation();resetTheme(\'' + t.id + '\')" '
-      + 'style="margin-top:6px;font-size:.65rem;background:#fff;border:1.5px solid #009A44;'
-      + 'color:#009A44;border-radius:50px;padding:4px 10px;cursor:pointer;font-weight:700">'
+    ? '<button class="btn-reset-theme" '
+      + 'onclick="event.stopPropagation();resetTheme(\'' + t.id + '\')">'
       + L('🔄 Irra deebiʼi', '🔄 Recommencer')
       + '</button>'
     : '';
@@ -848,10 +888,10 @@ function _buildThemeCard(t) {
 function openTheme(id) {
   var found = ALL_THEMES.find(function(t) { return t.id === id; });
   if (!found) {
-    /* Thème introuvable : probablement une typo d'id dans data.js.
+    /* Thème introuvable : probablement une typo d'id dans data-fr.js / data-or.js.
        On affiche un message visible plutôt qu'un écran blanc silencieux. */
     console.error('[openTheme] Thème introuvable : "' + id + '"');
-    _showToast('⚠️ Thème introuvable : "' + id + '" — vérifiez data.js', 6000);
+    _showToast('⚠️ Thème introuvable : "' + id + '" — vérifiez data-fr.js / data-or.js', 6000);
     return;
   }
   CT = found;
@@ -1024,11 +1064,16 @@ function renderFlash() {
  */
 function buildAlphaDetail(c) {
   var keys = langKeys();
-  return '<div style="font-size:2.5rem;font-weight:900;color:#009A44">' + c[keys.src] + '</div>'
-    + '<div style="color:#555;margin:4px 0;font-size:.85rem">' + c[keys.tgt] + '</div>'
-    + '<button onclick="speak(\'' + esc(c[keys.src]) + '\')" '
-    + 'style="margin-top:10px;background:#009A44;color:#fff;border:none;border-radius:50px;'
-    + 'padding:9px 18px;cursor:pointer;font-weight:700;min-height:44px">'
+  /*
+    Styles déplacés dans style.css sous les sélecteurs :
+      .alpha-detail-letter  → grande lettre colorée (var(--c-primary))
+      .alpha-detail-name    → sous-texte discret
+      .alpha-detail-btn     → bouton écoute (remplace le inline background:#009A44)
+    Avantage : le changement de palette ne touche plus que style.css.
+  */
+  return '<div class="alpha-detail-letter">' + c[keys.src] + '</div>'
+    + '<div class="alpha-detail-name">' + c[keys.tgt] + '</div>'
+    + '<button class="alpha-detail-btn" onclick="speak(\'' + esc(c[keys.src]) + '\')">'
     + L('🔊 Dhaggeeffadhu', '🔊 Écouter')
     + '</button>';
 }
@@ -1210,7 +1255,7 @@ function renderQuiz10() {
       + '<div style="font-size:2rem; margin-bottom:5px;">' + (earnedStars === 3 ? '🌟🌟🌟' : endStars) + '</div>'
       + '<h3>' + r.title + '</h3>'
       + '<div class="score-num">' + q10Score + '/' + total + '</div>'
-      + '<div style="font-size:1rem;margin:6px 0;color:' + (isSuccess ? '#009A44' : '#EF2B2D') + '">' + r.sub + '</div>'
+      + '<div style="font-size:1rem;margin:6px 0;color:' + (isSuccess ? 'var(--c-success)' : 'var(--c-error)') + '">' + r.sub + '</div>'
       + '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px">'
       + '<button class="retry-btn" style="background:#888" onclick="q10Step=0;q10Score=0;q10Answered=false;_q10Questions=null;renderQuiz10()">' + r.retry + '</button>'
       + (isSuccess ? '<button class="retry-btn" onclick="renderSections();showScreen(\'sections\')">' + r.finish + '</button>' : '')
@@ -1298,7 +1343,7 @@ function checkQ10(chosen, correct) {
   fb.textContent = (chosen === correct)
     ? L('✅ Sirrii dha! Baga gammadde!', '✅ Correct ! Félicitations !')
     : L('❌ Dogoggora. Deebiin sirriin: ', '❌ Mauvaise réponse. La solution était : ') + correctWord;
-  fb.style.color = (chosen === correct) ? '#009A44' : '#c0392b';
+  fb.style.color = (chosen === correct) ? 'var(--c-success)' : 'var(--c-error)';
 
   if (isAlphaQuiz()) {
     if (chosen !== correct) setTimeout(function() { speak(qs[q10Step].audio); }, 300);
@@ -1494,16 +1539,68 @@ function _normalizeRepeat(s) {
  * @param {string} expected
  * @returns {boolean}
  */
+/**
+ * Calcule la distance de Levenshtein entre deux chaînes.
+ * Algorithme DP classique, O(n*m) en temps, O(min(n,m)) en espace.
+ * @param {string} a
+ * @param {string} b
+ * @returns {number} Nombre minimum d'opérations (insertion/suppression/substitution)
+ */
+function _levenshtein(a, b) {
+  if (a === b) return 0;
+  if (a.length === 0) return b.length;
+  if (b.length === 0) return a.length;
+  /* Garantir que b est la chaîne la plus courte (économie mémoire) */
+  if (a.length < b.length) { var tmp = a; a = b; b = tmp; }
+  var prev = [];
+  var curr = [];
+  for (var j = 0; j <= b.length; j++) prev[j] = j;
+  for (var i = 1; i <= a.length; i++) {
+    curr[0] = i;
+    for (var k = 1; k <= b.length; k++) {
+      var cost = (a[i - 1] === b[k - 1]) ? 0 : 1;
+      curr[k] = Math.min(
+        curr[k - 1] + 1,        /* insertion */
+        prev[k]     + 1,        /* suppression */
+        prev[k - 1] + cost      /* substitution */
+      );
+    }
+    var swap = prev; prev = curr; curr = swap;
+  }
+  return prev[b.length];
+}
+
 function _matchRepeat(transcript, expected) {
   var t = _normalizeRepeat(transcript);
   var e = _normalizeRepeat(expected);
-  /* Correspondance exacte ou contenue */
+
+  /* Correspondance exacte ou le mot attendu est contenu dans la transcription */
   if (t === e || t.indexOf(e) !== -1) return true;
-  /* Tolérance sur les mots très courts (≤3 car) : comparaison stricte seulement */
+
+  /* Mots très courts (≤ 3 car) : pas de tolérance pour éviter les faux positifs */
   if (e.length <= 3) return t === e;
-  /* Pour les mots plus longs : on accepte si ≥ 75% des caractères matchent
-     (distance de Levenshtein simplifiée non implémentée — on reste sur indexOf
-     pour ne pas sur-compliquer, mais cette règle absorbe les fins de mots) */
+
+  /*
+    Tolérance Levenshtein : on accepte si la distance normalisée est ≤ 25 %.
+    Exemples avec seuil 25% :
+      "bonjour" (7) → tolère jusqu'à 1 faute  (7 × 0.25 = 1.75 → floor 1)
+      "au revoir" (8) → tolère jusqu'à 2 fautes
+      "enchanté" (8) → "enchante" (sans accent) → distance 1 → ✅
+    On teste aussi chaque mot de la transcription séparément, ce qui absorbe
+    les mots parasites que le STT ajoute souvent en début ou fin de phrase.
+  */
+  var threshold = Math.floor(e.length * 0.25);
+  if (threshold < 1) threshold = 1;
+
+  /* Test sur la transcription entière d'abord */
+  if (_levenshtein(t, e) <= threshold) return true;
+
+  /* Test mot par mot dans la transcription (absorbe les "euh", "et", etc.) */
+  var words = t.split(/\s+/);
+  for (var i = 0; i < words.length; i++) {
+    if (_levenshtein(words[i], e) <= threshold) return true;
+  }
+
   return false;
 }
 
@@ -1961,7 +2058,7 @@ function _renderRepeatResult() {
 /* ============================================================
    13. QUIZ DIALOGUE — QUESTIONS SUR LE DIALOGUE
    ============================================================
-   Quiz statique chargé depuis CT.quiz (défini dans data.js).
+   Quiz statique chargé depuis CT.quiz (défini dans data-fr.js / data-or.js).
    Même système d'étoiles que le Quiz 10 questions.
    ============================================================ */
 
@@ -1990,7 +2087,7 @@ function renderDialogQuiz() {
       + '<div style="font-size:2rem; margin-bottom:5px;">' + (earnedStars === 3 ? '🎉🎉🎉' : endStars) + '</div>'
       + '<h3>' + r.title + '</h3>'
       + '<div class="score-num">' + dqScore + '/' + total + '</div>'
-      + '<div style="font-size:.9rem;margin-top:6px;color:' + (isSuccess ? '#009A44' : '#EF2B2D') + '">' + r.sub + '</div>'
+      + '<div style="font-size:.9rem;margin-top:6px;color:' + (isSuccess ? 'var(--c-success)' : 'var(--c-error)') + '">' + r.sub + '</div>'
       + '<div style="display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap">'
       + '<button class="retry-btn" style="background:#888" onclick="dqStep=0;dqScore=0;dqAnswered=false;renderDialogQuiz()">' + r.retry + '</button>'
       + (isSuccess ? '<button class="retry-btn" onclick="renderSections();showScreen(\'sections\')">' + r.finish + '</button>' : '')
@@ -2037,7 +2134,7 @@ function checkDQ(chosen, correct) {
   fb.textContent = (chosen === correct)
     ? L('✅ Deebii sirrii dha!', '✅ Bonne réponse !')
     : L('❌ Deebistee yaali!',   '❌ Essayer de nouveau !');
-  fb.style.color = (chosen === correct) ? '#009A44' : '#c0392b';
+  fb.style.color = (chosen === correct) ? 'var(--c-success)' : 'var(--c-error)';
 
   _saveQuizSession('dq');
   setTimeout(function() { dqStep++; renderDialogQuiz(); }, 1500);
@@ -2371,6 +2468,36 @@ function _buildOnboardingContent() {
    ============================================================ */
 
 function showCredits() {
+  /* Mise à jour bilingue du contenu selon le mode actif */
+  var titleEl = document.getElementById('credits-modal-title');
+  var bodyEl  = document.getElementById('credits-modal-body');
+  var closeEl = document.getElementById('credits-modal-close');
+
+  if (titleEl) titleEl.textContent = L('Remerciements', 'Galateeffannaa');
+  if (closeEl) closeEl.textContent = L('Fermer', 'Cufuu');
+
+  if (bodyEl) {
+    bodyEl.innerHTML = isFrench()
+      /* ── Texte Oromo (interface pour l'apprenant de français) ── */
+      ? '<p>Galata guddaa <strong>Fédérico Calo</strong>'
+        + ' (<a href="https://www.linkedin.com/in/federicocalo/" target="_blank">'
+        + 'Architektii Guddisaa Web</a>) gargaarsa teknikaaf.</p>'
+        + '<p>Galata baay&#x27;een <strong>Mussa Sembro</strong>'
+        + ' (<a href="https://www.linkedin.com/in/mussa-sembro-137472174/" target="_blank">'
+        + 'Hiikkaa-Ibsituu Afaan Oromoo</a>)'
+        + ' — hiikaa, sirreessaa fi gorsa afaanii.</p>'
+        + '<p><strong>Maatii koo</strong> — irra deebi&#x27;ee dubbisuu fi gorsaaf.</p>'
+      /* ── Texte français (interface pour l'apprenant d'Oromo) ── */
+      : '<p>Un grand merci à <strong>Fédérico Calo</strong>'
+        + ' (<a href="https://www.linkedin.com/in/federicocalo/" target="_blank">'
+        + 'Architecte Développeur Web</a>) pour son aide technique.</p>'
+        + '<p>Merci beaucoup à <strong>Mussa Sembro</strong>'
+        + ' (<a href="https://www.linkedin.com/in/mussa-sembro-137472174/" target="_blank">'
+        + 'Traducteur-Interprète en Oromo</a>)'
+        + ' pour son travail de traduction, ses corrections et ses précieux conseils linguistiques.</p>'
+        + '<p>Merci à mes <strong>parents</strong> pour leur relecture attentive et leurs conseils.</p>';
+  }
+
   var modal = document.getElementById('credits-modal');
   if (modal) modal.style.display = 'flex';
 }
@@ -2397,3 +2524,81 @@ document.addEventListener('keydown', function(e) {
   e.preventDefault();
   target.click();
 });
+
+
+/* ============================================================
+   UX — SPINNER DE CHARGEMENT DES DONNÉES
+   ============================================================
+   Affiché entre le clic sur le launcher et l'affichage de #home,
+   pendant le téléchargement de data-fr.js ou data-or.js (~100 Ko).
+   L'élément #app-loading est injecté dans le DOM par _showLoadingSpinner()
+   et retiré par _hideLoadingSpinner() dans le callback de _loadDataScript.
+   ============================================================ */
+
+/**
+ * Affiche un spinner plein écran pendant le chargement des données.
+ * Injecté dynamiquement pour ne pas alourdir le HTML initial.
+ */
+function _showLoadingSpinner() {
+  if (document.getElementById('app-loading')) return; /* déjà visible */
+  var el = document.createElement('div');
+  el.id        = 'app-loading';
+  el.className = 'app-loading';
+  el.setAttribute('role', 'status');
+  el.setAttribute('aria-live', 'polite');
+  el.innerHTML =
+    '<div class="app-loading-inner">'
+    + '<div class="app-loading-spinner"></div>'
+    + '<p class="app-loading-label">'
+    + L('Barachuu eegaluuf…', 'Chargement en cours…')
+    + '</p>'
+    + '</div>';
+  document.body.appendChild(el);
+  /* Forcer un reflow pour que la transition CSS d'entrée soit jouée */
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() { el.classList.add('app-loading--visible'); });
+  });
+}
+
+/**
+ * Retire le spinner de chargement avec une transition de sortie.
+ */
+function _hideLoadingSpinner() {
+  var el = document.getElementById('app-loading');
+  if (!el) return;
+  el.classList.remove('app-loading--visible');
+  setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 300);
+}
+/* ============================================================
+   15. ENREGISTREMENT DU SERVICE WORKER (PWA / Hors-ligne)
+   ============================================================
+   Enregistré après le chargement complet de la page pour ne pas
+   bloquer le rendu initial. Le SW gère le cache hors-ligne et
+   la stratégie Cache First / Network First (voir sw.js).
+   ============================================================ */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('./sw.js')
+      .then(function(reg) {
+        /* SW enregistré — mise à jour silencieuse si une nouvelle version existe */
+        reg.addEventListener('updatefound', function() {
+          var newSW = reg.installing;
+          if (!newSW) return;
+          newSW.addEventListener('statechange', function() {
+            if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+              /* Nouvelle version disponible : toast discret, sans forcer le rechargement */
+              _showToast(
+                L('🔄 Haala haaraan jira — Fuula haaromsuun argatta.',
+                  '🔄 Mise à jour disponible — Rechargez pour en bénéficier.'),
+                6000
+              );
+            }
+          });
+        });
+      })
+      .catch(function(err) {
+        /* Échec silencieux : l'app fonctionne quand même en ligne */
+        console.warn('[SW] Enregistrement échoué :', err);
+      });
+  });
+}

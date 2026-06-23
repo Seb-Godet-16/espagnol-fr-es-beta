@@ -34,10 +34,15 @@
 /* ──────────────────────────────────────────────────────────────────
    CONFIGURATION
    ──────────────────────────────────────────────────────────────────
-   CACHE_NAME : incrémenter le suffixe (v2, v3…) à chaque déploiement
+   CACHE_NAME : incrémenter le suffixe (v3, v4…) à chaque déploiement
    pour invalider automatiquement l'ancien cache au prochain visit.
+
+   RÈGLE : toute modification de index.html, app.js, style.css,
+   data-fr.js, data-or.js ou sw.js doit être accompagnée d'un
+   incrément de ce suffixe. Sans ça, les utilisateurs ayant déjà
+   l'app installée continuent de voir l'ancienne version.
    ────────────────────────────────────────────────────────────────── */
-var CACHE_NAME = 'taphadmeuh-v2';
+var CACHE_NAME = 'taphadmeuh-v3';   /* v3 — Juin 2026 : méta PWA, lang dynamique, CSS vars */
 
 /*
   Liste exhaustive des ressources à pré-cacher lors de l'installation.
