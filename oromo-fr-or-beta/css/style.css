@@ -224,11 +224,11 @@ html.theme-oromo body{background:#f4f9f4}
 /* ══════════════════════════════════════════════════════════════════
    §5 — ÉCRAN 0 : LANCEUR D'APPLICATION  (#app-launcher)
    ══════════════════════════════════════════════════════════════════
-   Premier écran visible. Fond noisette lacté (Option 2A), motif de 
+   Premier écran visible. Fond café au lait (Option 2B), motif de 
    dégradé discret pour rappeler les deux drapeaux sans imposer un thème.
    ══════════════════════════════════════════════════════════════════ */
 #app-launcher{
-  background: #F4EFEA; /* Option 2A : Noisette lacté doux */
+  background: #D9C8B4; /* Option 2B : Café au lait plus foncé */
   align-items: center;
   justify-content: center;
   padding: 24px 20px 80px; /* padding-bottom réservé au footer absolu */
@@ -247,9 +247,9 @@ html.theme-oromo body{background:#f4f9f4}
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 15% 20%, rgba(0,35,149,.07)   0%, transparent 45%),
-    radial-gradient(circle at 85% 75%, rgba(0,154,68,.07)   0%, transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(237,41,57,.04)  0%, transparent 60%);
+    radial-gradient(circle at 15% 20%, rgba(0,35,149,.10)   0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(0,154,68,.10)   0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(237,41,57,.06)  0%, transparent 60%);
   pointer-events: none;
 }
 
