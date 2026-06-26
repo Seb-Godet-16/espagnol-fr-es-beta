@@ -58,6 +58,65 @@
  * @param {'learn_french'|'learn_spain'} mode
  * @param {Function} callback  — fonction à exécuter quand les données sont prêtes
  */
+function showResetConfirm() {
+  var msg = L('¿Seguro que quieres borrar toda tu progresión? Esta acción es irreversible.', 'Voulez-vous vraiment effacer toute votre progression ? Cette action est irréversible.');
+  document.getElementById('confirmMsg').textContent = msg;
+  document.getElementById('confirm-modal').style.display = 'flex';
+}
+function confirmReset() {
+  done = [];
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  document.getElementById('confirm-modal').style.display = 'none';
+  renderSections();
+  _showToast(L('✅ Progresión borrada.', '✅ Progression effacée.'));
+}
+function cancelReset() {
+  document.getElementById('confirm-modal').style.display = 'none';
+}
+
+function _showSpinner() {
+  var s = document.getElementById('app-spinner');
+  if (!s) {
+    s = document.createElement('div');
+    s.id = 'app-spinner';
+    document.body.appendChild(s);
+  }
+  s.style.display = 'flex';
+}
+function _hideSpinner() {
+  var s = document.getElementById('app-spinner');
+  if (s) s.style.display = 'none';
+}
+
+function _showConfetti() {
+  var overlay = document.createElement('div');
+  overlay.id = 'confetti-overlay';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99998;';
+  document.body.appendChild(overlay);
+
+  var isFranceTheme = document.documentElement.classList.contains('theme-french');
+  var colors = isFranceTheme
+    ? ['#002395', '#ED2939', '#ffffff', '#FFD700']
+    : ['#C60B1E', '#FFD700', '#F1BF00', '#ffffff'];
+
+  for (var i = 0; i < 22; i++) {
+    var p = document.createElement('div');
+    p.className = 'confetti-particle';
+    var size = 8 + Math.random() * 8; // 8–16 px
+    p.style.left             = (Math.random() * 100) + '%';
+    p.style.width            = size + 'px';
+    p.style.height           = size + 'px';
+    p.style.background       = colors[Math.floor(Math.random() * colors.length)];
+    p.style.setProperty('--delay', (Math.random() * 1.5).toFixed(2) + 's');
+    p.style.setProperty('--dur',   (1.5 + Math.random()).toFixed(2) + 's');
+    overlay.appendChild(p);
+  }
+
+  setTimeout(function() {
+    if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+  }, 2400);
+}
+
 function loadDataForMode(mode, callback) {
   var alreadyLoaded = (mode === 'learn_french')
     ? (typeof ALL_THEMES_FR !== 'undefined')
@@ -73,6 +132,7 @@ function loadDataForMode(mode, callback) {
   script.src = src;
 
   script.onload = function() {
+    _hideSpinner();
     callback();
   };
 
@@ -80,6 +140,7 @@ function loadDataForMode(mode, callback) {
     _showToast('⚠️ Erreur de chargement des données (' + src + '). Vérifiez votre connexion.', 5000);
   };
 
+  _showSpinner();
   document.head.appendChild(script);
 }
 
@@ -373,6 +434,7 @@ function showLauncher() {
   document.documentElement.className = '';
   _setLauncherFooterLang(null);
   window.scrollTo(0, 0);
+  document.documentElement.lang = 'fr';
 }
 
 /**
@@ -403,6 +465,7 @@ function initApp(mode) {
   /* ─── MODE : Apprendre le Français (interface présentée en Espagnol) ─── */
   if (mode === 'learn_french') {
     document.documentElement.className = 'theme-french';
+    document.documentElement.lang = 'es';
     voiceLang  = 'fr-FR';
     ALL_THEMES = ALL_THEMES_FR;
     STORAGE_KEY = 'pe_es_fr_done_v1';
@@ -424,6 +487,7 @@ function initApp(mode) {
   /* ─── MODE : Apprendre l'Espagnol (interface présentée en Français) ─── */
   } else if (mode === 'learn_spain') {
     document.documentElement.className = 'theme-spain region-' + currentRegion;
+    document.documentElement.lang = 'fr';
     voiceLang  = 'es-ES';
     ALL_THEMES = ALL_THEMES_ES;
     STORAGE_KEY = 'pe_fr_es_done_v1';
@@ -454,6 +518,9 @@ function initApp(mode) {
        Le guide s'affiche juste après le choix de langue + variante.
        À la fermeture du guide, l'utilisateur se retrouve sur Sections. */
   _maybeAutoShowGuide();
+
+  // Met à jour la barre de navigation basse pour le mode courant
+  _updateBottomNav('sections');
 }
 
 
@@ -638,6 +705,13 @@ function _doSpeak(txt, voiceObj, rate) {
   speakPart(0);
 }
 
+// §3c — Interruption TTS à la mise en arrière-plan
+document.addEventListener('visibilitychange', function() {
+  if (document.hidden && window.speechSynthesis) {
+    speechSynthesis.cancel();
+  }
+});
+
 
 /* ─────────────────────────────────────────────────────────
    INDICATEUR "AUDIO INDISPONIBLE"
@@ -772,6 +846,7 @@ function markDone(id, pct) {
     if (newStars > existing.stars) existing.stars = newStars; // Amélioration seulement
   } else {
     done.push({ id: id, stars: newStars });
+    if (newStars === 3) _showConfetti();
   }
   saveDone();
 }
@@ -887,7 +962,61 @@ function _clearQuizSession() {
    "Retour" de l'écran home vers le launcher.
 ═══════════════════════════════════════════════════════════ */
 
-function showScreen(id) {
+/* _updateBottomNav(screenId) — Synchronise la barre de navigation basse
+   avec l'écran actuellement affiché.
+   • Masque la barre sur le launcher (avant tout choix de langue).
+   • Active visuellement le bouton correspondant à l'écran courant
+     (#bnavModules pour 'sections' ; aucun pour les autres car
+     #bnavGuide est une modale, pas un écran).
+   • Met à jour les libellés selon la langue d'interface via L(). */
+function _updateBottomNav(screenId) {
+  var nav = document.getElementById('bottomNav');
+  if (!nav) return;
+
+  /* (1) Visibilité : cachée sur le launcher, visible partout ailleurs */
+  nav.style.display = (screenId === 'app-launcher') ? 'none' : 'flex';
+
+  /* (2) État actif des boutons */
+  var btnModules = document.getElementById('bnavModules');
+  if (btnModules) {
+    btnModules.classList.toggle('active', screenId === 'sections');
+  }
+  /* bnavGuide n'est jamais marqué actif (c'est une modale, pas un écran) */
+
+  /* (3) Libellés bilingues via L(espagnol, français) */
+  var elModules = document.getElementById('bnavModulesLabel');
+  var elGuide   = document.getElementById('bnavGuideLabel');
+  var elLang    = document.getElementById('bnavLangLabel');
+  if (elModules) elModules.textContent = L('Módulos', 'Modules');
+  if (elGuide)   elGuide.textContent   = L('Guía',    'Guide');
+  if (elLang)    elLang.textContent    = L('Idioma',  'Langue');
+}
+
+/* Ordre canonique des écrans pour le calcul automatique de direction.
+   'app-launcher' est l'écran racine (index 0), 'sections' le suivant,
+   'lesson' le plus profond. Les écrans hors de ce tableau (ex. 'home')
+   ne déclenchent pas d'animation directionnelle. */
+const _SCREEN_ORDER = ['app-launcher', 'sections', 'lesson'];
+
+function showScreen(id, dir) {
+  // Détermine l'écran actuellement actif (avant de le masquer)
+  const currentEl = document.querySelector('.screen.active');
+  const currentId = currentEl ? currentEl.id : null;
+
+  // Calcul automatique de la direction si elle n'est pas fournie
+  if (!dir && currentId && currentId !== id) {
+    const fromIdx = _SCREEN_ORDER.indexOf(currentId);
+    const toIdx   = _SCREEN_ORDER.indexOf(id);
+    if (fromIdx !== -1 && toIdx !== -1) {
+      dir = toIdx > fromIdx ? 'forward' : 'back';
+    }
+  }
+
+  // Applique l'animation de sortie sur l'écran courant
+  if (dir && currentEl) {
+    currentEl.classList.add(dir === 'forward' ? 'slide-out-left' : 'slide-out-right');
+  }
+
   // Masque tous les écrans, puis active uniquement celui demandé
   document.querySelectorAll('.screen').forEach(function(s) {
     s.classList.remove('active');
@@ -896,11 +1025,28 @@ function showScreen(id) {
   // Remonte systématiquement en haut de page à chaque changement d'écran.
   window.scrollTo(0, 0);
 
-  document.getElementById(id).classList.add('active');
+  const nextEl = document.getElementById(id);
+  nextEl.classList.add('active');
+
+  // Applique l'animation d'entrée sur le nouvel écran
+  if (dir) {
+    nextEl.classList.add(dir === 'forward' ? 'slide-in-right' : 'slide-in-left');
+  }
+
+  // Retire toutes les classes d'animation après la fin de la transition
+  setTimeout(function() {
+    if (currentEl) {
+      currentEl.classList.remove('slide-out-left', 'slide-out-right');
+    }
+    nextEl.classList.remove('slide-in-right', 'slide-in-left');
+  }, 300);
 
   // Rendu à la demande selon l'écran affiché
   if (id === 'home')     renderHome();
   if (id === 'sections') renderSections();
+
+  // Met à jour la barre de navigation basse
+  _updateBottomNav(id);
 }
 
 
@@ -997,13 +1143,19 @@ function renderSections() {
       footer.innerHTML =
         '© Junio 2026 – Desarrollado por Sébastien Godet · Asistido por IA Claude Sonnet 4.6 y Gemini 3.5 Flash<br>'
         + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">💼 LinkedIn</a> · '
-        + '<a href="#" onclick="showCredits()">Agradecimientos</a>';
+        + '<a href="#" onclick="showCredits()">Agradecimientos</a>'
+        + '<br><button onclick="showResetConfirm()" style="margin-top:8px; padding:6px 14px; border-radius:50px; border:1.5px solid #c0392b; color:#c0392b; background:transparent; font-size:0.8rem; cursor:pointer; font-weight:700;">'
+        + L('🗑️ Borrar toda la progresión', '🗑️ Tout réinitialiser')
+        + '</button>';
     } else {
       // Francophone apprenant l'espagnol : footer en français, "Guide" supprimé
       footer.innerHTML =
         '© Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>'
         + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> · '
-        + '<a href="#" onclick="showCredits()">Remerciements</a>';
+        + '<a href="#" onclick="showCredits()">Remerciements</a>'
+        + '<br><button onclick="showResetConfirm()" style="margin-top:8px; padding:6px 14px; border-radius:50px; border:1.5px solid #c0392b; color:#c0392b; background:transparent; font-size:0.8rem; cursor:pointer; font-weight:700;">'
+        + L('🗑️ Borrar toda la progresión', '🗑️ Tout réinitialiser')
+        + '</button>';
     }
   }
 
@@ -1151,13 +1303,38 @@ function openTheme(id) {
   }
 }
 
+function lessonNav(delta) {
+  if (!CT || !ALL_THEMES.length) return;
+  var idx = ALL_THEMES.findIndex(function(t) { return t.id === CT.id; });
+  if (idx === -1) return;
+  var newIdx = (idx + delta + ALL_THEMES.length) % ALL_THEMES.length;
+  openTheme(ALL_THEMES[newIdx].id);
+}
+
 /* switchTab(tab) — Active l'onglet demandé et déclenche son rendu.
    Réinitialise les variables de quiz à chaque changement d'onglet. */
 function switchTab(tab) {
   document.querySelectorAll('#lessonTabs .tab').forEach(function(b) {
     b.classList.toggle('active', b.dataset.tab === tab);
   });
-  if      (tab === 'flash')  { renderFlash(); }
+  if      (tab === 'flash')  {
+    renderFlash();
+    /* Bouton export vocabulaire — injecté après renderFlash() */
+    (function() {
+      var tc = document.getElementById('tabContent');
+      if (!tc) return;
+      var existing = document.getElementById('export-vocab-btn');
+      if (existing) existing.remove();
+      if (CT && CT.words && CT.type !== 'alpha') {
+        var btn = document.createElement('div');
+        btn.style.cssText = 'text-align:center;margin-top:14px;';
+        btn.innerHTML = '<button id="export-vocab-btn" class="export-pdf-btn" onclick="_exportVocab()">'
+          + '📄 ' + L('Exportar vocabulario PDF', 'Exporter le vocabulaire PDF')
+          + '</button>';
+        tc.appendChild(btn);
+      }
+    })();
+  }
   else if (tab === 'quiz10') {
     q10Step = 0; q10Score = 0; q10Answered = false;
     _clearQuizSession();
@@ -1167,7 +1344,22 @@ function switchTab(tab) {
     }
     renderQuiz10();
   }
-  else if (tab === 'dialog') { renderDialog(); }
+  else if (tab === 'dialog') {
+    renderDialog();
+    /* Bouton export situation — injecté après renderDialog() */
+    (function() {
+      var tc = document.getElementById('tabContent');
+      if (!tc) return;
+      var existing = document.getElementById('export-sit-btn');
+      if (existing) existing.remove();
+      var btn = document.createElement('div');
+      btn.style.cssText = 'text-align:center;margin-top:14px;';
+      btn.innerHTML = '<button id="export-sit-btn" class="export-pdf-btn" onclick="_exportSituation()">'
+        + '📄 ' + L('Exportar situación PDF', 'Exporter la situation PDF')
+        + '</button>';
+      tc.appendChild(btn);
+    })();
+  }
   else if (tab === 'vocab')  { renderVocab(); }
   else if (tab === 'dquiz')  {
     dqStep = 0; dqScore = 0; dqAnswered = false;
@@ -1360,6 +1552,44 @@ function _normalizeSpeech(s) {
     .replace(/\s+/g, ' ').trim();
 }
 
+/* _levenshtein(a, b) — Distance d'édition (Levenshtein) entre deux chaînes.
+   Programmation dynamique : tableau 2D (|a|+1) × (|b|+1).
+   Coût : substitution = 1, insertion = 1, suppression = 1. */
+function _levenshtein(a, b) {
+  var m = a.length, n = b.length;
+  var dp = [];
+  for (var i = 0; i <= m; i++) {
+    dp[i] = [i];
+    for (var j = 1; j <= n; j++) {
+      if (i === 0) {
+        dp[i][j] = j;
+      } else {
+        var cost = (a[i - 1] === b[j - 1]) ? 0 : 1;
+        dp[i][j] = Math.min(
+          dp[i - 1][j] + 1,        // suppression
+          dp[i][j - 1] + 1,        // insertion
+          dp[i - 1][j - 1] + cost  // substitution
+        );
+      }
+    }
+  }
+  return dp[m][n];
+}
+
+/* _speechMatch(spoken, expected) — Retourne true si la transcription vocale
+   correspond au mot attendu, avec tolérance floue pour les mots longs.
+   Règles (dans l'ordre) :
+     (a) identité exacte ;
+     (b) l'une des chaînes contient l'autre ;
+     (c) expected.length ≤ 3 → pas de tolérance (identité seulement) ;
+     (d) sinon, distance de Levenshtein ≤ 25 % de la longueur de expected. */
+function _speechMatch(spoken, expected) {
+  if (spoken === expected) return true;
+  if (spoken.indexOf(expected) !== -1 || expected.indexOf(spoken) !== -1) return true;
+  if (expected.length <= 3) return false;
+  return _levenshtein(spoken, expected) <= Math.floor(expected.length * 0.25);
+}
+
 /* _micBlockedHtml() — Retourne le HTML (icône + message clair) à afficher
    quand le micro est bloqué/refusé par le navigateur (erreurs SpeechRecognition
    'not-allowed' ou 'service-not-allowed'). L'icône 🚫🎤 est volontairement
@@ -1442,9 +1672,7 @@ function startMicReco(word, lang) {
     var transcript = e.results[0][0].transcript;
     var expected   = _normalizeSpeech(word);
     var spoken     = _normalizeSpeech(transcript);
-    var ok         = (spoken === expected)
-                  || spoken.indexOf(expected) !== -1
-                  || expected.indexOf(spoken) !== -1;
+    var ok         = _speechMatch(spoken, expected);
 
     var fbEl = document.getElementById('micFeedback');
     if (fbEl) {
@@ -1704,9 +1932,7 @@ function _rpStartMic(word, lang) {
     var transcript = e.results[0][0].transcript;
     var expected   = _normalizeSpeech(word);
     var spoken     = _normalizeSpeech(transcript);
-    var ok = (spoken === expected)
-          || spoken.indexOf(expected) !== -1
-          || expected.indexOf(spoken) !== -1;
+    var ok = _speechMatch(spoken, expected);
 
     if (ok) _rpScore++;
     _vibrateFeedback(ok);
@@ -2799,6 +3025,25 @@ function showGuide() {
   if (showFrench) _refreshGuideHeroFR();
   else            _refreshGuideRegion();
 
+  // Bouton export guide PDF — injecté dans la topbar si absent
+  (function() {
+    var topbarEl = document.getElementById('guideTopbar') || document.querySelector('.guide-topbar');
+    if (!topbarEl) return;
+    var existing = document.getElementById('guide-export-btn');
+    if (!existing) {
+      var btn = document.createElement('button');
+      btn.id = 'guide-export-btn';
+      btn.className = 'export-pdf-btn';
+      btn.style.cssText = 'margin-right:8px;';
+      btn.onclick = function() { _exportGuide(); };
+      btn.innerHTML = '📄 PDF';
+      /* Insère avant le bouton Fermer */
+      var closeBtnRef = document.getElementById('guideCloseBtn');
+      if (closeBtnRef) topbarEl.insertBefore(btn, closeBtnRef);
+      else topbarEl.appendChild(btn);
+    }
+  })();
+
   // Affiche la modale et remonte en haut (au cas où elle a déjà été scrollée)
   modal.classList.add('active');
   modal.scrollTop = 0;
@@ -2976,6 +3221,276 @@ function _showToast(msg, duration) {
     toast.classList.remove('visible');
   }, duration);
 }
+
+/* ════════════════════════════════════════════════════════════
+   §21 — EXPORTS PDF
+   ──────────────────────────────────────────────────────────
+   3 fonctions d'export ouvrant une page HTML dans un nouvel
+   onglet, puis déclenchant window.print() au onload.
+
+   Couleurs selon le thème actif :
+     theme-french → bleu #002395 / rouge #C60B1E (drapeaux FR + ES)
+     theme-spain  → rouge #C60B1E / bleu #002395  (ES en couleur 1)
+
+   Logo : img/Logo-appli-es-fr.png
+   Bilingue via L() pour tous les libellés d'interface.
+════════════════════════════════════════════════════════════ */
+
+/* _pdfTheme() — Retourne les couleurs primaire / secondaire selon le thème actif. */
+function _pdfTheme() {
+  var isFR = isFrench();
+  return {
+    primary:   isFR ? '#002395' : '#C60B1E',
+    secondary: isFR ? '#C60B1E' : '#002395',
+    logoSrc:   'img/Logo-appli-es-fr.png'
+  };
+}
+
+/* _pdfBaseStyles(th) — CSS commun à tous les exports PDF.
+   th : objet retourné par _pdfTheme(). */
+function _pdfBaseStyles(th) {
+  return '<style>'
+    + '*{box-sizing:border-box;margin:0;padding:0}'
+    + 'body{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#111;background:#fff;padding:0 18px 24px}'
+    + '.pdf-header{display:flex;align-items:center;gap:14px;background:' + th.primary + ';color:#fff;padding:14px 18px;margin:0 -18px 22px}'
+    + '.pdf-header img{height:48px;width:auto;object-fit:contain}'
+    + '.pdf-header-info{flex:1}'
+    + '.pdf-header h1{font-size:1.15rem;font-weight:900;letter-spacing:.02em}'
+    + '.pdf-header p{font-size:.78rem;opacity:.88;margin-top:2px}'
+    + '.pdf-badge{background:' + th.secondary + ';color:#fff;border-radius:50px;padding:2px 10px;font-size:.72rem;font-weight:700;margin-top:6px;display:inline-block}'
+    + 'h2{font-size:1rem;font-weight:800;color:' + th.primary + ';border-bottom:2px solid ' + th.primary + ';padding-bottom:4px;margin:20px 0 10px}'
+    + 'h3{font-size:.88rem;font-weight:700;color:' + th.secondary + ';margin:14px 0 6px}'
+    + 'table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:.88rem}'
+    + 'th{background:' + th.primary + ';color:#fff;text-align:left;padding:6px 8px;font-size:.8rem}'
+    + 'td{padding:5px 8px;border-bottom:1px solid #e0e0e0;vertical-align:top}'
+    + 'tr:nth-child(even) td{background:#f5f7ff}'
+    + '.conj{font-style:italic;color:#555;font-size:.8rem;margin-top:2px}'
+    + '.bubble-row{display:flex;gap:8px;margin-bottom:8px;align-items:flex-start}'
+    + '.bubble-side{width:28px;flex-shrink:0;font-size:.7rem;color:#888;padding-top:3px;text-align:center}'
+    + '.bubble-box{background:#f0f4ff;border-left:3px solid ' + th.primary + ';border-radius:0 8px 8px 0;padding:6px 10px;flex:1}'
+    + '.bubble-box.right{background:#fff5f5;border-left-color:' + th.secondary + '}'
+    + '.bubble-main{font-weight:700;font-size:.9rem}'
+    + '.bubble-trans{font-size:.78rem;color:#555;margin-top:2px}'
+    + '.pdf-footer{margin-top:28px;padding-top:10px;border-top:1px solid #ddd;font-size:.72rem;color:#888;text-align:center}'
+    + 'details summary{cursor:pointer;font-weight:700;padding:4px 0}'
+    + '@media print{'
+    + '  body{padding:0 12px}'
+    + '  .pdf-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}'
+    + '  th{-webkit-print-color-adjust:exact;print-color-adjust:exact}'
+    + '  tr:nth-child(even) td{-webkit-print-color-adjust:exact;print-color-adjust:exact}'
+    + '  .bubble-box{-webkit-print-color-adjust:exact;print-color-adjust:exact}'
+    + '}'
+    + '</style>';
+}
+
+/* _pdfHeader(th, title, subtitle) — En-tête HTML avec logo + titre + badge. */
+function _pdfHeader(th, title, subtitle) {
+  return '<div class="pdf-header">'
+    + '<img src="' + th.logoSrc + '" alt="VACHÉBO" onerror="this.style.display=\'none\'">'
+    + '<div class="pdf-header-info">'
+    + '<h1>' + title + '</h1>'
+    + (subtitle ? '<p>' + subtitle + '</p>' : '')
+    + '<span class="pdf-badge">VACHÉBO</span>'
+    + '</div></div>';
+}
+
+/* _pdfFooter() — Pied de page avec date d'export. */
+function _pdfFooter() {
+  var d = new Date();
+  var ds = d.toLocaleDateString(isFrench() ? 'es-ES' : 'fr-FR', {day:'2-digit',month:'long',year:'numeric'});
+  return '<div class="pdf-footer">'
+    + L('Exportado desde VACHÉBO · ' + ds, 'Exporté depuis VACHÉBO · ' + ds)
+    + '</div>';
+}
+
+/* _pdfOpen(htmlContent) — Ouvre le HTML dans un nouvel onglet et lance l'impression. */
+function _pdfOpen(htmlContent) {
+  var w = window.open('', '_blank');
+  if (!w) { _showToast(L('Autoriza las ventanas emergentes para exportar.', 'Autorisez les pop-ups pour exporter.')); return; }
+  w.document.write(htmlContent);
+  w.document.close();
+  w.onload = function() { w.focus(); w.print(); };
+}
+
+/* ─────────────────────────────────────────────────────────
+   _exportGuide() — Export PDF du guide utilisateur complet.
+   Extrait le HTML de #guideContentFR ou #guideContentES
+   selon le mode actif, l'enveloppe dans une page imprimable.
+───────────────────────────────────────────────────────── */
+function _exportGuide() {
+  var th       = _pdfTheme();
+  var guideId  = isFrench() ? 'guideContentFR' : 'guideContentES';
+  var guideEl  = document.getElementById(guideId);
+  var guideHTML = guideEl ? guideEl.innerHTML : '<p>' + L('Contenido no disponible.', 'Contenu indisponible.') + '</p>';
+  var title    = L('Guía del usuario — VACHÉBO', 'Guide utilisateur — VACHÉBO');
+  var subtitle = L('Aprende Francés · Guía completa', 'Apprends l\'Espagnol · Guide complet');
+
+  var html = '<!DOCTYPE html><html lang="' + (isFrench() ? 'es' : 'fr') + '"><head>'
+    + '<meta charset="utf-8">'
+    + '<meta name="viewport" content="width=device-width,initial-scale=1">'
+    + '<title>' + title + '</title>'
+    + _pdfBaseStyles(th)
+    + '<style>'
+    + '.guide-hero{display:none}'          /* masque le hero visuel dans le PDF */
+    + '.guide-region-grid{display:none}'   /* masque la grille des régions */
+    + '.guide-hero-chips{display:none}'
+    + '.guide-step-visual{display:none}'
+    + 'details{margin-bottom:10px;border:1px solid #e0e0e0;border-radius:6px;padding:6px 10px}'
+    + 'details summary{font-weight:700;padding:4px 0;list-style:none}'
+    + 'details summary::before{content:"▶ ";color:' + th.primary + '}'
+    + 'details[open] summary::before{content:"▼ "}'
+    + 'p,li{margin-bottom:6px;line-height:1.55}'
+    + 'ul,ol{padding-left:18px;margin-bottom:8px}'
+    + '.guide-section-title{font-size:.95rem;font-weight:800;color:' + th.primary + ';margin:16px 0 6px}'
+    + '</style>'
+    + '</head><body>'
+    + _pdfHeader(th, title, subtitle)
+    + '<div>' + guideHTML + '</div>'
+    + _pdfFooter()
+    + '</body></html>';
+
+  _pdfOpen(html);
+}
+
+/* ─────────────────────────────────────────────────────────
+   _exportVocab() — Export PDF du tableau de vocabulaire.
+   Colonnes : emoji | mot source | mot cible (+ variante régionale).
+   Les conjugaisons (conj) sont affichées en italique sous le mot.
+───────────────────────────────────────────────────────── */
+function _exportVocab() {
+  if (!CT || !CT.words) { _showToast(L('Sin vocabulario disponible.', 'Pas de vocabulaire disponible.')); return; }
+  var th      = _pdfTheme();
+  var words   = CT.words;
+  var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+  var regionFlag = isFrench() ? (flagEmojis[currentRegion] || '🇪🇸') : '🇫🇷';
+
+  var title    = L(
+    '📘 Vocabulario — ' + (CT.title || CT.id),
+    '📘 Vocabulaire — ' + (CT.title || CT.id)
+  );
+  var subtitle = L(
+    'Francés 🇫🇷 ↔ Español ' + regionFlag,
+    'Français 🇫🇷 ↔ Espagnol ' + regionFlag
+  );
+  var hdrEmoji = 'Emoji';
+  var hdrSrc   = L('Español ' + regionFlag, 'Français 🇫🇷');
+  var hdrTgt   = L('Francés 🇫🇷', 'Espagnol ' + regionFlag);
+
+  var rows = words.map(function(card) {
+    var finalEs = (card.variants && card.variants[currentRegion])
+      ? card.variants[currentRegion] : (card.es || '');
+    var srcWord = L(finalEs, card.fr || '');
+    var tgtWord = L(card.fr || '', finalEs);
+
+    /* Conjugaisons éventuelles */
+    var conjSrc = '', conjTgt = '';
+    if (card.conj) {
+      var cSrc = isFrench() ? card.conj.es : card.conj.fr;
+      var cTgt = isFrench() ? card.conj.fr : card.conj.es;
+      if (cSrc && cSrc.length) conjSrc = '<div class="conj">' + cSrc.join('<br>') + '</div>';
+      if (cTgt && cTgt.length) conjTgt = '<div class="conj">' + cTgt.join('<br>') + '</div>';
+    }
+
+    return '<tr>'
+      + '<td style="text-align:center;font-size:1.3rem;width:42px">' + (card.em || '') + '</td>'
+      + '<td>' + srcWord + conjSrc + '</td>'
+      + '<td>' + tgtWord + conjTgt + '</td>'
+      + '</tr>';
+  }).join('');
+
+  var html = '<!DOCTYPE html><html lang="' + (isFrench() ? 'es' : 'fr') + '"><head>'
+    + '<meta charset="utf-8">'
+    + '<meta name="viewport" content="width=device-width,initial-scale=1">'
+    + '<title>' + title + '</title>'
+    + _pdfBaseStyles(th)
+    + '</head><body>'
+    + _pdfHeader(th, title, subtitle)
+    + '<table>'
+    + '<thead><tr><th>' + hdrEmoji + '</th><th>' + hdrSrc + '</th><th>' + hdrTgt + '</th></tr></thead>'
+    + '<tbody>' + rows + '</tbody>'
+    + '</table>'
+    + _pdfFooter()
+    + '</body></html>';
+
+  _pdfOpen(html);
+}
+
+/* ─────────────────────────────────────────────────────────
+   _exportSituation() — Export PDF du dialogue actif.
+   Affiche les bulles en 2 colonnes (locuteur | répliques FR + ES),
+   puis le vocabulaire CT.vocab en tableau.
+───────────────────────────────────────────────────────── */
+function _exportSituation() {
+  if (!CT || !CT.situations) { _showToast(L('Sin diálogo disponible.', 'Pas de dialogue disponible.')); return; }
+  var th  = _pdfTheme();
+  var sit = CT.situations[sitIdx] || CT.situations[0];
+  var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+  var regionFlag = flagEmojis[currentRegion] || '🇪🇸';
+
+  var title    = L(
+    '💬 Diálogo — ' + (CT.title || CT.id),
+    '💬 Dialogue — ' + (CT.title || CT.id)
+  );
+  var subtitle = L(
+    (sit.label || '') + ' · Situación ' + (sitIdx + 1),
+    (sit.label || '') + ' · Situation ' + (sitIdx + 1)
+  );
+
+  /* Bulles de dialogue */
+  var bubbles = sit.dialogue.map(function(ln) {
+    var finalEsLine = (ln.variants && ln.variants[currentRegion])
+      ? ln.variants[currentRegion]
+      : _adaptDialogueLine(ln.es);
+    var isRight = ln.side === 'right';
+    return '<div class="bubble-row">'
+      + '<div class="bubble-side">' + (ln.s || '') + '</div>'
+      + '<div class="bubble-box' + (isRight ? ' right' : '') + '">'
+      + '<div class="bubble-main">' + (isFrench() ? ln.fr : finalEsLine) + '</div>'
+      + '<div class="bubble-trans">' + (isFrench() ? finalEsLine : ln.fr) + '</div>'
+      + '</div></div>';
+  }).join('');
+
+  /* Tableau du lexique vocab (format "ES = FR") */
+  var vocabSection = '';
+  if (CT.vocab && CT.vocab.length) {
+    var vocabTitle = L('📚 Vocabulario de la situación', '📚 Vocabulaire de la situation');
+    var hdrSrc = L('Español ' + regionFlag, 'Français 🇫🇷');
+    var hdrTgt = L('Francés 🇫🇷', 'Espagnol ' + regionFlag);
+    var vocabRows = CT.vocab.map(function(v) {
+      var parts   = v.split('=');
+      var es      = parts[0] ? parts[0].trim() : '';
+      var fr      = parts[1] ? parts[1].trim() : '';
+      /* Variante régionale dans le lexique */
+      var finalEs = es;
+      if (CT.words) {
+        var match = CT.words.find(function(w) { return w.es === es; });
+        if (match && match.variants && match.variants[currentRegion]) finalEs = match.variants[currentRegion];
+      }
+      var srcWord = L(finalEs, fr);
+      var tgtWord = L(fr, finalEs);
+      return '<tr><td>' + srcWord + '</td><td>' + tgtWord + '</td></tr>';
+    }).join('');
+    vocabSection = '<h2>' + vocabTitle + '</h2>'
+      + '<table><thead><tr><th>' + hdrSrc + '</th><th>' + hdrTgt + '</th></tr></thead>'
+      + '<tbody>' + vocabRows + '</tbody></table>';
+  }
+
+  var html = '<!DOCTYPE html><html lang="' + (isFrench() ? 'es' : 'fr') + '"><head>'
+    + '<meta charset="utf-8">'
+    + '<meta name="viewport" content="width=device-width,initial-scale=1">'
+    + '<title>' + title + '</title>'
+    + _pdfBaseStyles(th)
+    + '</head><body>'
+    + _pdfHeader(th, title, subtitle)
+    + '<h2>' + L('Diálogo', 'Dialogue') + '</h2>'
+    + '<div>' + bubbles + '</div>'
+    + vocabSection
+    + _pdfFooter()
+    + '</body></html>';
+
+  _pdfOpen(html);
+}
+
 
 /* ════════════════════════════════════════
    ACCESSIBILITÉ CLAVIER — ÉLÉMENTS "BOUTON" NON NATIFS

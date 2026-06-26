@@ -103,14 +103,14 @@ body {
       0 0 0 1px rgba(0,0,0,.06),
       0 8px 32px rgba(0,0,0,.14),
       0 2px 8px  rgba(0,0,0,.08);
-    min-height: var(--app-h, 100vh);
+    min-height: 100vh;
     position: relative;
   }
 
   /* Le lanceur et chaque écran occupent toute la hauteur de la carte */
   #app-launcher,
   .screen.active {
-    min-height: var(--app-h, 100vh);
+    min-height: 100vh;
   }
 }
 
@@ -135,11 +135,65 @@ body {
 /* Chaque écran est masqué par défaut ; .active l'affiche en flex */
 .screen {
   display: none;
-  min-height: var(--app-h, 100vh);
+  min-height: 100vh;
   flex-direction: column;
 }
 .screen.active {
   display: flex;
+}
+
+
+/* ════════════════════════════════════════
+   §1b — TRANSITIONS DE NAVIGATION
+   ──────────────────────────────────────
+   Quatre classes d'animation utilisées par
+   showScreen() dans app.js pour les
+   transitions entre écrans.
+
+   forward  (→) : sortant prend slide-out-left,
+                  entrant prend slide-in-right.
+   back     (←) : sortant prend slide-out-right,
+                  entrant prend slide-in-left.
+
+   Les classes sont retirées après 300 ms
+   (setTimeout côté JS) pour ne pas polluer
+   l'état du DOM après l'animation.
+════════════════════════════════════════ */
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes slideOutLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes slideOutRight {
+  from { transform: translateX(0); }
+  to   { transform: translateX(100%); }
+}
+
+.slide-in-right  { animation: slideInRight  280ms ease both; }
+.slide-out-left  { animation: slideOutLeft  280ms ease both; }
+.slide-in-left   { animation: slideInLeft   280ms ease both; }
+.slide-out-right { animation: slideOutRight 280ms ease both; }
+
+/* Respect de la préférence système "réduire les animations" */
+@media (prefers-reduced-motion: reduce) {
+  .slide-in-right,
+  .slide-out-left,
+  .slide-in-left,
+  .slide-out-right {
+    animation: none;
+    transition: none;
+  }
 }
 
 
@@ -156,7 +210,7 @@ body {
   padding: 16px 20px 12px;
   position: relative;
   overflow: hidden;
-  min-height: var(--app-h, 100vh);       /* fallback navigateurs anciens */
+  min-height: 100vh;       /* fallback navigateurs anciens */
   min-height: 100dvh;      /* hauteur réelle viewport mobile (exclut barres nav) */
   box-sizing: border-box;
 }
@@ -643,6 +697,9 @@ body {
   opacity: 0.9;
 }
 .lesson-home-btn:active { opacity: 0.6; }
+
+.lesson-nav-btn { background:none; border:none; font-size:1.8rem; color:var(--c-primary); cursor:pointer; padding:0 8px; line-height:1; opacity:0.7; }
+.lesson-nav-btn:hover { opacity:1; }
 
 .lesson-body {
   padding: 14px;
@@ -2445,4 +2502,383 @@ html.theme-spain.region-VE {
     --c-home-progress-label: #f08090;
   }
   html.theme-spain body { background: #100c04; }
+}
+
+/* ════════════════════════════════════════
+   §24b — MODE SOMBRE
+   ══════════════════════════════════════════
+   Définit cinq nouveaux tokens de surface sur html.theme-french
+   et html.theme-spain séparément, dans un unique bloc
+   @media (prefers-color-scheme: dark).
+
+   Nouveaux tokens (n'existaient pas en mode clair) :
+     --c-bg       fond principal des écrans (sections, leçon)
+     --c-card     fond des cartes / boîtes / composants
+     --c-text     texte principal
+     --c-text-sub texte secondaire / muted
+     --c-border   bordures subtiles
+
+   Les couleurs d'accentuation (bleu FR #002395/#5b84e8,
+   rouge ES #C60B1E/#e85060, or #FFC400/#e8a800) ne sont
+   PAS modifiées ici : elles sont déjà gérées par les blocs
+   dark existants (lignes 2264 et 2427).
+
+   Tous les composants (flashcards, quiz, dialogues, chips,
+   mic, répète, alphabet, sit-btn) sont câblés ci-dessous
+   sur ces variables, remplaçant les couleurs hardcodées
+   #fff / #e0ddd6 / #333 de leurs règles de base.
+════════════════════════════════════════ */
+
+@media (prefers-color-scheme: dark) {
+
+  /* ──────────────────────────────────────
+     THÈME FRANÇAIS — tokens de surface
+     Bleus très sombres pour conserver
+     l'identité de marque FR en dark.
+  ────────────────────────────────────── */
+  html.theme-french {
+    --c-bg:       #1a1a2e;              /* fond principal (écrans sections/leçon) */
+    --c-card:     #2a2a3e;              /* fond cartes, boîtes, composants        */
+    --c-text:     #e8e8f0;              /* texte principal                        */
+    --c-text-sub: #aaaacc;              /* texte secondaire / libellés            */
+    --c-border:   rgba(255,255,255,.1); /* bordures subtiles                      */
+  }
+
+  /* Fond body spécifique FR (plus sombre que --c-bg) */
+  html.theme-french body {
+    background-color: #0f0f1e;
+  }
+
+  /* ──────────────────────────────────────
+     THÈME ESPAGNOL — tokens de surface
+     Tons chauds très sombres pour garder
+     l'identité rouge/or ES en dark.
+  ────────────────────────────────────── */
+  html.theme-spain {
+    --c-bg:       #1a1a2e;              /* fond principal — neutre sombre         */
+    --c-card:     #2a2a3e;              /* fond cartes / boîtes                   */
+    --c-text:     #e8e8f0;              /* texte principal                        */
+    --c-text-sub: #aaaacc;              /* texte secondaire / libellés            */
+    --c-border:   rgba(255,255,255,.1); /* bordures subtiles                      */
+  }
+
+  /* Fond body spécifique ES (légèrement teinté chaud) */
+  html.theme-spain body {
+    background-color: #100c04;
+  }
+
+  /* ──────────────────────────────────────
+     FLASHCARDS — face avant
+     Remplace le blanc hardcodé (#fff)
+     par --c-card et les textes par les
+     tokens de texte.
+  ────────────────────────────────────── */
+  html.theme-french .fc-front,
+  html.theme-spain  .fc-front {
+    background: var(--c-card);
+    box-shadow: 0 4px 20px rgba(0,0,0,.45);
+  }
+  html.theme-french .fc-front-hint,
+  html.theme-spain  .fc-front-hint {
+    color: var(--c-text-sub);
+  }
+  html.theme-french .fc-front .fc-conj-line,
+  html.theme-spain  .fc-front .fc-conj-line {
+    color: var(--c-text);
+    border-bottom-color: var(--c-border);
+  }
+
+  /* Navigation flashcard */
+  html.theme-french .fc-nav button,
+  html.theme-spain  .fc-nav button {
+    background: var(--c-card);
+  }
+  html.theme-french .fc-counter,
+  html.theme-spain  .fc-counter {
+    color: var(--c-text-sub);
+  }
+
+  /* ──────────────────────────────────────
+     QUIZ — options et feedback
+  ────────────────────────────────────── */
+  html.theme-french .quiz-opt,
+  html.theme-spain  .quiz-opt {
+    background: var(--c-card);
+    color: var(--c-text);
+  }
+  html.theme-french .quiz-feedback,
+  html.theme-spain  .quiz-feedback {
+    color: var(--c-text);
+  }
+  html.theme-french .quiz-q .q-text,
+  html.theme-spain  .quiz-q .q-text {
+    color: var(--c-text);
+  }
+  html.theme-french .result-box,
+  html.theme-spain  .result-box {
+    background: var(--c-card);
+  }
+
+  /* ──────────────────────────────────────
+     DIALOGUES — boîtes et bulles gauche
+  ────────────────────────────────────── */
+  html.theme-french .dialogue-box,
+  html.theme-spain  .dialogue-box {
+    background: var(--c-card);
+    border-color: var(--c-border);
+  }
+  html.theme-french .bubble.left .msg,
+  html.theme-spain  .bubble.left .msg {
+    background: var(--c-bg);
+    color: var(--c-text);
+  }
+
+  /* Boutons de sélection de situation */
+  html.theme-french .sit-btn,
+  html.theme-spain  .sit-btn {
+    background: var(--c-card);
+    color: var(--c-text);
+    border-color: var(--c-border);
+  }
+
+  /* ──────────────────────────────────────
+     VOCABULAIRE — section et titre
+  ────────────────────────────────────── */
+  html.theme-french .vocab-section,
+  html.theme-spain  .vocab-section {
+    background: var(--c-card);
+    border-color: var(--c-border);
+  }
+  html.theme-french .vocab-title,
+  html.theme-spain  .vocab-title {
+    color: var(--c-text-sub);
+  }
+
+  /* ──────────────────────────────────────
+     CHIPS VOCABULAIRE
+  ────────────────────────────────────── */
+  html.theme-french .vocab-chip,
+  html.theme-spain  .vocab-chip {
+    background: var(--c-bg);
+    border-color: var(--c-border);
+    color: var(--c-text);
+  }
+
+  /* ──────────────────────────────────────
+     MICRO — zone et bouton
+  ────────────────────────────────────── */
+  html.theme-french .mic-zone,
+  html.theme-spain  .mic-zone {
+    background: var(--c-card);
+  }
+  html.theme-french .mic-btn,
+  html.theme-spain  .mic-btn {
+    background: var(--c-card);
+  }
+
+  /* ──────────────────────────────────────
+     RÉPÈTE — boîte mot et score
+  ────────────────────────────────────── */
+  html.theme-french .rp-word-box,
+  html.theme-spain  .rp-word-box {
+    background: var(--c-card);
+  }
+  html.theme-french .rp-score,
+  html.theme-spain  .rp-score {
+    color: var(--c-text);
+  }
+  html.theme-french .rp-header,
+  html.theme-spain  .rp-header {
+    background: var(--c-bg);
+    color: var(--c-text-sub);
+  }
+  html.theme-french .rp-skip-btn,
+  html.theme-spain  .rp-skip-btn {
+    background: var(--c-bg);
+    border-color: var(--c-border);
+    color: var(--c-text-sub);
+  }
+
+  /* ──────────────────────────────────────
+     ALPHABET — cartes et détail
+  ────────────────────────────────────── */
+  html.theme-french .alpha-card,
+  html.theme-spain  .alpha-card {
+    background: var(--c-card);
+    border-color: var(--c-border);
+  }
+  html.theme-french .alpha-name,
+  html.theme-spain  .alpha-name {
+    color: var(--c-text-sub);
+  }
+  html.theme-french .alpha-detail,
+  html.theme-spain  .alpha-detail {
+    background: var(--c-card);
+    box-shadow: 0 2px 8px rgba(0,0,0,.35);
+  }
+
+  /* ──────────────────────────────────────
+     ONGLETS (tabs)
+  ────────────────────────────────────── */
+  html.theme-french .tab,
+  html.theme-spain  .tab {
+    background: var(--c-card);
+  }
+
+  /* ──────────────────────────────────────
+     CARTES DE THÈME (launcher)
+  ────────────────────────────────────── */
+  html.theme-french .theme-card,
+  html.theme-spain  .theme-card {
+    background: var(--c-card);
+  }
+  html.theme-french .t-name,
+  html.theme-spain  .t-name {
+    color: var(--c-text);
+  }
+  html.theme-french .t-sub,
+  html.theme-spain  .t-sub {
+    color: var(--c-text-sub);
+  }
+
+  /* ──────────────────────────────────────
+     ACCORDÉON DE NIVEAU
+  ────────────────────────────────────── */
+  html.theme-french .level-accordion,
+  html.theme-spain  .level-accordion {
+    background: var(--c-card);
+  }
+  html.theme-french .level-acc-header,
+  html.theme-spain  .level-acc-header {
+    background: var(--c-bg);
+  }
+
+  /* ──────────────────────────────────────
+     FOOTER ET LABELS
+  ────────────────────────────────────── */
+  html.theme-french footer,
+  html.theme-spain  footer,
+  html.theme-french .lesson-footer,
+  html.theme-spain  .lesson-footer {
+    background: var(--c-card);
+    border-top-color: var(--c-border);
+    color: var(--c-text-sub);
+  }
+  html.theme-french .section-label,
+  html.theme-spain  .section-label {
+    color: var(--c-text-sub);
+  }
+
+} /* fin @media (prefers-color-scheme: dark) §24b */
+
+/* ════════════════════════════════════════
+   §26 — BARRE DE NAVIGATION BASSE
+   ──────────────────────────────────────
+   .bottom-nav : barre fixe en bas de l'app,
+   centrée et limitée à max-width:480px pour
+   rester dans la colonne mobile.
+   Masquée sur le launcher (gérée par JS).
+   .bnav-btn.active : onglet courant en blanc gras.
+   .screen.active : padding-bottom pour ne pas
+   que le contenu passe sous la barre.
+════════════════════════════════════════ */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: var(--c-primary);
+  z-index: 1000;
+}
+
+.bnav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.65rem;
+  gap: 2px;
+  cursor: pointer;
+  padding: 6px 0;
+  min-height: 44px; /* zone de tap accessible */
+}
+
+.bnav-btn.active {
+  color: #fff;
+  font-weight: bold;
+}
+
+.bnav-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+/* Compense la hauteur de la barre pour que le contenu
+   ne soit pas masqué derrière elle */
+.screen.active {
+  padding-bottom: 56px;
+}
+
+/* SPINNER DE CHARGEMENT */
+#app-spinner { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.85); display:none; align-items:center; justify-content:center; z-index:99999; }
+#app-spinner::after { content:''; width:48px; height:48px; border:5px solid #eee; border-top-color:var(--c-primary,#002395); border-radius:50%; animation:spin 0.8s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* §CONFETTI */
+.confetti-particle { position:absolute; top:-20px; border-radius:3px; animation: confetti-fall var(--dur) var(--delay) ease-in forwards; }
+@keyframes confetti-fall { to { transform: translateY(110vh) rotate(720deg); opacity:0; } }
+
+/* ════════════════════════════════════════
+   §PDF-EXPORT — Boutons export PDF
+   Utilisés dans l'onglet Cartes (vocab),
+   l'onglet Dialogue et la modale Guide.
+   Couleur pilotée par var(--c-primary).
+════════════════════════════════════════ */
+.export-pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--c-primary, #002395);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 9px 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 44px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 8px rgba(0,0,0,.18);
+  transition: background .2s, transform .15s, box-shadow .15s;
+}
+
+.export-pdf-btn:hover,
+.export-pdf-btn:focus-visible {
+  background: var(--c-secondary, #C60B1E);
+  outline: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,.22);
+}
+
+.export-pdf-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 1px 4px rgba(0,0,0,.18);
+}
+
+html.theme-french .export-pdf-btn { background: #002395; }
+html.theme-france .export-pdf-btn:hover { background: #C60B1E; }
+html.theme-spain  .export-pdf-btn { background: #C60B1E; }
+html.theme-spain  .export-pdf-btn:hover { background: #002395; }
+
+@media print {
+  .export-pdf-btn { display: none !important; }
 }
