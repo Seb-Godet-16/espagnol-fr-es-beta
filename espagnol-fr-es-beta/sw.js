@@ -39,7 +39,7 @@
    CONFIGURATION
 ═══════════════════════════════════════════════════════════ */
 
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = '__BUILD_NUMBER__';
 const CACHE_NAME    = 'vachebo-' + CACHE_VERSION;
 
 /*

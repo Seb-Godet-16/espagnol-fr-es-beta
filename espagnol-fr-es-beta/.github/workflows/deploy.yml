@@ -1,0 +1,51 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+# Permissions requises pour déployer sur GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un seul déploiement à la fois ; annule le déploiement en attente
+# si un nouveau push arrive, mais ne coupe jamais un déploiement en cours.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      # 1. Récupérer le code source
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Injecter le numéro de build dans sw.js
+      - name: Set cache version
+        run: sed -i "s/__BUILD_NUMBER__/${{ github.run_number }}/g" sw.js
+
+      # 3. Configurer GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # 4. Empaqueter le contenu de la racine du dépôt
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      # 5. Déployer sur GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
