@@ -3018,3 +3018,43 @@ const cardES = document.getElementById('card-learn-spain');
 if (cardES) cardES.addEventListener('click', function() {
   showLauncherVariant('learn_spain');
 });
+/* ════════════════════════════════════════
+   §21b — VIEWPORT HEIGHT FIX ANDROID
+   Sur Android, 100vh inclut la barre de navigation du système,
+   ce qui provoque un débordement silencieux. Cette section calcule
+   la hauteur réelle du viewport (window.innerHeight) et l'expose
+   via la custom property CSS --app-h, utilisée à la place de 100vh
+   dans .app, #app-launcher, .screen et .screen.active.
+   Trois points d'écoute couvrent :
+     • window.resize       — rotation / redimensionnement fenêtre
+     • visualViewport      — clavier virtuel Android (Chrome/WebView)
+     • touchend + timeout  — cas résiduels où resize ne se déclenche pas
+════════════════════════════════════════ */
+(function() {
+  var _vh_timer = null;
+
+  function _updateAppHeight() {
+    document.documentElement.style.setProperty('--app-h', window.innerHeight + 'px');
+  }
+
+  function _debounced80() {
+    clearTimeout(_vh_timer);
+    _vh_timer = setTimeout(_updateAppHeight, 80);
+  }
+
+  /* (1) Appel immédiat */
+  _updateAppHeight();
+
+  /* (3) Écoute resize classique avec debounce 80 ms */
+  window.addEventListener('resize', _debounced80);
+
+  /* (4) Écoute visualViewport (clavier virtuel Android) avec debounce 80 ms */
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', _debounced80);
+  }
+
+  /* (5) Fallback touchend avec setTimeout 300 ms */
+  window.addEventListener('touchend', function() {
+    setTimeout(_updateAppHeight, 300);
+  });
+})();

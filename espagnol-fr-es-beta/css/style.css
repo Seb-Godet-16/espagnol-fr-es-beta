@@ -103,14 +103,14 @@ body {
       0 0 0 1px rgba(0,0,0,.06),
       0 8px 32px rgba(0,0,0,.14),
       0 2px 8px  rgba(0,0,0,.08);
-    min-height: 100vh;
+    min-height: var(--app-h, 100vh);
     position: relative;
   }
 
   /* Le lanceur et chaque écran occupent toute la hauteur de la carte */
   #app-launcher,
   .screen.active {
-    min-height: 100vh;
+    min-height: var(--app-h, 100vh);
   }
 }
 
@@ -135,7 +135,7 @@ body {
 /* Chaque écran est masqué par défaut ; .active l'affiche en flex */
 .screen {
   display: none;
-  min-height: 100vh;
+  min-height: var(--app-h, 100vh);
   flex-direction: column;
 }
 .screen.active {
@@ -156,7 +156,7 @@ body {
   padding: 16px 20px 12px;
   position: relative;
   overflow: hidden;
-  min-height: 100vh;       /* fallback navigateurs anciens */
+  min-height: var(--app-h, 100vh);       /* fallback navigateurs anciens */
   min-height: 100dvh;      /* hauteur réelle viewport mobile (exclut barres nav) */
   box-sizing: border-box;
 }

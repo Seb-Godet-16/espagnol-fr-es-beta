@@ -3,6 +3,7 @@
  * ║  Language App 🇫🇷🇪🇹  —  js/data-or.js                         ║
  * ║  Auteur   : Sébastien Godet                                     ║
  * ║  Assisté  : Claude Sonnet 4.6 · Gemini 3.5 Flash               ║
+ * ║  Modernisé ES2020 (const pour les tableaux de données)           ║
  * ║  Version  : Juin 2026                                           ║
  * ╠══════════════════════════════════════════════════════════════════╣
  * ║  RÔLE DE CE FICHIER                                             ║
@@ -27,8 +28,9 @@
    les menus de l'application s'affichent alors en Afaan Oromoo.
    ══════════════════════════════════════════════════════════════════ */
 
-var LEVEL1_THEMES_OR = [
+const LEVEL1_THEMES_OR = [
 
+  // 1/48 -- Qubeewwan -- L'Alphabet
   {
     id: 'alpha', level: 1, emoji: '🔤',
     name: 'Qubeewwan', sub: 'L\'Alphabet',
@@ -65,6 +67,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 2/48 -- Nagaa Gaafachuu -- Les Salutations
   {
     id: 'salut', level: 1, emoji: '👋',
     name: 'Nagaa Gaafachuu', sub: 'Les Salutations',
@@ -86,6 +89,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 3/48 -- Ofii Beeksisuu -- Se Présenter
   {
     id: 'pres', level: 1, emoji: '🙋',
     name: 'Ofii Beeksisuu', sub: 'Se Présenter',
@@ -101,6 +105,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 4/48 -- Jechi Murteessoo -- Expressions Essentielles
   {
     id: 'expr', level: 1, emoji: '💬',
     name: 'Jechi Murteessoo', sub: 'Expressions Essentielles',
@@ -122,6 +127,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 5/48 -- Gaaffii Addaadaa -- Mots interrogatifs
  {
     id: 'interro', level: 1, emoji: '❓',
     name: 'Gaaffii Addaadaa', sub: 'Mots interrogatifs',
@@ -138,6 +144,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 6/48 -- Lakkoofsa -- Les Nombres
   {
     id: 'num', level: 1, emoji: '🔢',
     name: 'Lakkoofsa', sub: 'Les Nombres',
@@ -163,6 +170,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 7/48 -- Sa'atii fi Sanaata -- L'Heure et le Calendrier
  {
     id: 'temps', level: 1, emoji: '🕐',
     name: 'Sa\'atii fi Sanaata', sub: 'L\'Heure et le Calendrier',
@@ -190,6 +198,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 8/48 -- Qilleensa fi Haala Biraa -- La Météo et le Climat
  {
     id: 'meteo', level: 1, emoji: '🌤️',
     name: 'Qilleensa fi Haala Biraa', sub: 'La Météo et le Climat',
@@ -208,6 +217,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 9/48 -- Gochaalee -- Les Verbes
   {
     id: 'verb', level: 1, emoji: '📝',
     name: 'Gochaalee', sub: 'Les Verbes',
@@ -249,6 +259,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 10/48 -- Miiraawwan -- Les Émotions
   {
     id: 'emot', level: 1, emoji: '😄',
     name: 'Miiraawwan', sub: 'Les Émotions',
@@ -272,6 +283,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 11/48 -- Maatii -- La Famille
   {
     id: 'fam', level: 1, emoji: '👨‍👩‍👧',
     name: 'Maatii', sub: 'La Famille',
@@ -286,6 +298,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 12/48 -- Halluu -- Les Couleurs
   {
     id: 'col', level: 1, emoji: '🎨',
     name: 'Halluu', sub: 'Les Couleurs',
@@ -298,6 +311,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 13/48 -- Jireenya Guyyaa Guyyaa -- La Vie Quotidienne
   {
     id: 'routine', level: 1, emoji: '🌅',
     name: 'Jireenya Guyyaa Guyyaa', sub: 'La Vie Quotidienne',
@@ -320,6 +334,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 14/48 -- Nyaata -- La Nourriture
  {
     id: 'nour', level: 1, emoji: '🍽️',
     name: 'Nyaata', sub: 'La Nourriture',
@@ -344,6 +359,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 15/48 -- Dhugaatii -- Les Boissons
  {
     id: 'bois', level: 1, emoji: '🥤',
     name: 'Dhugaatii', sub: 'Les Boissons',
@@ -358,6 +374,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 16/48 -- Mana Nyaataa Keessatti -- Au Restaurant
   {
     id: 'rest', level: 1, emoji: '🍽️',
     name: 'Mana Nyaataa Keessatti', sub: 'Au Restaurant',
@@ -376,6 +393,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 17/48 -- Karaa Kee Argachuu -- S'Orienter
  {
     id: 'orient', level: 1, emoji: '🧭',
    name: 'Karaa Kee Argachuu', sub: 'S\'Orienter',
@@ -388,6 +406,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 18/48 -- Iddoowwan -- Les Lieux
  {
     id: 'lieux', level: 1, emoji: '🏙️',
     name: 'Iddoowwan', sub: 'Les Lieux',
@@ -411,6 +430,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 19/48 -- Gejjiba -- Les Transports
  {
     id: 'trans', level: 1, emoji: '🚌',
     name: 'Gejjiba', sub: 'Les Transports',
@@ -428,6 +448,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 20/48 -- Qaamaa -- Le Corps
  {
     id: 'corps', level: 1, emoji: '🧍',
     name: 'Qaamaa', sub: 'Le Corps',
@@ -446,6 +467,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 21/48 -- Mi'oota Guyyuu -- Objets du Quotidien
  {
     id: 'objets', level: 1, emoji: '🔑',
     name: 'Mi\'oota Guyyuu', sub: 'Objets du Quotidien',
@@ -467,6 +489,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 22/48 -- Mana Jireenyaa -- Le Logement
   {
     id: 'log', level: 1, emoji: '🏠',
     name: 'Mana Jireenyaa', sub: 'Le Logement',
@@ -480,6 +503,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 23/48 -- Meeshaalee Manaa fi Meeshaalee Hojii -- Meubles et Équipements
  {
     id: 'muebles_equipamiento', level: 1, emoji: '🪑',
     name: 'Meeshaalee Manaa fi Meeshaalee Hojii', sub: 'Meubles et Équipements',
@@ -495,6 +519,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 24/48 -- Uffata -- Les Vêtements
   {
     id: 'veth', level: 1, emoji: '👗',
     name: 'Uffata', sub: 'Les Vêtements',
@@ -511,6 +536,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 25/48 -- Ogummaawwan Hojii -- Les Professions
   {
     id: 'met', level: 1, emoji: '💼',
     name: 'Ogummaawwan Hojii', sub: 'Les Professions',
@@ -528,6 +554,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 26/48 -- Fayyaa -- La Santé
   {
     id: 'sante', level: 1, emoji: '🏥',
     name: 'Fayyaa', sub: 'La Santé',
@@ -547,6 +574,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 27/48 -- Imala -- Le Voyage
   {
     id: 'viaje', level: 1, emoji: '🧳',
     name: 'Imala', sub: 'Le Voyage',
@@ -564,6 +592,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 28/48 -- Biyyoota -- Les Pays
   {
     id: 'pays', level: 1, emoji: '🌍',
     name: 'Biyyoota', sub: 'Les Pays',
@@ -583,6 +612,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 29/48 -- Hojiiwwan Yeroo Boqonnaa -- Les Loisirs
   {
     id: 'ocio', level: 1, emoji: '⛰️',
     name: 'Hojiiwwan Yeroo Boqonnaa', sub: 'Les Loisirs',
@@ -599,6 +629,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 30/48 -- Biqiltuuwwan -- Les Plantes
   {
     id: 'plan', level: 1, emoji: '🌿',
     name: 'Biqiltuuwwan', sub: 'Les Plantes',
@@ -619,6 +650,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 31/48 -- Bineensota -- Les Animaux
   {
     id: 'anim', level: 1, emoji: '🐘',
     name: 'Bineensota', sub: 'Les Animaux',
@@ -640,6 +672,7 @@ var LEVEL1_THEMES_OR = [
     ]
   },
 
+  // 32/48 -- Qonnaafi Horsiisa Loonii -- L'Agriculture et L'Élevage
   {
     id: 'agri', level: 1, emoji: '🌾',
     name: 'Qonnaafi Horsiisa Loonii', sub: 'L\'Agriculture et L\'Élevage',
@@ -672,8 +705,9 @@ var LEVEL1_THEMES_OR = [
    16 modules, structure identique à LEVEL2_THEMES_FR (§2).
    ══════════════════════════════════════════════════════════════════ */
 
-var LEVEL2_THEMES_OR = [
+const LEVEL2_THEMES_OR = [
 
+  // 33/48 -- Nama Nagaa Gaafachuu -- Saluer Quelqu'un
   {
     id: 'salut2', level: 2, emoji: '👋',
     name: 'Nama Nagaa Gaafachuu', sub: 'Saluer Quelqu\'un', type: 'dialog',
@@ -714,6 +748,7 @@ var LEVEL2_THEMES_OR = [
     ]
   },
 
+  // 34/48 -- Of Beeksisuu -- Se Présenter
   {
     id: 'pres2', level: 2, emoji: '🙋',
     name: 'Of Beeksisuu', sub: 'Se Présenter', type: 'dialog',
@@ -755,6 +790,7 @@ var LEVEL2_THEMES_OR = [
     ]
   },
 
+  // 35/48 -- Kallattii Gaafadhu -- Demander son Chemin
   {
     id: 'chemin2', level: 2, emoji: '🗺️',
     name: 'Kallattii Gaafadhu', sub: 'Demander son Chemin', type: 'dialog',
@@ -795,6 +831,7 @@ var LEVEL2_THEMES_OR = [
     ]
   },
 
+  // 36/48 -- Kaaffeetti Ajajuu -- Commander au Café
   {
     id: 'bar2', level: 2, emoji: '☕',
    name: 'Kaaffeetti Ajajuu', sub: 'Commander au Café', type: 'dialog',
@@ -835,6 +872,7 @@ var LEVEL2_THEMES_OR = [
     ]
   },
 
+  // 37/48 -- Nyaata Ajajadhu -- Commander un Repas
  {
     id: 'resto2', level: 2, emoji: '🍽️',
     name: 'Nyaata Ajajadhu', sub: 'Commander un Repas', type: 'dialog',
@@ -876,6 +914,7 @@ var LEVEL2_THEMES_OR = [
     ]
   },
 
+  // 38/48 -- Gabaa deemu -- Faire les Courses
  {
     id: 'compras2', level: 2, emoji: '🛍️',
     name: 'Gabaa deemu', sub: 'Faire les Courses', type: 'dialog',
@@ -916,6 +955,7 @@ var LEVEL2_THEMES_OR = [
     ]
   },
 
+  // 39/48 -- Naannoo Keessa Socho'uu -- Se Déplacer
   {
     id: 'transp2', level: 2, emoji: '🚌',
     name: 'Naannoo Keessa Socho\'uu', sub: 'Se Déplacer', type: 'dialog',
@@ -957,6 +997,7 @@ var LEVEL2_THEMES_OR = [
     ]
   },
 
+  // 40/48 -- Hoteela Gahuu -- Arriver à l'Hôtel
   {
     id: 'hotel2', level: 2, emoji: '🏨',
    name: 'Hoteela Gahuu', sub: 'Arriver à l\'Hôtel', type: 'dialog',
@@ -998,6 +1039,7 @@ var LEVEL2_THEMES_OR = [
     ]
   },
 
+  // 41/48 -- Bakka Jireenyaa Barbaadi -- Chercher un Logement
   {
     id: 'logement2', level: 2, emoji: '🏠',
     name: 'Bakka Jireenyaa Barbaadi', sub: 'Chercher un Logement', type: 'dialog',
@@ -1038,6 +1080,7 @@ var LEVEL2_THEMES_OR = [
     ]
   },
 
+  // 42/48 -- Waa'ee Qilleensaa Haasa'uu -- Parler de la Météo
   {
     id: 'meteo2', level: 2, emoji: '☀️',
     name: 'Waa\'ee Qilleensaa Haasa\'uu', sub: 'Parler de la Météo', type: 'dialog',
@@ -1078,6 +1121,7 @@ var LEVEL2_THEMES_OR = [
     ]
   },
 
+  // 43/48 -- Yeroo fi Qilleensa -- L'Heure et la Météo
  {
     id: 'temps2', level: 2, emoji: '🕐',
     name: 'Yeroo fi Qilleensa', sub: 'L\'Heure et la Météo', type: 'dialog',
@@ -1120,6 +1164,7 @@ var LEVEL2_THEMES_OR = [
     ]
   },
 
+  // 44/48 -- Jireenya Guyyuu -- La Vie Quotidienne
   {
     id: 'routine2', level: 2, emoji: '🌅',
     name: 'Jireenya Guyyuu', sub: 'La Vie Quotidienne', type: 'dialog',
@@ -1161,6 +1206,7 @@ var LEVEL2_THEMES_OR = [
     ]
   },
 
+  // 45/48 -- Hojiiwwan Yeroo Boqonnaa -- Les Loisirs
   {
     id: 'gustos2', level: 2, emoji: '❤️',
     name: 'Hojiiwwan Yeroo Boqonnaa', sub: 'Les Loisirs', type: 'dialog',
@@ -1203,6 +1249,7 @@ var LEVEL2_THEMES_OR = [
     ]
   },
 
+  // 46/48 -- Halkan Ala -- Sortir le Soir
   {
     id: 'fiesta2', level: 2, emoji: '🎉',
    name: 'Halkan Ala', sub: 'Sortir le Soir', type: 'dialog',
@@ -1243,6 +1290,7 @@ var LEVEL2_THEMES_OR = [
     ]
   },
 
+  // 47/48 -- Mana Qorichaa -- À la Pharmacie
  {
     id: 'farmacia2', level: 2, emoji: '💊',
     name: 'Mana Qorichaa', sub: 'À la Pharmacie', type: 'dialog',
@@ -1284,6 +1332,7 @@ var LEVEL2_THEMES_OR = [
     ]
   },
 
+  // 48/48 -- Bakka Doktoraatti -- Chez le Médecin
   {
     id: 'medico2', level: 2, emoji: '🩺',
     name: 'Bakka Doktoraatti', sub: 'Chez le Médecin', type: 'dialog',
@@ -1331,4 +1380,4 @@ var LEVEL2_THEMES_OR = [
    Tableau fusionné — consommé directement par app.js
    ══════════════════════════════════════════════════════════════════ */
 
-var ALL_THEMES_OR = LEVEL1_THEMES_OR.concat(LEVEL2_THEMES_OR);
+const ALL_THEMES_OR = LEVEL1_THEMES_OR.concat(LEVEL2_THEMES_OR);

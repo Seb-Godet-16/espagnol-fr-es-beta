@@ -1378,6 +1378,15 @@
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
       navigator.serviceWorker.register('./sw.js', { scope: './' })
+        .then(function() {
+          let _reloading = false;
+          navigator.serviceWorker.addEventListener('controllerchange', function() {
+            if (!_reloading) {
+              _reloading = true;
+              window.location.reload();
+            }
+          });
+        })
         .catch(function(err) {
           /* Échec silencieux : l'app fonctionne sans SW */
           console.warn('[SW] Enregistrement échoué :', err);
