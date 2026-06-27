@@ -240,7 +240,7 @@ body {
   background: #FCFFEE; /* crème exact du logo (RVB 252,255,238) */
   align-items: center;
   justify-content: space-between; /* répartit logo + cartes + footer sur la hauteur dispo */
-  padding: 16px 20px 12px;
+  padding: 16px 20px 70px; /* padding-bottom 70px pour laisser place à la nav basse */
   position: relative;
   overflow: hidden;
   min-height: 100vh;       /* fallback navigateurs anciens */
@@ -338,15 +338,14 @@ body {
 
 /* Pied de page absolu du lanceur */
 .launcher-footer {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
+  position: relative; /* flux normal — la nav basse fixe prend la place en bas */
   text-align: center;
-  padding: 14px 12px;
+  padding: 10px 12px 6px;
   font-size: .68rem;
   color: #aaa;
   background: transparent;
   line-height: 1.7;
-  z-index: 1;
+  width: 100%;
 }
 .launcher-footer a          { color: #888; text-decoration: none; font-weight: 600; }
 .launcher-footer a:hover    { text-decoration: underline; }
@@ -2635,8 +2634,6 @@ footer a:hover { text-decoration: underline; }
 /* Texte de langue : affiché selon le bloc courant */
 .guide-no-show-fr,
 .guide-no-show-es { display: none; }
-#guideContentFR ~ * .guide-no-show-fr,
-.guide-no-show-fr { display: none; }
 
 /* Visibilité gérée par JS via showGuide() — on cache les deux par défaut
    et on laisse le contenu de la topbar s'afficher pour les deux langues
@@ -3587,6 +3584,29 @@ html.theme-spain.region-VE {
    ne soit pas masqué derrière elle */
 .screen.active {
   padding-bottom: 56px;
+}
+
+/* Sur le launcher (écran 0), la barre est toujours visible dès le départ
+   (pas de .screen.active, elle est positionnée fixed) */
+#app-launcher.active ~ .bottom-nav,
+.bottom-nav.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Sur le fond crème du launcher Vue A, la bordure top doit être visible */
+#app-launcher ~ .bottom-nav {
+  background: #fff;
+  border-top-color: rgba(0,0,0,.12);
+}
+
+/* Sur le fond dégradé coloré de Vue B, adapter le fond de la nav */
+#app-launcher.variant-active ~ .bottom-nav {
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top-color: rgba(255,255,255,.3);
 }
 
 /* SPINNER DE CHARGEMENT */

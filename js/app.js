@@ -411,9 +411,8 @@ function showLauncherVariant(mode) {
       document.getElementById('app-launcher').classList.remove('variant-active');
       document.documentElement.className = '';
       _setLauncherFooterLang(null);
-      /* Cacher la nav basse en retournant à la Vue A */
-      var nav = document.getElementById('bottom-nav');
-      if (nav) nav.classList.remove('visible');
+      /* Retour à Vue A → Langue reste actif, currentMode réinitialisé */
+      _updateBottomNav('app-launcher');
     };
     backBtn.addEventListener('click', backBtn._launcherHandler);
   }
@@ -421,8 +420,8 @@ function showLauncherVariant(mode) {
   /* — Traduction du footer selon le mode (langue d'interface = langue opposée à celle apprise) — */
   _setLauncherFooterLang(mode);
 
-  /* — Afficher la barre de nav basse dès la Vue B — */
-  _updateBottomNav('home');  // 'home' = n'importe quel écran non-launcher → la nav est visible
+  /* — Mettre à jour la barre de nav : Langue actif sur l'écran 0 — */
+  _updateBottomNav('app-launcher');
 }
 
 /**
@@ -470,9 +469,8 @@ function showLauncher() {
   document.getElementById('app-launcher').classList.remove('variant-active');
   document.documentElement.className = '';
   _setLauncherFooterLang(null);
-  /* Cacher la nav basse en retournant à la Vue A */
-  var nav = document.getElementById('bottom-nav');
-  if (nav) nav.classList.remove('visible');
+  /* La barre de nav reste visible sur le launcher, avec Langue actif */
+  _updateBottomNav('app-launcher');
   window.scrollTo(0, 0);
   document.documentElement.lang = 'fr';
 }
@@ -1097,26 +1095,19 @@ function _clearQuizSession() {
 
 /* _updateBottomNav(screenId) — Synchronise la barre de navigation basse
    avec l'écran actuellement affiché.
-   • Masque la barre sur le launcher (avant tout choix de langue).
-   • Active visuellement le bouton correspondant à l'écran courant
-     (#navBtnModules pour 'sections' ; aucun pour les autres car
-     #navBtnGuide est une modale, pas un écran).
-   • Met à jour les libellés selon la langue d'interface via L(). */
+   • Toujours visible, sur TOUS les écrans y compris le launcher (écran 0).
+   • Active visuellement le bouton correspondant à l'écran courant :
+       app-launcher (Vue A & B) → Langue actif
+       home                     → Guide actif
+       sections-level1/2        → Modules actif
+       lesson                   → Modules actif (on est dans un module)
+       (Infos est une modale : flash visuel temporaire, jamais "collé")
+   • Libellés et drapeau adaptés à la langue d'interface. */
 function _updateBottomNav(screenId) {
   const nav = document.getElementById('bottom-nav');
   if (!nav) return;
 
-  /* (1) Visibilité : cachée sur le launcher Vue A (avant tout choix), visible partout ailleurs */
-  if (screenId === 'app-launcher') {
-    /* Sur le launcher, on cache la nav seulement si on est en Vue A (cartes).
-       Si on est en Vue B (variante), la nav doit rester visible. */
-    var launcherVariantVisible = document.getElementById('launcher-view-variant');
-    var isVariantView = launcherVariantVisible && launcherVariantVisible.style.display !== 'none';
-    if (!isVariantView) {
-      nav.classList.remove('visible');
-      return;
-    }
-  }
+  /* (1) Toujours visible — la barre est présente sur tous les écrans */
   nav.classList.add('visible');
 
   /* (2) État actif : reset tous les boutons, puis active le bon */
@@ -1124,25 +1115,55 @@ function _updateBottomNav(screenId) {
     var el = document.getElementById(id);
     if (el) el.classList.remove('active');
   });
-  if (screenId === 'sections' || screenId === 'sections-level1' || screenId === 'sections-level2') {
+
+  if (screenId === 'app-launcher') {
+    /* Écran 0 (Vue A choix de langue, Vue B sélecteur variante) → Langue actif */
+    var btnLang = document.getElementById('navBtnLang');
+    if (btnLang) btnLang.classList.add('active');
+  } else if (screenId === 'home') {
+    /* Écran Guide → Guide actif */
+    var btnGuide = document.getElementById('navBtnGuide');
+    if (btnGuide) btnGuide.classList.add('active');
+  } else if (screenId === 'sections' || screenId === 'sections-level1' || screenId === 'sections-level2' || screenId === 'lesson') {
+    /* Écrans Modules et Leçon → Modules actif */
     var btnModules = document.getElementById('navBtnModules');
     if (btnModules) btnModules.classList.add('active');
   }
-  /* navBtnGuide n'est jamais marqué actif (c'est une modale, pas un écran) */
 
-  /* (3) Libellés bilingues via L(espagnol, français) */
+  /* (3) Libellés bilingues via L(learn_french, learn_spain)
+     Sur le launcher (avant tout choix), on affiche les libellés en français par défaut */
   var elLang    = document.getElementById('navLabelLang');
   var elGuide   = document.getElementById('navLabelGuide');
   var elModules = document.getElementById('navLabelModules');
   var elCredits = document.getElementById('navLabelCredits');
-  if (elLang)    elLang.textContent    = L('Idioma',  'Langue');
-  if (elGuide)   elGuide.textContent   = L('Guía',    'Guide');
-  if (elModules) elModules.textContent = L('Módulos', 'Modules');
-  if (elCredits) elCredits.textContent = L('Infos',   'Infos');
 
-  /* (4) Drapeau dynamique selon le mode */
+  if (!currentMode) {
+    /* Launcher Vue A : pas encore de mode → libellés en français */
+    if (elLang)    elLang.textContent    = 'Langue';
+    if (elGuide)   elGuide.textContent   = 'Guide';
+    if (elModules) elModules.textContent = 'Modules';
+    if (elCredits) elCredits.textContent = 'Infos';
+  } else {
+    if (elLang)    elLang.textContent    = L('Idioma',  'Langue');
+    if (elGuide)   elGuide.textContent   = L('Guía',    'Guide');
+    if (elModules) elModules.textContent = L('Módulos', 'Modules');
+    if (elCredits) elCredits.textContent = L('Infos',   'Infos');
+  }
+
+  /* (4) Drapeau dynamique selon le mode et la région active
+     Sur le launcher sans mode, on affiche 🌍 (neutre) */
   var langFlag = document.getElementById('navLangFlag');
-  if (langFlag) langFlag.textContent = L('🇪🇸', '🇫🇷');
+  if (langFlag) {
+    if (!currentMode) {
+      langFlag.textContent = '🌍';
+    } else if (currentMode === 'learn_french') {
+      langFlag.textContent = '🇫🇷';
+    } else {
+      /* learn_spain : drapeau de la variante régionale active */
+      var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+      langFlag.textContent = flagEmojis[currentRegion] || '🇪🇸';
+    }
+  }
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -3274,6 +3295,12 @@ function pickRegion(regionId) {
     var guideES = document.getElementById('guideContentES');
     if (guideES && guideES.style.display !== 'none') _refreshGuideRegion();
   }
+
+  /* Mise à jour du drapeau dans la barre de nav basse */
+  var langFlag = document.getElementById('navLangFlag');
+  if (langFlag && currentMode === 'learn_spain') {
+    langFlag.textContent = flagEmojis[currentRegion] || '🇪🇸';
+  }
 }
 
 
@@ -3346,7 +3373,11 @@ window.addEventListener('resize', _resizeOpenAccordions);
    accordéon déjà ouverte par défaut dans le HTML (ex : « Comment ça
    marche », ouverte au premier affichage), pour éviter tout effet de
    troncature avant la première interaction utilisateur. */
-document.addEventListener('DOMContentLoaded', _resizeOpenAccordions);
+document.addEventListener('DOMContentLoaded', function() {
+  _resizeOpenAccordions();
+  /* Affiche la barre de nav dès le chargement, avec Langue actif (écran 0) */
+  _updateBottomNav('app-launcher');
+});
 
 /* ═══════════════════════════════════════════════════════════
    16. REMERCIEMENTS — Modale de crédits
@@ -3357,6 +3388,9 @@ document.addEventListener('DOMContentLoaded', _resizeOpenAccordions);
 
 function showCredits() {
   document.getElementById('credits-modal').style.display = 'flex';
+  /* Marque le bouton Infos actif pendant que la modale est ouverte */
+  var btnCredits = document.getElementById('navBtnCredits');
+  if (btnCredits) btnCredits.classList.add('active');
 }
 
 
