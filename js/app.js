@@ -553,12 +553,16 @@ function initApp(mode) {
        éléments dynamiques (drapeaux, titre, badges, boutons…). */
   _buildHomeGuide();
 
-  /* — Masquer le launcher et naviguer vers l'écran #home (= guide) — */
+  /* — Masquer le launcher et naviguer directement vers les modules —
+       Le guide (#home) reste accessible via le bouton ❓ dans la nav bar.
+       On saute l'écran d'accueil pour que l'apprenant arrive immédiatement
+       sur la grille des modules, sans étape intermédiaire. */
   document.getElementById('app-launcher').classList.remove('active');
-  showScreen('home');
+  renderSections(1);
+  showScreen('sections-level1');
 
   // Met à jour la barre de navigation basse pour le mode courant
-  _updateBottomNav('home');
+  _updateBottomNav('sections-level1');
 }
 
 
@@ -612,6 +616,33 @@ let _spanishVoice     = undefined;
 // Empêche la répétition de l'alerte de configuration audio
 let _hasNotifiedVoice = false;
 
+// Qualité de la voix espagnole résolue : 'exact' | 'fallback' | 'default' | null
+let _spanishVoiceQuality = null;
+// Nom lisible de la voix résolue (pour le badge)
+let _spanishVoiceLabel   = '';
+
+// ─── Contrôle de vitesse TTS ───
+// Valeurs : 0.6 (lent) | 0.85 (normal) | 1.1 (rapide)
+// Persisté en sessionStorage pour la session courante
+var SPEED_LEVELS = [
+  { id:'slow',   rate: 0.60, label:'🐢', title: function() { return L('Lento',  'Lent');   } },
+  { id:'normal', rate: 0.85, label:'▶',  title: function() { return L('Normal', 'Normal'); } },
+  { id:'fast',   rate: 1.10, label:'⚡', title: function() { return L('Rápido', 'Rapide'); } }
+];
+function _getTtsSpeed() {
+  var saved = sessionStorage.getItem('vachebo_tts_speed');
+  return saved || 'normal';
+}
+function _setTtsSpeed(id) {
+  sessionStorage.setItem('vachebo_tts_speed', id);
+  _updateSpeedBar();
+}
+function _getTtsRate() {
+  var id = _getTtsSpeed();
+  var s = SPEED_LEVELS.find(function(x) { return x.id === id; });
+  return s ? s.rate : 0.85;
+}
+
 /* Résout de façon asynchrone la meilleure voix espagnole disponible sur l'appareil.
    Cascade : voix exacte (ex: es-EC) → tout espagnol disponible → voix[0]
    Le résultat est mis en cache dans _spanishVoice pour les appels suivants. */
@@ -647,13 +678,15 @@ function _resolveSpanishVoice(callback) {
 
     var foundVoice = null;
     var foundLabel = regionName + ' ' + L('(Voz por defecto)', '(Voix par défaut)');
+    var foundQuality = 'default';
 
     // Priorité 1 : voix exactement correspondant à la région (ex : es-MX pour le Mexique)
     foundVoice = voices.find(function(v) {
       return v.lang.toLowerCase() === targetLang.toLowerCase();
     });
     if (foundVoice) {
-      foundLabel = regionName;
+      foundLabel   = regionName;
+      foundQuality = 'exact';
     } else {
       // Priorité 2 : n'importe quel espagnol disponible (ex : es-ES si es-MX absent)
       foundVoice = voices.find(function(v) {
@@ -663,15 +696,22 @@ function _resolveSpanishVoice(callback) {
         /* Résoudre le nom lisible de la voix de secours */
         var fallbackCode = foundVoice.lang.toUpperCase().split('-')[1] || 'ES';
         var fallbackName = regionLabels[fallbackCode] || foundVoice.lang;
-        foundLabel = regionName + ' ' + L('(secours: ', '(secours : ') + fallbackName + ')';
+        foundLabel   = regionName + ' ' + L('(secours: ', '(secours : ') + fallbackName + ')';
+        foundQuality = 'fallback';
       } else {
-        foundLabel = L('Voz por defecto', 'Voix par défaut');
+        foundLabel   = L('Voz por defecto', 'Voix par défaut');
+        foundQuality = 'default';
       }
     }
     // Priorité 3 : première voix disponible (ultime recours)
-    if (!foundVoice) foundVoice = voices[0];
+    if (!foundVoice) { foundVoice = voices[0]; foundQuality = 'default'; }
 
-    _spanishVoice = foundVoice;
+    _spanishVoice        = foundVoice;
+    _spanishVoiceQuality = foundQuality;
+    _spanishVoiceLabel   = foundLabel;
+
+    // Mise à jour du badge de voix dans le header leçon
+    _updateVoiceBadge();
 
     // Notification discrète (toast) informant l'utilisateur de la voix configurée
     if (!_hasNotifiedVoice) {
@@ -748,12 +788,13 @@ function speak(txt, triggerBtn) {
     _resolveSpanishVoice(function(voice) {
       speechSynthesis.cancel();
       var parts = (txt || '').split('/').map(p => p.trim()).filter(Boolean);
+      var rate  = _getTtsRate();
       _markSpeaking(triggerBtn);
       function speakPart(i) {
         if (i >= parts.length) { _unmarkSpeaking(triggerBtn); return; }
         var u = new SpeechSynthesisUtterance(parts[i]);
         if (voice) { u.voice = voice; u.lang = voice.lang; }
-        u.rate  = 0.85;
+        u.rate  = rate;
         u.onend = function() {
           _hideAudioUnavailable();
           if (i + 1 < parts.length) setTimeout(function() { speakPart(i + 1); }, 800);
@@ -766,8 +807,8 @@ function speak(txt, triggerBtn) {
     });
 
   } else {
-    // ─── Mode Français : voix système standard, taux légèrement ralenti ───
-    _doSpeak(txt, null, 0.80, triggerBtn);
+    // ─── Mode Français : voix système standard, vitesse réglable ───
+    _doSpeak(txt, null, _getTtsRate(), triggerBtn);
   }
 }
 
@@ -804,6 +845,107 @@ function _doSpeak(txt, voiceObj, rate, triggerBtn) {
     speechSynthesis.speak(u);
   }
   speakPart(0);
+}
+
+/* speakSlow(txt) — Prononce toujours à vitesse lente, indépendamment du réglage.
+   Utilisé par le bouton "Répéter lentement" sur les flashcards. */
+function speakSlow(txt, triggerBtn) {
+  if (!txt || !window.speechSynthesis) return;
+  if (currentMode !== 'learn_french') {
+    _resolveSpanishVoice(function(voice) {
+      speechSynthesis.cancel();
+      var parts = (txt || '').split('/').map(p => p.trim()).filter(Boolean);
+      if (triggerBtn) triggerBtn.classList.add('is-speaking');
+      function speakPart(i) {
+        if (i >= parts.length) { if (triggerBtn) triggerBtn.classList.remove('is-speaking'); return; }
+        var u = new SpeechSynthesisUtterance(parts[i]);
+        if (voice) { u.voice = voice; u.lang = voice.lang; }
+        u.rate = 0.55;
+        u.onend = function() {
+          if (i + 1 < parts.length) setTimeout(function() { speakPart(i + 1); }, 1000);
+          else if (triggerBtn) triggerBtn.classList.remove('is-speaking');
+        };
+        u.onerror = function() { if (triggerBtn) triggerBtn.classList.remove('is-speaking'); };
+        speechSynthesis.speak(u);
+      }
+      speakPart(0);
+    });
+  } else {
+    _doSpeak(txt, null, 0.55, triggerBtn);
+  }
+}
+
+/* _updateVoiceBadge() — Met à jour le badge de voix dans le header leçon.
+   Affiche la qualité de voix (exact ✅ / secours ⚠️ / défaut ❓)
+   avec le drapeau et le nom de la région. */
+function _updateVoiceBadge() {
+  var badge = document.getElementById('voice-quality-badge');
+  if (!badge) return;
+
+  // Mode français : badge simplifié
+  if (currentMode === 'learn_french') {
+    badge.innerHTML = '🇫🇷 <span class="vqb-label">Voix FR</span>';
+    badge.className = 'voice-quality-badge vqb-exact';
+    badge.title = 'Voix française système';
+    return;
+  }
+
+  var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+  var flag = flagEmojis[currentRegion] || '🇪🇸';
+
+  if (!_spanishVoiceLabel) {
+    // Voix pas encore résolue
+    badge.innerHTML = flag + ' <span class="vqb-label">…</span>';
+    badge.className = 'voice-quality-badge vqb-pending';
+    badge.title     = L('Cargando voz…', 'Chargement de la voix…');
+    return;
+  }
+
+  var qualityIcon, qualityClass, qualityTitle;
+  if (_spanishVoiceQuality === 'exact') {
+    qualityIcon  = '✅';
+    qualityClass = 'vqb-exact';
+    qualityTitle = L('Voz exacta disponible', 'Voix exacte disponible');
+  } else if (_spanishVoiceQuality === 'fallback') {
+    qualityIcon  = '⚠️';
+    qualityClass = 'vqb-fallback';
+    qualityTitle = L('Voz de sustitución', 'Voix de substitution');
+  } else {
+    qualityIcon  = '❓';
+    qualityClass = 'vqb-default';
+    qualityTitle = L('Voz por defecto', 'Voix système par défaut');
+  }
+
+  badge.innerHTML = flag + ' <span class="vqb-label">' + _spanishVoiceLabel + '</span> ' + qualityIcon;
+  badge.className = 'voice-quality-badge ' + qualityClass;
+  badge.title     = qualityTitle + ' — ' + _spanishVoiceLabel;
+}
+
+/* _updateSpeedBar() — Met à jour les boutons de vitesse dans la barre persistante. */
+function _updateSpeedBar() {
+  var bar = document.getElementById('tts-speed-bar');
+  if (!bar) return;
+  var current = _getTtsSpeed();
+  SPEED_LEVELS.forEach(function(s) {
+    var btn = bar.querySelector('[data-speed="' + s.id + '"]');
+    if (!btn) return;
+    btn.classList.toggle('speed-active', s.id === current);
+    btn.title = s.title();
+  });
+}
+
+/* _buildSpeedBar() — Génère le HTML de la barre de contrôle de vitesse. */
+function _buildSpeedBar() {
+  var btns = SPEED_LEVELS.map(function(s) {
+    var active = _getTtsSpeed() === s.id ? ' speed-active' : '';
+    return '<button class="speed-btn' + active + '" data-speed="' + s.id + '"'
+      + ' title="' + s.title() + '"'
+      + ' onclick="_setTtsSpeed(\'' + s.id + '\')">'
+      + s.label + '</button>';
+  }).join('');
+  return '<div id="tts-speed-bar" class="tts-speed-bar">'
+    + '<span class="speed-bar-label">' + L('Velocidad:', 'Vitesse :') + '</span>'
+    + btns + '</div>';
 }
 
 // §3c — Interruption TTS à la mise en arrière-plan
@@ -1641,6 +1783,35 @@ function openTheme(id) {
       + '" data-tab="' + t.k + '" onclick="switchTab(\'' + t.k + '\')">' + t.lbl + '</button>';
   }).join('');
 
+  // ─── Badge de voix + barre de vitesse — injectés sous les onglets ───
+  var lessonMeta = document.getElementById('lesson-meta-bar');
+  if (!lessonMeta) {
+    lessonMeta = document.createElement('div');
+    lessonMeta.id = 'lesson-meta-bar';
+    lessonMeta.className = 'lesson-meta-bar';
+    var lessonBody = document.getElementById('lessonBody');
+    var tabs_el    = document.getElementById('lessonTabs');
+    if (lessonBody && tabs_el && tabs_el.nextSibling) {
+      lessonBody.insertBefore(lessonMeta, tabs_el.nextSibling);
+    } else if (lessonBody) {
+      lessonBody.insertBefore(lessonMeta, lessonBody.firstChild);
+    }
+  }
+  // Badge voix (ES uniquement) + barre de vitesse (les deux modes)
+  var badgeHtml = (currentMode === 'learn_spain')
+    ? '<div id="voice-quality-badge" class="voice-quality-badge vqb-pending" title="">…</div>'
+    : '<div id="voice-quality-badge" class="voice-quality-badge vqb-exact">🇫🇷 <span class="vqb-label">Voix FR</span></div>';
+  lessonMeta.innerHTML = badgeHtml + _buildSpeedBar();
+
+  // Résolution immédiate du badge (si voix déjà résolue)
+  _updateVoiceBadge();
+  _updateSpeedBar();
+
+  // Si mode espagnol, déclencher la résolution de voix en tâche de fond pour le badge
+  if (currentMode === 'learn_spain' && _spanishVoice === undefined) {
+    _resolveSpanishVoice(function() { _updateVoiceBadge(); });
+  }
+
   // Affiche l'onglet initial (repris ou premier par défaut).
   // On évite de passer par switchTab() pour ne pas réinitialiser le quiz restauré.
   if (resumeTab === initialTab) {
@@ -1816,8 +1987,9 @@ function renderFlash() {
       + '<span class="fc-counter">' + (fcIdx + 1) + ' / ' + w.length + '</span>'
       + '<button onclick="nextCard()">Siguiente →</button>'
       + '</div>'
-      + '<div style="text-align:center;margin-top:10px;">'
-      + '<button class="audio-btn-big" onclick="speak(\'' + esc(card.fr) + '\')" aria-label="' + _escAttr(L("Escuchar : ", "Écouter : ") + card.fr) + '">🔊 Escuchar audio</button>'
+      + '<div class="audio-btn-group">'
+      + '<button class="audio-btn-big audio-btn-main" onclick="speak(\'' + esc(card.fr) + '\', this)" aria-label="' + _escAttr(L("Escuchar : ", "Écouter : ") + card.fr) + '">🔊 ' + L('Escuchar audio', 'Écouter') + '</button>'
+      + '<button class="audio-btn-big audio-btn-slow" onclick="speakSlow(\'' + esc(card.fr) + '\', this)" aria-label="' + L('Repetir lento', 'Répéter lentement') + '">🐢 ' + L('Lento', 'Lent') + '</button>'
       + '</div>'
       + _buildMicZone(card.fr, 'fr-FR');
 
@@ -1849,7 +2021,10 @@ function renderFlash() {
       + '<span class="fc-counter">' + (fcIdx + 1) + ' / ' + w.length + '</span>'
       + '<button onclick="nextCard()">Suivant →</button>'
       + '</div>'
-      + '<button class="audio-btn-big" onclick="speak(\'' + esc(finalEsWord) + '\')" aria-label="' + _escAttr(L("Escuchar : ", "Écouter : ") + finalEsWord) + '">🔊 Écouter la prononciation</button>'
+      + '<div class="audio-btn-group">'
+      + '<button class="audio-btn-big audio-btn-main" onclick="speak(\'' + esc(finalEsWord) + '\', this)" aria-label="' + _escAttr("Écouter : " + finalEsWord) + '">' + activeFlag + ' 🔊 ' + L('Escuchar', 'Écouter') + '</button>'
+      + '<button class="audio-btn-big audio-btn-slow" onclick="speakSlow(\'' + esc(finalEsWord) + '\', this)" aria-label="Répéter lentement">🐢 ' + L('Lento', 'Lent') + '</button>'
+      + '</div>'
       + _buildMicZone(finalEsWord, voiceLang);
   }
 }
@@ -3197,8 +3372,16 @@ function pickRegion(regionId) {
   }
 
   // Force la résolution d'une nouvelle voix espagnole adaptée à la région
-  _spanishVoice     = undefined;
-  _hasNotifiedVoice = false;
+  _spanishVoice        = undefined;
+  _hasNotifiedVoice    = false;
+  _spanishVoiceQuality = null;
+  _spanishVoiceLabel   = '';
+
+  // Mettre le badge en état "chargement" immédiatement
+  _updateVoiceBadge();
+
+  // Déclencher la résolution en tâche de fond pour mettre à jour le badge
+  _resolveSpanishVoice(function() { _updateVoiceBadge(); });
 
   // Mise à jour du bandeau d'information avec la note audio
   var msgBox = document.getElementById('region-message-box');
