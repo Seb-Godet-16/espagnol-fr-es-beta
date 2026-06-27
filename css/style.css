@@ -456,13 +456,12 @@ body {
   justify-content: flex-start;
   padding: 0;
   text-align: left;
-  position: relative;
+  /* position et display gérés par .screen / .screen.active — ne pas les redéfinir ici */
   overflow-y: auto;
   overflow-x: hidden;
   height: 100vh;
   height: 100dvh;
   box-sizing: border-box;
-  display: flex;
   flex-direction: column;
 }
 
