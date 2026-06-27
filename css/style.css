@@ -3254,3 +3254,52 @@ html.theme-spain  .export-pdf-btn:hover { background: #002395; }
 @media print {
   .export-pdf-btn { display: none !important; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   §SPEAKING  Feedback visuel bouton audio pendant la lecture TTS
+   ══════════════════════════════════════════════════════════════
+   La classe .is-speaking est posée par speak() / _doSpeak()
+   sur le bouton déclencheur dès le début de la lecture,
+   et retirée dans le dernier onend (ou à l'annulation).
+
+   Animation d'onde (ripple) visible sur tous les boutons 🔊
+   dans les flashcards, le vocabulaire et les dialogues.
+   ══════════════════════════════════════════════════════════════ */
+
+@keyframes speakingPulse {
+  0%   { box-shadow: 0 0 0 0    rgba(var(--c-primary-rgb, 198,11,30), .45); }
+  70%  { box-shadow: 0 0 0 8px  rgba(var(--c-primary-rgb, 198,11,30), 0);   }
+  100% { box-shadow: 0 0 0 0    rgba(var(--c-primary-rgb, 198,11,30), 0);   }
+}
+
+.is-speaking {
+  animation: speakingPulse 1s ease-out infinite;
+  opacity: .82;
+  cursor: wait;
+}
+
+/* Variante sur les boutons son spécifiques */
+.btn-speak.is-speaking,
+.vocab-chip.is-speaking,
+.dial-speak-btn.is-speaking,
+.alpha-audio-btn.is-speaking {
+  filter: brightness(.88) saturate(1.4);
+}
+
+/* Mode sombre */
+@media (prefers-color-scheme: dark) {
+  @keyframes speakingPulse {
+    0%   { box-shadow: 0 0 0 0   rgba(255,255,255,.35); }
+    70%  { box-shadow: 0 0 0 8px rgba(255,255,255,0);   }
+    100% { box-shadow: 0 0 0 0   rgba(255,255,255,0);   }
+  }
+}
+
+/* Accessibilité : reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .is-speaking {
+    animation: none;
+    outline: 2px solid var(--c-primary);
+    outline-offset: 2px;
+  }
+}

@@ -635,21 +635,41 @@ function _resolveSpanishVoice(callback) {
     if (!voices || voices.length === 0) return false;
 
     var targetLang = langMap[currentRegion] || 'es-ES';
+
+    /* Table de noms lisibles par code région (bilingue ES / FR) */
+    var regionLabels = {
+      ES: L('España (Castellano)', 'Espagne (Castillan)'),
+      MX: L('México',              'Mexique'),
+      CO: L('Colombia',            'Colombie'),
+      AR: L('Argentina',           'Argentine'),
+      PE: L('Perú',                'Pérou'),
+      VE: L('Venezuela',           'Venezuela'),
+      EC: L('Ecuador',             'Équateur')
+    };
+    var regionName = regionLabels[currentRegion] || currentRegion;
+
     var foundVoice = null;
-    var foundLabel = 'Espagne (Voix par défaut)';
+    var foundLabel = regionName + ' ' + L('(Voz por defecto)', '(Voix par défaut)');
 
     // Priorité 1 : voix exactement correspondant à la région (ex : es-MX pour le Mexique)
     foundVoice = voices.find(function(v) {
       return v.lang.toLowerCase() === targetLang.toLowerCase();
     });
     if (foundVoice) {
-      foundLabel = targetLang;
+      foundLabel = regionName;
     } else {
       // Priorité 2 : n'importe quel espagnol disponible (ex : es-ES si es-MX absent)
       foundVoice = voices.find(function(v) {
         return v.lang.toLowerCase().indexOf('es') === 0;
       });
-      foundLabel = foundVoice ? foundVoice.lang + ' (Secours)' : 'Voix par défaut';
+      if (foundVoice) {
+        /* Résoudre le nom lisible de la voix de secours */
+        var fallbackCode = foundVoice.lang.toUpperCase().split('-')[1] || 'ES';
+        var fallbackName = regionLabels[fallbackCode] || foundVoice.lang;
+        foundLabel = regionName + ' ' + L('(secours: ', '(secours : ') + fallbackName + ')';
+      } else {
+        foundLabel = L('Voz por defecto', 'Voix par défaut');
+      }
     }
     // Priorité 3 : première voix disponible (ultime recours)
     if (!foundVoice) foundVoice = voices[0];
@@ -670,25 +690,51 @@ function _resolveSpanishVoice(callback) {
     return true;
   }
 
-  // Si les voix ne sont pas encore chargées, on attend l'événement voiceschanged
+  // Si les voix ne sont pas encore chargées, on attend l'événement voiceschanged.
+  // Sur iOS/Safari, cet événement peut ne jamais se déclencher.
+  // Un timeout de 2 s force la résolution avec les voix disponibles à ce moment
+  // (ou la voix par défaut du système si la liste est encore vide).
   if (!search()) {
-    speechSynthesis.addEventListener('voiceschanged', function h() {
-      speechSynthesis.removeEventListener('voiceschanged', h);
-      search();
+    var _voicesTimeout = null;
+
+    function _onVoicesChanged() {
+      speechSynthesis.removeEventListener('voiceschanged', _onVoicesChanged);
+      clearTimeout(_voicesTimeout);
+      if (_spanishVoice === undefined) {
+        _spanishVoice = speechSynthesis.getVoices()[0] || null;
+      }
       callback(_spanishVoice);
-    });
+    }
+
+    speechSynthesis.addEventListener('voiceschanged', _onVoicesChanged);
+
+    /* Timeout de sécurité : 2 s max — évite un callback silencieux sur iOS */
+    _voicesTimeout = setTimeout(function() {
+      speechSynthesis.removeEventListener('voiceschanged', _onVoicesChanged);
+      if (_spanishVoice === undefined) {
+        var fallback = speechSynthesis.getVoices();
+        _spanishVoice = fallback.length > 0 ? fallback[0] : null;
+        if (!_hasNotifiedVoice) {
+          _hasNotifiedVoice = true;
+          _showToast(L('🎙️ Voz configurada: Voz por defecto', '🎙️ Voix configurée : Voix par défaut'));
+        }
+      }
+      callback(_spanishVoice);
+    }, 2000);
   }
 }
 
-/* speak(txt) — Point d'entrée unique pour la synthèse vocale.
+/* speak(txt, triggerBtn) — Point d'entrée unique pour la synthèse vocale.
    Gère automatiquement :
-     - Les textes avec '/' (prononce chaque partie avec 2s de pause)
+     - Les textes avec '/' (prononce chaque partie avec 800ms de pause)
      - Le mode 'learn_spain' → voix espagnole résolue dynamiquement
      - Le mode 'learn_french'  → voix française (voiceLang = 'fr-FR')
+     - triggerBtn (optionnel) : reçoit .is-speaking pendant la lecture,
+       retiré au dernier onend pour un retour visuel immédiat.
    Si la synthèse échoue silencieusement (ex : iOS Safari avant la première
    interaction tactile de la page), un indicateur "🔇 Audio indisponible"
    discret est affiché via _showAudioUnavailable(). */
-function speak(txt) {
+function speak(txt, triggerBtn) {
   if (!txt) return;
 
   if (!window.speechSynthesis) {
@@ -696,21 +742,27 @@ function speak(txt) {
     return;
   }
 
+  /* Helpers feedback visuel */
+  function _markSpeaking(btn) { if (btn) btn.classList.add('is-speaking'); }
+  function _unmarkSpeaking(btn) { if (btn) btn.classList.remove('is-speaking'); }
+
   if (currentMode !== 'learn_french') {
     // ─── Mode Espagnol : résolution asynchrone de la meilleure voix disponible ───
     _resolveSpanishVoice(function(voice) {
       speechSynthesis.cancel();
       var parts = (txt || '').split('/').map(p => p.trim()).filter(Boolean);
+      _markSpeaking(triggerBtn);
       function speakPart(i) {
-        if (i >= parts.length) return;
+        if (i >= parts.length) { _unmarkSpeaking(triggerBtn); return; }
         var u = new SpeechSynthesisUtterance(parts[i]);
         if (voice) { u.voice = voice; u.lang = voice.lang; }
         u.rate  = 0.85;
         u.onend = function() {
           _hideAudioUnavailable();
-          if (i + 1 < parts.length) setTimeout(function() { speakPart(i + 1); }, 2000);
+          if (i + 1 < parts.length) setTimeout(function() { speakPart(i + 1); }, 800);
+          else _unmarkSpeaking(triggerBtn);
         };
-        u.onerror = function() { _showAudioUnavailable(); };
+        u.onerror = function() { _showAudioUnavailable(); _unmarkSpeaking(triggerBtn); };
         speechSynthesis.speak(u);
       }
       speakPart(0);
@@ -718,31 +770,40 @@ function speak(txt) {
 
   } else {
     // ─── Mode Français : voix système standard, taux légèrement ralenti ───
-    _doSpeak(txt, null, 0.80);
+    _doSpeak(txt, null, 0.80, triggerBtn);
   }
 }
 
-/* _doSpeak(txt, voiceObj, rate) — Synthèse TTS bas niveau.
-   Gère la découpe sur '/' et la pause de 2s entre les parties.
+/* _doSpeak(txt, voiceObj, rate, triggerBtn) — Synthèse TTS bas niveau.
+   Gère la découpe sur '/' et la pause de 800ms entre les parties.
+   triggerBtn (optionnel) reçoit .is-speaking pendant toute la lecture.
    Signale via _showAudioUnavailable() si la synthèse échoue (onerror). */
-function _doSpeak(txt, voiceObj, rate) {
+function _doSpeak(txt, voiceObj, rate, triggerBtn) {
   if (!window.speechSynthesis) {
     _showAudioUnavailable();
     return;
   }
   speechSynthesis.cancel();
   var parts = (txt || '').split('/').map(p => p.trim()).filter(Boolean);
+  if (triggerBtn) triggerBtn.classList.add('is-speaking');
   function speakPart(i) {
-    if (i >= parts.length) return;
+    if (i >= parts.length) {
+      if (triggerBtn) triggerBtn.classList.remove('is-speaking');
+      return;
+    }
     var u = new SpeechSynthesisUtterance(parts[i]);
     u.lang = voiceLang;
     u.rate = rate;
     if (voiceObj) u.voice = voiceObj;
     u.onend = function() {
       _hideAudioUnavailable();
-      if (i + 1 < parts.length) setTimeout(function() { speakPart(i + 1); }, 2000);
+      if (i + 1 < parts.length) setTimeout(function() { speakPart(i + 1); }, 800);
+      else if (triggerBtn) triggerBtn.classList.remove('is-speaking');
     };
-    u.onerror = function() { _showAudioUnavailable(); };
+    u.onerror = function() {
+      _showAudioUnavailable();
+      if (triggerBtn) triggerBtn.classList.remove('is-speaking');
+    };
     speechSynthesis.speak(u);
   }
   speakPart(0);
@@ -754,6 +815,35 @@ document.addEventListener('visibilitychange', function() {
     speechSynthesis.cancel();
   }
 });
+
+/* ─────────────────────────────────────────────────────────
+   §3d — KEEPALIVE WATCHDOG — Chrome / Android
+   ─────────────────────────────────────────────────────────
+   Bug Chrome/Android (Chromium #503948) : speechSynthesis.speaking
+   passe silencieusement à false après ~15 s d'inactivité du moteur
+   TTS, figeant la synthèse sans déclencher onend ni onerror.
+
+   Remède : un setInterval à 10 s qui appelle pause()/resume()
+   uniquement si le moteur est censé parler (speaking && !paused).
+   Ce micro-jolt réveille le thread TTS sans interruption perçue.
+   L'intervalle est suspendu quand l'app passe en arrière-plan
+   (document.hidden) pour économiser la batterie.
+───────────────────────────────────────────────────────── */
+var _ttsKeepAliveTimer = null;
+
+function _startTtsKeepAlive() {
+  if (_ttsKeepAliveTimer) return;
+  if (!window.speechSynthesis) return;
+  _ttsKeepAliveTimer = setInterval(function() {
+    if (document.hidden) return;
+    if (speechSynthesis.speaking && !speechSynthesis.paused) {
+      speechSynthesis.pause();
+      speechSynthesis.resume();
+    }
+  }, 10000);
+}
+
+_startTtsKeepAlive();
 
 
 /* ─────────────────────────────────────────────────────────
@@ -1830,12 +1920,33 @@ function _levenshtein(a, b) {
      (a) identité exacte ;
      (b) l'une des chaînes contient l'autre ;
      (c) expected.length ≤ 3 → pas de tolérance (identité seulement) ;
-     (d) sinon, distance de Levenshtein ≤ 25 % de la longueur de expected. */
+     (d) sinon, distance de Levenshtein ≤ 25 % de la longueur de expected ;
+     (e) pour les expressions avec "/" (ex : "Por favor / De nada"),
+         chaque partie est testée indépendamment — la STT ne transcrit
+         qu'une seule formulation, le seuil global échouerait sinon. */
 function _speechMatch(spoken, expected) {
-  if (spoken === expected) return true;
-  if (spoken.includes(expected) || expected.includes(spoken)) return true;
-  if (expected.length <= 3) return false;
-  return _levenshtein(spoken, expected) <= Math.floor(expected.length * 0.25);
+  /* Teste une paire normalisée avec la logique Levenshtein */
+  function _testPair(t, e) {
+    if (!e) return false;
+    if (t === e) return true;
+    if (t.includes(e) || e.includes(t)) return true;
+    if (e.length <= 3) return false;
+    return _levenshtein(t, e) <= Math.floor(e.length * 0.25);
+  }
+
+  /* Test direct sur l'expression complète */
+  if (_testPair(spoken, expected)) return true;
+
+  /* Si l'expression contient "/", tester chaque partie séparément */
+  if (expected.indexOf('/') !== -1) {
+    var parts = expected.split('/').map(function(p) { return p.trim(); }).filter(Boolean);
+    for (var i = 0; i < parts.length; i++) {
+      var normPart = _normalizeSpeech(parts[i]);
+      if (_testPair(spoken, normPart)) return true;
+    }
+  }
+
+  return false;
 }
 
 /* _micBlockedHtml() — Retourne le HTML (icône + message clair) à afficher
