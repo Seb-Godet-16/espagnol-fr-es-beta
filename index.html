@@ -177,56 +177,597 @@
 
 
   <!-- ══════════════════════════════════════════
-       ÉCRAN 1 — ACCUEIL
-       Affiché après sélection de la langue.
-       Montre la progression globale (barre + étoiles)
-       et le bouton pour démarrer.
-       Le contenu textuel est injecté dynamiquement
-       par initApp() via _setUI().
+       ÉCRAN 1 — GUIDE / ONBOARDING  (#home)
+       ──────────────────────────────────────────
+       Affiché après la sélection de langue.
+       Style Oromo : topbar sticky sombre + hero coloré
+       + barre sticky "Commencer + PDF" + accordéons
+       <details>/<summary> natifs (zéro JS pour ouvrir/fermer).
+
+       Deux blocs statiques (un par langue) :
+         • #guideContentFR → guide en Français (mode learn_spain)
+         • #guideContentES → guide en Espagnol (mode learn_french)
+       showGuide() affiche le bon bloc et masque l'autre.
   ══════════════════════════════════════════ -->
   <div id="home" class="screen">
 
-    <!-- Bouton retour → relance le launcher -->
-    <button class="back-btn home-back-btn" id="homeBackBtn"
-            aria-label="Retour au choix de langue / Volver a la selección de idioma">← Volver</button>
-
-    <!-- Drapeau dynamique (🇫🇷 ou 🇪🇸 / variante) injecté par JS -->
-    <div class="flag-row" id="homeFlagRow"></div>
-
-    <!-- Titre injecté par JS (contiennent du HTML bilingue) -->
-    <h1 id="homeTitle"></h1>
-    
-    <!-- Cercle SVG de progression (visible une fois des modules complétés) -->
-    <div class="home-progress-circle-wrap" id="homeProgressCircleWrap" style="display:none">
-      <svg class="home-progress-circle" viewBox="0 0 120 120"
-           width="120" height="120"
-           role="img" aria-labelledby="hpcTitle" aria-describedby="hpcDesc">
-        <title id="hpcTitle"></title>
-        <desc id="hpcDesc"></desc>
-        <circle class="hpc-track" cx="60" cy="60" r="50"/>
-        <circle class="hpc-fill"  cx="60" cy="60" r="50" id="hpcArc"/>
-        <text class="hpc-pct" x="60" y="56" id="hpcPct">0%</text>
-        <text class="hpc-sub" x="60" y="74" id="hpcSub">⭐ 0</text>
-      </svg>
+    <!-- Topbar sticky sombre — titre "Guide explicatif" / "Guía" -->
+    <div class="home-topbar">
+      <span class="home-topbar-title" id="homeTopbarTitle">Guide explicatif</span>
     </div>
 
-    <!-- Widget de variante régionale hispanique (visible uniquement en mode Espagnol).
-         Contenu généré dynamiquement par _renderHomeRegionWidget() dans app.js.
-         Les couleurs et styles s'adaptent automatiquement à la région active
-         via les CSS custom properties (var(--c-primary), var(--c-accent)…)
-         appliquées par pickRegion() sur <html>. -->
-    <div id="home-region-widget" style="display:none;"></div>
+    <!-- En-tête coloré — IDs mis à jour par showGuide() -->
+    <div class="home-guide-header" id="homeGuideHeader">
+      <div class="home-guide-flags" id="homeGuideFlagsRow">🇫🇷 🌍 🇪🇸</div>
+      <h1 class="home-guide-title" id="homeTitle">Apprends l'Espagnol 🇪🇸</h1>
+      <p class="home-guide-subtitle" id="homeGuideSubtitle">App gratuite — idéale pour les grands débutants.</p>
+      <div class="home-guide-badges" id="homeGuideBadges"></div>
 
-    <!-- Bouton démarrer → showScreen('sections'), texte injecté par JS -->
-    <button class="btn-primary" id="homeStartBtn"></button>
+      <!-- Cercle SVG de progression (visible une fois des modules complétés) -->
+      <div class="home-progress-circle-wrap" id="homeProgressCircleWrap" style="display:none">
+        <svg class="home-progress-circle" viewBox="0 0 120 120"
+             width="120" height="120"
+             role="img" aria-labelledby="hpcTitle" aria-describedby="hpcDesc">
+          <title id="hpcTitle"></title>
+          <desc id="hpcDesc"></desc>
+          <circle class="hpc-track" cx="60" cy="60" r="50"/>
+          <circle class="hpc-fill"  cx="60" cy="60" r="50" id="hpcArc"/>
+          <text class="hpc-pct" x="60" y="56" id="hpcPct">0%</text>
+          <text class="hpc-sub" x="60" y="74" id="hpcSub">⭐ 0</text>
+        </svg>
+      </div>
+    </div><!-- /.home-guide-header -->
 
-    <footer>
-      © Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
-      <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
-      <a href="#" onclick="showGuide()">Guide / Guía</a> ·
-      <a href="#" onclick="showCredits()">Agradecimientos</a>
-    </footer>
-  </div><!-- /home -->
+    <!-- Barre sticky : Commencer + PDF côte à côte -->
+    <div class="home-start-sticky">
+      <div class="home-start-row">
+        <button class="btn-start-main" id="homeStartBtn" onclick="showScreen('sections-level1')">▶ Commencer</button>
+        <button class="btn-pdf-pill" id="homeExportBtn" onclick="_exportGuide()" aria-label="Télécharger le guide PDF">📄 PDF</button>
+      </div>
+    </div>
+
+    <!--
+      ══════════════════════════════════════════════════════════════
+      CORPS DU GUIDE — deux blocs statiques (un par langue)
+      Seul le bloc correspondant au mode actif est visible.
+      Géré par showGuide() via la classe .home-lang-hidden.
+      ══════════════════════════════════════════════════════════════
+    -->
+    <div class="home-guide-body" id="homeGuideBody">
+
+      <!-- ─────────────────────────────────────────────────────────
+           BLOC FR — guide en Français
+           Affiché quand l'apprenant apprend l'Espagnol (learn_spain).
+           Langue maternelle = Français → guide en Français.
+           ───────────────────────────────────────────────────────── -->
+      <div class="home-lang-block home-lang-hidden" id="guideContentFR" data-lang="fr">
+
+        <!-- 1. Comment ça marche -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">📖</span>
+            <span class="hg-label">Comment ça marche</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <p>Cette appli te guide pas à pas — sans inscription ni téléchargement obligatoire. Elle fonctionne directement dans ton navigateur, et tu peux l'<strong>installer sur ton écran d'accueil</strong> pour y accéder comme une vraie app.</p>
+            <p>Elle est organisée en <strong>deux modes et deux niveaux</strong> :</p>
+            <div class="ob-flow">
+              <span class="ob-flow-step">🌍 Choisis ta langue</span>
+              <span class="ob-flow-arrow">→</span>
+              <span class="ob-flow-step">📚 Modules</span>
+              <span class="ob-flow-arrow">→</span>
+              <span class="ob-flow-step">🃏 Cartes flash</span>
+              <span class="ob-flow-arrow">→</span>
+              <span class="ob-flow-step">🎯 Quiz</span>
+              <span class="ob-flow-arrow">→</span>
+              <span class="ob-flow-step">⭐ Étoiles</span>
+            </div>
+            <ul>
+              <li>📚 <strong>Niveau 1 — Vocabulaire</strong> : Cartes flash, Lexique, Quiz, Répétition orale</li>
+              <li>💬 <strong>Niveau 2 — Dialogues</strong> : scènes de la vie réelle à écouter, comprendre et répéter</li>
+            </ul>
+            <div class="guide-grid-2" style="margin:10px 0 6px;">
+              <div class="guide-mode-card fr">
+                <div class="guide-mode-flag">🇫🇷</div>
+                <div class="guide-mode-title">Apprendre le Français</div>
+                <div class="guide-mode-sub">Pour les hispanophones</div>
+              </div>
+              <div class="guide-mode-card es">
+                <div class="guide-mode-flag">🇪🇸</div>
+                <div class="guide-mode-title">Apprendre l'Espagnol</div>
+                <div class="guide-mode-sub">Pour les francophones</div>
+              </div>
+            </div>
+            <p><strong>Le Quiz et les Étoiles ⭐</strong> : après les cartes flash, un Quiz te teste. Jusqu'à 3 étoiles selon ton score :</p>
+            <ul>
+              <li>⭐ : ≥ 50% — module validé ! · ⭐⭐ : ≥ 75% · ⭐⭐⭐ : 100% 🎉</li>
+              <li>Les étoiles ne <strong>diminuent jamais</strong> — ton meilleur score est toujours conservé.</li>
+            </ul>
+            <p>Ce <strong>Guide</strong> est accessible à tout moment via le bouton ❓ dans la barre de navigation en bas.</p>
+            <div class="ob-tip">💡 Commence par le Niveau 1 — les dialogues du Niveau 2 seront plus faciles ensuite !</div>
+          </div>
+        </details>
+
+        <!-- 2. Points forts -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">✨</span>
+            <span class="hg-label">Points forts de cette appli</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <ul>
+              <li>💸 <strong>100% gratuit</strong> — aucun abonnement, aucune publicité</li>
+              <li>🚫 <strong>Sans inscription</strong> — ouvre l'app et commence immédiatement</li>
+              <li>🗂️ <strong>Vocabulaire structuré</strong> — thèmes du plus simple au plus complexe</li>
+              <li>🌎 <strong>7 variantes d'espagnol</strong> — Espagne, Mexique, Colombie, Pérou, Venezuela, Argentine, Équateur</li>
+              <li>🔊 <strong>Audio intégré</strong> — écoute chaque mot prononcé d'un simple tap</li>
+              <li>🎤 <strong>Répétition orale</strong> — l'onglet <em>Répète</em> analyse ta prononciation en temps réel</li>
+              <li>📴 <strong>Hors-ligne</strong> — installe l'app sur ton écran d'accueil et apprends sans connexion</li>
+              <li>⭐ <strong>Progression sauvegardée</strong> — tes étoiles ne diminuent jamais, ton meilleur score est conservé</li>
+            </ul>
+            <div class="ob-tip">💡 Cette appli n'est pas un outil unique — combine-la avec Duolingo, un cours ou des amis natifs pour progresser plus vite !</div>
+          </div>
+        </details>
+
+        <!-- 3. L'audio -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">🔊</span>
+            <span class="hg-label">L'audio</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <h4 style="margin:0 0 .4em;font-size:.95em">🔊 Configurer son audio</h4>
+            <p>L'appli utilise la <strong>synthèse vocale du navigateur</strong> (Web Speech API). L'audio français et espagnol est disponible sur la plupart des appareils — si ce n'est pas le cas, suis les instructions ci-dessous.</p>
+
+            <div class="ob-audio-block">
+              <div class="ob-audio-head">🤖 Android</div>
+              <ol>
+                <li>Ouvre <strong>Paramètres → Accessibilité → Synthèse vocale</strong> (ou cherche « synthèse »).</li>
+                <li>Dans <em>Moteur préféré</em>, sélectionne <strong>Google Text-to-Speech</strong>, mets-le à jour depuis le Play Store.</li>
+                <li>⚙️ → <em>Installer les données vocales</em> → télécharge <strong>Français (France)</strong> ou <strong>Español</strong>.</li>
+                <li>Reviens dans l'appli et <strong>rafraîchis la page</strong>.</li>
+              </ol>
+              <div class="ob-audio-tip">💡 Sur Samsung : Paramètres → Accessibilité → TTS. Les voix supplémentaires s'y téléchargent aussi.</div>
+            </div>
+
+            <div class="ob-audio-block">
+              <div class="ob-audio-head">🍎 iPhone / iPad (iOS)</div>
+              <ol>
+                <li>Ouvre <strong>Réglages → Accessibilité → Contenu énoncé → Voix</strong>.</li>
+                <li>Sélectionne la langue cible, choisis une voix et appuie sur ⬇️ pour la télécharger en qualité <em>Améliorée</em>.</li>
+                <li>Ouvre l'appli dans <strong>Safari</strong> (recommandé sur iOS) et tape une première fois sur 🔊 — iOS demande une interaction avant d'autoriser l'audio.</li>
+                <li>Si rien ne sort, vérifie que le <strong>bouton silencieux</strong> (interrupteur sur le côté) est bien désactivé.</li>
+              </ol>
+              <div class="ob-audio-tip">💡 L'onglet 🎤 Répète n'est disponible que sur Safari iOS 14.5+ et Chrome Android — pas sur Firefox mobile.</div>
+            </div>
+
+            <div class="ob-audio-block">
+              <div class="ob-audio-head">💻 Ordinateur (Windows / Mac)</div>
+              <ol>
+                <li><strong>Chrome ou Edge</strong> sont recommandés — ils embarquent de bonnes voix et supportent la reconnaissance vocale.</li>
+                <li><strong>Windows</strong> : Paramètres → Heure et langue → Parole → Ajouter des voix → installe <em>Français (France)</em> ou <em>Español</em>.</li>
+                <li><strong>Mac</strong> : Préférences Système → Accessibilité → Contenu parlé → Voix système → télécharge <em>Thomas</em> (FR) ou <em>Diego / Monica</em> (ES).</li>
+                <li>Redémarre le navigateur après l'installation — les nouvelles voix sont détectées au chargement.</li>
+              </ol>
+            </div>
+
+            <div class="ob-audio-block">
+              <div class="ob-audio-head">🆘 Toujours un problème ?</div>
+              <p>Si l'audio ne fonctionne toujours pas, le problème vient probablement d'un réglage spécifique à ton modèle. Les équipes support peuvent t'aider :</p>
+              <p style="margin:.4em 0">
+                🤖 <a href="https://support.google.com/accessibility/android" target="_blank" rel="noopener">Support Google / Android</a> ·
+                🍎 <a href="https://support.apple.com" target="_blank" rel="noopener">Support Apple</a> ·
+                📱 <a href="https://www.samsung.com/fr/support/" target="_blank" rel="noopener">Support Samsung</a> ·
+                💻 <a href="https://support.microsoft.com" target="_blank" rel="noopener">Support Microsoft</a>
+              </p>
+              <p>Pour tout autre fabricant (Xiaomi, Oppo, OnePlus…), recherche <em>« synthèse vocale + [nom de ton téléphone] »</em> sur le site officiel du fabricant.</p>
+            </div>
+
+            <h4 style="margin:.8em 0 .3em;font-size:.95em;border-top:1px solid var(--color-border);padding-top:.6em">🎤 L'onglet Répète</h4>
+            <p>L'onglet <strong>Répète</strong> utilise le microphone pour pratiquer la prononciation :</p>
+            <ul>
+              <li><strong>🔊 Écouter</strong> — entends le mot.</li>
+              <li><strong>🎤 Parler</strong> — prononce-le à ton tour.</li>
+            </ul>
+            <div class="ob-tip">💡 Nécessite l'autorisation microphone — peut ne pas fonctionner sur tous les navigateurs.</div>
+          </div>
+        </details>
+
+        <!-- 4. Réinitialiser un module -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">🔄</span>
+            <span class="hg-label">Réinitialiser un module</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <p>Envie de recommencer un module à zéro ? Tu peux <strong>effacer tes étoiles</strong> et repartir de la base.</p>
+            <ul>
+              <li>Depuis l'écran <strong>Modules</strong>, repère le thème déjà complété — le bouton <strong>🔄 Recommencer</strong> apparaît directement sur sa carte.</li>
+              <li>Appuie sur ce bouton — une confirmation te sera demandée.</li>
+              <li>Tes étoiles sont supprimées — rejoue le Quiz pour en regagner.</li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- 5. Hors ligne -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">📲</span>
+            <span class="hg-label">Hors ligne</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <h4 style="margin:0 0 .4em;font-size:.95em">📲 Installer l'app en hors ligne</h4>
+            <ul>
+              <li><strong>Android / Chrome</strong> : menu ⋮ → <em>"Ajouter à l'écran d'accueil"</em></li>
+              <li><strong>iOS / Safari</strong> : 🔗 → <em>"Sur l'écran d'accueil"</em></li>
+            </ul>
+            <p>Une fois installée, l'app fonctionne <strong>entièrement hors ligne</strong>.</p>
+            <div class="ob-tip">💡 L'app se met à jour automatiquement à chaque nouvelle version — il suffit de la rouvrir dans le navigateur.</div>
+
+            <h4 style="margin:.8em 0 .3em;font-size:.95em;border-top:1px solid var(--color-border);padding-top:.6em">📄 Téléchargement en PDF</h4>
+            <p>Tu peux sauvegarder trois types de contenus en PDF :</p>
+            <ul>
+              <li><strong>📖 Ce guide complet</strong> — bouton <em>📄 PDF</em> en haut de cette page.</li>
+              <li><strong>📚 Un module thématique</strong> — bouton <em>📄 PDF</em> depuis la page du module.</li>
+              <li><strong>💬 Une situation de dialogue</strong> — bouton <em>📄 PDF</em> depuis la page du dialogue.</li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- 6. Comparaison -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">⚖️</span>
+            <span class="hg-label">Comparaison — cette appli vs. les autres</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <p>Pas de meilleure méthode unique — chacune a ses forces. <strong>L'idéal, c'est de les combiner !</strong></p>
+            <div class="ob-compare">
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">📱 Cette appli</div>
+                <ul><li>💸 100% gratuit</li><li>🚫 Sans inscription</li><li>🌎 7 variantes d'espagnol</li><li>🔊 Audio intégré</li><li>🎤 Répétition orale</li><li>📴 Hors-ligne</li></ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🦉 Duolingo / Babbel</div>
+                <ul><li>🎮 Gamification motivante</li><li>🌐 Large catalogue</li><li>🎯 Parcours adaptatif</li><li>👥 Communauté</li><li>📐 Grammaire progressive</li></ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🏫 École de langue</div>
+                <ul><li>🧑‍🏫 Enseignant humain</li><li>📋 Structure pédagogique</li><li>🗣️ Pratique en groupe</li><li>🎓 Certification reconnue</li><li>📐 Grammaire approfondie</li></ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🗣️ Immersion / Amis natifs</div>
+                <ul><li>🌍 Langue authentique</li><li>🎙️ Accent naturel</li><li>🛒 Vocabulaire du quotidien</li><li>💪 Confiance en soi</li><li>🤝 Échanges culturels</li></ul>
+              </div>
+            </div>
+            <div class="ob-tip">💡 Notre conseil : utilise cette appli pour construire ta base de vocabulaire dès le premier jour — puis appuie-toi sur Duolingo ou une école pour la grammaire, et pratique avec des natifs pour la fluidité. Chaque outil renforce les autres !</div>
+          </div>
+        </details>
+
+        <!-- 7. Remerciements -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">🙏</span>
+            <span class="hg-label">Remerciements</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <p>Un grand merci à <strong>Fédérico Calo</strong>
+              (<a href="https://www.linkedin.com/in/federicocalo/" target="_blank" rel="noopener">Architecte Développeur Web</a>)
+              pour son aide technique précieuse tout au long du projet.</p>
+            <p>Merci également à mes <strong>parents</strong> pour leur travail de relecture, leurs corrections sur les traductions et leurs conseils sur l'ergonomie de l'application.</p>
+          </div>
+        </details>
+
+        <!-- 8. À propos -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">🙋</span>
+            <span class="hg-label">À propos — Qui suis-je ?</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <div class="ob-bio-card">
+              <div class="ob-bio-avatar">🙋</div>
+              <div class="ob-bio-info">
+                <div class="ob-bio-name">Sébastien Godet</div>
+                <div class="ob-bio-role">En reconversion — Gestion de projets Agile &amp; Data</div>
+              </div>
+            </div>
+            <p>Après plus de 10 ans dans le <strong>géomarketing</strong> — études de marché, analyses d'implantation — je suis en reconversion vers la <strong>gestion de projets</strong>. Mon profil est volontairement polyvalent : <strong>Scrum Master, Product Owner, Chef de Projet, Business Analyst ou AI Project Manager</strong> selon les besoins.</p>
+            <p><strong>VACHÉBO</strong> est née de mon immersion de 8 mois en Amérique du Sud en 2022, de mes amitiés hispanophones, et de ma curiosité d'apprendre à développer une application web avec l'IA. J'avais envie de créer un outil qui facilite vraiment l'apprentissage de l'espagnol — avec ses vraies <strong>variantes régionales</strong>, car le castillan d'Espagne n'est pas le même que l'argentin ou le mexicain. Et dans l'autre sens, pour que mes amis hispanophones puissent apprendre le français depuis leur propre variante.</p>
+            <p>VACHÉBO est pensée avant tout pour les <strong>débutants</strong>. Ici, tout est conçu pour démarrer en douceur, progresser à son rythme et garder la motivation.</p>
+            <p>L'application grandit avec mon réseau : quand de nouveaux contacts me font découvrir d'autres variantes, je les intègre. C'est un <strong>projet vivant</strong>, pensé pour des gens réels.</p>
+            <div class="ob-bio-contact">
+              <div class="ob-bio-contact-title">💬 Une suggestion, une question, une coquille ?</div>
+              <p>Cette appli est faite pour toi — chaque retour compte vraiment !</p>
+              <div class="ob-bio-links">
+                <button class="ob-bio-btn antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button>
+                <a class="ob-bio-btn" href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener">💼 Message LinkedIn</a>
+              </div>
+            </div>
+          </div>
+        </details>
+
+      </div><!-- /.home-lang-block[data-lang="fr"] / #guideContentFR -->
+
+
+      <!-- ─────────────────────────────────────────────────────────
+           BLOC ES — guide en Espagnol
+           Affiché quand l'apprenant apprend le Français (learn_french).
+           Langue maternelle = Espagnol → guide en Espagnol.
+           Les IDs heroFlags, regionBadge, regionExample et data-region
+           sont utilisés par _refreshGuideRegion() dans app.js.
+           ───────────────────────────────────────────────────────── -->
+      <div class="home-lang-block home-lang-hidden" id="guideContentES" data-lang="es">
+
+        <!-- Bandeau variante régionale — injecté par _refreshGuideRegion() -->
+        <div class="guide-hero-region-badge" id="guideRegionBadgeES"></div>
+
+        <!-- 1. Cómo funciona -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">📖</span>
+            <span class="hg-label">Cómo funciona</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <p>Esta app te guía paso a paso — sin registro ni descargas obligatorias. Funciona directamente en tu navegador, y puedes <strong>instalarla en tu pantalla de inicio</strong> para acceder a ella como una app de verdad.</p>
+            <p>Está organizada en <strong>dos modos y dos niveles</strong> :</p>
+            <div class="ob-flow">
+              <span class="ob-flow-step">🌍 Elige tu idioma</span>
+              <span class="ob-flow-arrow">→</span>
+              <span class="ob-flow-step">📚 Módulos</span>
+              <span class="ob-flow-arrow">→</span>
+              <span class="ob-flow-step">🃏 Tarjetas</span>
+              <span class="ob-flow-arrow">→</span>
+              <span class="ob-flow-step">🎯 Quiz</span>
+              <span class="ob-flow-arrow">→</span>
+              <span class="ob-flow-step">⭐ Estrellas</span>
+            </div>
+            <ul>
+              <li>📚 <strong>Nivel 1 — Vocabulario</strong> : Tarjetas flash, Léxico, Quiz, Repetición oral</li>
+              <li>💬 <strong>Nivel 2 — Diálogos</strong> : situaciones de la vida real para escuchar, entender y repetir</li>
+            </ul>
+            <div class="guide-grid-2" style="margin:10px 0 6px;">
+              <div class="guide-mode-card fr">
+                <div class="guide-mode-flag">🇫🇷</div>
+                <div class="guide-mode-title">Aprender Francés</div>
+                <div class="guide-mode-sub">Para hispanohablantes</div>
+              </div>
+              <div class="guide-mode-card es">
+                <div class="guide-mode-flag">🇪🇸</div>
+                <div class="guide-mode-title">Aprender Español</div>
+                <div class="guide-mode-sub">Para francófonos</div>
+              </div>
+            </div>
+            <p><strong>El Quiz y las Estrellas ⭐</strong> : tras las tarjetas flash, un Quiz te evalúa. Hasta 3 estrellas según tu puntuación :</p>
+            <ul>
+              <li>⭐ : ≥ 50% — ¡módulo validado! · ⭐⭐ : ≥ 75% · ⭐⭐⭐ : 100% 🎉</li>
+              <li>Las estrellas <strong>nunca disminuyen</strong> — tu mejor puntuación siempre se conserva.</li>
+            </ul>
+            <p>Esta <strong>Guía</strong> está accesible en todo momento desde el botón ❓ en la barra de navegación inferior.</p>
+            <div class="ob-tip">💡 ¡Empieza por el Nivel 1 — los diálogos del Nivel 2 serán más fáciles después!</div>
+          </div>
+        </details>
+
+        <!-- 2. Puntos fuertes -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">✨</span>
+            <span class="hg-label">Puntos fuertes de esta app</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <ul>
+              <li>💸 <strong>100% gratis</strong> — sin suscripción, sin publicidad</li>
+              <li>🚫 <strong>Sin registro</strong> — abre la app y empieza inmediatamente</li>
+              <li>🗂️ <strong>Vocabulario estructurado</strong> — temas del más simple al más complejo</li>
+              <li>🌎 <strong>7 variantes de español</strong> — España, México, Colombia, Perú, Venezuela, Argentina, Ecuador</li>
+              <li>🔊 <strong>Audio integrado</strong> — escucha cada palabra con un simple toque</li>
+              <li>🎤 <strong>Repetición oral</strong> — la pestaña <em>Repite</em> analiza tu pronunciación en tiempo real</li>
+              <li>📴 <strong>Sin conexión</strong> — instala la app en tu pantalla de inicio y aprende sin internet</li>
+              <li>⭐ <strong>Progreso guardado</strong> — tus estrellas nunca disminuyen, tu mejor puntuación siempre se conserva</li>
+            </ul>
+            <div class="ob-tip">💡 ¡Esta app no es una herramienta única — combínala con Duolingo, un curso o amigos nativos para progresar más rápido!</div>
+          </div>
+        </details>
+
+        <!-- 3. El audio -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">🔊</span>
+            <span class="hg-label">El audio</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <h4 style="margin:0 0 .4em;font-size:.95em">🔊 Configurar el audio</h4>
+            <p>La app usa la <strong>síntesis de voz del navegador</strong> (Web Speech API). El audio en español y francés está disponible en la mayoría de dispositivos — si no es así, sigue estas instrucciones.</p>
+
+            <div class="ob-audio-block">
+              <div class="ob-audio-head">🤖 Android</div>
+              <ol>
+                <li>Abre <strong>Configuración → Accesibilidad → Texto a voz</strong> (o busca «síntesis de voz»).</li>
+                <li>En <em>Motor preferido</em>, selecciona <strong>Google Text-to-Speech</strong>, actualízalo desde Play Store.</li>
+                <li>⚙️ → <em>Instalar datos de voz</em> → descarga <strong>Español</strong> o <strong>Français (France)</strong>.</li>
+                <li>Vuelve a la app y <strong>recarga la página</strong>.</li>
+              </ol>
+              <div class="ob-audio-tip">💡 En Samsung: Configuración → Accesibilidad → TTS. Las voces adicionales se descargan desde ahí.</div>
+            </div>
+
+            <div class="ob-audio-block">
+              <div class="ob-audio-head">🍎 iPhone / iPad (iOS)</div>
+              <ol>
+                <li>Abre <strong>Ajustes → Accesibilidad → Contenido hablado → Voces</strong>.</li>
+                <li>Selecciona el idioma destino, elige una voz y pulsa ⬇️ para descargarla en calidad <em>Mejorada</em>.</li>
+                <li>Abre la app en <strong>Safari</strong> (recomendado en iOS) y pulsa por primera vez 🔊 — iOS pide una interacción antes de permitir el audio.</li>
+                <li>Si no sale nada, comprueba que el <strong>botón de silencio</strong> (interruptor lateral) está desactivado.</li>
+              </ol>
+              <div class="ob-audio-tip">💡 La pestaña 🎤 Repite solo está disponible en Safari iOS 14.5+ y Chrome Android — no funciona en Firefox móvil.</div>
+            </div>
+
+            <div class="ob-audio-block">
+              <div class="ob-audio-head">💻 Ordenador (Windows / Mac)</div>
+              <ol>
+                <li><strong>Chrome o Edge</strong> son los más recomendados — incluyen buenas voces y soportan el reconocimiento de voz.</li>
+                <li><strong>Windows</strong> : Configuración → Hora e idioma → Voz → Añadir voces → instala <em>Español</em> o <em>Français (France)</em>.</li>
+                <li><strong>Mac</strong> : Preferencias del Sistema → Accesibilidad → Contenido hablado → Voz del sistema → descarga <em>Diego / Mónica</em> (ES) o <em>Thomas</em> (FR).</li>
+                <li>Reinicia el navegador tras la instalación — las nuevas voces se detectan al cargar.</li>
+              </ol>
+            </div>
+
+            <div class="ob-audio-block">
+              <div class="ob-audio-head">🆘 ¿Sigues con problemas?</div>
+              <p>Si el audio sigue sin funcionar, el problema probablemente viene de un ajuste específico de tu modelo. Los equipos de soporte pueden ayudarte :</p>
+              <p style="margin:.4em 0">
+                🤖 <a href="https://support.google.com/android/" target="_blank" rel="noopener">Soporte Google / Android</a> ·
+                🍎 <a href="https://support.apple.com/es-es/contact" target="_blank" rel="noopener">Soporte Apple</a> ·
+                📱 <a href="https://www.samsung.com/es/support/" target="_blank" rel="noopener">Soporte Samsung</a> ·
+                💻 <a href="https://www.microsoft.com/es-es/support" target="_blank" rel="noopener">Soporte Microsoft</a>
+              </p>
+              <p>Para cualquier otro fabricante (Xiaomi, Oppo, OnePlus…), busca <em>«síntesis de voz + [nombre de tu teléfono]»</em> en el sitio oficial del fabricante.</p>
+            </div>
+
+            <h4 style="margin:.8em 0 .3em;font-size:.95em;border-top:1px solid var(--color-border);padding-top:.6em">🎤 La pestaña Repite</h4>
+            <p>La pestaña <strong>Repite</strong> usa el micrófono para practicar la pronunciación :</p>
+            <ul>
+              <li><strong>🔊 Escuchar</strong> — oye la palabra.</li>
+              <li><strong>🎤 Hablar</strong> — pronúnciala tú también.</li>
+            </ul>
+            <div class="ob-tip">💡 Requiere permiso de micrófono — puede no funcionar en todos los navegadores.</div>
+          </div>
+        </details>
+
+        <!-- 4. Reiniciar un módulo -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">🔄</span>
+            <span class="hg-label">Reiniciar un módulo</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <p>¿Quieres empezar un módulo desde cero? Puedes <strong>borrar tus estrellas</strong> y volver al principio.</p>
+            <ul>
+              <li>Desde la pantalla <strong>Módulos</strong>, localiza el tema ya completado — el botón <strong>🔄 Reiniciar</strong> aparece directamente en su tarjeta.</li>
+              <li>Pulsa ese botón — se te pedirá una confirmación.</li>
+              <li>Tus estrellas se borran — vuelve a jugar el Quiz para recuperarlas.</li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- 5. Sin conexión -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">📲</span>
+            <span class="hg-label">Sin conexión</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <h4 style="margin:0 0 .4em;font-size:.95em">📲 Instalar la app sin conexión</h4>
+            <ul>
+              <li><strong>Android / Chrome</strong> : menú ⋮ → <em>"Añadir a pantalla de inicio"</em></li>
+              <li><strong>iOS / Safari</strong> : 🔗 → <em>"En la pantalla de inicio"</em></li>
+            </ul>
+            <p>Una vez instalada, la app funciona <strong>completamente sin conexión</strong>.</p>
+            <div class="ob-tip">💡 La app se actualiza automáticamente en cada nueva versión — basta con volver a abrirla en el navegador.</div>
+
+            <h4 style="margin:.8em 0 .3em;font-size:.95em;border-top:1px solid var(--color-border);padding-top:.6em">📄 Descarga en PDF</h4>
+            <p>Puedes guardar tres tipos de contenido en PDF :</p>
+            <ul>
+              <li><strong>📖 Esta guía completa</strong> — botón <em>📄 PDF</em> en la parte superior de esta página.</li>
+              <li><strong>📚 Un módulo temático</strong> — botón <em>📄 PDF</em> desde la página del módulo.</li>
+              <li><strong>💬 Una situación de diálogo</strong> — botón <em>📄 PDF</em> desde la página del diálogo.</li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- 6. Comparación -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">⚖️</span>
+            <span class="hg-label">Comparación — esta app vs. las otras</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <p>No hay un único método perfecto — cada uno tiene sus puntos fuertes. <strong>¡Lo ideal es combinarlos!</strong></p>
+            <div class="ob-compare">
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">📱 Esta app</div>
+                <ul><li>💸 100% gratis</li><li>🚫 Sin registro</li><li>🌎 7 variantes de español</li><li>🔊 Audio integrado</li><li>🎤 Repetición oral</li><li>📴 Sin conexión</li></ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🦉 Duolingo / Babbel</div>
+                <ul><li>🎮 Gamificación motivante</li><li>🌐 Gran catálogo</li><li>🎯 Recorrido adaptativo</li><li>👥 Comunidad</li><li>📐 Gramática progresiva</li></ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🏫 Escuela de idiomas</div>
+                <ul><li>🧑‍🏫 Profesor humano</li><li>📋 Estructura pedagógica</li><li>🗣️ Práctica en grupo</li><li>🎓 Certificación reconocida</li><li>📐 Gramática profunda</li></ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🗣️ Inmersión / Amigos nativos</div>
+                <ul><li>🌍 Lengua auténtica</li><li>🎙️ Acento natural</li><li>🛒 Vocabulario cotidiano</li><li>💪 Confianza en uno mismo</li><li>🤝 Intercambios culturales</li></ul>
+              </div>
+            </div>
+            <div class="ob-tip">💡 Nuestro consejo: usa esta app para construir tu base de vocabulario desde el primer día — luego apóyate en Duolingo o una escuela para la gramática, y practica con nativos para la fluidez. ¡Cada herramienta refuerza las demás!</div>
+          </div>
+        </details>
+
+        <!-- 7. Agradecimientos -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">🙏</span>
+            <span class="hg-label">Agradecimientos</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <p>Un gran agradecimiento a <strong>Fédérico Calo</strong>
+              (<a href="https://www.linkedin.com/in/federicocalo/" target="_blank" rel="noopener">Arquitecto Desarrollador Web</a>)
+              por su valiosa ayuda técnica a lo largo del proyecto.</p>
+            <p>Gracias también a mis <strong>padres</strong> por su trabajo de corrección, sus ajustes en las traducciones y sus consejos sobre la ergonomía de la aplicación.</p>
+          </div>
+        </details>
+
+        <!-- 8. Sobre mí -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">🙋</span>
+            <span class="hg-label">Sobre mí — ¿Quién soy?</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <div class="ob-bio-card">
+              <div class="ob-bio-avatar">🙋</div>
+              <div class="ob-bio-info">
+                <div class="ob-bio-name">Sébastien Godet</div>
+                <div class="ob-bio-role">En reconversión — Gestión de proyectos Agile &amp; Data</div>
+              </div>
+            </div>
+            <p>Tras más de 10 años en <strong>geomarketing</strong> — estudios de mercado, análisis de implantación — estoy en reconversión hacia la <strong>gestión de proyectos</strong>. Mi perfil es deliberadamente polivalente : <strong>Scrum Master, Product Owner, Jefe de Proyecto, Business Analyst o AI Project Manager</strong> según las necesidades.</p>
+            <p><strong>VACHÉBO</strong> nació de mi inmersión de 8 meses en América del Sur en 2022, de mis amistades hispanohablantes, y de mi curiosidad por aprender a desarrollar una app web con IA. Quería crear una herramienta que facilite de verdad el aprendizaje del español — con sus auténticas <strong>variantes regionales</strong>, porque el castellano de España no es lo mismo que el argentino o el mexicano.</p>
+            <p>VACHÉBO está pensada ante todo para los <strong>principiantes</strong>. Aquí todo está diseñado para empezar con calma, avanzar a su ritmo y mantener la motivación.</p>
+            <p>La aplicación crece con mi red : cuando nuevos contactos me hacen descubrir otras variantes, las integro. Es un <strong>proyecto vivo</strong>, pensado para personas reales.</p>
+            <div class="ob-bio-contact">
+              <div class="ob-bio-contact-title">💬 ¿Una sugerencia, una pregunta, una errata?</div>
+              <p>Esta app está hecha para ti — ¡cada comentario cuenta de verdad!</p>
+              <div class="ob-bio-links">
+                <button class="ob-bio-btn antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button>
+                <a class="ob-bio-btn" href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener">💼 Mensaje LinkedIn</a>
+              </div>
+            </div>
+          </div>
+        </details>
+
+      </div><!-- /.home-lang-block[data-lang="es"] / #guideContentES -->
+
+    </div><!-- /#homeGuideBody -->
+
+  </div><!-- /#home -->
 
 
   <!-- ══════════════════════════════════════════
@@ -434,962 +975,10 @@
   </div><!-- /credits-modal -->
 
 
-  <!-- ══════════════════════════════════════════
-       ÉCRAN / MODALE — GUIDE UTILISATEUR
-       Déclenchée automatiquement à la première visite
-       (juste après le choix de langue, voir initApp()
-       et _maybeAutoShowGuide() dans app.js), ou à tout
-       moment via le lien "Guide / Guía" en pied de page
-       (showGuide()). Fermée par closeGuide().
-
-       Contenu repris à l'identique des 3 fichiers guide
-       HTML d'origine (language-app-user-guide*.html),
-       fusionné ici en un seul écran. Deux blocs de
-       contenu (#guideContentFR / #guideContentES) sont
-       injectés côte à côte ; seul l'un des deux est
-       affiché à la fois, selon la langue d'interface
-       choisie par showGuide() (logique reprise de
-       currentMode, comme le reste de l'application).
-
-       Le bloc ES reste adapté dynamiquement à la
-       variante régionale (currentRegion) via
-       _refreshGuideRegion() dans app.js, exactement
-       comme le faisait le <script> de la page séparée
-       language-app-user-guide-es.html.
-  ══════════════════════════════════════════ -->
-  <div id="guide-modal" class="guide-modal">
-
-    <div class="guide-topbar" id="guideTopbar">
-      <label class="guide-no-show-label guide-topbar-noshow" id="guideNoShowLabel">
-        <input type="checkbox" class="guide-no-show-check" onchange="toggleGuideNoShow(this)">
-        <span class="guide-no-show-text guide-no-show-fr">Ne plus afficher</span>
-        <span class="guide-no-show-text guide-no-show-es" style="display:none;">No volver a mostrar</span>
-      </label>
-      <button id="guideCloseBtn" onclick="closeGuide()">✕ Fermer</button>
-    </div>
-
-    <!-- ─────────────────────────────────────────
-         BLOC FR — Guide affiché en français
-         (mode 'learn_spain' : apprendre l'espagnol,
-         interface du guide en français)
-         Contenu identique à language-app-user-guide-fr.html
-    ───────────────────────────────────────── -->
-    <div id="guideContentFR">
-
-      <div class="guide-hero">
-        <div class="guide-hero-flags" id="guideHeroFlagsFR">🇫🇷 🌍 🇪🇸</div>
-        <h1 id="guideHeroTitleFR">Apprends l'Espagnol,<br><span>joue, écoute, progresse !</span></h1>
-        <p class="guide-hero-sub">Une appli gratuite et idéale pour les grands débutants.</p>
-        <div class="guide-hero-chips">
-          <span class="guide-hero-chip">✅ Gratuit</span>
-          <span class="guide-hero-chip">📱 Mobile &amp; ordinateur</span>
-          <span class="guide-hero-chip">🔊 Audio inclus</span>
-          <span class="guide-hero-chip">🌎 7 variantes d'espagnol</span>
-          <span class="guide-hero-chip">🎤 Répétition orale</span>
-          <span class="guide-hero-chip">📲 Installable hors-ligne</span>
-        </div>
-      </div>
-
-      <div class="guide-wrap">
-
-        <!-- ═══════ COMMENT ÇA MARCHE ═══════ -->
-        <div class="guide-section guide-accordion">
-          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="guide-eyebrow">📖 Comment ça marche</span>
-            <span class="guide-acc-arrow">▾</span>
-          </button>
-          <div class="guide-acc-body">
-          <div class="guide-title">4 étapes,<br><span class="fr">et c'est parti !</span></div>
-          <p class="guide-sub">Aucune inscription, aucun téléchargement obligatoire : ça marche directement dans ton navigateur — et tu peux aussi l'<strong>installer sur ton écran d'accueil</strong> pour y accéder comme une vraie application.</p>
-
-          <div class="guide-grid-2" style="margin-bottom:14px;">
-            <div class="guide-mode-card fr">
-              <div class="guide-mode-flag">🇫🇷</div>
-              <div class="guide-mode-title">Apprendre le Français</div>
-              <div class="guide-mode-sub">Pour les hispanophones</div>
-            </div>
-            <div class="guide-mode-card es">
-              <div class="guide-mode-flag">🇪🇸</div>
-              <div class="guide-mode-title">Apprendre l'Espagnol</div>
-              <div class="guide-mode-sub">Pour les francophones</div>
-            </div>
-          </div>
-
-          <div class="guide-steps">
-            <div class="guide-step-card guide-card">
-              <div class="guide-step-num n1">1</div>
-              <div class="guide-step-body">
-                <div class="guide-step-title">🌍 Choisis ta langue</div>
-                <div class="guide-step-desc">Clique sur la carte de la langue que tu veux apprendre. Tu peux changer de mode à tout moment ; ta progression est sauvegardée séparément pour chacune.</div>
-              </div>
-            </div>
-            <div class="guide-step-card guide-card">
-              <div class="guide-step-num n2">2</div>
-              <div class="guide-step-body">
-                <div class="guide-step-title">📚 Choisis un module</div>
-                <div class="guide-step-desc"><strong>Niveau 1</strong> pour le vocabulaire thématique, <strong>Niveau 2</strong> pour des dialogues de situations réelles.</div>
-              </div>
-            </div>
-            <div class="guide-step-card guide-card">
-              <div class="guide-step-num n3">3</div>
-              <div class="guide-step-body">
-                <div class="guide-step-title">🃏 Apprends avec les outils</div>
-                <div class="guide-step-desc">Cartes flash pour mémoriser, quiz pour te tester, dialogues pour pratiquer en contexte — et l'onglet <strong>🎤 Répète</strong> pour t'entraîner à prononcer à voix haute avec le micro.</div>
-              </div>
-            </div>
-            <div class="guide-step-card guide-card">
-              <div class="guide-step-num n4">4</div>
-              <div class="guide-step-body">
-                <div class="guide-step-title">⭐ Gagne des étoiles</div>
-                <div class="guide-step-desc">Jusqu'à 3 étoiles par quiz selon ton score : <strong>⭐ 1 étoile à partir de 50 %</strong> de bonnes réponses, <strong>⭐⭐ 2 étoiles à partir de 75 %</strong>, <strong>⭐⭐⭐ 3 étoiles à 100 %</strong>. Reviens t'entraîner pour t'améliorer !</div>
-              </div>
-            </div>
-          </div>
-          </div><!-- /guide-acc-body -->
-        </div>
-
-
-        <!-- ═══════ POINTS FORTS ═══════ -->
-        <div class="guide-section guide-accordion">
-          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="guide-eyebrow">✨ Points forts</span>
-            <span class="guide-acc-arrow">▾</span>
-          </button>
-          <div class="guide-acc-body">
-          <div class="guide-title">Ce qui rend l'appli <span class="fr">unique</span></div>
-
-          <!-- Ordre pensé pour un grand débutant : du plus essentiel au
-               moins indispensable pour bien démarrer (entendre/prononcer
-               → mémoriser → se tester → pratiquer en contexte → s'adapter
-               à sa variante → suivre sa progression). -->
-          <div class="guide-grid-3">
-            <div class="guide-card guide-feat-card">
-              <div class="guide-feat-icon">🔊</div>
-              <div class="guide-feat-title">Prononciation audio</div>
-              <div class="guide-feat-desc">Chaque mot ou phrase peut être <strong>écouté à voix haute</strong>, en un clic.</div>
-            </div>
-            <div class="guide-card guide-feat-card">
-              <div class="guide-feat-icon">🎤</div>
-              <div class="guide-feat-title">Répétition orale</div>
-              <div class="guide-feat-desc">L'onglet <strong>Répète</strong> écoute ta voix mot par mot : feedback immédiat vert ✅ ou orange 🔁, avancement automatique.</div>
-            </div>
-            <div class="guide-card guide-feat-card">
-              <div class="guide-feat-icon">🃏</div>
-              <div class="guide-feat-title">Cartes flash</div>
-              <div class="guide-feat-desc">Se retournent d'un clic, avec <strong>conjugaisons complètes</strong> pour les verbes.</div>
-            </div>
-            <div class="guide-card guide-feat-card">
-              <div class="guide-feat-icon">❓</div>
-              <div class="guide-feat-title">Quiz intelligents</div>
-              <div class="guide-feat-desc">Les questions <strong>changent à chaque partie</strong> — jamais deux fois le même quiz.</div>
-            </div>
-            <div class="guide-card guide-feat-card">
-              <div class="guide-feat-icon">💬</div>
-              <div class="guide-feat-title">Dialogues réels</div>
-              <div class="guide-feat-desc">Pharmacie, taxi, hôtel… avec <strong>vocabulaire clé</strong> et mini-quiz pour valider.</div>
-            </div>
-            <div class="guide-card guide-feat-card">
-              <div class="guide-feat-icon">🌎</div>
-              <div class="guide-feat-title">7 variantes d'espagnol</div>
-              <div class="guide-feat-desc">L'appli adapte vocabulaire et audio à <strong>ta variante régionale</strong>.</div>
-            </div>
-            <div class="guide-card guide-feat-card">
-              <div class="guide-feat-icon">📈</div>
-              <div class="guide-feat-title">Progression sauvegardée</div>
-              <div class="guide-feat-desc">Ton avancement est <strong>conservé automatiquement</strong> sur ton appareil.</div>
-            </div>
-            <div class="guide-card guide-feat-card">
-              <div class="guide-feat-icon">📲</div>
-              <div class="guide-feat-title">Installable sur écran d'accueil</div>
-              <div class="guide-feat-desc">Ajoute l'appli à ton écran d'accueil comme une vraie application — <strong>fonctionne hors-ligne</strong>, sans passer par le navigateur.</div>
-            </div>
-          </div>
-          </div><!-- /guide-acc-body -->
-        </div>
-
-
-        <!-- ═══════ EN CHIFFRES ═══════ -->
-        <div class="guide-section guide-accordion">
-          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="guide-eyebrow">🗂️ En chiffres</span>
-            <span class="guide-acc-arrow">▾</span>
-          </button>
-          <div class="guide-acc-body">
-          <div class="guide-title">Tout le contenu, <span class="es">d'un coup d'œil</span></div>
-
-          <div class="guide-stats-row">
-            <div class="guide-stat"><div class="guide-stat-num">32</div><div class="guide-stat-label">Thèmes vocab.</div></div>
-            <div class="guide-stat"><div class="guide-stat-num">16</div><div class="guide-stat-label">Dialogues</div></div>
-            <div class="guide-stat"><div class="guide-stat-num">7</div><div class="guide-stat-label">Variantes ES</div></div>
-          </div>
-          </div><!-- /guide-acc-body -->
-        </div>
-
-
-        <!-- ═══════ VARIANTES RÉGIONALES ═══════ -->
-        <div class="guide-section guide-accordion">
-          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="guide-eyebrow">🌎 Variantes régionales</span>
-            <span class="guide-acc-arrow">▾</span>
-          </button>
-          <div class="guide-acc-body">
-          <div class="guide-title">Ton espagnol, <span class="es">pas juste « le castillan » !</span></div>
-          <p class="guide-sub">Choisis ta variante préférée depuis l'écran d'accueil — vocabulaire et audio s'adaptent.</p>
-
-          <div class="guide-region-grid">
-            <div class="guide-region-card"><span class="guide-region-flag">🇪🇸</span>Espagne</div>
-            <div class="guide-region-card"><span class="guide-region-flag">🇲🇽</span>Mexique</div>
-            <div class="guide-region-card"><span class="guide-region-flag">🇦🇷</span>Argentine</div>
-            <div class="guide-region-card"><span class="guide-region-flag">🇨🇴</span>Colombie</div>
-            <div class="guide-region-card"><span class="guide-region-flag">🇻🇪</span>Venezuela</div>
-            <div class="guide-region-card"><span class="guide-region-flag">🇵🇪</span>Pérou</div>
-            <div class="guide-region-card"><span class="guide-region-flag">🇪🇨</span>Équateur</div>
-          </div>
-          </div><!-- /guide-acc-body -->
-        </div>
-
-
-        <!-- ═══════ COMPARAISON ═══════ -->
-        <div class="guide-section guide-accordion">
-          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="guide-eyebrow">⚖️ Comparaison</span>
-            <span class="guide-acc-arrow">▾</span>
-          </button>
-          <div class="guide-acc-body">
-          <div class="guide-title">Cette appli vs. les autres <span class="fr">façons d'apprendre</span></div>
-          <p class="guide-sub">Pas de meilleure méthode unique — chacune a ses forces. L'idéal, c'est de les combiner !</p>
-
-          <div class="guide-vs-cards">
-
-            <div class="guide-vs-card guide-vs-card--highlight">
-              <div class="guide-vs-card-head">
-                <span class="guide-vs-card-icon">📱</span>
-                <span class="guide-vs-card-name">Cette appli</span>
-              </div>
-              <div class="guide-vs-chips">
-                <span class="guide-vs-chip">💸 100% gratuit</span>
-                <span class="guide-vs-chip">🚫 Sans inscription</span>
-                <span class="guide-vs-chip">🗂️ Vocabulaire structuré</span>
-                <span class="guide-vs-chip">🌎 7 variantes d'espagnol</span>
-                <span class="guide-vs-chip">🎤 Répétition orale</span>
-                <span class="guide-vs-chip">💬 Dialogues réels</span>
-                <span class="guide-vs-chip">📴 Fonctionne hors-ligne</span>
-              </div>
-            </div>
-
-            <div class="guide-vs-card">
-              <div class="guide-vs-card-head">
-                <span class="guide-vs-card-icon">🦉</span>
-                <span class="guide-vs-card-name">Duolingo / Babbel</span>
-              </div>
-              <div class="guide-vs-chips">
-                <span class="guide-vs-chip">🎮 Gamification motivante</span>
-                <span class="guide-vs-chip">🌐 Large catalogue de langues</span>
-                <span class="guide-vs-chip">🎯 Parcours adaptatif</span>
-                <span class="guide-vs-chip">👥 Communauté et classements</span>
-                <span class="guide-vs-chip">📐 Grammaire progressive</span>
-              </div>
-            </div>
-
-            <div class="guide-vs-card">
-              <div class="guide-vs-card-head">
-                <span class="guide-vs-card-icon">🏫</span>
-                <span class="guide-vs-card-name">École de langue</span>
-              </div>
-              <div class="guide-vs-chips">
-                <span class="guide-vs-chip">🧑‍🏫 Enseignant humain</span>
-                <span class="guide-vs-chip">📋 Structure pédagogique</span>
-                <span class="guide-vs-chip">🗣️ Pratique entre apprenants</span>
-                <span class="guide-vs-chip">🎓 Certification reconnue</span>
-                <span class="guide-vs-chip">📐 Grammaire approfondie</span>
-              </div>
-            </div>
-
-            <div class="guide-vs-card">
-              <div class="guide-vs-card-head">
-                <span class="guide-vs-card-icon">🗣️</span>
-                <span class="guide-vs-card-name">Immersion / Amis natifs</span>
-              </div>
-              <div class="guide-vs-chips">
-                <span class="guide-vs-chip">🌍 Langue vivante et authentique</span>
-                <span class="guide-vs-chip">🎙️ Accent naturel</span>
-                <span class="guide-vs-chip">🛒 Vocabulaire du quotidien</span>
-                <span class="guide-vs-chip">💪 Confiance en soi</span>
-                <span class="guide-vs-chip">🤝 Échanges culturels</span>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="guide-vs-tip guide-card">
-            💡 <strong>Notre conseil :</strong> aucun de ces outils ne suffit seul — c'est leur <strong>complémentarité</strong> qui fait progresser vite. Utilise cette appli pour <strong>construire ta base de vocabulaire</strong> et te familiariser avec la prononciation dès le premier jour, sans pression et sans inscription. Puis appuie-toi sur Duolingo ou une école pour structurer ta grammaire, et pratique avec des natifs pour gagner en fluidité naturelle. <strong>Chaque outil renforce les autres : combine-les plutôt que d'en choisir un seul !</strong>
-          </div>
-
-          </div><!-- /guide-acc-body -->
-        </div>
-
-
-        <!-- ═══════ AUDIO / SYNTHÈSE VOCALE ═══════ -->
-        <div class="guide-section guide-accordion">
-          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="guide-eyebrow">🔊 Configurer l'audio</span>
-            <span class="guide-acc-arrow">▾</span>
-          </button>
-          <div class="guide-acc-body">
-          <div class="guide-title">Bien entendre les mots, <span class="fr">c'est essentiel !</span></div>
-          <p class="guide-sub">L'appli utilise la <strong>synthèse vocale</strong> intégrée à ton téléphone ou navigateur (Web Speech API). Si le son est absent, robotique ou dans la mauvaise langue, voici comment corriger ça selon ton appareil.</p>
-
-          <div class="guide-audio-cards">
-
-            <!-- Android -->
-            <div class="guide-card guide-audio-card">
-              <div class="guide-audio-card-header">
-                <span class="guide-audio-icon">🤖</span>
-                <span class="guide-audio-os">Android</span>
-              </div>
-              <div class="guide-audio-steps">
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">1</span>
-                  <span>Ouvre <strong>Paramètres</strong> → <strong>Accessibilité</strong> → <strong>Synthèse vocale</strong> (ou cherche « synthèse » dans la barre de recherche des paramètres)</span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">2</span>
-                  <span>Dans <strong>Moteur préféré</strong>, choisis <strong>Google Text-to-Speech</strong> (recommandé) et assure-toi qu'il est à jour dans le Play Store</span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">3</span>
-                  <span>Clique sur ⚙️ à côté du moteur → <strong>Installer les données vocales</strong> → télécharge la voix <strong>Français (France)</strong> ou <strong>Español</strong> selon ta langue cible</span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">4</span>
-                  <span>Reviens dans l'appli et actualise la page — la synthèse vocale devrait fonctionner</span>
-                </div>
-              </div>
-              <div class="guide-audio-tip">💡 Sur certains téléphones Samsung, le moteur est <strong>Samsung TTS</strong> — le chemin est <em>Paramètres → Accessibilité → TTS</em>. Les voix supplémentaires se téléchargent aussi depuis ce menu.</div>
-            </div>
-
-            <!-- iPhone / iPad -->
-            <div class="guide-card guide-audio-card">
-              <div class="guide-audio-card-header">
-                <span class="guide-audio-icon">🍎</span>
-                <span class="guide-audio-os">iPhone / iPad (iOS)</span>
-              </div>
-              <div class="guide-audio-steps">
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">1</span>
-                  <span>Ouvre <strong>Réglages</strong> → <strong>Accessibilité</strong> → <strong>Contenu énoncé</strong> → <strong>Voix</strong></span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">2</span>
-                  <span>Sélectionne la langue cible : <strong>Français</strong> ou <strong>Espagnol</strong> — puis choisis une voix et appuie sur ⬇️ pour la télécharger en qualité <em>Améliorée</em></span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">3</span>
-                  <span>Ouvre l'appli dans <strong>Safari</strong> (recommandé sur iOS) et tape une première fois sur le bouton 🔊 — iOS demande une interaction avant d'autoriser l'audio</span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">4</span>
-                  <span>Si rien ne sort, vérifie que le <strong>bouton silencieux</strong> (interrupteur sur le côté) est bien désactivé</span>
-                </div>
-              </div>
-              <div class="guide-audio-tip">💡 La reconnaissance vocale (onglet 🎤 Répète) n'est disponible que sur Safari iOS 14.5+ et Chrome Android — elle n'est pas supportée sur Firefox mobile.</div>
-            </div>
-
-            <!-- Ordinateur -->
-            <div class="guide-card guide-audio-card">
-              <div class="guide-audio-card-header">
-                <span class="guide-audio-icon">💻</span>
-                <span class="guide-audio-os">Ordinateur (Windows / Mac)</span>
-              </div>
-              <div class="guide-audio-steps">
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">1</span>
-                  <span><strong>Chrome</strong> ou <strong>Edge</strong> sont recommandés — ils embarquent de bonnes voix et supportent la reconnaissance vocale</span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">2</span>
-                  <span>Sur <strong>Windows</strong> : <em>Paramètres → Heure et langue → Parole → Ajouter des voix</em> — installe le pack <strong>Français (France)</strong> ou <strong>Español</strong></span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">3</span>
-                  <span>Sur <strong>Mac</strong> : <em>Préférences Système → Accessibilité → Contenu parlé → Voix système</em> — télécharge <strong>Thomas</strong> (FR) ou <strong>Diego / Monica</strong> (ES)</span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">4</span>
-                  <span>Redémarre le navigateur après l'installation — les nouvelles voix sont détectées au chargement</span>
-                </div>
-              </div>
-            </div>
-
-          </div><!-- /guide-audio-cards -->
-
-          <!-- Bloc "toujours un problème ?" -->
-          <div class="guide-audio-help guide-card">
-            <div class="guide-audio-help-title">🆘 Toujours un problème ? Contacte le support de ton fabricant</div>
-            <p class="guide-audio-help-desc">Si après ces étapes l'audio ne fonctionne toujours pas, le problème vient probablement d'un réglage spécifique à ton modèle de téléphone. Les équipes support de chaque fabricant peuvent t'aider à configurer la synthèse vocale :</p>
-            <div class="guide-audio-contacts">
-              <a class="guide-audio-contact-btn" href="https://support.google.com/android/" target="_blank">🤖 Support Google / Android</a>
-              <a class="guide-audio-contact-btn" href="https://support.apple.com/fr-fr/contact" target="_blank">🍎 Support Apple</a>
-              <a class="guide-audio-contact-btn" href="https://www.samsung.com/fr/support/" target="_blank">📱 Support Samsung</a>
-              <a class="guide-audio-contact-btn" href="https://www.microsoft.com/fr-fr/support" target="_blank">💻 Support Microsoft</a>
-            </div>
-            <p class="guide-audio-help-hint">Pour tout autre fabricant (Xiaomi, Oppo, OnePlus…), recherche <em>« synthèse vocale + [nom de ton téléphone] »</em> sur le site officiel du fabricant.</p>
-          </div>
-
-          </div><!-- /guide-acc-body -->
-        </div>
-
-
-        <!-- ═══════ REMERCIEMENTS ═══════ -->
-        <div class="guide-section guide-accordion">
-          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="guide-eyebrow">🙏 Remerciements</span>
-            <span class="guide-acc-arrow">▾</span>
-          </button>
-          <div class="guide-acc-body">
-          <div class="guide-title">Merci à ceux qui <span class="fr">ont rendu ça possible</span></div>
-
-          <div class="guide-card guide-bio-card">
-            <div class="guide-bio-text">
-              <p>Un grand merci à <strong>Fédérico Calo</strong>
-                (<a href="https://www.linkedin.com/in/federicocalo/" target="_blank" style="color:var(--g-fr);font-weight:700;">Architecte Développeur Web</a>)
-                pour son aide technique précieuse tout au long du projet.</p>
-              <p>Merci également à mes <strong>parents</strong> pour leur travail de relecture, leurs corrections sur les traductions et leurs conseils sur l'ergonomie de l'application.</p>
-            </div>
-          </div>
-          </div><!-- /guide-acc-body -->
-        </div>
-
-
-        <!-- ═══════ QUI SUIS-JE ═══════ -->
-        <div class="guide-section guide-accordion">
-          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="guide-eyebrow">🙋 À propos</span>
-            <span class="guide-acc-arrow">▾</span>
-          </button>
-          <div class="guide-acc-body">
-            <div class="guide-title">Qui suis-je, <span class="fr">et pourquoi cette appli ?</span></div>
-
-           <div class="guide-card guide-bio-card">
-              <div class="guide-bio-head">
-                <div class="guide-bio-avatar">🙋</div>
-                <div>
-                  <div class="guide-bio-name">Sébastien Godet</div>
-                  <div class="guide-bio-role">En reconversion — Gestion de projets Agile & Data</div>
-                </div>
-              </div>
-             <div class="guide-bio-text">
-                <p>Après plus de 10 ans dans l'univers du <strong>géomarketing</strong> — production d'études de marché, analyses d'implantation — je suis en reconversion vers la <strong>gestion de projets</strong>, que ce soit en agilité ou traditionnelle. Mon profil est volontairement polyvalent : <strong>Scrum Master, Product Owner, Chef de Projet, Business Analyst ou AI Project Manager</strong> selon les besoins.</p>
-                <p><strong>VACHÉBO</strong> — l'application — est née de mon immersion de 8 mois en Amérique du Sud en 2022, de mes amitiés hispanophones, et de ma curiosité d'apprendre à développer une application web tout en utilisant l'IA. J'avais envie de créer un outil qui facilite vraiment l'apprentissage de l'espagnol — avec ses vraies <strong>variantes régionales</strong>, car le castillan d'Espagne n'est pas le même que l'argentin ou l'équatorien ou le vénézuélien. Et dans l'autre sens, pour que mes amis hispanophones puissent apprendre le français à partir de leur propre variante.</p>
-                <p>VACHÉBO est pensée avant tout pour les <strong>débutants</strong>. Apprendre une langue, c'est souvent perçu comme complexe — et beaucoup abandonnent en route. Ici, tout est conçu pour démarrer en douceur, progresser à son rythme et garder la motivation.</p>
-                <p>L'application grandit avec mon réseau : quand de nouveaux contacts me font découvrir d'autres variantes — en espagnol comme en français — je les intègre. C'est un <strong>projet vivant</strong>, pensé pour des gens réels.</p>
-                <p>Ce projet, c'est aussi ma façon de travailler : apprendre par la pratique, trouver des solutions, soigner le détail. J'ai moi-même réussi à m'ouvrir à l'univers hispanophone, et ça a changé ma façon de voir les choses. J'aimerais que VACHÉBO permette à d'autres — des deux côtés — de vivre cette même expérience : se rapprocher, mieux se comprendre, et partager encore plus de bons moments ensemble.</p>
-              </div>
-
-              <div class="guide-contact-callout">
-                <div class="guide-contact-callout-title">💬 Une suggestion, une question, une coquille ?</div>
-                <p class="guide-contact-callout-desc">Cette appli est faite pour toi — si tu vois quelque chose à améliorer, une traduction incorrecte, une fonctionnalité qui bug ou simplement une idée à partager, <strong>écris-moi !</strong> Chaque retour compte vraiment.</p>
-                <div class="guide-contact-callout-actions">
-                  <button type="button" class="guide-contact-callout-btn antispam-btn" onclick="openAndCopyEmail()">
-                    ✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span>
-                  </button>
-                  <a class="guide-contact-callout-btn guide-contact-callout-btn--secondary" href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">💼 Message LinkedIn</a>
-                </div>
-              </div>
-            </div>
-          </div></div>
-
-
-        <!-- ═══════ CTA ═══════ -->
-        <div class="guide-cta-block">
-          <h2>🚀 Prêt à commencer ?</h2>
-          <p>Aucune inscription, aucun téléchargement obligatoire — l'application fonctionne directement dans ton navigateur, et tu peux l'<strong>installer sur ton écran d'accueil</strong> pour un accès encore plus rapide !</p>
-          <div class="guide-no-show-bottom">
-            <label class="guide-no-show-label guide-no-show-label--light">
-              <input type="checkbox" class="guide-no-show-check" onchange="toggleGuideNoShow(this)">
-              <span class="guide-no-show-text guide-no-show-fr">Ne plus afficher ce guide au démarrage</span>
-            </label>
-            <p class="guide-no-show-hint guide-no-show-fr">Tu peux le revoir à tout moment via le lien en bas de page.</p>
-          </div>
-          <button class="guide-cta-btn" onclick="closeGuide()">▶ Ouvrir l'application</button>
-        </div>
-
-      </div><!-- /guide-wrap -->
-
-      <div class="guide-footer">
-        © Juin 2026 – Développé par <strong>Sébastien Godet</strong> · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
-        <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> ·
-        <a href="#" onclick="showCredits()">Remerciements</a>
-      </div>
-
-    </div><!-- /guideContentFR -->
-
-
-    <!-- ─────────────────────────────────────────
-         BLOC ES — Guide affiché en espagnol
-         (mode 'learn_french' : apprendre le français,
-         interface du guide en espagnol)
-         Contenu identique à language-app-user-guide-es.html.
-         Les éléments avec id (heroFlags, regionBadge,
-         regionExample) et data-region sont réutilisés par
-         _refreshGuideRegion() dans app.js pour l'adaptation
-         dynamique à currentRegion, comme dans le fichier source.
-    ───────────────────────────────────────── -->
-    <div id="guideContentES">
-
-      <div class="guide-hero">
-        <div class="guide-hero-flags" id="guideHeroFlagsES">🇫🇷 🌍 🇪🇸</div>
-        <h1 id="guideHeroTitleES">Aprende Francés</h1>
-        <p class="guide-hero-sub">Una app gratuita e ideal para empezar desde cero.</p>
-        <div class="guide-hero-region-badge" id="guideRegionBadgeES"></div>
-        <br>
-        <div class="guide-hero-chips">
-          <span class="guide-hero-chip">✅ Gratis</span>
-          <span class="guide-hero-chip">📱 Móvil y ordenador</span>
-          <span class="guide-hero-chip">🔊 Audio incluido</span>
-          <span class="guide-hero-chip">🌎 7 variantes de español</span>
-          <span class="guide-hero-chip">🎤 Repetición oral</span>
-          <span class="guide-hero-chip">📲 Instalable sin conexión</span>
-        </div>
-      </div>
-
-      <div class="guide-wrap">
-
-        <!-- ═══════ CÓMO FUNCIONA ═══════ -->
-        <div class="guide-section guide-accordion">
-          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="guide-eyebrow">📖 Cómo funciona</span>
-            <span class="guide-acc-arrow">▾</span>
-          </button>
-          <div class="guide-acc-body">
-          <div class="guide-title">4 pasos, <span class="es">¡y ya está!</span></div>
-          <p class="guide-sub">Sin registro, sin descargas obligatorias: funciona directamente en tu navegador — y también puedes <strong>instalarla en tu pantalla de inicio</strong> para acceder a ella como una app de verdad.</p>
-
-          <div class="guide-grid-2" style="margin-bottom:14px;">
-            <div class="guide-mode-card fr">
-              <div class="guide-mode-flag">🇫🇷</div>
-              <div class="guide-mode-title">Aprender Francés</div>
-              <div class="guide-mode-sub">Para hispanohablantes</div>
-            </div>
-            <div class="guide-mode-card es">
-              <div class="guide-mode-flag">🇪🇸</div>
-              <div class="guide-mode-title">Aprender Español</div>
-              <div class="guide-mode-sub">Para francófonos</div>
-            </div>
-          </div>
-
-          <div class="guide-steps">
-            <div class="guide-step-card guide-card">
-              <div class="guide-step-num n1">1</div>
-              <div class="guide-step-body">
-                <div class="guide-step-title">🌍 Elige tu idioma</div>
-                <div class="guide-step-desc">Haz clic en la tarjeta del idioma que quieres aprender. Puedes cambiar de modo cuando quieras; tu progreso se guarda por separado para cada uno.</div>
-              </div>
-            </div>
-            <div class="guide-step-card guide-card">
-              <div class="guide-step-num n2">2</div>
-              <div class="guide-step-body">
-                <div class="guide-step-title">📚 Elige un módulo</div>
-                <div class="guide-step-desc"><strong>Nivel 1</strong> para vocabulario temático, <strong>Nivel 2</strong> para diálogos de situaciones reales.</div>
-              </div>
-            </div>
-            <div class="guide-step-card guide-card">
-              <div class="guide-step-num n3">3</div>
-              <div class="guide-step-body">
-                <div class="guide-step-title">🃏 Aprende con las herramientas</div>
-                <div class="guide-step-desc">Tarjetas flash para memorizar, cuestionarios para evaluarte, diálogos para practicar en contexto — y la pestaña <strong>🎤 Repite</strong> para entrenar tu pronunciación con el micrófono.</div>
-              </div>
-            </div>
-            <div class="guide-step-card guide-card">
-              <div class="guide-step-num n4">4</div>
-              <div class="guide-step-body">
-                <div class="guide-step-title">⭐ Gana estrellas</div>
-                <div class="guide-step-desc">Hasta 3 estrellas por cuestionario según tu puntuación: <strong>⭐ 1 estrella a partir del 50 %</strong> de respuestas correctas, <strong>⭐⭐ 2 estrellas a partir del 75 %</strong>, <strong>⭐⭐⭐ 3 estrellas con el 100 %</strong>. ¡Vuelve a practicar para mejorar!</div>
-              </div>
-            </div>
-          </div>
-          </div><!-- /guide-acc-body -->
-        </div>
-
-
-        <!-- ═══════ PUNTOS FUERTES ═══════ -->
-        <div class="guide-section guide-accordion">
-          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="guide-eyebrow">✨ Puntos fuertes</span>
-            <span class="guide-acc-arrow">▾</span>
-          </button>
-          <div class="guide-acc-body">
-          <div class="guide-title">Lo que hace la app <span class="es">única</span></div>
-
-          <!-- Orden pensado para un gran principiante: de lo más esencial a
-               lo menos imprescindible para empezar bien (oír/pronunciar
-               → memorizar → autoevaluarse → practicar en contexto →
-               adaptarse a tu variante → seguir tu progreso). -->
-          <div class="guide-grid-3">
-            <div class="guide-card guide-feat-card">
-              <div class="guide-feat-icon">🔊</div>
-              <div class="guide-feat-title">Pronunciación en audio</div>
-              <div class="guide-feat-desc">Cada palabra o frase se puede <strong>escuchar en voz alta</strong>, con un clic.</div>
-            </div>
-            <div class="guide-card guide-feat-card">
-              <div class="guide-feat-icon">🎤</div>
-              <div class="guide-feat-title">Repetición oral</div>
-              <div class="guide-feat-desc">La pestaña <strong>Repite</strong> escucha tu voz palabra por palabra: feedback inmediato verde ✅ o naranja 🔁, avance automático.</div>
-            </div>
-            <div class="guide-card guide-feat-card">
-              <div class="guide-feat-icon">🃏</div>
-              <div class="guide-feat-title">Tarjetas flash</div>
-              <div class="guide-feat-desc">Se giran con un clic, con <strong>conjugaciones completas</strong> para los verbos.</div>
-            </div>
-            <div class="guide-card guide-feat-card">
-              <div class="guide-feat-icon">❓</div>
-              <div class="guide-feat-title">Cuestionarios inteligentes</div>
-              <div class="guide-feat-desc">Las preguntas <strong>cambian en cada partida</strong> — nunca el mismo cuestionario dos veces.</div>
-            </div>
-            <div class="guide-card guide-feat-card">
-              <div class="guide-feat-icon">💬</div>
-              <div class="guide-feat-title">Diálogos reales</div>
-              <div class="guide-feat-desc">Farmacia, taxi, hotel… con <strong>vocabulario clave</strong> y mini-cuestionario para validar.</div>
-            </div>
-            <div class="guide-card guide-feat-card">
-              <div class="guide-feat-icon">🌎</div>
-              <div class="guide-feat-title">7 variantes de español</div>
-              <div class="guide-feat-desc">La app adapta vocabulario y audio a <strong>tu variante regional</strong>.</div>
-            </div>
-            <div class="guide-card guide-feat-card">
-              <div class="guide-feat-icon">📈</div>
-              <div class="guide-feat-title">Progreso guardado</div>
-              <div class="guide-feat-desc">Tu avance se <strong>guarda automáticamente</strong> en tu dispositivo.</div>
-            </div>
-            <div class="guide-card guide-feat-card">
-              <div class="guide-feat-icon">📲</div>
-              <div class="guide-feat-title">Instalable en pantalla de inicio</div>
-              <div class="guide-feat-desc">Añade la app a tu pantalla de inicio como una aplicación real — <strong>funciona sin conexión</strong>, sin pasar por el navegador.</div>
-            </div>
-          </div>
-          </div><!-- /guide-acc-body -->
-        </div>
-
-
-        <!-- ═══════ EN CIFRAS ═══════ -->
-        <div class="guide-section guide-accordion">
-          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="guide-eyebrow">🗂️ En cifras</span>
-            <span class="guide-acc-arrow">▾</span>
-          </button>
-          <div class="guide-acc-body">
-          <div class="guide-title">Todo el contenido, <span class="fr">de un vistazo</span></div>
-
-          <div class="guide-stats-row">
-            <div class="guide-stat"><div class="guide-stat-num">32</div><div class="guide-stat-label">Temas vocab.</div></div>
-            <div class="guide-stat"><div class="guide-stat-num">16</div><div class="guide-stat-label">Diálogos</div></div>
-            <div class="guide-stat"><div class="guide-stat-num">7</div><div class="guide-stat-label">Variantes ES</div></div>
-          </div>
-          </div><!-- /guide-acc-body -->
-        </div>
-
-
-        <!-- ═══════ VARIANTES REGIONALES ═══════ -->
-        <div class="guide-section guide-accordion">
-          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="guide-eyebrow">🌎 Variantes regionales</span>
-            <span class="guide-acc-arrow">▾</span>
-          </button>
-          <div class="guide-acc-body">
-          <div class="guide-title">Tu español, <span class="fr">no solo «el castellano»</span></div>
-          <p class="guide-sub">Elige tu variante preferida desde la pantalla de inicio — el vocabulario y el audio se adaptan.</p>
-
-          <div class="guide-region-grid" id="guideRegionGridES">
-            <div class="guide-region-card" data-region="ES"><span class="guide-region-flag">🇪🇸</span>España</div>
-            <div class="guide-region-card" data-region="MX"><span class="guide-region-flag">🇲🇽</span>México</div>
-            <div class="guide-region-card" data-region="AR"><span class="guide-region-flag">🇦🇷</span>Argentina</div>
-            <div class="guide-region-card" data-region="CO"><span class="guide-region-flag">🇨🇴</span>Colombia</div>
-            <div class="guide-region-card" data-region="VE"><span class="guide-region-flag">🇻🇪</span>Venezuela</div>
-            <div class="guide-region-card" data-region="PE"><span class="guide-region-flag">🇵🇪</span>Perú</div>
-            <div class="guide-region-card" data-region="EC"><span class="guide-region-flag">🇪🇨</span>Ecuador</div>
-          </div>
-
-          <div class="guide-card guide-region-example" id="guideRegionExampleES"></div>
-          </div><!-- /guide-acc-body -->
-        </div>
-
-
-        <!-- ═══════ COMPARACIÓN ═══════ -->
-        <div class="guide-section guide-accordion">
-          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="guide-eyebrow">⚖️ Comparación</span>
-            <span class="guide-acc-arrow">▾</span>
-          </button>
-          <div class="guide-acc-body">
-          <div class="guide-title">Esta app vs. otras <span class="es">formas de aprender</span></div>
-          <p class="guide-sub">No hay un único método perfecto — cada uno tiene sus puntos fuertes. ¡Lo ideal es combinarlos!</p>
-
-          <div class="guide-vs-cards">
-
-            <div class="guide-vs-card guide-vs-card--highlight">
-              <div class="guide-vs-card-head">
-                <span class="guide-vs-card-icon">📱</span>
-                <span class="guide-vs-card-name">Esta app</span>
-              </div>
-              <div class="guide-vs-chips">
-                <span class="guide-vs-chip">💸 100% gratis</span>
-                <span class="guide-vs-chip">🚫 Sin registro</span>
-                <span class="guide-vs-chip">🗂️ Vocabulario estructurado</span>
-                <span class="guide-vs-chip">🌎 7 variantes de español</span>
-                <span class="guide-vs-chip">🎤 Repetición oral</span>
-                <span class="guide-vs-chip">💬 Diálogos reales</span>
-                <span class="guide-vs-chip">📴 Funciona sin conexión</span>
-              </div>
-            </div>
-
-            <div class="guide-vs-card">
-              <div class="guide-vs-card-head">
-                <span class="guide-vs-card-icon">🦉</span>
-                <span class="guide-vs-card-name">Duolingo / Babbel</span>
-              </div>
-              <div class="guide-vs-chips">
-                <span class="guide-vs-chip">🎮 Gamificación motivadora</span>
-                <span class="guide-vs-chip">🌐 Amplio catálogo de idiomas</span>
-                <span class="guide-vs-chip">🎯 Recorrido adaptativo</span>
-                <span class="guide-vs-chip">👥 Comunidad y clasificaciones</span>
-                <span class="guide-vs-chip">📐 Gramática progresiva</span>
-              </div>
-            </div>
-
-            <div class="guide-vs-card">
-              <div class="guide-vs-card-head">
-                <span class="guide-vs-card-icon">🏫</span>
-                <span class="guide-vs-card-name">Escuela de idiomas</span>
-              </div>
-              <div class="guide-vs-chips">
-                <span class="guide-vs-chip">🧑‍🏫 Profesor humano</span>
-                <span class="guide-vs-chip">📋 Estructura pedagógica</span>
-                <span class="guide-vs-chip">🗣️ Práctica entre alumnos</span>
-                <span class="guide-vs-chip">🎓 Certificación reconocida</span>
-                <span class="guide-vs-chip">📐 Gramática en profundidad</span>
-              </div>
-            </div>
-
-            <div class="guide-vs-card">
-              <div class="guide-vs-card-head">
-                <span class="guide-vs-card-icon">🗣️</span>
-                <span class="guide-vs-card-name">Inmersión / Amigos nativos</span>
-              </div>
-              <div class="guide-vs-chips">
-                <span class="guide-vs-chip">🌍 Lengua viva y auténtica</span>
-                <span class="guide-vs-chip">🎙️ Acento natural</span>
-                <span class="guide-vs-chip">🛒 Vocabulario del día a día</span>
-                <span class="guide-vs-chip">💪 Confianza en uno mismo</span>
-                <span class="guide-vs-chip">🤝 Intercambios culturales</span>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="guide-vs-tip guide-card">
-            💡 <strong>Nuestro consejo:</strong> ninguna de estas herramientas basta por sí sola — es su <strong>complementariedad</strong> la que hace progresar rápido. Usa esta app para <strong>construir tu base de vocabulario</strong> y familiarizarte con la pronunciación desde el primer día, sin presión y sin registro. Luego apóyate en Duolingo o una escuela para estructurar tu gramática, y practica con nativos para ganar fluidez natural. <strong>Cada herramienta refuerza a las demás: combínalas en lugar de elegir solo una!</strong>
-          </div>
-
-          </div><!-- /guide-acc-body -->
-        </div>
-
-
-        <!-- ═══════ AUDIO / SÍNTESIS DE VOZ ═══════ -->
-        <div class="guide-section guide-accordion">
-          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="guide-eyebrow">🔊 Configurar el audio</span>
-            <span class="guide-acc-arrow">▾</span>
-          </button>
-          <div class="guide-acc-body">
-          <div class="guide-title">Escuchar bien los sonidos, <span class="es">¡es clave!</span></div>
-          <p class="guide-sub">La app usa la <strong>síntesis de voz</strong> integrada en tu teléfono o navegador (Web Speech API). Si el sonido falta, suena robótico o está en el idioma incorrecto, aquí te explicamos cómo solucionarlo según tu dispositivo.</p>
-
-          <div class="guide-audio-cards">
-
-            <!-- Android -->
-            <div class="guide-card guide-audio-card">
-              <div class="guide-audio-card-header">
-                <span class="guide-audio-icon">🤖</span>
-                <span class="guide-audio-os">Android</span>
-              </div>
-              <div class="guide-audio-steps">
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">1</span>
-                  <span>Abre <strong>Ajustes</strong> → <strong>Accesibilidad</strong> → <strong>Texto a voz</strong> (o busca «texto a voz» en la barra de búsqueda de ajustes)</span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">2</span>
-                  <span>En <strong>Motor preferido</strong>, elige <strong>Google Text-to-Speech</strong> (recomendado) y asegúrate de que está actualizado desde Play Store</span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">3</span>
-                  <span>Toca ⚙️ junto al motor → <strong>Instalar datos de voz</strong> → descarga la voz <strong>Español</strong> o <strong>Français (France)</strong> según el idioma que aprendes</span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">4</span>
-                  <span>Vuelve a la app y recarga la página — la síntesis de voz debería funcionar</span>
-                </div>
-              </div>
-              <div class="guide-audio-tip">💡 En algunos teléfonos Samsung, el motor es <strong>Samsung TTS</strong> — la ruta es <em>Ajustes → Accesibilidad → TTS</em>. Las voces adicionales también se descargan desde ese menú.</div>
-            </div>
-
-            <!-- iPhone / iPad -->
-            <div class="guide-card guide-audio-card">
-              <div class="guide-audio-card-header">
-                <span class="guide-audio-icon">🍎</span>
-                <span class="guide-audio-os">iPhone / iPad (iOS)</span>
-              </div>
-              <div class="guide-audio-steps">
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">1</span>
-                  <span>Abre <strong>Ajustes</strong> → <strong>Accesibilidad</strong> → <strong>Contenido hablado</strong> → <strong>Voces</strong></span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">2</span>
-                  <span>Selecciona el idioma objetivo: <strong>Español</strong> o <strong>Francés</strong> — luego elige una voz y toca ⬇️ para descargarla en calidad <em>Mejorada</em></span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">3</span>
-                  <span>Abre la app en <strong>Safari</strong> (recomendado en iOS) y toca una primera vez el botón 🔊 — iOS requiere una interacción del usuario antes de permitir el audio</span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">4</span>
-                  <span>Si no sale ningún sonido, verifica que el <strong>botón de silencio</strong> (interruptor lateral) esté desactivado</span>
-                </div>
-              </div>
-              <div class="guide-audio-tip">💡 El reconocimiento de voz (pestaña 🎤 Repite) solo está disponible en Safari iOS 14.5+ y Chrome Android — no es compatible con Firefox móvil.</div>
-            </div>
-
-            <!-- Ordenador -->
-            <div class="guide-card guide-audio-card">
-              <div class="guide-audio-card-header">
-                <span class="guide-audio-icon">💻</span>
-                <span class="guide-audio-os">Ordenador (Windows / Mac)</span>
-              </div>
-              <div class="guide-audio-steps">
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">1</span>
-                  <span><strong>Chrome</strong> o <strong>Edge</strong> son los más recomendados — incluyen buenas voces y soportan el reconocimiento de voz</span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">2</span>
-                  <span>En <strong>Windows</strong>: <em>Configuración → Hora e idioma → Voz → Añadir voces</em> — instala el paquete de <strong>Español</strong> o <strong>Français (France)</strong></span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">3</span>
-                  <span>En <strong>Mac</strong>: <em>Preferencias del Sistema → Accesibilidad → Contenido hablado → Voz del sistema</em> — descarga <strong>Diego / Mónica</strong> (ES) o <strong>Thomas</strong> (FR)</span>
-                </div>
-                <div class="guide-audio-step">
-                  <span class="guide-audio-step-num">4</span>
-                  <span>Reinicia el navegador tras la instalación — las nuevas voces se detectan al cargar</span>
-                </div>
-              </div>
-            </div>
-
-          </div><!-- /guide-audio-cards -->
-
-          <!-- Bloc "¿sigues con problemas?" -->
-          <div class="guide-audio-help guide-card">
-            <div class="guide-audio-help-title">🆘 ¿Sigues con problemas? Contacta el soporte de tu fabricante</div>
-            <p class="guide-audio-help-desc">Si después de estos pasos el audio sigue sin funcionar, el problema probablemente viene de un ajuste específico de tu modelo de teléfono. Los equipos de soporte de cada fabricante pueden ayudarte a configurar la síntesis de voz:</p>
-            <div class="guide-audio-contacts">
-              <a class="guide-audio-contact-btn" href="https://support.google.com/android/" target="_blank">🤖 Soporte Google / Android</a>
-              <a class="guide-audio-contact-btn" href="https://support.apple.com/es-es/contact" target="_blank">🍎 Soporte Apple</a>
-              <a class="guide-audio-contact-btn" href="https://www.samsung.com/es/support/" target="_blank">📱 Soporte Samsung</a>
-              <a class="guide-audio-contact-btn" href="https://www.microsoft.com/es-es/support" target="_blank">💻 Soporte Microsoft</a>
-            </div>
-            <p class="guide-audio-help-hint">Para cualquier otro fabricante (Xiaomi, Oppo, OnePlus…), busca <em>«síntesis de voz + [nombre de tu teléfono]»</em> en el sitio oficial del fabricante.</p>
-          </div>
-
-          </div><!-- /guide-acc-body -->
-        </div>
-
-
-        <!-- ═══════ AGRADECIMIENTOS ═══════ -->
-        <div class="guide-section guide-accordion">
-          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="guide-eyebrow">🙏 Agradecimientos</span>
-            <span class="guide-acc-arrow">▾</span>
-          </button>
-          <div class="guide-acc-body">
-          <div class="guide-title">Gracias a quienes <span class="es">lo hicieron posible</span></div>
-
-          <div class="guide-card guide-bio-card">
-            <div class="guide-bio-text">
-              <p>Un gran agradecimiento a <strong>Fédérico Calo</strong>
-                (<a href="https://www.linkedin.com/in/federicocalo/" target="_blank" style="color:var(--g-es);font-weight:700;">Arquitecto Desarrollador Web</a>)
-                por su valiosa ayuda técnica a lo largo del proyecto.</p>
-              <p>Gracias también a mis <strong>padres</strong> por su trabajo de corrección, sus ajustes en las traducciones y sus consejos sobre la ergonomía de la aplicación.</p>
-            </div>
-          </div>
-          </div><!-- /guide-acc-body -->
-        </div>
-
-
-        <!-- ═══════ QUIÉN SOY ═══════ -->
-        <div class="guide-section guide-accordion">
-          <button class="guide-acc-header" onclick="toggleAcc(this)" aria-expanded="false">
-            <span class="guide-eyebrow">🙋 Sobre mí</span>
-            <span class="guide-acc-arrow">▾</span>
-          </button>
-          <div class="guide-acc-body">
-            <div class="guide-title">¿Quién soy <span class="es">y por qué esta app?</span></div>
-
-            <div class="guide-card guide-bio-card">
-              <div class="guide-bio-head">
-                <div class="guide-bio-avatar">🙋</div>
-                <div>
-                  <div class="guide-bio-name">Sébastien Godet</div>
-                  <div class="guide-bio-role">En reconversión — Gestión de proyectos Agile & Data</div>
-                </div>
-              </div>
-              <div class="guide-bio-text">
-                <p>Tras más de 10 años en <strong>geomarketing</strong> — producción de estudios de mercado, análisis de implantación, modelización predictiva — estoy en plena reconversión hacia la <strong>gestión de proyectos</strong>, tanto en entornos ágiles como en modo tradicional. Mi perfil es deliberadamente polivalente : <strong>Scrum Master, Product Owner, Jefe de Proyecto, Business Analyst o AI Project Manager</strong> según las necesidades.</p>
-                <p><strong>VACHÉBO</strong> — la aplicación — nació de mi inmersión de 8 meses en América del Sur en 2022, de mis amistades hispanohablantes, y de mi curiosidad por aprender a desarrollar una aplicación web utilizando la IA. Quería crear una herramienta que facilite de verdad el aprendizaje del español — con sus auténticas <strong>variantes regionales</strong>, porque el castellano de España no es lo mismo que el argentino o el mexicano. Y al revés, para que mis amigos hispanohablantes puedan aprender el francés desde su propia variante.</p>
-                <p>VACHÉBO está pensada ante todo para los <strong>principiantes</strong>. Aprender un idioma suele percibirse como algo complejo — y muchos lo abandonan a mitad de camino. Aquí todo está diseñado para empezar con calma, avanzar a su ritmo y mantener la motivación.</p>
-                <p>La aplicación crece con mi red : cuando nuevos contactos me hacen descubrir otras variantes — en español o en francés — las integro. Es un <strong>proyecto vivo</strong>, pensado para personas reales.</p>
-                <p>Este proyecto también refleja mi manera de trabajar : aprender haciendo, encontrar soluciones, cuidar los detalles. Yo mismo logré abrirme al mundo hispanohablante, y eso cambió mi forma de ver las cosas. Me gustaría que VACHÉBO permita a otros — de los dos lados — vivir esa misma experiencia : acercarse, entenderse mejor y compartir aún más buenos momentos juntos.</p>
-              </div>
-
-              <div class="guide-contact-callout">
-                <div class="guide-contact-callout-title">💬 ¿Una sugerencia, una pregunta, una errata?</div>
-                <p class="guide-contact-callout-desc">Esta app está hecha para ti — si ves algo que mejorar, una traducción incorrecta, una función que falla o simplemente una idea que compartir, <strong>¡escríbeme!</strong> Cada comentario cuenta de verdad.</p>
-                <div class="guide-contact-callout-actions">
-                  <button type="button" class="guide-contact-callout-btn antispam-btn" onclick="openAndCopyEmail()">
-                    ✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span>
-                  </button>
-                  <a class="guide-contact-callout-btn guide-contact-callout-btn--secondary" href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">💼 Mensaje LinkedIn</a>
-                </div>
-              </div>
-            </div>
-          </div></div>
-
-
-        <!-- ═══════ CTA ═══════ -->
-        <div class="guide-cta-block">
-          <h2>🚀 ¿Listo para empezar?</h2>
-          <p>Sin registro, sin descargas obligatorias — ¡la app funciona directamente en tu navegador, y puedes <strong>instalarla en tu pantalla de inicio</strong> para un acceso aún más rápido!</p>
-          <div class="guide-no-show-bottom">
-            <label class="guide-no-show-label guide-no-show-label--light">
-              <input type="checkbox" class="guide-no-show-check" onchange="toggleGuideNoShow(this)">
-              <span class="guide-no-show-text guide-no-show-es">No volver a mostrar esta guía al iniciar</span>
-            </label>
-            <p class="guide-no-show-hint guide-no-show-es">Puedes volver a consultarla en cualquier momento a través del enlace situado al final de la página.</p>
-          </div>
-          <button class="guide-cta-btn" onclick="closeGuide()">▶ Abrir la app</button>
-        </div>
-
-      </div><!-- /guide-wrap -->
-
-      <div class="guide-footer">
-        © Junio 2026 – Desarrollado por <strong>Sébastien Godet</strong> · Asistido por IA Claude Sonnet 4.6 y Gemini 3.5 Flash<br>
-        <a class="guide-footer-link" href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">💼 LinkedIn</a> ·
-        <a class="guide-footer-link" href="#" onclick="showCredits()">Agradecimientos</a>
-      </div>
-
-    </div><!-- /guideContentES -->
-
-  </div><!-- /guide-modal -->
+  <!-- Guide-modal stub — conservé pour compatibilité avec app.js.
+       Le vrai guide est maintenant l'écran #home ci-dessus.
+       showGuide() dans app.js a été mis à jour pour pointer vers showScreen('home'). -->
+  <div id="guide-modal" style="display:none!important"></div>
 
   <!-- ════════════════════════════════════════════════════════════════
        BARRE DE NAVIGATION BASSE  (#bottom-nav)

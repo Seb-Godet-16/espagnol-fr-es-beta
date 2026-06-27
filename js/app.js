@@ -550,14 +550,14 @@ function initApp(mode) {
   /* — Chargement de la progression sauvegardée pour ce mode — */
   loadDone();
 
-  /* — Masquer le launcher et naviguer vers l'écran Home — */
+  /* — Construction du guide intégré dans l'écran #home (style Oromo) —
+       _buildHomeGuide() active le bon bloc de langue et injecte les
+       éléments dynamiques (drapeaux, titre, badges, boutons…). */
+  _buildHomeGuide();
+
+  /* — Masquer le launcher et naviguer vers l'écran #home (= guide) — */
   document.getElementById('app-launcher').classList.remove('active');
   showScreen('home');
-
-  /* — Première visite : affichage automatique du guide utilisateur —
-       Le guide s'affiche juste après le choix de langue + variante.
-       À la fermeture du guide, l'utilisateur se retrouve sur Home. */
-  _maybeAutoShowGuide();
 
   // Met à jour la barre de navigation basse pour le mode courant
   _updateBottomNav('home');
@@ -570,8 +570,8 @@ function initApp(mode) {
    Utilise innerHTML pour interpréter les balises HTML bilingues.
 ───────────────────────────────────────────────────────── */
 function _setUI(t) {
-  _setText('homeFlagRow',     t.homeFlagRow);
-  _setText('homeTitle',       t.homeTitle);
+  /* homeFlagRow et homeBackBtn n'existent plus dans le nouveau #home style Oromo —
+     les drapeaux et le titre sont gérés par _buildHomeGuide(). */
   _setText('sectionsBackBtn',  t.sectionsBackBtn);
   _setText('sectionsBackBtn2', t.sectionsBackBtn);  // Écran sections-level2
   _setText('sectionsTitle',   t.sectionsTitle);
@@ -585,19 +585,7 @@ function _setUI(t) {
   _setText('level2Badge',     t.level2Badge);
   _setText('level2Label',     t.level2Label);
   _setText('level2LabelB',    t.level2Label);       // Onglet sur sections-level2
-
-  // Branche le bouton Démarrer de l'écran Home vers Sections
-  var homeStartBtn = document.getElementById('homeStartBtn');
-  if (homeStartBtn) {
-    homeStartBtn.innerHTML = t.homeStartBtn || '';
-    homeStartBtn.onclick = function() { showScreen('sections-level1'); };
-  }
-
-  // Branche le bouton retour de l'écran Home vers le Launcher
-  var homeBackBtn = document.getElementById('homeBackBtn');
-  if (homeBackBtn) {
-    homeBackBtn.onclick = showLauncher;
-  }
+  /* homeStartBtn est câblé par _buildHomeGuide() — pas besoin ici */
 }
 
 /* _setText(id, val) — Remplace innerHTML d'un élément par val
@@ -3413,217 +3401,182 @@ function showCredits() {
                                language-app-user-guide-es.html
 ═══════════════════════════════════════════════════════════ */
 
-// Clé localStorage du flag "guide déjà vu" — globale, indépendante du mode
-const GUIDE_STORAGE_KEY = 'pe_guide_seen_v1';
+/* ═══════════════════════════════════════════════════════════
+   17. GUIDE UTILISATEUR — Écran #home intégré (style Oromo)
+   ─────────────────────────────────────────────────────────
+   Le guide n'est plus une modale (#guide-modal) mais l'écran
+   #home lui-même, avec :
+     • topbar sticky sombre (.home-topbar)
+     • hero coloré (.home-guide-header) avec drapeaux, titre,
+       sous-titre et badges de fonctionnalités
+     • barre sticky "Commencer + PDF" (.home-start-sticky)
+     • accordéons natifs <details>/<summary> (zéro JS)
+     • corps blanc arrondi (.home-guide-body)
+   Deux blocs de contenu statiques dans index.html :
+     #guideContentFR (.home-lang-block[data-lang="fr"])
+     #guideContentES (.home-lang-block[data-lang="es"])
+   _buildHomeGuide() active le bon bloc et injecte les dynamiques.
 
-/* showGuide() — Point d'entrée principal pour afficher le guide.
-   Appelée automatiquement à la première visite (_maybeAutoShowGuide)
-   ou manuellement via le lien "Guide / Guía" en pied de page. */
-function showGuide() {
-  var modal = document.getElementById('guide-modal');
-  if (!modal) return;
+   Fonctions publiques :
+     showGuide()           — alias de showOnboardingGuide()
+     _buildHomeGuide()     — injecte les parties dynamiques
+     _maybeAutoShowGuide() — affiche le guide à la 1re visite
+     _refreshGuideRegion() — adapte le bandeau variante ES
+     _refreshGuideHeroFR() — adapte le titre/drapeau bloc FR
+═══════════════════════════════════════════════════════════ */
 
-  var blockFR = document.getElementById('guideContentFR');
-  var blockES = document.getElementById('guideContentES');
-
-  /* — Sélection du bloc de langue à afficher —
-     Logique identique à celle de _setUI() dans initApp() :
-     l'interface (ici, celle du guide) est toujours présentée
-     dans la langue MATERNELLE supposée de l'apprenant, donc
-     dans la langue OPPOSÉE à celle qu'il apprend.
-     Si aucun mode n'est encore défini (accès direct improbable,
-     sécurité), on retombe par défaut sur le français. */
-  // Utilise la variable d'état globale réelle de l'application (cf. section 1)
+/**
+ * _buildHomeGuide() — Active le bon bloc de langue et met à jour
+ * les éléments dynamiques de l'écran #home (topbar, drapeaux, titre,
+ * sous-titre, badges, boutons Commencer et PDF).
+ * Appelée par initApp() après _setUI().
+ */
+function _buildHomeGuide() {
   var showFrench = (currentMode === 'learn_spain') || !currentMode;
+  /* Convention :
+     showFrench = true  → mode learn_spain (Francophone apprend l'Espagnol) → guide en FR → bloc [data-lang="fr"]
+     showFrench = false → mode learn_french (Hispanophone apprend le Français) → guide en ES → bloc [data-lang="es"] */
+  var activeLang = showFrench ? 'fr' : 'es';
 
-  if (blockFR) blockFR.style.display = showFrench ? 'block' : 'none';
-  if (blockES) blockES.style.display = showFrench ? 'none'  : 'block';
-
-  // ── Adaptation de la topbar selon le mode ──
-  var noShowLabel = document.querySelector('.guide-topbar-noshow');
-  var closeBtn    = document.getElementById('guideCloseBtn');
-  var topbar      = document.getElementById('guideTopbar') || document.querySelector('.guide-topbar');
-
-  // La checkbox (noShowLabel) doit être affichée dans les deux modes
-  if (noShowLabel) {
-    noShowLabel.style.display = 'flex';
-  }
-
-  // Récupération de TOUS les spans de texte fr/es (topbar + bas de page)
-  var textsFr = document.querySelectorAll('.guide-no-show-fr');
-  var textsEs = document.querySelectorAll('.guide-no-show-es');
-
-  if (showFrench) {
-    // Mode learn_spain (Francophone) : bouton = Fermer, texte = Ne plus afficher
-    if (closeBtn) closeBtn.textContent = '✕ Fermer';
-    textsFr.forEach(el => { el.style.display = 'inline'; });
-    textsEs.forEach(el => { el.style.display = 'none'; });
-    
-    if (topbar) {
-      topbar.classList.add('guide-topbar--fr');
-      topbar.classList.remove('guide-topbar--es');
-    }
-  } else {
-    // Mode learn_french (Hispanophone) : bouton = Cerrar, texte = No mostrar más
-    if (closeBtn) closeBtn.textContent = '✕ Cerrar';
-    textsFr.forEach(el => { el.style.display = 'none'; });
-    textsEs.forEach(el => { el.style.display = 'inline'; });
-    
-    if (topbar) {
-      topbar.classList.add('guide-topbar--es');
-      topbar.classList.remove('guide-topbar--fr');
-    }
-  }
-
-  // Adapte le titre du bloc affiché à la langue réellement étudiée
-  // (et, côté espagnol, à la variante régionale active)
-  if (showFrench) _refreshGuideHeroFR();
-  else            _refreshGuideRegion();
-
-  // Bouton export guide PDF — injecté dans la topbar si absent
-  (function() {
-    var topbarEl = document.getElementById('guideTopbar') || document.querySelector('.guide-topbar');
-    if (!topbarEl) return;
-    var existing = document.getElementById('guide-export-btn');
-    if (!existing) {
-      var btn = document.createElement('button');
-      btn.id = 'guide-export-btn';
-      btn.className = 'export-pdf-btn';
-      btn.style.cssText = 'margin-right:8px;';
-      btn.onclick = function() { _exportGuide(); };
-      btn.innerHTML = '📄 PDF';
-      /* Insère avant le bouton Fermer */
-      var closeBtnRef = document.getElementById('guideCloseBtn');
-      if (closeBtnRef) topbarEl.insertBefore(btn, closeBtnRef);
-      else topbarEl.appendChild(btn);
-    }
-  })();
-
-  // Affiche la modale et remonte en haut (au cas où elle a déjà été scrollée)
-  modal.classList.add('active');
-  modal.scrollTop = 0;
-
-  // Synchronise toutes les checkboxes "ne plus afficher" avec l'état actuel du flag
-  var flagValue = false;
-  // SÉCURITÉ : Remplacement de la constante par une chaîne si GUIDE_STORAGE_KEY n'est pas déclarée globalement
-  var storageKey = (typeof GUIDE_STORAGE_KEY !== 'undefined') ? GUIDE_STORAGE_KEY : 'lang_app_guide_noshow';
-  try { flagValue = localStorage.getItem(storageKey) === '1'; } catch(e) {}
-  
-  var allChecks = document.querySelectorAll('.guide-no-show-check');
-  allChecks.forEach(cb => { cb.checked = flagValue; });
-}
-
-/* closeGuide() — Referme la modale du guide.
-   Le flag "ne plus afficher" n'est posé que par la checkbox,
-   pas ici : fermer sans cocher = guide réaffiché à la prochaine visite. */
-function closeGuide() {
-  var modal = document.getElementById('guide-modal');
-  if (modal) modal.classList.remove('active');
-}
-
-/* toggleGuideNoShow(cb) — Appelée au clic sur n'importe quelle checkbox
-   "Ne plus afficher". Pose ou retire le flag localStorage et synchronise
-   toutes les autres checkboxes (les 4 au total : haut+bas × FR+ES). */
-function toggleGuideNoShow(cb) {
-  var checked = cb.checked;
-  // Synchronise toutes les checkboxes sœurs
-  var allChecks = document.querySelectorAll('.guide-no-show-check');
-  allChecks.forEach(c => { c.checked = checked; });
-  // Pose ou retire le flag
-  try {
-    if (checked) {
-      localStorage.setItem(GUIDE_STORAGE_KEY, '1');
+  /* ── 1. Révèle le bon bloc, masque l'autre ── */
+  document.querySelectorAll('.home-lang-block').forEach(function(el) {
+    if (el.dataset.lang === activeLang) {
+      el.classList.remove('home-lang-hidden');
     } else {
-      localStorage.removeItem(GUIDE_STORAGE_KEY);
+      el.classList.add('home-lang-hidden');
     }
-  } catch(e) {}
+  });
+
+  /* ── 2. Topbar titre ── */
+  var topbarTitle = document.getElementById('homeTopbarTitle');
+  if (topbarTitle) topbarTitle.textContent = showFrench ? 'Guide explicatif' : 'Guía explicativa';
+
+  /* ── 3. En-tête : drapeaux, titre, sous-titre ── */
+  var flagsEl = document.getElementById('homeGuideFlagsRow');
+  if (flagsEl) {
+    var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+    var activeFlag = flagEmojis[currentRegion] || '🇪🇸';
+    flagsEl.textContent = showFrench ? ('🇫🇷 → ' + activeFlag) : (activeFlag + ' → 🇫🇷');
+  }
+
+  var titleEl = document.getElementById('homeTitle');
+  if (titleEl) {
+    var flagEmojis2 = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+    var activeFlag2 = flagEmojis2[currentRegion] || '🇪🇸';
+    titleEl.textContent = showFrench
+      ? ('Apprends l\'Espagnol ' + activeFlag2)
+      : ('Aprende Francés 🇫🇷');
+  }
+
+  var subEl = document.getElementById('homeGuideSubtitle');
+  if (subEl) subEl.textContent = showFrench
+    ? 'App gratuite — idéale pour les grands débutants.'
+    : 'App gratuita — ideal para empezar desde cero.';
+
+  /* ── 4. Badges de fonctionnalités ── */
+  var badgesEl = document.getElementById('homeGuideBadges');
+  if (badgesEl) {
+    var badges = showFrench
+      ? ['✅ Gratuit', '🚧 Sans inscription', '📱 Mobile & ordinateur', '🔊 Audio inclus', '🎤 Répétition orale', '🌎 7 variantes d\'espagnol', '📲 Installable hors-ligne']
+      : ['✅ Gratis', '🚧 Sin registro', '📱 Móvil y ordenador', '🔊 Audio incluido', '🎤 Repetición oral', '🌎 7 variantes de español', '📲 Instalable sin conexión'];
+    badgesEl.innerHTML = badges.map(function(b) { return '<span class="hg-badge">' + b + '</span>'; }).join('');
+  }
+
+  /* ── 5. Bouton Commencer ── */
+  var startBtn = document.getElementById('homeStartBtn');
+  if (startBtn) {
+    startBtn.textContent = showFrench ? '▶ Commencer' : '▶ Empezar';
+    startBtn.onclick = function() { showScreen('sections-level1'); };
+  }
+
+  /* ── 6. Bouton PDF guide ── */
+  var exportBtn = document.getElementById('homeExportBtn');
+  if (exportBtn) {
+    exportBtn.textContent = '📄 PDF';
+    exportBtn.title = showFrench ? 'Télécharger le guide (PDF)' : 'Descargar la guía (PDF)';
+  }
+
+  /* ── 7. Bandeau variante régionale (bloc ES) ── */
+  _refreshGuideRegion();
 }
 
-/* _maybeAutoShowGuide() — Déclenche l'affichage automatique du guide
-   uniquement lors de la toute première visite (flag absent).
-   Appelée en fin d'initApp(), donc juste après le choix de langue. */
+/**
+ * showGuide() — Affiche le guide (écran #home) et met à jour les
+ * éléments dynamiques. Alias de showOnboardingGuide() pour la
+ * compatibilité avec les liens "Guide / Guía" dans les footers.
+ */
+function showGuide() {
+  _buildHomeGuide();
+  showScreen('home');
+}
+
+/**
+ * showOnboardingGuide() — Alias public de showGuide().
+ * Appelée par le bouton ❓ de la barre de navigation basse.
+ */
+function showOnboardingGuide() {
+  showGuide();
+}
+
+/**
+ * closeGuide() — Conservée pour compatibilité (HTML inline).
+ * Dans le nouveau style, "fermer" le guide = aller aux modules.
+ */
+function closeGuide() {
+  showScreen('sections-level1');
+}
+
+/**
+ * toggleGuideNoShow() — Conservée pour compatibilité (HTML inline).
+ * Dans le nouveau style Oromo, il n'y a plus de checkbox "Ne plus afficher".
+ * La fonction est gardée vide pour éviter toute erreur JS.
+ */
+function toggleGuideNoShow(cb) { /* no-op — supprimé dans le style Oromo */ }
+
+/**
+ * _maybeAutoShowGuide() — Affiche le guide à la première visite
+ * (ou toujours, car dans le style Oromo le guide = écran d'accueil).
+ * Appelée en fin d'initApp().
+ */
 function _maybeAutoShowGuide() {
-  var alreadySeen = false;
-  try { alreadySeen = localStorage.getItem(GUIDE_STORAGE_KEY) === '1'; }
-  catch (e) { alreadySeen = false; }
-
-  if (!alreadySeen) showGuide();
+  /* Dans le style Oromo, le guide est toujours l'écran d'accueil.
+     showScreen('home') a déjà été appelé dans initApp() via showGuide(). */
 }
 
-/* _refreshGuideRegion() — Adapte le bloc espagnol du guide (#guideContentES)
-   à la variante régionale active (currentRegion). Reprend la logique du
-   <script> embarqué dans l'ancienne page language-app-user-guide-es.html :
-   drapeau du héros, bandeau "Tu app está configurada en…", exemple de
-   vocabulaire régional (t-shirt / bus), et surbrillance de la carte active
-   dans la grille des variantes régionales. */
+/**
+ * _refreshGuideRegion() — Adapte le bandeau variante régionale
+ * du bloc espagnol (#guideContentES) à currentRegion.
+ */
 function _refreshGuideRegion() {
-  // Table de correspondance région → infos d'affichage (drapeau, nom, exemples)
   var REGIONS = {
-    ES: { flag:'🇪🇸', name:'España (Castellano)', shirt:'la camiseta', bus:'el autobús' },
-    MX: { flag:'🇲🇽', name:'México',               shirt:'la playera',  bus:'el camión' },
-    AR: { flag:'🇦🇷', name:'Argentina',            shirt:'la remera',   bus:'el colectivo' },
-    CO: { flag:'🇨🇴', name:'Colombia',             shirt:'la camiseta', bus:'el bus / la buseta' },
-    VE: { flag:'🇻🇪', name:'Venezuela',            shirt:'la franela',  bus:'la buseta' },
-    PE: { flag:'🇵🇪', name:'Perú',                 shirt:'el polo',     bus:'la combi' },
-    EC: { flag:'🇪🇨', name:'Ecuador',              shirt:'la camiseta', bus:'el autobús' }
+    ES: { flag:'🇪🇸', name:'España (Castellano)' },
+    MX: { flag:'🇲🇽', name:'México' },
+    AR: { flag:'🇦🇷', name:'Argentina' },
+    CO: { flag:'🇨🇴', name:'Colombia' },
+    VE: { flag:'🇻🇪', name:'Venezuela' },
+    PE: { flag:'🇵🇪', name:'Perú' },
+    EC: { flag:'🇪🇨', name:'Ecuador' }
   };
-
   var region = REGIONS[currentRegion] ? currentRegion : 'ES';
   var r = REGIONS[region];
 
-  // Drapeaux du hero : 🇫🇷 (langue apprise dans ce bloc) 🌍 + drapeau régional
-  // de la variante d'espagnol maternelle de l'apprenant (sert de repère, pas
-  // la langue étudiée — celle-ci est toujours le français dans ce bloc).
-  var heroFlags = document.getElementById('guideHeroFlagsES');
-  if (heroFlags) heroFlags.textContent = '🇫🇷 🌍 ' + r.flag;
-
-  // Titre du hero : toujours "Apprends le Français" dans ce bloc, avec le
-  // drapeau français (langue réellement étudiée par l'utilisateur), et non
-  // un libellé générique "Apprends une langue".
-  var heroTitle = document.getElementById('guideHeroTitleES');
-  if (heroTitle) heroTitle.innerHTML = 'Aprende Francés 🇫🇷';
- 
-  // Bandeau d'info sous le sous-titre du hero
+  /* Bandeau variante dans le bloc ES */
   var badge = document.getElementById('guideRegionBadgeES');
   if (badge) badge.innerHTML = 'Tu app está configurada en <strong>' + r.flag + ' ' + r.name + '</strong>';
-
-  // Exemple de vocabulaire régional dans la section "Variantes regionales"
-  var example = document.getElementById('guideRegionExampleES');
-  if (example) {
-    example.innerHTML = '💡 Ejemplo con tu variante — así se dice en <strong>' + r.name + '</strong>: '
-      + r.flag + ' <strong>' + r.shirt + '</strong> (camiseta) · <strong>' + r.bus + '</strong> (autobús)'
-      + '<br><span style="font-size:.75rem;color:var(--g-muted);">Puedes cambiar tu variante en cualquier momento desde la pantalla de inicio de la app.</span>';
-  }
-
-  // Surbrillance de la carte de la région active dans la grille
-  var grid = document.getElementById('guideRegionGridES');
-  if (grid) {
-    var cards = grid.querySelectorAll('.guide-region-card');
-    cards.forEach(c => { c.classList.remove('active'); });
-    var activeCard = grid.querySelector('.guide-region-card[data-region="' + region + '"]');
-    if (activeCard) activeCard.classList.add('active');
-  }
-
-  // Le contenu injecté ci-dessus peut changer la hauteur d'un panneau
-  // accordéon déjà ouvert (ex : section "Variantes régionales") : on
-  // recalcule sa max-height pour éviter toute troncature visuelle.
-  _resizeOpenAccordions();
 }
 
-/* _refreshGuideHeroFR() — Adapte le titre du hero du bloc français du guide
-   (#guideContentFR), affiché quand currentMode === 'learn_spain' (l'utilisateur
-   apprend l'espagnol). Remplace le libellé générique "Apprends une langue"
-   par "Apprends l'Espagnol" + le drapeau de la variante régionale choisie
-   (ex : 🇲🇽 si Mexique), au lieu du systématique 🇪🇸. */
+/**
+ * _refreshGuideHeroFR() — Adapte le titre/drapeau de l'en-tête
+ * du bloc français (en-tête #home) à la variante régionale active.
+ * Conservée pour compatibilité — _buildHomeGuide() gère déjà cela.
+ */
 function _refreshGuideHeroFR() {
-  const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
-  var activeFlag  = flagEmojis[currentRegion] || '🇪🇸';
-
-  var heroFlags = document.getElementById('guideHeroFlagsFR');
-  if (heroFlags) heroFlags.textContent = '🇫🇷 🌍 ' + activeFlag;
-
-  var heroTitle = document.getElementById('guideHeroTitleFR');
-  if (heroTitle) heroTitle.innerHTML = 'Apprends l\'Espagnol ' + activeFlag;
+  var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+  var activeFlag = flagEmojis[currentRegion] || '🇪🇸';
+  var flagsEl = document.getElementById('homeGuideFlagsRow');
+  if (flagsEl) flagsEl.textContent = '🇫🇷 → ' + activeFlag;
+  var titleEl = document.getElementById('homeTitle');
+  if (titleEl) titleEl.textContent = 'Apprends l\'Espagnol ' + activeFlag;
 }
 
 /* ============================================================
