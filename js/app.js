@@ -553,16 +553,16 @@ function initApp(mode) {
        éléments dynamiques (drapeaux, titre, badges, boutons…). */
   _buildHomeGuide();
 
-  /* — Masquer le launcher et naviguer directement vers les modules —
-       Le guide (#home) reste accessible via le bouton ❓ dans la nav bar.
-       On saute l'écran d'accueil pour que l'apprenant arrive immédiatement
-       sur la grille des modules, sans étape intermédiaire. */
+  /* — Masquer le launcher et afficher le guide (#home) en premier —
+       L'apprenant voit le guide à chaque lancement (présentation de l'app,
+       bouton "Commencer" pour accéder aux modules).
+       Le guide reste aussi accessible via le bouton ❓ dans la nav bar. */
   document.getElementById('app-launcher').classList.remove('active');
   renderSections(1);
-  showScreen('sections-level1');
+  showScreen('home');
 
   // Met à jour la barre de navigation basse pour le mode courant
-  _updateBottomNav('sections-level1');
+  _updateBottomNav('home');
 }
 
 
