@@ -40,7 +40,7 @@
 
   <!--
     PWA — Progressive Web App
-    Ces trois balises permettent l'installation sur écran d'accueil
+    Ces balises permettent l'installation sur écran d'accueil
     et définissent l'apparence de l'app en mode standalone.
 
     manifest.json  → nom, icône, couleurs, start_url, orientation
@@ -51,8 +51,21 @@
                         pas le manifest pour l'icône)
   -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#002395">
+  <meta name="theme-color" content="#002395" id="meta-theme-color">
+  <meta name="description"
+        content="VACHÉBO — Application bilingue Français ↔ Espagnol. Apprenez hors-ligne, sur mobile et desktop.">
+
+  <!-- ── iOS PWA : icône et comportement de la barre de statut ── -->
   <link rel="apple-touch-icon" href="img/Logo-appli-es-fr.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="VACHÉBO">
+
+  <!-- ── Open Graph (partage réseaux sociaux) ── -->
+  <meta property="og:title"       content="VACHÉBO 🐄 — Français ↔ Espagnol">
+  <meta property="og:description" content="Application bilingue d'apprentissage Français / Espagnol. Gratuite et hors-ligne.">
+  <meta property="og:image"       content="img/Logo-appli-es-fr.png">
+  <meta property="og:type"        content="website">
 
   <!-- Feuille de styles unique — voir css/style.css pour les détails -->
   <link rel="stylesheet" href="css/style.css">
@@ -179,35 +192,26 @@
     <!-- Titre injecté par JS (contiennent du HTML bilingue) -->
     <h1 id="homeTitle"></h1>
     
-    <!-- Barre de progression : remplie par renderHome() -->
-    <div class="home-progress-wrap">
-      <div class="home-progress-bar" id="homeBar" style="width:0%"></div>
+    <!-- Cercle SVG de progression (visible une fois des modules complétés) -->
+    <div class="home-progress-circle-wrap" id="homeProgressCircleWrap" style="display:none">
+      <svg class="home-progress-circle" viewBox="0 0 120 120"
+           width="120" height="120"
+           role="img" aria-labelledby="hpcTitle" aria-describedby="hpcDesc">
+        <title id="hpcTitle"></title>
+        <desc id="hpcDesc"></desc>
+        <circle class="hpc-track" cx="60" cy="60" r="50"/>
+        <circle class="hpc-fill"  cx="60" cy="60" r="50" id="hpcArc"/>
+        <text class="hpc-pct" x="60" y="56" id="hpcPct">0%</text>
+        <text class="hpc-sub" x="60" y="74" id="hpcSub">⭐ 0</text>
+      </svg>
     </div>
-    <div class="home-progress-label" id="homeBarLabel"></div>
 
-    <!-- Affichage total d'étoiles gagnées -->
-    <div class="stars-row" id="homeStars"></div>
-
-    <!-- Sélecteur de variante hispanique (visible uniquement en mode Espagnol)
-         Le contenu est généré par renderRegionOptions() dans app.js -->
-    <div id="region-selector-wrap" style="margin:0 auto 15px;text-align:center;display:none;">
-      <label for="regionSelector"
-             style="font-size:0.9rem;opacity:0.8;margin-right:8px;color:var(--c-home-subtitle);">
-        Variante :
-      </label>
-      <select id="regionSelector"
-              onchange="changeRegion(this.value)"
-              style="padding:6px 12px;border-radius:8px;border:1px solid #ccc;
-                     font-size:0.9rem;background:white;font-family:inherit;">
-        <option value="ES">🇪🇸 Espagne (Castillan)</option>
-        <option value="MX">🇲🇽 Mexique</option>
-        <option value="CO">🇨🇴 Colombie</option>
-        <option value="PE">🇵🇪 Pérou</option>
-        <option value="VE">🇻🇪 Venezuela</option>
-        <option value="AR">🇦🇷 Argentine</option>
-        <option value="EC">🇪🇨 Équateur</option>
-      </select>
-    </div>
+    <!-- Widget de variante régionale hispanique (visible uniquement en mode Espagnol).
+         Contenu généré dynamiquement par _renderHomeRegionWidget() dans app.js.
+         Les couleurs et styles s'adaptent automatiquement à la région active
+         via les CSS custom properties (var(--c-primary), var(--c-accent)…)
+         appliquées par pickRegion() sur <html>. -->
+    <div id="home-region-widget" style="display:none;"></div>
 
     <!-- Bouton démarrer → showScreen('sections'), texte injecté par JS -->
     <button class="btn-primary" id="homeStartBtn"></button>
@@ -222,19 +226,18 @@
 
 
   <!-- ══════════════════════════════════════════
-       ÉCRAN 2 — LISTE DES MODULES (SECTIONS)
-       Grille des thèmes regroupés en Niveau 1
-       (vocabulaire) et Niveau 2 (dialogues).
-       Les cartes sont générées par renderSections()
+       ÉCRAN 2a — NIVEAU 1 MODULES  (#sections-level1)
+       Grille des thèmes de Niveau 1 (vocabulaire).
+       Les cartes sont générées par renderSections(1)
        dans app.js à partir de ALL_THEMES.
   ══════════════════════════════════════════ -->
-  <div id="sections" class="screen">
+  <div id="sections-level1" class="screen">
 
     <div class="sections-header">
       <!-- Ligne du haut : Retour + Titre à gauche, drapeau de la langue apprise à droite -->
       <div class="sections-top-row">
         <div class="sections-top-left">
-          <!-- Retour → launcher (l'écran Home n'est plus dans le parcours) -->
+          <!-- Retour → launcher -->
           <button class="back-btn" id="sectionsBackBtn" onclick="showLauncher()"
                   aria-label="Retour au choix de langue / Volver a la selección de idioma"></button>
 
@@ -258,44 +261,88 @@
       <div class="sections-stars" id="sectionsStars"></div>
     </div>
 
+    <!-- Barre d'onglets Niveau 1 / Niveau 2 -->
+    <div class="level-tab-bar">
+      <button class="level-tab active" id="lvlTab1" onclick="showScreen('sections-level1')">
+        <span id="level1Label"></span>
+      </button>
+      <button class="level-tab" id="lvlTab2" onclick="showScreen('sections-level2')">
+        <span id="level2Label"></span>
+      </button>
+    </div>
+
     <div class="sections-body">
-
-      <!-- Niveau 1 : Vocabulaire — accordéon déroulant -->
-      <div class="level-accordion">
-        <button class="level-acc-header" onclick="toggleLevelAcc(this)" aria-expanded="true">
-          <div class="level-label">
-            <span class="level-badge" id="level1Badge"></span>
-            <span id="level1Label"></span>
-          </div>
-          <span class="level-acc-arrow">▾</span>
-        </button>
-        <div class="level-acc-body open">
-          <div class="themes-grid" id="grid1"></div>
-        </div>
-      </div>
-
-      <!-- Niveau 2 : Dialogues — accordéon déroulant -->
-      <div class="level-accordion">
-        <button class="level-acc-header" onclick="toggleLevelAcc(this)" aria-expanded="true">
-          <div class="level-label">
-            <span class="level-badge l2" id="level2Badge"></span>
-            <span id="level2Label"></span>
-          </div>
-          <span class="level-acc-arrow">▾</span>
-        </button>
-        <div class="level-acc-body open">
-          <div class="themes-grid" id="grid2"></div>
-        </div>
-      </div>
-
+      <div class="themes-grid" id="grid1"></div>
     </div>
 
     <footer id="sectionsFooter">
       <!-- Contenu injecté par renderSections() selon le mode et la variante -->
     </footer>
-  </div><!-- /sections -->
+  </div><!-- /#sections-level1 -->
 
 
+  <!-- ══════════════════════════════════════════
+       ÉCRAN 2b — NIVEAU 2 MODULES  (#sections-level2)
+       Grille des thèmes de Niveau 2 (dialogues).
+       Les cartes sont générées par renderSections(2)
+       dans app.js à partir de ALL_THEMES.
+  ══════════════════════════════════════════ -->
+  <div id="sections-level2" class="screen">
+
+    <div class="sections-header">
+      <!-- Ligne du haut : Retour + Titre à gauche, drapeau de la langue apprise à droite -->
+      <div class="sections-top-row">
+        <div class="sections-top-left">
+          <!-- Retour → launcher -->
+          <button class="back-btn" id="sectionsBackBtn2" onclick="showLauncher()"
+                  aria-label="Retour au choix de langue / Volver a la selección de idioma"></button>
+
+          <!-- Titre injecté par JS -->
+          <h2 id="sectionsTitle2"></h2>
+          <!-- Sous-titre bilingue -->
+          <div class="sections-subtitle" id="sectionsSubtitle2"></div>
+        </div>
+
+        <!-- Drapeau de la langue apprise -->
+        <div class="sections-flag" id="sectionsFlag2"></div>
+      </div>
+
+      <!-- Barre de progression globale -->
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="globalProgress2" style="width:0%"></div>
+      </div>
+      <div class="progress-label" id="progressLabel2"></div>
+
+      <!-- Étoiles totales -->
+      <div class="sections-stars" id="sectionsStars2"></div>
+    </div>
+
+    <!-- Barre d'onglets Niveau 1 / Niveau 2 -->
+    <div class="level-tab-bar">
+      <button class="level-tab" id="lvlTab1b" onclick="showScreen('sections-level1','back')">
+        <span id="level1LabelB"></span>
+      </button>
+      <button class="level-tab active" id="lvlTab2b" onclick="showScreen('sections-level2')">
+        <span id="level2LabelB"></span>
+      </button>
+    </div>
+
+    <div class="sections-body">
+      <div class="themes-grid" id="grid2"></div>
+    </div>
+
+    <footer id="sectionsFooter2">
+      <!-- Contenu injecté par renderSections() selon le mode et la variante -->
+    </footer>
+  </div><!-- /#sections-level2 -->
+
+
+  <!-- ══════════════════════════════════════════
+       [ANCIEN ÉCRAN SECTIONS - CONSERVÉ VIDE pour compatibilité]
+       Remplacé par #sections-level1 et #sections-level2.
+       Cet élément n'est plus activé, mais sa présence dans le DOM
+       évite des erreurs si du code résiduel référence l'ID "sections".
+  ══════════════════════════════════════════ -->
   <!-- ══════════════════════════════════════════
        ÉCRAN 3 — LEÇON
        Affiché quand on clique sur un module.
@@ -312,20 +359,24 @@
   <div id="lesson" class="screen">
 
     <div class="lesson-header">
-      <!-- Retour → écran sections -->
-      <button class="lesson-nav-btn" onclick="lessonNav(-1)" id="lessonPrevBtn" aria-label="Module précédent">‹</button>
-      <button class="back-btn" onclick="showScreen('sections')" id="lessonBackBtn"
+      <!-- Retour → écran sections (niveau mémorisé via lessonGoBack()) -->
+      <button class="back-btn" onclick="lessonGoBack()" id="lessonBackBtn"
               aria-label="Retour aux modules / Volver a los módulos">←</button>
 
-      <!-- Retour direct → écran sections (le home n'est plus dans le parcours) -->
-      <button class="back-btn lesson-home-btn" onclick="showScreen('sections')" id="lessonHomeBtn"
+      <!-- Retour direct → écran sections -->
+      <button class="back-btn lesson-home-btn" onclick="lessonGoBack()" id="lessonHomeBtn"
               title="Modules" aria-label="Accueil des modules / Inicio de módulos">🏠</button>
 
       <!-- Emoji et titre du module courant, injectés par openTheme() -->
       <span id="lessonEmoji" style="font-size:1.4rem;margin-right:4px"></span>
       <h3 id="lessonTitle"></h3>
-      <button class="lesson-nav-btn" onclick="lessonNav(1)" id="lessonNextBtn" aria-label="Module suivant">›</button>
-    </div>
+
+      <!-- Navigation prev / next dans le niveau -->
+      <div class="lesson-nav-arrows">
+        <button class="lesson-nav-btn" id="lessonPrevBtn" onclick="lessonNav(-1)" title="Module précédent" aria-label="Module précédent">‹</button>
+        <button class="lesson-nav-btn" id="lessonNextBtn" onclick="lessonNav(1)"  title="Module suivant"   aria-label="Module suivant">›</button>
+      </div>
+    </div><!-- /.lesson-header -->
 
     <div class="lesson-body" id="lessonBody">
       <!-- Onglets générés dynamiquement par openTheme() -->
@@ -835,8 +886,8 @@
                 <div class="guide-contact-callout-title">💬 Une suggestion, une question, une coquille ?</div>
                 <p class="guide-contact-callout-desc">Cette appli est faite pour toi — si tu vois quelque chose à améliorer, une traduction incorrecte, une fonctionnalité qui bug ou simplement une idée à partager, <strong>écris-moi !</strong> Chaque retour compte vraiment.</p>
                 <div class="guide-contact-callout-actions">
-                  <button type="button" class="guide-contact-callout-btn" onclick="copierEmailSecurise(this)">
-                    ✉️ Copier mon e-mail
+                  <button type="button" class="guide-contact-callout-btn antispam-btn" onclick="openAndCopyEmail()">
+                    ✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span>
                   </button>
                   <a class="guide-contact-callout-btn guide-contact-callout-btn--secondary" href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">💼 Message LinkedIn</a>
                 </div>
@@ -1300,8 +1351,8 @@
                 <div class="guide-contact-callout-title">💬 ¿Una sugerencia, una pregunta, una errata?</div>
                 <p class="guide-contact-callout-desc">Esta app está hecha para ti — si ves algo que mejorar, una traducción incorrecta, una función que falla o simplemente una idea que compartir, <strong>¡escríbeme!</strong> Cada comentario cuenta de verdad.</p>
                 <div class="guide-contact-callout-actions">
-                  <button type="button" class="guide-contact-callout-btn" onclick="copierEmailSecurise(this)">
-                    ✉️ Copiar mi correo
+                  <button type="button" class="guide-contact-callout-btn antispam-btn" onclick="openAndCopyEmail()">
+                    ✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span>
                   </button>
                   <a class="guide-contact-callout-btn guide-contact-callout-btn--secondary" href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">💼 Mensaje LinkedIn</a>
                 </div>
@@ -1336,18 +1387,26 @@
 
   </div><!-- /guide-modal -->
 
-  <nav class="bottom-nav" id="bottomNav" style="display:none;">
-    <button class="bnav-btn" id="bnavModules" onclick="showScreen('sections')">
-      <span class="bnav-icon">🏠</span>
-      <span class="bnav-label" id="bnavModulesLabel">Modules</span>
+  <!-- ════════════════════════════════════════════════════════════════
+       BARRE DE NAVIGATION BASSE  (#bottom-nav)
+       Cachée sur l'écran lanceur ; visible dès que l'app est initialisée.
+       ════════════════════════════════════════════════════════════════ -->
+  <nav id="bottom-nav" class="bottom-nav" aria-label="Navigation principale">
+    <button class="nav-btn" id="navBtnLang" onclick="showLauncher()" aria-label="Changer de langue">
+      <span class="nav-icon" id="navLangFlag">🌍</span>
+      <span class="nav-label" id="navLabelLang">Langue</span>
     </button>
-    <button class="bnav-btn" id="bnavGuide" onclick="showGuide()">
-      <span class="bnav-icon">❓</span>
-      <span class="bnav-label" id="bnavGuideLabel">Guide</span>
+    <button class="nav-btn" id="navBtnGuide" onclick="showGuide()" aria-label="Guide">
+      <span class="nav-icon">❓</span>
+      <span class="nav-label" id="navLabelGuide">Guide</span>
     </button>
-    <button class="bnav-btn" id="bnavLang" onclick="showLauncher()">
-      <span class="bnav-icon">🌍</span>
-      <span class="bnav-label" id="bnavLangLabel">Langue</span>
+    <button class="nav-btn" id="navBtnModules" onclick="navGoModules()" aria-label="Modules">
+      <span class="nav-icon">📚</span>
+      <span class="nav-label" id="navLabelModules">Modules</span>
+    </button>
+    <button class="nav-btn" id="navBtnCredits" onclick="showCredits()" aria-label="Infos">
+      <span class="nav-icon">💌</span>
+      <span class="nav-label" id="navLabelCredits">Infos</span>
     </button>
   </nav>
 

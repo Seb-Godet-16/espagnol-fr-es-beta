@@ -67,7 +67,7 @@ function confirmReset() {
   done = [];
   try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
   document.getElementById('confirm-modal').style.display = 'none';
-  renderSections();
+  renderSections(_currentThemeLevel || 1);
   _showToast(L('✅ Progresión borrada.', '✅ Progression effacée.'));
 }
 function cancelReset() {
@@ -88,37 +88,66 @@ function _hideSpinner() {
   if (s) s.style.display = 'none';
 }
 
-function _showConfetti() {
-  var overlay = document.createElement('div');
-  overlay.id = 'confetti-overlay';
-  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99998;';
-  document.body.appendChild(overlay);
+/* _launchConfetti(isThreeStars) — Animation de félicitations ⭐⭐⭐
+   Portée depuis l'app Oromo :
+   - Répartition en zones (pas de regroupement aléatoire).
+   - Couleurs cycliques (pas de random pur) pour une palette équilibrée.
+   - CSS custom properties (--cx, --cr, --cs, --cd) : transitions GPU.
+   - Délai échelonné calculé (i × 0.028 s) pour un effet de vague.
+   - Guard CSS custom properties pour très vieux navigateurs.
+   - Nettoyage DOM après 2 400 ms (fin de la dernière animation).
+   @param {boolean} [isThreeStars=true] – Intensité (réservé pour évolution) */
+function _launchConfetti(isThreeStars) {
+  /* Guard : s'assurer que les CSS custom properties sont disponibles */
+  if (typeof document.documentElement.style.setProperty !== 'function') return;
 
+  /* Palette selon le thème actif */
   var isFranceTheme = document.documentElement.classList.contains('theme-french');
   var colors = isFranceTheme
-    ? ['#002395', '#ED2939', '#ffffff', '#FFD700']
-    : ['#C60B1E', '#FFD700', '#F1BF00', '#ffffff'];
+    ? ['#002395', '#ffffff', '#ED2939', '#FFD700', '#4A6FE3', '#FF6B7A']  /* FR */
+    : ['#C60B1E', '#FFD700', '#F1BF00', '#ffffff', '#E05020', '#FFE566']; /* ES */
 
-  for (var i = 0; i < 22; i++) {
+  /* Créer l'overlay */
+  var overlay = document.createElement('div');
+  overlay.className = 'confetti-overlay';
+  document.body.appendChild(overlay);
+
+  var COUNT = 22;
+  for (var i = 0; i < COUNT; i++) {
     var p = document.createElement('div');
-    p.className = 'confetti-particle';
-    var size = 8 + Math.random() * 8; // 8–16 px
-    p.style.left             = (Math.random() * 100) + '%';
-    p.style.width            = size + 'px';
-    p.style.height           = size + 'px';
-    p.style.background       = colors[Math.floor(Math.random() * colors.length)];
-    p.style.setProperty('--delay', (Math.random() * 1.5).toFixed(2) + 's');
-    p.style.setProperty('--dur',   (1.5 + Math.random()).toFixed(2) + 's');
+    p.className = 'conf-p';
+
+    /* Position X : répartie en zones pour éviter les regroupements */
+    var zone   = (i / COUNT) * 100;
+    var jitter = (Math.random() - 0.5) * 14;
+    var cx     = Math.max(2, Math.min(98, zone + jitter));
+
+    /* Couleur cyclique dans la palette */
+    var color = colors[i % colors.length];
+
+    /* Scale aléatoire entre 0.7 et 1.5 */
+    var scale = (0.7 + Math.random() * 0.8).toFixed(2);
+
+    /* Délai échelonné : les 22 particules partent sur ~0.6 s */
+    var delay = (i * 0.028).toFixed(3) + 's';
+
+    p.style.setProperty('--cx', cx + '%');
+    p.style.setProperty('--cr', color);
+    p.style.setProperty('--cs', scale);
+    p.style.setProperty('--cd', delay);
+
     overlay.appendChild(p);
   }
 
+  /* Nettoyer après la fin de la dernière animation
+     (délai max ~0.6 s + durée animation ~1.4 s + marge) */
   setTimeout(function() {
-    if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
   }, 2400);
 }
 
 function loadDataForMode(mode, callback) {
-  var alreadyLoaded = (mode === 'learn_french')
+  const alreadyLoaded = (mode === 'learn_french')
     ? (typeof ALL_THEMES_FR !== 'undefined')
     : (typeof ALL_THEMES_ES !== 'undefined');
 
@@ -127,8 +156,8 @@ function loadDataForMode(mode, callback) {
     return;
   }
 
-  var src = (mode === 'learn_french') ? 'js/data-fr.js' : 'js/data-es.js';
-  var script = document.createElement('script');
+  const src = (mode === 'learn_french') ? 'js/data-fr.js' : 'js/data-es.js';
+  const script = document.createElement('script');
   script.src = src;
 
   script.onload = function() {
@@ -187,7 +216,7 @@ let _currentDynQuiz = [];
 
 // Clé sessionStorage utilisée pour mémoriser la position dans un quiz en cours
 // (perdue à la fermeture de l'onglet, conservée si on quitte/revient sur la leçon)
-const QUIZ_SESSION_KEY = 'pe_quiz_session_v1';
+const QUIZ_SESSION_KEY = 'quiz_session';
 
 // Progression persistante : tableau d'objets { id: string, stars: 1|2|3 }
 let done = [];
@@ -314,7 +343,7 @@ function showLauncherVariant(mode) {
   document.getElementById('app-launcher').classList.add('variant-active');
 
   /* — Drapeau et titre selon le mode — */
-  var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+  const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
   var flagRow   = document.getElementById('launcherFlagRow');
   var titleEl   = document.getElementById('launcherVariantTitle');
   if (mode === 'learn_french') {
@@ -424,7 +453,7 @@ function _setLauncherFooterLang(mode) {
  * Masque tous les écrans et réaffiche le Launcher avec la Vue A.
  */
 function showLauncher() {
-  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  document.querySelectorAll('.screen').forEach(s => { s.classList.remove('active'); });
   document.getElementById('launcher-view-variant').style.display = 'none';
   document.getElementById('launcher-view-cards').style.display   = 'flex';
   document.getElementById('launcher-view-cards').style.flexDirection = 'column';
@@ -459,7 +488,7 @@ function initApp(mode) {
   _hasNotifiedVoice = false;
 
   /* — La région a déjà été choisie dans showLauncherVariant() — */
-  var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+  const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
   var activeFlag  = flagEmojis[currentRegion] || '🇪🇸';
 
   /* ─── MODE : Apprendre le Français (interface présentée en Espagnol) ─── */
@@ -510,17 +539,17 @@ function initApp(mode) {
   /* — Chargement de la progression sauvegardée pour ce mode — */
   loadDone();
 
-  /* — Masquer le launcher et naviguer directement vers Sections — */
+  /* — Masquer le launcher et naviguer vers l'écran Home — */
   document.getElementById('app-launcher').classList.remove('active');
-  showScreen('sections');
+  showScreen('home');
 
   /* — Première visite : affichage automatique du guide utilisateur —
        Le guide s'affiche juste après le choix de langue + variante.
-       À la fermeture du guide, l'utilisateur se retrouve sur Sections. */
+       À la fermeture du guide, l'utilisateur se retrouve sur Home. */
   _maybeAutoShowGuide();
 
   // Met à jour la barre de navigation basse pour le mode courant
-  _updateBottomNav('sections');
+  _updateBottomNav('home');
 }
 
 
@@ -532,18 +561,32 @@ function initApp(mode) {
 function _setUI(t) {
   _setText('homeFlagRow',     t.homeFlagRow);
   _setText('homeTitle',       t.homeTitle);
-  _setText('homeStartBtn',    t.homeStartBtn);
-  _setText('sectionsBackBtn', t.sectionsBackBtn);
+  _setText('sectionsBackBtn',  t.sectionsBackBtn);
+  _setText('sectionsBackBtn2', t.sectionsBackBtn);  // Écran sections-level2
   _setText('sectionsTitle',   t.sectionsTitle);
+  _setText('sectionsTitle2',  t.sectionsTitle);     // Écran sections-level2
   _setText('sectionsFlag',    t.sectionsFlag);
+  _setText('sectionsFlag2',   t.sectionsFlag);      // Écran sections-level2
   _setText('lessonBackBtn',   t.lessonBackBtn);
   _setText('level1Badge',     t.level1Badge);
   _setText('level1Label',     t.level1Label);
+  _setText('level1LabelB',    t.level1Label);       // Onglet sur sections-level2
   _setText('level2Badge',     t.level2Badge);
   _setText('level2Label',     t.level2Label);
+  _setText('level2LabelB',    t.level2Label);       // Onglet sur sections-level2
 
-  // sectionsBackBtn : retour au Launcher (la fonction showLauncher est déjà dans onclick HTML)
-  // homeStartBtn : non utilisé dans le nouveau flux, conservé pour rétro-compatibilité
+  // Branche le bouton Démarrer de l'écran Home vers Sections
+  var homeStartBtn = document.getElementById('homeStartBtn');
+  if (homeStartBtn) {
+    homeStartBtn.innerHTML = t.homeStartBtn || '';
+    homeStartBtn.onclick = function() { showScreen('sections-level1'); };
+  }
+
+  // Branche le bouton retour de l'écran Home vers le Launcher
+  var homeBackBtn = document.getElementById('homeBackBtn');
+  if (homeBackBtn) {
+    homeBackBtn.onclick = showLauncher;
+  }
 }
 
 /* _setText(id, val) — Remplace innerHTML d'un élément par val
@@ -555,7 +598,7 @@ function _setText(id, val) {
 
 
 /* ═══════════════════════════════════════════════════════════
-   3. SYNTHÈSE VOCALE — Voix espagnole avec cascade locale
+   3b. SYNTHÈSE VOCALE — Voix espagnole avec cascade locale
    ─────────────────────────────────────────────────────────
    La Web Speech API charge ses voix de façon asynchrone.
    Pour l'espagnol, on résout d'abord la meilleure voix disponible
@@ -640,7 +683,7 @@ function _resolveSpanishVoice(callback) {
 /* speak(txt) — Point d'entrée unique pour la synthèse vocale.
    Gère automatiquement :
      - Les textes avec '/' (prononce chaque partie avec 2s de pause)
-     - Le mode 'learn_spanish' → voix espagnole résolue dynamiquement
+     - Le mode 'learn_spain' → voix espagnole résolue dynamiquement
      - Le mode 'learn_french'  → voix française (voiceLang = 'fr-FR')
    Si la synthèse échoue silencieusement (ex : iOS Safari avant la première
    interaction tactile de la page), un indicateur "🔇 Audio indisponible"
@@ -657,7 +700,7 @@ function speak(txt) {
     // ─── Mode Espagnol : résolution asynchrone de la meilleure voix disponible ───
     _resolveSpanishVoice(function(voice) {
       speechSynthesis.cancel();
-      var parts = (txt || '').split('/').map(function(p) { return p.trim(); }).filter(Boolean);
+      var parts = (txt || '').split('/').map(p => p.trim()).filter(Boolean);
       function speakPart(i) {
         if (i >= parts.length) return;
         var u = new SpeechSynthesisUtterance(parts[i]);
@@ -688,7 +731,7 @@ function _doSpeak(txt, voiceObj, rate) {
     return;
   }
   speechSynthesis.cancel();
-  var parts = (txt || '').split('/').map(function(p) { return p.trim(); }).filter(Boolean);
+  var parts = (txt || '').split('/').map(p => p.trim()).filter(Boolean);
   function speakPart(i) {
     if (i >= parts.length) return;
     var u = new SpeechSynthesisUtterance(parts[i]);
@@ -756,34 +799,32 @@ function _hideAudioUnavailable() {
 }
 
 
-/* _showToast(msg) — Affiche un message discret en bas d'écran pendant 3 secondes.
+/* _showToast(msg, duration) — Affiche un message discret en bas d'écran.
    Remplace les alert() bloquants pour les notifications non critiques.
-   Crée dynamiquement un élément #app-toast (singleton) dans le DOM. */
-function _showToast(msg) {
-  var toast = document.getElementById('app-toast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'app-toast';
-    toast.style.cssText =
-      'position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);'
-      + 'background:rgba(30,30,30,0.92);color:#fff;padding:10px 20px;border-radius:50px;'
-      + 'font-size:.82rem;font-weight:600;max-width:340px;text-align:center;'
-      + 'box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:99999;'
-      + 'opacity:0;transition:opacity .3s ease,transform .3s ease;pointer-events:none;';
-    document.body.appendChild(toast);
-  }
+   Portée depuis l'app Oromo :
+   - Élément DOM frais à chaque appel (pas de singleton #app-toast).
+   - Durée configurable (défaut 3000 ms).
+   - Double requestAnimationFrame pour garantir la transition CSS d'entrée.
+   - Le nœud est supprimé du DOM après la transition de sortie (300 ms). */
+function _showToast(msg, duration) {
+  duration = duration || 3000;
+
+  var toast = document.createElement('div');
+  toast.className = 'app-toast';
   toast.textContent = msg;
-  // Apparition
+  document.body.appendChild(toast);
+
+  /* Différer l'ajout de .visible d'une double frame pour que la
+     transition CSS d'entrée (opacité + translation) soit bien jouée. */
   requestAnimationFrame(function() {
-    toast.style.opacity  = '1';
-    toast.style.transform = 'translateX(-50%) translateY(0)';
+    requestAnimationFrame(function() { toast.classList.add('visible'); });
   });
-  // Disparition après 3 s
-  clearTimeout(toast._hideTimer);
-  toast._hideTimer = setTimeout(function() {
-    toast.style.opacity  = '0';
-    toast.style.transform = 'translateX(-50%) translateY(20px)';
-  }, 3000);
+
+  setTimeout(function() {
+    toast.classList.remove('visible');
+    /* Laisser la transition de sortie se terminer avant de retirer le nœud. */
+    setTimeout(function() { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300);
+  }, duration);
 }
 
 
@@ -838,34 +879,34 @@ function _calcStars(pct) {
 /* Marque un module comme terminé avec le nombre d'étoiles calculé.
    Ne sauvegarde que si au moins 1 étoile ; ne rétrograde jamais un score. */
 function markDone(id, pct) {
-  var newStars = _calcStars(pct);
+  const newStars = _calcStars(pct);
   if (newStars === 0) return;
 
-  var existing = done.find(function(d) { return d.id === id; });
+  const existing = done.find(d => d.id === id);
   if (existing) {
     if (newStars > existing.stars) existing.stars = newStars; // Amélioration seulement
   } else {
     done.push({ id: id, stars: newStars });
-    if (newStars === 3) _showConfetti();
+    if (newStars === 3) _launchConfetti(true);
   }
   saveDone();
 }
 
 /* Réinitialise la progression d'un module (bouton "Recommencer"). */
 function resetTheme(id) {
-  done = done.filter(function(d) { return d.id !== id; });
+  done = done.filter(d => d.id !== id);
   saveDone();
-  renderSections();
+  renderSections(_currentThemeLevel);
 }
 
 /* Retourne true si le module a été complété au moins une fois (≥ 1 étoile). */
 function isDone(id) {
-  return done.some(function(d) { return d.id === id; });
+  return done.some(d => d.id === id);
 }
 
 /* Retourne le nombre d'étoiles d'un module (0 si non commencé). */
 function getThemeStars(id) {
-  var found = done.find(function(d) { return d.id === id; });
+  const found = done.find(d => d.id === id);
   return found ? found.stars : 0;
 }
 
@@ -882,11 +923,12 @@ function getThemeStars(id) {
 /* Sauvegarde l'état courant du quiz actif (appelée après chaque réponse). */
 function _saveQuizSession() {
   if (!CT) return;
-  var activeTabEl = document.querySelector('#lessonTabs .tab.active');
-  var tabKey = activeTabEl ? activeTabEl.dataset.tab : null;
+  const activeTabEl = document.querySelector('#lessonTabs .tab.active');
+  const tabKey = activeTabEl ? activeTabEl.dataset.tab : null;
   if (tabKey !== 'quiz10' && tabKey !== 'dquiz') return;
 
   var state = {
+    mode: currentMode,
     themeId: CT.id,
     tab: tabKey,
     q10Step: q10Step, q10Score: q10Score,
@@ -908,7 +950,7 @@ function _restoreQuizSession() {
 
   var state;
   try { state = JSON.parse(raw); } catch (e) { return null; }
-  if (!state || state.themeId !== CT.id) return null;
+  if (!state || state.mode !== currentMode || state.themeId !== CT.id) return null;
 
   // Quiz déjà terminé dans la session sauvegardée : pas la peine de reprendre
   var total;
@@ -932,11 +974,13 @@ function _restoreQuizSession() {
     q10Step  = state.q10Step  || 0;
     q10Score = state.q10Score || 0;
     if (state.dynQuiz && state.dynQuiz.length) _currentDynQuiz = state.dynQuiz;
+    _showToast(L('Quiz restaurado desde tu última sesión', 'Quiz restauré depuis votre dernière session'), 3500);
     return 'quiz10';
   }
   if (state.tab === 'dquiz') {
     dqStep  = state.dqStep  || 0;
     dqScore = state.dqScore || 0;
+    _showToast(L('Quiz restaurado desde tu última sesión', 'Quiz restauré depuis votre dernière session'), 3500);
     return 'dquiz';
   }
   return null;
@@ -966,37 +1010,118 @@ function _clearQuizSession() {
    avec l'écran actuellement affiché.
    • Masque la barre sur le launcher (avant tout choix de langue).
    • Active visuellement le bouton correspondant à l'écran courant
-     (#bnavModules pour 'sections' ; aucun pour les autres car
-     #bnavGuide est une modale, pas un écran).
+     (#navBtnModules pour 'sections' ; aucun pour les autres car
+     #navBtnGuide est une modale, pas un écran).
    • Met à jour les libellés selon la langue d'interface via L(). */
 function _updateBottomNav(screenId) {
-  var nav = document.getElementById('bottomNav');
+  const nav = document.getElementById('bottom-nav');
   if (!nav) return;
 
   /* (1) Visibilité : cachée sur le launcher, visible partout ailleurs */
-  nav.style.display = (screenId === 'app-launcher') ? 'none' : 'flex';
-
-  /* (2) État actif des boutons */
-  var btnModules = document.getElementById('bnavModules');
-  if (btnModules) {
-    btnModules.classList.toggle('active', screenId === 'sections');
+  if (screenId === 'app-launcher') {
+    nav.classList.remove('visible');
+    return;
   }
-  /* bnavGuide n'est jamais marqué actif (c'est une modale, pas un écran) */
+  nav.classList.add('visible');
+
+  /* (2) État actif : reset tous les boutons, puis active le bon */
+  ['navBtnLang', 'navBtnGuide', 'navBtnModules', 'navBtnCredits'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.classList.remove('active');
+  });
+  if (screenId === 'sections' || screenId === 'sections-level1' || screenId === 'sections-level2') {
+    var btnModules = document.getElementById('navBtnModules');
+    if (btnModules) btnModules.classList.add('active');
+  }
+  /* navBtnGuide n'est jamais marqué actif (c'est une modale, pas un écran) */
 
   /* (3) Libellés bilingues via L(espagnol, français) */
-  var elModules = document.getElementById('bnavModulesLabel');
-  var elGuide   = document.getElementById('bnavGuideLabel');
-  var elLang    = document.getElementById('bnavLangLabel');
-  if (elModules) elModules.textContent = L('Módulos', 'Modules');
-  if (elGuide)   elGuide.textContent   = L('Guía',    'Guide');
+  var elLang    = document.getElementById('navLabelLang');
+  var elGuide   = document.getElementById('navLabelGuide');
+  var elModules = document.getElementById('navLabelModules');
+  var elCredits = document.getElementById('navLabelCredits');
   if (elLang)    elLang.textContent    = L('Idioma',  'Langue');
+  if (elGuide)   elGuide.textContent   = L('Guía',    'Guide');
+  if (elModules) elModules.textContent = L('Módulos', 'Modules');
+  if (elCredits) elCredits.textContent = L('Infos',   'Infos');
+
+  /* (4) Drapeau dynamique selon le mode */
+  var langFlag = document.getElementById('navLangFlag');
+  if (langFlag) langFlag.textContent = L('🇪🇸', '🇫🇷');
+}
+
+/* ─────────────────────────────────────────────────────────
+   5b. NAVIGATION NIVEAUX — helpers
+   ─────────────────────────────────────────────────────────
+   _currentThemeLevel — Mémorise le niveau du thème ouvert (1 ou 2)
+                        pour que le retour depuis la leçon revienne
+                        au bon écran (sections-level1 ou sections-level2).
+
+   _updateLevelTabs(screenId) — Synchronise l'état actif des boutons
+                        d'onglets Niveau 1 / 2 sur les deux paires
+                        (#sections-level1 et #sections-level2).
+
+   lessonGoBack()    — Retour depuis la leçon vers le bon écran de niveau.
+
+   navGoModules()    — Bouton Modules de la nav bar : navigue vers
+                        l'écran du niveau mémorisé.
+───────────────────────────────────────────────────────── */
+
+/** Niveau du thème ouvert (1 ou 2) — mémorisé pour retour et flèches */
+var _currentThemeLevel = 1;
+
+/**
+ * Synchronise l'état actif des onglets Niveau 1 / 2
+ * sur les deux paires de boutons (level-tab) selon l'écran affiché.
+ * @param {string} screenId
+ */
+function _updateLevelTabs(screenId) {
+  var isL1 = (screenId === 'sections-level1');
+  var isL2 = (screenId === 'sections-level2');
+  if (!isL1 && !isL2) return;
+
+  /* Onglets dans sections-level1 */
+  var t1a = document.getElementById('lvlTab1');
+  var t2a = document.getElementById('lvlTab2');
+  if (t1a) t1a.classList.toggle('active', isL1);
+  if (t2a) t2a.classList.toggle('active', isL2);
+
+  /* Onglets dans sections-level2 */
+  var t1b = document.getElementById('lvlTab1b');
+  var t2b = document.getElementById('lvlTab2b');
+  if (t1b) t1b.classList.toggle('active', isL1);
+  if (t2b) t2b.classList.toggle('active', isL2);
+}
+
+/**
+ * Retour depuis la leçon → retourne au bon écran de niveau.
+ */
+function lessonGoBack() {
+  var target = (_currentThemeLevel === 2) ? 'sections-level2' : 'sections-level1';
+  renderSections(_currentThemeLevel);
+  showScreen(target, 'back');
+}
+
+/**
+ * Bouton Modules dans la nav bar :
+ * va sur l'écran du niveau mémorisé (ou niveau 1 par défaut).
+ */
+function navGoModules() {
+  var target = (_currentThemeLevel === 2) ? 'sections-level2' : 'sections-level1';
+  /* Direction : depuis lesson = back, sinon forward */
+  var current = null;
+  document.querySelectorAll('.screen').forEach(function(s) {
+    if (s.classList.contains('active')) current = s.id;
+  });
+  var dir = (current === 'lesson') ? 'back' : undefined;
+  renderSections(_currentThemeLevel);
+  showScreen(target, dir);
 }
 
 /* Ordre canonique des écrans pour le calcul automatique de direction.
-   'app-launcher' est l'écran racine (index 0), 'sections' le suivant,
-   'lesson' le plus profond. Les écrans hors de ce tableau (ex. 'home')
-   ne déclenchent pas d'animation directionnelle. */
-const _SCREEN_ORDER = ['app-launcher', 'sections', 'lesson'];
+   'app-launcher' est l'écran racine (index 0), puis les deux écrans
+   de sections par niveau (1a et 1b), puis 'lesson' le plus profond. */
+const _SCREEN_ORDER = ['app-launcher', 'home', 'sections-level1', 'sections-level2', 'lesson'];
 
 function showScreen(id, dir) {
   // Détermine l'écran actuellement actif (avant de le masquer)
@@ -1042,8 +1167,12 @@ function showScreen(id, dir) {
   }, 300);
 
   // Rendu à la demande selon l'écran affiché
-  if (id === 'home')     renderHome();
-  if (id === 'sections') renderSections();
+  if (id === 'home')              renderHome();
+  if (id === 'sections-level1')   renderSections(1);
+  if (id === 'sections-level2')   renderSections(2);
+
+  // Synchronise l'état actif des onglets Niveau 1 / 2
+  _updateLevelTabs(id);
 
   // Met à jour la barre de navigation basse
   _updateBottomNav(id);
@@ -1059,31 +1188,126 @@ function showScreen(id, dir) {
      - Le total d'étoiles gagnées (sur le maximum possible)
 ═══════════════════════════════════════════════════════════ */
 
+/**
+ * Calcule la progression globale en un seul endroit.
+ * Utilisé par renderHome() ET renderSections() pour éviter la duplication.
+ * @returns {{ total: number, n: number, pct: number,
+ *             starsEarned: number, starsMax: number }}
+ */
+function _getProgress() {
+  const total = ALL_THEMES.length;
+  const n     = done.length;
+  return {
+    total      : total,
+    n          : n,
+    pct        : total > 0 ? Math.round(n / total * 100) : 0,
+    starsEarned: done.reduce((acc, d) => acc + d.stars, 0),
+    starsMax   : total * 3
+  };
+}
+
 function renderHome() {
   if (!ALL_THEMES.length) return;
 
-  var total = ALL_THEMES.length;
-  var n     = done.length;
-  var pct   = Math.round(n / total * 100);
+  const p = _getProgress();
 
-  // Mise à jour de la largeur de la barre de progression
-  document.getElementById('homeBar').style.width = pct + '%';
+  /* ── Cercle SVG de progression ── */
+  var wrap = document.getElementById('homeProgressCircleWrap');
+  if (wrap) {
+    if (p.n === 0) {
+      /* Première visite : on cache le cercle */
+      wrap.style.display = 'none';
+    } else {
+      wrap.style.display = 'flex';
 
-  // Label bilingue selon le mode actif
-  var label = L(
-    n + ' / ' + total + ' modules validés — ' + pct + '%'
-    + '<br><span class="translation-sub">' + n + ' / ' + total + ' módulos completados — ' + pct + '%</span>',
-    n + ' / ' + total + ' módulos aprobados — ' + pct + '%'
-    + '<br><span class="translation-sub">' + n + ' / ' + total + ' modules validés — ' + pct + '%</span>'
-  );
-  document.getElementById('homeBarLabel').innerHTML = label;
+      /* Circonférence pour r=50 : 2π×50 = 314.16 px */
+      var CIRC   = 314.16;
+      var offset = CIRC - (CIRC * p.pct / 100);
 
-  // Calcul et affichage du total d'étoiles (réel / maximum possible)
-  var totalStarsEarned = done.reduce(function(acc, d) { return acc + d.stars; }, 0);
-  var maxStarsPossible = total * 3;
-  document.getElementById('homeStars').innerHTML =
-    '<span style="font-size:1.1rem;font-weight:bold;color:#f1c40f;">⭐ '
-    + totalStarsEarned + ' / ' + maxStarsPossible + '</span>';
+      var arc     = document.getElementById('hpcArc');
+      var pctTxt  = document.getElementById('hpcPct');
+      var subTxt  = document.getElementById('hpcSub');
+      var titleEl = document.getElementById('hpcTitle');
+      var descEl  = document.getElementById('hpcDesc');
+
+      /* Léger délai pour déclencher la transition CSS après display:flex */
+      setTimeout(function() {
+        if (arc) arc.style.strokeDashoffset = offset;
+      }, 50);
+
+      if (pctTxt) pctTxt.textContent = p.pct + '%';
+      if (subTxt) subTxt.textContent = '⭐ ' + p.starsEarned + ' / ' + p.starsMax;
+
+      /* Textes accessibles (aria) */
+      var a11yLabel = L(
+        p.n + ' / ' + p.total + ' modules validés — ' + p.pct + '% — ' + p.starsEarned + ' étoiles / ' + p.starsMax,
+        p.n + ' / ' + p.total + ' módulos completados — ' + p.pct + '% — ' + p.starsEarned + ' estrellas / ' + p.starsMax
+      );
+      if (titleEl) titleEl.textContent = a11yLabel;
+      if (descEl)  descEl.textContent  = a11yLabel;
+    }
+  }
+
+  /* ── Widget de variante régionale (mode Espagnol uniquement) ── */
+  _renderHomeRegionWidget();
+}
+
+
+/* ─────────────────────────────────────────────────────────
+   _renderHomeRegionWidget()
+   ─────────────────────────────────────────────────────────
+   Génère le sélecteur de variante régionale dans l'écran #home.
+   Visible uniquement en mode learn_spain.
+
+   UX : 7 chips cliquables (une par variante). La chip active
+   est mise en valeur avec le fond var(--c-primary) et la bordure
+   var(--c-accent), héritant automatiquement des CSS custom
+   properties appliquées par pickRegion() sur <html>.
+   Ainsi le widget est toujours aux couleurs du pays sélectionné.
+
+   Appelle pickRegion() au clic (persistance + cascade CSS + voix).
+───────────────────────────────────────────────────────── */
+function _renderHomeRegionWidget() {
+  var widget = document.getElementById('home-region-widget');
+  if (!widget) return;
+
+  /* Masquer le widget en mode Français */
+  if (currentMode !== 'learn_spain') {
+    widget.style.display = 'none';
+    return;
+  }
+  widget.style.display = 'block';
+
+  var regions = [
+    { id:'ES', flag:'🇪🇸', name: 'Espagne'    },
+    { id:'MX', flag:'🇲🇽', name: 'Mexique'    },
+    { id:'CO', flag:'🇨🇴', name: 'Colombie'   },
+    { id:'PE', flag:'🇵🇪', name: 'Pérou'      },
+    { id:'VE', flag:'🇻🇪', name: 'Venezuela'  },
+    { id:'AR', flag:'🇦🇷', name: 'Argentine'  },
+    { id:'EC', flag:'🇪🇨', name: 'Équateur'   }
+  ];
+
+  var labelText = L('Variante regional :', 'Variante régionale :');
+
+  var html = '<div class="hrw-wrap">'
+    + '<p class="hrw-label">' + labelText + '</p>'
+    + '<div class="hrw-chips" role="group" aria-label="' + labelText + '">';
+
+  regions.forEach(function(r) {
+    var isActive = (currentRegion === r.id);
+    html += '<button'
+      + ' class="hrw-chip' + (isActive ? ' hrw-chip--active' : '') + '"'
+      + ' onclick="pickRegion(\'' + r.id + '\');_renderHomeRegionWidget();"'
+      + ' aria-pressed="' + isActive + '"'
+      + ' title="' + r.name + '">'
+      + '<span class="hrw-chip-flag">' + r.flag + '</span>'
+      + '<span class="hrw-chip-name">' + r.name + '</span>'
+      + '</button>';
+  });
+
+  html += '</div></div>';
+  widget.innerHTML = html;
 }
 
 
@@ -1095,84 +1319,88 @@ function renderHome() {
    et un bouton "Recommencer" si le module a été validé.
 ═══════════════════════════════════════════════════════════ */
 
-function renderSections() {
+function renderSections(activeLevel) {
   if (!ALL_THEMES.length) return;
+  if (!activeLevel) activeLevel = 1;
 
   var total = ALL_THEMES.length;
   var n     = done.length;
   var pct   = Math.round(n / total * 100);
-
-  // Mise à jour de la barre de progression globale
-  document.getElementById('globalProgress').style.width = pct + '%';
-  var progressLabel = L(
-    n + ' / ' + total + ' modules — ' + pct + '%',
-    n + ' / ' + total + ' módulos — '  + pct + '%'
-  );
-  document.getElementById('progressLabel').innerHTML = progressLabel;
-
-  // Affichage des étoiles totales dans le header de Sections
-  var totalStarsEarned = done.reduce(function(acc, d) { return acc + d.stars; }, 0);
+  var totalStarsEarned = done.reduce((acc, d) => acc + d.stars, 0);
   var maxStarsPossible = total * 3;
-  var sectionsStars = document.getElementById('sectionsStars');
-  if (sectionsStars) {
-    sectionsStars.innerHTML =
-      '<span style="font-size:1rem;font-weight:bold;color:rgba(255,255,255,0.95);">⭐ '
-      + totalStarsEarned + ' / ' + maxStarsPossible + '</span>';
-  }
 
-  // Sous-titre bilingue sous le titre "Modules / Módulos"
-  // En mode FR (hispanophone) : affiche la traduction espagnole selon la variante
-  // En mode ES (francophone)  : affiche la traduction française simple
-  var subtitle = document.getElementById('sectionsSubtitle');
-  if (subtitle) {
-    if (isFrench()) {
-      // Hispanophone apprenant le français : sous-titre en espagnol
-      subtitle.innerHTML = '<span class="translation-sub">Módulos</span>';
-    } else {
-      // Francophone apprenant l'espagnol : sous-titre en français
-      subtitle.innerHTML = '<span class="translation-sub">Modules</span>';
+  /* ── Helper : remplir les éléments d'un header de sections ── */
+  function _fillHeader(suffix) {
+    var s = suffix || '';
+    // Barre de progression
+    var gp = document.getElementById('globalProgress' + s);
+    if (gp) gp.style.width = pct + '%';
+
+    // Label de progression
+    var pl = document.getElementById('progressLabel' + s);
+    if (pl) {
+      pl.innerHTML = L(
+        n + ' / ' + total + ' modules — ' + pct + '%',
+        n + ' / ' + total + ' módulos — '  + pct + '%'
+      );
+    }
+
+    // Étoiles totales
+    var se = document.getElementById('sectionsStars' + s);
+    if (se) {
+      se.innerHTML =
+        '<span style="font-size:1rem;font-weight:bold;color:rgba(255,255,255,0.95);">⭐ '
+        + totalStarsEarned + ' / ' + maxStarsPossible + '</span>';
+    }
+
+    // Sous-titre bilingue
+    var subtitle = document.getElementById('sectionsSubtitle' + s);
+    if (subtitle) {
+      if (isFrench()) {
+        subtitle.innerHTML = '<span class="translation-sub">Módulos</span>';
+      } else {
+        subtitle.innerHTML = '<span class="translation-sub">Modules</span>';
+      }
+    }
+
+    // Footer dynamique selon le mode
+    var footer = document.getElementById('sectionsFooter' + s);
+    if (footer) {
+      if (isFrench()) {
+        footer.innerHTML =
+          '© Junio 2026 – Desarrollado por Sébastien Godet · Asistido por IA Claude Sonnet 4.6 y Gemini 3.5 Flash<br>'
+          + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">💼 LinkedIn</a> · '
+          + '<a href="#" onclick="showCredits()">Agradecimientos</a>'
+          + '<br><button onclick="showResetConfirm()" style="margin-top:8px; padding:6px 14px; border-radius:50px; border:1.5px solid #c0392b; color:#c0392b; background:transparent; font-size:0.8rem; cursor:pointer; font-weight:700;">'
+          + L('🗑️ Borrar toda la progresión', '🗑️ Tout réinitialiser')
+          + '</button>';
+      } else {
+        footer.innerHTML =
+          '© Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>'
+          + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> · '
+          + '<a href="#" onclick="showCredits()">Remerciements</a>'
+          + '<br><button onclick="showResetConfirm()" style="margin-top:8px; padding:6px 14px; border-radius:50px; border:1.5px solid #c0392b; color:#c0392b; background:transparent; font-size:0.8rem; cursor:pointer; font-weight:700;">'
+          + L('🗑️ Borrar toda la progresión', '🗑️ Tout réinitialiser')
+          + '</button>';
+      }
     }
   }
 
-  // Footer dynamique selon le mode
-  var footer = document.getElementById('sectionsFooter');
-  if (footer) {
-    if (isFrench()) {
-      // Hispanophone apprenant le français : footer entièrement en espagnol
-      // "Remerciements" traduit, "Guide" supprimé
-      footer.innerHTML =
-        '© Junio 2026 – Desarrollado por Sébastien Godet · Asistido por IA Claude Sonnet 4.6 y Gemini 3.5 Flash<br>'
-        + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">💼 LinkedIn</a> · '
-        + '<a href="#" onclick="showCredits()">Agradecimientos</a>'
-        + '<br><button onclick="showResetConfirm()" style="margin-top:8px; padding:6px 14px; border-radius:50px; border:1.5px solid #c0392b; color:#c0392b; background:transparent; font-size:0.8rem; cursor:pointer; font-weight:700;">'
-        + L('🗑️ Borrar toda la progresión', '🗑️ Tout réinitialiser')
-        + '</button>';
-    } else {
-      // Francophone apprenant l'espagnol : footer en français, "Guide" supprimé
-      footer.innerHTML =
-        '© Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>'
-        + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> · '
-        + '<a href="#" onclick="showCredits()">Remerciements</a>'
-        + '<br><button onclick="showResetConfirm()" style="margin-top:8px; padding:6px 14px; border-radius:50px; border:1.5px solid #c0392b; color:#c0392b; background:transparent; font-size:0.8rem; cursor:pointer; font-weight:700;">'
-        + L('🗑️ Borrar toda la progresión', '🗑️ Tout réinitialiser')
-        + '</button>';
-    }
-  }
+  /* ── Remplir les deux headers (level1 et level2) ── */
+  _fillHeader('');    // IDs sans suffixe → #sections-level1
+  _fillHeader('2');   // IDs avec suffixe '2' → #sections-level2
 
-  // Génération des grilles pour chaque niveau (1 = vocabulaire, 2 = dialogues)
-  ['grid1', 'grid2'].forEach(function(gid) {
-    var lv = gid === 'grid1' ? 1 : 2;
-    document.getElementById(gid).innerHTML = ALL_THEMES
-      .filter(function(t) { return t.level === lv; })
-      .map(function(t) { return _buildThemeCard(t); })
-      .join('');
-  });
-
-  // Recalcule la max-height des accordéons de niveau maintenant que les grilles
-  // sont remplies (au moment du clic initial les corps étaient encore vides)
-  document.querySelectorAll('.level-acc-body.open').forEach(function(body) {
-    body.style.maxHeight = body.scrollHeight + 'px';
-  });
+  /* ── Grilles de thèmes ── */
+  var grid1 = document.getElementById('grid1');
+  var grid2 = document.getElementById('grid2');
+  if (grid1) grid1.innerHTML = ALL_THEMES
+    .filter(t => t.level === 1)
+    .map(t => _buildThemeCard(t))
+    .join('');
+  if (grid2) grid2.innerHTML = ALL_THEMES
+    .filter(t => t.level === 2)
+    .map(t => _buildThemeCard(t))
+    .join('');
 }
 
 /* _buildThemeCard(t) — Construit le HTML d'une carte de module.
@@ -1236,11 +1464,14 @@ function _buildThemeCard(t) {
 
 function openTheme(id) {
   // Chargement du thème et réinitialisation de toutes les variables de session
-  CT        = ALL_THEMES.find(function(t) { return t.id === id; });
+  CT        = ALL_THEMES.find(t => t.id === id);
   fcIdx     = 0;
   dqStep    = 0; dqScore    = 0; dqAnswered  = false;
   sitIdx    = 0;
   q10Step   = 0; q10Score   = 0; q10Answered = false;
+
+  // Mémoriser le niveau du thème ouvert (pour le retour depuis la leçon)
+  if (CT) _currentThemeLevel = CT.level || 1;
 
   // Pré-génération du quiz dynamique pour les thèmes de Niveau 1 (hors alphabet)
   _currentDynQuiz = (CT && CT.level === 1 && CT.type !== 'alpha')
@@ -1261,6 +1492,7 @@ function openTheme(id) {
   document.getElementById('lessonTitle').textContent = mainTitle + ' — ' + subTitle;
 
   showScreen('lesson');
+  _updateLessonNavArrows();
 
   // Définition des onglets selon le type de thème et le mode courant
   var tabs;
@@ -1285,7 +1517,7 @@ function openTheme(id) {
 
   // Rendu des boutons d'onglets
   // Si une session de quiz a été restaurée, on active cet onglet plutôt que le premier
-  var initialTab = (resumeTab && tabs.some(function(t) { return t.k === resumeTab; }))
+  var initialTab = (resumeTab && tabs.some(t => t.k === resumeTab))
     ? resumeTab : tabs[0].k;
 
   document.getElementById('lessonTabs').innerHTML = tabs.map(function(t, i) {
@@ -1305,10 +1537,26 @@ function openTheme(id) {
 
 function lessonNav(delta) {
   if (!CT || !ALL_THEMES.length) return;
-  var idx = ALL_THEMES.findIndex(function(t) { return t.id === CT.id; });
+  var levelThemes = ALL_THEMES.filter(t => t.level === CT.level);
+  var idx = levelThemes.findIndex(function(t) { return t.id === CT.id; });
   if (idx === -1) return;
-  var newIdx = (idx + delta + ALL_THEMES.length) % ALL_THEMES.length;
-  openTheme(ALL_THEMES[newIdx].id);
+  var newIdx = idx + delta;
+  if (newIdx < 0 || newIdx >= levelThemes.length) return;
+  openTheme(levelThemes[newIdx].id);
+}
+/**
+ * Met à jour l'état disabled des boutons ‹ / › de navigation entre modules.
+ * Désactive la flèche gauche sur le premier thème du niveau,
+ * la flèche droite sur le dernier.
+ */
+function _updateLessonNavArrows() {
+  if (!CT) return;
+  var levelThemes = ALL_THEMES.filter(t => t.level === CT.level);
+  var idx = levelThemes.findIndex(function(t) { return t.id === CT.id; });
+  var prev = document.getElementById('lessonPrevBtn');
+  var next = document.getElementById('lessonNextBtn');
+  if (prev) prev.disabled = (idx <= 0);
+  if (next) next.disabled = (idx >= levelThemes.length - 1);
 }
 
 /* switchTab(tab) — Active l'onglet demandé et déclenche son rendu.
@@ -1556,8 +1804,8 @@ function _normalizeSpeech(s) {
    Programmation dynamique : tableau 2D (|a|+1) × (|b|+1).
    Coût : substitution = 1, insertion = 1, suppression = 1. */
 function _levenshtein(a, b) {
-  var m = a.length, n = b.length;
-  var dp = [];
+  const m = a.length, n = b.length;
+  const dp = [];
   for (var i = 0; i <= m; i++) {
     dp[i] = [i];
     for (var j = 1; j <= n; j++) {
@@ -1585,7 +1833,7 @@ function _levenshtein(a, b) {
      (d) sinon, distance de Levenshtein ≤ 25 % de la longueur de expected. */
 function _speechMatch(spoken, expected) {
   if (spoken === expected) return true;
-  if (spoken.indexOf(expected) !== -1 || expected.indexOf(spoken) !== -1) return true;
+  if (spoken.includes(expected) || expected.includes(spoken)) return true;
   if (expected.length <= 3) return false;
   return _levenshtein(spoken, expected) <= Math.floor(expected.length * 0.25);
 }
@@ -1838,7 +2086,7 @@ function renderRepeat() {
   _rpScore    = 0;
   _rpAnswered = false;
   // Filtre les mots ayant fr ET es
-  _rpWords = (CT.words || []).filter(function(w) { return w.fr && w.es; });
+  _rpWords = (CT.words || []).filter(w => w.fr && w.es);
 
   if (!_rpWords.length) {
     var noW = L('No hay palabras disponibles.', 'Aucun mot disponible.');
@@ -2095,11 +2343,11 @@ function _shuffle(arr) {
    Retourne un tableau de questions [{q, opts:[4], ans:index}] */
 function _generateLevel1Quiz(theme) {
   // Filtre les mots incomplets (sans fr ou sans es)
-  var words = (theme.words || []).filter(function(w) { return w.fr && w.es; });
+  const words = (theme.words || []).filter(w => w.fr && w.es);
   if (words.length < 2) return [];
 
-  var total = getQuizTotal(theme);
-  var pool  = _shuffle(words).slice(0, total);
+  const total = getQuizTotal(theme);
+  const pool  = _shuffle(words).slice(0, total);
 
   return pool.map(function(card) {
     // Résolution du mot espagnol (variante régionale ou castillan par défaut)
@@ -2118,7 +2366,7 @@ function _generateLevel1Quiz(theme) {
     }
 
     // Génération de 3 distracteurs depuis les autres mots du thème
-    var distractors = _shuffle(words.filter(function(w) { return w !== card; }))
+    var distractors = _shuffle(words.filter(w => w !== card))
       .slice(0, 3)
       .map(function(d) {
         return currentMode === 'learn_french'
@@ -2192,7 +2440,7 @@ function renderQuiz10() {
       + '<button class="retry-btn" style="background:#888" onclick="_retryQuiz10()">'
       + r.retry + '</button>'
       + (isSuccess
-          ? '<button class="retry-btn" onclick="renderSections();showScreen(\'sections\')">'
+          ? '<button class="retry-btn" onclick="renderSections();showScreen(\'sections-level1\')">'
             + r.finish + '</button>'
           : '')
       + '</div></div>';
@@ -2387,8 +2635,8 @@ function _adaptDialogueLine(esText) {
 
 /* renderDialog() — Construit et affiche les bulles de conversation pour la situation active. */
 function renderDialog() {
-  var sits    = CT.situations;
-  var sit     = sits[sitIdx];
+  const sits    = CT.situations;
+  const sit     = sits[sitIdx];
 
   // Boutons de sélection de situation (Sit. 1, Sit. 2, Sit. 3)
   var sitBtns = sits.map(function(s, i) {
@@ -2437,7 +2685,7 @@ function renderDialog() {
 
   // Déclenche l'animation d'apparition des bulles après un délai minimal
   setTimeout(function() {
-    document.querySelectorAll('[id^=bl]').forEach(function(b) { b.style.opacity = '1'; });
+    document.querySelectorAll('[id^=bl]').forEach(b => { b.style.opacity = '1'; });
   }, 80);
 }
 
@@ -2468,8 +2716,8 @@ function renderVocab() {
       var match = CT.words.find(function(w) {
         if (w.es === es) return true;
         // Gère les cas avec barres obliques (ex: "Morado / Violeta")
-        var esParts = w.es.split('/').map(function(p) { return p.trim(); });
-        return esParts.indexOf(es) !== -1;
+        var esParts = w.es.split('/').map(p => p.trim());
+        return esParts.includes(es);
       });
       if (match && match.variants && match.variants[currentRegion]) {
         finalEs = match.variants[currentRegion];
@@ -2540,7 +2788,7 @@ function renderDialogQuiz() {
       + '<button class="retry-btn" style="background:#888" onclick="dqStep=0;dqScore=0;dqAnswered=false;_clearQuizSession();renderDialogQuiz()">'
       + r.retry + '</button>'
       + (isSuccess
-          ? '<button class="retry-btn" onclick="renderSections();showScreen(\'sections\')">'
+          ? '<button class="retry-btn" onclick="renderSections();showScreen(\'sections-level1\')">'
             + r.finish + '</button>'
           : '')
       + '</div></div>';
@@ -2585,7 +2833,7 @@ function checkDQ(chosen, correct) {
 
   var fb   = document.getElementById('dqfb');
   var fbOk = L('✅ ¡Buena respuesta!',    '✅ Bonne réponse !');
-  var fbErr= L('❌ ¡Inténtalo de nuevo!', '❌ Essayer de nouveau !');
+  var fbErr= L('❌ ¡Inténtalo de nuevo!', '❌ Réessayer !');
   fb.textContent = (chosen === correct) ? fbOk : fbErr;
   fb.style.color = (chosen === correct) ? '#009A44' : '#c0392b';
 
@@ -2608,8 +2856,8 @@ function checkDQ(chosen, correct) {
 
 /* Retourne un objet {title, sub, retry, finish} localisé selon le mode et le score. */
 function _quizResultStrings(pct) {
-  var stars     = _calcStars(pct);
-  var isSuccess = stars > 0;
+  const stars     = _calcStars(pct);
+  const isSuccess = stars > 0;
 
   var title = L('¡Prueba terminada!', 'Quiz terminé !');
   if      (stars === 3) title = L('¡Perfecto! ⭐⭐⭐',  'Parfait ! ⭐⭐⭐');
@@ -2704,7 +2952,7 @@ function renderRegionOptions() {
   selectContainer.innerHTML = html;
 
   // Bandeau d'info sur la variante active
-  var activeRegion = regions.find(function(r) { return r.id === currentRegion; }) || regions[0];
+  var activeRegion = regions.find(r => r.id === currentRegion) || regions[0];
   if (msgBox) {
     var bannerMsg = L(
       'ℹ️ Tu aplicación está configurada actualmente con la variante de <strong>' + activeRegion.name + '</strong>.',
@@ -2757,7 +3005,7 @@ function pickRegion(regionId) {
     var activeName = regionsNames[currentRegion] || currentRegion;
     var noteAudio  = L(
       '<div style="margin-top:5px;font-size:0.75rem;color:#666;font-style:italic;">'
-        + 'Nota: El acento real depende de las voces instaladas en la configuration de síntesis de voz de tu dispositivo.'
+        + 'Nota: El acento real depende de las voces instaladas en la configuración de síntesis de voz de tu dispositivo.'
         + '</div>',
       '<div style="margin-top:5px;font-size:0.75rem;color:#666;font-style:italic;">'
         + 'Note : L\'accent audio dépend des voix espagnoles installées dans les paramètres de synthèse vocale de votre smartphone.'
@@ -2798,7 +3046,7 @@ function pickRegion(regionId) {
 
   // Mise à jour du drapeau dans la Vue B du Launcher (si visible)
   var launcherFlagRow = document.getElementById('launcherFlagRow');
-  var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+  const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
   if (launcherFlagRow && currentMode === 'learn_spain') {
     launcherFlagRow.textContent = flagEmojis[currentRegion] || '🇪🇸';
   }
@@ -2821,6 +3069,12 @@ function pickRegion(regionId) {
     if (at === 'vocab')  renderVocab();
     if (at === 'dialog') renderDialog();
     if (at === 'flash')  renderFlash();
+  }
+
+  // Rafraîchissement du widget région dans l'écran Home si celui-ci est actif
+  var homeScreen = document.getElementById('home');
+  if (homeScreen && homeScreen.classList.contains('active')) {
+    _renderHomeRegionWidget();
   }
 
   // Rafraîchissement du guide utilisateur si la modale est actuellement ouverte
@@ -3001,8 +3255,8 @@ function showGuide() {
   if (showFrench) {
     // Mode learn_spain (Francophone) : bouton = Fermer, texte = Ne plus afficher
     if (closeBtn) closeBtn.textContent = '✕ Fermer';
-    textsFr.forEach(function(el) { el.style.display = 'inline'; });
-    textsEs.forEach(function(el) { el.style.display = 'none'; });
+    textsFr.forEach(el => { el.style.display = 'inline'; });
+    textsEs.forEach(el => { el.style.display = 'none'; });
     
     if (topbar) {
       topbar.classList.add('guide-topbar--fr');
@@ -3011,8 +3265,8 @@ function showGuide() {
   } else {
     // Mode learn_french (Hispanophone) : bouton = Cerrar, texte = No mostrar más
     if (closeBtn) closeBtn.textContent = '✕ Cerrar';
-    textsFr.forEach(function(el) { el.style.display = 'none'; });
-    textsEs.forEach(function(el) { el.style.display = 'inline'; });
+    textsFr.forEach(el => { el.style.display = 'none'; });
+    textsEs.forEach(el => { el.style.display = 'inline'; });
     
     if (topbar) {
       topbar.classList.add('guide-topbar--es');
@@ -3055,7 +3309,7 @@ function showGuide() {
   try { flagValue = localStorage.getItem(storageKey) === '1'; } catch(e) {}
   
   var allChecks = document.querySelectorAll('.guide-no-show-check');
-  allChecks.forEach(function(cb) { cb.checked = flagValue; });
+  allChecks.forEach(cb => { cb.checked = flagValue; });
 }
 
 /* closeGuide() — Referme la modale du guide.
@@ -3073,7 +3327,7 @@ function toggleGuideNoShow(cb) {
   var checked = cb.checked;
   // Synchronise toutes les checkboxes sœurs
   var allChecks = document.querySelectorAll('.guide-no-show-check');
-  allChecks.forEach(function(c) { c.checked = checked; });
+  allChecks.forEach(c => { c.checked = checked; });
   // Pose ou retire le flag
   try {
     if (checked) {
@@ -3144,7 +3398,7 @@ function _refreshGuideRegion() {
   var grid = document.getElementById('guideRegionGridES');
   if (grid) {
     var cards = grid.querySelectorAll('.guide-region-card');
-    cards.forEach(function(c) { c.classList.remove('active'); });
+    cards.forEach(c => { c.classList.remove('active'); });
     var activeCard = grid.querySelector('.guide-region-card[data-region="' + region + '"]');
     if (activeCard) activeCard.classList.add('active');
   }
@@ -3161,7 +3415,7 @@ function _refreshGuideRegion() {
    par "Apprends l'Espagnol" + le drapeau de la variante régionale choisie
    (ex : 🇲🇽 si Mexique), au lieu du systématique 🇪🇸. */
 function _refreshGuideHeroFR() {
-  var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+  const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
   var activeFlag  = flagEmojis[currentRegion] || '🇪🇸';
 
   var heroFlags = document.getElementById('guideHeroFlagsFR');
@@ -3172,54 +3426,36 @@ function _refreshGuideHeroFR() {
 }
 
 /* ============================================================
-   FONCTION MAISON - COPIE SÉCURISÉE DE L'E-MAIL
+   COPIE SÉCURISÉE DE L'E-MAIL — mécanisme unifié (≡ app Oromo)
+   ─────────────────────────────────────────────────────────────
+   Antispam double verrouillage :
+     1. Dans le HTML, l'adresse est écrite à l'envers dans un
+        <span class="antispam-email"> ; le CSS (direction:rtl)
+        la remet à l'endroit visuellement sans toucher au DOM.
+     2. Au clic, l'adresse est reconstituée en mémoire vive
+        (jamais dans le DOM à l'endroit) pour ouvrir le client
+        mail ET copier l'adresse dans le presse-papier.
+   Feedback : toast _showToast() — universel, sans dépendance
+   à un id de bouton.
+   Fallback : si l'API Clipboard échoue, _showToast() affiche
+   l'adresse pour une copie manuelle (5 s).
    ============================================================ */
-function copierEmailSecurise(bouton) {
-    // L'adresse est scindée en morceaux pour être invisible aux robots scanneurs
-    const identifiant = "sebastien.godet16";
-    const extension = "gmail.com";
-    const adresseComplete = identifiant + "@" + extension;
+function openAndCopyEmail() {
+  const user   = 'sebastien.godet16';
+  const domain = 'gmail.com';
+  const full   = user + '@' + domain;
 
-    // Utilisation de l'API Presse-papiers du navigateur
-    navigator.clipboard.writeText(adresseComplete).then(() => {
-        // Sauvegarde du texte initial du bouton
-        const texteInitial = bouton.innerHTML;
-        
-        // Changement visuel temporaire (Vert + Texte mis à jour)
-        bouton.innerHTML = "✅ E-mail copié !";
-        bouton.classList.add("copied");
-
-        // Retour à l'état initial après 2,5 secondes
-        setTimeout(() => {
-            bouton.innerHTML = texteInitial;
-            bouton.classList.remove("copied");
-        }, 2500);
-    }).catch(err => {
-        // Cas de secours si le navigateur bloque l'accès automatique au presse-papiers
-        _showToast("📋 Copiez manuellement : " + adresseComplete, 5000);
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(full).then(() => {
+      _showToast(L('✅ E-mail copiado en el portapapeles', '✅ E-mail copié dans le presse-papier'));
+    }).catch(() => {
+      _showToast(L('📋 Copie manualmente: ', '📋 Copiez manuellement : ') + full, 5000);
     });
-}
-
-/* ════════════════════════════════════════
-   TOAST — NOTIFICATION NON BLOQUANTE
-   Remplace alert() pour les messages
-   d'information (voix, copie e-mail…).
-   duration : durée d'affichage en ms (défaut 3000)
-════════════════════════════════════════ */
-function _showToast(msg, duration) {
-  duration = duration || 3000;
-  var toast = document.getElementById('app-toast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'app-toast';
-    toast.className = 'app-toast';
-    document.body.appendChild(toast);
+  } else {
+    _showToast(L('📋 Copie manualmente: ', '📋 Copiez manuellement : ') + full, 5000);
   }
-  toast.textContent = msg;
-  toast.classList.add('visible');
-  setTimeout(function() {
-    toast.classList.remove('visible');
-  }, duration);
+
+  window.location.href = 'mailto:' + full;
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -3238,7 +3474,7 @@ function _showToast(msg, duration) {
 
 /* _pdfTheme() — Retourne les couleurs primaire / secondaire selon le thème actif. */
 function _pdfTheme() {
-  var isFR = isFrench();
+  const isFR = isFrench();
   return {
     primary:   isFR ? '#002395' : '#C60B1E',
     secondary: isFR ? '#C60B1E' : '#002395',
@@ -3296,8 +3532,8 @@ function _pdfHeader(th, title, subtitle) {
 
 /* _pdfFooter() — Pied de page avec date d'export. */
 function _pdfFooter() {
-  var d = new Date();
-  var ds = d.toLocaleDateString(isFrench() ? 'es-ES' : 'fr-FR', {day:'2-digit',month:'long',year:'numeric'});
+  const d = new Date();
+  const ds = d.toLocaleDateString(isFrench() ? 'es-ES' : 'fr-FR', {day:'2-digit',month:'long',year:'numeric'});
   return '<div class="pdf-footer">'
     + L('Exportado desde VACHÉBO · ' + ds, 'Exporté depuis VACHÉBO · ' + ds)
     + '</div>';
@@ -3319,7 +3555,7 @@ function _pdfOpen(htmlContent) {
 ───────────────────────────────────────────────────────── */
 function _exportGuide() {
   var th       = _pdfTheme();
-  var guideId  = isFrench() ? 'guideContentFR' : 'guideContentES';
+  var guideId = !isFrench() ? 'guideContentFR' : 'guideContentES';
   var guideEl  = document.getElementById(guideId);
   var guideHTML = guideEl ? guideEl.innerHTML : '<p>' + L('Contenido no disponible.', 'Contenu indisponible.') + '</p>';
   var title    = L('Guía del usuario — VACHÉBO', 'Guide utilisateur — VACHÉBO');
@@ -3361,7 +3597,7 @@ function _exportVocab() {
   if (!CT || !CT.words) { _showToast(L('Sin vocabulario disponible.', 'Pas de vocabulaire disponible.')); return; }
   var th      = _pdfTheme();
   var words   = CT.words;
-  var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+  const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
   var regionFlag = isFrench() ? (flagEmojis[currentRegion] || '🇪🇸') : '🇫🇷';
 
   var title    = L(
@@ -3424,7 +3660,7 @@ function _exportSituation() {
   if (!CT || !CT.situations) { _showToast(L('Sin diálogo disponible.', 'Pas de dialogue disponible.')); return; }
   var th  = _pdfTheme();
   var sit = CT.situations[sitIdx] || CT.situations[0];
-  var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+  const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
   var regionFlag = flagEmojis[currentRegion] || '🇪🇸';
 
   var title    = L(
@@ -3463,7 +3699,7 @@ function _exportSituation() {
       /* Variante régionale dans le lexique */
       var finalEs = es;
       if (CT.words) {
-        var match = CT.words.find(function(w) { return w.es === es; });
+        var match = CT.words.find(w => w.es === es);
         if (match && match.variants && match.variants[currentRegion]) finalEs = match.variants[currentRegion];
       }
       var srcWord = L(finalEs, fr);
