@@ -873,7 +873,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 7px;
-  padding: 11px 8px;
+  padding: 8px 8px;
   background: transparent;
   border: none;
   color: rgba(255,255,255,.45);
@@ -884,6 +884,7 @@ body {
   position: relative;
   letter-spacing: .01em;
   font-family: inherit;
+  line-height: 1.25;
 }
 .level-tab:active { background: rgba(0,0,0,.12); }
 
@@ -912,6 +913,107 @@ body {
     background: rgba(0,0,0,.55);
     color: #fff;
   }
+}
+
+/* ── Sous-titre de traduction dans les onglets Niveau 1/2 ── */
+.level-tab-sub {
+  font-size: .6rem;
+  font-weight: 500;
+  opacity: .65;
+  display: block;
+  letter-spacing: .005em;
+  line-height: 1.2;
+  margin-top: 1px;
+}
+.level-tab.active .level-tab-sub {
+  opacity: .78;
+}
+
+
+/* ════════════════════════════════════════
+   §LAUNCHER-REGION-GRID
+   Grille visuelle de drapeaux dans la Vue B
+   du Launcher (Écran 4) — remplace le <select>
+════════════════════════════════════════ */
+.launcher-region-grid-wrap {
+  width: 100%;
+  padding: 4px 12px 0;
+}
+
+.launcher-region-grid-label {
+  font-size: .65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,.6);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.launcher-region-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.launcher-region-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 4px;
+  background: rgba(255,255,255,.15);
+  border: 2px solid rgba(255,255,255,.2);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, transform .12s;
+  color: rgba(255,255,255,.8);
+}
+.launcher-region-btn:active {
+  transform: scale(.93);
+}
+.launcher-region-btn--active {
+  background: rgba(255,255,255,.92);
+  border-color: #fff;
+  color: #222;
+  box-shadow: 0 3px 12px rgba(0,0,0,.2);
+}
+.launcher-region-flag {
+  font-size: 1.6rem;
+  line-height: 1;
+  display: block;
+}
+.launcher-region-name {
+  font-size: .58rem;
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+  display: block;
+  letter-spacing: .01em;
+}
+
+/* Bandeau info variante active */
+.launcher-region-info {
+  margin: 10px 0 4px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,.15);
+  border-left: 3px solid rgba(255,255,255,.6);
+  border-radius: 0 10px 10px 0;
+  font-size: .82rem;
+  color: rgba(255,255,255,.95);
+  text-align: left;
+}
+.launcher-region-info strong {
+  color: #fff;
+  font-weight: 800;
+}
+.launcher-region-info-note {
+  margin-top: 5px;
+  font-size: .7rem;
+  color: rgba(255,255,255,.65);
+  font-style: italic;
+  line-height: 1.35;
 }
 
 

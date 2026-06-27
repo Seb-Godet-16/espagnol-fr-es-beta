@@ -145,16 +145,20 @@
 
       <!-- Bouton retour → revient aux cartes de langue -->
       <button class="back-btn launcher-back-btn" id="launcherBackBtn"
-              aria-label="Retour au choix de langue / Volver a la selección de idioma">←</button>
+              aria-label="Retour au choix de langue / Volver a la selección de idioma">← <span id="launcherBackLabel">Volver</span></button>
 
       <!-- Drapeau + titre injectés par showLauncherVariant() -->
       <div class="flag-row" id="launcherFlagRow" style="font-size:3rem;margin:10px 0;"></div>
       <h1 class="launcher-variant-title" id="launcherVariantTitle"></h1>
 
-      <!-- Sélecteur de variante et encart info : générés par renderRegionOptions() -->
+      <!-- Grille visuelle de drapeaux (remplace le <select>) -->
       <div id="region-selector-wrap" style="width:100%;max-width:400px;margin:0 auto 10px;">
-        <div id="region-select-container"></div>
+        <!-- La grille est injectée par renderRegionGrid() dans app.js -->
+        <div id="region-grid-container"></div>
+        <!-- Bandeau d'info sur la variante active -->
         <div id="region-message-box"></div>
+        <!-- Compatibilité ancienne : le select caché est conservé pour pickRegion() -->
+        <div id="region-select-container" style="display:none;"></div>
       </div>
 
       <!-- Bouton Continuer → lance initApp() et affiche le Guide -->

@@ -354,16 +354,18 @@ function showLauncherVariant(mode) {
     if (titleEl)  titleEl.textContent  = 'Aprender Español';
   }
 
-  /* — Génération du sélecteur de variante et de l'encart info — */
+  /* — Génération de la grille visuelle de drapeaux — */
   var selectorWrap = document.getElementById('region-selector-wrap');
   if (selectorWrap) {
     selectorWrap.style.display = 'block';
-    var container = document.getElementById('region-select-container');
-    var msgBox    = document.getElementById('region-message-box');
-    if (container) container.innerHTML = '';
-    if (msgBox)    msgBox.innerHTML    = '';
-    renderRegionOptions();
+    renderRegionGrid(mode);
     pickRegion(currentRegion);
+  }
+
+  /* — Libellé du bouton retour selon le mode — */
+  var backLabel = document.getElementById('launcherBackLabel');
+  if (backLabel) {
+    backLabel.textContent = (mode === 'learn_french') ? 'Volver' : 'Retour';
   }
 
   /* — Texte et handler du bouton Continuer selon le mode —
@@ -409,12 +411,18 @@ function showLauncherVariant(mode) {
       document.getElementById('app-launcher').classList.remove('variant-active');
       document.documentElement.className = '';
       _setLauncherFooterLang(null);
+      /* Cacher la nav basse en retournant à la Vue A */
+      var nav = document.getElementById('bottom-nav');
+      if (nav) nav.classList.remove('visible');
     };
     backBtn.addEventListener('click', backBtn._launcherHandler);
   }
 
   /* — Traduction du footer selon le mode (langue d'interface = langue opposée à celle apprise) — */
   _setLauncherFooterLang(mode);
+
+  /* — Afficher la barre de nav basse dès la Vue B — */
+  _updateBottomNav('home');  // 'home' = n'importe quel écran non-launcher → la nav est visible
 }
 
 /**
@@ -462,6 +470,9 @@ function showLauncher() {
   document.getElementById('app-launcher').classList.remove('variant-active');
   document.documentElement.className = '';
   _setLauncherFooterLang(null);
+  /* Cacher la nav basse en retournant à la Vue A */
+  var nav = document.getElementById('bottom-nav');
+  if (nav) nav.classList.remove('visible');
   window.scrollTo(0, 0);
   document.documentElement.lang = 'fr';
 }
@@ -508,9 +519,9 @@ function initApp(mode) {
       sectionsFlag   : '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1eb-1f1f7.svg" style="width:1.5em;vertical-align:middle;" alt="fr">',
       lessonBackBtn  : '← Modules<br><span class="translation-sub">Módulos</span>',
       level1Badge    : '1',
-      level1Label    : '<span>Niveau 1 — Vocabulaire</span>',
+      level1Label    : '<span>Niveau 1 — Vocabulaire<br><span class="level-tab-sub">Nivel 1 — Vocabulario</span></span>',
       level2Badge    : '2',
-      level2Label    : '<span>Niveau 2 — Phrases simples</span>'
+      level2Label    : '<span>Niveau 2 — Phrases simples<br><span class="level-tab-sub">Nivel 2 — Frases sencillas</span></span>'
     });
 
   /* ─── MODE : Apprendre l'Espagnol (interface présentée en Français) ─── */
@@ -530,9 +541,9 @@ function initApp(mode) {
       sectionsFlag   : activeFlag,           // Drapeau de la variante régionale apprise
       lessonBackBtn  : '← Módulos<br><span class="translation-sub">Modules</span>',
       level1Badge    : '1',
-      level1Label    : '<span>Nivel 1 — Vocabulario</span>',
+      level1Label    : '<span>Nivel 1 — Vocabulario<br><span class="level-tab-sub">Niveau 1 — Vocabulaire</span></span>',
       level2Badge    : '2',
-      level2Label    : '<span>Nivel 2 — Frases sencillas</span>'
+      level2Label    : '<span>Nivel 2 — Frases sencillas<br><span class="level-tab-sub">Niveau 2 — Phrases simples</span></span>'
     });
   }
 
@@ -1107,10 +1118,16 @@ function _updateBottomNav(screenId) {
   const nav = document.getElementById('bottom-nav');
   if (!nav) return;
 
-  /* (1) Visibilité : cachée sur le launcher, visible partout ailleurs */
+  /* (1) Visibilité : cachée sur le launcher Vue A (avant tout choix), visible partout ailleurs */
   if (screenId === 'app-launcher') {
-    nav.classList.remove('visible');
-    return;
+    /* Sur le launcher, on cache la nav seulement si on est en Vue A (cartes).
+       Si on est en Vue B (variante), la nav doit rester visible. */
+    var launcherVariantVisible = document.getElementById('launcher-view-variant');
+    var isVariantView = launcherVariantVisible && launcherVariantVisible.style.display !== 'none';
+    if (!isVariantView) {
+      nav.classList.remove('visible');
+      return;
+    }
   }
   nav.classList.add('visible');
 
@@ -3072,6 +3089,79 @@ function renderRegionOptions() {
     msgBox.innerHTML = '<div style="margin:5px 10px 15px 10px;padding:12px;background-color:#eef9ff;'
       + 'border-left:4px solid #007bff;border-radius:8px;font-size:0.9rem;color:#333;text-align:left;">'
       + bannerMsg + '</div>';
+  }
+}
+
+/* renderRegionGrid(mode) — Génère la grille visuelle de 7 drapeaux pour le sélecteur
+   de variante hispanique dans le Launcher Vue B (Écran 4).
+   Affichée pour les DEUX modes :
+     • learn_spain  → choisir la variante d'espagnol à apprendre
+     • learn_french → choisir sa variante d'espagnol maternelle (origine)
+                      pour que l'interface s'adapte à l'apprenant hispanophone. */
+function renderRegionGrid(mode) {
+  var container = document.getElementById('region-grid-container');
+  var msgBox    = document.getElementById('region-message-box');
+  if (!container) return;
+
+  /* Utilise le mode courant si aucun n'est passé en paramètre */
+  var activeMode = mode || currentMode;
+
+  var regions = [
+    { id:'ES', flag:'🇪🇸', nameEs:'España',    nameFr:'Espagne'   },
+    { id:'MX', flag:'🇲🇽', nameEs:'México',    nameFr:'Mexique'   },
+    { id:'CO', flag:'🇨🇴', nameEs:'Colombia',  nameFr:'Colombie'  },
+    { id:'PE', flag:'🇵🇪', nameEs:'Perú',      nameFr:'Pérou'     },
+    { id:'VE', flag:'🇻🇪', nameEs:'Venezuela', nameFr:'Venezuela' },
+    { id:'AR', flag:'🇦🇷', nameEs:'Argentina', nameFr:'Argentine' },
+    { id:'EC', flag:'🇪🇨', nameEs:'Ecuador',   nameFr:'Équateur'  }
+  ];
+
+  /* Label du bloc selon le parcours */
+  var gridLabel = (activeMode === 'learn_french')
+    ? 'TU VARIANTE DE ESPAÑOL'   /* hispanophone : sa langue maternelle */
+    : 'VARIANTE RÉGIONALE';      /* francophone  : la variante à apprendre */
+
+  var html = '<div class="launcher-region-grid-wrap">'
+    + '<p class="launcher-region-grid-label">' + gridLabel + '</p>'
+    + '<div class="launcher-region-grid" role="group" aria-label="' + gridLabel + '">';
+
+  regions.forEach(function(r) {
+    var isActive  = (currentRegion === r.id);
+    /* Nom du pays dans la langue d'interface :
+       learn_french → interface en espagnol → nom en espagnol
+       learn_spain  → interface en français → nom en français */
+    var countryName = (activeMode === 'learn_french') ? r.nameEs : r.nameFr;
+    html += '<button'
+      + ' class="launcher-region-btn' + (isActive ? ' launcher-region-btn--active' : '') + '"'
+      + ' onclick="pickRegion(\'' + r.id + '\');renderRegionGrid(\'' + activeMode + '\');"'
+      + ' aria-pressed="' + isActive + '"'
+      + ' title="' + countryName + '">'
+      + '<span class="launcher-region-flag">' + r.flag + '</span>'
+      + '<span class="launcher-region-name">' + countryName + '</span>'
+      + '</button>';
+  });
+
+  html += '</div></div>';
+  container.innerHTML = html;
+
+  /* Bandeau d'info contextuel selon le parcours */
+  if (msgBox) {
+    var mainMsg, noteMsg;
+
+    if (activeMode === 'learn_french') {
+      /* Parcours Français — apprenant hispanophone */
+      mainMsg = '🌍 Elige tu variante de español de origen — el vocabulario y las expresiones se adaptarán a tu variante.';
+      noteMsg = 'Ej.: si eres argentino, elige 🇦🇷 Argentina. El contenido usará tu vocabulario regional.';
+    } else {
+      /* Parcours Espagnol — apprenant francophone */
+      mainMsg = '🌍 Choisissez la variante d\'espagnol que vous souhaitez apprendre — le vocabulaire et les expressions seront adaptés.';
+      noteMsg = 'Ex. : si vous partez au Mexique, choisissez 🇲🇽 México. L\'accent audio dépend des voix installées sur votre appareil.';
+    }
+
+    msgBox.innerHTML = '<div class="launcher-region-info">'
+      + mainMsg
+      + '<div class="launcher-region-info-note">' + noteMsg + '</div>'
+      + '</div>';
   }
 }
 
