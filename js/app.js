@@ -579,9 +579,12 @@ function initApp(mode) {
   /* — Masquer le launcher et afficher le guide (#home) en premier —
        L'apprenant voit le guide à chaque lancement (présentation de l'app,
        bouton "Commencer" pour accéder aux modules).
-       Le guide reste aussi accessible via le bouton ❓ dans la nav bar. */
+       Le guide reste aussi accessible via le bouton ❓ dans la nav bar.
+       Note : renderSections() est volontairement PAS appelé ici — il le sera
+       par showScreen() lorsque l'utilisateur clique "Commencer". Appeler
+       renderSections() avant showScreen('home') crée un chevauchement d'écrans
+       pendant la transition d'animation (300 ms) qui bloque les interactions. */
   document.getElementById('app-launcher').classList.remove('active');
-  renderSections(1);
   showScreen('home');
 
   // Met à jour la barre de navigation basse pour le mode courant
@@ -3424,7 +3427,7 @@ function renderRegionGrid(mode) {
     var countryName = (activeMode === 'learn_french') ? r.nameEs : r.nameFr;
     html += '<button'
       + ' class="launcher-region-btn' + (isActive ? ' launcher-region-btn--active' : '') + '"'
-      + ' onclick="pickRegion(\'' + r.id + '\');renderRegionGrid(\'' + activeMode + '\');"'
+      + ' onclick="pickRegion(\'' + r.id + '\');renderRegionGrid(currentMode);"'
       + ' aria-pressed="' + isActive + '"'
       + ' title="' + countryName + '">'
       + '<span class="launcher-region-flag">' + r.flag + '</span>'
