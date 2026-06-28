@@ -419,12 +419,18 @@ function showLauncherVariant(mode) {
       backBtn.removeEventListener('click', backBtn._launcherHandler);
     }
     backBtn._launcherHandler = function() {
+      /* S'assurer que tous les écrans sont masqués et que le launcher est bien actif */
+      document.querySelectorAll('.screen').forEach(function(s) {
+        s.classList.remove('active');
+      });
+      document.getElementById('app-launcher').classList.add('active');
       document.getElementById('launcher-view-variant').style.display = 'none';
       document.getElementById('launcher-view-cards').style.display   = 'flex';
       document.getElementById('launcher-view-cards').style.flexDirection = 'column';
       document.getElementById('launcher-view-cards').style.alignItems = 'center';
       document.getElementById('app-launcher').classList.remove('variant-active');
       document.documentElement.className = '';
+      currentMode = '';
       _setLauncherFooterLang(null);
       /* Retour à Vue A → Langue reste actif, currentMode réinitialisé */
       _updateBottomNav('app-launcher');
@@ -475,6 +481,8 @@ function _setLauncherFooterLang(mode) {
  * Masque tous les écrans et réaffiche le Launcher avec la Vue A.
  */
 function showLauncher() {
+  /* Réinitialise le mode et le thème visuel UNIQUEMENT quand on revient au launcher */
+  currentMode = '';
   document.querySelectorAll('.screen').forEach(s => { s.classList.remove('active'); });
   document.getElementById('launcher-view-variant').style.display = 'none';
   document.getElementById('launcher-view-cards').style.display   = 'flex';
@@ -1398,13 +1406,23 @@ function lessonGoBack() {
  * va sur l'écran du niveau mémorisé (ou niveau 1 par défaut).
  */
 function navGoModules() {
+  /* Si ALL_THEMES n'est pas encore chargé (pas de mode actif), on ne fait rien */
+  if (!ALL_THEMES || !ALL_THEMES.length) return;
+
   var target = (_currentThemeLevel === 2) ? 'sections-level2' : 'sections-level1';
-  /* Direction : depuis lesson = back, sinon forward */
+
+  /* Déterminer l'écran courant */
   var current = null;
   document.querySelectorAll('.screen').forEach(function(s) {
     if (s.classList.contains('active')) current = s.id;
   });
-  var dir = (current === 'lesson') ? 'back' : undefined;
+
+  /* Si on est déjà sur le bon écran, ne rien faire */
+  if (current === target) return;
+
+  /* Direction : depuis lesson = back, depuis home = forward, sinon auto */
+  var dir = (current === 'lesson') ? 'back' : 'forward';
+
   /* Pré-rend les grilles pour éviter le double rendu dans showScreen() */
   renderSections(_currentThemeLevel);
   _showScreenNoRender(target, dir);
@@ -3452,8 +3470,11 @@ function pickRegion(regionId) {
   localStorage.setItem('user_preferred_region', regionId);
   currentRegion = regionId;
 
-  // Mise à jour du code BCP-47 pour la synthèse vocale (mode Espagnol uniquement)
-  if (currentMode === 'learn_spain') {
+  // Mise à jour du code BCP-47 pour la synthèse vocale (mode Espagnol ou pré-sélection Launcher)
+  // On applique aussi depuis le Launcher (currentMode non encore défini) pour que la voix
+  // soit correcte dès le lancement et que la classe CSS de région soit bien positionnée.
+  var isSpainMode = (currentMode === 'learn_spain') || (currentMode === '');
+  if (currentMode !== 'learn_french') {
     var voiceMap = {
       ES:'es-ES', MX:'es-MX', CO:'es-CO', PE:'es-PE', VE:'es-VE', AR:'es-AR', EC:'es-EC'
     };
@@ -3532,16 +3553,16 @@ function pickRegion(regionId) {
     }
   }
 
-  // Mise à jour du drapeau dans la Vue B du Launcher (si visible)
+  // Mise à jour du drapeau dans la Vue B du Launcher (si visible) — tous modes
   var launcherFlagRow = document.getElementById('launcherFlagRow');
   const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
-  if (launcherFlagRow && currentMode === 'learn_spain') {
+  if (launcherFlagRow && currentMode !== 'learn_french') {
     launcherFlagRow.textContent = flagEmojis[currentRegion] || '🇪🇸';
   }
 
   // Mise à jour du drapeau de l'écran Sections (variante régionale apprise)
   var sectionsFlag = document.getElementById('sectionsFlag');
-  if (sectionsFlag && currentMode === 'learn_spain') {
+  if (sectionsFlag && currentMode !== 'learn_french') {
     sectionsFlag.innerHTML = flagHtml;
   }
 
@@ -3576,7 +3597,7 @@ function pickRegion(regionId) {
 
   /* Mise à jour du drapeau dans la barre de nav basse */
   var langFlag = document.getElementById('navLangFlag');
-  if (langFlag && currentMode === 'learn_spain') {
+  if (langFlag && currentMode !== 'learn_french') {
     langFlag.textContent = flagEmojis[currentRegion] || '🇪🇸';
   }
 }
