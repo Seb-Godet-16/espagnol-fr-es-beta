@@ -24,23 +24,23 @@
  * ║  changer la classe sur <html> pour basculer le rendu visuel.   ║
  * ╠══════════════════════════════════════════════════════════════════╣
  * ║  PLAN DU FICHIER                                                ║
- * ║   §1  Reset & base                          ligne ~  40         ║
- * ║   §2  Variables de thème (:root / fallback) ligne ~  75         ║
- * ║   §3  Thème Français (html.theme-french)    ligne ~ 190         ║
- * ║   §4  Thème Espagnol (html.theme-spain)     ligne ~ 215         ║
- * ║   §5  Écran 0 — Lanceur                     ligne ~ 245         ║
- * ║   §6  Écran 1 — Accueil #home               ligne ~ 330         ║
- * ║   §7  Écran 2 — Sections                    ligne ~ 420         ║
- * ║   §8  Écran 3 — Leçon                       ligne ~ 490         ║
- * ║   §9  Composants : Flashcards               ligne ~ 530         ║
- * ║   §10 Composants : Alphabet                 ligne ~ 610         ║
- * ║   §11 Composants : Quiz                     ligne ~ 660         ║
- * ║   §12 Composants : Dialogues / Situations   ligne ~ 730         ║
- * ║   §13 Composants : Vocabulaire              ligne ~ 800         ║
- * ║   §14 Onglet Répète                         ligne ~ 850         ║
- * ║   §15 Variantes régionales hispaniques      ligne ~ 920         ║
- * ║   §16 Modales (Guide + Remerciements)       ligne ~ 990         ║
- * ║   §17 Footer commun                         ligne ~ 1700        ║
+ * ║   §1  Reset & base                          ligne   49          ║
+ * ║   §2  Variables de thème (:root / fallback) ligne  405          ║
+ * ║   §3  Thème Français (html.theme-french)    ligne 2877          ║
+ * ║   §4  Thème Espagnol (html.theme-spain)     ligne 2895          ║
+ * ║   §5  Écran 0 — Lanceur                     ligne  236          ║
+ * ║   §6  Écran 1 — Accueil #home               ligne  443          ║
+ * ║   §7  Écran 2 — Sections                    ligne 1070          ║
+ * ║   §8  Écran 3 — Leçon                       ligne 1416          ║
+ * ║   §9  Composants : Flashcards               ligne 1548          ║
+ * ║   §10 Composants : Alphabet                 ligne 1818          ║
+ * ║   §11 Composants : Quiz                     ligne 1880          ║
+ * ║   §12 Composants : Dialogues / Situations   ligne 1960          ║
+ * ║   §13 Composants : Vocabulaire              ligne 2029          ║
+ * ║   §14 Onglet Répète                         ligne 3002          ║
+ * ║   §15 Variantes régionales hispaniques      ligne 2927          ║
+ * ║   §16 Modales (Guide + Remerciements)       ligne 2844          ║
+ * ║   §17 Footer commun                         ligne 2123          ║
  * ╚══════════════════════════════════════════════════════════════════╝
  */
 

@@ -3,16 +3,16 @@
 > **¡Oh la vache, qué chévère, boludo!**  
 > Application bilingue Français ↔ Espagnol — flashcards, quiz, dialogues, 7 variantes d'espagnol.
 
-[![PWA](https://img.shields.io/badge/PWA-installable-blueviolet)](https://sgodet.github.io/vachebo/)
+[![PWA](https://img.shields.io/badge/PWA-installable-blueviolet)](https://seb-godet-16.github.io/espagnol-fr-es-beta/)
 [![Vanilla JS](https://img.shields.io/badge/Vanilla-JS-f7df1e?logo=javascript)](https://developer.mozilla.org/fr/docs/Web/JavaScript)
 [![Licence](https://img.shields.io/badge/licence-MIT-green)](LICENSE)
-[![GitHub Pages](https://img.shields.io/badge/déployé%20sur-GitHub%20Pages-222?logo=github)](https://sgodet.github.io/vachebo/)
+[![GitHub Pages](https://img.shields.io/badge/déployé%20sur-GitHub%20Pages-222?logo=github)](https://seb-godet-16.github.io/espagnol-fr-es-beta/)
 
 ---
 
 ## 🌍 Démo
 
-➡️ **[Ouvrir l'application](https://sgodet.github.io/vachebo/)**
+➡️ **[Ouvrir l'application](https://seb-godet-16.github.io/espagnol-fr-es-beta/)**
 
 Aucune inscription, aucun téléchargement. Fonctionne dans le navigateur et s'installe sur écran d'accueil comme une vraie app.
 
@@ -47,7 +47,7 @@ Aucune inscription, aucun téléchargement. Fonctionne dans le navigateur et s'i
 ## 🏗️ Architecture
 
 ```
-vachebo/
+espagnol-fr-es-beta/
 ├── index.html          # Structure HTML unique (SPA — Single Page App)
 ├── css/
 │   └── style.css       # Thèmes couleur, composants, animations (597 blocs, 38 CSS vars)
@@ -94,8 +94,8 @@ sed -i "s/__BUILD_NUMBER__/${{ github.run_number }}/g" sw.js
 ### Installation locale
 
 ```bash
-git clone https://github.com/sgodet/vachebo.git
-cd vachebo
+git clone https://github.com/Seb-Godet-16/espagnol-fr-es-beta.git
+cd espagnol-fr-es-beta
 # Servir avec n'importe quel serveur statique, ex :
 npx serve .
 # ou
