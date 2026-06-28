@@ -58,6 +58,10 @@
  * @param {'learn_french'|'learn_spain'} mode
  * @param {Function} callback  — fonction à exécuter quand les données sont prêtes
  */
+/* ── Note d'ordre : ces 3 fonctions sont déclarées en tête de fichier car elles sont
+   attachées en onclick="" dans le footer HTML généré dynamiquement par renderSections().
+   Elles appellent L(), renderSections() et _showToast() qui sont définies plus bas,
+   ce qui est valide grâce au hoisting JS (function declarations). ── */
 function showResetConfirm() {
   var msg = L('¿Seguro que quieres borrar toda tu progresión? Esta acción es irreversible.', 'Voulez-vous vraiment effacer toute votre progression ? Cette action est irréversible.');
   document.getElementById('confirmMsg').textContent = msg;
@@ -146,6 +150,9 @@ function _launchConfetti(isThreeStars) {
   }, 2400);
 }
 
+/* Verrou contre les doubles appels simultanés (ex : double-clic rapide sur Continuer) */
+var _loadDataInProgress = false;
+
 function loadDataForMode(mode, callback) {
   const alreadyLoaded = (mode === 'learn_french')
     ? (typeof ALL_THEMES_FR !== 'undefined')
@@ -156,16 +163,22 @@ function loadDataForMode(mode, callback) {
     return;
   }
 
+  /* Évite d'injecter deux balises <script> si l'utilisateur double-clique */
+  if (_loadDataInProgress) return;
+  _loadDataInProgress = true;
+
   const src = (mode === 'learn_french') ? 'js/data-fr.js' : 'js/data-es.js';
   const script = document.createElement('script');
   script.src = src;
 
   script.onload = function() {
+    _loadDataInProgress = false;
     _hideSpinner();
     callback();
   };
 
   script.onerror = function() {
+    _loadDataInProgress = false;
     _hideSpinner();
     _showToast('⚠️ Erreur de chargement des données (' + src + '). Vérifiez votre connexion.', 5000);
   };
@@ -592,8 +605,11 @@ function _setUI(t) {
   /* homeStartBtn est câblé par _buildHomeGuide() — pas besoin ici */
 }
 
-/* _setText(id, val) — Remplace innerHTML d'un élément par val
-   (utilise innerHTML et non textContent pour supporter les balises HTML) */
+/* _setText(id, val) — Remplace innerHTML d'un élément par val.
+   ⚠️  SÉCURITÉ : utilise innerHTML (et non textContent) pour interpréter les
+   balises HTML embarquées dans les libellés bilingues (<span>, <br>…).
+   À n'appeler QU'avec des littéraux JS hardcodés provenant de _setUI().
+   Ne jamais passer de données utilisateur ou d'entrées réseau non sanitisées. */
 function _setText(id, val) {
   var el = document.getElementById(id);
   if (el) el.innerHTML = val || '';
@@ -918,7 +934,7 @@ function _updateVoiceBadge() {
     qualityTitle = L('Voz por defecto', 'Voix système par défaut');
   }
 
-  badge.innerHTML = flag + ' <span class="vqb-label">' + _spanishVoiceLabel + '</span> ' + qualityIcon;
+  badge.innerHTML = flag + ' <span class="vqb-label">' + _escAttr(_spanishVoiceLabel) + '</span> ' + qualityIcon;
   badge.className = 'voice-quality-badge ' + qualityClass;
   badge.title     = qualityTitle + ' — ' + _spanishVoiceLabel;
 }
@@ -1122,7 +1138,10 @@ function markDone(id, pct) {
 
   const existing = done.find(d => d.id === id);
   if (existing) {
-    if (newStars > existing.stars) existing.stars = newStars; // Amélioration seulement
+    if (newStars > existing.stars) {
+      if (newStars === 3) _launchConfetti(true); // confetti aussi sur upgrade vers 3 étoiles
+      existing.stars = newStars;
+    }
   } else {
     done.push({ id: id, stars: newStars });
     if (newStars === 3) _launchConfetti(true);
@@ -1418,6 +1437,10 @@ function showScreen(id, dir) {
   window.scrollTo(0, 0);
 
   const nextEl = document.getElementById(id);
+  if (!nextEl) {
+    console.error('showScreen: écran introuvable dans le DOM :', id);
+    return;
+  }
   nextEl.classList.add('active');
 
   // Applique l'animation d'entrée sur le nouvel écran
@@ -2248,12 +2271,12 @@ function startMicReco(word, lang) {
       if (ok) {
         fbEl.className  = 'mic-feedback mic-feedback--ok';
         fbEl.innerHTML  = L('✅ ¡Muy bien! ', '✅ Parfait ! ')
-          + '<span class="mic-transcript">"' + transcript + '"</span>';
+          + '<span class="mic-transcript">"' + _escAttr(transcript) + '"</span>';
       } else {
         fbEl.className  = 'mic-feedback mic-feedback--ko';
         fbEl.innerHTML  = L('🔁 Inténtalo otra vez · ', '🔁 Réessaie · ')
           + L('Escuchado : ', 'Entendu : ')
-          + '<span class="mic-transcript">"' + transcript + '"</span>';
+          + '<span class="mic-transcript">"' + _escAttr(transcript) + '"</span>';
       }
     }
     _resetMicBtn(word, lang);
@@ -2548,11 +2571,11 @@ function _rpShowFeedback(ok, transcript, word, lang) {
     if (ok) {
       fbEl.className = 'rp-feedback mic-feedback mic-feedback--ok';
       fbEl.innerHTML = L('✅ ¡Muy bien! ', '✅ Parfait ! ')
-        + '<span class="mic-transcript">"' + transcript + '"</span>';
+        + '<span class="mic-transcript">"' + _escAttr(transcript) + '"</span>';
     } else {
       fbEl.className = 'rp-feedback mic-feedback mic-feedback--ko';
       fbEl.innerHTML = L('🔁 Inténtalo otra vez · Escuchado : ', '🔁 Réessaie · Entendu : ')
-        + '<span class="mic-transcript">"' + transcript + '"</span>';
+        + '<span class="mic-transcript">"' + _escAttr(transcript) + '"</span>';
     }
   }
   // Avancement automatique après 2500ms
@@ -2595,11 +2618,19 @@ function _rpShowEnd() {
   var total  = _rpWords.length;
   var pct    = total ? Math.round(_rpScore / total * 100) : 0;
 
+  /* Sauvegarde des étoiles — l'onglet Répète contribue à la progression
+     au même titre que les onglets Quiz (markDone ne rétrograde jamais). */
+  var starsEarned = _calcStars(pct);
+  if (starsEarned > 0 && CT) {
+    markDone(CT.id, pct);
+    /* Rafraîchit les étoiles dans la grille de modules (visible au retour) */
+    renderSections(_currentThemeLevel);
+  }
+
   var titleOk  = L('¡Sesión completada!', 'Session terminée !');
   var retryLbl = L('🔁 Volver a empezar', '🔁 Recommencer');
   var scoreLbl = L('Resultado', 'Score');
 
-  var starsEarned = _calcStars(pct);
   var starsHtml   = Array.from({ length: 3 }, function(_, i) {
     return i < starsEarned ? '⭐' : '☆';
   }).join('');
@@ -2810,7 +2841,7 @@ function renderQuiz10() {
 
   document.getElementById('tabContent').innerHTML =
     '<div class="dialog-quiz-wrap">'
-    + '<div class="quiz-q"><div class="q-text">' + qStdLabel + '<br><b>' + q.q + '</b></div></div>'
+    + '<div class="quiz-q"><div class="q-text">' + qStdLabel + '<br><b>' + _escAttr(q.q) + '</b></div></div>'
     + '<div class="quiz-options" style="grid-template-columns:1fr">' + stdOpts + '</div>'
     + '<div class="quiz-feedback" id="q10fb"></div>'
     + '</div>';
@@ -3128,7 +3159,7 @@ function renderDialogQuiz() {
 
   document.getElementById('tabContent').innerHTML =
     '<div class="dialog-quiz-wrap">'
-    + '<div class="quiz-q"><div class="q-text">' + qLabel + '<br><b>' + q.q + '</b></div></div>'
+    + '<div class="quiz-q"><div class="q-text">' + qLabel + '<br><b>' + _escAttr(q.q) + '</b></div></div>'
     + '<div class="quiz-options" style="grid-template-columns:1fr">' + opts + '</div>'
     + '<div class="quiz-feedback" id="dqfb"></div>'
     + '</div>';
@@ -3200,7 +3231,12 @@ function _quizResultStrings(pct) {
 /* esc(s) — Échappe les caractères spéciaux pour injection dans les onclick="" HTML.
    Gère les antislashs, guillemets simples et doubles. */
 function esc(s) {
-  return (s || '').replaceAll('\\', '\\\\').replaceAll("'", "\\'").replaceAll('"', '&quot;');
+  return (s || '')
+    .replaceAll('\\', '\\\\')
+    .replaceAll("'", "\\'")
+    .replaceAll('"', '&quot;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;');
 }
 
 /* _escAttr(s) — Échappe une chaîne pour injection dans un attribut HTML (aria-label, title…).
@@ -3925,13 +3961,25 @@ function _pdfFooter() {
     + '</div>';
 }
 
-/* _pdfOpen(htmlContent) — Ouvre le HTML dans un nouvel onglet et lance l'impression. */
+/* _pdfOpen(htmlContent) — Ouvre le HTML dans un nouvel onglet et lance l'impression.
+   Double déclenchement : onload (navigateurs modernes) + setTimeout 800 ms (fallback Safari/Firefox
+   où document.write() dans un nouvel onglet ne déclenche pas toujours onload). */
 function _pdfOpen(htmlContent) {
   var w = window.open('', '_blank');
   if (!w) { _showToast(L('Autoriza las ventanas emergentes para exportar.', 'Autorisez les pop-ups pour exporter.')); return; }
   w.document.write(htmlContent);
   w.document.close();
-  w.onload = function() { w.focus(); w.print(); };
+  var _printed = false;
+  function _doPrint() {
+    if (_printed) return;
+    _printed = true;
+    w.focus();
+    w.print();
+  }
+  w.onload = _doPrint;
+  /* Fallback : onload ne se déclenche pas toujours (Safari, Firefox) quand le document
+     est écrit via document.write() dans un onglet ouvert par window.open(). */
+  setTimeout(_doPrint, 800);
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -3987,8 +4035,8 @@ function _exportVocab() {
   var regionFlag = isFrench() ? (flagEmojis[currentRegion] || '🇪🇸') : '🇫🇷';
 
   var title    = L(
-    '📘 Vocabulario — ' + (CT.title || CT.id),
-    '📘 Vocabulaire — ' + (CT.title || CT.id)
+    '📘 Vocabulario — ' + (CT.name || CT.id),
+    '📘 Vocabulaire — ' + (CT.name || CT.id)
   );
   var subtitle = L(
     'Francés 🇫🇷 ↔ Español ' + regionFlag,
@@ -4050,8 +4098,8 @@ function _exportSituation() {
   var regionFlag = flagEmojis[currentRegion] || '🇪🇸';
 
   var title    = L(
-    '💬 Diálogo — ' + (CT.title || CT.id),
-    '💬 Dialogue — ' + (CT.title || CT.id)
+    '💬 Diálogo — ' + (CT.name || CT.id),
+    '💬 Dialogue — ' + (CT.name || CT.id)
   );
   var subtitle = L(
     (sit.label || '') + ' · Situación ' + (sitIdx + 1),

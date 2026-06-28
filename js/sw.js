@@ -2,7 +2,7 @@
  * ╔══════════════════════════════════════════════════════════════════╗
  * ║  Language App 🇫🇷🇪🇸  —  sw.js  (Service Worker)              ║
  * ║  Auteur   : Sébastien Godet                                     ║
- * ║  Assistés  : Claude Sonnet 4.6 et Gemini 3.5 Flash                                  ║
+ * ║  Assisté   : Claude Sonnet 4.6 · Gemini 3.5 Flash                               ║
  * ║  Version  : Juin 2026                                           ║
  * ╠══════════════════════════════════════════════════════════════════╣
  * ║  STRATÉGIE DE CACHE HYBRIDE                                     ║
@@ -37,8 +37,15 @@
    CACHE_NAME : suffixe automatiquement remplacé par GitHub Actions
    (variable __BUILD_NUMBER__) à chaque déploiement — pas d'action
    manuelle requise.
+   En dev local (npx serve / python3 -m http.server), le placeholder
+   n'est pas substitué : on utilise Date.now() comme fallback pour
+   éviter un cache zombie nommé 'vachebo-__BUILD_NUMBER__' qui ne
+   serait jamais nettoyé par le filtre activate ci-dessous.
    ────────────────────────────────────────────────────────────────── */
-const CACHE_NAME = 'vachebo-__BUILD_NUMBER__';   /* Suffixe automatisé par GitHub Actions */
+const _RAW_BUILD = '__BUILD_NUMBER__';
+const CACHE_NAME = _RAW_BUILD.startsWith('__')
+  ? 'vachebo-dev-' + Date.now()     /* dev local : cache unique par session */
+  : 'vachebo-' + _RAW_BUILD;        /* CI/CD GitHub Actions : numéro de build */
 
 /*
   Liste exhaustive des ressources à pré-cacher lors de l'installation.
@@ -54,7 +61,8 @@ const PRECACHE_URLS = [
   './js/app.js',
   './js/data-fr.js',
   './js/data-es.js',
-  './manifest.json'
+  './manifest.json',
+  './img/Logo-appli-es-fr.png'      /* logo principal — affiché dès le launcher */
 ];
 
 /* Préfixes d'URLs considérées comme "externes" → stratégie Network First */
@@ -120,8 +128,10 @@ function _isPwaIcon(url) {
  * @returns {boolean}
  */
 function _isNavigation(request) {
+  /* request.headers.get('accept') peut retourner null sur certaines requêtes
+     (ex : fetch() sans Accept header explicite côté app) → on guard avec || '' */
   return request.mode === 'navigate'
-    || request.headers.get('accept').includes('text/html');
+    || (request.headers.get('accept') || '').includes('text/html');
 }
 
 

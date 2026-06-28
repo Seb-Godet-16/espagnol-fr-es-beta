@@ -32,6 +32,29 @@
 <head>
   <meta charset="UTF-8">
   <!--
+    ── SÉCURITÉ ────────────────────────────────────────────────────────────────
+    Content-Security-Policy (via meta tag — GitHub Pages ne permet pas de headers HTTP).
+    Politique :
+      • default-src 'self'               — tout bloqué par défaut sauf ressources locales
+      • script-src 'self'                — scripts uniquement depuis l'origine (pas d'inline)
+      • style-src 'self' 'unsafe-inline' — inline styles nécessaires (composants générés JS)
+      • img-src 'self' data: https://cdnjs.cloudflare.com https://raw.githubusercontent.com
+                                         — drapeaux Twemoji (CDN) + logo GitHub + data: SVG inline
+      • connect-src 'self'               — fetch() uniquement vers l'origine (Service Worker)
+      • object-src 'none'                — bloque Flash/plugins legacy
+      • base-uri 'self'                  — empêche l'injection de <base href="...">
+      • form-action 'self'               — empêche les soumissions vers l'extérieur
+    Note : 'unsafe-inline' pour style-src est inévitable (génération HTML côté JS avec style="").
+    ─────────────────────────────────────────────────────────────────────────── -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://cdnjs.cloudflare.com https://raw.githubusercontent.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <!-- Empêche le détournement en iframe (clickjacking) -->
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+  <!-- Empêche le MIME-sniffing (interprétation de .js comme HTML, etc.) -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <!-- Referrer limité à l'origine — ne fuite pas les URLs dans les logs externes -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!--
     viewport : maximum-scale=5.0 autorise le zoom utilisateur
     (WCAG 1.4.4 — critère d'accessibilité).
   -->
