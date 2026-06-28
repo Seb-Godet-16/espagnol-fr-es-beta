@@ -34,20 +34,10 @@
   <!--
     ── SÉCURITÉ ────────────────────────────────────────────────────────────────
     Content-Security-Policy (via meta tag — GitHub Pages ne permet pas de headers HTTP).
-    Politique :
-      • default-src 'self'               — tout bloqué par défaut sauf ressources locales
-      • script-src 'self'                — scripts uniquement depuis l'origine (pas d'inline)
-      • style-src 'self' 'unsafe-inline' — inline styles nécessaires (composants générés JS)
-      • img-src 'self' data: https://cdnjs.cloudflare.com https://raw.githubusercontent.com
-                                         — drapeaux Twemoji (CDN) + logo GitHub + data: SVG inline
-      • connect-src 'self'               — fetch() uniquement vers l'origine (Service Worker)
-      • object-src 'none'                — bloque Flash/plugins legacy
-      • base-uri 'self'                  — empêche l'injection de <base href="...">
-      • form-action 'self'               — empêche les soumissions vers l'extérieur
-    Note : 'unsafe-inline' pour style-src est inévitable (génération HTML côté JS avec style="").
+    Politique ajustée pour autoriser votre domaine GitHub Pages et éviter le blocage des images.
     ─────────────────────────────────────────────────────────────────────────── -->
   <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://cdnjs.cloudflare.com https://raw.githubusercontent.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://seb-godet-16.github.io https://cdnjs.cloudflare.com https://raw.githubusercontent.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
   <!-- Empêche le détournement en iframe (clickjacking) -->
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
   <!-- Empêche le MIME-sniffing (interprétation de .js comme HTML, etc.) -->
@@ -65,21 +55,14 @@
     PWA — Progressive Web App
     Ces balises permettent l'installation sur écran d'accueil
     et définissent l'apparence de l'app en mode standalone.
-
-    manifest.json  → nom, icône, couleurs, start_url, orientation
-    theme-color    → couleur de la barre de statut du navigateur
-                     (bleu FR par défaut ; app.js peut la changer via
-                      <meta name="theme-color"> si nécessaire)
-    apple-touch-icon → icône sur écran d'accueil iOS (Safari ne lit
-                        pas le manifest pour l'icône)
   -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#002395" id="meta-theme-color">
   <meta name="description"
         content="VACHÉBO — Application bilingue Français ↔ Espagnol. Apprenez hors-ligne, sur mobile et desktop.">
 
-  <!-- ── iOS PWA : icône et comportement de la barre de statut ── -->
-  <link rel="apple-touch-icon" href="img/Logo-appli-es-fr.png">
+  <!-- ── iOS PWA : Correction du chemin de l'icône vers le sous-dossier dédié /img/icons/ ── -->
+  <link rel="apple-touch-icon" href="img/icons/icon-152x152.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="VACHÉBO">
@@ -201,17 +184,7 @@
 
   <!-- ══════════════════════════════════════════
        ÉCRAN 1 — GUIDE / ONBOARDING  (#home)
-       ──────────────────────────────────────────
-       Affiché après la sélection de langue.
-       Style Oromo : topbar sticky sombre + hero coloré
-       + barre sticky "Commencer + PDF" + accordéons
-       <details>/<summary> natifs (zéro JS pour ouvrir/fermer).
-
-       Deux blocs statiques (un par langue) :
-         • #guideContentFR → guide en Français (mode learn_spain)
-         • #guideContentES → guide en Espagnol (mode learn_french)
-       showGuide() affiche le bon bloc et masque l'autre.
-  ══════════════════════════════════════════ -->
+       ────────────────────────────────────────── -->
   <div id="home" class="screen">
 
     <!-- Topbar sticky sombre — titre "Guide explicatif" / "Guía" -->
@@ -249,20 +222,10 @@
       </div>
     </div>
 
-    <!--
-      ══════════════════════════════════════════════════════════════
-      CORPS DU GUIDE — deux blocs statiques (un par langue)
-      Seul le bloc correspondant au mode actif est visible.
-      Géré par showGuide() via la classe .home-lang-hidden.
-      ══════════════════════════════════════════════════════════════
-    -->
+    <!-- CORPS DU GUIDE — deux blocs statiques (un par langue) -->
     <div class="home-guide-body" id="homeGuideBody">
 
-      <!-- ─────────────────────────────────────────────────────────
-           BLOC FR — guide en Français
-           Affiché quand l'apprenant apprend l'Espagnol (learn_spain).
-           Langue maternelle = Français → guide en Français.
-           ───────────────────────────────────────────────────────── -->
+      <!-- BLOC FR — guide en Français -->
       <div class="home-lang-block home-lang-hidden" id="guideContentFR" data-lang="fr">
 
         <!-- 1. Comment ça marche -->
@@ -521,13 +484,7 @@
       </div><!-- /.home-lang-block[data-lang="fr"] / #guideContentFR -->
 
 
-      <!-- ─────────────────────────────────────────────────────────
-           BLOC ES — guide en Espagnol
-           Affiché quand l'apprenant apprend le Français (learn_french).
-           Langue maternelle = Espagnol → guide en Espagnol.
-           Les IDs heroFlags, regionBadge, regionExample et data-region
-           sont utilisés par _refreshGuideRegion() dans app.js.
-           ───────────────────────────────────────────────────────── -->
+      <!-- BLOC ES — guide en Espagnol -->
       <div class="home-lang-block home-lang-hidden" id="guideContentES" data-lang="es">
 
         <!-- Bandeau variante régionale — injecté par _refreshGuideRegion() -->
@@ -629,7 +586,7 @@
               <ol>
                 <li>Abre <strong>Ajustes → Accesibilidad → Contenido hablado → Voces</strong>.</li>
                 <li>Selecciona el idioma destino, elige una voz y pulsa ⬇️ para descargarla en calidad <em>Mejorada</em>.</li>
-                <li>Abre la app en <strong>Safari</strong> (recomendado en iOS) y pulsa por primera vez 🔊 — iOS pide una interacción antes de permitir el audio.</li>
+                <li>Abre la app en <strong>Safari</strong> (ambas opciones recomendadas en iOS) y pulsa por primera vez 🔊 — iOS pide una interacción antes de permitir el audio.</li>
                 <li>Si no sale nada, comprueba que el <strong>botón de silencio</strong> (interruptor lateral) está desactivado.</li>
               </ol>
               <div class="ob-audio-tip">💡 La pestaña 🎤 Repite solo está disponible en Safari iOS 14.5+ y Chrome Android — no funciona en Firefox móvil.</div>
@@ -646,7 +603,7 @@
             </div>
 
             <div class="ob-audio-block">
-              <div class="ob-audio-head">🆘 ¿Sigues con problemas?</div>
+              <div class="ob-audio-head">⚖️ ¿Sigues con problemas?</div>
               <p>Si el audio sigue sin funcionar, el problema probablemente viene de un ajuste específico de tu modelo. Los equipos de soporte pueden ayudarte :</p>
               <p style="margin:.4em 0">
                 🤖 <a href="https://support.google.com/android/" target="_blank" rel="noopener noreferrer">Soporte Google / Android</a> ·
@@ -661,7 +618,7 @@
             <p>La pestaña <strong>Repite</strong> usa el micrófono para practicar la pronunciación :</p>
             <ul>
               <li><strong>🔊 Escuchar</strong> — oye la palabra.</li>
-              <li><strong>🎤 Hablar</strong> — pronúnciala tú también.</li>
+              <li><strong>🎤 Hablar</strong> — pronúnciana tú también.</li>
             </ul>
             <div class="ob-tip">💡 Requiere permiso de micrófono — puede no funcionar en todos los navegadores.</div>
           </div>
@@ -726,7 +683,7 @@
               </div>
               <div class="ob-compare-col">
                 <div class="ob-compare-head">🦉 Duolingo / Babbel</div>
-                <ul><li>🎮 Gamificación motivante</li><li>🌐 Gran catálogo</li><li>🎯 Recorrido adaptativo</li><li>👥 Comunidad</li><li>📐 Gramática progresiva</li></ul>
+                <ul><li>🎮 Gamification motivante</li><li>🌐 Gran catálogo</li><li>🎯 Recorrido adaptativo</li><li>👥 Comunidad</li><li>📐 Gramática progresiva</li></ul>
               </div>
               <div class="ob-compare-col">
                 <div class="ob-compare-head">🏫 Escuela de idiomas</div>
@@ -795,41 +752,28 @@
 
   <!-- ══════════════════════════════════════════
        ÉCRAN 2a — NIVEAU 1 MODULES  (#sections-level1)
-       Grille des thèmes de Niveau 1 (vocabulaire).
-       Les cartes sont générées par renderSections(1)
-       dans app.js à partir de ALL_THEMES.
-  ══════════════════════════════════════════ -->
+       ────────────────────────────────────────── -->
   <div id="sections-level1" class="screen">
 
     <div class="sections-header">
-      <!-- Ligne du haut : Retour + Titre à gauche, drapeau de la langue apprise à droite -->
       <div class="sections-top-row">
         <div class="sections-top-left">
-          <!-- Retour → launcher -->
           <button class="back-btn" id="sectionsBackBtn" onclick="showLauncher()"
                   aria-label="Retour au choix de langue / Volver a la selección de idioma"></button>
-
-          <!-- Titre injecté par JS (ex : "📚 Modules") -->
           <h2 id="sectionsTitle"></h2>
-          <!-- Sous-titre bilingue injecté par renderSections() -->
           <div class="sections-subtitle" id="sectionsSubtitle"></div>
         </div>
-
-        <!-- Drapeau de la langue apprise (FR fixe, ou variante régionale ES) -->
         <div class="sections-flag" id="sectionsFlag"></div>
       </div>
 
-      <!-- Barre de progression globale (% de modules terminés) -->
       <div class="progress-bar-wrap">
         <div class="progress-bar" id="globalProgress" style="width:0%"></div>
       </div>
       <div class="progress-label" id="progressLabel"></div>
 
-      <!-- Étoiles totales (injectées par renderSections()) -->
       <div class="sections-stars" id="sectionsStars"></div>
     </div>
 
-    <!-- Barre d'onglets Niveau 1 / Niveau 2 -->
     <div class="level-tab-bar">
       <button class="level-tab active" id="lvlTab1" onclick="showScreen('sections-level1')">
         <span id="level1Label"></span>
@@ -843,49 +787,34 @@
       <div class="themes-grid" id="grid1"></div>
     </div>
 
-    <footer id="sectionsFooter">
-      <!-- Contenu injecté par renderSections() selon le mode et la variante -->
-    </footer>
+    <footer id="sectionsFooter"></footer>
   </div><!-- /#sections-level1 -->
 
 
   <!-- ══════════════════════════════════════════
        ÉCRAN 2b — NIVEAU 2 MODULES  (#sections-level2)
-       Grille des thèmes de Niveau 2 (dialogues).
-       Les cartes sont générées par renderSections(2)
-       dans app.js à partir de ALL_THEMES.
-  ══════════════════════════════════════════ -->
+       ────────────────────────────────────────── -->
   <div id="sections-level2" class="screen">
 
     <div class="sections-header">
-      <!-- Ligne du haut : Retour + Titre à gauche, drapeau de la langue apprise à droite -->
       <div class="sections-top-row">
         <div class="sections-top-left">
-          <!-- Retour → launcher -->
           <button class="back-btn" id="sectionsBackBtn2" onclick="showLauncher()"
                   aria-label="Retour au choix de langue / Volver a la selección de idioma"></button>
-
-          <!-- Titre injecté par JS -->
           <h2 id="sectionsTitle2"></h2>
-          <!-- Sous-titre bilingue -->
           <div class="sections-subtitle" id="sectionsSubtitle2"></div>
         </div>
-
-        <!-- Drapeau de la langue apprise -->
         <div class="sections-flag" id="sectionsFlag2"></div>
       </div>
 
-      <!-- Barre de progression globale -->
       <div class="progress-bar-wrap">
         <div class="progress-bar" id="globalProgress2" style="width:0%"></div>
       </div>
       <div class="progress-label" id="progressLabel2"></div>
 
-      <!-- Étoiles totales -->
       <div class="sections-stars" id="sectionsStars2"></div>
     </div>
 
-    <!-- Barre d'onglets Niveau 1 / Niveau 2 -->
     <div class="level-tab-bar">
       <button class="level-tab" id="lvlTab1b" onclick="showScreen('sections-level1','back')">
         <span id="level1LabelB"></span>
@@ -899,47 +828,25 @@
       <div class="themes-grid" id="grid2"></div>
     </div>
 
-    <footer id="sectionsFooter2">
-      <!-- Contenu injecté par renderSections() selon le mode et la variante -->
-    </footer>
+    <footer id="sectionsFooter2"></footer>
   </div><!-- /#sections-level2 -->
 
 
   <!-- ══════════════════════════════════════════
-       [ANCIEN ÉCRAN SECTIONS - CONSERVÉ VIDE pour compatibilité]
-       Remplacé par #sections-level1 et #sections-level2.
-       Cet élément n'est plus activé, mais sa présence dans le DOM
-       évite des erreurs si du code résiduel référence l'ID "sections".
-  ══════════════════════════════════════════ -->
-  <!-- ══════════════════════════════════════════
        ÉCRAN 3 — LEÇON
-       Affiché quand on clique sur un module.
-       Contient un système d'onglets :
-         • Flashcards   (tab 'flash')
-         • Quiz audio   (tab 'quiz10') pour l'alphabet
-         • Quiz QCM     (tab 'quiz10') pour le vocabulaire
-         • Dialogue     (tab 'dialog') pour les thèmes Niveau 2
-         • Vocabulaire  (tab 'vocab')  idem
-         • Mini-quiz    (tab 'dquiz')  idem
-       Les onglets et leur contenu sont injectés
-       par openTheme() et switchTab() dans app.js.
-  ══════════════════════════════════════════ -->
+       ────────────────────────────────────────── -->
   <div id="lesson" class="screen">
 
     <div class="lesson-header">
-      <!-- Retour → écran sections (niveau mémorisé via lessonGoBack()) -->
       <button class="back-btn" onclick="lessonGoBack()" id="lessonBackBtn"
               aria-label="Retour aux modules / Volver a los módulos">←</button>
 
-      <!-- Retour direct → écran sections -->
       <button class="back-btn lesson-home-btn" onclick="lessonGoBack()" id="lessonHomeBtn"
               title="Modules" aria-label="Accueil des modules / Inicio de módulos">🏠</button>
 
-      <!-- Emoji et titre du module courant, injectés par openTheme() -->
       <span id="lessonEmoji" style="font-size:1.4rem;margin-right:4px"></span>
       <h3 id="lessonTitle"></h3>
 
-      <!-- Navigation prev / next dans le niveau -->
       <div class="lesson-nav-arrows">
         <button class="lesson-nav-btn" id="lessonPrevBtn" onclick="lessonNav(-1)" title="Module précédent" aria-label="Module précédent">‹</button>
         <button class="lesson-nav-btn" id="lessonNextBtn" onclick="lessonNav(1)"  title="Module suivant"   aria-label="Module suivant">›</button>
@@ -947,14 +854,10 @@
     </div><!-- /.lesson-header -->
 
     <div class="lesson-body" id="lessonBody">
-      <!-- Onglets générés dynamiquement par openTheme() -->
       <div class="tabs" id="lessonTabs"></div>
-
-      <!-- Zone de contenu de l'onglet actif ; entièrement remplacée par switchTab() -->
       <div id="tabContent"></div>
     </div>
 
-    <!-- Pied de page de l'écran leçon -->
     <footer class="lesson-footer">
       © Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash ·
       <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a> ·
@@ -967,9 +870,7 @@
 
   <!-- ══════════════════════════════════════════
        MODALE — REMERCIEMENTS
-       Déclenchée par showCredits() (lien en footer).
-       Fermée par le bouton "Fermer".
-  ══════════════════════════════════════════ -->
+       ────────────────────────────────────────── -->
   <div id="credits-modal"
        class="modal"
        style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;
@@ -997,16 +898,11 @@
     </div>
   </div><!-- /credits-modal -->
 
-
-  <!-- Guide-modal stub — conservé pour compatibilité avec app.js.
-       Le vrai guide est maintenant l'écran #home ci-dessus.
-       showGuide() dans app.js a été mis à jour pour pointer vers showScreen('home'). -->
   <div id="guide-modal" style="display:none!important"></div>
 
-  <!-- ════════════════════════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════
        BARRE DE NAVIGATION BASSE  (#bottom-nav)
-       Cachée sur l'écran lanceur ; visible dès que l'app est initialisée.
-       ════════════════════════════════════════════════════════════════ -->
+       ────────────────────────────────────────── -->
   <nav id="bottom-nav" class="bottom-nav" aria-label="Navigation principale">
     <button class="nav-btn" id="navBtnLang" onclick="showLauncher()" aria-label="Changer de langue">
       <span class="nav-icon" id="navLangFlag">🌍</span>
@@ -1038,44 +934,8 @@
 
 </div><!-- /app -->
 
-<!--
-  ══════════════════════════════════════════════════════════════════
-  CHARGEMENT DES SCRIPTS
-  ══════════════════════════════════════════════════════════════════
-  Les scripts sont placés en fin de <body> pour s'assurer que
-  l'intégralité du DOM est parsé avant leur exécution.
-
-  Ordre de chargement :
-    1. app.js   — chargé seul au démarrage. Il embarque loadDataForMode()
-                  qui injecte dynamiquement data-fr.js ou data-es.js
-                  au moment où l'utilisateur choisit sa langue.
-                  Cela réduit de ~50 % le volume JS parsé à l'ouverture.
-
-  Anciennement data.js (monolithique 2 400 lignes) → remplacé par :
-    • js/data-fr.js  (~106 Ko) — chargé uniquement si mode learn_french
-    • js/data-es.js  (~96 Ko)  — chargé uniquement si mode learn_spain
-  ══════════════════════════════════════════════════════════════════
--->
 <script src="js/app.js"></script>
 
-<!--
-  ══════════════════════════════════════════════════════════════════
-  ENREGISTREMENT DU SERVICE WORKER (PWA)
-  ══════════════════════════════════════════════════════════════════
-  Le Service Worker (sw.js) doit être enregistré APRÈS le chargement
-  de app.js pour ne pas bloquer le démarrage de l'interface.
-
-  Comportement :
-    • Premier chargement   : SW installé, shell mis en cache.
-    • Visites suivantes    : app servie depuis le cache (instantané).
-    • Hors-ligne           : app pleinement fonctionnelle.
-    • Mise à jour déployée : SW se met à jour en arrière-plan ;
-                             nouveau cache actif à la prochaine ouverture.
-
-  Portée (scope) : './' → tout le dossier de l'app.
-  Le SW est placé à la racine du projet pour avoir la portée maximale.
-  ══════════════════════════════════════════════════════════════════
--->
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
@@ -1090,7 +950,6 @@
           });
         })
         .catch(function(err) {
-          /* Échec silencieux : l'app fonctionne sans SW */
           console.warn('[SW] Enregistrement échoué :', err);
         });
     });
