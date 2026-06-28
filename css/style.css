@@ -1199,6 +1199,7 @@ body {
   transition: transform .15s, border-color .2s;
   position: relative;
 }
+.theme-card:hover         { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.12); border-color: var(--c-primary); }
 .theme-card:active        { transform: scale(.96); }
 .theme-card.done          { border-color: var(--c-done); }
 
@@ -1458,7 +1459,11 @@ body {
   cursor: pointer;
   padding: 4px 8px;
   line-height: 1;
+  border-radius: 8px;
+  transition: background .15s;
 }
+.back-btn:hover        { background: rgba(255,255,255,.18); }
+.back-btn:focus-visible { outline: 3px solid rgba(255,255,255,.7); outline-offset: 2px; }
 .sections-header .back-btn,
 .lesson-header   .back-btn {
   font-size: 1rem !important;
@@ -1523,6 +1528,8 @@ body {
   white-space: nowrap;
 }
 .tab.active { background: var(--c-primary); color: #fff; }
+.tab:hover:not(.active)  { background: var(--c-fc-nav-hover); }
+.tab:focus-visible       { outline: 3px solid var(--c-primary); outline-offset: 2px; }
 
 /* Petite étiquette de section au-dessus du contenu (ex : "Recto / Verso") */
 .section-label {
@@ -1892,7 +1899,9 @@ body {
   min-height: 54px;
   line-height: 1.3;
 }
+.quiz-opt:hover:not(.disabled)  { background: var(--c-fc-nav-hover); border-color: var(--c-primary); }
 .quiz-opt:active:not(.disabled) { background: var(--c-fc-nav-hover); transform: scale(.97); }
+.quiz-opt:focus-visible          { outline: 3px solid var(--c-primary); outline-offset: 2px; }
 .quiz-opt.correct                { background: #4CAF50; border-color: #4CAF50; color: #fff; }
 .quiz-opt.wrong                  { background: var(--c-accent); border-color: var(--c-accent); color: #fff; }
 .quiz-opt.disabled               { cursor: default; opacity: .75; }
@@ -1932,8 +1941,17 @@ body {
   font-weight: 700;
   cursor: pointer;
   min-height: 48px;
+  transition: opacity .15s, transform .1s, box-shadow .15s;
 }
-.retry-btn:active { background: var(--c-primary-dark); }
+.retry-btn:hover        { opacity: .88; box-shadow: 0 4px 14px rgba(0,0,0,.28); }
+.retry-btn:active       { background: var(--c-primary-dark); transform: scale(.97); }
+.retry-btn:focus-visible { outline: 3px solid var(--c-primary); outline-offset: 2px; }
+/* Variante secondaire (bouton "Recommencer" — couleur neutre pour ne pas concurrencer le CTA principal) */
+.retry-btn--secondary {
+  background: #6b7280;
+}
+.retry-btn--secondary:hover  { background: #4b5563; opacity: 1; }
+.retry-btn--secondary:active { background: #374151; }
 
 
 /* ════════════════════════════════════════
@@ -3242,6 +3260,8 @@ html.theme-spain.region-VE {
   .result-box { background: #1e2236; }
   .result-box h3 { color: var(--c-primary); }
   .score-num  { color: var(--c-primary); }
+  .retry-btn--secondary { background: #4b5563; }
+  .retry-btn--secondary:hover { background: #374151; }
 
   /* ── Dialogues ── */
   .dialogue-box { background: #1e2236; border-color: #2a2e46; }
@@ -3850,7 +3870,7 @@ html.theme-spain.region-VE {
 }
 
 html.theme-french .export-pdf-btn { background: #002395; }
-html.theme-france .export-pdf-btn:hover { background: #C60B1E; }
+html.theme-french .export-pdf-btn:hover { background: #C60B1E; }
 html.theme-spain  .export-pdf-btn { background: #C60B1E; }
 html.theme-spain  .export-pdf-btn:hover { background: #002395; }
 

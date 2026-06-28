@@ -166,6 +166,7 @@ function loadDataForMode(mode, callback) {
   };
 
   script.onerror = function() {
+    _hideSpinner();
     _showToast('⚠️ Erreur de chargement des données (' + src + '). Vérifiez votre connexion.', 5000);
   };
 
@@ -329,8 +330,9 @@ function showLauncherVariant(mode) {
   currentMode = mode;
 
   /* — Restauration de la région préférée depuis localStorage — */
+  var _VALID_REGIONS = ['ES', 'MX', 'CO', 'PE', 'VE', 'AR', 'EC'];
   var savedRegion = localStorage.getItem('user_preferred_region');
-  currentRegion   = savedRegion || 'ES';
+  currentRegion   = (_VALID_REGIONS.includes(savedRegion)) ? savedRegion : 'ES';
 
   /* — Thème visuel provisoire (pour que les couleurs du sélecteur soient correctes) — */
   document.documentElement.className = (mode === 'learn_french') ? 'theme-french' : 'theme-spain';
@@ -437,19 +439,19 @@ function _setLauncherFooterLang(mode) {
   if (mode === 'learn_french') {
     footer.innerHTML =
       '© Junio 2026 – Sébastien Godet<br>' +
-      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> · ' +
+      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a> · ' +
       '<a href="#" onclick="showGuide()">Guía</a> · ' +
       '<a href="#" onclick="showCredits()">Agradecimientos</a>';
   } else if (mode === 'learn_spain') {
     footer.innerHTML =
       '© Juin 2026 – Sébastien Godet<br>' +
-      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> · ' +
+      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a> · ' +
       '<a href="#" onclick="showGuide()">Guide</a> · ' +
       '<a href="#" onclick="showCredits()">Remerciements</a>';
   } else {
     footer.innerHTML =
       '© Juin 2026 – Sébastien Godet<br>' +
-      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> · ' +
+      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a> · ' +
       '<a href="#" onclick="showGuide()">Guide / Guía</a> · ' +
       '<a href="#" onclick="showCredits()">Remerciements / Agradecimientos</a>';
   }
@@ -1087,8 +1089,15 @@ function _vibrateFeedback(isCorrect) {
 /* Charge la progression sauvegardée depuis localStorage.
    En cas de données corrompues, repart d'un tableau vide. */
 function loadDone() {
-  try   { done = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
-  catch (e) { done = []; }
+  try {
+    var parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    // Validation : on accepte uniquement un tableau d'objets { id: string, stars: 1|2|3 }
+    done = Array.isArray(parsed)
+      ? parsed.filter(function(d) {
+          return d && typeof d.id === 'string' && [1,2,3].includes(d.stars);
+        })
+      : [];
+  } catch (e) { done = []; }
 }
 
 /* Sauvegarde silencieusement la progression dans localStorage. */
@@ -1627,7 +1636,7 @@ function renderSections(activeLevel) {
       if (isFrench()) {
         footer.innerHTML =
           '© Junio 2026 – Desarrollado por Sébastien Godet · Asistido por IA Claude Sonnet 4.6 y Gemini 3.5 Flash<br>'
-          + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">💼 LinkedIn</a> · '
+          + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a> · '
           + '<a href="#" onclick="showCredits()">Agradecimientos</a>'
           + '<br><button onclick="showResetConfirm()" style="margin-top:8px; padding:6px 14px; border-radius:50px; border:1.5px solid #c0392b; color:#c0392b; background:transparent; font-size:0.8rem; cursor:pointer; font-weight:700;">'
           + L('🗑️ Borrar toda la progresión', '🗑️ Tout réinitialiser')
@@ -1635,7 +1644,7 @@ function renderSections(activeLevel) {
       } else {
         footer.innerHTML =
           '© Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>'
-          + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank">LinkedIn</a> · '
+          + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a> · '
           + '<a href="#" onclick="showCredits()">Remerciements</a>'
           + '<br><button onclick="showResetConfirm()" style="margin-top:8px; padding:6px 14px; border-radius:50px; border:1.5px solid #c0392b; color:#c0392b; background:transparent; font-size:0.8rem; cursor:pointer; font-weight:700;">'
           + L('🗑️ Borrar toda la progresión', '🗑️ Tout réinitialiser')
@@ -2749,14 +2758,14 @@ function renderQuiz10() {
       + '<div style="font-size:1rem;margin:6px 0;color:'
       + (isSuccess ? '#009A44' : '#EF2B2D') + '">' + r.sub + '</div>'
       + '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px">'
-      + '<button class="retry-btn" style="background:#888" onclick="_retryQuiz10()">'
+      + '<button class="retry-btn retry-btn--secondary" onclick="_retryQuiz10()">'
       + r.retry + '</button>'
       + (isSuccess
-          ? '<button class="retry-btn" onclick="renderSections();showScreen(\'sections-level1\')">'
+          ? '<button class="retry-btn" onclick="renderSections(_currentThemeLevel);showScreen(_currentThemeLevel===2?\'sections-level2\':\'sections-level1\')">'
             + r.finish + '</button>'
           : '')
       + '</div></div>';
-    renderSections();
+    renderSections(_currentThemeLevel);
     return;
   }
 
@@ -3097,14 +3106,14 @@ function renderDialogQuiz() {
       + '<div style="font-size:.9rem;margin-top:6px;color:'
       + (isSuccess ? '#009A44' : '#EF2B2D') + '">' + r.sub + '</div>'
       + '<div style="display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap">'
-      + '<button class="retry-btn" style="background:#888" onclick="dqStep=0;dqScore=0;dqAnswered=false;_clearQuizSession();renderDialogQuiz()">'
+      + '<button class="retry-btn retry-btn--secondary" onclick="dqStep=0;dqScore=0;dqAnswered=false;_clearQuizSession();renderDialogQuiz()">'
       + r.retry + '</button>'
       + (isSuccess
-          ? '<button class="retry-btn" onclick="renderSections();showScreen(\'sections-level1\')">'
+          ? '<button class="retry-btn" onclick="renderSections(_currentThemeLevel);showScreen(_currentThemeLevel===2?\'sections-level2\':\'sections-level1\')">'
             + r.finish + '</button>'
           : '')
       + '</div></div>';
-    renderSections();
+    renderSections(_currentThemeLevel);
     return;
   }
 
@@ -3353,6 +3362,12 @@ function renderRegionGrid(mode) {
    Persiste le choix, met à jour la voix BCP-47, les couleurs CSS, les drapeaux
    et rafraîchit le contenu de l'onglet actif si une leçon est ouverte. */
 function pickRegion(regionId) {
+  // Validation : seules les 7 régions connues sont acceptées (sécurité injection CSS/localStorage)
+  var ALLOWED_REGIONS = ['ES', 'MX', 'CO', 'PE', 'VE', 'AR', 'EC'];
+  if (!ALLOWED_REGIONS.includes(regionId)) {
+    console.warn('pickRegion: regionId invalide ignoré :', regionId);
+    return;
+  }
   // Mémorisation du choix dans localStorage (persiste entre les sessions)
   localStorage.setItem('user_preferred_region', regionId);
   currentRegion = regionId;
