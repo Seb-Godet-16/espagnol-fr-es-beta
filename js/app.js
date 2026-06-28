@@ -1418,68 +1418,29 @@ const _SCREEN_ORDER = ['app-launcher', 'home', 'sections-level1', 'sections-leve
 /**
  * _showScreenNoRender(id, dir) — Variante interne de showScreen() qui effectue
  * UNIQUEMENT la transition visuelle sans rappeler renderSections() ni renderHome().
- * À utiliser quand le rendu a déjà été fait juste avant (lessonGoBack, navGoModules)
- * pour éviter le double rendu qui provoque des blocages sur mobile.
+ * À utiliser quand le rendu a déjà été fait juste avant (lessonGoBack, navGoModules).
  */
 function _showScreenNoRender(id, dir) {
-  const currentEl = document.querySelector('.screen.active');
-  const currentId = currentEl ? currentEl.id : null;
-
-  if (currentId === id) {
-    _updateLevelTabs(id);
-    _updateBottomNav(id);
-    return;
-  }
-
-  if (_screenTransitionTimer) {
-    clearTimeout(_screenTransitionTimer);
-    _screenTransitionTimer = null;
-    document.querySelectorAll('.screen').forEach(function(s) {
-      s.classList.remove('slide-out-left', 'slide-out-right', 'slide-in-right', 'slide-in-left');
-    });
-  }
-
-  if (!dir && currentId && currentId !== id) {
-    const fromIdx = _SCREEN_ORDER.indexOf(currentId);
-    const toIdx   = _SCREEN_ORDER.indexOf(id);
-    if (fromIdx !== -1 && toIdx !== -1) {
-      dir = toIdx > fromIdx ? 'forward' : 'back';
-    }
-  }
-
-  if (dir && currentEl) {
-    currentEl.classList.add(dir === 'forward' ? 'slide-out-left' : 'slide-out-right');
-  }
-
+  if (_screenTransitionTimer) { clearTimeout(_screenTransitionTimer); _screenTransitionTimer = null; }
   document.querySelectorAll('.screen').forEach(function(s) {
-    s.classList.remove('active');
+    s.classList.remove('active', 'slide-out-left', 'slide-out-right', 'slide-in-right', 'slide-in-left');
   });
-
   window.scrollTo(0, 0);
-
   const nextEl = document.getElementById(id);
-  if (!nextEl) {
-    console.error('_showScreenNoRender: écran introuvable :', id);
-    return;
-  }
+  if (!nextEl) { console.error('_showScreenNoRender: écran introuvable :', id); return; }
   nextEl.classList.add('active');
-
   if (dir) {
     nextEl.classList.add(dir === 'forward' ? 'slide-in-right' : 'slide-in-left');
+    _screenTransitionTimer = setTimeout(function() {
+      _screenTransitionTimer = null;
+      nextEl.classList.remove('slide-in-right', 'slide-in-left');
+    }, 300);
   }
-
-  _screenTransitionTimer = setTimeout(function() {
-    _screenTransitionTimer = null;
-    if (currentEl) currentEl.classList.remove('slide-out-left', 'slide-out-right');
-    nextEl.classList.remove('slide-in-right', 'slide-in-left');
-  }, 300);
-
   _updateLevelTabs(id);
   _updateBottomNav(id);
 }
 
-/* Verrou anti-navigation simultanée : empêche deux transitions qui se croisent
-   (double-clic rapide, rebond de touchend) de corrompre l'état des écrans. */
+/* Verrou anti-navigation simultanée : empêche deux transitions qui se croisent */
 var _screenTransitionInProgress = false;
 var _screenTransitionTimer = null;
 
@@ -1488,26 +1449,28 @@ function showScreen(id, dir) {
   const currentEl = document.querySelector('.screen.active');
   const currentId = currentEl ? currentEl.id : null;
 
-  // Si on demande l'écran déjà actif, on se contente de mettre à jour
-  // les onglets et la nav bar sans déclencher de transition inutile.
+  // Si on demande l'écran déjà actif, mise à jour des onglets et nav seulement
   if (currentId === id) {
+    // Quand même re-rendre le contenu si c'est un écran sections
+    // (peut être appelé depuis un onglet de niveau déjà sur cet écran)
+    if (id === 'sections-level1') renderSections(1);
+    if (id === 'sections-level2') renderSections(2);
     _updateLevelTabs(id);
     _updateBottomNav(id);
     return;
   }
 
-  // Annule le timer de nettoyage précédent s'il est encore en attente
+  // Nettoyage immédiat de toute animation en cours
   if (_screenTransitionTimer) {
     clearTimeout(_screenTransitionTimer);
     _screenTransitionTimer = null;
-    // Nettoyage immédiat des classes d'animation résiduelles
-    document.querySelectorAll('.screen').forEach(function(s) {
-      s.classList.remove('slide-out-left', 'slide-out-right', 'slide-in-right', 'slide-in-left');
-    });
   }
+  document.querySelectorAll('.screen').forEach(function(s) {
+    s.classList.remove('slide-out-left', 'slide-out-right', 'slide-in-right', 'slide-in-left');
+  });
 
   // Calcul automatique de la direction si elle n'est pas fournie
-  if (!dir && currentId && currentId !== id) {
+  if (!dir && currentId) {
     const fromIdx = _SCREEN_ORDER.indexOf(currentId);
     const toIdx   = _SCREEN_ORDER.indexOf(id);
     if (fromIdx !== -1 && toIdx !== -1) {
@@ -1515,53 +1478,37 @@ function showScreen(id, dir) {
     }
   }
 
-  // Applique l'animation de sortie sur l'écran courant
-  if (dir && currentEl) {
-    currentEl.classList.add(dir === 'forward' ? 'slide-out-left' : 'slide-out-right');
-  }
-
-  // Masque tous les écrans, puis active uniquement celui demandé
+  // Masque IMMÉDIATEMENT tous les écrans (retire display:flex, évite les clics fantômes)
   document.querySelectorAll('.screen').forEach(function(s) {
     s.classList.remove('active');
   });
 
-  // Remonte systématiquement en haut de page à chaque changement d'écran.
   window.scrollTo(0, 0);
 
   const nextEl = document.getElementById(id);
   if (!nextEl) {
-    console.error('showScreen: écran introuvable dans le DOM :', id);
+    console.error('showScreen: écran introuvable :', id);
     return;
   }
+
+  // Active le nouvel écran
   nextEl.classList.add('active');
 
-  // Applique l'animation d'entrée sur le nouvel écran
+  // Animation d'entrée uniquement (l'écran sortant est déjà masqué — pas de risque de clic)
   if (dir) {
     nextEl.classList.add(dir === 'forward' ? 'slide-in-right' : 'slide-in-left');
+    _screenTransitionTimer = setTimeout(function() {
+      _screenTransitionTimer = null;
+      nextEl.classList.remove('slide-in-right', 'slide-in-left');
+    }, 300);
   }
 
-  // Retire toutes les classes d'animation après la fin de la transition
-  _screenTransitionTimer = setTimeout(function() {
-    _screenTransitionTimer = null;
-    if (currentEl) {
-      currentEl.classList.remove('slide-out-left', 'slide-out-right');
-    }
-    nextEl.classList.remove('slide-in-right', 'slide-in-left');
-  }, 300);
-
-  // Rendu à la demande selon l'écran affiché.
-  // IMPORTANT : renderSections() n'est appelé ICI que si on arrive directement
-  // sur un écran sections (ex : nav bar). Quand on passe par lessonGoBack() ou
-  // navGoModules(), renderSections() est déjà appelé AVANT showScreen() pour
-  // éviter le double rendu qui bloque sur mobile.
+  // Rendu du contenu de l'écran
   if (id === 'home')              renderHome();
   if (id === 'sections-level1')   renderSections(1);
   if (id === 'sections-level2')   renderSections(2);
 
-  // Synchronise l'état actif des onglets Niveau 1 / 2
   _updateLevelTabs(id);
-
-  // Met à jour la barre de navigation basse
   _updateBottomNav(id);
 }
 

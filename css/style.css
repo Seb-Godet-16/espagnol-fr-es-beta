@@ -204,6 +204,7 @@ body {
   position: absolute;
   animation: slideOutLeft  280ms cubic-bezier(.4,0,.2,1) both;
   z-index: 1;
+  pointer-events: none; /* bloque les clics sur l'écran sortant */
 }
 .slide-in-left {
   display: flex;
@@ -216,6 +217,7 @@ body {
   position: absolute;
   animation: slideOutRight 280ms cubic-bezier(.4,0,.2,1) both;
   z-index: 1;
+  pointer-events: none; /* bloque les clics sur l'écran sortant */
 }
 
 /* Respect de la préférence système "réduire les animations" */
