@@ -1381,11 +1381,16 @@ function _updateLevelTabs(screenId) {
 
 /**
  * Retour depuis la leçon → retourne au bon écran de niveau.
+ * renderSections() est appelé ICI (pas dans showScreen) pour éviter le double rendu.
  */
 function lessonGoBack() {
   var target = (_currentThemeLevel === 2) ? 'sections-level2' : 'sections-level1';
+  /* Pré-rend les grilles AVANT la transition pour que le contenu soit
+     présent au moment où l'écran devient visible (pas de flash vide). */
   renderSections(_currentThemeLevel);
-  showScreen(target, 'back');
+  /* On passe skipRender=true via le flag interne pour que showScreen()
+     ne rappelle pas renderSections une 2e fois. */
+  _showScreenNoRender(target, 'back');
 }
 
 /**
@@ -1400,8 +1405,9 @@ function navGoModules() {
     if (s.classList.contains('active')) current = s.id;
   });
   var dir = (current === 'lesson') ? 'back' : undefined;
+  /* Pré-rend les grilles pour éviter le double rendu dans showScreen() */
   renderSections(_currentThemeLevel);
-  showScreen(target, dir);
+  _showScreenNoRender(target, dir);
 }
 
 /* Ordre canonique des écrans pour le calcul automatique de direction.
@@ -1409,10 +1415,96 @@ function navGoModules() {
    de sections par niveau (1a et 1b), puis 'lesson' le plus profond. */
 const _SCREEN_ORDER = ['app-launcher', 'home', 'sections-level1', 'sections-level2', 'lesson'];
 
+/**
+ * _showScreenNoRender(id, dir) — Variante interne de showScreen() qui effectue
+ * UNIQUEMENT la transition visuelle sans rappeler renderSections() ni renderHome().
+ * À utiliser quand le rendu a déjà été fait juste avant (lessonGoBack, navGoModules)
+ * pour éviter le double rendu qui provoque des blocages sur mobile.
+ */
+function _showScreenNoRender(id, dir) {
+  const currentEl = document.querySelector('.screen.active');
+  const currentId = currentEl ? currentEl.id : null;
+
+  if (currentId === id) {
+    _updateLevelTabs(id);
+    _updateBottomNav(id);
+    return;
+  }
+
+  if (_screenTransitionTimer) {
+    clearTimeout(_screenTransitionTimer);
+    _screenTransitionTimer = null;
+    document.querySelectorAll('.screen').forEach(function(s) {
+      s.classList.remove('slide-out-left', 'slide-out-right', 'slide-in-right', 'slide-in-left');
+    });
+  }
+
+  if (!dir && currentId && currentId !== id) {
+    const fromIdx = _SCREEN_ORDER.indexOf(currentId);
+    const toIdx   = _SCREEN_ORDER.indexOf(id);
+    if (fromIdx !== -1 && toIdx !== -1) {
+      dir = toIdx > fromIdx ? 'forward' : 'back';
+    }
+  }
+
+  if (dir && currentEl) {
+    currentEl.classList.add(dir === 'forward' ? 'slide-out-left' : 'slide-out-right');
+  }
+
+  document.querySelectorAll('.screen').forEach(function(s) {
+    s.classList.remove('active');
+  });
+
+  window.scrollTo(0, 0);
+
+  const nextEl = document.getElementById(id);
+  if (!nextEl) {
+    console.error('_showScreenNoRender: écran introuvable :', id);
+    return;
+  }
+  nextEl.classList.add('active');
+
+  if (dir) {
+    nextEl.classList.add(dir === 'forward' ? 'slide-in-right' : 'slide-in-left');
+  }
+
+  _screenTransitionTimer = setTimeout(function() {
+    _screenTransitionTimer = null;
+    if (currentEl) currentEl.classList.remove('slide-out-left', 'slide-out-right');
+    nextEl.classList.remove('slide-in-right', 'slide-in-left');
+  }, 300);
+
+  _updateLevelTabs(id);
+  _updateBottomNav(id);
+}
+
+/* Verrou anti-navigation simultanée : empêche deux transitions qui se croisent
+   (double-clic rapide, rebond de touchend) de corrompre l'état des écrans. */
+var _screenTransitionInProgress = false;
+var _screenTransitionTimer = null;
+
 function showScreen(id, dir) {
   // Détermine l'écran actuellement actif (avant de le masquer)
   const currentEl = document.querySelector('.screen.active');
   const currentId = currentEl ? currentEl.id : null;
+
+  // Si on demande l'écran déjà actif, on se contente de mettre à jour
+  // les onglets et la nav bar sans déclencher de transition inutile.
+  if (currentId === id) {
+    _updateLevelTabs(id);
+    _updateBottomNav(id);
+    return;
+  }
+
+  // Annule le timer de nettoyage précédent s'il est encore en attente
+  if (_screenTransitionTimer) {
+    clearTimeout(_screenTransitionTimer);
+    _screenTransitionTimer = null;
+    // Nettoyage immédiat des classes d'animation résiduelles
+    document.querySelectorAll('.screen').forEach(function(s) {
+      s.classList.remove('slide-out-left', 'slide-out-right', 'slide-in-right', 'slide-in-left');
+    });
+  }
 
   // Calcul automatique de la direction si elle n'est pas fournie
   if (!dir && currentId && currentId !== id) {
@@ -1449,14 +1541,19 @@ function showScreen(id, dir) {
   }
 
   // Retire toutes les classes d'animation après la fin de la transition
-  setTimeout(function() {
+  _screenTransitionTimer = setTimeout(function() {
+    _screenTransitionTimer = null;
     if (currentEl) {
       currentEl.classList.remove('slide-out-left', 'slide-out-right');
     }
     nextEl.classList.remove('slide-in-right', 'slide-in-left');
   }, 300);
 
-  // Rendu à la demande selon l'écran affiché
+  // Rendu à la demande selon l'écran affiché.
+  // IMPORTANT : renderSections() n'est appelé ICI que si on arrive directement
+  // sur un écran sections (ex : nav bar). Quand on passe par lessonGoBack() ou
+  // navGoModules(), renderSections() est déjà appelé AVANT showScreen() pour
+  // éviter le double rendu qui bloque sur mobile.
   if (id === 'home')              renderHome();
   if (id === 'sections-level1')   renderSections(1);
   if (id === 'sections-level2')   renderSections(2);
@@ -2792,7 +2889,7 @@ function renderQuiz10() {
       + '<button class="retry-btn retry-btn--secondary" onclick="_retryQuiz10()">'
       + r.retry + '</button>'
       + (isSuccess
-          ? '<button class="retry-btn" onclick="renderSections(_currentThemeLevel);showScreen(_currentThemeLevel===2?\'sections-level2\':\'sections-level1\')">'
+          ? '<button class="retry-btn" onclick="renderSections(_currentThemeLevel);_showScreenNoRender(_currentThemeLevel===2?\'sections-level2\':\'sections-level1\',\'back\')">'
             + r.finish + '</button>'
           : '')
       + '</div></div>';
@@ -3140,7 +3237,7 @@ function renderDialogQuiz() {
       + '<button class="retry-btn retry-btn--secondary" onclick="dqStep=0;dqScore=0;dqAnswered=false;_clearQuizSession();renderDialogQuiz()">'
       + r.retry + '</button>'
       + (isSuccess
-          ? '<button class="retry-btn" onclick="renderSections(_currentThemeLevel);showScreen(_currentThemeLevel===2?\'sections-level2\':\'sections-level1\')">'
+          ? '<button class="retry-btn" onclick="renderSections(_currentThemeLevel);_showScreenNoRender(_currentThemeLevel===2?\'sections-level2\':\'sections-level1\',\'back\')">'
             + r.finish + '</button>'
           : '')
       + '</div></div>';
