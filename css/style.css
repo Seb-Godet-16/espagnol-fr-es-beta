@@ -3734,6 +3734,17 @@ html.theme-spain.region-VE {
   display: block;
 }
 
+/* Sous-étiquette bilingue (traduction discrète) */
+.nav-sub {
+  font-size: .52rem;
+  font-weight: 400;
+  letter-spacing: .01em;
+  line-height: 1;
+  display: block;
+  opacity: 0.6;
+  min-height: 0.52rem;
+}
+
 /* Bouton actif : couleur thème + indicateur trait en haut */
 .nav-btn.active {
   color: var(--c-primary);
