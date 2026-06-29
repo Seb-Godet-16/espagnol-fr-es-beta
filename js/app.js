@@ -1,35 +1,48 @@
 /* ============================================================
-   Language App 🇫🇷🇪🇸  —  Moteur applicatif unifié
+   VACHÉBO 🐄🇫🇷🇪🇸  —  Moteur applicatif unifié
    Français ↔ Espagnol (bidirectionnel)
    © Juin 2026 – Sébastien Godet · IA Claude Sonnet 4.6 et Gemini 3.5 Flash
    ============================================================
    ARCHITECTURE (5 fichiers) :
-     ├─ index.html  → Structure HTML + launcher
-     ├─ style.css   → Thèmes couleur, composants visuels
-     ├─ data-fr.js  → ALL_THEMES_FR (contenu mode learn_french)  — chargé à la demande
-     ├─ data-es.js  → ALL_THEMES_ES (contenu mode learn_spain)   — chargé à la demande
-     └─ app.js      → Ce fichier : logique applicative complète
+     ├─ index.html  → Structure HTML + launcher (4 écrans, 2 modales)
+     ├─ style.css   → Thèmes couleur, composants visuels (239 variables CSS)
+     ├─ data-fr.js  → ALL_THEMES_FR (32 thèmes + 16 dialogues) — chargé à la demande
+     ├─ data-es.js  → ALL_THEMES_ES (32 thèmes + 16 dialogues) — chargé à la demande
+     └─ app.js      → Ce fichier : logique applicative complète (~4 373 lignes)
 
-   SECTIONS DE CE FICHIER :
-     0.  Chargement conditionnel des données — loadDataForMode()
-     1.  Variables d'état globales
-     2.  Utilitaires centraux de sélection bilingue (L, isFrench, langKeys)
-     3.  Point d'entrée — initApp(mode)
-     4.  Synthèse vocale — voix espagnole (cascade locale)
-     5.  Persistance — système de progression & étoiles
-     6.  Navigation — changement d'écran
-     7.  Écran Home — barre de progression et étoiles
-     8.  Écran Sections — grille des thèmes (niveaux 1 & 2)
-     9.  Ouverture d'un thème — écran leçon + onglets
-    10.  Cartes Flash — flashcards (vocabulaire & alphabet)
-    11.  Quiz 10 questions — QCM dynamique avec étoiles
-    12.  Dialogue — bulles de conversation situationnelles
-    13.  Vocabulaire — lexique cliquable (chips)
-    14.  Quiz Dialogue — mini-quiz de fin de dialogue
-    15.  Utilitaires — résultats, échappement, helpers
-    16.  Variantes régionales — sélecteur de pays hispanophone
-    17.  Remerciements — modale de crédits
-    18.  Guide utilisateur — écran d'aide intégré (FR/ES)
+   PLAN DU FICHIER (numéros de ligne réels) :
+     §0    L.   48  Chargement conditionnel des données — loadDataForMode()
+     §0b   L.   74  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
+     §1    L.  204  Variables d'état globales
+     §1b   L.  252  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
+     §3    L.  335  Point d'entrée — showLauncherVariant(), initApp(), showLauncher()
+     §3b   L.  657  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
+     §3c   L. 1010  Interruption TTS à la mise en arrière-plan (visibilitychange)
+     §3d   L. 1017  Keepalive watchdog Chrome/Android (pause/resume toutes les 10 s)
+     §3e   L. 1047  Audio indisponible + toast _showToast() + _vibrateFeedback()
+     §4    L. 1131  Persistance — loadDone(), markDone(), étoiles, quiz sessionStorage
+     §5    L. 1294  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
+     §5b   L. 1380  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
+     §6    L. 1567  Écran Home — renderHome(), _renderHomeRegionWidget()
+     §7    L. 1699  Écran Sections — renderSections(), _buildThemeCard()
+     §8    L. 1835  Ouverture d'un thème — openTheme(), switchTab(), lessonNav()
+     §9    L. 2053  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail()
+     §9b   L. 2215  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
+     §9c   L. 2477  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic()
+     §10   L. 2767  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
+     §11   L. 3044  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
+     §12   L. 3165  Vocabulaire — renderVocab() (chips cliquables)
+     §13   L. 3223  Quiz Dialogue — renderDialogQuiz(), checkDQ()
+     §14   L. 3316  Utilitaires — _quizResultStrings(), esc(), _escAttr()
+     §15   L. 3371  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
+     §15b  L. 3681  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
+     §16   L. 3745  Remerciements — showCredits()
+     §17   L. 3801  Guide utilisateur — _buildHomeGuide(), showGuide(), _refreshGuideRegion()
+     §18   L. 3994  E-mail antispam — openAndCopyEmail()
+     §19   L. 4012  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
+     §20   L. 4294  Accessibilité clavier (keydown → role="button")
+     §21   L. 4309  Initialisation Launcher — addEventListener sur les cartes de langue
+     §21b  L. 4335  Viewport height fix Android — --app-h via window.innerHeight
    ============================================================ */
 
 /* ═══════════════════════════════════════════════════════════
@@ -458,20 +471,23 @@ function _setLauncherFooterLang(mode) {
   if (mode === 'learn_french') {
     footer.innerHTML =
       '© Junio 2026 – Sébastien Godet<br>' +
-      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a> · ' +
-      '<a href="#" onclick="showGuide()">Guía</a> · ' +
+      'Asistido por IA Claude Sonnet 4.6 y Gemini 3.5 Flash<br>' +
+      '<button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> · ' +
+      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> · ' +
       '<a href="#" onclick="showCredits()">Agradecimientos</a>';
   } else if (mode === 'learn_spain') {
     footer.innerHTML =
       '© Juin 2026 – Sébastien Godet<br>' +
-      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a> · ' +
-      '<a href="#" onclick="showGuide()">Guide</a> · ' +
+      'Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>' +
+      '<button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> · ' +
+      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> · ' +
       '<a href="#" onclick="showCredits()">Remerciements</a>';
   } else {
     footer.innerHTML =
       '© Juin 2026 – Sébastien Godet<br>' +
-      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a> · ' +
-      '<a href="#" onclick="showGuide()">Guide / Guía</a> · ' +
+      'Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>' +
+      '<button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> · ' +
+      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> · ' +
       '<a href="#" onclick="showCredits()">Remerciements / Agradecimientos</a>';
   }
 }
@@ -566,6 +582,17 @@ function initApp(mode) {
       level2Badge    : '2',
       level2Label    : '<span>Nivel 2 — Frases sencillas<br><span class="level-tab-sub">Niveau 2 — Phrases simples</span></span>'
     });
+  }
+
+  /* — Préchargement de la voix en arrière-plan dès l'entrée dans le mode —
+       Pour le mode espagnol : déclenche la résolution immédiatement (sans attendre
+       l'ouverture d'une leçon) afin que la voix soit prête dès le 1er tap 🔊.
+       Pour le mode français : la voix système est disponible sans délai. */
+  if (mode === 'learn_spain') {
+    /* Petit délai pour laisser le DOM se stabiliser avant la requête voix */
+    setTimeout(function() {
+      _resolveSpanishVoice(function() { /* voix en cache — rien à faire */ });
+    }, 400);
   }
 
   /* — Chargement de la progression sauvegardée pour ce mode — */
@@ -780,13 +807,16 @@ function _resolveSpanishVoice(callback) {
       if (_spanishVoice === undefined) {
         var fallback = speechSynthesis.getVoices();
         _spanishVoice = fallback.length > 0 ? fallback[0] : null;
+        _spanishVoiceQuality = 'default';
+        _spanishVoiceLabel   = L('Voz por defecto', 'Voix par défaut');
         if (!_hasNotifiedVoice) {
           _hasNotifiedVoice = true;
           _showToast(L('🎙️ Voz configurada: Voz por defecto', '🎙️ Voix configurée : Voix par défaut'));
         }
       }
+      _updateVoiceBadge();
       callback(_spanishVoice);
-    }, 2000);
+    }, 1200);
   }
 }
 
@@ -913,7 +943,7 @@ function _updateVoiceBadge() {
 
   // Mode français : badge simplifié
   if (currentMode === 'learn_french') {
-    badge.innerHTML = '🇫🇷 <span class="vqb-label">Voix FR</span>';
+    badge.innerHTML = '🇫🇷 <span class="vqb-label">Voix Français</span>';
     badge.className = 'voice-quality-badge vqb-exact';
     badge.title = 'Voix française système';
     return;
@@ -1006,9 +1036,9 @@ function _startTtsKeepAlive() {
     if (document.hidden) return;
     if (speechSynthesis.speaking && !speechSynthesis.paused) {
       speechSynthesis.pause();
-      speechSynthesis.resume();
+      setTimeout(function() { speechSynthesis.resume(); }, 50);
     }
-  }, 10000);
+  }, 8000);
 }
 
 _startTtsKeepAlive();
@@ -1723,20 +1753,18 @@ function renderSections(activeLevel) {
     if (footer) {
       if (isFrench()) {
         footer.innerHTML =
-          '© Junio 2026 – Desarrollado por Sébastien Godet · Asistido por IA Claude Sonnet 4.6 y Gemini 3.5 Flash<br>'
-          + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a> · '
-          + '<a href="#" onclick="showCredits()">Agradecimientos</a>'
-          + '<br><button onclick="showResetConfirm()" style="margin-top:8px; padding:6px 14px; border-radius:50px; border:1.5px solid #c0392b; color:#c0392b; background:transparent; font-size:0.8rem; cursor:pointer; font-weight:700;">'
-          + L('🗑️ Borrar toda la progresión', '🗑️ Tout réinitialiser')
-          + '</button>';
+          '© Junio 2026 – Desarrollado por Sébastien Godet<br>'
+          + 'Asistido por IA Claude Sonnet 4.6 y Gemini 3.5 Flash<br>'
+          + '<button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> · '
+          + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> · '
+          + '<a href="#" onclick="showCredits()">Agradecimientos</a>';
       } else {
         footer.innerHTML =
-          '© Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>'
-          + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a> · '
-          + '<a href="#" onclick="showCredits()">Remerciements</a>'
-          + '<br><button onclick="showResetConfirm()" style="margin-top:8px; padding:6px 14px; border-radius:50px; border:1.5px solid #c0392b; color:#c0392b; background:transparent; font-size:0.8rem; cursor:pointer; font-weight:700;">'
-          + L('🗑️ Borrar toda la progresión', '🗑️ Tout réinitialiser')
-          + '</button>';
+          '© Juin 2026 – Développé par Sébastien Godet<br>'
+          + 'Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>'
+          + '<button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> · '
+          + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> · '
+          + '<a href="#" onclick="showCredits()">Remerciements</a>';
       }
     }
   }
@@ -1849,6 +1877,26 @@ function openTheme(id) {
   showScreen('lesson');
   _updateLessonNavArrows();
 
+  /* ── Footer de la leçon dans la langue de l'apprenant ── */
+  var lf = document.getElementById('lessonFooter');
+  if (lf) {
+    if (isFrench()) {
+      lf.innerHTML =
+        '© Junio 2026 – Sébastien Godet<br>'
+        + 'Asistido por IA Claude Sonnet 4.6 y Gemini 3.5 Flash · '
+        + '<button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> · '
+        + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> · '
+        + '<a href="#" onclick="showCredits()">Agradecimientos</a>';
+    } else {
+      lf.innerHTML =
+        '© Juin 2026 – Sébastien Godet<br>'
+        + 'Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash · '
+        + '<button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> · '
+        + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> · '
+        + '<a href="#" onclick="showCredits()">Remerciements</a>';
+    }
+  }
+
   // Définition des onglets selon le type de thème et le mode courant
   var tabs;
   if (CT.type === 'dialog') {
@@ -1896,8 +1944,8 @@ function openTheme(id) {
   }
   // Badge voix (ES uniquement) + barre de vitesse (les deux modes)
   var badgeHtml = (currentMode === 'learn_spain')
-    ? '<div id="voice-quality-badge" class="voice-quality-badge vqb-pending" title="">…</div>'
-    : '<div id="voice-quality-badge" class="voice-quality-badge vqb-exact">🇫🇷 <span class="vqb-label">Voix FR</span></div>';
+    ? '<div id="voice-quality-badge" class="voice-quality-badge vqb-pending" title="">🇪🇸 <span class="vqb-label">Espagne (Castillan)…</span></div>'
+    : '<div id="voice-quality-badge" class="voice-quality-badge vqb-exact">🇫🇷 <span class="vqb-label">Voix Français</span></div>';
   lessonMeta.innerHTML = badgeHtml + _buildSpeedBar();
 
   // Résolution immédiate du badge (si voix déjà résolue)
@@ -1950,8 +1998,7 @@ function switchTab(tab) {
     b.classList.toggle('active', b.dataset.tab === tab);
   });
   if      (tab === 'flash')  {
-    renderFlash();
-    /* Bouton export vocabulaire — injecté après renderFlash() */
+    /* Bouton PDF — injecté AVANT le contenu flash pour apparaître en haut */
     (function() {
       var tc = document.getElementById('tabContent');
       if (!tc) return;
@@ -1959,13 +2006,14 @@ function switchTab(tab) {
       if (existing) existing.remove();
       if (CT && CT.words && CT.type !== 'alpha') {
         var btn = document.createElement('div');
-        btn.style.cssText = 'text-align:center;margin-top:14px;';
-        btn.innerHTML = '<button id="export-vocab-btn" class="export-pdf-btn" onclick="_exportVocab()">'
-          + '📄 ' + L('Exportar vocabulario PDF', 'Exporter le vocabulaire PDF')
+        btn.className = 'pdf-btn-top-wrap';
+        btn.innerHTML = '<button id="export-vocab-btn" class="export-pdf-btn export-pdf-btn--top" onclick="_exportVocab()" aria-label="' + L('Exportar vocabulario PDF', 'Exporter le vocabulaire PDF') + '">'
+          + '📄 PDF'
           + '</button>';
-        tc.appendChild(btn);
+        tc.insertBefore(btn, tc.firstChild);
       }
     })();
+    renderFlash();
   }
   else if (tab === 'quiz10') {
     q10Step = 0; q10Score = 0; q10Answered = false;
@@ -1977,20 +2025,20 @@ function switchTab(tab) {
     renderQuiz10();
   }
   else if (tab === 'dialog') {
-    renderDialog();
-    /* Bouton export situation — injecté après renderDialog() */
+    /* Bouton PDF — injecté AVANT le contenu dialogue pour apparaître en haut */
     (function() {
       var tc = document.getElementById('tabContent');
       if (!tc) return;
       var existing = document.getElementById('export-sit-btn');
       if (existing) existing.remove();
       var btn = document.createElement('div');
-      btn.style.cssText = 'text-align:center;margin-top:14px;';
-      btn.innerHTML = '<button id="export-sit-btn" class="export-pdf-btn" onclick="_exportSituation()">'
-        + '📄 ' + L('Exportar situación PDF', 'Exporter la situation PDF')
+      btn.className = 'pdf-btn-top-wrap';
+      btn.innerHTML = '<button id="export-sit-btn" class="export-pdf-btn export-pdf-btn--top" onclick="_exportSituation()" aria-label="' + L('Exportar situación PDF', 'Exporter la situation PDF') + '">'
+        + '📄 PDF'
         + '</button>';
-      tc.appendChild(btn);
+      tc.insertBefore(btn, tc.firstChild);
     })();
+    renderDialog();
   }
   else if (tab === 'vocab')  { renderVocab(); }
   else if (tab === 'dquiz')  {
@@ -2072,9 +2120,11 @@ function renderFlash() {
       backContent  = emBk + '<div class="fc-back-word">' + finalEsWord + '</div>';
     }
 
+    var regionLabelsFR = { ES:'🇪🇸 España (Castellano)', MX:'🇲🇽 México', CO:'🇨🇴 Colombia', AR:'🇦🇷 Argentina', PE:'🇵🇪 Perú', VE:'🇻🇪 Venezuela', EC:'🇪🇨 Ecuador' };
+    var regionFullLabel = regionLabelsFR[currentRegion] || ('🇪🇸 España (Castellano)');
     document.getElementById('tabContent').innerHTML =
       '<div class="section-label">Anverso : Francés 🇫🇷 — Reverso : Español '
-      + '<span id="current-lang-flag">' + activeFlag + '</span> · Haz clic para volver !</div>'
+      + '<span id="current-lang-flag">' + regionFullLabel + '</span> · Haz clic para volver !</div>'
       + '<div class="fc-wrap"><div class="fc" id="fc" onclick="flipCard()">'
       + '<div class="fc-front">' + frontContent + '</div>'
       + '<div class="fc-back">'  + backContent  + '</div>'
@@ -2106,9 +2156,11 @@ function renderFlash() {
       backContent  = emBk + '<div class="fc-back-word">' + card.fr + '</div>';
     }
 
+    var regionLabelsES = { ES:'🇪🇸 Espagne (Castillan)', MX:'🇲🇽 Mexique', CO:'🇨🇴 Colombie', AR:'🇦🇷 Argentine', PE:'🇵🇪 Pérou', VE:'🇻🇪 Venezuela', EC:'🇪🇨 Équateur' };
+    var regionFullLabelES = regionLabelsES[currentRegion] || ('🇪🇸 Espagne (Castillan)');
     document.getElementById('tabContent').innerHTML =
       '<div class="section-label">Recto : Espagnol <span id="current-lang-flag">'
-      + activeFlag + '</span> — Verso : Français 🇫🇷 · Cliquez pour retourner !</div>'
+      + regionFullLabelES + '</span> — Verso : Français 🇫🇷 · Cliquez pour retourner !</div>'
       + '<div class="fc-wrap"><div class="fc" id="fc" onclick="flipCard()">'
       + '<div class="fc-front">' + frontContent + '</div>'
       + '<div class="fc-back">'  + backContent  + '</div>'
@@ -3569,9 +3621,18 @@ function pickRegion(regionId) {
     sectionsFlag.innerHTML = flagHtml;
   }
 
-  // Mise à jour du petit drapeau inline dans les flashcards (section-label)
+  // Mise à jour de l'inscription audio dans les flashcards (section-label)
+  // Utilise le même format texte complet que renderFlash() pour la cohérence
   var flagSpan = document.getElementById('current-lang-flag');
-  if (flagSpan) flagSpan.innerHTML = flagHtml;
+  if (flagSpan) {
+    if (currentMode === 'learn_french') {
+      var regionLabelsFR2 = { ES:'🇪🇸 España (Castellano)', MX:'🇲🇽 México', CO:'🇨🇴 Colombia', AR:'🇦🇷 Argentina', PE:'🇵🇪 Perú', VE:'🇻🇪 Venezuela', EC:'🇪🇨 Ecuador' };
+      flagSpan.textContent = regionLabelsFR2[currentRegion] || '🇪🇸 España (Castellano)';
+    } else {
+      var regionLabelsES2 = { ES:'🇪🇸 Espagne (Castillan)', MX:'🇲🇽 Mexique', CO:'🇨🇴 Colombie', AR:'🇦🇷 Argentine', PE:'🇵🇪 Pérou', VE:'🇻🇪 Venezuela', EC:'🇪🇨 Équateur' };
+      flagSpan.textContent = regionLabelsES2[currentRegion] || '🇪🇸 Espagne (Castillan)';
+    }
+  }
 
   // Rafraîchissement de l'onglet actif si une leçon est ouverte
   // Note : activeTab n'est pas une variable globale, on teste directement l'onglet actif

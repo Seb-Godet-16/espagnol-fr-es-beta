@@ -50,9 +50,9 @@ Aucune inscription, aucun téléchargement. Fonctionne dans le navigateur et s'i
 espagnol-fr-es-beta/
 ├── index.html          # Structure HTML unique (SPA — Single Page App)
 ├── css/
-│   └── style.css       # Thèmes couleur, composants, animations (597 blocs, 38 CSS vars)
+│   └── style.css       # Thèmes couleur, composants, animations (239 variables CSS)
 ├── js/
-│   ├── app.js          # Moteur applicatif complet (114 fonctions, ~3 800 lignes)
+│   ├── app.js          # Moteur applicatif complet (126 fonctions, 4 312 lignes)
 │   ├── data-fr.js      # Contenu mode "Apprendre le Français" — chargé à la demande
 │   └── data-es.js      # Contenu mode "Apprendre l'Espagnol" — chargé à la demande
 ├── img/
@@ -69,7 +69,7 @@ espagnol-fr-es-beta/
 
 - **Zéro dépendance** — Vanilla JS ES2020, pas de framework, pas de bundler
 - **Chargement fractionné** — `data-fr.js` et `data-es.js` injectés dynamiquement au choix de langue (−50 % de JS parsé au démarrage)
-- **CSS custom properties** — 38 variables pour les thèmes (`theme-french` / `theme-spain`) et les 7 variantes régionales (`region-ES`, `region-MX`, etc.)
+- **CSS custom properties** — 239 variables pour les thèmes (`theme-french` / `theme-spain`) et les 7 variantes régionales (`region-ES`, `region-MX`, etc.)
 - **Service Worker hybride** — Cache-First pour les ressources locales, Network-First pour les CDN externes (Twemoji), avec fallbacks SVG inline pour le mode hors-ligne
 
 ---

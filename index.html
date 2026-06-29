@@ -174,9 +174,10 @@
 
     <!-- Pied de page commun à tous les écrans -->
     <footer class="launcher-footer" id="launcherFooter">
-      © Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
-      <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a> ·
-      <a href="#" onclick="showGuide()">Guide / Guía</a> ·
+      © Juin 2026 – Développé par Sébastien Godet<br>
+      Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
+      <button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> ·
+      <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> ·
       <a href="#" onclick="showCredits()">Remerciements / Agradecimientos</a>
     </footer>
   </div><!-- /app-launcher -->
@@ -194,6 +195,15 @@
 
     <!-- En-tête coloré — IDs mis à jour par showGuide() -->
     <div class="home-guide-header" id="homeGuideHeader">
+      <!-- Logo centré entre le titre et les drapeaux -->
+      <div class="home-guide-logo-wrap">
+        <img
+          src="img/Logo-appli-es-fr.png"
+          alt="VACHÉBO"
+          class="home-guide-logo-img"
+          onerror="this.style.display='none';"
+        >
+      </div>
       <div class="home-guide-flags" id="homeGuideFlagsRow">🇫🇷 🌍 🇪🇸</div>
       <h1 class="home-guide-title" id="homeTitle">Apprends l'Espagnol 🇪🇸</h1>
       <p class="home-guide-subtitle" id="homeGuideSubtitle">App gratuite — idéale pour les grands débutants.</p>
@@ -769,7 +779,10 @@
       <div class="progress-bar-wrap">
         <div class="progress-bar" id="globalProgress" style="width:0%"></div>
       </div>
-      <div class="progress-label" id="progressLabel"></div>
+      <div class="progress-label-row">
+        <div class="progress-label" id="progressLabel"></div>
+        <button class="reset-inline-btn" onclick="showResetConfirm()" id="resetInlineBtn" aria-label="Réinitialiser la progression">🗑️</button>
+      </div>
 
       <div class="sections-stars" id="sectionsStars"></div>
     </div>
@@ -810,7 +823,10 @@
       <div class="progress-bar-wrap">
         <div class="progress-bar" id="globalProgress2" style="width:0%"></div>
       </div>
-      <div class="progress-label" id="progressLabel2"></div>
+      <div class="progress-label-row">
+        <div class="progress-label" id="progressLabel2"></div>
+        <button class="reset-inline-btn" onclick="showResetConfirm()" id="resetInlineBtn2" aria-label="Réinitialiser la progression">🗑️</button>
+      </div>
 
       <div class="sections-stars" id="sectionsStars2"></div>
     </div>
@@ -858,11 +874,12 @@
       <div id="tabContent"></div>
     </div>
 
-    <footer class="lesson-footer">
-      © Juin 2026 – Développé par Sébastien Godet · Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash ·
-      <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a> ·
-      <a href="#" onclick="showGuide()">Guide / Guía</a> ·
-      <a href="#" onclick="showCredits()">Remerciements</a>
+    <footer class="lesson-footer" id="lessonFooter">
+      © Juin 2026 – Développé par Sébastien Godet<br>
+      Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash ·
+      <button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> ·
+      <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> ·
+      <a href="#" onclick="showCredits()">Remerciements / Agradecimientos</a>
     </footer>
 
   </div><!-- /lesson -->

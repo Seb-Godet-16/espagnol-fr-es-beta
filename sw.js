@@ -1,6 +1,6 @@
 /*
  * ╔══════════════════════════════════════════════════════════════════╗
- * ║  Language App 🇫🇷🇪🇸  —  sw.js  (Service Worker)              ║
+ * ║  VACHÉBO 🐄🇫🇷🇪🇸  —  sw.js  (Service Worker)               ║
  * ║  Auteur   : Sébastien Godet                                     ║
  * ║  Assisté  : Claude Sonnet 4.6 · Gemini 3.5 Flash               ║
  * ║  Version  : Juin 2026                                           ║

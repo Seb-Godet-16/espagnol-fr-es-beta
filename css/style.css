@@ -1,6 +1,6 @@
 /*
  * ╔══════════════════════════════════════════════════════════════════╗
- * ║  Language App 🇫🇷🇪🇸  —  css/style.css                        ║
+ * ║  VACHÉBO 🐄🇫🇷🇪🇸  —  css/style.css                          ║
  * ║  Auteur   : Sébastien Godet                                     ║
  * ║  Assisté  : Claude Sonnet 4.6 · Gemini 3.5 Flash               ║
  * ║  Version  : Juin 2026                                           ║
@@ -24,23 +24,37 @@
  * ║  changer la classe sur <html> pour basculer le rendu visuel.   ║
  * ╠══════════════════════════════════════════════════════════════════╣
  * ║  PLAN DU FICHIER                                                ║
- * ║   §1  Reset & base                          ligne   49          ║
- * ║   §2  Variables de thème (:root / fallback) ligne  405          ║
- * ║   §3  Thème Français (html.theme-french)    ligne 2877          ║
- * ║   §4  Thème Espagnol (html.theme-spain)     ligne 2895          ║
- * ║   §5  Écran 0 — Lanceur                     ligne  236          ║
- * ║   §6  Écran 1 — Accueil #home               ligne  443          ║
- * ║   §7  Écran 2 — Sections                    ligne 1070          ║
- * ║   §8  Écran 3 — Leçon                       ligne 1416          ║
- * ║   §9  Composants : Flashcards               ligne 1548          ║
- * ║   §10 Composants : Alphabet                 ligne 1818          ║
- * ║   §11 Composants : Quiz                     ligne 1880          ║
- * ║   §12 Composants : Dialogues / Situations   ligne 1960          ║
- * ║   §13 Composants : Vocabulaire              ligne 2029          ║
- * ║   §14 Onglet Répète                         ligne 3002          ║
- * ║   §15 Variantes régionales hispaniques      ligne 2927          ║
- * ║   §16 Modales (Guide + Remerciements)       ligne 2844          ║
- * ║   §17 Footer commun                         ligne 2123          ║
+ * ║   §1   Reset & base                            ligne   48       ║
+ * ║   §1b  Transitions de navigation               ligne  153       ║
+ * ║   §2   Variables de thème (:root / fallback)   ligne  404       ║
+ * ║   §3   Thème Français (html.theme-french)      ligne 2876       ║
+ * ║   §4   Thème Espagnol (html.theme-spain)       ligne 2894       ║
+ * ║   §5   Écran 0 — Lanceur  #app-launcher        ligne  235       ║
+ * ║   §6   Écran 1 — Accueil  #home (style Oromo)  ligne  442       ║
+ * ║         Widget variante régionale               ligne  970       ║
+ * ║   §7   Écran 2 — Sections  #sections           ligne 1069       ║
+ * ║         §27 Onglets Niveau 1 / 2               ligne 1225       ║
+ * ║         §LAUNCHER-REGION-GRID                  ligne 1305       ║
+ * ║         §28 Écrans sections level : layout     ligne 1392       ║
+ * ║   §8   Écran 3 — Leçon  #lesson               ligne 1415       ║
+ * ║         Onglets (tabs)                         ligne 1510       ║
+ * ║         Barre meta (badge voix + vitesse)      ligne 1644       ║
+ * ║   §9   Composants : Flashcards                 ligne 1547       ║
+ * ║   §10  Composants : Alphabet                   ligne 1817       ║
+ * ║   §11  Composants : Quiz                       ligne 1879       ║
+ * ║   §12  Composants : Dialogues / Situations     ligne 1959       ║
+ * ║   §13  Composants : Vocabulaire                ligne 2028       ║
+ * ║   §14  Onglet Répète                           ligne 3001       ║
+ * ║   §15  Variantes régionales hispaniques        ligne 2926       ║
+ * ║   §16  Modales (Guide + Remerciements)         ligne 2843       ║
+ * ║   §17  Footer commun                           ligne 2118       ║
+ * ║   §24b Mode sombre @media dark                 ligne 3168       ║
+ * ║   §26  Barre de navigation basse               ligne 3648       ║
+ * ║         Focus clavier (role="button")          ligne 3123       ║
+ * ║         Toast — notification discrète          ligne 3137       ║
+ * ║   §PDF  Boutons export PDF                     ligne 3838       ║
+ * ║   §SPK  Feedback visuel TTS (.is-speaking)     ligne 3883       ║
+ * ║         Ajouts Juin 2026                       ligne 3931       ║
  * ╚══════════════════════════════════════════════════════════════════╝
  */
 
@@ -3927,4 +3941,103 @@ html.theme-spain  .export-pdf-btn:hover { background: #002395; }
     outline: 2px solid var(--c-primary);
     outline-offset: 2px;
   }
+}
+/* ═══════════════════════════════════════════════════════════
+   AJOUTS JUIN 2026 — Ajustements UI
+═══════════════════════════════════════════════════════════ */
+
+/* ── 1b/c : Bouton email antispam dans les footers ── */
+.footer-antispam-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: #888;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline;
+  line-height: inherit;
+  font-family: inherit;
+}
+.footer-antispam-btn:hover { text-decoration: underline; }
+.launcher-footer .footer-antispam-btn { color: #888; }
+.lesson-footer .footer-antispam-btn   { color: #aaa; }
+footer .footer-antispam-btn           { color: #aaa; }
+
+/* ── 2 : Logo dans le guide ── */
+.home-guide-logo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 6px auto 4px;
+}
+.home-guide-logo-img {
+  max-width: 160px;
+  width: 50%;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.92;
+  border-radius: 8px;
+}
+
+/* ── 3 : Ligne label progression + bouton reset ── */
+.progress-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 0 4px;
+}
+.progress-label-row .progress-label {
+  margin-top: 0;
+  flex: 1;
+}
+.reset-inline-btn {
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.85);
+  border-radius: 50px;
+  padding: 2px 8px;
+  font-size: 0.72rem;
+  cursor: pointer;
+  font-weight: 700;
+  white-space: nowrap;
+  line-height: 1.6;
+  transition: background .2s, border-color .2s;
+  flex-shrink: 0;
+}
+.reset-inline-btn:hover {
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.85);
+}
+
+/* ── 4a : Bouton PDF compact en haut ── */
+.pdf-btn-top-wrap {
+  display: flex;
+  justify-content: flex-end;
+  padding: 4px 8px 6px;
+}
+.export-pdf-btn--top {
+  padding: 6px 14px !important;
+  font-size: 0.76rem !important;
+  min-height: 34px !important;
+  border-radius: 50px !important;
+}
+
+/* ── 4b : Label audio pleine largeur (pas de troncature) ── */
+.vqb-label {
+  max-width: none !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  white-space: normal !important;
+}
+.voice-quality-badge {
+  white-space: normal !important;
+  flex-wrap: wrap;
+}
+
+/* ── section-label : ne pas couper le nom de la région ── */
+.section-label {
+  white-space: normal !important;
+  word-break: normal;
 }
