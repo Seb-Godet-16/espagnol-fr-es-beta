@@ -8,7 +8,7 @@
      ├─ style.css   → Thèmes couleur, composants visuels (239 variables CSS)
      ├─ data-fr.js  → ALL_THEMES_FR (32 thèmes + 16 dialogues) — chargé à la demande
      ├─ data-es.js  → ALL_THEMES_ES (32 thèmes + 16 dialogues) — chargé à la demande
-     └─ app.js      → Ce fichier : logique applicative complète (~4 373 lignes)
+     └─ app.js      → Ce fichier : logique applicative complète (~4 388 lignes)
 
    PLAN DU FICHIER (numéros de ligne réels) :
      §0    L.   48  Chargement conditionnel des données — loadDataForMode()
@@ -17,32 +17,32 @@
      §1b   L.  252  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
      §3    L.  335  Point d'entrée — showLauncherVariant(), initApp(), showLauncher()
      §3b   L.  657  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
-     §3c   L. 1010  Interruption TTS à la mise en arrière-plan (visibilitychange)
-     §3d   L. 1017  Keepalive watchdog Chrome/Android (pause/resume toutes les 10 s)
-     §3e   L. 1047  Audio indisponible + toast _showToast() + _vibrateFeedback()
-     §4    L. 1131  Persistance — loadDone(), markDone(), étoiles, quiz sessionStorage
-     §5    L. 1294  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
-     §5b   L. 1380  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
-     §6    L. 1567  Écran Home — renderHome(), _renderHomeRegionWidget()
-     §7    L. 1699  Écran Sections — renderSections(), _buildThemeCard()
-     §8    L. 1835  Ouverture d'un thème — openTheme(), switchTab(), lessonNav()
-     §9    L. 2053  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail()
-     §9b   L. 2215  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
-     §9c   L. 2477  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic()
-     §10   L. 2767  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
-     §11   L. 3044  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
-     §12   L. 3165  Vocabulaire — renderVocab() (chips cliquables)
-     §13   L. 3223  Quiz Dialogue — renderDialogQuiz(), checkDQ()
-     §14   L. 3316  Utilitaires — _quizResultStrings(), esc(), _escAttr()
-     §15   L. 3371  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
-     §15b  L. 3681  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
-     §16   L. 3745  Remerciements — showCredits()
-     §17   L. 3801  Guide utilisateur — _buildHomeGuide(), showGuide(), _refreshGuideRegion()
-     §18   L. 3994  E-mail antispam — openAndCopyEmail()
-     §19   L. 4012  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
-     §20   L. 4294  Accessibilité clavier (keydown → role="button")
-     §21   L. 4309  Initialisation Launcher — addEventListener sur les cartes de langue
-     §21b  L. 4335  Viewport height fix Android — --app-h via window.innerHeight
+     §3c   L. 1034  Interruption TTS à la mise en arrière-plan (visibilitychange)
+     §3d   L. 1055  Keepalive watchdog Chrome/Android (pause/resume toutes les 10 s)
+     §3e   L. 1083  Audio indisponible + toast _showToast() + _vibrateFeedback()
+     §4    L. 1154  Persistance — loadDone(), markDone(), étoiles, quiz sessionStorage
+     §5    L. 1317  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
+     §5b   L. 1451  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
+     §6    L. 1613  Écran Home — renderHome(), _renderHomeRegionWidget()
+     §7    L. 1745  Écran Sections — renderSections(), _buildThemeCard()
+     §8    L. 1881  Ouverture d'un thème — openTheme(), switchTab(), lessonNav()
+     §9    L. 2068  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail()
+     §9b   L. 2230  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
+     §9c   L. 2492  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic()
+     §10   L. 2782  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
+     §11   L. 3059  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
+     §12   L. 3180  Vocabulaire — renderVocab() (chips cliquables)
+     §13   L. 3238  Quiz Dialogue — renderDialogQuiz(), checkDQ()
+     §14   L. 3331  Utilitaires — _quizResultStrings(), esc(), _escAttr()
+     §15   L. 3386  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
+     §15b  L. 3696  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
+     §16   L. 3760  Remerciements — showCredits()
+     §17   L. 3816  Guide utilisateur — _buildHomeGuide(), showGuide(), _refreshGuideRegion()
+     §18   L. 4009  E-mail antispam — openAndCopyEmail()
+     §19   L. 4027  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
+     §20   L. 4309  Accessibilité clavier (keydown → role="button")
+     §21   L. 4324  Initialisation Launcher — addEventListener sur les cartes de langue
+     §21b  L. 4350  Viewport height fix Android — --app-h via window.innerHeight
    ============================================================ */
 
 /* ═══════════════════════════════════════════════════════════

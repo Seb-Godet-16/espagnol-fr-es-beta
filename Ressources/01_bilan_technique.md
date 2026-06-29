@@ -10,8 +10,8 @@
 | Architecture | SPA (Single Page App) — Vanilla JS ES2020, zéro dépendance |
 | Hébergement | GitHub Pages (statique, HTTPS, gratuit) |
 | CI/CD | GitHub Actions — déploiement automatique sur push `main` |
-| Poids total source | ~620 Ko (12 081 lignes de code) |
-| Chargement initial | ~290 Ko (app.js + style.css + index.html), les données chargées à la demande |
+| Poids total source | ~613 Ko (12 310 lignes de code) |
+| Chargement initial | ~284 Ko (app.js + style.css + index.html), les données chargées à la demande |
 
 ---
 
@@ -19,11 +19,11 @@
 
 | Fichier | Lignes | Taille | Rôle |
 |---|---|---|---|
-| `app.js` | 4 312 | 195 Ko | Moteur applicatif — 126 fonctions, 18 sections |
-| `style.css` | 3 929 | 127 Ko | Thèmes, composants, animations — 239 variables CSS |
-| `data-fr.js` | 1 494 | 109 Ko | Données mode Français (32 thèmes + 16 dialogues) |
-| `data-es.js` | 850 | 98 Ko | Données mode Espagnol (32 thèmes + 16 dialogues) |
-| `index.html` | 958 | 59 Ko | Structure HTML (4 écrans + 2 modales) |
+| `app.js` | 4 388 | 197 Ko | Moteur applicatif — 127 fonctions, 18 sections |
+| `style.css` | 4 061 | 128 Ko | Thèmes, composants, animations — 239 variables CSS |
+| `data-fr.js` | 1 494 | 106 Ko | Données mode Français (32 thèmes + 16 dialogues) |
+| `data-es.js` | 850 | 95 Ko | Données mode Espagnol (32 thèmes + 16 dialogues) |
+| `index.html` | 979 | 59 Ko | Structure HTML (4 écrans + 2 modales) |
 | `sw.js` | 538 | 29 Ko | Service Worker (cache hybride + 4 fallbacks SVG) |
 | `manifest.json` | — | — | PWA (11 icônes, portrait, standalone) |
 | `deploy.yml` | — | — | CI/CD GitHub Actions |

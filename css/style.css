@@ -24,37 +24,37 @@
  * ║  changer la classe sur <html> pour basculer le rendu visuel.   ║
  * ╠══════════════════════════════════════════════════════════════════╣
  * ║  PLAN DU FICHIER                                                ║
- * ║   §1   Reset & base                            ligne   48       ║
- * ║   §1b  Transitions de navigation               ligne  153       ║
- * ║   §2   Variables de thème (:root / fallback)   ligne  404       ║
- * ║   §3   Thème Français (html.theme-french)      ligne 2876       ║
- * ║   §4   Thème Espagnol (html.theme-spain)       ligne 2894       ║
- * ║   §5   Écran 0 — Lanceur  #app-launcher        ligne  235       ║
- * ║   §6   Écran 1 — Accueil  #home (style Oromo)  ligne  442       ║
- * ║         Widget variante régionale               ligne  970       ║
- * ║   §7   Écran 2 — Sections  #sections           ligne 1069       ║
- * ║         §27 Onglets Niveau 1 / 2               ligne 1225       ║
- * ║         §LAUNCHER-REGION-GRID                  ligne 1305       ║
- * ║         §28 Écrans sections level : layout     ligne 1392       ║
- * ║   §8   Écran 3 — Leçon  #lesson               ligne 1415       ║
- * ║         Onglets (tabs)                         ligne 1510       ║
- * ║         Barre meta (badge voix + vitesse)      ligne 1644       ║
- * ║   §9   Composants : Flashcards                 ligne 1547       ║
- * ║   §10  Composants : Alphabet                   ligne 1817       ║
- * ║   §11  Composants : Quiz                       ligne 1879       ║
- * ║   §12  Composants : Dialogues / Situations     ligne 1959       ║
- * ║   §13  Composants : Vocabulaire                ligne 2028       ║
- * ║   §14  Onglet Répète                           ligne 3001       ║
- * ║   §15  Variantes régionales hispaniques        ligne 2926       ║
- * ║   §16  Modales (Guide + Remerciements)         ligne 2843       ║
- * ║   §17  Footer commun                           ligne 2118       ║
- * ║   §24b Mode sombre @media dark                 ligne 3168       ║
- * ║   §26  Barre de navigation basse               ligne 3648       ║
- * ║         Focus clavier (role="button")          ligne 3123       ║
- * ║         Toast — notification discrète          ligne 3137       ║
- * ║   §PDF  Boutons export PDF                     ligne 3838       ║
- * ║   §SPK  Feedback visuel TTS (.is-speaking)     ligne 3883       ║
- * ║         Ajouts Juin 2026                       ligne 3931       ║
+ * ║   §1   Reset & base                            ligne   62       ║
+ * ║   §1b  Transitions de navigation               ligne  167       ║
+ * ║   §2   Variables de thème (:root / fallback)   ligne  418       ║
+ * ║   §3   Thème Français (html.theme-french)      ligne 2890       ║
+ * ║   §4   Thème Espagnol (html.theme-spain)       ligne 2908       ║
+ * ║   §5   Écran 0 — Lanceur  #app-launcher        ligne  249       ║
+ * ║   §6   Écran 1 — Accueil  #home (style Oromo)  ligne  456       ║
+ * ║         Widget variante régionale               ligne  941       ║
+ * ║   §7   Écran 2 — Sections  #sections           ligne 1083       ║
+ * ║         §27 Onglets Niveau 1 / 2               ligne 1239       ║
+ * ║         §LAUNCHER-REGION-GRID                  ligne 1319       ║
+ * ║         §28 Écrans sections level : layout     ligne 1406       ║
+ * ║   §8   Écran 3 — Leçon  #lesson               ligne 1429       ║
+ * ║         Onglets (tabs)                         ligne 1524       ║
+ * ║         Barre meta (badge voix + vitesse)      ligne 1658       ║
+ * ║   §9   Composants : Flashcards                 ligne 1561       ║
+ * ║   §10  Composants : Alphabet                   ligne 1831       ║
+ * ║   §11  Composants : Quiz                       ligne 1893       ║
+ * ║   §12  Composants : Dialogues / Situations     ligne 1973       ║
+ * ║   §13  Composants : Vocabulaire                ligne 2042       ║
+ * ║   §14  Onglet Répète                           ligne 3015       ║
+ * ║   §15  Variantes régionales hispaniques        ligne 2940       ║
+ * ║   §16  Modales (Guide + Remerciements)         ligne 2164       ║
+ * ║   §17  Footer commun                           ligne 2132       ║
+ * ║   §24b Mode sombre @media dark                 ligne 3379       ║
+ * ║   §26  Barre de navigation basse               ligne 3662       ║
+ * ║         Focus clavier (role="button")          ligne 3138       ║
+ * ║         Toast — notification discrète          ligne 3151       ║
+ * ║   §PDF  Boutons export PDF                     ligne 3863       ║
+ * ║   §SPK  Feedback visuel TTS (.is-speaking)     ligne 3908       ║
+ * ║         Ajouts Juin 2026                       ligne 3956       ║
  * ╚══════════════════════════════════════════════════════════════════╝
  */
 

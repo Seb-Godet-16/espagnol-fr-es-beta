@@ -52,7 +52,7 @@ espagnol-fr-es-beta/
 ├── css/
 │   └── style.css       # Thèmes couleur, composants, animations (239 variables CSS)
 ├── js/
-│   ├── app.js          # Moteur applicatif complet (126 fonctions, 4 312 lignes)
+│   ├── app.js          # Moteur applicatif complet (127 fonctions, 4 388 lignes)
 │   ├── data-fr.js      # Contenu mode "Apprendre le Français" — chargé à la demande
 │   └── data-es.js      # Contenu mode "Apprendre l'Espagnol" — chargé à la demande
 ├── img/
