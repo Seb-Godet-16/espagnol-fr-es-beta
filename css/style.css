@@ -3964,6 +3964,15 @@ html.theme-spain  .export-pdf-btn:hover { background: #002395; }
 .lesson-footer .footer-antispam-btn   { color: #aaa; }
 footer .footer-antispam-btn           { color: #aaa; }
 
+/* ── Adresse email anti-spam : inversée dans le HTML (anti-robots),
+   réaffichée lisiblement via RTL. Le code source reste illisible
+   pour les scrapers, mais l'utilisateur voit l'adresse normale. ── */
+.antispam-email {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  display: inline;
+}
+
 /* ── 2 : Logo dans le guide ── */
 .home-guide-logo-wrap {
   display: flex;

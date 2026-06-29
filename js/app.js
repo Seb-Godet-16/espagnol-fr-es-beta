@@ -1354,11 +1354,18 @@ function _updateBottomNav(screenId) {
     if (elGuide)   elGuide.textContent   = 'Guide';
     if (elModules) elModules.textContent = 'Modules';
     if (elCredits) elCredits.textContent = 'Infos';
+  } else if (currentMode === 'learn_french') {
+    /* Apprenant hispanophone (apprend le français) → libellés en espagnol */
+    if (elLang)    elLang.textContent    = 'Idioma';
+    if (elGuide)   elGuide.textContent   = 'Guía';
+    if (elModules) elModules.textContent = 'Módulos';
+    if (elCredits) elCredits.textContent = 'Infos';
   } else {
-    if (elLang)    elLang.textContent    = L('Idioma',  'Langue');
-    if (elGuide)   elGuide.textContent   = L('Guía',    'Guide');
-    if (elModules) elModules.textContent = L('Módulos', 'Modules');
-    if (elCredits) elCredits.textContent = L('Infos',   'Infos');
+    /* Apprenant francophone (apprend l'espagnol) → libellés en français */
+    if (elLang)    elLang.textContent    = 'Langue';
+    if (elGuide)   elGuide.textContent   = 'Guide';
+    if (elModules) elModules.textContent = 'Modules';
+    if (elCredits) elCredits.textContent = 'Infos';
   }
 
   /* (4) Drapeau dynamique selon le mode et la région active
@@ -2025,22 +2032,24 @@ function switchTab(tab) {
     renderQuiz10();
   }
   else if (tab === 'dialog') {
-    /* Bouton PDF — injecté AVANT le contenu dialogue pour apparaître en haut */
+    renderDialog();
+  }
+  else if (tab === 'vocab')  {
+    /* Bouton PDF — injecté AVANT le contenu vocabulaire pour apparaître en haut */
     (function() {
       var tc = document.getElementById('tabContent');
       if (!tc) return;
-      var existing = document.getElementById('export-sit-btn');
+      var existing = document.getElementById('export-vocab-btn-v');
       if (existing) existing.remove();
       var btn = document.createElement('div');
       btn.className = 'pdf-btn-top-wrap';
-      btn.innerHTML = '<button id="export-sit-btn" class="export-pdf-btn export-pdf-btn--top" onclick="_exportSituation()" aria-label="' + L('Exportar situación PDF', 'Exporter la situation PDF') + '">'
+      btn.innerHTML = '<button id="export-vocab-btn-v" class="export-pdf-btn export-pdf-btn--top" onclick="_exportVocab()" aria-label="' + L('Exportar vocabulario PDF', 'Exporter le vocabulaire PDF') + '">'
         + '📄 PDF'
         + '</button>';
       tc.insertBefore(btn, tc.firstChild);
     })();
-    renderDialog();
+    renderVocab();
   }
-  else if (tab === 'vocab')  { renderVocab(); }
   else if (tab === 'dquiz')  {
     dqStep = 0; dqScore = 0; dqAnswered = false;
     _clearQuizSession();
@@ -3141,9 +3150,13 @@ function renderDialog() {
   }).join('');
 
   var quizBtnLabel = L('Iniciar el minicuestionario ➜', 'Lancer le mini quiz ➜');
+  var pdfAriaLabel = L('Exportar situación PDF', 'Exporter la situation PDF');
 
   document.getElementById('tabContent').innerHTML =
-    '<div class="sit-nav">' + sitBtns + '</div>'
+    '<div class="pdf-btn-top-wrap">'
+    + '<button id="export-sit-btn" class="export-pdf-btn export-pdf-btn--top" onclick="_exportSituation()" aria-label="' + pdfAriaLabel + '">📄 PDF</button>'
+    + '</div>'
+    + '<div class="sit-nav">' + sitBtns + '</div>'
     + '<div class="dialogue-box">'
     + '<div class="scene-img-big">' + sit.img + '</div>'
     + '<div class="bubble-wrap">' + bubbles + '</div>'
