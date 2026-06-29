@@ -993,7 +993,7 @@ function _updateSpeedBar() {
   });
 }
 
-/* _buildSpeedBar() — Génère le HTML de la barre de contrôle de vitesse. */
+/* _buildSpeedBar() — Génère le HTML de la barre vitesse + slot PDF sur la même ligne. */
 function _buildSpeedBar() {
   var btns = SPEED_LEVELS.map(function(s) {
     var active = _getTtsSpeed() === s.id ? ' speed-active' : '';
@@ -1004,7 +1004,30 @@ function _buildSpeedBar() {
   }).join('');
   return '<div id="tts-speed-bar" class="tts-speed-bar">'
     + '<span class="speed-bar-label">' + L('Velocidad:', 'Vitesse :') + '</span>'
-    + btns + '</div>';
+    + btns
+    + '<div id="meta-pdf-slot"></div>'
+    + '</div>';
+}
+
+/* _updateMetaPdfBtn(tab) — Injecte ou retire le bouton PDF dans #meta-pdf-slot selon l'onglet.
+   Appelée par switchTab() à chaque changement. PDF : flash (hors alpha), dialog, vocab. */
+function _updateMetaPdfBtn(tab) {
+  var slot = document.getElementById('meta-pdf-slot');
+  if (!slot) return;
+  var hasPdf = false, onclick = '', ariaLabel = '';
+  if (tab === 'flash' && CT && CT.words && CT.type !== 'alpha') {
+    hasPdf = true; onclick = '_exportVocab()';
+    ariaLabel = L('Exportar vocabulario PDF', 'Exporter le vocabulaire PDF');
+  } else if (tab === 'dialog') {
+    hasPdf = true; onclick = '_exportSituation()';
+    ariaLabel = L('Exportar situación PDF', 'Exporter la situation PDF');
+  } else if (tab === 'vocab') {
+    hasPdf = true; onclick = '_exportVocab()';
+    ariaLabel = L('Exportar vocabulario PDF', 'Exporter le vocabulaire PDF');
+  }
+  slot.innerHTML = hasPdf
+    ? '<button class="export-pdf-btn export-pdf-btn--meta" onclick="' + onclick + '" aria-label="' + ariaLabel + '">📄 PDF</button>'
+    : '';
 }
 
 // §3c — Interruption TTS à la mise en arrière-plan
@@ -1353,27 +1376,7 @@ function _updateBottomNav(screenId) {
   var elSubCredits = document.getElementById('navSubCredits');
 
   if (!currentMode) {
-    /* Launcher Vue A : pas encore de mode → libellés en français, pas de sous-titre */
-    if (elLang)    elLang.textContent    = 'Langue';
-    if (elGuide)   elGuide.textContent   = 'Guide';
-    if (elModules) elModules.textContent = 'Modules';
-    if (elCredits) elCredits.textContent = 'Infos';
-    if (elSubLang)    elSubLang.textContent    = '';
-    if (elSubGuide)   elSubGuide.textContent   = '';
-    if (elSubModules) elSubModules.textContent = '';
-    if (elSubCredits) elSubCredits.textContent = '';
-  } else if (currentMode === 'learn_french') {
-    /* Apprenant hispanophone (apprend le français) → principal en espagnol, sous-titre en français */
-    if (elLang)    elLang.textContent    = 'Idioma';
-    if (elGuide)   elGuide.textContent   = 'Guía';
-    if (elModules) elModules.textContent = 'Módulos';
-    if (elCredits) elCredits.textContent = 'Infos';
-    if (elSubLang)    elSubLang.textContent    = 'Langue';
-    if (elSubGuide)   elSubGuide.textContent   = 'Guide';
-    if (elSubModules) elSubModules.textContent = 'Modules';
-    if (elSubCredits) elSubCredits.textContent = '';
-  } else {
-    /* Apprenant francophone (apprend l'espagnol) → principal en français, sous-titre en espagnol */
+    /* Launcher Vue A uniquement : bilingue FR + traduction ES en sous-titre */
     if (elLang)    elLang.textContent    = 'Langue';
     if (elGuide)   elGuide.textContent   = 'Guide';
     if (elModules) elModules.textContent = 'Modules';
@@ -1381,6 +1384,26 @@ function _updateBottomNav(screenId) {
     if (elSubLang)    elSubLang.textContent    = 'Idioma';
     if (elSubGuide)   elSubGuide.textContent   = 'Guía';
     if (elSubModules) elSubModules.textContent = 'Módulos';
+    if (elSubCredits) elSubCredits.textContent = '';
+  } else if (currentMode === 'learn_french') {
+    /* Apprenant hispanophone : libellés en espagnol uniquement, pas de sous-titre */
+    if (elLang)    elLang.textContent    = 'Idioma';
+    if (elGuide)   elGuide.textContent   = 'Guía';
+    if (elModules) elModules.textContent = 'Módulos';
+    if (elCredits) elCredits.textContent = 'Infos';
+    if (elSubLang)    elSubLang.textContent    = '';
+    if (elSubGuide)   elSubGuide.textContent   = '';
+    if (elSubModules) elSubModules.textContent = '';
+    if (elSubCredits) elSubCredits.textContent = '';
+  } else {
+    /* Apprenant francophone : libellés en français uniquement, pas de sous-titre */
+    if (elLang)    elLang.textContent    = 'Langue';
+    if (elGuide)   elGuide.textContent   = 'Guide';
+    if (elModules) elModules.textContent = 'Modules';
+    if (elCredits) elCredits.textContent = 'Infos';
+    if (elSubLang)    elSubLang.textContent    = '';
+    if (elSubGuide)   elSubGuide.textContent   = '';
+    if (elSubModules) elSubModules.textContent = '';
     if (elSubCredits) elSubCredits.textContent = '';
   }
 
@@ -2020,35 +2043,19 @@ function switchTab(tab) {
   document.querySelectorAll('#lessonTabs .tab').forEach(function(b) {
     b.classList.toggle('active', b.dataset.tab === tab);
   });
+  /* Mise à jour du bouton PDF dans la barre meta (même ligne que Vitesse) */
+  _updateMetaPdfBtn(tab);
   if      (tab === 'flash')  { renderFlash(); }
   else if (tab === 'quiz10') {
     q10Step = 0; q10Score = 0; q10Answered = false;
     _clearQuizSession();
-    // Régénère les questions dynamiques à chaque ouverture de l'onglet Quiz
     if (CT && CT.level === 1 && CT.type !== 'alpha') {
       _currentDynQuiz = _generateLevel1Quiz(CT);
     }
     renderQuiz10();
   }
-  else if (tab === 'dialog') {
-    renderDialog();
-  }
-  else if (tab === 'vocab')  {
-    /* Bouton PDF — injecté AVANT le contenu vocabulaire pour apparaître en haut */
-    (function() {
-      var tc = document.getElementById('tabContent');
-      if (!tc) return;
-      var existing = document.getElementById('export-vocab-btn-v');
-      if (existing) existing.remove();
-      var btn = document.createElement('div');
-      btn.className = 'pdf-btn-top-wrap';
-      btn.innerHTML = '<button id="export-vocab-btn-v" class="export-pdf-btn export-pdf-btn--top" onclick="_exportVocab()" aria-label="' + L('Exportar vocabulario PDF', 'Exporter le vocabulaire PDF') + '">'
-        + '📄 PDF'
-        + '</button>';
-      tc.insertBefore(btn, tc.firstChild);
-    })();
-    renderVocab();
-  }
+  else if (tab === 'dialog') { renderDialog(); }
+  else if (tab === 'vocab')  { renderVocab(); }
   else if (tab === 'dquiz')  {
     dqStep = 0; dqScore = 0; dqAnswered = false;
     _clearQuizSession();
@@ -2130,12 +2137,8 @@ function renderFlash() {
 
     var regionLabelsFR = { ES:'🇪🇸 España (Castellano)', MX:'🇲🇽 México', CO:'🇨🇴 Colombia', AR:'🇦🇷 Argentina', PE:'🇵🇪 Perú', VE:'🇻🇪 Venezuela', EC:'🇪🇨 Ecuador' };
     var regionFullLabel = regionLabelsFR[currentRegion] || ('🇪🇸 España (Castellano)');
-    var pdfBtnFR = (CT.words && CT.type !== 'alpha')
-      ? '<div class="pdf-btn-top-wrap"><button id="export-vocab-btn" class="export-pdf-btn export-pdf-btn--top" onclick="_exportVocab()" aria-label="Exportar vocabulario PDF">📄 PDF</button></div>'
-      : '';
     document.getElementById('tabContent').innerHTML =
-      pdfBtnFR
-      + '<div class="section-label">Anverso : Francés 🇫🇷 — Reverso : Español '
+      '<div class="section-label">Anverso : Francés 🇫🇷 — Reverso : Español '
       + '<span id="current-lang-flag">' + regionFullLabel + '</span> · Haz clic para volver !</div>'
       + '<div class="fc-wrap"><div class="fc" id="fc" onclick="flipCard()">'
       + '<div class="fc-front">' + frontContent + '</div>'
@@ -2170,12 +2173,8 @@ function renderFlash() {
 
     var regionLabelsES = { ES:'🇪🇸 Espagne (Castillan)', MX:'🇲🇽 Mexique', CO:'🇨🇴 Colombie', AR:'🇦🇷 Argentine', PE:'🇵🇪 Pérou', VE:'🇻🇪 Venezuela', EC:'🇪🇨 Équateur' };
     var regionFullLabelES = regionLabelsES[currentRegion] || ('🇪🇸 Espagne (Castillan)');
-    var pdfBtnES = (CT.words && CT.type !== 'alpha')
-      ? '<div class="pdf-btn-top-wrap"><button id="export-vocab-btn" class="export-pdf-btn export-pdf-btn--top" onclick="_exportVocab()" aria-label="Exporter le vocabulaire PDF">📄 PDF</button></div>'
-      : '';
     document.getElementById('tabContent').innerHTML =
-      pdfBtnES
-      + '<div class="section-label">Recto : Espagnol <span id="current-lang-flag">'
+      '<div class="section-label">Recto : Espagnol <span id="current-lang-flag">'
       + regionFullLabelES + '</span> — Verso : Français 🇫🇷 · Cliquez pour retourner !</div>'
       + '<div class="fc-wrap"><div class="fc" id="fc" onclick="flipCard()">'
       + '<div class="fc-front">' + frontContent + '</div>'
@@ -3157,13 +3156,9 @@ function renderDialog() {
   }).join('');
 
   var quizBtnLabel = L('Iniciar el minicuestionario ➜', 'Lancer le mini quiz ➜');
-  var pdfAriaLabel = L('Exportar situación PDF', 'Exporter la situation PDF');
 
   document.getElementById('tabContent').innerHTML =
-    '<div class="pdf-btn-top-wrap">'
-    + '<button id="export-sit-btn" class="export-pdf-btn export-pdf-btn--top" onclick="_exportSituation()" aria-label="' + pdfAriaLabel + '">📄 PDF</button>'
-    + '</div>'
-    + '<div class="sit-nav">' + sitBtns + '</div>'
+    '<div class="sit-nav">' + sitBtns + '</div>'
     + '<div class="dialogue-box">'
     + '<div class="scene-img-big">' + sit.img + '</div>'
     + '<div class="bubble-wrap">' + bubbles + '</div>'

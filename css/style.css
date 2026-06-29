@@ -4031,14 +4031,12 @@ footer .footer-antispam-btn           { color: #aaa; }
   border-color: rgba(255,255,255,0.85);
 }
 
-/* ── 4a : Bouton PDF compact en haut ── */
-.pdf-btn-top-wrap {
-  display: flex;
-  justify-content: flex-end;
-  padding: 4px 8px 6px;
+/* ── 4a : Bouton PDF compact dans la barre meta (même ligne que Vitesse) ── */
+#meta-pdf-slot {
+  margin-left: auto;
 }
-.export-pdf-btn--top {
-  padding: 6px 14px !important;
+.export-pdf-btn--meta {
+  padding: 4px 12px !important;
   font-size: 0.76rem !important;
   min-height: 34px !important;
   border-radius: 50px !important;
