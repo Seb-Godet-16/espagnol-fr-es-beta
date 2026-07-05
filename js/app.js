@@ -4195,37 +4195,29 @@ function _buildHomeGuide() {
 
 /**
  * navBackToHome() — Bouton 🏠 du bouton retour à deux icônes (écran Modules).
- * Retourne à l'écran #home tel quel (en haut : progression + bouton Commencer).
- * Corrige le titre de la topbar sticky pour bien afficher "Accueil / Inicio"
- * au lieu du titre "Guide explicatif" laissé par le dernier appel à
- * _buildHomeGuide() (le titre ne se remettait jamais à jour ici).
+ * L'écran #home est en réalité l'écran "Guide explicatif" (celui affiché par
+ * showGuide()) : y afficher un titre "Accueil/Inicio" par-dessus son contenu
+ * de Guide ne fait pas de #home un véritable accueil, ça laisse juste un
+ * titre trompeur au-dessus du même contenu. Le véritable accueil de l'app
+ * est l'écran #app-launcher ("Choisis ta langue / Elige tu idioma"), affiché
+ * par showLauncher() — c'est donc lui qu'il faut appeler ici.
  */
 function navBackToHome() {
-  showScreen('home');
-  const homeEl = document.getElementById('home');
-  if (homeEl) homeEl.scrollTop = 0;
-  const topbarTitle = document.getElementById('homeTopbarTitle');
-  if (topbarTitle) topbarTitle.textContent = L('Inicio', 'Accueil');
+  showLauncher();
 }
 
 /**
  * navBackToGuide() — Bouton ❓ du bouton retour à deux icônes (écran Modules).
- * Va sur #home (comme showGuide(), qui remet bien le titre "Guide explicatif")
- * PUIS fait défiler jusqu'au corps du guide (accordéons d'explication).
- * Calcule le décalage réel des deux barres sticky (.home-topbar +
- * .home-start-sticky) pour que le haut du guide ne soit pas caché dessous.
+ * Va sur #home via showGuide() (qui remet bien le titre "Guide explicatif").
+ * L'écran #home a un scroll interne indépendant du scroll de la fenêtre
+ * (remis à 0 par showScreen()), donc sans reset explicite ici il conservait
+ * la position de défilement laissée par une visite précédente du Guide —
+ * d'où l'écran qui apparaissait "pas en haut". On le remet en haut.
  */
 function navBackToGuide() {
   showGuide();
-  setTimeout(() => {
-    const homeEl    = document.getElementById('home');
-    const guideBody = document.getElementById('homeGuideBody');
-    if (!homeEl || !guideBody) return;
-    const topbar       = homeEl.querySelector('.home-topbar');
-    const startSticky  = homeEl.querySelector('.home-start-sticky');
-    const stickyOffset = (topbar ? topbar.offsetHeight : 0) + (startSticky ? startSticky.offsetHeight : 0);
-    homeEl.scrollTo({ top: Math.max(guideBody.offsetTop - stickyOffset, 0), behavior: 'smooth' });
-  }, 320); // après la transition d'écran (300ms, cf. showScreen())
+  const homeEl = document.getElementById('home');
+  if (homeEl) homeEl.scrollTop = 0;
 }
 
 /**
