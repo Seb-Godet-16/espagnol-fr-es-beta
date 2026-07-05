@@ -27,6 +27,9 @@
   ║  Ordre du parcours utilisateur :                               ║
   ║    [0] app-launcher → [1] home → [2] sections → [3] lesson    ║
   ╚══════════════════════════════════════════════════════════════════╝
+  Cible JS (script inline d'enregistrement du Service Worker) : ES2020
+  maximum, sans transpileur, pour compatibilité native iOS Safari 14.5+.
+  Modernisé le 05/07/2026 : var → const, callbacks → arrow functions.
 -->
 <html lang="fr">
 <head>
@@ -221,7 +224,14 @@
           <text class="hpc-pct" x="60" y="56" id="hpcPct">0%</text>
           <text class="hpc-sub" x="60" y="74" id="hpcSub">⭐ 0</text>
         </svg>
+        <!-- Détail texte (hors SVG, pour ne pas surcharger le cercle) : nombre de modules validés -->
+        <div class="hpc-modules-line" id="hpcModulesLine"></div>
       </div>
+
+      <!-- Résumé de progression de l'AUTRE parcours (Français ↔ Espagnol), affiché
+           uniquement si l'apprenant l'a déjà commencé — pour ne pas surcharger l'écran
+           d'une barre de progression vide quand un seul parcours a été essayé. -->
+      <div class="home-other-progress" id="homeOtherProgress" style="display:none"></div>
     </div><!-- /.home-guide-header -->
 
     <!-- Barre sticky : Commencer + PDF côte à côte -->
@@ -402,7 +412,29 @@
               <li><strong>Android / Chrome</strong> : menu ⋮ → <em>"Ajouter à l'écran d'accueil"</em></li>
               <li><strong>iOS / Safari</strong> : 🔗 → <em>"Sur l'écran d'accueil"</em></li>
             </ul>
-            <p>Une fois installée, l'app fonctionne <strong>entièrement hors ligne</strong>.</p>
+            <p style="margin:.6em 0 .3em;font-size:.85em">Sur Android, deux options apparaissent alors — <strong>elles ne se valent pas</strong> pour le hors-ligne :</p>
+            <div class="ob-compare">
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">✅ Installer</div>
+                <ul>
+                  <li>Vraie appli autonome, avec sa propre icône</li>
+                  <li>S'ouvre en plein écran, sans barre d'adresse</li>
+                  <li>Le Service Worker enregistre toutes les leçons en cache</li>
+                  <li>Fonctionne sans réseau, même après redémarrage</li>
+                </ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🔗 Créer un raccourci</div>
+                <ul>
+                  <li>Simple favori épinglé sur l'écran d'accueil</li>
+                  <li>Rouvre le navigateur (ex. Brave), barre d'adresse visible</li>
+                  <li>Dépend du cache du navigateur, moins fiable hors-ligne</li>
+                  <li>Utile pour un accès rapide, pas pour le hors-ligne garanti</li>
+                </ul>
+              </div>
+            </div>
+            <div class="ob-tip">💡 Pour un hors-ligne fiable, choisis toujours <strong>Installer</strong>. Le raccourci reste pratique pour un accès rapide, mais ne garantit pas que l'app fonctionne sans connexion.</div>
+            <p>Une fois <strong>installée</strong> (et non simplement en raccourci), l'app fonctionne <strong>entièrement hors ligne</strong>.</p>
             <div class="ob-tip">💡 L'app se met à jour automatiquement à chaque nouvelle version — il suffit de la rouvrir dans le navigateur.</div>
 
             <h4 style="margin:.8em 0 .3em;font-size:.95em;border-top:1px solid var(--color-border);padding-top:.6em">📄 Téléchargement en PDF</h4>
@@ -664,7 +696,29 @@
               <li><strong>Android / Chrome</strong> : menú ⋮ → <em>"Añadir a pantalla de inicio"</em></li>
               <li><strong>iOS / Safari</strong> : 🔗 → <em>"En la pantalla de inicio"</em></li>
             </ul>
-            <p>Una vez instalada, la app funciona <strong>completamente sin conexión</strong>.</p>
+            <p style="margin:.6em 0 .3em;font-size:.85em">En Android aparecen entonces dos opciones — <strong>no son equivalentes</strong> para el uso sin conexión:</p>
+            <div class="ob-compare">
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">✅ Instalar</div>
+                <ul>
+                  <li>App autónoma real, con su propio icono</li>
+                  <li>Se abre a pantalla completa, sin barra de direcciones</li>
+                  <li>El Service Worker guarda todas las lecciones en caché</li>
+                  <li>Funciona sin red, incluso tras reiniciar el móvil</li>
+                </ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🔗 Crear un acceso directo</div>
+                <ul>
+                  <li>Simple favorito anclado en la pantalla de inicio</li>
+                  <li>Vuelve a abrir el navegador (ej. Brave), barra de direcciones visible</li>
+                  <li>Depende de la caché del navegador, menos fiable sin conexión</li>
+                  <li>Útil para un acceso rápido, no para el sin conexión garantizado</li>
+                </ul>
+              </div>
+            </div>
+            <div class="ob-tip">💡 Para un uso sin conexión fiable, elige siempre <strong>Instalar</strong>. El acceso directo sigue siendo práctico para acceder rápido, pero no garantiza que la app funcione sin conexión.</div>
+            <p>Una vez <strong>instalada</strong> (y no solo como acceso directo), la app funciona <strong>completamente sin conexión</strong>.</p>
             <div class="ob-tip">💡 La app se actualiza automáticamente en cada nueva versión — basta con volver a abrirla en el navegador.</div>
 
             <h4 style="margin:.8em 0 .3em;font-size:.95em;border-top:1px solid var(--color-border);padding-top:.6em">📄 Descarga en PDF</h4>
@@ -768,8 +822,16 @@
     <div class="sections-header">
       <div class="sections-top-row">
         <div class="sections-top-left">
-          <button class="back-btn" id="sectionsBackBtn" onclick="showLauncher()"
-                  aria-label="Retour au choix de langue / Volver a la selección de idioma"></button>
+          <div class="sections-back-group" role="group" aria-label="Retour">
+            <button class="back-btn back-icon-btn" id="sectionsBackHomeBtn" onclick="navBackToHome()"
+                    aria-label="Retour à l'accueil / Volver al inicio" title="Accueil / Inicio">
+              <span aria-hidden="true">🏠</span>
+            </button>
+            <button class="back-btn back-icon-btn" id="sectionsBackGuideBtn" onclick="navBackToGuide()"
+                    aria-label="Retour au guide explicatif / Volver a la guía" title="Guide / Guía">
+              <span aria-hidden="true">❓</span>
+            </button>
+          </div>
           <h2 id="sectionsTitle"></h2>
           <div class="sections-subtitle" id="sectionsSubtitle"></div>
         </div>
@@ -781,7 +843,7 @@
       </div>
       <div class="progress-label-row">
         <div class="progress-label" id="progressLabel"></div>
-        <button class="reset-inline-btn" onclick="showResetConfirm()" id="resetInlineBtn" aria-label="Réinitialiser la progression">🗑️</button>
+        <button class="reset-inline-btn" onclick="showResetConfirm()" id="resetInlineBtn" aria-label="Réinitialiser la progression">🔄</button>
       </div>
 
       <div class="sections-stars" id="sectionsStars"></div>
@@ -812,8 +874,16 @@
     <div class="sections-header">
       <div class="sections-top-row">
         <div class="sections-top-left">
-          <button class="back-btn" id="sectionsBackBtn2" onclick="showLauncher()"
-                  aria-label="Retour au choix de langue / Volver a la selección de idioma"></button>
+          <div class="sections-back-group" role="group" aria-label="Retour">
+            <button class="back-btn back-icon-btn" id="sectionsBackHomeBtn2" onclick="navBackToHome()"
+                    aria-label="Retour à l'accueil / Volver al inicio" title="Accueil / Inicio">
+              <span aria-hidden="true">🏠</span>
+            </button>
+            <button class="back-btn back-icon-btn" id="sectionsBackGuideBtn2" onclick="navBackToGuide()"
+                    aria-label="Retour au guide explicatif / Volver a la guía" title="Guide / Guía">
+              <span aria-hidden="true">❓</span>
+            </button>
+          </div>
           <h2 id="sectionsTitle2"></h2>
           <div class="sections-subtitle" id="sectionsSubtitle2"></div>
         </div>
@@ -825,7 +895,7 @@
       </div>
       <div class="progress-label-row">
         <div class="progress-label" id="progressLabel2"></div>
-        <button class="reset-inline-btn" onclick="showResetConfirm()" id="resetInlineBtn2" aria-label="Réinitialiser la progression">🗑️</button>
+        <button class="reset-inline-btn" onclick="showResetConfirm()" id="resetInlineBtn2" aria-label="Réinitialiser la progression">🔄</button>
       </div>
 
       <div class="sections-stars" id="sectionsStars2"></div>
@@ -907,7 +977,7 @@
         Merci beaucoup également à mes parents pour leur travail de relecture,
         leurs corrections sur les traductions et leurs conseils sur l'ergonomie de l'application.
       </p>
-      <button onclick="document.getElementById('credits-modal').style.display='none'; var b=document.getElementById('navBtnCredits'); if(b)b.classList.remove('active'); var cur=document.querySelector('.screen.active'); _updateBottomNav(cur?cur.id:'app-launcher');"
+      <button onclick="document.getElementById('credits-modal').style.display='none'; const b=document.getElementById('navBtnCredits'); if(b)b.classList.remove('active'); const cur=document.querySelector('.screen.active'); _updateBottomNav(cur?cur.id:'app-launcher');"
               style="margin-top:15px;padding:10px 25px;border-radius:8px;border:none;
                      background:#007bff;color:white;font-weight:bold;cursor:pointer;">
         Fermer
@@ -959,18 +1029,18 @@
 
 <script>
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
+    window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js', { scope: './' })
-        .then(function() {
+        .then(() => {
           let _reloading = false;
-          navigator.serviceWorker.addEventListener('controllerchange', function() {
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
             if (!_reloading) {
               _reloading = true;
               window.location.reload();
             }
           });
         })
-        .catch(function(err) {
+        .catch((err) => {
           console.warn('[SW] Enregistrement échoué :', err);
         });
     });

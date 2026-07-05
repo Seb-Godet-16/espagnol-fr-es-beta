@@ -29,6 +29,9 @@
  * ║    activate → nettoyage des anciens caches (évite les zombies)  ║
  * ║    fetch    → interception et dispatch Cache/Network First      ║
  * ╚══════════════════════════════════════════════════════════════════╝
+ * Cible : ES2020 maximum pour assurer la compatibilité native iOS
+ * Safari 14.5+ sans transpileur. Déjà conforme (const/arrow functions) —
+ * aucun changement de code nécessaire lors de l'audit du 05/07/2026.
  */
 
 /* ──────────────────────────────────────────────────────────────────
@@ -65,14 +68,38 @@ const PRECACHE_URLS = [
   './img/Logo-appli-es-fr.png'      /* logo principal — affiché dès le launcher */
 ];
 
+/* BUG 11.3 (corrigé) : drapeaux Twemoji (CDN externe cdnjs.cloudflare.com).
+   Ces SVG étaient chargés en Network First mais jamais pré-cachés : si
+   l'utilisateur passait en mode Avion avant d'avoir visité l'écran qui
+   charge un drapeau donné (ex : le drapeau FR de l'écran Sections), le
+   cache était vide → réseau KO → le <img> tombait sur son texte de
+   secours "fr" (attribut alt). En les pré-cachant ici, ils sont garantis
+   disponibles hors-ligne dès la toute première installation du SW, sans
+   dépendre de la navigation de l'utilisateur avant la coupure.
+   Volontairement séparés de PRECACHE_URLS : ce sont des ressources
+   externes, non essentielles au fonctionnement de l'app (contrairement
+   à index.html/app.js/style.css). On les cache en "best effort" (voir
+   installFlagCache() ci-dessous) pour qu'un CDN temporairement injoignable
+   ne fasse jamais échouer l'installation complète du Service Worker. */
+const FLAG_PRECACHE_URLS = [
+  'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1eb-1f1f7.svg', /* 🇫🇷 France */
+  'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1ea-1f1f8.svg', /* 🇪🇸 Espagne */
+  'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1f2-1f1fd.svg', /* 🇲🇽 Mexique */
+  'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1e8-1f1f4.svg', /* 🇨🇴 Colombie */
+  'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1f5-1f1ea.svg', /* 🇵🇪 Pérou */
+  'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1fb-1f1ea.svg', /* 🇻🇪 Venezuela */
+  'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1e6-1f1f7.svg', /* 🇦🇷 Argentine */
+  'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1ea-1f1e8.svg'  /* 🇪🇨 Équateur */
+];
+
 /* Préfixes d'URLs considérées comme "externes" → stratégie Network First */
 const EXTERNAL_PREFIXES = [
   'https://raw.githubusercontent.com/',
   'https://cdnjs.cloudflare.com/'
 ];
 
-/* Extensions reconnues comme des images raster */
-const IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.webp', '.gif'];
+/* Extensions reconnues comme des images raster (+ .svg pour les drapeaux Twemoji, Bug 11.3) */
+const IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg'];
 
 /* Chemin du dossier des icônes PWA */
 const ICONS_PATH = '/img/icons/';
@@ -141,10 +168,27 @@ function _isNavigation(request) {
    skipWaiting() : le nouveau SW prend le contrôle immédiatement
    sans attendre la fermeture de tous les onglets.
    ────────────────────────────────────────────────────────────────── */
+/* installFlagCache() — Pré-cache "best effort" des drapeaux Twemoji (Bug 11.3).
+   Contrairement à cache.addAll() (atomique : un seul échec fait tout échouer),
+   chaque drapeau est mis en cache indépendamment via Promise.allSettled :
+   si cdnjs.cloudflare.com est injoignable au moment de l'install, l'app
+   continue de s'installer normalement (juste sans ce drapeau précaché —
+   il sera de toute façon caché à la prochaine visite en ligne via la
+   stratégie Network First habituelle). */
+function installFlagCache(cache) {
+  return Promise.allSettled(
+    FLAG_PRECACHE_URLS.map(url =>
+      fetch(url, { mode: 'cors' }).then(res => {
+        if (res && res.status === 200) return cache.put(url, res);
+      }).catch(() => { /* CDN injoignable à l'install : tant pis, non bloquant */ })
+    )
+  );
+}
+
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(PRECACHE_URLS))
+      .then(cache => cache.addAll(PRECACHE_URLS).then(() => installFlagCache(cache)))
       .then(() => self.skipWaiting())
   );
 });

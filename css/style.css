@@ -74,9 +74,18 @@
 
 body {
   font-family: 'Segoe UI', system-ui, sans-serif;
-  min-height: 100vh;
-  font-size: 16px;
-  background: #FCFFEE; /* crème exact du logo (RVB 252,255,238) */
+  min-height: 100vh;   /* fallback navigateurs anciens */
+  min-height: 100dvh;  /* Amélioration bonus : hauteur réelle du viewport mobile,
+                          exclut dynamiquement la barre du navigateur (Brave/Chrome mobile) */
+  /* Amélioration 12.2 (corrigé) : 1rem au lieu de 16px.
+     rem est toujours relatif à la taille de police de l'élément <html>
+     (racine du document). Comme aucune règle ne fixe html { font-size }
+     dans cette feuille de style, cette racine reste égale à la taille de
+     police par défaut du navigateur — celle-là même que l'utilisateur
+     change dans les paramètres d'accessibilité de son téléphone Android
+     ("Taille de police" / "Taille d'affichage"). En px, cette valeur
+     était figée et ignorait totalement ce réglage système. */
+  font-size: 1rem;
 }
 
 /* Conteneur principal (largeur max mobile-first) */
@@ -150,7 +159,9 @@ body {
 /* Chaque écran est masqué par défaut ; .active l'affiche en flex */
 .screen {
   display: none;
-  min-height: 100vh;
+  min-height: 100vh;   /* fallback navigateurs anciens */
+  min-height: 100dvh;  /* Amélioration bonus : s'adapte à l'espace réel visible,
+                          que la barre du navigateur mobile soit affichée ou non */
   flex-direction: column;
   position: absolute;       /* hors du flux, prêt à animer */
   top: 0; left: 0; right: 0;
@@ -450,6 +461,14 @@ body {
   --c-home-title:          #001A6E;
   --c-home-subtitle:       #002395;
   --c-home-progress-label: #002395;
+
+  /* Amélioration 12.3 : tokens génériques de surface/texte secondaire,
+     déclarés en clair ici pour symétrie avec leur override en sombre
+     (voir @media (prefers-color-scheme: dark) plus bas). Utilisés par
+     les composants qui ne dépendent pas d'un thème FR/ES spécifique
+     (barre de navigation basse, footer du lanceur, cartes du Guide…). */
+  --c-text-sub: #6b6b80;              /* texte secondaire — ≥4.5:1 sur fond clair */
+  --c-border:   rgba(0,0,0,.10);      /* bordure subtile — visible sur fond clair */
 }
 
 
@@ -617,7 +636,7 @@ body {
 
 .hpc-pct {
   font-family: system-ui, -apple-system, sans-serif;
-  font-size: 22px;
+  font-size: 1.375rem; /* 22px → rem (Amélioration 12.2) : respecte la taille de police système */
   font-weight: 800;
   fill: #fff;
   text-anchor: middle;
@@ -627,7 +646,7 @@ body {
 
 .hpc-sub {
   font-family: system-ui, -apple-system, sans-serif;
-  font-size: 11px;
+  font-size: .6875rem; /* 11px → rem (Amélioration 12.2) */
   fill: rgba(255,255,255,.85);
   text-anchor: middle;
   dominant-baseline: auto;
@@ -636,6 +655,33 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .hpc-fill { transition: none; }
 }
+
+/* Détail texte sous le cercle : nombre de modules validés (ex. "12/48 modules") */
+.hpc-modules-line {
+  text-align: center;
+  color: rgba(255,255,255,.85);
+  font-size: .7rem;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Badge de progression de l'AUTRE parcours (Français ↔ Espagnol) — masqué
+   par défaut, affiché en JS uniquement si ce parcours a déjà été commencé */
+.home-other-progress {
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: fit-content;
+  margin: 6px auto 0;
+  padding: 4px 12px;
+  background: rgba(255,255,255,.16);
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: 20px;
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 700;
+}
+.hop-sep { opacity: .65; margin: 0 1px; }
 
 /* ── Barre sticky : Commencer + PDF côte à côte ── */
 .home-start-sticky {
@@ -1117,6 +1163,24 @@ body {
 .sections-top-left .back-btn {
   padding: 4px 0;
 }
+
+/* Groupe des 2 icônes de retour (🏠 Accueil / ❓ Guide) remplaçant
+   l'ancienne flèche unique "← Retour" — chacune navigue vers une
+   destination différente, au choix de l'apprenant. */
+.sections-back-group {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+.back-icon-btn {
+  font-size: 1.3rem !important;
+  min-width: 40px;
+  min-height: 40px;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 2px !important;
+}
 .sections-flag {
   font-size: 2.4rem;
   line-height: 1;
@@ -1413,7 +1477,9 @@ body {
 #sections-level2 {
   background: var(--c-bg);
   flex-direction: column;
-  min-height: var(--app-h, 100vh);
+  min-height: var(--app-h, 100vh);  /* fallback navigateurs anciens */
+  min-height: var(--app-h, 100dvh); /* Amélioration bonus : dvh tant que le JS
+                                        (--app-h, window.innerHeight) n'a pas encore tourné */
   /* display géré par .screen / .screen.active — ne pas forcer flex ici */
 }
 
@@ -1442,8 +1508,43 @@ body {
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
+  flex-wrap: nowrap; /* Bug 9.6 : empêche tout retour à la ligne des flèches */
 }
-.lesson-header h3 { color: #fff; font-size: 1rem; flex: 1; line-height: 1.3; }
+/* Bug 9.6 — Titre de leçon dans le header :
+   - min-width: 0 est la clé technique : sans cela, un flex item ne peut
+     jamais rétrécir en dessous de la largeur naturelle de son contenu,
+     ce qui repoussait la flèche › hors de la ligne sur les titres longs
+     (ex : "Mots interrogatifs") sur écrans étroits (Galaxy A55, 360px).
+   - Plutôt que de tronquer le titre (ellipsis), on le laisse retourner
+     à la ligne (white-space: normal) et on réduit sa taille via clamp()
+     sur les petits écrans. Comme .lesson-header garde flex-wrap: nowrap
+     et align-items: center, un titre sur 2 lignes agrandit juste la
+     hauteur de la ligne : les flèches ‹ › restent à la même position,
+     centrées verticalement, jamais repoussées en dessous. */
+.lesson-header h3 {
+  color: #fff;
+  line-height: 1.2;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: visible;
+  white-space: normal;
+  word-break: break-word;
+  font-size: clamp(0.82rem, 3.8vw, 1rem);
+}
+
+/* Bug 9.6 — Éléments à taille fixe du header de leçon : ne doivent jamais
+   être écrasés ni passer à la ligne, quelle que soit la longueur du titre. */
+#lessonBackBtn,
+.lesson-home-btn,
+#lessonEmoji,
+.lesson-nav-arrows {
+  flex-shrink: 0;
+}
+.lesson-nav-arrows {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 2px;
+}
 
 /* Bouton "Accueil" dans l'écran leçon — retour direct sans passer par sections */
 .lesson-home-btn {
@@ -1453,7 +1554,7 @@ body {
 }
 .lesson-home-btn:active { opacity: 0.6; }
 
-.lesson-nav-btn { background:none; border:none; font-size:1.8rem; color:var(--c-primary); cursor:pointer; padding:0 8px; line-height:1; opacity:0.7; }
+.lesson-nav-btn { background:none; border:none; font-size:1.8rem; color:var(--c-primary); cursor:pointer; padding:0 8px; line-height:1; opacity:0.7; flex-shrink:0; }
 .lesson-nav-btn:hover { opacity:1; }
 
 .lesson-body {
@@ -1489,8 +1590,6 @@ body {
 
 /* Correctif alignement : le bouton retour peut contenir deux lignes
    (ex : "← Retour\nVolver"), on les centre proprement */
-#sectionsBackBtn,
-#sectionsBackBtn2,
 #lessonBackBtn {
   display: inline-flex !important;
   flex-direction: column !important;
@@ -1700,6 +1799,8 @@ body {
   display: flex;
   align-items: center;
   gap: 4px;
+  flex-wrap: wrap;
+  row-gap: 6px;
 }
 .speed-bar-label {
   font-size: .75rem;
@@ -1711,12 +1812,12 @@ body {
   background: #f0f0f0;
   border: 1.5px solid #ccc;
   border-radius: 8px;
-  padding: 4px 10px;
-  font-size: .82rem;
+  padding: 4px 8px;
+  font-size: .8rem;
   font-weight: 700;
   cursor: pointer;
   min-height: 34px;
-  min-width: 38px;
+  min-width: 34px;
   transition: background .15s, border-color .15s, color .15s;
   color: #444;
 }
@@ -1725,6 +1826,43 @@ body {
   background: var(--c-primary);
   border-color: var(--c-primary);
   color: #fff;
+}
+
+/* ── Bouton de répétition TTS (drill de prononciation) ── */
+.repeat-btn {
+  background: #f0f0f0;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  padding: 4px 9px;
+  font-size: .78rem;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 34px;
+  color: #444;
+  margin-left: 4px;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.repeat-btn:hover { background: #e0e0e0; }
+.repeat-btn.repeat-active {
+  background: #ff8f00;
+  border-color: #ff8f00;
+  color: #fff;
+}
+
+/* ── Surlignage mot par mot pendant la lecture audio (best-effort) ── */
+.tts-word {
+  transition: background .12s ease, color .12s ease;
+  border-radius: 4px;
+  padding: 0 3px;
+}
+.tts-word-active {
+  background: #ffe066;
+  color: #1a1a1a;
+}
+.tts-sep {
+  color: #999;
+  font-weight: 400;
+  padding: 0 2px;
 }
 
 
@@ -2209,7 +2347,7 @@ footer a:hover { text-decoration: underline; }
   -webkit-overflow-scrolling: touch;
   font-family: 'Segoe UI', system-ui, sans-serif;
   color: var(--g-text);
-  font-size: 16px;
+  font-size: 1rem; /* 16px → rem (Amélioration 12.2) : respecte la taille de police système */
   line-height: 1.65;
 }
 .guide-modal.active { display: block; }
@@ -3213,6 +3351,13 @@ html.theme-spain.region-VE {
     --c-home-title:          #a0b8f8;
     --c-home-subtitle:       #8aaaf0;
     --c-home-progress-label: #8aaaf0;
+
+    /* Amélioration 12.3 : tokens génériques (voir déclaration miroir en clair
+       plus haut). Valeurs choisies pour un contraste ≥ 7:1 sur les fonds
+       sombres de l'app (#13162a à #1f1f28) — largement au-dessus du minimum
+       WCAG AA (4.5:1 texte, 3:1 bordures/UI). */
+    --c-text-sub: #aaaacc;              /* texte secondaire — remplace #666/#555a7a trop sombres */
+    --c-border:   rgba(255,255,255,.14); /* bordure visible — remplace #2a2e46 quasi invisible */
   }
 
   /* ── Fond global body ── */
@@ -3246,7 +3391,7 @@ html.theme-spain.region-VE {
   }
   .theme-card.done { border-color: #4caf50; }
   .t-name  { color: #e0e4f8; }
-  .t-sub   { color: #666a90; }
+  .t-sub   { color: var(--c-text-sub); }
 
   /* ── Accordéon de niveau ── */
   .level-accordion  { background: #1a1d30; }
@@ -3256,7 +3401,7 @@ html.theme-spain.region-VE {
   /* ── Flashcard face avant (fond blanc → sombre) ── */
   .fc-front { background: #1e2236; box-shadow: 0 4px 20px rgba(0,0,0,.45); }
   .fc-front-word  { color: var(--c-primary); }
-  .fc-front-hint  { color: #555a7a; }
+  .fc-front-hint  { color: var(--c-text-sub); }
   .fc-front .fc-conj-line { color: #c0c8e8; border-bottom-color: rgba(255,255,255,.08); }
 
   /* ── Navigation flashcard ── */
@@ -3280,11 +3425,11 @@ html.theme-spain.region-VE {
   .retry-btn--secondary:hover { background: #374151; }
 
   /* ── Dialogues ── */
-  .dialogue-box { background: #1e2236; border-color: #2a2e46; }
+  .dialogue-box { background: #1e2236; border-color: var(--c-border); }
   .bubble.left .msg { background: #252a48; color: #dde0f4; }
 
   /* ── Vocabulaire ── */
-  .vocab-section { background: #1e2236; border-color: #2a2e46; }
+  .vocab-section { background: #1e2236; border-color: var(--c-border); }
   .vocab-title   { color: #8890b8; }
 
   /* ── Blocs micro ── */
@@ -3295,7 +3440,7 @@ html.theme-spain.region-VE {
   .alpha-card  { background: #1e2236; border-color: var(--c-primary); }
   .alpha-card:active { background: var(--c-primary); }
   .alpha-letter { color: var(--c-primary); }
-  .alpha-name   { color: #666a90; }
+  .alpha-name   { color: var(--c-text-sub); }
   .alpha-detail { background: #1e2236; box-shadow: 0 2px 8px rgba(0,0,0,.35); }
 
   /* ── Situation + sit-btn ── */
@@ -3309,26 +3454,26 @@ html.theme-spain.region-VE {
   .rp-skip-btn { background: #252a48; border-color: #3a3e60; color: #8890b8; }
 
   /* ── Section label ── */
-  .section-label { color: #666a90; }
+  .section-label { color: var(--c-text-sub); }
 
   /* ── Footer ── */
-  footer { background: #14172a; border-top-color: #2a2e46; color: #666a90; }
+  footer { background: #14172a; border-top-color: var(--c-border); color: var(--c-text-sub); }
   footer a { color: var(--c-primary); }
-  .lesson-footer { background: #14172a; border-top-color: #2a2e46; color: #666a90; }
+  .lesson-footer { background: #14172a; border-top-color: var(--c-border); color: var(--c-text-sub); }
   .lesson-footer a { color: var(--c-primary); }
-  .launcher-footer { color: #555a7a; }
-  .launcher-footer a { color: #777aaa; }
+  .launcher-footer { color: var(--c-text-sub); } /* Amélioration 12.3 : était #555a7a (2.66:1, échec WCAG) */
+  .launcher-footer a { color: #a8b0e0; }
 
   /* ── Guide (variables propres --g-*) ── */
   :root {
     --g-bg:     #121420;
     --g-text:   #dde0f4;
-    --g-muted:  #666a90;
-    --g-border: #2a2e46;
+    --g-muted:  #8a8fb8; /* Amélioration 12.3 : était #666a90 (trop sombre, ~2.9:1) */
+    --g-border: rgba(255,255,255,.14); /* Amélioration 12.3 : était #2a2e46 (~1.25:1, invisible) */
   }
   .guide-modal { background: var(--g-bg); }
-  .guide-accordion { background: #1a1d30; border-color: #2a2e46; }
-  .guide-card  { background: #1a1d30; border-color: #2a2e46; }
+  .guide-accordion { background: #1a1d30; border-color: var(--g-border); } /* Amélioration 12.3 */
+  .guide-card  { background: #1a1d30; border-color: var(--g-border); }     /* Amélioration 12.3 */
   .guide-acc-header:hover { background: rgba(255,255,255,.04); }
   .guide-topbar { background: rgba(5,5,20,.92); }
 
@@ -3653,6 +3798,15 @@ html.theme-spain.region-VE {
   .speed-btn.speed-active { background: var(--c-primary); border-color: var(--c-primary); color: #fff; }
   .speed-bar-label    { color: #999; }
 
+  /* Bouton répétition — dark mode */
+  .repeat-btn         { background: #2a2a3a; border-color: #444; color: #ccc; }
+  .repeat-btn:hover   { background: #333348; }
+  .repeat-btn.repeat-active { background: #ff8f00; border-color: #ff8f00; color: #fff; }
+
+  /* Surlignage mot par mot — dark mode */
+  .tts-word-active    { background: #c9a600; color: #111; }
+  .tts-sep            { color: #666; }
+
   /* Bouton lent — dark mode */
   .audio-btn-slow { background: #1a3a6b; }
 
@@ -3774,7 +3928,7 @@ html.theme-spain.region-VE {
 /* Mode sombre */
 @media (prefers-color-scheme: dark) {
   .bottom-nav { background: #1f1f28; border-top-color: rgba(255,255,255,.08); }
-  .nav-btn { color: #666; }
+  .nav-btn { color: var(--c-text-sub); } /* Amélioration 12.3 : était #666 (2.85:1, échec WCAG) */
   .nav-btn.active { color: var(--c-primary); }
 }
 
@@ -3814,12 +3968,20 @@ html.theme-spain.region-VE {
 
 /* §CONFETTI — Animation de félicitations ⭐⭐⭐ (100%)
    Overlay positionné en fixed sur tout l'écran.
-   22 particules .conf-p générées par JS (_launchConfetti).
+   Plusieurs rafales de particules .conf-p générées par JS (_launchConfetti)
+   pour un effet de pluie continue (cf. Bug 6.4).
    Chaque particule reçoit :
-     • --cx : position X de départ (répartie en zones)
-     • --cr : couleur cyclique dans la palette FR ou ES
-     • --cs : scale aléatoire (taille)
-     • --cd : délai échelonné (stagger)
+     • --cx   : position X de départ (répartie en zones)
+     • --cr   : couleur cyclique dans la palette FR ou ES
+     • --cs   : scale aléatoire (taille)
+     • --cd   : délai avant le départ (stagger + décalage de rafale)
+     • --cdur : durée de la chute (variable pour un effet plus naturel)
+   BUG 6.4 (corrigé) : --cd était auparavant utilisé à tort comme
+   *durée* de l'animation dans le raccourci `animation: conf-fall var(--cd)…`,
+   ce qui limitait chaque particule à ~0.6s de chute (l'échelonnement de
+   départ, pas la vraie durée de chute) → effet trop rapide et trop court.
+   Il est maintenant utilisé uniquement comme animation-delay ; --cdur
+   porte la vraie durée de la chute.
    @keyframes conf-fall : chute + rotation + fondu.
    @media prefers-reduced-motion : animation désactivée,
    flash d'opacité sur l'overlay pour maintenir le feedback. */
@@ -3840,7 +4002,12 @@ html.theme-spain.region-VE {
   background: var(--cr, #FFD700);
   transform: rotate(0deg) scale(1);
   opacity: 1;
-  animation: conf-fall var(--cd, 1.4s) ease-in forwards;
+  animation-name: conf-fall;
+  animation-duration: var(--cdur, 2s);
+  animation-delay: var(--cd, 0s);
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+  will-change: transform, opacity;
 }
 /* Quelques particules rondes pour la variété */
 .conf-p:nth-child(3n) { border-radius: 50%; }
@@ -4058,4 +4225,185 @@ footer .footer-antispam-btn           { color: #aaa; }
 .section-label {
   white-space: normal !important;
   word-break: normal;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   AMÉLIORATION — OPTIMISATION DU MODE PAYSAGE (TÉLÉPHONES)
+   ══════════════════════════════════════════════════════════════════
+   Cible : orientation paysage ET hauteur courte (téléphones,
+   pas les tablettes — celles-ci ont déjà bien plus de 500px de
+   hauteur même en paysage et suivent le layout "carte" desktop
+   défini par @media (min-width: 768px) plus haut dans ce fichier).
+
+   Constat de départ :
+   - Aucune media query "orientation" n'existait dans ce fichier.
+   - .app restait limité à 480px de large même quand la largeur
+     disponible était grande (téléphone couché) : tout l'espace
+     horizontal supplémentaire était perdu, alors que la hauteur,
+     elle, est rare dans ce contexte.
+   - Plusieurs éléments à hauteur fixe (bandeau décoratif #home,
+     cartes du lanceur empilées verticalement, barre de nav basse,
+     en-têtes leçon/sections) consommaient une part disproportionnée
+     d'un écran de ~340-420px de haut, forçant un défilement qui
+     n'apporte rien (le contenu tenait très bien horizontalement).
+
+   Stratégie : exploiter la largeur disponible (cartes du lanceur
+   côte à côte plutôt qu'empilées, colonne .app élargie) et
+   comprimer verticalement les éléments de navigation/chrome
+   (barre basse, en-têtes) qui n'ont pas besoin d'autant de hauteur.
+
+   Placé en fin de fichier : les valeurs ci-dessous doivent gagner
+   sur les media queries min-width existantes (bottom-nav @600px/
+   @900px notamment), qui ciblent des largeurs de bureau et non
+   des téléphones couchés, sans notion de hauteur.
+════════════════════════════════════════════════════════════════ */
+@media (orientation: landscape) and (max-height: 500px) {
+
+  /* ── Conteneur global : exploiter la largeur dispo ── */
+  .app { max-width: 640px; }
+
+  /* ── Barre de navigation basse : version compacte ──
+     Le sous-libellé bilingue (.nav-sub) est le premier sacrifié :
+     c'est une info redondante (le libellé principal suffit),
+     jamais une info essentielle — rien n'est perdu pour l'usage. */
+  .bottom-nav { max-width: 640px; }
+  .nav-btn { min-height: 38px; padding: 4px 4px 5px; gap: 1px; }
+  .nav-icon { font-size: 1.05rem; }
+  .nav-label { font-size: .58rem; }
+  .nav-sub { display: none; }
+  .screen.active { padding-bottom: 40px; } /* compense la nav réduite (au lieu de 56px) */
+
+  /* ── Lanceur — Vue A : cartes de langue côte à côte ──
+     Fait passer les 2 cartes d'un empilement vertical (qui, à lui
+     seul, peut dépasser 300px de haut) à une disposition horizontale
+     qui tient sur une seule ligne, sans jamais nécessiter de scroll
+     pour voir les deux choix de langue. */
+  #app-launcher { padding: 8px 16px 44px; justify-content: center; gap: 6px; }
+  .launcher-inner { max-width: 600px; }
+  .launcher-logo { margin-bottom: 4px; }
+  .launcher-logo-img { max-width: 200px; }
+  .launcher-subtitle { margin-bottom: 8px; font-size: .74rem; }
+  .launcher-cards { flex-direction: row; gap: 10px; }
+  .lang-card { padding: 10px 12px; gap: 10px; }
+  .lang-card-flag { font-size: 1.7rem; }
+  .lang-card-name { font-size: .82rem; }
+  .lang-card-sub { display: none; } /* sous-titre traduit : redondant avec le nom principal, coupé pour gagner de la hauteur de carte */
+  .lang-card-arrow { font-size: 1.4rem; }
+  .launcher-footer { padding: 3px 12px 2px; font-size: .58rem; line-height: 1.3; }
+
+  /* ── Lanceur — Vue B : sélecteur de variante régionale ── */
+  #launcher-view-variant { padding-top: 6px; max-width: 600px; }
+  .launcher-back-btn { padding: 5px 14px; font-size: .8rem; margin-bottom: 6px; }
+  .launcher-variant-title { font-size: 1.25rem; margin-bottom: 6px; }
+  #launcherFlagRow { font-size: 1.8rem !important; margin: 4px 0 !important; }
+
+  /* ── Écran Guide/Accueil (#home) : bandeau décoratif réduit ──
+     320px de bandeau sur un écran de ~360-400px de haut masquait
+     quasiment tout l'écran sous un motif purement décoratif. */
+  #home::before { height: 120px; }
+  .home-topbar { min-height: 42px; }
+  .home-topbar-title { font-size: 1rem; }
+  .home-guide-header { padding: 12px 20px 8px; }
+  .home-guide-flags { font-size: 1.6rem; margin-bottom: 3px; }
+
+  /* ── En-tête écran Sections ── */
+  .sections-header { padding: 8px 14px 10px; }
+  .sections-header h2 { font-size: .88rem !important; }
+  .sections-subtitle { font-size: .68rem; }
+
+  /* ── En-tête + pied de page écran Leçon ── */
+  .lesson-header { padding: 8px 14px; }
+  .lesson-footer { padding: 5px 12px 6px; font-size: .6rem; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   §27 — ÉCRAN LEÇON : MISE EN PAGE 2 COLONNES (DESKTOP ≥768px)
+   ══════════════════════════════════════════════════════════════════
+   Constat : les 5 onglets de leçon (flashcards, quiz, dialogue,
+   vocabulaire, répète) restaient en simple colonne verticale même
+   sur grand écran. Le scroll fonctionnait, mais la largeur
+   disponible n'était pas exploitée.
+
+   Stratégie : élargir la carte .app SEULEMENT quand #lesson est
+   l'écran actif (via :has()), puis répartir en 2 colonnes le
+   contenu de chaque onglet avec CSS Grid, en ciblant les classes
+   déjà posées par app.js. Aucune modification de app.js ni
+   d'index.html n'est nécessaire.
+
+   Le vocabulaire (.vocab-grid) ne nécessite pas de règle dédiée :
+   c'est déjà une grille flexible (flex-wrap, puces auto-largeur)
+   qui affiche naturellement plusieurs colonnes de puces dès que
+   la carte est plus large — élargir .app suffit.
+
+   Fallback : navigateurs sans :has() → la carte reste à 480px et
+   tout s'affiche en 1 colonne comme avant. Aucune régression.
+════════════════════════════════════════════════════════════════ */
+@media (min-width: 768px) {
+
+  /* ── Élargit la carte .app uniquement pendant l'écran Leçon ── */
+  .app:has(#lesson.screen.active) {
+    max-width: 760px;
+  }
+
+  /* ── FLASHCARDS : carte à gauche, contrôles (nav / audio / micro) à droite ── */
+  #tabContent:has(> .fc-wrap) {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(230px, 300px);
+    grid-template-areas:
+      "label label"
+      "card  nav"
+      "card  audio"
+      "card  mic";
+    column-gap: 28px;
+    align-items: start;
+  }
+  #tabContent:has(> .fc-wrap) > .section-label   { grid-area: label; }
+  #tabContent:has(> .fc-wrap) > .fc-wrap         { grid-area: card; max-width: 360px; width: 100%; justify-self: center; margin-bottom: 0; }
+  #tabContent:has(> .fc-wrap) > .fc-nav          { grid-area: nav; margin-top: 0; }
+  #tabContent:has(> .fc-wrap) > .audio-btn-group { grid-area: audio; }
+  #tabContent:has(> .fc-wrap) > .mic-zone        { grid-area: mic; }
+
+  /* ── QUIZ (10 questions & mini-quiz de fin de dialogue) : question à gauche, réponses à droite ── */
+  .dialog-quiz-wrap:has(.quiz-options) {
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) minmax(280px, 400px);
+    grid-template-areas:
+      "q    opts"
+      "q    fb";
+    column-gap: 28px;
+    align-items: start;
+  }
+  .dialog-quiz-wrap .quiz-q        { grid-area: q; margin-bottom: 0; }
+  .dialog-quiz-wrap .quiz-options  { grid-area: opts; }
+  .dialog-quiz-wrap .quiz-feedback { grid-area: fb; margin: 0; }
+
+  /* ── DIALOGUE : situations en colonne à gauche, conversation à droite ── */
+  #tabContent:has(> .dialogue-box) {
+    display: grid;
+    grid-template-columns: minmax(120px, 170px) minmax(0, 1fr);
+    grid-template-areas:
+      "nav    chat"
+      "action action";
+    column-gap: 24px;
+    align-items: start;
+  }
+  #tabContent:has(> .dialogue-box) > .sit-nav      { grid-area: nav; flex-direction: column; flex-wrap: nowrap; }
+  #tabContent:has(> .dialogue-box) > .sit-nav .sit-btn { flex: none; }
+  #tabContent:has(> .dialogue-box) > .dialogue-box { grid-area: chat; margin-bottom: 0; }
+  #tabContent:has(> .dialogue-box) > .action-row   { grid-area: action; }
+
+  /* ── RÉPÈTE : mot à écouter à gauche, feedback + contrôles à droite ── */
+  .rp-wrap:has(> .rp-controls) {
+    display: grid;
+    grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
+    grid-template-areas:
+      "header   header"
+      "word     feedback"
+      "word     controls";
+    gap: 14px 28px;
+  }
+  .rp-wrap:has(> .rp-controls) > .rp-header   { grid-area: header; }
+  .rp-wrap:has(> .rp-controls) > .rp-word-box { grid-area: word; }
+  .rp-wrap:has(> .rp-controls) > .rp-feedback { grid-area: feedback; }
+  .rp-wrap:has(> .rp-controls) > .rp-controls { grid-area: controls; }
 }

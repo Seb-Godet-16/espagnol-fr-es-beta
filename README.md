@@ -52,7 +52,7 @@ espagnol-fr-es-beta/
 ├── css/
 │   └── style.css       # Thèmes couleur, composants, animations (239 variables CSS)
 ├── js/
-│   ├── app.js          # Moteur applicatif complet (127 fonctions, 4 388 lignes)
+│   ├── app.js          # Moteur applicatif complet (149 fonctions nommées, 4 656 lignes)
 │   ├── data-fr.js      # Contenu mode "Apprendre le Français" — chargé à la demande
 │   └── data-es.js      # Contenu mode "Apprendre l'Espagnol" — chargé à la demande
 ├── img/
@@ -67,7 +67,8 @@ espagnol-fr-es-beta/
 
 ### Principes de conception
 
-- **Zéro dépendance** — Vanilla JS ES2020, pas de framework, pas de bundler
+- **Zéro dépendance** — Vanilla JS, pas de framework, pas de bundler, pas de transpileur
+- **Cible ES2020** — plafond de compatibilité volontaire : tout le JS (déclarations `let`/`const`, optional chaining `?.`, arrow functions pour les callbacks) reste nativement supporté depuis Safari 13.4, ce qui couvre la cible minimale du projet (iOS Safari 14.5+) sans avoir besoin d'un bundler. Les fonctions nommées de premier niveau gardent volontairement la syntaxe `function` (hoisting requis par les attributs `onclick=""` générés dynamiquement et par certains callbacks qui dépendent de `this`). Base de code harmonisée en ce sens le 05/07/2026.
 - **Chargement fractionné** — `data-fr.js` et `data-es.js` injectés dynamiquement au choix de langue (−50 % de JS parsé au démarrage)
 - **CSS custom properties** — 239 variables pour les thèmes (`theme-french` / `theme-spain`) et les 7 variantes régionales (`region-ES`, `region-MX`, etc.)
 - **Service Worker hybride** — Cache-First pour les ressources locales, Network-First pour les CDN externes (Twemoji), avec fallbacks SVG inline pour le mode hors-ligne
@@ -125,7 +126,7 @@ python3 -m http.server 8080
 
 - **HTML5** — structure SPA avec 4 écrans + modales
 - **CSS3** — custom properties, animations CSS (`@keyframes`), Grid, Flexbox, `contain`
-- **JavaScript ES2020** — modules dynamiques, `optional chaining`, `nullish coalescing`, `Promise`, `async/await`
+- **JavaScript ES2020** (plafond volontaire, sans transpileur) — `let`/`const`, optional chaining `?.`, arrow functions, template literals, `Promise` (`.then`/`.catch`)
 - **Web Speech API** — synthèse vocale (`SpeechSynthesis`) + reconnaissance (`SpeechRecognition`)
 - **Service Worker API** — cache offline, stratégie stale-while-revalidate
 - **localStorage / sessionStorage** — persistance de la progression et reprise de quiz

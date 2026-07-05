@@ -3,47 +3,60 @@
    Français ↔ Espagnol (bidirectionnel)
    © Juin 2026 – Sébastien Godet · IA Claude Sonnet 4.6 et Gemini 3.5 Flash
    ============================================================
+   Cible : ES2020 maximum pour assurer la compatibilité native
+   iOS Safari 14.5+ sans transpileur (pas de bundler dans ce projet).
+   Modernisation appliquée le 05/07/2026 : var → let/const, optional
+   chaining (?.) sur les chaînes de garde, arrow functions pour les
+   callbacks anonymes sans dépendance à `this`. Les fonctions nommées
+   de premier niveau restent en `function` (hoisting + compatibilité
+   avec les attributs onclick="" générés dynamiquement).
+   ============================================================
    ARCHITECTURE (5 fichiers) :
      ├─ index.html  → Structure HTML + launcher (4 écrans, 2 modales)
      ├─ style.css   → Thèmes couleur, composants visuels (239 variables CSS)
      ├─ data-fr.js  → ALL_THEMES_FR (32 thèmes + 16 dialogues) — chargé à la demande
      ├─ data-es.js  → ALL_THEMES_ES (32 thèmes + 16 dialogues) — chargé à la demande
-     └─ app.js      → Ce fichier : logique applicative complète (~4 388 lignes)
+     └─ app.js      → Ce fichier : logique applicative complète (4 644 lignes)
 
-   PLAN DU FICHIER (numéros de ligne réels) :
-     §0    L.   48  Chargement conditionnel des données — loadDataForMode()
-     §0b   L.   74  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
-     §1    L.  204  Variables d'état globales
-     §1b   L.  252  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
-     §3    L.  335  Point d'entrée — showLauncherVariant(), initApp(), showLauncher()
-     §3b   L.  657  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
-     §3c   L. 1034  Interruption TTS à la mise en arrière-plan (visibilitychange)
-     §3d   L. 1055  Keepalive watchdog Chrome/Android (pause/resume toutes les 10 s)
-     §3e   L. 1083  Audio indisponible + toast _showToast() + _vibrateFeedback()
-     §4    L. 1154  Persistance — loadDone(), markDone(), étoiles, quiz sessionStorage
-     §5    L. 1317  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
-     §5b   L. 1451  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
-     §6    L. 1613  Écran Home — renderHome(), _renderHomeRegionWidget()
-     §7    L. 1745  Écran Sections — renderSections(), _buildThemeCard()
-     §8    L. 1881  Ouverture d'un thème — openTheme(), switchTab(), lessonNav()
-     §9    L. 2068  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail()
-     §9b   L. 2230  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
-     §9c   L. 2492  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic()
-     §10   L. 2782  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
-     §11   L. 3059  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
-     §12   L. 3180  Vocabulaire — renderVocab() (chips cliquables)
-     §13   L. 3238  Quiz Dialogue — renderDialogQuiz(), checkDQ()
-     §14   L. 3331  Utilitaires — _quizResultStrings(), esc(), _escAttr()
-     §15   L. 3386  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
-     §15b  L. 3696  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
-     §16   L. 3760  Remerciements — showCredits()
-     §17   L. 3816  Guide utilisateur — _buildHomeGuide(), showGuide(), _refreshGuideRegion()
-     §18   L. 4009  E-mail antispam — openAndCopyEmail()
-     §19   L. 4027  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
-     §20   L. 4309  Accessibilité clavier (keydown → role="button")
-     §21   L. 4324  Initialisation Launcher — addEventListener sur les cartes de langue
-     §21b  L. 4350  Viewport height fix Android — --app-h via window.innerHeight
+   PLAN DU FICHIER (numéros de ligne réels, vérifiés le 05/07/2026) :
+     §0    L.   61  Chargement conditionnel des données — loadDataForMode()
+     §0b   L.   87  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
+     §1    L.  246  Variables d'état globales
+     §1b   L.  294  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
+     §3    L.  377  Point d'entrée — showLauncherVariant(), initApp(), showLauncher()
+     §3b   L.  702  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
+     §3a-bis L. 887 Surlignage mot par mot pendant la lecture (TTS, best-effort)
+     §3c   L. 1237  Interruption TTS à la mise en arrière-plan (visibilitychange)
+     §3d   L. 1244  Keepalive watchdog Chrome/Android (pause/resume toutes les 8 s)
+     §3e   L. 1274  Audio indisponible + toast _showToast() + _vibrateFeedback()
+     §4    L. 1358  Persistance — loadDone(), markDone(), étoiles, quiz sessionStorage
+     §5    L. 1521  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
+     §5b   L. 1630  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
+     §6    L. 1825  Écran Home — renderHome(), _renderHomeRegionWidget()
+     §7    L. 1957  Écran Sections — renderSections(), _buildThemeCard()
+     §8    L. 2093  Ouverture d'un thème — openTheme(), switchTab(), lessonNav()
+     §9    L. 2296  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail()
+     §9b   L. 2458  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
+     §9c   L. 2720  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic()
+     §10   L. 3010  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
+     §11   L. 3287  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
+     §12   L. 3408  Vocabulaire — renderVocab() (chips cliquables)
+     §13   L. 3466  Quiz Dialogue — renderDialogQuiz(), checkDQ()
+     §14   L. 3559  Utilitaires — _quizResultStrings(), esc(), _escAttr()
+     §15   L. 3614  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
+     §15b  L. 3913  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
+     §16   L. 3988  Remerciements — showCredits()
+     §17   L. 4003  Guide utilisateur — _buildHomeGuide(), showGuide(), _refreshGuideRegion(),
+                     _guideSeenKey()/_hasSeenGuide()/_markGuideSeen() (flag par langue, §17)
+     §18   L. 4265  E-mail antispam — openAndCopyEmail()
+     §19   L. 4298  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
+                     (étiqueté "§21" dans le code même — incohérence de numérotation
+                      préexistante, non corrigée ici pour ne pas renuméroter tout le fichier)
+     §20   L. 4599  Accessibilité clavier (keydown → role="button")
+     §21   L. 4614  Initialisation Launcher — addEventListener sur les cartes de langue
+     §21b  L. 4640  Viewport height fix Android — --app-h via window.innerHeight
    ============================================================ */
+
 
 /* ═══════════════════════════════════════════════════════════
    0. CHARGEMENT CONDITIONNEL DES DONNÉES
@@ -76,7 +89,7 @@
    Elles appellent L(), renderSections() et _showToast() qui sont définies plus bas,
    ce qui est valide grâce au hoisting JS (function declarations). ── */
 function showResetConfirm() {
-  var msg = L('¿Seguro que quieres borrar toda tu progresión? Esta acción es irreversible.', 'Voulez-vous vraiment effacer toute votre progression ? Cette action est irréversible.');
+  const msg = L('¿Seguro que quieres borrar toda tu progresión? Esta acción es irreversible.', 'Voulez-vous vraiment effacer toute votre progression ? Cette action est irréversible.');
   document.getElementById('confirmMsg').textContent = msg;
   document.getElementById('confirm-modal').style.display = 'flex';
 }
@@ -92,7 +105,7 @@ function cancelReset() {
 }
 
 function _showSpinner() {
-  var s = document.getElementById('app-spinner');
+  let s = document.getElementById('app-spinner');
   if (!s) {
     s = document.createElement('div');
     s.id = 'app-spinner';
@@ -101,70 +114,99 @@ function _showSpinner() {
   s.style.display = 'flex';
 }
 function _hideSpinner() {
-  var s = document.getElementById('app-spinner');
+  const s = document.getElementById('app-spinner');
   if (s) s.style.display = 'none';
 }
 
 /* _launchConfetti(isThreeStars) — Animation de félicitations ⭐⭐⭐
-   Portée depuis l'app Oromo :
+   Portée depuis l'app Oromo, puis étendue (Bug 6.4) :
    - Répartition en zones (pas de regroupement aléatoire).
    - Couleurs cycliques (pas de random pur) pour une palette équilibrée.
-   - CSS custom properties (--cx, --cr, --cs, --cd) : transitions GPU.
-   - Délai échelonné calculé (i × 0.028 s) pour un effet de vague.
+   - CSS custom properties (--cx, --cr, --cs, --cd, --cdur) : transitions GPU.
+   - BUG 6.4 (corrigé) : l'animation ne durait qu'~1-2 s au total car le CSS
+     utilisait par erreur la variable de délai (--cd) comme durée d'animation,
+     et une seule "rafale" de particules était générée.
+     Corrigé en : (1) séparant clairement délai (--cd) et durée (--cdur)
+     côté CSS, et (2) générant plusieurs rafales successives ci-dessous,
+     pour obtenir une pluie de confettis continue d'environ 3 à 4 secondes.
    - Guard CSS custom properties pour très vieux navigateurs.
-   - Nettoyage DOM après 2 400 ms (fin de la dernière animation).
+   - Nettoyage DOM programmé dynamiquement après la fin de la dernière
+     particule de la dernière rafale.
    @param {boolean} [isThreeStars=true] – Intensité (réservé pour évolution) */
 function _launchConfetti(isThreeStars) {
   /* Guard : s'assurer que les CSS custom properties sont disponibles */
   if (typeof document.documentElement.style.setProperty !== 'function') return;
 
   /* Palette selon le thème actif */
-  var isFranceTheme = document.documentElement.classList.contains('theme-french');
-  var colors = isFranceTheme
+  const isFranceTheme = document.documentElement.classList.contains('theme-french');
+  const colors = isFranceTheme
     ? ['#002395', '#ffffff', '#ED2939', '#FFD700', '#4A6FE3', '#FF6B7A']  /* FR */
     : ['#C60B1E', '#FFD700', '#F1BF00', '#ffffff', '#E05020', '#FFE566']; /* ES */
 
   /* Créer l'overlay */
-  var overlay = document.createElement('div');
+  const overlay = document.createElement('div');
   overlay.className = 'confetti-overlay';
   document.body.appendChild(overlay);
 
-  var COUNT = 22;
-  for (var i = 0; i < COUNT; i++) {
-    var p = document.createElement('div');
-    p.className = 'conf-p';
+  /* ── Paramètres ajustables ──────────────────────────────────────────
+     WAVES          : nombre de rafales successives (effet "vagues")
+     COUNT_PER_WAVE : nombre de particules par rafale
+     WAVE_GAP       : écart (s) entre le départ de chaque rafale
+     STAGGER        : échelonnement (s) entre particules d'une même rafale
+     DUR_MIN/MAX    : durée de chute (s) — variable pour un effet naturel
+     ──────────────────────────────────────────────────────────────── */
+  const WAVES          = 3;
+  const COUNT_PER_WAVE = 16;
+  const WAVE_GAP       = 0.8;
+  const STAGGER        = 0.025;
+  const DUR_MIN        = 1.6;
+  const DUR_MAX        = 2.0;
 
-    /* Position X : répartie en zones pour éviter les regroupements */
-    var zone   = (i / COUNT) * 100;
-    var jitter = (Math.random() - 0.5) * 14;
-    var cx     = Math.max(2, Math.min(98, zone + jitter));
+  let particleIndex = 0;
+  for (let w = 0; w < WAVES; w++) {
+    for (let i = 0; i < COUNT_PER_WAVE; i++) {
+      const p = document.createElement('div');
+      p.className = 'conf-p';
 
-    /* Couleur cyclique dans la palette */
-    var color = colors[i % colors.length];
+      /* Position X : répartie en zones pour éviter les regroupements */
+      const zone   = (i / COUNT_PER_WAVE) * 100;
+      const jitter = (Math.random() - 0.5) * 14;
+      const cx     = Math.max(2, Math.min(98, zone + jitter));
 
-    /* Scale aléatoire entre 0.7 et 1.5 */
-    var scale = (0.7 + Math.random() * 0.8).toFixed(2);
+      /* Couleur cyclique dans la palette (continue d'une rafale à l'autre) */
+      const color = colors[particleIndex % colors.length];
 
-    /* Délai échelonné : les 22 particules partent sur ~0.6 s */
-    var delay = (i * 0.028).toFixed(3) + 's';
+      /* Scale aléatoire entre 0.7 et 1.5 */
+      const scale = (0.7 + Math.random() * 0.8).toFixed(2);
 
-    p.style.setProperty('--cx', cx + '%');
-    p.style.setProperty('--cr', color);
-    p.style.setProperty('--cs', scale);
-    p.style.setProperty('--cd', delay);
+      /* Délai = décalage de la rafale + échelonnement propre à la rafale */
+      const delay = (w * WAVE_GAP + i * STAGGER).toFixed(3) + 's';
 
-    overlay.appendChild(p);
+      /* Durée de chute variable (effet plus naturel qu'une durée fixe) */
+      const dur = (DUR_MIN + Math.random() * (DUR_MAX - DUR_MIN)).toFixed(2) + 's';
+
+      p.style.setProperty('--cx', cx + '%');
+      p.style.setProperty('--cr', color);
+      p.style.setProperty('--cs', scale);
+      p.style.setProperty('--cd', delay);
+      p.style.setProperty('--cdur', dur);
+
+      overlay.appendChild(p);
+      particleIndex++;
+    }
   }
 
-  /* Nettoyer après la fin de la dernière animation
-     (délai max ~0.6 s + durée animation ~1.4 s + marge) */
-  setTimeout(function() {
-    if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
-  }, 2400);
+  /* Nettoyer après la fin de la dernière particule de la dernière rafale
+     (délai max de départ + durée max de chute + marge de sécurité). */
+  const lastStartDelay = (WAVES - 1) * WAVE_GAP + (COUNT_PER_WAVE - 1) * STAGGER;
+  const cleanupDelay   = Math.ceil((lastStartDelay + DUR_MAX + 0.3) * 1000);
+  setTimeout(() => {
+    if (overlay?.parentNode) overlay.parentNode.removeChild(overlay);
+  }, cleanupDelay);
 }
 
 /* Verrou contre les doubles appels simultanés (ex : double-clic rapide sur Continuer) */
-var _loadDataInProgress = false;
+let _loadDataInProgress = false;
 
 function loadDataForMode(mode, callback) {
   const alreadyLoaded = (mode === 'learn_french')
@@ -356,8 +398,8 @@ function showLauncherVariant(mode) {
   currentMode = mode;
 
   /* — Restauration de la région préférée depuis localStorage — */
-  var _VALID_REGIONS = ['ES', 'MX', 'CO', 'PE', 'VE', 'AR', 'EC'];
-  var savedRegion = localStorage.getItem('user_preferred_region');
+  const _VALID_REGIONS = ['ES', 'MX', 'CO', 'PE', 'VE', 'AR', 'EC'];
+  const savedRegion = localStorage.getItem('user_preferred_region');
   currentRegion   = (_VALID_REGIONS.includes(savedRegion)) ? savedRegion : 'ES';
 
   /* — Thème visuel provisoire (pour que les couleurs du sélecteur soient correctes) — */
@@ -372,8 +414,8 @@ function showLauncherVariant(mode) {
 
   /* — Drapeau et titre selon le mode — */
   const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
-  var flagRow   = document.getElementById('launcherFlagRow');
-  var titleEl   = document.getElementById('launcherVariantTitle');
+  const flagRow   = document.getElementById('launcherFlagRow');
+  const titleEl   = document.getElementById('launcherVariantTitle');
   if (mode === 'learn_french') {
     if (flagRow)  flagRow.textContent  = '🇫🇷';
     if (titleEl)  titleEl.textContent  = 'Apprendre le Français';
@@ -383,7 +425,7 @@ function showLauncherVariant(mode) {
   }
 
   /* — Génération de la grille visuelle de drapeaux — */
-  var selectorWrap = document.getElementById('region-selector-wrap');
+  const selectorWrap = document.getElementById('region-selector-wrap');
   if (selectorWrap) {
     selectorWrap.style.display = 'block';
     renderRegionGrid(mode);
@@ -391,7 +433,7 @@ function showLauncherVariant(mode) {
   }
 
   /* — Libellé du bouton retour selon le mode — */
-  var backLabel = document.getElementById('launcherBackLabel');
+  const backLabel = document.getElementById('launcherBackLabel');
   if (backLabel) {
     backLabel.textContent = (mode === 'learn_french') ? 'Volver' : 'Retour';
   }
@@ -411,11 +453,11 @@ function showLauncherVariant(mode) {
     continueBtn._launcherHandler = function() {
       /* — Chargement conditionnel : injecte data-fr.js ou data-es.js
            seulement si ce n'est pas déjà fait, puis lance initApp(). — */
-      var btn = this;
-      var originalHTML = btn.innerHTML;
+      const btn = this;
+      const originalHTML = btn.innerHTML;
       btn.disabled = true;
       btn.innerHTML = '\u23f3 Chargement\u2026';
-      loadDataForMode(mode, function() {
+      loadDataForMode(mode, () => {
         btn.disabled = false;
         btn.innerHTML = originalHTML;
         initApp(mode);
@@ -433,7 +475,7 @@ function showLauncherVariant(mode) {
     }
     backBtn._launcherHandler = function() {
       /* S'assurer que tous les écrans sont masqués et que le launcher est bien actif */
-      document.querySelectorAll('.screen').forEach(function(s) {
+      document.querySelectorAll('.screen').forEach((s) => {
         s.classList.remove('active');
       });
       document.getElementById('app-launcher').classList.add('active');
@@ -465,7 +507,7 @@ function showLauncherVariant(mode) {
  * mode === null (Vue A, aucune langue choisie) → bilingue mixte par défaut
  */
 function _setLauncherFooterLang(mode) {
-  var footer = document.getElementById('launcherFooter');
+  const footer = document.getElementById('launcherFooter');
   if (!footer) return;
 
   if (mode === 'learn_french') {
@@ -526,8 +568,8 @@ function initApp(mode) {
 
   /* — Réinitialisation complète des tableaux de thèmes et des grilles HTML — */
   ALL_THEMES = [];
-  var g1 = document.getElementById('grid1');
-  var g2 = document.getElementById('grid2');
+  const g1 = document.getElementById('grid1');
+  const g2 = document.getElementById('grid2');
   if (g1) g1.innerHTML = '';
   if (g2) g2.innerHTML = '';
 
@@ -537,7 +579,7 @@ function initApp(mode) {
 
   /* — La région a déjà été choisie dans showLauncherVariant() — */
   const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
-  var activeFlag  = flagEmojis[currentRegion] || '🇪🇸';
+  const activeFlag  = flagEmojis[currentRegion] || '🇪🇸';
 
   /* ─── MODE : Apprendre le Français (interface présentée en Espagnol) ─── */
   if (mode === 'learn_french') {
@@ -551,7 +593,6 @@ function initApp(mode) {
       homeFlagRow    : '🇫🇷',
       homeTitle      : 'Apprendre le Français',
       homeStartBtn   : '▶ Commencer<br><span class="translation-sub">Empezar</span>',
-      sectionsBackBtn: '← Retour<br><span class="translation-sub">Volver</span>',
       sectionsTitle  : '📚 Modules',
       sectionsFlag   : '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1eb-1f1f7.svg" style="width:1.5em;vertical-align:middle;" alt="fr">',
       lessonBackBtn  : '← Modules<br><span class="translation-sub">Módulos</span>',
@@ -573,7 +614,6 @@ function initApp(mode) {
       homeFlagRow    : activeFlag,           // Drapeau dynamique selon la région mémorisée
       homeTitle      : 'Aprender Español',
       homeStartBtn   : '▶ Empezar<br><span class="translation-sub">Commencer</span>',
-      sectionsBackBtn: '← Volver<br><span class="translation-sub">Retour</span>',
       sectionsTitle  : '📚 Módulos',
       sectionsFlag   : activeFlag,           // Drapeau de la variante régionale apprise
       lessonBackBtn  : '← Módulos<br><span class="translation-sub">Modules</span>',
@@ -590,8 +630,8 @@ function initApp(mode) {
        Pour le mode français : la voix système est disponible sans délai. */
   if (mode === 'learn_spain') {
     /* Petit délai pour laisser le DOM se stabiliser avant la requête voix */
-    setTimeout(function() {
-      _resolveSpanishVoice(function() { /* voix en cache — rien à faire */ });
+    setTimeout(() => {
+      _resolveSpanishVoice(() => { /* voix en cache — rien à faire */ });
     }, 400);
   }
 
@@ -603,19 +643,22 @@ function initApp(mode) {
        éléments dynamiques (drapeaux, titre, badges, boutons…). */
   _buildHomeGuide();
 
-  /* — Masquer le launcher et afficher le guide (#home) en premier —
-       L'apprenant voit le guide à chaque lancement (présentation de l'app,
-       bouton "Commencer" pour accéder aux modules).
-       Le guide reste aussi accessible via le bouton ❓ dans la nav bar.
-       Note : renderSections() est volontairement PAS appelé ici — il le sera
-       par showScreen() lorsque l'utilisateur clique "Commencer". Appeler
-       renderSections() avant showScreen('home') crée un chevauchement d'écrans
-       pendant la transition d'animation (300 ms) qui bloque les interactions. */
+  /* — Masquer le launcher, puis afficher le guide (#home) UNE FOIS PAR LANGUE —
+       L'apprenant voit le guide au premier lancement de CHAQUE mode (présentation
+       de l'app, bouton "Commencer" pour accéder aux modules). Une fois quitté,
+       le flag localStorage propre à ce mode (cf. _guideSeenKey()) est posé par
+       showScreen() et le guide ne se relance plus tout seul aux lancements
+       suivants DANS CETTE LANGUE — il va alors directement aux modules. S'il
+       change de langue et que le guide n'a jamais été vu pour l'autre mode, il
+       le reverra (utile en cas d'erreur de langue au premier lancement). Reste
+       accessible à tout moment via le bouton ❓ Guide de la nav bar (cf.
+       _maybeAutoShowGuide()).
+       Note : renderSections() est volontairement PAS appelé ici — il est
+       déclenché par showScreen() lui-même (vers 'home' ou 'sections-level1'
+       selon le cas). L'appeler ici en plus créerait un chevauchement
+       d'écrans pendant la transition d'animation (300 ms). */
   document.getElementById('app-launcher').classList.remove('active');
-  showScreen('home');
-
-  // Met à jour la barre de navigation basse pour le mode courant
-  _updateBottomNav('home');
+  _maybeAutoShowGuide();
 }
 
 
@@ -627,8 +670,6 @@ function initApp(mode) {
 function _setUI(t) {
   /* homeFlagRow et homeBackBtn n'existent plus dans le nouveau #home style Oromo —
      les drapeaux et le titre sont gérés par _buildHomeGuide(). */
-  _setText('sectionsBackBtn',  t.sectionsBackBtn);
-  _setText('sectionsBackBtn2', t.sectionsBackBtn);  // Écran sections-level2
   _setText('sectionsTitle',   t.sectionsTitle);
   _setText('sectionsTitle2',  t.sectionsTitle);     // Écran sections-level2
   _setText('sectionsFlag',    t.sectionsFlag);
@@ -649,7 +690,7 @@ function _setUI(t) {
    À n'appeler QU'avec des littéraux JS hardcodés provenant de _setUI().
    Ne jamais passer de données utilisateur ou d'entrées réseau non sanitisées. */
 function _setText(id, val) {
-  var el = document.getElementById(id);
+  const el = document.getElementById(id);
   if (el) el.innerHTML = val || '';
 }
 
@@ -678,15 +719,17 @@ let _spanishVoiceQuality = null;
 let _spanishVoiceLabel   = '';
 
 // ─── Contrôle de vitesse TTS ───
-// Valeurs : 0.6 (lent) | 0.85 (normal) | 1.1 (rapide)
+// Valeurs : 0.55 (très lent) | 0.70 (lent) | 0.85 (normal) | 1.00 (rapide) | 1.20 (très rapide)
 // Persisté en sessionStorage pour la session courante
-var SPEED_LEVELS = [
-  { id:'slow',   rate: 0.60, label:'🐢', title: function() { return L('Lento',  'Lent');   } },
-  { id:'normal', rate: 0.85, label:'▶',  title: function() { return L('Normal', 'Normal'); } },
-  { id:'fast',   rate: 1.10, label:'⚡', title: function() { return L('Rápido', 'Rapide'); } }
+const SPEED_LEVELS = [
+  { id:'xslow',  rate: 0.55, label:'🐢', title: function() { return L('Muy lento',  'Très lent');   } },
+  { id:'slow',   rate: 0.70, label:'🚶', title: function() { return L('Lento',      'Lent');        } },
+  { id:'normal', rate: 0.85, label:'▶',  title: function() { return L('Normal',     'Normal');      } },
+  { id:'fast',   rate: 1.00, label:'🏃', title: function() { return L('Rápido',     'Rapide');      } },
+  { id:'xfast',  rate: 1.20, label:'🚀', title: function() { return L('Muy rápido', 'Très rapide'); } }
 ];
 function _getTtsSpeed() {
-  var saved = sessionStorage.getItem('vachebo_tts_speed');
+  const saved = sessionStorage.getItem('vachebo_tts_speed');
   return saved || 'normal';
 }
 function _setTtsSpeed(id) {
@@ -694,9 +737,26 @@ function _setTtsSpeed(id) {
   _updateSpeedBar();
 }
 function _getTtsRate() {
-  var id = _getTtsSpeed();
-  var s = SPEED_LEVELS.find(function(x) { return x.id === id; });
+  const id = _getTtsSpeed();
+  const s = SPEED_LEVELS.find((x) => { return x.id === id; });
   return s ? s.rate : 0.85;
+}
+
+// ─── Contrôle de répétition TTS (drill de prononciation) ───
+// Cycle 1× → 2× → 3× → 1×, persisté en sessionStorage pour la session courante.
+const REPEAT_MAX = 3;
+function _getTtsRepeat() {
+  const saved = parseInt(sessionStorage.getItem('vachebo_tts_repeat'), 10);
+  return (saved >= 1 && saved <= REPEAT_MAX) ? saved : 1;
+}
+function _setTtsRepeat(n) {
+  sessionStorage.setItem('vachebo_tts_repeat', String(n));
+  _updateSpeedBar();
+}
+function _cycleTtsRepeat() {
+  let next = _getTtsRepeat() + 1;
+  if (next > REPEAT_MAX) next = 1;
+  _setTtsRepeat(next);
 }
 
 /* Résout de façon asynchrone la meilleure voix espagnole disponible sur l'appareil.
@@ -710,18 +770,18 @@ function _resolveSpanishVoice(callback) {
   }
 
   // Table de correspondance région → code BCP-47
-  var langMap = {
+  const langMap = {
     ES:'es-ES', MX:'es-MX', CO:'es-CO', AR:'es-AR', PE:'es-PE', VE:'es-VE', EC:'es-EC'
   };
 
   function search() {
-    var voices = speechSynthesis.getVoices();
+    const voices = speechSynthesis.getVoices();
     if (!voices || voices.length === 0) return false;
 
-    var targetLang = langMap[currentRegion] || 'es-ES';
+    const targetLang = langMap[currentRegion] || 'es-ES';
 
     /* Table de noms lisibles par code région (bilingue ES / FR) */
-    var regionLabels = {
+    const regionLabels = {
       ES: L('España (Castellano)', 'Espagne (Castillan)'),
       MX: L('México',              'Mexique'),
       CO: L('Colombia',            'Colombie'),
@@ -730,14 +790,14 @@ function _resolveSpanishVoice(callback) {
       VE: L('Venezuela',           'Venezuela'),
       EC: L('Ecuador',             'Équateur')
     };
-    var regionName = regionLabels[currentRegion] || currentRegion;
+    const regionName = regionLabels[currentRegion] || currentRegion;
 
-    var foundVoice = null;
-    var foundLabel = regionName + ' ' + L('(Voz por defecto)', '(Voix par défaut)');
-    var foundQuality = 'default';
+    let foundVoice = null;
+    let foundLabel = regionName + ' ' + L('(Voz por defecto)', '(Voix par défaut)');
+    let foundQuality = 'default';
 
     // Priorité 1 : voix exactement correspondant à la région (ex : es-MX pour le Mexique)
-    foundVoice = voices.find(function(v) {
+    foundVoice = voices.find((v) => {
       return v.lang.toLowerCase() === targetLang.toLowerCase();
     });
     if (foundVoice) {
@@ -745,13 +805,13 @@ function _resolveSpanishVoice(callback) {
       foundQuality = 'exact';
     } else {
       // Priorité 2 : n'importe quel espagnol disponible (ex : es-ES si es-MX absent)
-      foundVoice = voices.find(function(v) {
+      foundVoice = voices.find((v) => {
         return v.lang.toLowerCase().indexOf('es') === 0;
       });
       if (foundVoice) {
         /* Résoudre le nom lisible de la voix de secours */
-        var fallbackCode = foundVoice.lang.toUpperCase().split('-')[1] || 'ES';
-        var fallbackName = regionLabels[fallbackCode] || foundVoice.lang;
+        const fallbackCode = foundVoice.lang.toUpperCase().split('-')[1] || 'ES';
+        const fallbackName = regionLabels[fallbackCode] || foundVoice.lang;
         foundLabel   = regionName + ' ' + L('(secours: ', '(secours : ') + fallbackName + ')';
         foundQuality = 'fallback';
       } else {
@@ -772,7 +832,7 @@ function _resolveSpanishVoice(callback) {
     // Notification discrète (toast) informant l'utilisateur de la voix configurée
     if (!_hasNotifiedVoice) {
       _hasNotifiedVoice = true;
-      var msg = L(
+      const msg = L(
         '🎙️ Voz configurada: ' + foundLabel,
         '🎙️ Voix configurée : ' + foundLabel
       );
@@ -788,7 +848,7 @@ function _resolveSpanishVoice(callback) {
   // Un timeout de 2 s force la résolution avec les voix disponibles à ce moment
   // (ou la voix par défaut du système si la liste est encore vide).
   if (!search()) {
-    var _voicesTimeout = null;
+    let _voicesTimeout = null;
 
     function _onVoicesChanged() {
       speechSynthesis.removeEventListener('voiceschanged', _onVoicesChanged);
@@ -802,10 +862,10 @@ function _resolveSpanishVoice(callback) {
     speechSynthesis.addEventListener('voiceschanged', _onVoicesChanged);
 
     /* Timeout de sécurité : 2 s max — évite un callback silencieux sur iOS */
-    _voicesTimeout = setTimeout(function() {
+    _voicesTimeout = setTimeout(() => {
       speechSynthesis.removeEventListener('voiceschanged', _onVoicesChanged);
       if (_spanishVoice === undefined) {
-        var fallback = speechSynthesis.getVoices();
+        const fallback = speechSynthesis.getVoices();
         _spanishVoice = fallback.length > 0 ? fallback[0] : null;
         _spanishVoiceQuality = 'default';
         _spanishVoiceLabel   = L('Voz por defecto', 'Voix par défaut');
@@ -820,117 +880,244 @@ function _resolveSpanishVoice(callback) {
   }
 }
 
-/* speak(txt, triggerBtn) — Point d'entrée unique pour la synthèse vocale.
+/* ─────────────────────────────────────────────────────────
+   §3a-bis — SURLIGNAGE MOT PAR MOT PENDANT LA LECTURE (best-effort)
+   ─────────────────────────────────────────────────────────
+   Repose sur l'événement 'onboundary' de SpeechSynthesisUtterance.
+   Cet événement n'est PAS déclenché de façon fiable par tous les moteurs
+   TTS (en particulier certaines voix système Android) : dans ce cas,
+   l'audio se lit normalement, simplement sans surlignage — dégradation
+   silencieuse, jamais d'erreur visible pour l'utilisateur.
+───────────────────────────────────────────────────────── */
+
+/* _wordOffsets(str) → [{start,end}, ...] pour chaque mot de str. */
+function _wordOffsets(str) {
+  const out = [];
+  const re = /\S+/g;
+  let m;
+  while ((m = re.exec(str)) !== null) out.push({ start: m.index, end: m.index + m[0].length });
+  return out;
+}
+
+/* _findWordIndex(offsets, charIndex) → index du mot correspondant à charIndex
+   (ou le mot suivant le plus proche si charIndex tombe sur un espace). */
+function _findWordIndex(offsets, charIndex) {
+  for (let i = 0; i < offsets.length; i++) {
+    if (charIndex >= offsets[i].start && charIndex < offsets[i].end) return i;
+  }
+  for (let j = 0; j < offsets.length; j++) {
+    if (charIndex < offsets[j].start) return j;
+  }
+  return offsets.length - 1;
+}
+
+/* _setActiveWord(uid, partIdx, wordIdx) — Active le surlignage du mot ciblé,
+   retire celui du mot précédent. */
+function _setActiveWord(uid, partIdx, wordIdx) {
+  const container = document.querySelector('[data-tts-container="' + uid + '"]');
+  if (!container) return;
+  const prev = container.querySelectorAll('.tts-word-active');
+  for (let i = 0; i < prev.length; i++) prev[i].classList.remove('tts-word-active');
+  const target = container.querySelector('[data-tts-part="' + partIdx + '"][data-tts-word="' + wordIdx + '"]');
+  if (target) target.classList.add('tts-word-active');
+}
+
+/* _clearWordHighlight(uid) — Retire tout surlignage actif (fin de lecture). */
+function _clearWordHighlight(uid) {
+  if (!uid) return;
+  const container = document.querySelector('[data-tts-container="' + uid + '"]');
+  if (!container) return;
+  const prev = container.querySelectorAll('.tts-word-active');
+  for (let i = 0; i < prev.length; i++) prev[i].classList.remove('tts-word-active');
+}
+
+/* _buildSpeakableHTML(text, uid) — Enveloppe chaque mot de `text` dans un
+   <span> ciblable par le surlignage. Gère aussi les textes multi-parties
+   séparées par '/' (chaque partie étant lue séparément par le moteur TTS).
+   `uid` doit être unique dans le DOM à l'instant T — un seul mot est
+   surligné à la fois dans l'app, un id fixe par zone d'affichage suffit. */
+function _buildSpeakableHTML(text, uid) {
+  const parts = (text || '').split('/').map((p) => { return p.trim(); }).filter(Boolean);
+  const html = parts.map((part, pi) => {
+    const offsets = _wordOffsets(part);
+    const words = offsets.map((o, wi) => {
+      return '<span class="tts-word" data-tts-part="' + pi + '" data-tts-word="' + wi + '">'
+        + part.slice(o.start, o.end) + '</span>';
+    });
+    return words.join(' ');
+  }).join(' <span class="tts-sep">/</span> ');
+  return '<span data-tts-container="' + uid + '">' + html + '</span>';
+}
+
+/* speak(txt, triggerBtn, opts) — Point d'entrée unique pour la synthèse vocale.
    Gère automatiquement :
      - Les textes avec '/' (prononce chaque partie avec 800ms de pause)
      - Le mode 'learn_spain' → voix espagnole résolue dynamiquement
      - Le mode 'learn_french'  → voix française (voiceLang = 'fr-FR')
+     - La répétition complète du mot/phrase selon _getTtsRepeat()
      - triggerBtn (optionnel) : reçoit .is-speaking pendant la lecture,
        retiré au dernier onend pour un retour visuel immédiat.
+   opts (optionnel) : { highlightUid } — active le surlignage mot par mot
+     sur le conteneur DOM correspondant (cf. _buildSpeakableHTML).
    Si la synthèse échoue silencieusement (ex : iOS Safari avant la première
    interaction tactile de la page), un indicateur "🔇 Audio indisponible"
    discret est affiché via _showAudioUnavailable(). */
-function speak(txt, triggerBtn) {
+function speak(txt, triggerBtn, opts) {
   if (!txt) return;
-
   if (!window.speechSynthesis) {
     _showAudioUnavailable();
     return;
   }
-
-  /* Helpers feedback visuel */
-  function _markSpeaking(btn) { if (btn) btn.classList.add('is-speaking'); }
-  function _unmarkSpeaking(btn) { if (btn) btn.classList.remove('is-speaking'); }
-
+  const rate = _getTtsRate();
   if (currentMode !== 'learn_french') {
-    // ─── Mode Espagnol : résolution asynchrone de la meilleure voix disponible ───
-    _resolveSpanishVoice(function(voice) {
-      speechSynthesis.cancel();
-      var parts = (txt || '').split('/').map(p => p.trim()).filter(Boolean);
-      var rate  = _getTtsRate();
-      _markSpeaking(triggerBtn);
-      function speakPart(i) {
-        if (i >= parts.length) { _unmarkSpeaking(triggerBtn); return; }
-        var u = new SpeechSynthesisUtterance(parts[i]);
-        if (voice) { u.voice = voice; u.lang = voice.lang; }
-        u.rate  = rate;
-        u.onend = function() {
-          _hideAudioUnavailable();
-          if (i + 1 < parts.length) setTimeout(function() { speakPart(i + 1); }, 800);
-          else _unmarkSpeaking(triggerBtn);
-        };
-        u.onerror = function() { _showAudioUnavailable(); _unmarkSpeaking(triggerBtn); };
-        speechSynthesis.speak(u);
-      }
-      speakPart(0);
+    _resolveSpanishVoice((voice) => {
+      _doSpeak(txt, voice, rate, triggerBtn, opts);
     });
-
   } else {
-    // ─── Mode Français : voix système standard, vitesse réglable ───
-    _doSpeak(txt, null, _getTtsRate(), triggerBtn);
+    _doSpeak(txt, null, rate, triggerBtn, opts);
   }
 }
 
-/* _doSpeak(txt, voiceObj, rate, triggerBtn) — Synthèse TTS bas niveau.
-   Gère la découpe sur '/' et la pause de 800ms entre les parties.
-   triggerBtn (optionnel) reçoit .is-speaking pendant toute la lecture.
-   Signale via _showAudioUnavailable() si la synthèse échoue (onerror). */
-function _doSpeak(txt, voiceObj, rate, triggerBtn) {
+/* _waitForVoicesReady(callback) — Garantit que la liste des voix système est
+   chargée avant de tenter une synthèse vocale.
+   BUG 5.2 : sur certains navigateurs mobiles (ex : Brave/Android), au tout
+   premier chargement de la page, speechSynthesis.getVoices() renvoie un
+   tableau vide : la liste des voix est encore en cours de chargement par le
+   moteur natif. Si on appelle speechSynthesis.speak() à ce moment précis,
+   la synthèse échoue silencieusement (onerror) et affiche à tort le badge
+   "🔇 Audio indisponible", alors que la voix fonctionne très bien si on
+   réessaie un instant après.
+   Cette fonction attend l'événement 'voiceschanged' (déclenché par le
+   navigateur une fois les voix réellement chargées) avant d'exécuter le
+   callback. Un timeout de sécurité de 1.5 s est prévu pour les navigateurs
+   où cet événement ne se déclenche jamais (ex : iOS Safari) — le callback
+   est alors exécuté quand même, avec les voix disponibles à ce moment. */
+let _voicesReady = false;
+function _waitForVoicesReady(callback) {
+  if (_voicesReady || !window.speechSynthesis) { callback(); return; }
+
+  const voices = speechSynthesis.getVoices();
+  if (voices?.length > 0) {
+    _voicesReady = true;
+    callback();
+    return;
+  }
+
+  let _settled = false;
+  const _voicesReadyTimeout = setTimeout(() => {
+    if (_settled) return;
+    _settled = true;
+    speechSynthesis.removeEventListener('voiceschanged', _onVoicesReady);
+    _voicesReady = true;
+    callback();
+  }, 1500);
+
+  function _onVoicesReady() {
+    if (_settled) return;
+    _settled = true;
+    clearTimeout(_voicesReadyTimeout);
+    speechSynthesis.removeEventListener('voiceschanged', _onVoicesReady);
+    _voicesReady = true;
+    callback();
+  }
+  speechSynthesis.addEventListener('voiceschanged', _onVoicesReady);
+}
+
+/* _doSpeak(txt, voiceObj, rate, triggerBtn, opts) — Moteur TTS unique bas niveau.
+   Utilisé par speak() (français ET espagnol, la résolution de voix se fait
+   en amont) et par speakSlow(). Gère en un seul endroit :
+     - la découpe sur '/' (pause `opts.partGap`ms, 800 par défaut) ;
+     - la répétition complète de la séquence selon _getTtsRepeat()
+       (pause `opts.repeatGap`ms entre deux répétitions, 500 par défaut) ;
+     - le surlignage mot par mot best-effort si opts.highlightUid est fourni
+       (repose sur 'onboundary', non garanti par tous les moteurs — dégrade
+       silencieusement en simple lecture si l'événement ne se déclenche pas) ;
+     - un jeton de génération (_ttsGen) qui invalide les callbacks d'un appel
+       précédent si un nouvel appel à speak()/_doSpeak() démarre entre-temps
+       (évite un chevauchement audio si l'utilisateur tape vite plusieurs
+       boutons pendant une répétition en cours) ;
+     - triggerBtn (optionnel) reçoit .is-speaking pendant toute la séquence.
+   Attend d'abord que les voix soient chargées via _waitForVoicesReady()
+   (cf. Bug 5.2) pour éviter une fausse alerte au premier chargement. */
+let _ttsGen = 0;
+function _doSpeak(txt, voiceObj, rate, triggerBtn, opts) {
   if (!window.speechSynthesis) {
     _showAudioUnavailable();
     return;
   }
-  speechSynthesis.cancel();
-  var parts = (txt || '').split('/').map(p => p.trim()).filter(Boolean);
-  if (triggerBtn) triggerBtn.classList.add('is-speaking');
-  function speakPart(i) {
-    if (i >= parts.length) {
+  opts = opts || {};
+  const partGap   = opts.partGap   != null ? opts.partGap   : 800;
+  const repeatGap = opts.repeatGap != null ? opts.repeatGap : 500;
+  const uid       = opts.highlightUid || null;
+  const repeatN   = Math.max(1, _getTtsRepeat());
+
+  _waitForVoicesReady(() => {
+    const myGen = ++_ttsGen;
+    speechSynthesis.cancel();
+    const parts = (txt || '').split('/').map((p) => { return p.trim(); }).filter(Boolean);
+    if (triggerBtn) triggerBtn.classList.add('is-speaking');
+    _clearWordHighlight(uid);
+
+    function finishAll() {
       if (triggerBtn) triggerBtn.classList.remove('is-speaking');
-      return;
+      _clearWordHighlight(uid);
     }
-    var u = new SpeechSynthesisUtterance(parts[i]);
-    u.lang = voiceLang;
-    u.rate = rate;
-    if (voiceObj) u.voice = voiceObj;
-    u.onend = function() {
-      _hideAudioUnavailable();
-      if (i + 1 < parts.length) setTimeout(function() { speakPart(i + 1); }, 800);
-      else if (triggerBtn) triggerBtn.classList.remove('is-speaking');
-    };
-    u.onerror = function() {
-      _showAudioUnavailable();
-      if (triggerBtn) triggerBtn.classList.remove('is-speaking');
-    };
-    speechSynthesis.speak(u);
-  }
-  speakPart(0);
+
+    function speakPart(rep, i) {
+      if (myGen !== _ttsGen) return; // supersédé par un appel plus récent
+      if (i >= parts.length) {
+        if (rep + 1 < repeatN) setTimeout(() => { speakPart(rep + 1, 0); }, repeatGap);
+        else finishAll();
+        return;
+      }
+      const partText = parts[i];
+      const u = new SpeechSynthesisUtterance(partText);
+      u.lang = voiceObj ? voiceObj.lang : voiceLang;
+      u.rate = rate;
+      if (voiceObj) u.voice = voiceObj;
+
+      if (uid) {
+        const offsets = _wordOffsets(partText);
+        u.onboundary = function(ev) {
+          if (myGen !== _ttsGen) return;
+          if (ev.name && ev.name !== 'word') return; // ignore les bornes 'sentence' éventuelles
+          _setActiveWord(uid, i, _findWordIndex(offsets, ev.charIndex));
+        };
+      }
+
+      u.onend = function() {
+        if (myGen !== _ttsGen) return;
+        _hideAudioUnavailable();
+        if (i + 1 < parts.length) setTimeout(() => { speakPart(rep, i + 1); }, partGap);
+        else speakPart(rep, parts.length);
+      };
+      u.onerror = function() {
+        if (myGen !== _ttsGen) return;
+        _showAudioUnavailable();
+        finishAll();
+      };
+      speechSynthesis.speak(u);
+    }
+    speakPart(0, 0);
+  });
 }
 
-/* speakSlow(txt) — Prononce toujours à vitesse lente, indépendamment du réglage.
-   Utilisé par le bouton "Répéter lentement" sur les flashcards. */
-function speakSlow(txt, triggerBtn) {
+/* speakSlow(txt, triggerBtn, opts) — Prononce toujours au palier le plus lent
+   (SPEED_LEVELS[0]), indépendamment du réglage de vitesse choisi par
+   l'utilisateur. Utilisé par le bouton "Répéter lentement" sur les flashcards.
+   Respecte comme speak() la répétition (_getTtsRepeat()) et le surlignage
+   mot par mot (opts.highlightUid). Conserve une pause de 1000ms entre les
+   parties (au lieu de 800ms pour speak()) — lecture plus posée à vitesse lente. */
+function speakSlow(txt, triggerBtn, opts) {
   if (!txt || !window.speechSynthesis) return;
+  const slowRate   = SPEED_LEVELS[0].rate;
+  const mergedOpts = Object.assign({ partGap: 1000 }, opts || {});
   if (currentMode !== 'learn_french') {
-    _resolveSpanishVoice(function(voice) {
-      speechSynthesis.cancel();
-      var parts = (txt || '').split('/').map(p => p.trim()).filter(Boolean);
-      if (triggerBtn) triggerBtn.classList.add('is-speaking');
-      function speakPart(i) {
-        if (i >= parts.length) { if (triggerBtn) triggerBtn.classList.remove('is-speaking'); return; }
-        var u = new SpeechSynthesisUtterance(parts[i]);
-        if (voice) { u.voice = voice; u.lang = voice.lang; }
-        u.rate = 0.55;
-        u.onend = function() {
-          if (i + 1 < parts.length) setTimeout(function() { speakPart(i + 1); }, 1000);
-          else if (triggerBtn) triggerBtn.classList.remove('is-speaking');
-        };
-        u.onerror = function() { if (triggerBtn) triggerBtn.classList.remove('is-speaking'); };
-        speechSynthesis.speak(u);
-      }
-      speakPart(0);
+    _resolveSpanishVoice((voice) => {
+      _doSpeak(txt, voice, slowRate, triggerBtn, mergedOpts);
     });
   } else {
-    _doSpeak(txt, null, 0.55, triggerBtn);
+    _doSpeak(txt, null, slowRate, triggerBtn, mergedOpts);
   }
 }
 
@@ -938,7 +1125,7 @@ function speakSlow(txt, triggerBtn) {
    Affiche la qualité de voix (exact ✅ / secours ⚠️ / défaut ❓)
    avec le drapeau et le nom de la région. */
 function _updateVoiceBadge() {
-  var badge = document.getElementById('voice-quality-badge');
+  const badge = document.getElementById('voice-quality-badge');
   if (!badge) return;
 
   // Mode français : badge simplifié
@@ -949,8 +1136,8 @@ function _updateVoiceBadge() {
     return;
   }
 
-  var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
-  var flag = flagEmojis[currentRegion] || '🇪🇸';
+  const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+  const flag = flagEmojis[currentRegion] || '🇪🇸';
 
   if (!_spanishVoiceLabel) {
     // Voix pas encore résolue
@@ -960,7 +1147,7 @@ function _updateVoiceBadge() {
     return;
   }
 
-  var qualityIcon, qualityClass, qualityTitle;
+  let qualityIcon, qualityClass, qualityTitle;
   if (_spanishVoiceQuality === 'exact') {
     qualityIcon  = '✅';
     qualityClass = 'vqb-exact';
@@ -980,31 +1167,44 @@ function _updateVoiceBadge() {
   badge.title     = qualityTitle + ' — ' + _spanishVoiceLabel;
 }
 
-/* _updateSpeedBar() — Met à jour les boutons de vitesse dans la barre persistante. */
+/* _updateSpeedBar() — Met à jour les boutons de vitesse + le bouton de répétition
+   dans la barre persistante. */
 function _updateSpeedBar() {
-  var bar = document.getElementById('tts-speed-bar');
+  const bar = document.getElementById('tts-speed-bar');
   if (!bar) return;
-  var current = _getTtsSpeed();
-  SPEED_LEVELS.forEach(function(s) {
-    var btn = bar.querySelector('[data-speed="' + s.id + '"]');
+  const current = _getTtsSpeed();
+  SPEED_LEVELS.forEach((s) => {
+    const btn = bar.querySelector('[data-speed="' + s.id + '"]');
     if (!btn) return;
     btn.classList.toggle('speed-active', s.id === current);
     btn.title = s.title();
   });
+  const repeatBtn = document.getElementById('tts-repeat-btn');
+  if (repeatBtn) {
+    const n = _getTtsRepeat();
+    repeatBtn.textContent = '🔁 ×' + n;
+    repeatBtn.classList.toggle('repeat-active', n > 1);
+    repeatBtn.title = L('Repetir', 'Répéter') + ' ×' + n;
+  }
 }
 
-/* _buildSpeedBar() — Génère le HTML de la barre vitesse + slot PDF sur la même ligne. */
+/* _buildSpeedBar() — Génère le HTML de la barre vitesse + bouton répétition + slot PDF. */
 function _buildSpeedBar() {
-  var btns = SPEED_LEVELS.map(function(s) {
-    var active = _getTtsSpeed() === s.id ? ' speed-active' : '';
+  const btns = SPEED_LEVELS.map((s) => {
+    const active = _getTtsSpeed() === s.id ? ' speed-active' : '';
     return '<button class="speed-btn' + active + '" data-speed="' + s.id + '"'
       + ' title="' + s.title() + '"'
       + ' onclick="_setTtsSpeed(\'' + s.id + '\')">'
       + s.label + '</button>';
   }).join('');
+  const repeatN = _getTtsRepeat();
+  const repeatBtn = '<button id="tts-repeat-btn" class="repeat-btn' + (repeatN > 1 ? ' repeat-active' : '') + '"'
+    + ' title="' + L('Repetir', 'Répéter') + ' ×' + repeatN + '"'
+    + ' onclick="_cycleTtsRepeat()">🔁 ×' + repeatN + '</button>';
   return '<div id="tts-speed-bar" class="tts-speed-bar">'
     + '<span class="speed-bar-label">' + L('Velocidad:', 'Vitesse :') + '</span>'
     + btns
+    + repeatBtn
     + '<div id="meta-pdf-slot"></div>'
     + '</div>';
 }
@@ -1012,10 +1212,10 @@ function _buildSpeedBar() {
 /* _updateMetaPdfBtn(tab) — Injecte ou retire le bouton PDF dans #meta-pdf-slot selon l'onglet.
    Appelée par switchTab() à chaque changement. PDF : flash (hors alpha), dialog, vocab. */
 function _updateMetaPdfBtn(tab) {
-  var slot = document.getElementById('meta-pdf-slot');
+  const slot = document.getElementById('meta-pdf-slot');
   if (!slot) return;
-  var hasPdf = false, onclick = '', ariaLabel = '';
-  if (tab === 'flash' && CT && CT.words && CT.type !== 'alpha') {
+  let hasPdf = false, onclick = '', ariaLabel = '';
+  if (tab === 'flash' && CT?.words && CT.type !== 'alpha') {
     hasPdf = true; onclick = '_exportVocab()';
     ariaLabel = L('Exportar vocabulario PDF', 'Exporter le vocabulaire PDF');
   } else if (tab === 'dialog') {
@@ -1031,7 +1231,7 @@ function _updateMetaPdfBtn(tab) {
 }
 
 // §3c — Interruption TTS à la mise en arrière-plan
-document.addEventListener('visibilitychange', function() {
+document.addEventListener('visibilitychange', () => {
   if (document.hidden && window.speechSynthesis) {
     speechSynthesis.cancel();
   }
@@ -1050,16 +1250,16 @@ document.addEventListener('visibilitychange', function() {
    L'intervalle est suspendu quand l'app passe en arrière-plan
    (document.hidden) pour économiser la batterie.
 ───────────────────────────────────────────────────────── */
-var _ttsKeepAliveTimer = null;
+let _ttsKeepAliveTimer = null;
 
 function _startTtsKeepAlive() {
   if (_ttsKeepAliveTimer) return;
   if (!window.speechSynthesis) return;
-  _ttsKeepAliveTimer = setInterval(function() {
+  _ttsKeepAliveTimer = setInterval(() => {
     if (document.hidden) return;
     if (speechSynthesis.speaking && !speechSynthesis.paused) {
       speechSynthesis.pause();
-      setTimeout(function() { speechSynthesis.resume(); }, 50);
+      setTimeout(() => { speechSynthesis.resume(); }, 50);
     }
   }, 8000);
 }
@@ -1084,7 +1284,7 @@ function _showAudioUnavailable() {
   if (_audioUnavailableShown) return;
   _audioUnavailableShown = true;
 
-  var badge = document.getElementById('audio-unavailable-badge');
+  let badge = document.getElementById('audio-unavailable-badge');
   if (!badge) {
     badge = document.createElement('div');
     badge.id = 'audio-unavailable-badge';
@@ -1096,16 +1296,16 @@ function _showAudioUnavailable() {
       + 'opacity:0;transition:opacity .3s ease;';
     document.body.appendChild(badge);
   }
-  var label = L('🔇 Audio no disponible', '🔇 Audio indisponible');
+  const label = L('🔇 Audio no disponible', '🔇 Audio indisponible');
   badge.textContent = label;
-  requestAnimationFrame(function() { badge.style.opacity = '1'; });
+  requestAnimationFrame(() => { badge.style.opacity = '1'; });
 }
 
 /* Masque le badge "Audio indisponible" dès qu'une lecture réussit. */
 function _hideAudioUnavailable() {
   if (!_audioUnavailableShown) return;
   _audioUnavailableShown = false;
-  var badge = document.getElementById('audio-unavailable-badge');
+  const badge = document.getElementById('audio-unavailable-badge');
   if (badge) badge.style.opacity = '0';
 }
 
@@ -1120,21 +1320,21 @@ function _hideAudioUnavailable() {
 function _showToast(msg, duration) {
   duration = duration || 3000;
 
-  var toast = document.createElement('div');
+  const toast = document.createElement('div');
   toast.className = 'app-toast';
   toast.textContent = msg;
   document.body.appendChild(toast);
 
   /* Différer l'ajout de .visible d'une double frame pour que la
      transition CSS d'entrée (opacité + translation) soit bien jouée. */
-  requestAnimationFrame(function() {
-    requestAnimationFrame(function() { toast.classList.add('visible'); });
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => { toast.classList.add('visible'); });
   });
 
-  setTimeout(function() {
+  setTimeout(() => {
     toast.classList.remove('visible');
     /* Laisser la transition de sortie se terminer avant de retirer le nœud. */
-    setTimeout(function() { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300);
+    setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300);
   }, duration);
 }
 
@@ -1170,10 +1370,10 @@ function _vibrateFeedback(isCorrect) {
    En cas de données corrompues, repart d'un tableau vide. */
 function loadDone() {
   try {
-    var parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     // Validation : on accepte uniquement un tableau d'objets { id: string, stars: 1|2|3 }
     done = Array.isArray(parsed)
-      ? parsed.filter(function(d) {
+      ? parsed.filter((d) => {
           return d && typeof d.id === 'string' && [1,2,3].includes(d.stars);
         })
       : [];
@@ -1248,7 +1448,7 @@ function _saveQuizSession() {
   const tabKey = activeTabEl ? activeTabEl.dataset.tab : null;
   if (tabKey !== 'quiz10' && tabKey !== 'dquiz') return;
 
-  var state = {
+  const state = {
     mode: currentMode,
     themeId: CT.id,
     tab: tabKey,
@@ -1264,37 +1464,37 @@ function _saveQuizSession() {
 /* Tente de restaurer une session de quiz pour le thème courant.
    Retourne le tab à activer en priorité ('quiz10' | 'dquiz'), ou null si rien à reprendre. */
 function _restoreQuizSession() {
-  var raw;
+  let raw;
   try { raw = sessionStorage.getItem(QUIZ_SESSION_KEY); }
   catch (e) { return null; }
   if (!raw) return null;
 
-  var state;
+  let state;
   try { state = JSON.parse(raw); } catch (e) { return null; }
   if (!state || state.mode !== currentMode || state.themeId !== CT.id) return null;
 
   // Quiz déjà terminé dans la session sauvegardée : pas la peine de reprendre
-  var total;
+  let total;
   if (state.tab === 'quiz10') {
     if (CT.type === 'alpha') {
-      var alphaQs = getQuizQuestions(CT);
+      const alphaQs = getQuizQuestions(CT);
       total = alphaQs ? alphaQs.length : 0;
     } else if (CT.level === 1) {
-      total = (state.dynQuiz && state.dynQuiz.length) ? state.dynQuiz.length : 0;
+      total = state.dynQuiz?.length || 0;
     } else {
-      var stdQs = getQuizQuestions(CT);
+      const stdQs = getQuizQuestions(CT);
       total = stdQs ? stdQs.length : 0;
     }
   } else {
     total = CT.quiz ? CT.quiz.length : 0;
   }
-  var step = (state.tab === 'quiz10') ? state.q10Step : state.dqStep;
+  const step = (state.tab === 'quiz10') ? state.q10Step : state.dqStep;
   if (total && step >= total) return null;
 
   if (state.tab === 'quiz10') {
     q10Step  = state.q10Step  || 0;
     q10Score = state.q10Score || 0;
-    if (state.dynQuiz && state.dynQuiz.length) _currentDynQuiz = state.dynQuiz;
+    if (state.dynQuiz?.length) _currentDynQuiz = state.dynQuiz;
     _showToast(L('Quiz restaurado desde tu última sesión', 'Quiz restauré depuis votre dernière session'), 3500);
     return 'quiz10';
   }
@@ -1345,35 +1545,35 @@ function _updateBottomNav(screenId) {
   nav.classList.add('visible');
 
   /* (2) État actif : reset tous les boutons, puis active le bon */
-  ['navBtnLang', 'navBtnGuide', 'navBtnModules', 'navBtnCredits'].forEach(function(id) {
-    var el = document.getElementById(id);
+  ['navBtnLang', 'navBtnGuide', 'navBtnModules', 'navBtnCredits'].forEach((id) => {
+    const el = document.getElementById(id);
     if (el) el.classList.remove('active');
   });
 
   if (screenId === 'app-launcher') {
     /* Écran 0 (Vue A choix de langue, Vue B sélecteur variante) → Langue actif */
-    var btnLang = document.getElementById('navBtnLang');
+    const btnLang = document.getElementById('navBtnLang');
     if (btnLang) btnLang.classList.add('active');
   } else if (screenId === 'home') {
     /* Écran Guide → Guide actif */
-    var btnGuide = document.getElementById('navBtnGuide');
+    const btnGuide = document.getElementById('navBtnGuide');
     if (btnGuide) btnGuide.classList.add('active');
   } else if (screenId === 'sections' || screenId === 'sections-level1' || screenId === 'sections-level2' || screenId === 'lesson') {
     /* Écrans Modules et Leçon → Modules actif */
-    var btnModules = document.getElementById('navBtnModules');
+    const btnModules = document.getElementById('navBtnModules');
     if (btnModules) btnModules.classList.add('active');
   }
 
   /* (3) Libellés bilingues via L(learn_french, learn_spain)
      Sur le launcher (avant tout choix), on affiche les libellés en français par défaut */
-  var elLang    = document.getElementById('navLabelLang');
-  var elGuide   = document.getElementById('navLabelGuide');
-  var elModules = document.getElementById('navLabelModules');
-  var elCredits = document.getElementById('navLabelCredits');
-  var elSubLang    = document.getElementById('navSubLang');
-  var elSubGuide   = document.getElementById('navSubGuide');
-  var elSubModules = document.getElementById('navSubModules');
-  var elSubCredits = document.getElementById('navSubCredits');
+  const elLang    = document.getElementById('navLabelLang');
+  const elGuide   = document.getElementById('navLabelGuide');
+  const elModules = document.getElementById('navLabelModules');
+  const elCredits = document.getElementById('navLabelCredits');
+  const elSubLang    = document.getElementById('navSubLang');
+  const elSubGuide   = document.getElementById('navSubGuide');
+  const elSubModules = document.getElementById('navSubModules');
+  const elSubCredits = document.getElementById('navSubCredits');
 
   if (!currentMode) {
     /* Launcher Vue A uniquement : bilingue FR + traduction ES en sous-titre */
@@ -1409,7 +1609,7 @@ function _updateBottomNav(screenId) {
 
   /* (4) Drapeau dynamique selon le mode et la région active
      Sur le launcher sans mode, on affiche 🌍 (neutre) */
-  var langFlag = document.getElementById('navLangFlag');
+  const langFlag = document.getElementById('navLangFlag');
   if (langFlag) {
     if (!currentMode) {
       langFlag.textContent = '🌍';
@@ -1417,7 +1617,7 @@ function _updateBottomNav(screenId) {
       langFlag.textContent = '🇫🇷';
     } else {
       /* learn_spain : drapeau de la variante régionale active */
-      var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+      const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
       langFlag.textContent = flagEmojis[currentRegion] || '🇪🇸';
     }
   }
@@ -1441,7 +1641,7 @@ function _updateBottomNav(screenId) {
 ───────────────────────────────────────────────────────── */
 
 /** Niveau du thème ouvert (1 ou 2) — mémorisé pour retour et flèches */
-var _currentThemeLevel = 1;
+let _currentThemeLevel = 1;
 
 /**
  * Synchronise l'état actif des onglets Niveau 1 / 2
@@ -1449,19 +1649,19 @@ var _currentThemeLevel = 1;
  * @param {string} screenId
  */
 function _updateLevelTabs(screenId) {
-  var isL1 = (screenId === 'sections-level1');
-  var isL2 = (screenId === 'sections-level2');
+  const isL1 = (screenId === 'sections-level1');
+  const isL2 = (screenId === 'sections-level2');
   if (!isL1 && !isL2) return;
 
   /* Onglets dans sections-level1 */
-  var t1a = document.getElementById('lvlTab1');
-  var t2a = document.getElementById('lvlTab2');
+  const t1a = document.getElementById('lvlTab1');
+  const t2a = document.getElementById('lvlTab2');
   if (t1a) t1a.classList.toggle('active', isL1);
   if (t2a) t2a.classList.toggle('active', isL2);
 
   /* Onglets dans sections-level2 */
-  var t1b = document.getElementById('lvlTab1b');
-  var t2b = document.getElementById('lvlTab2b');
+  const t1b = document.getElementById('lvlTab1b');
+  const t2b = document.getElementById('lvlTab2b');
   if (t1b) t1b.classList.toggle('active', isL1);
   if (t2b) t2b.classList.toggle('active', isL2);
 }
@@ -1471,7 +1671,7 @@ function _updateLevelTabs(screenId) {
  * renderSections() est appelé ICI (pas dans showScreen) pour éviter le double rendu.
  */
 function lessonGoBack() {
-  var target = (_currentThemeLevel === 2) ? 'sections-level2' : 'sections-level1';
+  const target = (_currentThemeLevel === 2) ? 'sections-level2' : 'sections-level1';
   /* Pré-rend les grilles AVANT la transition pour que le contenu soit
      présent au moment où l'écran devient visible (pas de flash vide). */
   renderSections(_currentThemeLevel);
@@ -1488,11 +1688,11 @@ function navGoModules() {
   /* Si ALL_THEMES n'est pas encore chargé (pas de mode actif), on ne fait rien */
   if (!ALL_THEMES || !ALL_THEMES.length) return;
 
-  var target = (_currentThemeLevel === 2) ? 'sections-level2' : 'sections-level1';
+  const target = (_currentThemeLevel === 2) ? 'sections-level2' : 'sections-level1';
 
   /* Déterminer l'écran courant */
-  var current = null;
-  document.querySelectorAll('.screen').forEach(function(s) {
+  let current = null;
+  document.querySelectorAll('.screen').forEach((s) => {
     if (s.classList.contains('active')) current = s.id;
   });
 
@@ -1500,7 +1700,7 @@ function navGoModules() {
   if (current === target) return;
 
   /* Direction : depuis lesson = back, depuis home = forward, sinon auto */
-  var dir = (current === 'lesson') ? 'back' : 'forward';
+  const dir = (current === 'lesson') ? 'back' : 'forward';
 
   /* Pré-rend les grilles pour éviter le double rendu dans showScreen() */
   renderSections(_currentThemeLevel);
@@ -1519,7 +1719,7 @@ const _SCREEN_ORDER = ['app-launcher', 'home', 'sections-level1', 'sections-leve
  */
 function _showScreenNoRender(id, dir) {
   if (_screenTransitionTimer) { clearTimeout(_screenTransitionTimer); _screenTransitionTimer = null; }
-  document.querySelectorAll('.screen').forEach(function(s) {
+  document.querySelectorAll('.screen').forEach((s) => {
     s.classList.remove('active', 'slide-out-left', 'slide-out-right', 'slide-in-right', 'slide-in-left');
   });
   window.scrollTo(0, 0);
@@ -1528,7 +1728,7 @@ function _showScreenNoRender(id, dir) {
   nextEl.classList.add('active');
   if (dir) {
     nextEl.classList.add(dir === 'forward' ? 'slide-in-right' : 'slide-in-left');
-    _screenTransitionTimer = setTimeout(function() {
+    _screenTransitionTimer = setTimeout(() => {
       _screenTransitionTimer = null;
       nextEl.classList.remove('slide-in-right', 'slide-in-left');
     }, 300);
@@ -1538,13 +1738,21 @@ function _showScreenNoRender(id, dir) {
 }
 
 /* Verrou anti-navigation simultanée : empêche deux transitions qui se croisent */
-var _screenTransitionInProgress = false;
-var _screenTransitionTimer = null;
+const _screenTransitionInProgress = false;
+let _screenTransitionTimer = null;
 
 function showScreen(id, dir) {
   // Détermine l'écran actuellement actif (avant de le masquer)
   const currentEl = document.querySelector('.screen.active');
   const currentId = currentEl ? currentEl.id : null;
+
+  // Quitter le guide (#home) pour un autre écran = onboarding "vu" POUR CE
+  // MODE : il ne se relancera plus tout seul au prochain lancement dans cette
+  // même langue (cf. _maybeAutoShowGuide / _guideSeenKey). Couvre "▶ Commencer"
+  // comme n'importe quelle autre sortie du guide.
+  if (currentId === 'home' && id !== 'home') {
+    _markGuideSeen();
+  }
 
   // Si on demande l'écran déjà actif, mise à jour des onglets et nav seulement
   if (currentId === id) {
@@ -1562,7 +1770,7 @@ function showScreen(id, dir) {
     clearTimeout(_screenTransitionTimer);
     _screenTransitionTimer = null;
   }
-  document.querySelectorAll('.screen').forEach(function(s) {
+  document.querySelectorAll('.screen').forEach((s) => {
     s.classList.remove('slide-out-left', 'slide-out-right', 'slide-in-right', 'slide-in-left');
   });
 
@@ -1576,7 +1784,7 @@ function showScreen(id, dir) {
   }
 
   // Masque IMMÉDIATEMENT tous les écrans (retire display:flex, évite les clics fantômes)
-  document.querySelectorAll('.screen').forEach(function(s) {
+  document.querySelectorAll('.screen').forEach((s) => {
     s.classList.remove('active');
   });
 
@@ -1594,7 +1802,7 @@ function showScreen(id, dir) {
   // Animation d'entrée uniquement (l'écran sortant est déjà masqué — pas de risque de clic)
   if (dir) {
     nextEl.classList.add(dir === 'forward' ? 'slide-in-right' : 'slide-in-left');
-    _screenTransitionTimer = setTimeout(function() {
+    _screenTransitionTimer = setTimeout(() => {
       _screenTransitionTimer = null;
       nextEl.classList.remove('slide-in-right', 'slide-in-left');
     }, 300);
@@ -1643,7 +1851,7 @@ function renderHome() {
   const p = _getProgress();
 
   /* ── Cercle SVG de progression ── */
-  var wrap = document.getElementById('homeProgressCircleWrap');
+  const wrap = document.getElementById('homeProgressCircleWrap');
   if (wrap) {
     if (p.n === 0) {
       /* Première visite : on cache le cercle */
@@ -1652,25 +1860,30 @@ function renderHome() {
       wrap.style.display = 'flex';
 
       /* Circonférence pour r=50 : 2π×50 = 314.16 px */
-      var CIRC   = 314.16;
-      var offset = CIRC - (CIRC * p.pct / 100);
+      const CIRC   = 314.16;
+      const offset = CIRC - (CIRC * p.pct / 100);
 
-      var arc     = document.getElementById('hpcArc');
-      var pctTxt  = document.getElementById('hpcPct');
-      var subTxt  = document.getElementById('hpcSub');
-      var titleEl = document.getElementById('hpcTitle');
-      var descEl  = document.getElementById('hpcDesc');
+      const arc     = document.getElementById('hpcArc');
+      const pctTxt  = document.getElementById('hpcPct');
+      const subTxt  = document.getElementById('hpcSub');
+      const titleEl = document.getElementById('hpcTitle');
+      const descEl  = document.getElementById('hpcDesc');
 
       /* Léger délai pour déclencher la transition CSS après display:flex */
-      setTimeout(function() {
+      setTimeout(() => {
         if (arc) arc.style.strokeDashoffset = offset;
       }, 50);
 
       if (pctTxt) pctTxt.textContent = p.pct + '%';
       if (subTxt) subTxt.textContent = '⭐ ' + p.starsEarned + ' / ' + p.starsMax;
 
+      /* Nombre de modules validés, en texte simple sous le cercle (hors SVG
+         pour ne pas surcharger/déborder le petit texte "hpc-sub" interne) */
+      const modulesEl = document.getElementById('hpcModulesLine');
+      if (modulesEl) modulesEl.textContent = p.n + '/' + p.total + ' ' + L('módulos', 'modules');
+
       /* Textes accessibles (aria) */
-      var a11yLabel = L(
+      const a11yLabel = L(
         p.n + ' / ' + p.total + ' modules validés — ' + p.pct + '% — ' + p.starsEarned + ' étoiles / ' + p.starsMax,
         p.n + ' / ' + p.total + ' módulos completados — ' + p.pct + '% — ' + p.starsEarned + ' estrellas / ' + p.starsMax
       );
@@ -1681,6 +1894,58 @@ function renderHome() {
 
   /* ── Widget de variante régionale (mode Espagnol uniquement) ── */
   _renderHomeRegionWidget();
+
+  /* ── Résumé de progression de l'AUTRE parcours (si déjà commencé) ── */
+  _renderOtherModeProgress();
+}
+
+/**
+ * _renderOtherModeProgress() — Affiche un petit badge de progression pour
+ * l'AUTRE parcours (Français ↔ Espagnol) sur l'écran #home, si l'apprenant
+ * l'a déjà commencé. Reste masqué si l'autre parcours est vierge, pour ne
+ * pas surcharger l'écran avec une barre de progression vide.
+ *
+ * Note : les deux parcours partagent toujours le même total de 48 modules
+ * (32 thèmes + 16 dialogues, cf. Bilan_technique.md) — on réutilise donc
+ * ALL_THEMES.length du mode courant comme référence pour l'autre parcours,
+ * sans avoir à charger son fichier de données juste pour ce nombre.
+ */
+function _renderOtherModeProgress() {
+  const wrap = document.getElementById('homeOtherProgress');
+  if (!wrap) return;
+
+  const otherMode = (currentMode === 'learn_french') ? 'learn_spain' : 'learn_french';
+  const otherKey  = (otherMode === 'learn_french') ? 'pe_es_fr_done_v1' : 'pe_fr_es_done_v1';
+
+  let otherDone = [];
+  try {
+    otherDone = JSON.parse(localStorage.getItem(otherKey) || '[]');
+  } catch (e) {
+    otherDone = [];
+  }
+
+  if (!Array.isArray(otherDone) || otherDone.length === 0) {
+    wrap.style.display = 'none';
+    return;
+  }
+
+  const total       = ALL_THEMES.length || 48;
+  const starsMax    = total * 3;
+  const starsEarned = otherDone.reduce((acc, d) => acc + (d.stars || 0), 0);
+  const flagEmojis  = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+  const flag        = (otherMode === 'learn_french') ? '🇫🇷' : (flagEmojis[currentRegion] || '🇪🇸');
+
+  wrap.style.display = 'flex';
+  wrap.innerHTML = flag
+    + ' <strong>' + otherDone.length + '/' + total + '</strong>'
+    + ' <span class="hop-sep">·</span> ⭐ ' + starsEarned + '/' + starsMax;
+
+  const a11y = L(
+    'Otro recorrido: ' + otherDone.length + '/' + total + ' módulos, ' + starsEarned + '/' + starsMax + ' estrellas',
+    'Autre parcours : ' + otherDone.length + '/' + total + ' modules, ' + starsEarned + '/' + starsMax + ' étoiles'
+  );
+  wrap.setAttribute('aria-label', a11y);
+  wrap.setAttribute('title', a11y);
 }
 
 
@@ -1699,7 +1964,7 @@ function renderHome() {
    Appelle pickRegion() au clic (persistance + cascade CSS + voix).
 ───────────────────────────────────────────────────────── */
 function _renderHomeRegionWidget() {
-  var widget = document.getElementById('home-region-widget');
+  const widget = document.getElementById('home-region-widget');
   if (!widget) return;
 
   /* Masquer le widget en mode Français */
@@ -1709,7 +1974,7 @@ function _renderHomeRegionWidget() {
   }
   widget.style.display = 'block';
 
-  var regions = [
+  const regions = [
     { id:'ES', flag:'🇪🇸', name: 'Espagne'    },
     { id:'MX', flag:'🇲🇽', name: 'Mexique'    },
     { id:'CO', flag:'🇨🇴', name: 'Colombie'   },
@@ -1719,14 +1984,14 @@ function _renderHomeRegionWidget() {
     { id:'EC', flag:'🇪🇨', name: 'Équateur'   }
   ];
 
-  var labelText = L('Variante regional :', 'Variante régionale :');
+  const labelText = L('Variante regional :', 'Variante régionale :');
 
-  var html = '<div class="hrw-wrap">'
+  let html = '<div class="hrw-wrap">'
     + '<p class="hrw-label">' + labelText + '</p>'
     + '<div class="hrw-chips" role="group" aria-label="' + labelText + '">';
 
-  regions.forEach(function(r) {
-    var isActive = (currentRegion === r.id);
+  regions.forEach((r) => {
+    const isActive = (currentRegion === r.id);
     html += '<button'
       + ' class="hrw-chip' + (isActive ? ' hrw-chip--active' : '') + '"'
       + ' onclick="pickRegion(\'' + r.id + '\');_renderHomeRegionWidget();"'
@@ -1754,21 +2019,21 @@ function renderSections(activeLevel) {
   if (!ALL_THEMES.length) return;
   if (!activeLevel) activeLevel = 1;
 
-  var total = ALL_THEMES.length;
-  var n     = done.length;
-  var pct   = Math.round(n / total * 100);
-  var totalStarsEarned = done.reduce((acc, d) => acc + d.stars, 0);
-  var maxStarsPossible = total * 3;
+  const total = ALL_THEMES.length;
+  const n     = done.length;
+  const pct   = Math.round(n / total * 100);
+  const totalStarsEarned = done.reduce((acc, d) => acc + d.stars, 0);
+  const maxStarsPossible = total * 3;
 
   /* ── Helper : remplir les éléments d'un header de sections ── */
   function _fillHeader(suffix) {
-    var s = suffix || '';
+    const s = suffix || '';
     // Barre de progression
-    var gp = document.getElementById('globalProgress' + s);
+    const gp = document.getElementById('globalProgress' + s);
     if (gp) gp.style.width = pct + '%';
 
     // Label de progression
-    var pl = document.getElementById('progressLabel' + s);
+    const pl = document.getElementById('progressLabel' + s);
     if (pl) {
       pl.innerHTML = L(
         n + ' / ' + total + ' modules — ' + pct + '%',
@@ -1777,7 +2042,7 @@ function renderSections(activeLevel) {
     }
 
     // Étoiles totales
-    var se = document.getElementById('sectionsStars' + s);
+    const se = document.getElementById('sectionsStars' + s);
     if (se) {
       se.innerHTML =
         '<span style="font-size:1rem;font-weight:bold;color:rgba(255,255,255,0.95);">⭐ '
@@ -1785,7 +2050,7 @@ function renderSections(activeLevel) {
     }
 
     // Sous-titre bilingue
-    var subtitle = document.getElementById('sectionsSubtitle' + s);
+    const subtitle = document.getElementById('sectionsSubtitle' + s);
     if (subtitle) {
       if (isFrench()) {
         subtitle.innerHTML = '<span class="translation-sub">Módulos</span>';
@@ -1795,7 +2060,7 @@ function renderSections(activeLevel) {
     }
 
     // Footer dynamique selon le mode
-    var footer = document.getElementById('sectionsFooter' + s);
+    const footer = document.getElementById('sectionsFooter' + s);
     if (footer) {
       if (isFrench()) {
         footer.innerHTML =
@@ -1820,8 +2085,8 @@ function renderSections(activeLevel) {
   _fillHeader('2');   // IDs avec suffixe '2' → #sections-level2
 
   /* ── Grilles de thèmes ── */
-  var grid1 = document.getElementById('grid1');
-  var grid2 = document.getElementById('grid2');
+  const grid1 = document.getElementById('grid1');
+  const grid2 = document.getElementById('grid2');
   if (grid1) grid1.innerHTML = ALL_THEMES
     .filter(t => t.level === 1)
     .map(t => _buildThemeCard(t))
@@ -1840,7 +2105,7 @@ function _buildThemeCard(t) {
   const { main: mainTitle, sub: subLine } = _themeTitle(t);
 
   // Configuration du bouton de réinitialisation
-  var resetBtn = isDone(t.id)
+  const resetBtn = isDone(t.id)
     ? '<button onclick="event.stopPropagation();resetTheme(\'' + t.id + '\')" '
       + 'style="margin-top:6px;font-size:.65rem;background:#fff;border:1.5px solid #009A44;'
       + 'color:#009A44;border-radius:50px;padding:4px 10px;cursor:pointer;font-weight:700">'
@@ -1849,8 +2114,8 @@ function _buildThemeCard(t) {
     : '';
 
   // Génération de l'affichage des étoiles
-  var currentStars = getThemeStars(t.id);
-  var starsStr = Array.from({ length: 3 }, function(_, i) {
+  const currentStars = getThemeStars(t.id);
+  const starsStr = Array.from({ length: 3 }, (_, i) => {
     return i < currentStars ? '⭐' : '☆';
   }).join('');
 
@@ -1903,13 +2168,13 @@ function openTheme(id) {
   if (CT) _currentThemeLevel = CT.level || 1;
 
   // Pré-génération du quiz dynamique pour les thèmes de Niveau 1 (hors alphabet)
-  _currentDynQuiz = (CT && CT.level === 1 && CT.type !== 'alpha')
+  _currentDynQuiz = (CT?.level === 1 && CT.type !== 'alpha')
     ? _generateLevel1Quiz(CT)
     : [];
 
   // Tentative de reprise d'un quiz en cours (sessionStorage) pour ce même thème.
   // Si une session valide existe, on mémorise l'onglet à activer en priorité.
-  var resumeTab = _restoreQuizSession();
+  const resumeTab = _restoreQuizSession();
 
   // Injection de l'emoji dans l'en-tête de leçon
   document.getElementById('lessonEmoji').textContent = CT.emoji;
@@ -1924,7 +2189,7 @@ function openTheme(id) {
   _updateLessonNavArrows();
 
   /* ── Footer de la leçon dans la langue de l'apprenant ── */
-  var lf = document.getElementById('lessonFooter');
+  const lf = document.getElementById('lessonFooter');
   if (lf) {
     if (isFrench()) {
       lf.innerHTML =
@@ -1944,7 +2209,7 @@ function openTheme(id) {
   }
 
   // Définition des onglets selon le type de thème et le mode courant
-  var tabs;
+  let tabs;
   if (CT.type === 'dialog') {
     tabs = [
       { k:'dialog', lbl: L('💬 Diálogo',     '💬 Dialogue')   },
@@ -1966,30 +2231,30 @@ function openTheme(id) {
 
   // Rendu des boutons d'onglets
   // Si une session de quiz a été restaurée, on active cet onglet plutôt que le premier
-  var initialTab = (resumeTab && tabs.some(t => t.k === resumeTab))
+  const initialTab = (resumeTab && tabs.some(t => t.k === resumeTab))
     ? resumeTab : tabs[0].k;
 
-  document.getElementById('lessonTabs').innerHTML = tabs.map(function(t, i) {
+  document.getElementById('lessonTabs').innerHTML = tabs.map((t, i) => {
     return '<button class="tab' + (t.k === initialTab ? ' active' : '')
       + '" data-tab="' + t.k + '" onclick="switchTab(\'' + t.k + '\')">' + t.lbl + '</button>';
   }).join('');
 
   // ─── Badge de voix + barre de vitesse — injectés sous les onglets ───
-  var lessonMeta = document.getElementById('lesson-meta-bar');
+  let lessonMeta = document.getElementById('lesson-meta-bar');
   if (!lessonMeta) {
     lessonMeta = document.createElement('div');
     lessonMeta.id = 'lesson-meta-bar';
     lessonMeta.className = 'lesson-meta-bar';
-    var lessonBody = document.getElementById('lessonBody');
-    var tabs_el    = document.getElementById('lessonTabs');
-    if (lessonBody && tabs_el && tabs_el.nextSibling) {
+    const lessonBody = document.getElementById('lessonBody');
+    const tabs_el    = document.getElementById('lessonTabs');
+    if (lessonBody && tabs_el?.nextSibling) {
       lessonBody.insertBefore(lessonMeta, tabs_el.nextSibling);
     } else if (lessonBody) {
       lessonBody.insertBefore(lessonMeta, lessonBody.firstChild);
     }
   }
   // Badge voix (ES uniquement) + barre de vitesse (les deux modes)
-  var badgeHtml = (currentMode === 'learn_spain')
+  const badgeHtml = (currentMode === 'learn_spain')
     ? '<div id="voice-quality-badge" class="voice-quality-badge vqb-pending" title="">🇪🇸 <span class="vqb-label">Espagne (Castillan)…</span></div>'
     : '<div id="voice-quality-badge" class="voice-quality-badge vqb-exact">🇫🇷 <span class="vqb-label">Voix Français</span></div>';
   lessonMeta.innerHTML = badgeHtml + _buildSpeedBar();
@@ -2000,7 +2265,7 @@ function openTheme(id) {
 
   // Si mode espagnol, déclencher la résolution de voix en tâche de fond pour le badge
   if (currentMode === 'learn_spain' && _spanishVoice === undefined) {
-    _resolveSpanishVoice(function() { _updateVoiceBadge(); });
+    _resolveSpanishVoice(() => { _updateVoiceBadge(); });
   }
 
   // Affiche l'onglet initial (repris ou premier par défaut).
@@ -2015,10 +2280,10 @@ function openTheme(id) {
 
 function lessonNav(delta) {
   if (!CT || !ALL_THEMES.length) return;
-  var levelThemes = ALL_THEMES.filter(t => t.level === CT.level);
-  var idx = levelThemes.findIndex(function(t) { return t.id === CT.id; });
+  const levelThemes = ALL_THEMES.filter(t => t.level === CT.level);
+  const idx = levelThemes.findIndex((t) => { return t.id === CT.id; });
   if (idx === -1) return;
-  var newIdx = idx + delta;
+  const newIdx = idx + delta;
   if (newIdx < 0 || newIdx >= levelThemes.length) return;
   openTheme(levelThemes[newIdx].id);
 }
@@ -2029,38 +2294,54 @@ function lessonNav(delta) {
  */
 function _updateLessonNavArrows() {
   if (!CT) return;
-  var levelThemes = ALL_THEMES.filter(t => t.level === CT.level);
-  var idx = levelThemes.findIndex(function(t) { return t.id === CT.id; });
-  var prev = document.getElementById('lessonPrevBtn');
-  var next = document.getElementById('lessonNextBtn');
+  const levelThemes = ALL_THEMES.filter(t => t.level === CT.level);
+  const idx = levelThemes.findIndex((t) => { return t.id === CT.id; });
+  const prev = document.getElementById('lessonPrevBtn');
+  const next = document.getElementById('lessonNextBtn');
   if (prev) prev.disabled = (idx <= 0);
   if (next) next.disabled = (idx >= levelThemes.length - 1);
 }
 
 /* switchTab(tab) — Active l'onglet demandé et déclenche son rendu.
-   Réinitialise les variables de quiz à chaque changement d'onglet. */
+   BUG 6.7 (corrigé) : cette fonction réinitialisait auparavant à tort les
+   variables de quiz (q10Step/q10Score, dqStep/dqScore) à CHAQUE clic sur
+   l'onglet Prueba/dquiz — y compris en revenant d'un simple aller-retour
+   vers Cartas ou Repite. Un utilisateur à la question 4/10 qui cliquait
+   sur Cartas puis revenait sur Prueba perdait donc sa progression.
+   q10Step/q10Score/dqStep/dqScore sont des variables de module qui restent
+   en mémoire tant que la leçon reste ouverte : il suffit de ne plus les
+   écraser ici pour que la reprise fonctionne naturellement.
+
+   Cas particulier des quiz dynamiques (Niveau 1, hors alphabet) :
+   on veut GARDER un jeu de questions aléatoire différent à chaque
+   nouvelle tentative (fonctionnalité voulue), mais SANS écraser un quiz
+   déjà en cours. On ne régénère donc _currentDynQuiz que si q10Step === 0,
+   c'est-à-dire qu'aucune question n'a encore été répondue dans cette
+   visite de l'onglet — jamais si l'utilisateur est au milieu du quiz.
+
+   La réinitialisation complète reste faite aux bons endroits :
+     - openTheme()    → nouvelle leçon ouverte (reset complet)
+     - _retryQuiz10() / bouton "Recommencer" du dialogue → reset explicite
+   sessionStorage (_saveQuizSession/_restoreQuizSession) continue de gérer
+   la reprise après fermeture complète de l'app/l'onglet navigateur. */
 function switchTab(tab) {
-  document.querySelectorAll('#lessonTabs .tab').forEach(function(b) {
+  document.querySelectorAll('#lessonTabs .tab').forEach((b) => {
     b.classList.toggle('active', b.dataset.tab === tab);
   });
   /* Mise à jour du bouton PDF dans la barre meta (même ligne que Vitesse) */
   _updateMetaPdfBtn(tab);
   if      (tab === 'flash')  { renderFlash(); }
   else if (tab === 'quiz10') {
-    q10Step = 0; q10Score = 0; q10Answered = false;
-    _clearQuizSession();
-    if (CT && CT.level === 1 && CT.type !== 'alpha') {
+    // Aucun quiz en cours (pas encore répondu à une question) : on peut
+    // régénérer un nouveau jeu de questions dynamiques sans rien perdre.
+    if (q10Step === 0 && CT?.level === 1 && CT.type !== 'alpha') {
       _currentDynQuiz = _generateLevel1Quiz(CT);
     }
     renderQuiz10();
   }
   else if (tab === 'dialog') { renderDialog(); }
   else if (tab === 'vocab')  { renderVocab(); }
-  else if (tab === 'dquiz')  {
-    dqStep = 0; dqScore = 0; dqAnswered = false;
-    _clearQuizSession();
-    renderDialogQuiz();
-  }
+  else if (tab === 'dquiz')  { renderDialogQuiz(); }
   else if (tab === 'repeat') { renderRepeat(); }
 }
 
@@ -2077,21 +2358,21 @@ function switchTab(tab) {
 ═══════════════════════════════════════════════════════════ */
 
 function renderFlash() {
-  var w    = CT.words;
-  var card = w[fcIdx];
+  const w    = CT.words;
+  const card = w[fcIdx];
 
   /* ─── Rendu spécifique : Alphabet (grille de lettres) ─── */
   if (CT.type === 'alpha') {
-    var alphaLabel = L(
+    const alphaLabel = L(
       '¡Haz clic en una letra para escucharla!',
       'Cliquez sur une lettre pour l\'écouter !'
     );
 
     document.getElementById('tabContent').innerHTML =
       '<div class="section-label">' + alphaLabel + '</div>'
-      + '<div class="alpha-grid">' + w.map(function(c, i) {
-          var bigLetter = L(c.fr, c.es);
-          var smallName = L(c.es, c.fr);
+      + '<div class="alpha-grid">' + w.map((c, i) => {
+          const bigLetter = L(c.fr, c.es);
+          const smallName = L(c.es, c.fr);
           return '<div class="alpha-card" onclick="pickAlpha(' + i + ')">'
             + '<div class="alpha-letter">' + bigLetter + '</div>'
             + '<div class="alpha-name">'   + smallName  + '</div>'
@@ -2104,39 +2385,39 @@ function renderFlash() {
   /* ─── Rendu standard : Flashcard retournable ─── */
 
   // Résolution du mot espagnol : variante régionale prioritaire sur le castillan
-  var finalEsWord = (card.variants && card.variants[currentRegion])
+  const finalEsWord = (card.variants?.[currentRegion])
     ? card.variants[currentRegion] : card.es;
 
   // Drapeau courant pour l'affichage dans la section-label
-  var flagEmojis  = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
-  var activeFlag  = flagEmojis[currentRegion] || '🇪🇸';
+  const flagEmojis  = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+  const activeFlag  = flagEmojis[currentRegion] || '🇪🇸';
 
   // Optionnel : emoji décoratif sur les deux faces
-  var emFr = card.em ? '<div class="fc-front-emoji">' + card.em + '</div>' : '';
-  var emBk = card.em ? '<div class="fc-back-emoji">'  + card.em + '</div>' : '';
+  const emFr = card.em ? '<div class="fc-front-emoji">' + card.em + '</div>' : '';
+  const emBk = card.em ? '<div class="fc-back-emoji">'  + card.em + '</div>' : '';
 
-  var hasConj = card.conj && card.conj.es && card.conj.fr;
-  var frontContent, backContent;
+  const hasConj = card.conj?.es && card.conj?.fr;
+  let frontContent, backContent;
 
   /* — MODE Français : Recto = FR, Verso = ES — */
   if (isFrench()) {
-    var hintFr = L('Haz clic para ver su significado en español', '');
+    const hintFr = L('Haz clic para ver su significado en español', '');
     if (hasConj) {
       // Carte conjugaison : affiche le tableau de conjugaison des deux côtés
-      frontContent = emFr + '<div class="fc-front-word">' + card.fr + '</div>'
-        + '<div class="fc-conj">' + card.conj.fr.map(function(l) {
+      frontContent = emFr + '<div class="fc-front-word">' + _buildSpeakableHTML(card.fr, 'fcword') + '</div>'
+        + '<div class="fc-conj">' + card.conj.fr.map((l) => {
             return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
       backContent  = emBk + '<div class="fc-back-word">' + finalEsWord + '</div>'
-        + '<div class="fc-conj">' + card.conj.es.map(function(l) {
+        + '<div class="fc-conj">' + card.conj.es.map((l) => {
             return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
     } else {
-      frontContent = emFr + '<div class="fc-front-word">' + card.fr + '</div>'
+      frontContent = emFr + '<div class="fc-front-word">' + _buildSpeakableHTML(card.fr, 'fcword') + '</div>'
         + '<div class="fc-front-hint">👆 ' + hintFr + '</div>';
       backContent  = emBk + '<div class="fc-back-word">' + finalEsWord + '</div>';
     }
 
-    var regionLabelsFR = { ES:'🇪🇸 España (Castellano)', MX:'🇲🇽 México', CO:'🇨🇴 Colombia', AR:'🇦🇷 Argentina', PE:'🇵🇪 Perú', VE:'🇻🇪 Venezuela', EC:'🇪🇨 Ecuador' };
-    var regionFullLabel = regionLabelsFR[currentRegion] || ('🇪🇸 España (Castellano)');
+    const regionLabelsFR = { ES:'🇪🇸 España (Castellano)', MX:'🇲🇽 México', CO:'🇨🇴 Colombia', AR:'🇦🇷 Argentina', PE:'🇵🇪 Perú', VE:'🇻🇪 Venezuela', EC:'🇪🇨 Ecuador' };
+    const regionFullLabel = regionLabelsFR[currentRegion] || ('🇪🇸 España (Castellano)');
     document.getElementById('tabContent').innerHTML =
       '<div class="section-label">Anverso : Francés 🇫🇷 — Reverso : Español '
       + '<span id="current-lang-flag">' + regionFullLabel + '</span> · Haz clic para volver !</div>'
@@ -2150,29 +2431,29 @@ function renderFlash() {
       + '<button onclick="nextCard()">Siguiente →</button>'
       + '</div>'
       + '<div class="audio-btn-group">'
-      + '<button class="audio-btn-big audio-btn-main" onclick="speak(\'' + esc(card.fr) + '\', this)" aria-label="' + _escAttr(L("Escuchar : ", "Écouter : ") + card.fr) + '">🔊 ' + L('Escuchar audio', 'Écouter') + '</button>'
-      + '<button class="audio-btn-big audio-btn-slow" onclick="speakSlow(\'' + esc(card.fr) + '\', this)" aria-label="' + L('Repetir lento', 'Répéter lentement') + '">🐢 ' + L('Lento', 'Lent') + '</button>'
+      + '<button class="audio-btn-big audio-btn-main" onclick="speak(\'' + esc(card.fr) + '\', this, {highlightUid:\'fcword\'})" aria-label="' + _escAttr(L("Escuchar : ", "Écouter : ") + card.fr) + '">🔊 ' + L('Escuchar audio', 'Écouter') + '</button>'
+      + '<button class="audio-btn-big audio-btn-slow" onclick="speakSlow(\'' + esc(card.fr) + '\', this, {highlightUid:\'fcword\'})" aria-label="' + L('Repetir lento', 'Répéter lentement') + '">🐢 ' + L('Lento', 'Lent') + '</button>'
       + '</div>'
       + _buildMicZone(card.fr, 'fr-FR');
 
   /* — MODE Espagnol : Recto = ES (variante), Verso = FR — */
   } else {
-    var hintEs = L('', 'Cliquez pour voir la traduction en français');
+    const hintEs = L('', 'Cliquez pour voir la traduction en français');
     if (hasConj) {
-      frontContent = emFr + '<div class="fc-front-word">' + finalEsWord + '</div>'
-        + '<div class="fc-conj">' + card.conj.es.map(function(l) {
+      frontContent = emFr + '<div class="fc-front-word">' + _buildSpeakableHTML(finalEsWord, 'fcword') + '</div>'
+        + '<div class="fc-conj">' + card.conj.es.map((l) => {
             return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
       backContent  = emBk + '<div class="fc-back-word">' + card.fr + '</div>'
-        + '<div class="fc-conj">' + card.conj.fr.map(function(l) {
+        + '<div class="fc-conj">' + card.conj.fr.map((l) => {
             return '<div class="fc-conj-line">' + l + '</div>'; }).join('') + '</div>';
     } else {
-      frontContent = emFr + '<div class="fc-front-word">' + finalEsWord + '</div>'
+      frontContent = emFr + '<div class="fc-front-word">' + _buildSpeakableHTML(finalEsWord, 'fcword') + '</div>'
         + '<div class="fc-front-hint">👆 ' + hintEs + '</div>';
       backContent  = emBk + '<div class="fc-back-word">' + card.fr + '</div>';
     }
 
-    var regionLabelsES = { ES:'🇪🇸 Espagne (Castillan)', MX:'🇲🇽 Mexique', CO:'🇨🇴 Colombie', AR:'🇦🇷 Argentine', PE:'🇵🇪 Pérou', VE:'🇻🇪 Venezuela', EC:'🇪🇨 Équateur' };
-    var regionFullLabelES = regionLabelsES[currentRegion] || ('🇪🇸 Espagne (Castillan)');
+    const regionLabelsES = { ES:'🇪🇸 Espagne (Castillan)', MX:'🇲🇽 Mexique', CO:'🇨🇴 Colombie', AR:'🇦🇷 Argentine', PE:'🇵🇪 Pérou', VE:'🇻🇪 Venezuela', EC:'🇪🇨 Équateur' };
+    const regionFullLabelES = regionLabelsES[currentRegion] || ('🇪🇸 Espagne (Castillan)');
     document.getElementById('tabContent').innerHTML =
       '<div class="section-label">Recto : Espagnol <span id="current-lang-flag">'
       + regionFullLabelES + '</span> — Verso : Français 🇫🇷 · Cliquez pour retourner !</div>'
@@ -2186,8 +2467,8 @@ function renderFlash() {
       + '<button onclick="nextCard()">Suivant →</button>'
       + '</div>'
       + '<div class="audio-btn-group">'
-      + '<button class="audio-btn-big audio-btn-main" onclick="speak(\'' + esc(finalEsWord) + '\', this)" aria-label="' + _escAttr("Écouter : " + finalEsWord) + '">' + activeFlag + ' 🔊 ' + L('Escuchar', 'Écouter') + '</button>'
-      + '<button class="audio-btn-big audio-btn-slow" onclick="speakSlow(\'' + esc(finalEsWord) + '\', this)" aria-label="Répéter lentement">🐢 ' + L('Lento', 'Lent') + '</button>'
+      + '<button class="audio-btn-big audio-btn-main" onclick="speak(\'' + esc(finalEsWord) + '\', this, {highlightUid:\'fcword\'})" aria-label="' + _escAttr("Écouter : " + finalEsWord) + '">' + activeFlag + ' 🔊 ' + L('Escuchar', 'Écouter') + '</button>'
+      + '<button class="audio-btn-big audio-btn-slow" onclick="speakSlow(\'' + esc(finalEsWord) + '\', this, {highlightUid:\'fcword\'})" aria-label="Répéter lentement">🐢 ' + L('Lento', 'Lent') + '</button>'
       + '</div>'
       + _buildMicZone(finalEsWord, voiceLang);
   }
@@ -2196,10 +2477,10 @@ function renderFlash() {
 /* buildAlphaDetail(c) — Construit le panneau de détail d'une lettre de l'alphabet.
    Affiche la lettre en grand, son nom dans l'autre langue, et un bouton audio. */
 function buildAlphaDetail(c) {
-  var bigLetter = L(c.fr, c.es);
-  var smallName = L(c.es, c.fr);
-  var btnLabel  = L('🔊 Escuchar', '🔊 Écouter');
-  var spokenKey = _spokenKey(c);
+  const bigLetter = L(c.fr, c.es);
+  const smallName = L(c.es, c.fr);
+  const btnLabel  = L('🔊 Escuchar', '🔊 Écouter');
+  const spokenKey = _spokenKey(c);
   return '<div style="font-size:2.5rem;font-weight:900;color:#009A44">' + bigLetter + '</div>'
     + '<div style="color:#555;margin:4px 0;font-size:.85rem">' + smallName + '</div>'
     + '<button onclick="speak(\'' + esc(spokenKey) + '\')" '
@@ -2211,17 +2492,17 @@ function buildAlphaDetail(c) {
    la prononce et met à jour le panneau de détail. */
 function pickAlpha(i) {
   fcIdx = i;
-  var card      = CT.words[i];
+  const card      = CT.words[i];
   // _spokenKey() retourne le mot dans la langue source selon le mode actif
-  var spokenKey = _spokenKey(card);
+  const spokenKey = _spokenKey(card);
   speak(spokenKey);
-  var d = document.getElementById('alphaDetail');
+  const d = document.getElementById('alphaDetail');
   if (d) d.innerHTML = buildAlphaDetail(card);
 }
 
 /* flipCard() — Retourne la carte flash active (toggle de classe CSS 'flipped'). */
 function flipCard() {
-  var fc = document.getElementById('fc');
+  const fc = document.getElementById('fc');
   if (!fc) return;
   fc.classList.toggle('flipped');
 }
@@ -2261,13 +2542,13 @@ function _normalizeSpeech(s) {
 function _levenshtein(a, b) {
   const m = a.length, n = b.length;
   const dp = [];
-  for (var i = 0; i <= m; i++) {
+  for (let i = 0; i <= m; i++) {
     dp[i] = [i];
-    for (var j = 1; j <= n; j++) {
+    for (let j = 1; j <= n; j++) {
       if (i === 0) {
         dp[i][j] = j;
       } else {
-        var cost = (a[i - 1] === b[j - 1]) ? 0 : 1;
+        const cost = (a[i - 1] === b[j - 1]) ? 0 : 1;
         dp[i][j] = Math.min(
           dp[i - 1][j] + 1,        // suppression
           dp[i][j - 1] + 1,        // insertion
@@ -2286,7 +2567,7 @@ function _levenshtein(a, b) {
      (b) l'une des chaînes contient l'autre ;
      (c) expected.length ≤ 3 → pas de tolérance (identité seulement) ;
      (d) sinon, distance de Levenshtein ≤ 25 % de la longueur de expected ;
-     (e) pour les expressions avec "/" (ex : "Por favor / De nada"),
+     (e) pour les expressions avec "/" (ex : "Buenos días / Buen día"),
          chaque partie est testée indépendamment — la STT ne transcrit
          qu'une seule formulation, le seuil global échouerait sinon. */
 function _speechMatch(spoken, expected) {
@@ -2304,9 +2585,9 @@ function _speechMatch(spoken, expected) {
 
   /* Si l'expression contient "/", tester chaque partie séparément */
   if (expected.indexOf('/') !== -1) {
-    var parts = expected.split('/').map(function(p) { return p.trim(); }).filter(Boolean);
-    for (var i = 0; i < parts.length; i++) {
-      var normPart = _normalizeSpeech(parts[i]);
+    const parts = expected.split('/').map((p) => { return p.trim(); }).filter(Boolean);
+    for (let i = 0; i < parts.length; i++) {
+      const normPart = _normalizeSpeech(parts[i]);
       if (_testPair(spoken, normPart)) return true;
     }
   }
@@ -2320,7 +2601,7 @@ function _speechMatch(spoken, expected) {
    très reconnaissable, et le texte explique en 1 clic comment réactiver
    l'accès (icône cadenas/réglages dans la barre d'adresse). */
 function _micBlockedHtml() {
-  var msg = L(
+  const msg = L(
     '🚫🎤 Micrófono bloqueado — toca el icono 🔒/⚙️ junto a la dirección del sitio, luego autoriza el micrófono y recarga la página.',
     '🚫🎤 Micro bloqué — touche l\'icône 🔒/⚙️ à côté de l\'adresse du site, puis autorise le micro et recharge la page.'
   );
@@ -2336,12 +2617,12 @@ function _isMicBlockedError(err) {
 /* _buildMicZone(word, lang) — Génère le HTML complet du bloc micro
    (bouton, feedback, hint). word = mot attendu, lang = code BCP-47. */
 function _buildMicZone(word, lang) {
-  var btnLbl      = L('🎤 Pronunciar', '🎤 Prononcer');
-  var hint        = L(
+  const btnLbl      = L('🎤 Pronunciar', '🎤 Prononcer');
+  const hint        = L(
     'Pulsa el micrófono, luego pronúncialo en voz alta',
     'Appuie sur le micro, puis prononce le mot à voix haute'
   );
-  var unsupported = L(
+  const unsupported = L(
     '⚠️ Reconocimiento de voz no disponible en este navegador.',
     '⚠️ Reconnaissance vocale non disponible sur ce navigateur.'
   );
@@ -2364,17 +2645,17 @@ function _buildMicZone(word, lang) {
    Compare la transcription obtenue au mot attendu (normalisation souple).
    Affiche vert ✅ si correct, orange 🔁 sinon, avec le texte reconnu. */
 function startMicReco(word, lang) {
-  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) return;
 
   // Arrête une session précédente éventuelle
   _stopMicReco();
 
-  var isFR = (currentMode === 'learn_french');
+  const isFR = (currentMode === 'learn_french');
 
   // Mise à jour du bouton : état "en écoute"
-  var btn = document.getElementById('micBtn');
-  var fb  = document.getElementById('micFeedback');
+  const btn = document.getElementById('micBtn');
+  const fb  = document.getElementById('micFeedback');
   if (btn) {
     btn.textContent = L('⏹ Parar', '⏹ Arrêter');
     btn.classList.add('mic-btn--listening');
@@ -2386,19 +2667,19 @@ function startMicReco(word, lang) {
   }
 
   // Création et configuration de la session
-  var reco        = new SR();
+  const reco        = new SR();
   _micReco        = reco;
   reco.lang       = lang;
   reco.continuous = false;
   reco.interimResults = false;
 
   reco.onresult = function(e) {
-    var transcript = e.results[0][0].transcript;
-    var expected   = _normalizeSpeech(word);
-    var spoken     = _normalizeSpeech(transcript);
-    var ok         = _speechMatch(spoken, expected);
+    const transcript = e.results[0][0].transcript;
+    const expected   = _normalizeSpeech(word);
+    const spoken     = _normalizeSpeech(transcript);
+    const ok         = _speechMatch(spoken, expected);
 
-    var fbEl = document.getElementById('micFeedback');
+    const fbEl = document.getElementById('micFeedback');
     if (fbEl) {
       if (ok) {
         fbEl.className  = 'mic-feedback mic-feedback--ok';
@@ -2415,7 +2696,7 @@ function startMicReco(word, lang) {
   };
 
   reco.onerror = function(e) {
-    var fbEl = document.getElementById('micFeedback');
+    const fbEl = document.getElementById('micFeedback');
     if (fbEl) {
       if (_isMicBlockedError(e.error)) {
         fbEl.className  = 'mic-feedback mic-feedback--blocked';
@@ -2453,7 +2734,7 @@ function _stopMicReco() {
    🚫🎤 facilement reconnaissable directement sur le bouton, pour que
    l'apprenant comprenne immédiatement qu'il doit réautoriser l'accès. */
 function _resetMicBtn(word, lang, blocked) {
-  var btn = document.getElementById('micBtn');
+  const btn = document.getElementById('micBtn');
   if (!btn) return;
   btn.textContent = blocked
     ? L('🚫🎤 Bloqueado — toca para reintentar', '🚫🎤 Bloqué — touche pour réessayer')
@@ -2468,7 +2749,7 @@ function nextCard() {
   fcIdx = (fcIdx + 1) % CT.words.length;
   renderFlash();
   // Prononce le mot dans la langue cible (avec variante régionale si espagnol)
-  var spokenKey;
+  let spokenKey;
   if (isFrench()) {
     spokenKey = CT.words[fcIdx].fr;
   } else {
@@ -2476,7 +2757,7 @@ function nextCard() {
       ? CT.words[fcIdx].variants[currentRegion]
       : CT.words[fcIdx].es;
   }
-  setTimeout(function() { speak(spokenKey); }, 300);
+  setTimeout(() => { speak(spokenKey); }, 300);
 }
 
 /* prevCard() — Revient à la carte précédente. */
@@ -2486,7 +2767,7 @@ function prevCard() {
 }
 
 /* isAlphaQuiz() — Retourne true si le thème courant est de type alphabet. */
-function isAlphaQuiz() { return CT && CT.type === 'alpha'; }
+function isAlphaQuiz() { return CT?.type === 'alpha'; }
 
 
 /* ═══════════════════════════════════════════════════════════
@@ -2497,7 +2778,7 @@ function isAlphaQuiz() { return CT && CT.type === 'alpha'; }
      2. Lance speak() automatiquement
      3. Après un délai adapté à la longueur du mot (voir _rpMicDelay :
         1800ms de base, +1400ms par "/" pour les mots à deux formulations
-        comme "Por favor / De nada", +90ms par mot supplémentaire),
+        comme "Buenos días / Buen día", +90ms par mot supplémentaire),
         déclenche startMicReco avec la bonne langue
      4. Affiche feedback vert/orange identique à l'option A
      5. Après 2500ms de feedback, passe au mot suivant (ou attend le bouton)
@@ -2506,22 +2787,22 @@ function isAlphaQuiz() { return CT && CT.type === 'alpha'; }
 ═══════════════════════════════════════════════════════════ */
 
 // Variables d'état de la session Répète
-var _rpIdx       = 0;    // Index du mot courant
-var _rpScore     = 0;    // Nombre de réussites
-var _rpWords     = [];   // Liste des mots (filtrés fr+es)
-var _rpAnswered  = false; // Empêche le double-déclenchement
-var _rpAutoTimer = null; // Timer pour l'avancement automatique
-var _rpMicTimer  = null; // Timer pour le délai avant micro
+let _rpIdx       = 0;    // Index du mot courant
+let _rpScore     = 0;    // Nombre de réussites
+let _rpWords     = [];   // Liste des mots (filtrés fr+es)
+let _rpAnswered  = false; // Empêche le double-déclenchement
+let _rpAutoTimer = null; // Timer pour l'avancement automatique
+let _rpMicTimer  = null; // Timer pour le délai avant micro
 
 /* _rpGetWord(idx) — Retourne le mot courant avec sa forme cible résolue. */
 function _rpGetWord(idx) {
-  var card = _rpWords[idx];
+  const card = _rpWords[idx];
   if (!card) return null;
-  var targetWord, displayEmoji;
+  let targetWord, displayEmoji;
   if (currentMode === 'learn_french') {
     targetWord   = card.fr;
   } else {
-    targetWord = (card.variants && card.variants[currentRegion])
+    targetWord = (card.variants?.[currentRegion])
       ? card.variants[currentRegion] : card.es;
   }
   displayEmoji = card.em || '';
@@ -2530,21 +2811,21 @@ function _rpGetWord(idx) {
 
 /* _rpMicDelay(word) — Calcule le délai (ms) avant déclenchement du micro,
    en fonction de la longueur du mot à prononcer. Certains mots contiennent
-   un "/" car ils proposent deux formulations (ex : "Por favor / De nada"
+   un "/" car ils proposent deux formulations (ex : "Adiós / Hasta luego"
    ou "Buenos días / Buen día") : il faut laisser à l'apprenant le temps
    d'entendre ET de prononcer les deux, donc on augmente le délai de base
    et on ajoute un supplément par "/" et par mot supplémentaire. */
 function _rpMicDelay(word) {
-  var BASE       = 1800;  // délai standard pour un mot simple
-  var PER_SLASH  = 1400;  // supplément par "/" (mot composé de 2 formulations)
-  var PER_WORD   = 90;    // supplément par mot au-delà du premier (longueur de phrase)
+  const BASE       = 1800;  // délai standard pour un mot simple
+  const PER_SLASH  = 1400;  // supplément par "/" (mot composé de 2 formulations)
+  const PER_WORD   = 90;    // supplément par mot au-delà du premier (longueur de phrase)
 
   if (!word) return BASE;
 
-  var slashCount = (word.match(/\//g) || []).length;
-  var wordCount  = word.split(/\s+/).filter(Boolean).length;
+  const slashCount = (word.match(/\//g) || []).length;
+  const wordCount  = word.split(/\s+/).filter(Boolean).length;
 
-  var extra = slashCount * PER_SLASH + Math.max(0, wordCount - 1) * PER_WORD;
+  const extra = slashCount * PER_SLASH + Math.max(0, wordCount - 1) * PER_WORD;
   return BASE + extra;
 }
 
@@ -2565,7 +2846,7 @@ function renderRepeat() {
   _rpWords = (CT.words || []).filter(w => w.fr && w.es);
 
   if (!_rpWords.length) {
-    var noW = L('No hay palabras disponibles.', 'Aucun mot disponible.');
+    const noW = L('No hay palabras disponibles.', 'Aucun mot disponible.');
     document.getElementById('tabContent').innerHTML = '<div class="result-box"><p>' + noW + '</p></div>';
     return;
   }
@@ -2582,17 +2863,17 @@ function _rpShowWord() {
     return;
   }
 
-  var total  = _rpWords.length;
-  var info   = _rpGetWord(_rpIdx);
+  const total  = _rpWords.length;
+  const info   = _rpGetWord(_rpIdx);
   if (!info) { _rpIdx++; _rpShowWord(); return; }
 
-  var micLang    = isFrench() ? 'fr-FR' : voiceLang;
-  var counterLbl = L('Palabra', 'Mot');
-  var scoreLbl   = L('Aciertos', 'Réussites');
-  var skipLbl    = L('⏭ Saltar', '⏭ Passer');
-  var rehearLbl  = L('🔁 Volver a escuchar', '🔁 Réentendre');
+  const micLang    = isFrench() ? 'fr-FR' : voiceLang;
+  const counterLbl = L('Palabra', 'Mot');
+  const scoreLbl   = L('Aciertos', 'Réussites');
+  const skipLbl    = L('⏭ Saltar', '⏭ Passer');
+  const rehearLbl  = L('🔁 Volver a escuchar', '🔁 Réentendre');
 
-  var emojiHtml = info.emoji
+  const emojiHtml = info.emoji
     ? '<div class="rp-word-emoji">' + info.emoji + '</div>'
     : '';
 
@@ -2618,8 +2899,8 @@ function _rpShowWord() {
 
   // 2. Lance la reconnaissance vocale après un délai adapté à la longueur
   //    du mot (plus long si le mot contient "/" : deux formulations à dire)
-  _rpMicTimer = setTimeout(function() {
-    var fbEl = document.getElementById('rpFeedback');
+  _rpMicTimer = setTimeout(() => {
+    const fbEl = document.getElementById('rpFeedback');
     if (fbEl) {
       fbEl.className   = 'rp-feedback mic-feedback mic-feedback--listening';
       fbEl.textContent = L('🎙️ Escuchando…', '🎙️ Écoute en cours…');
@@ -2630,9 +2911,9 @@ function _rpShowWord() {
 
 /* _rpStartMic(word, lang) — Lance la reconnaissance vocale dans le contexte Répète. */
 function _rpStartMic(word, lang) {
-  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) {
-    var fbEl = document.getElementById('rpFeedback');
+    const fbEl = document.getElementById('rpFeedback');
     if (fbEl) {
       fbEl.className   = 'rp-feedback mic-feedback mic-feedback--ko';
       fbEl.textContent = L(
@@ -2644,7 +2925,7 @@ function _rpStartMic(word, lang) {
   }
   _stopMicReco();
 
-  var reco = new SR();
+  const reco = new SR();
   _micReco = reco;
   reco.lang           = lang;
   reco.continuous     = false;
@@ -2653,10 +2934,10 @@ function _rpStartMic(word, lang) {
   reco.onresult = function(e) {
     if (_rpAnswered) return;
     _rpAnswered = true;
-    var transcript = e.results[0][0].transcript;
-    var expected   = _normalizeSpeech(word);
-    var spoken     = _normalizeSpeech(transcript);
-    var ok = _speechMatch(spoken, expected);
+    const transcript = e.results[0][0].transcript;
+    const expected   = _normalizeSpeech(word);
+    const spoken     = _normalizeSpeech(transcript);
+    const ok = _speechMatch(spoken, expected);
 
     if (ok) _rpScore++;
     _vibrateFeedback(ok);
@@ -2666,7 +2947,7 @@ function _rpStartMic(word, lang) {
   reco.onerror = function(e) {
     if (_rpAnswered) return;
     _rpAnswered = true;
-    var fbEl = document.getElementById('rpFeedback');
+    const fbEl = document.getElementById('rpFeedback');
 
     if (_isMicBlockedError(e.error)) {
       // Micro bloqué : on ne fait PAS avancer automatiquement, l'apprenant
@@ -2689,7 +2970,7 @@ function _rpStartMic(word, lang) {
       fbEl.textContent = '';
     }
     // Passe au mot suivant après un silence
-    _rpAutoTimer = setTimeout(function() { _rpIdx++; _rpShowWord(); }, 2000);
+    _rpAutoTimer = setTimeout(() => { _rpIdx++; _rpShowWord(); }, 2000);
   };
 
   reco.onend = function() { _micReco = null; };
@@ -2698,7 +2979,7 @@ function _rpStartMic(word, lang) {
 
 /* _rpShowFeedback(ok, transcript, word, lang) — Affiche le feedback et programme l'avancement. */
 function _rpShowFeedback(ok, transcript, word, lang) {
-  var fbEl = document.getElementById('rpFeedback');
+  const fbEl = document.getElementById('rpFeedback');
   if (fbEl) {
     if (ok) {
       fbEl.className = 'rp-feedback mic-feedback mic-feedback--ok';
@@ -2711,23 +2992,23 @@ function _rpShowFeedback(ok, transcript, word, lang) {
     }
   }
   // Avancement automatique après 2500ms
-  _rpAutoTimer = setTimeout(function() { _rpIdx++; _rpShowWord(); }, 2500);
+  _rpAutoTimer = setTimeout(() => { _rpIdx++; _rpShowWord(); }, 2500);
 }
 
 /* _rpRehear() — Prononce à nouveau le mot courant et relance le micro. */
 function _rpRehear() {
   _rpClearTimers();
   _rpAnswered = false;
-  var micLang = isFrench() ? 'fr-FR' : voiceLang;
-  var info   = _rpGetWord(_rpIdx);
+  const micLang = isFrench() ? 'fr-FR' : voiceLang;
+  const info   = _rpGetWord(_rpIdx);
   if (!info) return;
 
-  var fbEl = document.getElementById('rpFeedback');
+  const fbEl = document.getElementById('rpFeedback');
   if (fbEl) { fbEl.className = 'rp-feedback'; fbEl.textContent = ''; }
 
   speak(info.word);
-  _rpMicTimer = setTimeout(function() {
-    var fbEl2 = document.getElementById('rpFeedback');
+  _rpMicTimer = setTimeout(() => {
+    const fbEl2 = document.getElementById('rpFeedback');
     if (fbEl2) {
       fbEl2.className   = 'rp-feedback mic-feedback mic-feedback--listening';
       fbEl2.textContent = L('🎙️ Escuchando…', '🎙️ Écoute en cours…');
@@ -2747,23 +3028,23 @@ function _rpSkip() {
 /* _rpShowEnd() — Affiche l'écran de fin de session avec score et bouton Recommencer. */
 function _rpShowEnd() {
   _rpClearTimers();
-  var total  = _rpWords.length;
-  var pct    = total ? Math.round(_rpScore / total * 100) : 0;
+  const total  = _rpWords.length;
+  const pct    = total ? Math.round(_rpScore / total * 100) : 0;
 
   /* Sauvegarde des étoiles — l'onglet Répète contribue à la progression
      au même titre que les onglets Quiz (markDone ne rétrograde jamais). */
-  var starsEarned = _calcStars(pct);
+  const starsEarned = _calcStars(pct);
   if (starsEarned > 0 && CT) {
     markDone(CT.id, pct);
     /* Rafraîchit les étoiles dans la grille de modules (visible au retour) */
     renderSections(_currentThemeLevel);
   }
 
-  var titleOk  = L('¡Sesión completada!', 'Session terminée !');
-  var retryLbl = L('🔁 Volver a empezar', '🔁 Recommencer');
-  var scoreLbl = L('Resultado', 'Score');
+  const titleOk  = L('¡Sesión completada!', 'Session terminée !');
+  const retryLbl = L('🔁 Volver a empezar', '🔁 Recommencer');
+  const scoreLbl = L('Resultado', 'Score');
 
-  var starsHtml   = Array.from({ length: 3 }, function(_, i) {
+  const starsHtml   = Array.from({ length: 3 }, (_, i) => {
     return i < starsEarned ? '⭐' : '☆';
   }).join('');
 
@@ -2801,7 +3082,7 @@ function _rpShowEnd() {
 /* Retourne le nombre de questions du quiz selon la taille du thème. */
 function getQuizTotal(theme) {
   if (theme.level === 2) return (theme.quiz || []).length; // Niveau 2 : questions fixes
-  var n = (theme.words || []).length;
+  const n = (theme.words || []).length;
   if (n < 10)  return 3;
   if (n < 15)  return 5;
   if (n <= 27) return 8;
@@ -2811,10 +3092,10 @@ function getQuizTotal(theme) {
 /* _shuffle(arr) — Mélange un tableau selon l'algorithme Fisher-Yates.
    Retourne un nouveau tableau (n'altère pas l'original). */
 function _shuffle(arr) {
-  var a = arr.slice();
-  for (var i = a.length - 1; i > 0; i--) {
-    var j  = Math.floor(Math.random() * (i + 1));
-    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j  = Math.floor(Math.random() * (i + 1));
+    const tmp = a[i]; a[i] = a[j]; a[j] = tmp;
   }
   return a;
 }
@@ -2833,14 +3114,14 @@ function _generateLevel1Quiz(theme) {
   const total = getQuizTotal(theme);
   const pool  = _shuffle(words).slice(0, total);
 
-  return pool.map(function(card) {
+  return pool.map((card) => {
     // Résolution du mot espagnol (variante régionale ou castillan par défaut)
-    var correctEs = (card.variants && card.variants[currentRegion])
+    const correctEs = (card.variants?.[currentRegion])
       ? card.variants[currentRegion] : card.es;
-    var correctFr = card.fr;
+    const correctFr = card.fr;
 
     // Question et réponse correcte selon le mode
-    var qText, correctAnswer;
+    let qText, correctAnswer;
     if (currentMode === 'learn_french') {
       qText         = '¿Cómo se dice "' + correctFr  + '" en español?';
       correctAnswer = correctEs;
@@ -2850,17 +3131,17 @@ function _generateLevel1Quiz(theme) {
     }
 
     // Génération de 3 distracteurs depuis les autres mots du thème
-    var distractors = _shuffle(words.filter(w => w !== card))
+    const distractors = _shuffle(words.filter(w => w !== card))
       .slice(0, 3)
-      .map(function(d) {
+      .map((d) => {
         return currentMode === 'learn_french'
-          ? ((d.variants && d.variants[currentRegion]) ? d.variants[currentRegion] : d.es)
+          ? ((d.variants?.[currentRegion]) ? d.variants[currentRegion] : d.es)
           : d.fr;
       });
 
     // Insertion de la bonne réponse à un index aléatoire parmi les 4 options
-    var opts   = distractors.slice(0, 3);
-    var ansIdx = Math.floor(Math.random() * 4);
+    const opts   = distractors.slice(0, 3);
+    const ansIdx = Math.floor(Math.random() * 4);
     opts.splice(ansIdx, 0, correctAnswer);
 
     return { q: qText, opts: opts, ans: ansIdx };
@@ -2878,19 +3159,19 @@ function getQuizQuestions(theme) {
 /* renderQuiz10() — Affiche la question courante du quiz, ou l'écran de résultats. */
 function renderQuiz10() {
   // Sélection de la source de questions
-  var qs;
-  if (CT && CT.type === 'alpha') {
+  let qs;
+  if (CT?.type === 'alpha') {
     qs = getQuizQuestions(CT);
-  } else if (CT && CT.level === 1) {
+  } else if (CT?.level === 1) {
     qs = _currentDynQuiz.length ? _currentDynQuiz : _generateLevel1Quiz(CT);
   } else {
     qs = getQuizQuestions(CT);
   }
-  var total = qs.length;
+  const total = qs.length;
 
   // Cas : aucune question disponible
   if (!qs || !total) {
-    var noQLabel = L(
+    const noQLabel = L(
       'No hay ningún cuestionario disponible.',
       'Aucun quiz disponible.'
     );
@@ -2902,13 +3183,13 @@ function renderQuiz10() {
   /* ─── Écran de résultats (toutes les questions répondues) ─── */
   if (q10Step >= total) {
     _clearQuizSession();
-    var pct         = Math.round(q10Score / total * 100);
-    var earnedStars = _calcStars(pct);
+    const pct         = Math.round(q10Score / total * 100);
+    const earnedStars = _calcStars(pct);
     if (earnedStars > 0) markDone(CT.id, pct);
 
-    var r         = _quizResultStrings(pct, 'q10');
-    var isSuccess = earnedStars > 0;
-    var endStars  = Array.from({ length: 3 }, function(_, i) {
+    const r         = _quizResultStrings(pct, 'q10');
+    const isSuccess = earnedStars > 0;
+    const endStars  = Array.from({ length: 3 }, (_, i) => {
       return i < earnedStars ? '⭐' : '☆';
     }).join('');
 
@@ -2932,18 +3213,18 @@ function renderQuiz10() {
     return;
   }
 
-  var q = qs[q10Step];
+  const q = qs[q10Step];
 
   /* ─── Quiz audio (alphabet) ─── */
   if (isAlphaQuiz()) {
-    var audioLabel = L(
+    const audioLabel = L(
       'Escucha el sonido y elige la letra correcta',
       'Écoutez le son et choisissez la bonne lettre'
     );
-    var listenHint = L('Haz clic para escuchar', 'Cliquez pour écouter');
-    var qLabel     = L('Pregunta ', 'Question ') + (q10Step + 1) + '/' + total;
+    const listenHint = L('Haz clic para escuchar', 'Cliquez pour écouter');
+    const qLabel     = L('Pregunta ', 'Question ') + (q10Step + 1) + '/' + total;
 
-    var opts = q.opts.map(function(o, i) {
+    const opts = q.opts.map((o, i) => {
       return '<button class="quiz-opt" id="q10o' + i
         + '" onclick="checkQ10(' + i + ',' + q.ans + ')" '
         + 'style="font-size:1.4rem;font-weight:900;letter-spacing:2px">' + o + '</button>';
@@ -2958,15 +3239,15 @@ function renderQuiz10() {
       + '<div class="quiz-feedback" id="q10fb"></div>'
       + '</div>';
 
-    setTimeout(function() { playAlphaAudio(q.audio); }, 400); // Lecture automatique de la lettre
+    setTimeout(() => { playAlphaAudio(q.audio); }, 400); // Lecture automatique de la lettre
     q10Answered = false;
     return;
   }
 
   /* ─── Quiz standard (vocabulaire) ─── */
-  var qStdLabel = L('Pregunta ', 'Question ') + (q10Step + 1) + '/' + total;
+  const qStdLabel = L('Pregunta ', 'Question ') + (q10Step + 1) + '/' + total;
 
-  var stdOpts = q.opts.map(function(o, i) {
+  const stdOpts = q.opts.map((o, i) => {
     return '<button class="quiz-opt" id="q10o' + i
       + '" onclick="checkQ10(' + i + ',' + q.ans + ')">' + o + '</button>';
   }).join('');
@@ -2983,10 +3264,10 @@ function renderQuiz10() {
 /* playAlphaAudio(letter) — Prononce une lettre de l'alphabet + animation bouton. */
 function playAlphaAudio(letter) {
   speak(letter);
-  var btn = document.getElementById('playAudioBtn');
+  const btn = document.getElementById('playAudioBtn');
   if (btn) {
     btn.style.transform = 'scale(0.9)';
-    setTimeout(function() { btn.style.transform = 'scale(1)'; }, 200);
+    setTimeout(() => { btn.style.transform = 'scale(1)'; }, 200);
   }
 }
 
@@ -2994,7 +3275,7 @@ function playAlphaAudio(letter) {
 function _retryQuiz10() {
   q10Step = 0; q10Score = 0; q10Answered = false;
   _clearQuizSession();
-  if (CT && CT.level === 1 && CT.type !== 'alpha') {
+  if (CT?.level === 1 && CT.type !== 'alpha') {
     _currentDynQuiz = _generateLevel1Quiz(CT);
   }
   renderQuiz10();
@@ -3008,13 +3289,13 @@ function checkQ10(chosen, correct) {
   q10Answered = true;
 
   // Sélection de la source de questions (identique à renderQuiz10)
-  var qs;
-  if (CT && CT.type === 'alpha')  { qs = getQuizQuestions(CT); }
-  else if (CT && CT.level === 1) { qs = _currentDynQuiz; }
+  let qs;
+  if (CT?.type === 'alpha')  { qs = getQuizQuestions(CT); }
+  else if (CT?.level === 1) { qs = _currentDynQuiz; }
   else                           { qs = getQuizQuestions(CT); }
 
   // Coloration des boutons : vert pour la bonne réponse, rouge pour le mauvais choix
-  document.querySelectorAll('[id^=q10o]').forEach(function(b, i) {
+  document.querySelectorAll('[id^=q10o]').forEach((b, i) => {
     b.classList.add('disabled');
     if (i === correct) b.classList.add('correct');
     else if (i === chosen && chosen !== correct) b.classList.add('wrong');
@@ -3025,31 +3306,31 @@ function checkQ10(chosen, correct) {
   // Retour haptique discret (mobile uniquement, échoue silencieusement ailleurs)
   _vibrateFeedback(chosen === correct);
 
-  var correctWord = qs[q10Step].opts[correct];
-  var fb = document.getElementById('q10fb');
-  var fbOk  = L('✅ ¡Correcto! ¡Enhorabuena!',           '✅ Correct ! Félicitations !');
-  var fbErr = L('❌ Respuesta incorrecta. La solución era: ', '❌ Mauvaise réponse. La solution était : ');
+  const correctWord = qs[q10Step].opts[correct];
+  const fb = document.getElementById('q10fb');
+  const fbOk  = L('✅ ¡Correcto! ¡Enhorabuena!',           '✅ Correct ! Félicitations !');
+  const fbErr = L('❌ Respuesta incorrecta. La solución era: ', '❌ Mauvaise réponse. La solution était : ');
   fb.textContent = (chosen === correct) ? fbOk : fbErr + correctWord;
   fb.style.color = (chosen === correct) ? '#009A44' : '#c0392b';
 
   // Prononciation de la réponse correcte
   if (isAlphaQuiz()) {
-    if (chosen !== correct) setTimeout(function() { speak(qs[q10Step].audio); }, 300);
+    if (chosen !== correct) setTimeout(() => { speak(qs[q10Step].audio); }, 300);
   } else if (CT.words) {
     // Recherche du mot dans le dictionnaire pour en extraire la forme régionale
-    var match = CT.words.find(function(w) {
-      var regionalVar = (w.variants && w.variants[currentRegion]) ? w.variants[currentRegion] : '';
+    const match = CT.words.find((w) => {
+      const regionalVar = (w.variants?.[currentRegion]) ? w.variants[currentRegion] : '';
       return w.es === correctWord || w.fr === correctWord || regionalVar === correctWord;
     });
     if (match) {
-      var finalEsMatch = (match.variants && match.variants[currentRegion])
+      const finalEsMatch = (match.variants?.[currentRegion])
         ? match.variants[currentRegion] : match.es;
       speak(L(match.fr, finalEsMatch));
     }
   }
 
   // Passage automatique à la question suivante après 1,6s
-  setTimeout(function() { q10Step++; renderQuiz10(); }, 1600);
+  setTimeout(() => { q10Step++; renderQuiz10(); }, 1600);
 
   // Mémorise la position courante (sessionStorage) pour permettre la reprise
   _saveQuizSession();
@@ -3073,7 +3354,7 @@ function checkQ10(chosen, correct) {
 /* Table de substitutions pour adapter les dialogues à la variante régionale active.
    Format : { 'mot_castillan': { CODE_PAYS: 'mot_regional', ... } }
    Utilisée uniquement quand la ligne n'a pas de propriété `variants` propre. */
-var _DIALOG_REGIONAL_SUBS = {
+const _DIALOG_REGIONAL_SUBS = {
   // Transports
   'autobús':    { MX:'camión',      AR:'colectivo',   CO:'bus',         VE:'autobús',  PE:'micro',   CL:'micro' },
   'billete':    { MX:'boleto',      AR:'boleto',      CO:'pasaje',      VE:'pasaje',   PE:'boleto',  CL:'boleto' },
@@ -3102,12 +3383,12 @@ var _DIALOG_REGIONAL_SUBS = {
    Ne modifie rien si la région n'a pas de substitution définie pour ce mot. */
 function _adaptDialogueLine(esText) {
   if (!esText) return esText;
-  var result = esText;
-  Object.keys(_DIALOG_REGIONAL_SUBS).forEach(function(castillanWord) {
-    var regionMap = _DIALOG_REGIONAL_SUBS[castillanWord];
-    var regional  = regionMap[currentRegion];
+  let result = esText;
+  Object.keys(_DIALOG_REGIONAL_SUBS).forEach((castillanWord) => {
+    const regionMap = _DIALOG_REGIONAL_SUBS[castillanWord];
+    const regional  = regionMap[currentRegion];
     if (!regional) return; // Pas de variante → on conserve le castillan
-    var escaped = castillanWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const escaped = castillanWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     // Remplacement insensible à la casse avec simulation de word-boundary pour l'espagnol
     result = result.replace(
       new RegExp('(?<![\\wÁÉÍÓÚáéíóúÑñ])' + escaped + '(?![\\wÁÉÍÓÚáéíóúÑñ])', 'g'),
@@ -3123,25 +3404,25 @@ function renderDialog() {
   const sit     = sits[sitIdx];
 
   // Boutons de sélection de situation (Sit. 1, Sit. 2, Sit. 3)
-  var sitBtns = sits.map(function(s, i) {
+  const sitBtns = sits.map((s, i) => {
     return '<button class="sit-btn' + (i === sitIdx ? ' active' : '')
       + '" onclick="pickSit(' + i + ')">' + s.label + '</button>';
   }).join('');
 
   // Génération des bulles avec adaptation régionale et animation d'entrée
-  var bubbles = sit.dialogue.map(function(ln, i) {
+  const bubbles = sit.dialogue.map((ln, i) => {
     // Priorité 1 : variants explicite sur la ligne → Priorité 2 : substitution auto
-    var finalEsLine = (ln.variants && ln.variants[currentRegion])
+    const finalEsLine = (ln.variants?.[currentRegion])
       ? ln.variants[currentRegion]
       : _adaptDialogueLine(ln.es);
 
-    var mainMsg   = L(ln.fr, finalEsLine);
-    var transMsg  = L(finalEsLine, ln.fr);
-    var spokenKey = L(ln.fr, finalEsLine);
-    var listenTip    = L('Escuchar', 'Écouter');
+    const mainMsg   = L(ln.fr, finalEsLine);
+    const transMsg  = L(finalEsLine, ln.fr);
+    const spokenKey = L(ln.fr, finalEsLine);
+    const listenTip    = L('Escuchar', 'Écouter');
     // aria-label descriptif : nom du locuteur + action + texte prononcé
     // (pattern repris de l'app Oromo pour l'accessibilité lecteurs d'écran)
-    var ariaListen   = _escAttr(listenTip + ' : ' + ln.s + ' — ' + spokenKey);
+    const ariaListen   = _escAttr(listenTip + ' : ' + ln.s + ' — ' + spokenKey);
 
     // Les bulles commencent invisibles et s'affichent via un délai croissant (effet cascade)
     return '<div class="bubble ' + ln.side + '" style="opacity:0;transition:opacity .3s '
@@ -3155,7 +3436,7 @@ function renderDialog() {
       + '</div>';
   }).join('');
 
-  var quizBtnLabel = L('Iniciar el minicuestionario ➜', 'Lancer le mini quiz ➜');
+  const quizBtnLabel = L('Iniciar el minicuestionario ➜', 'Lancer le mini quiz ➜');
 
   document.getElementById('tabContent').innerHTML =
     '<div class="sit-nav">' + sitBtns + '</div>'
@@ -3168,7 +3449,7 @@ function renderDialog() {
     + '</div>';
 
   // Déclenche l'animation d'apparition des bulles après un délai minimal
-  setTimeout(function() {
+  setTimeout(() => {
     document.querySelectorAll('[id^=bl]').forEach(b => { b.style.opacity = '1'; });
   }, 80);
 }
@@ -3189,28 +3470,28 @@ function pickSit(i) { sitIdx = i; renderDialog(); }
 ═══════════════════════════════════════════════════════════ */
 
 function renderVocab() {
-  var chips = CT.vocab.map(function(v) {
-    var parts = v.split('=');
-    var es    = parts[0].trim();
-    var fr    = parts[1] ? parts[1].trim() : '';
+  const chips = CT.vocab.map((v) => {
+    const parts = v.split('=');
+    const es    = parts[0].trim();
+    const fr    = parts[1] ? parts[1].trim() : '';
 
     // Recherche de la variante régionale dans le dictionnaire du thème
-    var finalEs = es;
+    let finalEs = es;
     if (CT.words) {
-      var match = CT.words.find(function(w) {
+      const match = CT.words.find((w) => {
         if (w.es === es) return true;
         // Gère les cas avec barres obliques (ex: "Morado / Violeta")
-        var esParts = w.es.split('/').map(p => p.trim());
+        const esParts = w.es.split('/').map(p => p.trim());
         return esParts.includes(es);
       });
-      if (match && match.variants && match.variants[currentRegion]) {
+      if (match?.variants?.[currentRegion]) {
         finalEs = match.variants[currentRegion];
       }
     }
 
-    var mainWord  = L(fr,      finalEs);
-    var subWord   = L(finalEs, fr);
-    var spokenKey = L(fr,      finalEs);
+    const mainWord  = L(fr,      finalEs);
+    const subWord   = L(finalEs, fr);
+    const spokenKey = L(fr,      finalEs);
 
     return '<span class="vocab-chip" style="display:inline-flex;flex-direction:column;align-items:center;text-align:center;" onclick="speak(\'' + esc(spokenKey) + '\')">'
       + '<span class="vocab-item-et" style="font-weight:bold;">' + mainWord + '</span>'
@@ -3218,11 +3499,11 @@ function renderVocab() {
       + '</span>';
   }).join('');
 
-  var vocabTitle   = L(
+  const vocabTitle   = L(
     '📚 Vocabulario básico — ¡Haz clic para escuchar el español!',
     '📚 Lexique essentiel — Cliquez pour écouter l\'Espagnol !'
   );
-  var quizBtnLabel = L('Iniciar el minicuestionario ➜', 'Lancer le mini quiz ➜');
+  const quizBtnLabel = L('Iniciar el minicuestionario ➜', 'Lancer le mini quiz ➜');
 
   document.getElementById('tabContent').innerHTML =
     '<div class="vocab-section">'
@@ -3244,19 +3525,19 @@ function renderVocab() {
 ═══════════════════════════════════════════════════════════ */
 
 function renderDialogQuiz() {
-  var qs    = CT.quiz;
-  var total = qs.length;
+  const qs    = CT.quiz;
+  const total = qs.length;
 
   /* ─── Écran de résultats ─── */
   if (dqStep >= total) {
     _clearQuizSession();
-    var pct         = Math.round(dqScore / total * 100);
-    var earnedStars = _calcStars(pct);
+    const pct         = Math.round(dqScore / total * 100);
+    const earnedStars = _calcStars(pct);
     if (earnedStars > 0) markDone(CT.id, pct);
 
-    var r         = _quizResultStrings(pct, 'dq');
-    var isSuccess = earnedStars > 0;
-    var endStars  = Array.from({ length: 3 }, function(_, i) {
+    const r         = _quizResultStrings(pct, 'dq');
+    const isSuccess = earnedStars > 0;
+    const endStars  = Array.from({ length: 3 }, (_, i) => {
       return i < earnedStars ? '⭐' : '☆';
     }).join('');
 
@@ -3281,10 +3562,10 @@ function renderDialogQuiz() {
   }
 
   /* ─── Question courante ─── */
-  var q      = qs[dqStep];
-  var qLabel = L('Pregunta ', 'Question ') + (dqStep + 1) + '/' + total;
+  const q      = qs[dqStep];
+  const qLabel = L('Pregunta ', 'Question ') + (dqStep + 1) + '/' + total;
 
-  var opts = q.opts.map(function(o, i) {
+  const opts = q.opts.map((o, i) => {
     return '<button class="quiz-opt" id="dqo' + i
       + '" onclick="checkDQ(' + i + ',' + q.ans + ')">' + o + '</button>';
   }).join('');
@@ -3304,7 +3585,7 @@ function checkDQ(chosen, correct) {
   if (dqAnswered) return;
   dqAnswered = true;
 
-  document.querySelectorAll('[id^=dqo]').forEach(function(b, i) {
+  document.querySelectorAll('[id^=dqo]').forEach((b, i) => {
     b.classList.add('disabled');
     if (i === correct) b.classList.add('correct');
     else if (i === chosen && chosen !== correct) b.classList.add('wrong');
@@ -3315,13 +3596,13 @@ function checkDQ(chosen, correct) {
   // Retour haptique discret (mobile uniquement, échoue silencieusement ailleurs)
   _vibrateFeedback(chosen === correct);
 
-  var fb   = document.getElementById('dqfb');
-  var fbOk = L('✅ ¡Buena respuesta!',    '✅ Bonne réponse !');
-  var fbErr= L('❌ ¡Inténtalo de nuevo!', '❌ Réessayer !');
+  const fb   = document.getElementById('dqfb');
+  const fbOk = L('✅ ¡Buena respuesta!',    '✅ Bonne réponse !');
+  const fbErr= L('❌ ¡Inténtalo de nuevo!', '❌ Réessayer !');
   fb.textContent = (chosen === correct) ? fbOk : fbErr;
   fb.style.color = (chosen === correct) ? '#009A44' : '#c0392b';
 
-  setTimeout(function() { dqStep++; renderDialogQuiz(); }, 1500);
+  setTimeout(() => { dqStep++; renderDialogQuiz(); }, 1500);
 
   // Mémorise la position courante (sessionStorage) pour permettre la reprise
   _saveQuizSession();
@@ -3343,7 +3624,7 @@ function _quizResultStrings(pct) {
   const stars     = _calcStars(pct);
   const isSuccess = stars > 0;
 
-  var title = L('¡Prueba terminada!', 'Quiz terminé !');
+  let title = L('¡Prueba terminada!', 'Quiz terminé !');
   if      (stars === 3) title = L('¡Perfecto! ⭐⭐⭐',  'Parfait ! ⭐⭐⭐');
   else if (stars === 2) title = L('¡Muy bien! ⭐⭐',    'Très bien ! ⭐⭐');
   else if (stars === 1) title = L('¡Bien! ⭐',           'Bien ! ⭐');
@@ -3413,12 +3694,12 @@ function changeRegion(region) {
 /* renderRegionOptions() — Génère le sélecteur déroulant de variante hispanique.
    Affiche également un bandeau d'information sur la variante active. */
 function renderRegionOptions() {
-  var selectContainer = document.getElementById('region-select-container');
-  var msgBox          = document.getElementById('region-message-box');
+  const selectContainer = document.getElementById('region-select-container');
+  const msgBox          = document.getElementById('region-message-box');
   if (!selectContainer) return;
 
   // Liste des régions disponibles avec labels localisés selon le mode
-  var regions = [
+  const regions = [
     { id:'ES', name: L('España (Castellano)', 'Espagne (Castillan)'), flag:'🇪🇸' },
     { id:'AR', name: L('Argentina',           'Argentine'),           flag:'🇦🇷' },
     { id:'CO', name: L('Colombia',            'Colombie'),            flag:'🇨🇴' },
@@ -3429,21 +3710,21 @@ function renderRegionOptions() {
   ];
 
   // Construction du <select>
-  var html = '<div style="padding:10px 10px 5px 10px;">'
+  let html = '<div style="padding:10px 10px 5px 10px;">'
     + '<select id="regionSelector" onchange="pickRegion(this.value)" '
     + 'style="width:100%;padding:12px;border-radius:12px;border:1px solid #ddd;'
     + 'font-size:1rem;background:#fff;cursor:pointer;outline:none;">';
-  regions.forEach(function(r) {
-    var selected = (currentRegion === r.id) ? ' selected' : '';
+  regions.forEach((r) => {
+    const selected = (currentRegion === r.id) ? ' selected' : '';
     html += '<option value="' + r.id + '"' + selected + '>' + r.flag + ' ' + r.name + '</option>';
   });
   html += '</select></div>';
   selectContainer.innerHTML = html;
 
   // Bandeau d'info sur la variante active
-  var activeRegion = regions.find(r => r.id === currentRegion) || regions[0];
+  const activeRegion = regions.find(r => r.id === currentRegion) || regions[0];
   if (msgBox) {
-    var bannerMsg = L(
+    const bannerMsg = L(
       'ℹ️ Tu aplicación está configurada actualmente con la variante de <strong>' + activeRegion.name + '</strong>.',
       'ℹ️ Votre application est actuellement configurée sur la variante <strong>' + activeRegion.name + '</strong>.'
     );
@@ -3460,38 +3741,38 @@ function renderRegionOptions() {
      • learn_french → choisir sa variante d'espagnol maternelle (origine)
                       pour que l'interface s'adapte à l'apprenant hispanophone. */
 function renderRegionGrid(mode) {
-  var container = document.getElementById('region-grid-container');
-  var msgBox    = document.getElementById('region-message-box');
+  const container = document.getElementById('region-grid-container');
+  const msgBox    = document.getElementById('region-message-box');
   if (!container) return;
 
   /* Utilise le mode courant si aucun n'est passé en paramètre */
-  var activeMode = mode || currentMode;
+  const activeMode = mode || currentMode;
 
-  var regions = [
+  const regions = [
+    { id:'AR', flag:'🇦🇷', nameEs:'Argentina', nameFr:'Argentine' },
+    { id:'CO', flag:'🇨🇴', nameEs:'Colombia',  nameFr:'Colombie'  },
+    { id:'EC', flag:'🇪🇨', nameEs:'Ecuador',   nameFr:'Équateur'  },
     { id:'ES', flag:'🇪🇸', nameEs:'España',    nameFr:'Espagne'   },
     { id:'MX', flag:'🇲🇽', nameEs:'México',    nameFr:'Mexique'   },
-    { id:'CO', flag:'🇨🇴', nameEs:'Colombia',  nameFr:'Colombie'  },
     { id:'PE', flag:'🇵🇪', nameEs:'Perú',      nameFr:'Pérou'     },
-    { id:'VE', flag:'🇻🇪', nameEs:'Venezuela', nameFr:'Venezuela' },
-    { id:'AR', flag:'🇦🇷', nameEs:'Argentina', nameFr:'Argentine' },
-    { id:'EC', flag:'🇪🇨', nameEs:'Ecuador',   nameFr:'Équateur'  }
+    { id:'VE', flag:'🇻🇪', nameEs:'Venezuela', nameFr:'Venezuela' }
   ];
 
   /* Label du bloc selon le parcours */
-  var gridLabel = (activeMode === 'learn_french')
+  const gridLabel = (activeMode === 'learn_french')
     ? 'TU VARIANTE DE ESPAÑOL'   /* hispanophone : sa langue maternelle */
     : 'VARIANTE RÉGIONALE';      /* francophone  : la variante à apprendre */
 
-  var html = '<div class="launcher-region-grid-wrap">'
+  let html = '<div class="launcher-region-grid-wrap">'
     + '<p class="launcher-region-grid-label">' + gridLabel + '</p>'
     + '<div class="launcher-region-grid" role="group" aria-label="' + gridLabel + '">';
 
-  regions.forEach(function(r) {
-    var isActive  = (currentRegion === r.id);
+  regions.forEach((r) => {
+    const isActive  = (currentRegion === r.id);
     /* Nom du pays dans la langue d'interface :
        learn_french → interface en espagnol → nom en espagnol
        learn_spain  → interface en français → nom en français */
-    var countryName = (activeMode === 'learn_french') ? r.nameEs : r.nameFr;
+    const countryName = (activeMode === 'learn_french') ? r.nameEs : r.nameFr;
     html += '<button'
       + ' class="launcher-region-btn' + (isActive ? ' launcher-region-btn--active' : '') + '"'
       + ' onclick="pickRegion(\'' + r.id + '\');renderRegionGrid(currentMode);"'
@@ -3507,7 +3788,7 @@ function renderRegionGrid(mode) {
 
   /* Bandeau d'info contextuel selon le parcours */
   if (msgBox) {
-    var mainMsg, noteMsg;
+    let mainMsg, noteMsg;
 
     if (activeMode === 'learn_french') {
       /* Parcours Français — apprenant hispanophone */
@@ -3531,7 +3812,7 @@ function renderRegionGrid(mode) {
    et rafraîchit le contenu de l'onglet actif si une leçon est ouverte. */
 function pickRegion(regionId) {
   // Validation : seules les 7 régions connues sont acceptées (sécurité injection CSS/localStorage)
-  var ALLOWED_REGIONS = ['ES', 'MX', 'CO', 'PE', 'VE', 'AR', 'EC'];
+  const ALLOWED_REGIONS = ['ES', 'MX', 'CO', 'PE', 'VE', 'AR', 'EC'];
   if (!ALLOWED_REGIONS.includes(regionId)) {
     console.warn('pickRegion: regionId invalide ignoré :', regionId);
     return;
@@ -3543,9 +3824,9 @@ function pickRegion(regionId) {
   // Mise à jour du code BCP-47 pour la synthèse vocale (mode Espagnol ou pré-sélection Launcher)
   // On applique aussi depuis le Launcher (currentMode non encore défini) pour que la voix
   // soit correcte dès le lancement et que la classe CSS de région soit bien positionnée.
-  var isSpainMode = (currentMode === 'learn_spain') || (currentMode === '');
+  const isSpainMode = (currentMode === 'learn_spain') || (currentMode === '');
   if (currentMode !== 'learn_french') {
-    var voiceMap = {
+    const voiceMap = {
       ES:'es-ES', MX:'es-MX', CO:'es-CO', PE:'es-PE', VE:'es-VE', AR:'es-AR', EC:'es-EC'
     };
     voiceLang = voiceMap[regionId] || 'es-ES';
@@ -3567,12 +3848,12 @@ function pickRegion(regionId) {
   _updateVoiceBadge();
 
   // Déclencher la résolution en tâche de fond pour mettre à jour le badge
-  _resolveSpanishVoice(function() { _updateVoiceBadge(); });
+  _resolveSpanishVoice(() => { _updateVoiceBadge(); });
 
   // Mise à jour du bandeau d'information avec la note audio
-  var msgBox = document.getElementById('region-message-box');
+  const msgBox = document.getElementById('region-message-box');
   if (msgBox) {
-    var regionsNames = {
+    const regionsNames = {
       ES: L('España (Castellano)', 'Espagne (Castillan)'),
       MX: L('México',              'Mexique'),
       CO: L('Colombia',            'Colombie'),
@@ -3581,8 +3862,8 @@ function pickRegion(regionId) {
       AR: L('Argentina',           'Argentine'),
       EC: L('Ecuador',             'Équateur')
     };
-    var activeName = regionsNames[currentRegion] || currentRegion;
-    var noteAudio  = L(
+    const activeName = regionsNames[currentRegion] || currentRegion;
+    const noteAudio  = L(
       '<div style="margin-top:5px;font-size:0.75rem;color:#666;font-style:italic;">'
         + 'Nota: El acento real depende de las voces instaladas en la configuración de síntesis de voz de tu dispositivo.'
         + '</div>',
@@ -3590,7 +3871,7 @@ function pickRegion(regionId) {
         + 'Note : L\'accent audio dépend des voix espagnoles installées dans les paramètres de synthèse vocale de votre smartphone.'
         + '</div>'
     );
-    var mainMsg = L(
+    const mainMsg = L(
       'ℹ️ Tu aplicación está configurada actualmente con la variante de <strong>' + activeName + '</strong>.',
       'ℹ️ Votre application est actuellement configurée sur la variante <strong>' + activeName + '</strong>.'
     );
@@ -3602,18 +3883,18 @@ function pickRegion(regionId) {
 
   /* — Construction de l'image drapeau via Twemoji CDN — */
   // Utilise des images SVG au lieu d'émojis natifs pour un rendu cohérent sur Windows
-  var flagCodes = { ES:'es', MX:'mx', CO:'co', PE:'pe', VE:'ve', AR:'ar', EC:'ec' };
-  var code      = flagCodes[currentRegion] || 'es';
+  const flagCodes = { ES:'es', MX:'mx', CO:'co', PE:'pe', VE:'ve', AR:'ar', EC:'ec' };
+  const code      = flagCodes[currentRegion] || 'es';
   // Table de correspondance code pays → codepoint Unicode Twemoji
-  var twemojiMap = {
+  const twemojiMap = {
     es:'1f1ea-1f1f8', mx:'1f1f2-1f1fd', co:'1f1e8-1f1f4',
     pe:'1f1f5-1f1ea', ve:'1f1fb-1f1ea', ar:'1f1e6-1f1f7', ec:'1f1ea-1f1e8'
   };
-  var flagHtml = '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/'
+  const flagHtml = '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/'
     + twemojiMap[code] + '.svg" style="width:1.5em;vertical-align:middle;display:inline-block;" alt="flag">';
 
   // Mise à jour du grand drapeau sur l'écran d'accueil (home)
-  var homeFlagRow = document.getElementById('homeFlagRow');
+  const homeFlagRow = document.getElementById('homeFlagRow');
   if (homeFlagRow) {
     if (currentMode === 'learn_spain') {
       homeFlagRow.innerHTML = flagHtml;
@@ -3624,58 +3905,58 @@ function pickRegion(regionId) {
   }
 
   // Mise à jour du drapeau dans la Vue B du Launcher (si visible) — tous modes
-  var launcherFlagRow = document.getElementById('launcherFlagRow');
+  const launcherFlagRow = document.getElementById('launcherFlagRow');
   const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
   if (launcherFlagRow && currentMode !== 'learn_french') {
     launcherFlagRow.textContent = flagEmojis[currentRegion] || '🇪🇸';
   }
 
   // Mise à jour du drapeau de l'écran Sections (variante régionale apprise)
-  var sectionsFlag = document.getElementById('sectionsFlag');
+  const sectionsFlag = document.getElementById('sectionsFlag');
   if (sectionsFlag && currentMode !== 'learn_french') {
     sectionsFlag.innerHTML = flagHtml;
   }
 
   // Mise à jour de l'inscription audio dans les flashcards (section-label)
   // Utilise le même format texte complet que renderFlash() pour la cohérence
-  var flagSpan = document.getElementById('current-lang-flag');
+  const flagSpan = document.getElementById('current-lang-flag');
   if (flagSpan) {
     if (currentMode === 'learn_french') {
-      var regionLabelsFR2 = { ES:'🇪🇸 España (Castellano)', MX:'🇲🇽 México', CO:'🇨🇴 Colombia', AR:'🇦🇷 Argentina', PE:'🇵🇪 Perú', VE:'🇻🇪 Venezuela', EC:'🇪🇨 Ecuador' };
+      const regionLabelsFR2 = { ES:'🇪🇸 España (Castellano)', MX:'🇲🇽 México', CO:'🇨🇴 Colombia', AR:'🇦🇷 Argentina', PE:'🇵🇪 Perú', VE:'🇻🇪 Venezuela', EC:'🇪🇨 Ecuador' };
       flagSpan.textContent = regionLabelsFR2[currentRegion] || '🇪🇸 España (Castellano)';
     } else {
-      var regionLabelsES2 = { ES:'🇪🇸 Espagne (Castillan)', MX:'🇲🇽 Mexique', CO:'🇨🇴 Colombie', AR:'🇦🇷 Argentine', PE:'🇵🇪 Pérou', VE:'🇻🇪 Venezuela', EC:'🇪🇨 Équateur' };
+      const regionLabelsES2 = { ES:'🇪🇸 Espagne (Castillan)', MX:'🇲🇽 Mexique', CO:'🇨🇴 Colombie', AR:'🇦🇷 Argentine', PE:'🇵🇪 Pérou', VE:'🇻🇪 Venezuela', EC:'🇪🇨 Équateur' };
       flagSpan.textContent = regionLabelsES2[currentRegion] || '🇪🇸 Espagne (Castillan)';
     }
   }
 
   // Rafraîchissement de l'onglet actif si une leçon est ouverte
   // Note : activeTab n'est pas une variable globale, on teste directement l'onglet actif
-  var activeTabEl = document.querySelector('#lessonTabs .tab.active');
+  const activeTabEl = document.querySelector('#lessonTabs .tab.active');
   if (activeTabEl) {
-    var at = activeTabEl.dataset.tab;
+    const at = activeTabEl.dataset.tab;
     if (at === 'vocab')  renderVocab();
     if (at === 'dialog') renderDialog();
     if (at === 'flash')  renderFlash();
   }
 
   // Rafraîchissement du widget région dans l'écran Home si celui-ci est actif
-  var homeScreen = document.getElementById('home');
-  if (homeScreen && homeScreen.classList.contains('active')) {
+  const homeScreen = document.getElementById('home');
+  if (homeScreen?.classList.contains('active')) {
     _renderHomeRegionWidget();
   }
 
   // Rafraîchissement du guide utilisateur si la modale est actuellement ouverte
   // sur son bloc espagnol (cas : changement de variante depuis l'écran home
   // pendant que le guide reste accessible en arrière-plan via une autre action).
-  var guideModal = document.getElementById('guide-modal');
-  if (guideModal && guideModal.classList.contains('active')) {
-    var guideES = document.getElementById('guideContentES');
-    if (guideES && guideES.style.display !== 'none') _refreshGuideRegion();
+  const guideModal = document.getElementById('guide-modal');
+  if (guideModal?.classList.contains('active')) {
+    const guideES = document.getElementById('guideContentES');
+    if (guideES?.style.display !== 'none') _refreshGuideRegion();
   }
 
   /* Mise à jour du drapeau dans la barre de nav basse */
-  var langFlag = document.getElementById('navLangFlag');
+  const langFlag = document.getElementById('navLangFlag');
   if (langFlag && currentMode !== 'learn_french') {
     langFlag.textContent = flagEmojis[currentRegion] || '🇪🇸';
   }
@@ -3694,8 +3975,8 @@ function pickRegion(regionId) {
    la hauteur réelle à l'ouverture, le panneau se déplie toujours en entier,
    quel que soit son contenu. */
 function toggleAcc(btn) {
-  var isOpen = btn.getAttribute('aria-expanded') === 'true';
-  var body   = btn.nextElementSibling;
+  const isOpen = btn.getAttribute('aria-expanded') === 'true';
+  const body   = btn.nextElementSibling;
 
   btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
   if (!body) return;
@@ -3703,7 +3984,7 @@ function toggleAcc(btn) {
   if (isOpen) {
     body.style.maxHeight = body.scrollHeight + 'px';
     body.offsetHeight;
-    requestAnimationFrame(function() {
+    requestAnimationFrame(() => {
       body.classList.remove('open');
       body.style.maxHeight = '0px';
     });
@@ -3716,8 +3997,8 @@ function toggleAcc(btn) {
 /* toggleLevelAcc(btn) — Ouvre ou ferme un niveau (Niveau 1 / Niveau 2)
    dans l'écran Sections. Même principe que toggleAcc() du guide. */
 function toggleLevelAcc(btn) {
-  var isOpen = btn.getAttribute('aria-expanded') === 'true';
-  var body   = btn.nextElementSibling;
+  const isOpen = btn.getAttribute('aria-expanded') === 'true';
+  const body   = btn.nextElementSibling;
 
   btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
   if (!body) return;
@@ -3725,7 +4006,7 @@ function toggleLevelAcc(btn) {
   if (isOpen) {
     body.style.maxHeight = body.scrollHeight + 'px';
     body.offsetHeight;
-    requestAnimationFrame(function() {
+    requestAnimationFrame(() => {
       body.classList.remove('open');
       body.style.maxHeight = '0px';
     });
@@ -3740,8 +4021,8 @@ function toggleLevelAcc(btn) {
    (rotation d'écran mobile) ou un changement de contenu dynamique
    (ex : _refreshGuideRegion() qui modifie le texte affiché). */
 function _resizeOpenAccordions() {
-  var openBodies = document.querySelectorAll('.guide-acc-body.open');
-  openBodies.forEach(function(body) {
+  const openBodies = document.querySelectorAll('.guide-acc-body.open');
+  openBodies.forEach((body) => {
     body.style.maxHeight = body.scrollHeight + 'px';
   });
 }
@@ -3751,7 +4032,7 @@ window.addEventListener('resize', _resizeOpenAccordions);
    accordéon déjà ouverte par défaut dans le HTML (ex : « Comment ça
    marche », ouverte au premier affichage), pour éviter tout effet de
    troncature avant la première interaction utilisateur. */
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
   _resizeOpenAccordions();
   /* Affiche la barre de nav dès le chargement, avec Langue actif (écran 0) */
   _updateBottomNav('app-launcher');
@@ -3767,7 +4048,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function showCredits() {
   document.getElementById('credits-modal').style.display = 'flex';
   /* Marque le bouton Infos actif pendant que la modale est ouverte */
-  var btnCredits = document.getElementById('navBtnCredits');
+  const btnCredits = document.getElementById('navBtnCredits');
   if (btnCredits) btnCredits.classList.add('active');
 }
 
@@ -3844,14 +4125,14 @@ function showCredits() {
  * Appelée par initApp() après _setUI().
  */
 function _buildHomeGuide() {
-  var showFrench = (currentMode === 'learn_spain') || !currentMode;
+  const showFrench = (currentMode === 'learn_spain') || !currentMode;
   /* Convention :
      showFrench = true  → mode learn_spain (Francophone apprend l'Espagnol) → guide en FR → bloc [data-lang="fr"]
      showFrench = false → mode learn_french (Hispanophone apprend le Français) → guide en ES → bloc [data-lang="es"] */
-  var activeLang = showFrench ? 'fr' : 'es';
+  const activeLang = showFrench ? 'fr' : 'es';
 
   /* ── 1. Révèle le bon bloc, masque l'autre ── */
-  document.querySelectorAll('.home-lang-block').forEach(function(el) {
+  document.querySelectorAll('.home-lang-block').forEach((el) => {
     if (el.dataset.lang === activeLang) {
       el.classList.remove('home-lang-hidden');
     } else {
@@ -3860,49 +4141,49 @@ function _buildHomeGuide() {
   });
 
   /* ── 2. Topbar titre ── */
-  var topbarTitle = document.getElementById('homeTopbarTitle');
+  const topbarTitle = document.getElementById('homeTopbarTitle');
   if (topbarTitle) topbarTitle.textContent = showFrench ? 'Guide explicatif' : 'Guía explicativa';
 
   /* ── 3. En-tête : drapeaux, titre, sous-titre ── */
-  var flagsEl = document.getElementById('homeGuideFlagsRow');
+  const flagsEl = document.getElementById('homeGuideFlagsRow');
   if (flagsEl) {
-    var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
-    var activeFlag = flagEmojis[currentRegion] || '🇪🇸';
+    const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+    const activeFlag = flagEmojis[currentRegion] || '🇪🇸';
     flagsEl.textContent = showFrench ? ('🇫🇷 → ' + activeFlag) : (activeFlag + ' → 🇫🇷');
   }
 
-  var titleEl = document.getElementById('homeTitle');
+  const titleEl = document.getElementById('homeTitle');
   if (titleEl) {
-    var flagEmojis2 = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
-    var activeFlag2 = flagEmojis2[currentRegion] || '🇪🇸';
+    const flagEmojis2 = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+    const activeFlag2 = flagEmojis2[currentRegion] || '🇪🇸';
     titleEl.textContent = showFrench
       ? ('Apprends l\'Espagnol ' + activeFlag2)
       : ('Aprende Francés 🇫🇷');
   }
 
-  var subEl = document.getElementById('homeGuideSubtitle');
+  const subEl = document.getElementById('homeGuideSubtitle');
   if (subEl) subEl.textContent = showFrench
     ? 'App gratuite — idéale pour les grands débutants.'
     : 'App gratuita — ideal para empezar desde cero.';
 
   /* ── 4. Badges de fonctionnalités ── */
-  var badgesEl = document.getElementById('homeGuideBadges');
+  const badgesEl = document.getElementById('homeGuideBadges');
   if (badgesEl) {
-    var badges = showFrench
+    const badges = showFrench
       ? ['✅ Gratuit', '🚧 Sans inscription', '📱 Mobile & ordinateur', '🔊 Audio inclus', '🎤 Répétition orale', '🌎 7 variantes d\'espagnol', '📲 Installable hors-ligne']
       : ['✅ Gratis', '🚧 Sin registro', '📱 Móvil y ordenador', '🔊 Audio incluido', '🎤 Repetición oral', '🌎 7 variantes de español', '📲 Instalable sin conexión'];
-    badgesEl.innerHTML = badges.map(function(b) { return '<span class="hg-badge">' + b + '</span>'; }).join('');
+    badgesEl.innerHTML = badges.map((b) => { return '<span class="hg-badge">' + b + '</span>'; }).join('');
   }
 
   /* ── 5. Bouton Commencer ── */
-  var startBtn = document.getElementById('homeStartBtn');
+  const startBtn = document.getElementById('homeStartBtn');
   if (startBtn) {
     startBtn.textContent = showFrench ? '▶ Commencer' : '▶ Empezar';
     startBtn.onclick = function() { showScreen('sections-level1'); };
   }
 
   /* ── 6. Bouton PDF guide ── */
-  var exportBtn = document.getElementById('homeExportBtn');
+  const exportBtn = document.getElementById('homeExportBtn');
   if (exportBtn) {
     exportBtn.textContent = '📄 PDF';
     exportBtn.title = showFrench ? 'Télécharger le guide (PDF)' : 'Descargar la guía (PDF)';
@@ -3910,6 +4191,29 @@ function _buildHomeGuide() {
 
   /* ── 7. Bandeau variante régionale (bloc ES) ── */
   _refreshGuideRegion();
+}
+
+/**
+ * navBackToHome() — Bouton 🏠 du bouton retour à deux icônes (écran Modules).
+ * Retourne à l'écran #home tel quel (en haut : progression + bouton Commencer),
+ * sans forcer le défilement vers les explications du guide plus bas.
+ */
+function navBackToHome() {
+  showScreen('home');
+}
+
+/**
+ * navBackToGuide() — Bouton ❓ du bouton retour à deux icônes (écran Modules).
+ * Va sur #home (comme showGuide()) PUIS fait défiler jusqu'au corps du guide
+ * (accordéons d'explication), pour amener directement l'apprenant à l'aide
+ * plutôt qu'au haut de l'écran. C'est ce qui différencie ce bouton du 🏠.
+ */
+function navBackToGuide() {
+  showGuide();
+  setTimeout(() => {
+    const guideBody = document.getElementById('homeGuideBody');
+    if (guideBody) guideBody.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 320); // après la transition d'écran (300ms, cf. showScreen())
 }
 
 /**
@@ -3946,13 +4250,56 @@ function closeGuide() {
 function toggleGuideNoShow(cb) { /* no-op — supprimé dans le style Oromo */ }
 
 /**
- * _maybeAutoShowGuide() — Affiche le guide à la première visite
- * (ou toujours, car dans le style Oromo le guide = écran d'accueil).
- * Appelée en fin d'initApp().
+ * _guideSeenKey() — Clé localStorage du flag "guide vu", PAR LANGUE
+ * ('vachebo_guide_vu_fr' / 'vachebo_guide_vu_es'). Avant le 05/07/2026 ce
+ * flag était global (tous modes confondus) ; il est désormais scindé par
+ * mode afin qu'un apprenant qui se trompe de langue au premier lancement
+ * voie bien le guide une seconde fois lorsqu'il choisit la bonne langue.
+ */
+function _guideSeenKey() {
+  return currentMode === 'learn_french' ? 'vachebo_guide_vu_fr' : 'vachebo_guide_vu_es';
+}
+
+/**
+ * _hasSeenGuide() / _markGuideSeen() — Persistance en localStorage de l'état
+ * "guide déjà consulté", PAR LANGUE (cf. _guideSeenKey()) : une fois le
+ * guide quitté une première fois dans un mode donné, il ne se relance plus
+ * tout seul pour CE mode — mais reste dû pour l'autre langue si elle n'a
+ * jamais été visitée. Reste accessible à tout moment via le bouton ❓ Guide
+ * de la barre de navigation basse (cf. showGuide()).
+ * Migration : GUIDE_SEEN_KEY_LEGACY est l'ancien flag global (avant la
+ * scission par langue) — s'il est posé, on le respecte une seule fois pour
+ * ne pas faire revoir le guide aux apprenants qui l'avaient déjà terminé.
+ * Enveloppé en try/catch : certains contextes (navigation privée stricte,
+ * stockage désactivé) peuvent faire lever localStorage — on dégrade alors
+ * simplement vers "jamais vu", sans casser l'app.
+ */
+const GUIDE_SEEN_KEY_LEGACY = 'vachebo_guide_vu';
+function _hasSeenGuide() {
+  try {
+    if (localStorage.getItem(_guideSeenKey()) === 'true') return true;
+    return localStorage.getItem(GUIDE_SEEN_KEY_LEGACY) === 'true';
+  } catch (e) { return false; }
+}
+function _markGuideSeen() {
+  try { localStorage.setItem(_guideSeenKey(), 'true'); } catch (e) {}
+}
+
+/**
+ * _maybeAutoShowGuide() — Affiche le guide uniquement s'il n'a jamais été
+ * quitté auparavant POUR LE MODE COURANT (cf. _hasSeenGuide()) ; sinon va
+ * directement aux modules.
+ * Appelée en fin d'initApp(), à la place de l'ancien showScreen('home') direct.
+ * Le flag est posé par showScreen() lui-même dès qu'on quitte l'écran #home
+ * (voir plus haut) — donc aussi bien via "▶ Commencer" que via n'importe
+ * quelle autre sortie du guide (nav basse, etc.).
  */
 function _maybeAutoShowGuide() {
-  /* Dans le style Oromo, le guide est toujours l'écran d'accueil.
-     showScreen('home') a déjà été appelé dans initApp() via showGuide(). */
+  if (_hasSeenGuide()) {
+    showScreen('sections-level1');
+  } else {
+    showScreen('home');
+  }
 }
 
 /**
@@ -3960,7 +4307,7 @@ function _maybeAutoShowGuide() {
  * du bloc espagnol (#guideContentES) à currentRegion.
  */
 function _refreshGuideRegion() {
-  var REGIONS = {
+  const REGIONS = {
     ES: { flag:'🇪🇸', name:'España (Castellano)' },
     MX: { flag:'🇲🇽', name:'México' },
     AR: { flag:'🇦🇷', name:'Argentina' },
@@ -3969,11 +4316,11 @@ function _refreshGuideRegion() {
     PE: { flag:'🇵🇪', name:'Perú' },
     EC: { flag:'🇪🇨', name:'Ecuador' }
   };
-  var region = REGIONS[currentRegion] ? currentRegion : 'ES';
-  var r = REGIONS[region];
+  const region = REGIONS[currentRegion] ? currentRegion : 'ES';
+  const r = REGIONS[region];
 
   /* Bandeau variante dans le bloc ES */
-  var badge = document.getElementById('guideRegionBadgeES');
+  const badge = document.getElementById('guideRegionBadgeES');
   if (badge) badge.innerHTML = 'Tu app está configurada en <strong>' + r.flag + ' ' + r.name + '</strong>';
 }
 
@@ -3983,11 +4330,11 @@ function _refreshGuideRegion() {
  * Conservée pour compatibilité — _buildHomeGuide() gère déjà cela.
  */
 function _refreshGuideHeroFR() {
-  var flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
-  var activeFlag = flagEmojis[currentRegion] || '🇪🇸';
-  var flagsEl = document.getElementById('homeGuideFlagsRow');
+  const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
+  const activeFlag = flagEmojis[currentRegion] || '🇪🇸';
+  const flagsEl = document.getElementById('homeGuideFlagsRow');
   if (flagsEl) flagsEl.textContent = '🇫🇷 → ' + activeFlag;
-  var titleEl = document.getElementById('homeTitle');
+  const titleEl = document.getElementById('homeTitle');
   if (titleEl) titleEl.textContent = 'Apprends l\'Espagnol ' + activeFlag;
 }
 
@@ -4011,7 +4358,7 @@ function openAndCopyEmail() {
   const domain = 'gmail.com';
   const full   = user + '@' + domain;
 
-  if (navigator.clipboard && navigator.clipboard.writeText) {
+  if (navigator.clipboard?.writeText) {
     navigator.clipboard.writeText(full).then(() => {
       _showToast(L('✅ E-mail copiado en el portapapeles', '✅ E-mail copié dans le presse-papier'));
     }).catch(() => {
@@ -4109,11 +4456,11 @@ function _pdfFooter() {
    Double déclenchement : onload (navigateurs modernes) + setTimeout 800 ms (fallback Safari/Firefox
    où document.write() dans un nouvel onglet ne déclenche pas toujours onload). */
 function _pdfOpen(htmlContent) {
-  var w = window.open('', '_blank');
+  const w = window.open('', '_blank');
   if (!w) { _showToast(L('Autoriza las ventanas emergentes para exportar.', 'Autorisez les pop-ups pour exporter.')); return; }
   w.document.write(htmlContent);
   w.document.close();
-  var _printed = false;
+  let _printed = false;
   function _doPrint() {
     if (_printed) return;
     _printed = true;
@@ -4130,16 +4477,35 @@ function _pdfOpen(htmlContent) {
    _exportGuide() — Export PDF du guide utilisateur complet.
    Extrait le HTML de #guideContentFR ou #guideContentES
    selon le mode actif, l'enveloppe dans une page imprimable.
-───────────────────────────────────────────────────────── */
-function _exportGuide() {
-  var th       = _pdfTheme();
-  var guideId = !isFrench() ? 'guideContentFR' : 'guideContentES';
-  var guideEl  = document.getElementById(guideId);
-  var guideHTML = guideEl ? guideEl.innerHTML : '<p>' + L('Contenido no disponible.', 'Contenu indisponible.') + '</p>';
-  var title    = L('Guía del usuario — VACHÉBO', 'Guide utilisateur — VACHÉBO');
-  var subtitle = L('Aprende Francés · Guía completa', 'Apprends l\'Espagnol · Guide complet');
 
-  var html = '<!DOCTYPE html><html lang="' + (isFrench() ? 'es' : 'fr') + '"><head>'
+   Amélioration : le guide est structuré en rubriques <details>
+   natives (repliées par défaut, dépliées au clic de l'apprenant).
+   Un navigateur ne rend PAS le contenu d'un <details> fermé — donc
+   copier innerHTML tel qu'affiché à l'écran exportait des rubriques
+   vides si l'apprenant ne les avait pas toutes ouvertes. On travaille
+   ici sur un CLONE du guide (jamais sur le DOM affiché — l'écran de
+   l'utilisateur ne doit pas se déplier sous ses yeux) et on force
+   l'attribut "open" sur chaque <details> du clone avant d'en lire
+   le HTML : le PDF contient donc toujours les 100% des rubriques,
+   qu'elles aient été consultées ou non. ─────────────────────────── */
+function _exportGuide() {
+  const th       = _pdfTheme();
+  const guideId = !isFrench() ? 'guideContentFR' : 'guideContentES';
+  const guideEl  = document.getElementById(guideId);
+  let guideHTML;
+  if (guideEl) {
+    const guideClone = guideEl.cloneNode(true);
+    guideClone.querySelectorAll('details').forEach((d) => {
+      d.setAttribute('open', ''); /* déplie toutes les rubriques, même imbriquées */
+    });
+    guideHTML = guideClone.innerHTML;
+  } else {
+    guideHTML = '<p>' + L('Contenido no disponible.', 'Contenu indisponible.') + '</p>';
+  }
+  const title    = L('Guía del usuario — VACHÉBO', 'Guide utilisateur — VACHÉBO');
+  const subtitle = L('Aprende Francés · Guía completa', 'Apprends l\'Espagnol · Guide complet');
+
+  const html = '<!DOCTYPE html><html lang="' + (isFrench() ? 'es' : 'fr') + '"><head>'
     + '<meta charset="utf-8">'
     + '<meta name="viewport" content="width=device-width,initial-scale=1">'
     + '<title>' + title + '</title>'
@@ -4173,36 +4539,36 @@ function _exportGuide() {
 ───────────────────────────────────────────────────────── */
 function _exportVocab() {
   if (!CT || !CT.words) { _showToast(L('Sin vocabulario disponible.', 'Pas de vocabulaire disponible.')); return; }
-  var th      = _pdfTheme();
-  var words   = CT.words;
+  const th      = _pdfTheme();
+  const words   = CT.words;
   const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
-  var regionFlag = isFrench() ? (flagEmojis[currentRegion] || '🇪🇸') : '🇫🇷';
+  const regionFlag = isFrench() ? (flagEmojis[currentRegion] || '🇪🇸') : '🇫🇷';
 
-  var title    = L(
+  const title    = L(
     '📘 Vocabulario — ' + (CT.name || CT.id),
     '📘 Vocabulaire — ' + (CT.name || CT.id)
   );
-  var subtitle = L(
+  const subtitle = L(
     'Francés 🇫🇷 ↔ Español ' + regionFlag,
     'Français 🇫🇷 ↔ Espagnol ' + regionFlag
   );
-  var hdrEmoji = 'Emoji';
-  var hdrSrc   = L('Español ' + regionFlag, 'Français 🇫🇷');
-  var hdrTgt   = L('Francés 🇫🇷', 'Espagnol ' + regionFlag);
+  const hdrEmoji = 'Emoji';
+  const hdrSrc   = L('Español ' + regionFlag, 'Français 🇫🇷');
+  const hdrTgt   = L('Francés 🇫🇷', 'Espagnol ' + regionFlag);
 
-  var rows = words.map(function(card) {
-    var finalEs = (card.variants && card.variants[currentRegion])
+  const rows = words.map((card) => {
+    const finalEs = (card.variants?.[currentRegion])
       ? card.variants[currentRegion] : (card.es || '');
-    var srcWord = L(finalEs, card.fr || '');
-    var tgtWord = L(card.fr || '', finalEs);
+    const srcWord = L(finalEs, card.fr || '');
+    const tgtWord = L(card.fr || '', finalEs);
 
     /* Conjugaisons éventuelles */
-    var conjSrc = '', conjTgt = '';
+    let conjSrc = '', conjTgt = '';
     if (card.conj) {
-      var cSrc = isFrench() ? card.conj.es : card.conj.fr;
-      var cTgt = isFrench() ? card.conj.fr : card.conj.es;
-      if (cSrc && cSrc.length) conjSrc = '<div class="conj">' + cSrc.join('<br>') + '</div>';
-      if (cTgt && cTgt.length) conjTgt = '<div class="conj">' + cTgt.join('<br>') + '</div>';
+      const cSrc = isFrench() ? card.conj.es : card.conj.fr;
+      const cTgt = isFrench() ? card.conj.fr : card.conj.es;
+      if (cSrc?.length) conjSrc = '<div class="conj">' + cSrc.join('<br>') + '</div>';
+      if (cTgt?.length) conjTgt = '<div class="conj">' + cTgt.join('<br>') + '</div>';
     }
 
     return '<tr>'
@@ -4212,7 +4578,7 @@ function _exportVocab() {
       + '</tr>';
   }).join('');
 
-  var html = '<!DOCTYPE html><html lang="' + (isFrench() ? 'es' : 'fr') + '"><head>'
+  const html = '<!DOCTYPE html><html lang="' + (isFrench() ? 'es' : 'fr') + '"><head>'
     + '<meta charset="utf-8">'
     + '<meta name="viewport" content="width=device-width,initial-scale=1">'
     + '<title>' + title + '</title>'
@@ -4236,26 +4602,26 @@ function _exportVocab() {
 ───────────────────────────────────────────────────────── */
 function _exportSituation() {
   if (!CT || !CT.situations) { _showToast(L('Sin diálogo disponible.', 'Pas de dialogue disponible.')); return; }
-  var th  = _pdfTheme();
-  var sit = CT.situations[sitIdx] || CT.situations[0];
+  const th  = _pdfTheme();
+  const sit = CT.situations[sitIdx] || CT.situations[0];
   const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
-  var regionFlag = flagEmojis[currentRegion] || '🇪🇸';
+  const regionFlag = flagEmojis[currentRegion] || '🇪🇸';
 
-  var title    = L(
+  const title    = L(
     '💬 Diálogo — ' + (CT.name || CT.id),
     '💬 Dialogue — ' + (CT.name || CT.id)
   );
-  var subtitle = L(
+  const subtitle = L(
     (sit.label || '') + ' · Situación ' + (sitIdx + 1),
     (sit.label || '') + ' · Situation ' + (sitIdx + 1)
   );
 
   /* Bulles de dialogue */
-  var bubbles = sit.dialogue.map(function(ln) {
-    var finalEsLine = (ln.variants && ln.variants[currentRegion])
+  const bubbles = sit.dialogue.map((ln) => {
+    const finalEsLine = (ln.variants?.[currentRegion])
       ? ln.variants[currentRegion]
       : _adaptDialogueLine(ln.es);
-    var isRight = ln.side === 'right';
+    const isRight = ln.side === 'right';
     return '<div class="bubble-row">'
       + '<div class="bubble-side">' + (ln.s || '') + '</div>'
       + '<div class="bubble-box' + (isRight ? ' right' : '') + '">'
@@ -4265,23 +4631,23 @@ function _exportSituation() {
   }).join('');
 
   /* Tableau du lexique vocab (format "ES = FR") */
-  var vocabSection = '';
-  if (CT.vocab && CT.vocab.length) {
-    var vocabTitle = L('📚 Vocabulario de la situación', '📚 Vocabulaire de la situation');
-    var hdrSrc = L('Español ' + regionFlag, 'Français 🇫🇷');
-    var hdrTgt = L('Francés 🇫🇷', 'Espagnol ' + regionFlag);
-    var vocabRows = CT.vocab.map(function(v) {
-      var parts   = v.split('=');
-      var es      = parts[0] ? parts[0].trim() : '';
-      var fr      = parts[1] ? parts[1].trim() : '';
+  let vocabSection = '';
+  if (CT.vocab?.length) {
+    const vocabTitle = L('📚 Vocabulario de la situación', '📚 Vocabulaire de la situation');
+    const hdrSrc = L('Español ' + regionFlag, 'Français 🇫🇷');
+    const hdrTgt = L('Francés 🇫🇷', 'Espagnol ' + regionFlag);
+    const vocabRows = CT.vocab.map((v) => {
+      const parts   = v.split('=');
+      const es      = parts[0] ? parts[0].trim() : '';
+      const fr      = parts[1] ? parts[1].trim() : '';
       /* Variante régionale dans le lexique */
-      var finalEs = es;
+      let finalEs = es;
       if (CT.words) {
-        var match = CT.words.find(w => w.es === es);
-        if (match && match.variants && match.variants[currentRegion]) finalEs = match.variants[currentRegion];
+        const match = CT.words.find(w => w.es === es);
+        if (match?.variants?.[currentRegion]) finalEs = match.variants[currentRegion];
       }
-      var srcWord = L(finalEs, fr);
-      var tgtWord = L(fr, finalEs);
+      const srcWord = L(finalEs, fr);
+      const tgtWord = L(fr, finalEs);
       return '<tr><td>' + srcWord + '</td><td>' + tgtWord + '</td></tr>';
     }).join('');
     vocabSection = '<h2>' + vocabTitle + '</h2>'
@@ -4289,7 +4655,7 @@ function _exportSituation() {
       + '<tbody>' + vocabRows + '</tbody></table>';
   }
 
-  var html = '<!DOCTYPE html><html lang="' + (isFrench() ? 'es' : 'fr') + '"><head>'
+  const html = '<!DOCTYPE html><html lang="' + (isFrench() ? 'es' : 'fr') + '"><head>'
     + '<meta charset="utf-8">'
     + '<meta name="viewport" content="width=device-width,initial-scale=1">'
     + '<title>' + title + '</title>'
@@ -4313,7 +4679,7 @@ function _exportSituation() {
    (flashcards, chips vocabulaire, cartes alphabet…).
    :focus-visible côté CSS complète ce mécanisme JS.
 ════════════════════════════════════════ */
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', (e) => {
   if (e.key !== 'Enter' && e.key !== ' ') return;
   const target = e.target.closest('[role="button"]');
   if (!target) return;
@@ -4340,11 +4706,11 @@ document.addEventListener('keydown', function(e) {
      pour éviter toute confusion lors de la maintenance.
 ════════════════════════════════════════ */
 const cardFR = document.getElementById('card-learn-french');
-if (cardFR) cardFR.addEventListener('click', function() {
+if (cardFR) cardFR.addEventListener('click', () => {
   showLauncherVariant('learn_french');
 });
 const cardES = document.getElementById('card-learn-spain');
-if (cardES) cardES.addEventListener('click', function() {
+if (cardES) cardES.addEventListener('click', () => {
   showLauncherVariant('learn_spain');
 });
 /* ════════════════════════════════════════
@@ -4360,7 +4726,7 @@ if (cardES) cardES.addEventListener('click', function() {
      • touchend + timeout  — cas résiduels où resize ne se déclenche pas
 ════════════════════════════════════════ */
 (function() {
-  var _vh_timer = null;
+  let _vh_timer = null;
 
   function _updateAppHeight() {
     document.documentElement.style.setProperty('--app-h', window.innerHeight + 'px');
@@ -4383,7 +4749,7 @@ if (cardES) cardES.addEventListener('click', function() {
   }
 
   /* (5) Fallback touchend avec setTimeout 300 ms */
-  window.addEventListener('touchend', function() {
+  window.addEventListener('touchend', () => {
     setTimeout(_updateAppHeight, 300);
   });
 })();

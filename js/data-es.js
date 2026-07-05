@@ -17,6 +17,8 @@
  * ║   • ALL_THEMES_ES     → concaténation des deux (utilisée par   ║
  * ║                          initApp via ALL_THEMES = ALL_THEMES_ES)║
  * ╚══════════════════════════════════════════════════════════════════╝
+ * Cible : ES2020 maximum pour assurer la compatibilité native iOS
+ * Safari 14.5+ sans transpileur. Modernisé le 05/07/2026 (var → const).
  */
 
 /* ========================================
@@ -26,21 +28,24 @@
    © Juin 2026 Sébastien Godet
 ======================================== */
 
-var LEVEL1_THEMES_ES=[
+const LEVEL1_THEMES_ES=[
 {id: 'alpha',level: 1,emoji: '🔤',name: 'El Alfabeto',sub: 'L\'Alphabet',type: 'alpha',words: [{es: 'A', fr: 'A', em: '✈️'},{es: 'B', fr: 'B', em: '🎈'},{es: 'C', fr: 'C', em: '☕'},{es: 'D', fr: 'D', em: '💃'},{es: 'E', fr: 'E', em: '🏫'},{es: 'F', fr: 'F', em: '🌸'},{es: 'G', fr: 'G', em: '🚉'},{es: 'H', fr: 'H', em: '🏨'},{es: 'I', fr: 'I', em: '🏝️'},{es: 'J', fr: 'J', em: '🌿'},{es: 'K', fr: 'K', em: '⚖️'},{es: 'L', fr: 'L', em: '🦁'},{es: 'M', fr: 'M', em: '🏠'},{es: 'N', fr: 'N', em: '🌙'},{es: 'Ñ', fr: 'Ñ', em: '🪅'},{es: 'O', fr: 'O', em: '🐦'},{es: 'P', fr: 'P', em: '🍞'},{es: 'Q', fr: 'Q', em: '🏘️'},{es: 'R', fr: 'R', em: '🌹'},{es: 'S', fr: 'S', em: '☀️'},{es: 'T', fr: 'T', em: '🚂'},{es: 'U', fr: 'U', em: '1️⃣'},{es: 'V', fr: 'V', em: '🌆'},{es: 'W', fr: 'W', em: '🚃'},{es: 'X', fr: 'X', em: '🎵'},{es: 'Y', fr: 'Y', em: '🥛'},{es: 'Z', fr: 'Z', em: '0️⃣'}],quiz10: [{q: 'Quelle lettre entends-tu ?', audio: 'J', opts: ['L', 'G', 'J', 'V'], ans: 2},{q: 'Quelle lettre entends-tu ?', audio: 'F', opts: ['Z', 'P', 'H', 'F'], ans: 3},{q: 'Quelle lettre entends-tu ?', audio: 'U', opts: ['M', 'U', 'I', 'J'], ans: 1},{q: 'Quelle lettre entends-tu ?', audio: 'I', opts: ['O', 'A', 'I', 'Y'], ans: 2},{q: 'Quelle lettre entends-tu ?', audio: 'H', opts: ['B', 'F', 'X', 'H'], ans: 3},{q: 'Quelle lettre entends-tu ?', audio: 'Y', opts: ['L', 'P', 'Y', 'Z'], ans: 2},{q: 'Quelle lettre entends-tu ?', audio: 'G', opts: ['K', 'T', 'G', 'N'], ans: 2},{q: 'Quelle lettre entends-tu ?', audio: 'R', opts: ['V', 'M', 'B', 'R'], ans: 3},{q: 'Quelle lettre entends-tu ?', audio: 'Z', opts: ['B', 'M', 'G', 'Z'], ans: 3},{q: 'Quelle lettre entends-tu ?', audio: 'S', opts: ['T', 'S', 'Y', 'D'], ans: 1},{q: 'Quelle lettre entends-tu ?', audio: 'N', opts: ['L', 'M', 'D', 'N'], ans: 3},{q: 'Quelle lettre entends-tu ?', audio: 'X', opts: ['X', 'C', 'W', 'N'], ans: 0}]},
 {id:'salut',level:1,emoji:'👋',name:'Los Saludos',sub:'Les Salutations',
  words:[
-   {es:'Buenos días',fr:'Bonjour (le matin)',em:'🌅'},
+   {es:'Buenos días',fr:'Bonjour',em:'🌅'},
    {es:'Buenas tardes',fr:'Bon après-midi',em:'🌆'},
    {es:'Buenas noches',fr:'Bonsoir / Bonne nuit',em:'🌙'},
    {es:'¡Hola!',fr:'Salut !',em:'👋'},
    {es:'Adiós / Hasta luego',fr:'Au revoir / À bientôt',em:'👋'},
    {es:'Hasta pronto',fr:'À bientôt',em:'⏱️'},
    {es:'Gracias / Muchas gracias',fr:'Merci / Merci beaucoup',em:'🙏'},
-   {es:'Por favor / De rien',fr:'S\'il vous plaît / De rien',em:'🤝'},
+   {es:'Por favor',fr:'S\'il vous plaît',em:'🙏'},
+   {es:'De nada',fr:'De rien',em:'🤝'},
    {es:'Disculpa / Disculpe',fr:'Pardon / Excusez-moi',em:'🙇'},
-   {es:'¡Venga! / ¡Vale!',fr:'Allez ! / D\'accord !',em:'👍',
-    variants:{MX:'¡Sale! / ¡Órale!',VE:'¡Dale! / ¡Listo!',AR:'¡Dale!',EC:'¡Dale!',PE:'¡Dale!',CO:'¡Listo! / ¡Dale!'}},
+   {es:'¡Venga!',fr:'Allez !',em:'👍',
+    variants:{MX:'¡Órale!',VE:'¡Dale!',AR:'¡Dale!',EC:'¡Dale!',PE:'¡Dale!',CO:'¡Dale!'}},
+   {es:'¡Vale!',fr:'D\'accord !',em:'🤙',
+    variants:{MX:'¡Sale!',VE:'¡Listo!',AR:'¡Dale!',EC:'¡Dale!',PE:'¡Dale!',CO:'¡Listo!'}},
    {es:'Sí',fr:'Oui',em:'✅'},
    {es:'No',fr:'Non',em:'❌'},
    {es:'¿Cómo estás? o ¿Qué tal?',fr:'Comment ça va ?',em:'🤗'},
@@ -71,7 +76,8 @@ var LEVEL1_THEMES_ES=[
   {es:'¡Feliz cumpleaños!',fr:'Joyeux anniversaire !',em:'🎂'},
   {es:'¡Feliz Navidad!',fr:'Joyeux Noël !',em:'🎄'},
   {es:'¡Feliz Año Nuevo!',fr:'Bonne année !',em:'🎆'},
-  {es:'El tuteo (tú) / El usted (formal)',fr:'Le tutoiement (tu) / Le vouvoiement (vous)',em:'🗣️'},
+  {es:'El tuteo (tú)',fr:'Le tutoiement (tu)',em:'🗣️'},
+  {es:'El usted (formal)',fr:'Le vouvoiement (vous)',em:'🎩'},
   {es:'Dar las gracias',fr:'Remercier',em:'🙏'},
  ]},
 {id:'interrog',level:1,emoji:'❓',name:'Palabras Interrogativas',sub:'Les Mots Interrogatifs',
@@ -146,10 +152,13 @@ var LEVEL1_THEMES_ES=[
       { es: 'Son las tres y media', fr: 'Il est trois heures et demie', em: '🕞' },
       { es: 'Son las tres y cuarto', fr: 'Il est trois heures et quart', em: '🕒' },
       { es: 'Son las tres menos cuarto', fr: 'Il est deux heures quarante-cinq', em: '🕓' },
-      { es: 'Es mediodía / Es medianoche', fr: 'Il est midi / Il est minuit', em: '🌞🌛' },
+      { es: 'Es mediodía', fr: 'Il est midi', em: '🌞' },
+      { es: 'Es medianoche', fr: 'Il est minuit', em: '🌛' },
       { es: 'A las + hora', fr: 'À + heure', em: '⏰' },
-      { es: 'Los minutos / Los segundos', fr: 'Les minutes / Les secondes', em: '⏱️' },
-      { es: 'Temprano / Tarde', fr: 'Tôt / Tard', em: '⏳' },
+      { es: 'Los minutos', fr: 'Les minutes', em: '⏱️' },
+      { es: 'Los segundos', fr: 'Les secondes', em: '⏲️' },
+      { es: 'Temprano', fr: 'Tôt', em: '🌤️' },
+      { es: 'Tarde', fr: 'Tard', em: '🌙' },
 
       // Jours de la semaine (Días de la semana)
       { es: 'Lunes', fr: 'Lundi', em: '1️⃣' },
@@ -176,14 +185,18 @@ var LEVEL1_THEMES_ES=[
 
       // Références temporelles
       { es: 'El fin de semana', fr: 'Le week-end', em: '🎉' },
-      { es: 'Ayer / Hoy / Mañana', fr: 'Hier / Aujourd\'hui / Demain', em: '📅' },
+      { es: 'Ayer', fr: 'Hier', em: '⬅️' },
+      { es: 'Hoy', fr: 'Aujourd\'hui', em: '📅' },
+      { es: 'Mañana', fr: 'Demain', em: '➡️' },
       { es: 'La semana que viene', fr: 'La semaine prochaine', em: '➡️' },
-      { es: 'El año pasado / El año que viene', fr: 'L\'année dernière / L\'année prochaine', em: '📆' },
+      { es: 'El año pasado', fr: 'L\'année dernière', em: '⬅️' },
+      { es: 'El año que viene', fr: 'L\'année prochaine', em: '➡️' },
 
       // Fêtes culturelles
       { es: 'El 14 de julio (Día Nacional de Francia)', fr: 'Le 14 juillet (Fête Nationale française)', em: '🇫🇷' },
       { es: 'El 10 de agosto (Día de la Independencia del Ecuador)', fr: 'Le 10 août (Indépendance de l\'Équateur)', em: '🇪🇨', variants: { CO: 'El 20 de julio', PE: 'El 28 de julio', AR: 'El 25 de mayo', MX: 'El 15 de septiembre', VE: 'El 5 de julio' } },
-      { es: 'La Navidad / El Año Nuevo', fr: 'Noël / Le Nouvel An', em: '🎄🎆' }
+      { es: 'La Navidad', fr: 'Noël', em: '🎄' },
+      { es: 'El Año Nuevo', fr: 'Le Nouvel An', em: '🥂' }
     ]},
   { id: 'meteo_climat',
     level: 1,
@@ -201,7 +214,8 @@ var LEVEL1_THEMES_ES=[
       { es: 'Nieva / Está nevando', fr: 'Il neige', em: '❄️' },
       { es: 'Hay niebla', fr: 'Il y a du brouillard', em: '🌫️' },
       { es: 'Está nublado', fr: 'Il est nuageux', em: '☁️' },
-      { es: 'Hay tormenta / Relámpagos', fr: 'Il y a un orage / Des éclairs', em: '⚡' },
+      { es: 'Hay tormenta', fr: 'Il y a un orage', em: '⛈️' },
+      { es: 'Relámpagos', fr: 'Des éclairs', em: '⚡' },
       { es: 'El pronóstico del tiempo', fr: 'Les prévisions météo', em: '📺' },
       { es: 'La temperatura', fr: 'La température', em: '🌡️' },
 
@@ -221,7 +235,8 @@ var LEVEL1_THEMES_ES=[
     ]},
 {id:'verb',level:1,emoji:'📝',name:'Los Verbos',sub:'Les Verbes',
  words:[
-   {es:'Ser / Estar',fr:'Être (ser=permanente : soy español / estar=temporal : estoy cansado)',em:'🧑',conj:{es:['Yo soy/estoy','Tú eres/estás','Él/Ella es/está','Nosotros somos/estamos','Vosotros sois/estáis','Ellos/Ellas son/están'],fr:['Je suis','Tu es','Il/Elle est','Nous sommes','Vous êtes','Ils/Elles sont']}},
+   {es:'Ser',fr:'Être (permanent, identité : soy español = je suis espagnol)',em:'🧑',conj:{es:['Yo soy','Tú eres','Él/Ella es','Nosotros somos','Vosotros sois','Ellos/Ellas son'],fr:['Je suis','Tu es','Il/Elle est','Nous sommes','Vous êtes','Ils/Elles sont']}},
+    {es:'Estar',fr:'Être (temporaire, état : estoy cansado = je suis fatigué)',em:'📍',conj:{es:['Yo estoy','Tú estás','Él/Ella está','Nosotros estamos','Vosotros estáis','Ellos/Ellas están'],fr:['Je suis','Tu es','Il/Elle est','Nous sommes','Vous êtes','Ils/Elles sont']}},
    {es:'Tener',fr:'Avoir',em:'🤲',conj:{es:['Yo tengo','Tú tienes','Él/Ella tiene','Nosotros tenemos','Vosotros tenéis','Ellos/Ellas tienen'],fr:['J\'ai','Tu as','Il/Elle a','Nous avons','Vous avez','Ils/Elles ont']}},
    {es:'Hablar',fr:'Parler',em:'🗣️',conj:{es:['Yo hablo','Tú hablas','Él/Ella habla','Nosotros hablamos','Vosotros habláis','Ellos/Ellas hablan'],fr:['Je parle','Tu parles','Il/Elle parle','Nous parlons','Vous parlez','Ils/Elles parlent']}},
    {es:'Vivir',fr:'Habiter',em:'🏠',conj:{es:['Yo vivo','Tú vives','Él/Ella vive','Nosotros vivimos','Vosotros vivís','Ellos/Ellas viven'],fr:['J\'habite','Tu habites','Il/Elle habite','Nous habitons','Vous habitez','Ils/Elles habitent']}},
@@ -284,7 +299,8 @@ var LEVEL1_THEMES_ES=[
   {es:'Negro',fr:'Noir',em:'🖤'},
   {es:'Rosa',fr:'Rose',em:'🩷',
    variants:{MX:'Rosado',AR:'Rosado',CO:'Rosado',PE:'Rosado'}},
-  {es:'Morado / Violeta',fr:'Violet',em:'💜'},
+  {es:'Morado',fr:'Violet foncé',em:'💜'},
+  {es:'Violeta',fr:'Violet clair',em:'🟣'},
   {es:'Marrón',fr:'Marron',em:'🤎',
    variants:{MX:'Café',AR:'Marrón',CO:'Café',PE:'Marrón / Café'}},
   {es:'Gris',fr:'Gris',em:'🩶'}
@@ -411,7 +427,8 @@ var LEVEL1_THEMES_ES=[
    {es:'El café con leche',fr:'Le café au lait',em:'☕'},
    {es:'El café de filtro',fr:'Le café filtre',em:'☕'},
    {es:'El té',fr:'Le thé',em:'🍵'},
-   {es:'El vino (tinto / blanco)',fr:'Le vin (rouge / blanc)',em:'🍷'},
+   {es:'El vino tinto',fr:'Le vin rouge',em:'🍷'},
+   {es:'El vino blanco',fr:'Le vin blanc',em:'🥂'},
    {es:'La cerveza',fr:'La bière',em:'🍺'},
    {es:'La sidra',fr:'Le cidre',em:'🍾'}
  ]},
@@ -422,7 +439,8 @@ var LEVEL1_THEMES_ES=[
    {es:'¿Está libre esta mesa?',fr:'Cette table est libre ?',em:'🪑'},
    {es:'El camarero / La camarera',fr:'Le serveur / La serveuse',em:'🧑‍🍳',
     variants:{MX:'El mesero / La mesera',AR:'El mozo / La moza',CO:'El mesero / La mesera',VE:'El mesero / La mesera',PE:'El mesero / La mesera'}},
-   {es:'La carta / El menú',fr:'La carte / Le menu',em:'📋'},
+   {es:'La carta',fr:'La carte (des plats)',em:'📋'},
+   {es:'El menú',fr:'Le menu (à prix fixe)',em:'🍱'},
    {es:'El menú del día',fr:'Le menu du jour (déjeuner)',em:'🍱'},
    {es:'Pedir / Comandar',fr:'Commander',em:'🙋'},
    {es:'¿Qué recomienda?',fr:'Que recommandez-vous ?',em:'👨‍🍳'},
@@ -440,7 +458,7 @@ var LEVEL1_THEMES_ES=[
  ]},
 {id:'orient',level:1,emoji:'🧭',name:'Orientarse',sub:'S\'Orienter',words:[{es:'Todo recto',fr:'Tout droit',em:'⬆️'},{es:'A la izquierda',fr:'À gauche',em:'⬅️'},{es:'A la derecha',fr:'À droite',em:'➡️'},{es:'Delante',fr:'Devant',em:'🔜'},{es:'Detrás',fr:'Derrière',em:'🔙'},{es:'Al lado',fr:'À côté',em:'↔️'},{es:'Frente a / Enfrente',fr:'En face',em:'🔄'},{es:'Cerca',fr:'Près',em:'📍'},{es:'Lejos',fr:'Loin',em:'🌅'},{es:'El mapa / El plano',fr:'Le plan / La carte',em:'🗺️'},
 ]},
-{id:'lieux',level:1,emoji:'🏙️',name:'Los Lugares',sub:'Les Lieux',words:[{es:'La ciudad',fr:'La ville',em:'🏙️'},{es:'El pueblo',fr:'Le village',em:'🏡'},{es:'El campo',fr:'La campagne',em:'🌾'},{es:'La montaña',fr:'La montagne',em:'⛰️'},{es:'El mar / El océano',fr:'La mer / L\'océan',em:'🌊'},{es:'La playa',fr:'La plage',em:'🏖️'},{es:'El río',fr:'La rivière',em:'🏞️'},{es:'El parque',fr:'Le parc',em:'🌳'},{es:'La plaza',fr:'La place',em:'⛲'},{es:'La calle / La avenida',fr:'La rue / L\'avenue',em:'🛣️'},{es:'La manzana (de casas)',fr:'Le pâté de maisons',em:'🏘️'},{es:'El ayuntamiento',fr:'La mairie / La commune',em:'🏛️'},{es:'El hospital',fr:'L\'hôpital',em:'🏥'},{es:'La farmacia',fr:'La pharmacie',em:'💊'},{es:'El banco',fr:'La banque',em:'🏦'},{es:'La iglesia',fr:'L\'église',em:'⛪'},{es:'El supermercado',fr:'Le supermarché',em:'🛒'},{es:'El bar / El café',fr:'Le bar / Le café',em:'☕'},{es:'La tienda',fr:'La boutique / Le commerce',em:'🏪'},{es:'La escuela infantil / La guardería',fr:'L\'école maternelle',em:'🧸'},{es:'La escuela primaria / El colegio',fr:'L\'école primaire',em:'🎒'},{es:'El instituto',fr:'Le collège / Le lycée',em:'📚'},{es:'La universidad',fr:'L\'université',em:'🏛️'},
+{id:'lieux',level:1,emoji:'🏙️',name:'Los Lugares',sub:'Les Lieux',words:[{es:'La ciudad',fr:'La ville',em:'🏙️'},{es:'El pueblo',fr:'Le village',em:'🏡'},{es:'El campo',fr:'La campagne',em:'🌾'},{es:'La montaña',fr:'La montagne',em:'⛰️'},{es:'El mar',fr:'La mer',em:'🌊'},{es:'El océano',fr:'L\'océan',em:'🌐'},{es:'La playa',fr:'La plage',em:'🏖️'},{es:'El río',fr:'La rivière',em:'🏞️'},{es:'El parque',fr:'Le parc',em:'🌳'},{es:'La plaza',fr:'La place',em:'⛲'},{es:'La calle',fr:'La rue',em:'🛣️'},{es:'La avenida',fr:'L\'avenue',em:'🌆'},{es:'La manzana (de casas)',fr:'Le pâté de maisons',em:'🏘️'},{es:'El ayuntamiento',fr:'La mairie',em:'🏛️'},{es:'El municipio',fr:'La commune',em:'🗺️'},{es:'El hospital',fr:'L\'hôpital',em:'🏥'},{es:'La farmacia',fr:'La pharmacie',em:'💊'},{es:'El banco',fr:'La banque',em:'🏦'},{es:'La iglesia',fr:'L\'église',em:'⛪'},{es:'El supermercado',fr:'Le supermarché',em:'🛒'},{es:'El bar',fr:'Le bar',em:'🍺'},{es:'El café',fr:'Le café',em:'☕'},{es:'La tienda',fr:'La boutique / Le commerce',em:'🏪'},{es:'La escuela infantil',fr:'L\'école maternelle',em:'🧸'},{es:'La guardería',fr:'La crèche',em:'👶'},{es:'La escuela primaria',fr:'L\'école primaire',em:'🎒'},{es:'El colegio',fr:'L\'école (primaire et secondaire)',em:'🏫'},{es:'El instituto (1r-4t ESO)',fr:'Le collège',em:'📚'},{es:'El instituto (Bachillerato)',fr:'Le lycée',em:'🎓'},{es:'La universidad',fr:'L\'université',em:'🏛️'},
 ]},
 {id:'trans',level:1,emoji:'🚌',name:'El Transporte',sub:'Les Transports',
  words:[
@@ -495,8 +513,9 @@ var LEVEL1_THEMES_ES=[
    {es:'El reloj de pulsera',fr:'La montre',em:'⌚'},
    {es:'El reloj (de pared)',fr:'L\'horloge / la pendule',em:'🕐'},
    {es:'Las llaves',fr:'Les clés',em:'🔑'},
-   {es:'La cartera / El monedero',fr:'Le portefeuille / le porte-monnaie',em:'👛',
-    variants:{MX:'La billetera / El monedero',AR:'La billetera',CO:'La billetera',VE:'La billetera',PE:'La billetera'}},
+   {es:'La cartera',fr:'Le portefeuille',em:'👛',
+    variants:{MX:'La billetera',AR:'La billetera',CO:'La billetera',VE:'La billetera',PE:'La billetera'}},
+   {es:'El monedero',fr:'Le porte-monnaie',em:'🪙'},
    {es:'La mochila',fr:'Le sac à dos',em:'🎒'},
    {es:'Las gafas',fr:'Les lunettes',em:'👓',
     variants:{MX:'Los lentes',AR:'Los anteojos / Lentes',CO:'Los lentes',VE:'Los lentes',PE:'Los lentes'}},
@@ -523,8 +542,9 @@ var LEVEL1_THEMES_ES=[
    {es:'El piso / El apartamento',fr:'L\'appartement',em:'🏢',
     variants:{MX:'El departamento',AR:'El departamento',CO:'El apartamento',VE:'El apartamento',PE:'El departamento'}},
    {es:'La entrada / El recibidor',fr:'L\'entrée',em:'🚪'},
-   {es:'El salón / El comedor',fr:'Le salon / la salle à manger',em:'🛋️',
-    variants:{MX:'La sala',AR:'El living / El comedor',CO:'La sala',VE:'La sala',PE:'La sala'}},
+   {es:'El salón',fr:'Le salon',em:'🛋️',
+    variants:{MX:'La sala',AR:'El living',CO:'La sala',VE:'La sala',PE:'La sala'}},
+   {es:'El comedor',fr:'La salle à manger',em:'🍽️'},
    {es:'La cocina',fr:'La cuisine',em:'🍳'},
    {es:'La habitación / El dormitorio',fr:'La chambre',em:'🛏️'},
    {es:'El cuarto de baño',fr:'La salle de bain',em:'🚿'},
@@ -561,13 +581,16 @@ var LEVEL1_THEMES_ES=[
    {es:'La camiseta',fr:'Le t-shirt',em:'👕',variants:{MX:'La playera',VE:'La franela',AR:'La remera',PE:'El polo'}},
    {es:'La camisa',fr:'La chemise',em:'👔'},
    {es:'El pantalón',fr:'Le pantalon',em:'👖'},
-   {es:'Los zapatos / Las zapatillas',fr:'Les chaussures / Les baskets',em:'👟',variants:{MX:'Los zapatos / Los tenis',VE:'Los zapatos / Los tenis',EC:'Los zapatos / Los tenis',CO:'Los zapatos / Los tenis'}},
+   {es:'Los zapatos',fr:'Les chaussures',em:'👞'},
+   {es:'Las zapatillas',fr:'Les baskets',em:'👟',variants:{MX:'Los tenis',VE:'Los tenis',EC:'Los tenis',CO:'Los tenis'}},
    {es:'Los calcetines',fr:'Les chaussettes',em:'🧦',variants:{MX:'Las medias',VE:'Las medias',AR:'Las medias',EC:'Las medias',PE:'Las medias',CO:'Las medias'}},
-   {es:'El vestido / La falda',fr:'La robe / La jupe',em:'👗',variants:{AR:'El vestido / La pollera'}},
+   {es:'El vestido',fr:'La robe',em:'👗'},
+   {es:'La falda',fr:'La jupe',em:'👚',variants:{AR:'La pollera'}},
    {es:'Los pantalones cortos / El short',fr:'Le short',em:'🩳'},
    {es:'El jersey',fr:'Le pull',em:'🧥',variants:{MX:'El suéter',VE:'El suéter',AR:'El buzo / El pulóver',EC:'El saco / La chompa',PE:'La chompa',CO:'El saco'}},
    {es:'La chaqueta',fr:'La veste',em:'🧥',variants:{MX:'La chamarra',AR:'La campera',EC:'La casaca',PE:'La casaca'}},
-   {es:'El sombrero / La gorra',fr:'Le chapeau / La casquette',em:'🎩'},
+   {es:'El sombrero',fr:'Le chapeau',em:'🎩'},
+   {es:'La gorra',fr:'La casquette',em:'🧢'},
    {es:'El abrigo',fr:'Le manteau',em:'🧥'},
    {es:'La bufanda',fr:'L\'écharpe',em:'🧣'},
    {es:'Los guantes',fr:'Les gants',em:'🧤'},
@@ -588,7 +611,7 @@ var LEVEL1_THEMES_ES=[
    {es:'El cocinero / La cocinera',fr:'Le cuisinier / La cuisinière',em:'👨‍🍳'},
    {es:'El fontanero / La fontanera',fr:'Le plombier / La plombière',em:'🔧',
     variants:{MX:'El plomero / La plomera',VE:'El plomero / La plomera',AR:'El plomero / La plomera',EC:'El plomero / La plomera',PE:'El gasfitero / La gasfitera',CO:'El plomero / La plomera'}},
-   {es:'El informático / La informática',fr:'L\'informaticien / Le technicien système',em:'💻'}
+   {es:'El informático / La informática',fr:'L\'informaticien / L\'informaticienne',em:'💻'}
  ]},
 {id:'sante',level:1,emoji:'🏥',name:'La Salud',sub:'La Santé',
  words:[
@@ -596,8 +619,9 @@ var LEVEL1_THEMES_ES=[
    {es:'Tener dolor',fr:'Avoir une douleur (plus formel)',em:'😣'},
    {es:'La fiebre',fr:'La fièvre',em:'🌡️'},
    {es:'La tos',fr:'La toux',em:'😮‍💨'},
-   {es:'El pañuelo de papel / El pañuelo',fr:'Le mouchoir',em:'🤧',
-    variants:{MX:'El clínex / El pañuelo',VE:'El clínex',AR:'La carilina / El pañuelo',CO:'El clínex / El pañuelo'}},
+   {es:'El pañuelo de papel',fr:'Le mouchoir en papier',em:'🤧',
+    variants:{MX:'El clínex',VE:'El clínex',AR:'La carilina',CO:'El clínex'}},
+   {es:'El pañuelo',fr:'Le mouchoir (en tissu)',em:'🧣'},
    {es:'El termómetro',fr:'Le thermomètre',em:'🌡️'},
    {es:'La cita',fr:'Le rendez-vous',em:'📅'},
    {es:'El médico / La médica / El doctor',fr:'Le médecin / Le docteur',em:'🩺'},
@@ -712,7 +736,8 @@ var LEVEL1_THEMES_ES=[
     // Espaces naturels & Jardins
     {es: 'El jardín', fr: 'Le jardin', em: '🏡'},
     {es: 'La rosa', fr: 'La rose', em: '🌹'},
-    {es: 'El bosque', fr: 'La forêt / La jungle', em: '🌲'},
+    {es: 'El bosque', fr: 'La forêt', em: '🌲'},
+    {es: 'La selva', fr: 'La jungle', em: '🌴'},
     {
       es: 'El césped', 
       fr: 'La pelouse / Le gazon', 
@@ -724,7 +749,8 @@ var LEVEL1_THEMES_ES=[
  words:[
    {es:'El perro',fr:'Le chien',em:'🐶'},
    {es:'El gato',fr:'Le chat',em:'🐱'},
-   {es:'El pájaro / El loro',fr:'L\'oiseau / Le perroquet',em:'🐦'},
+   {es:'El pájaro',fr:'L\'oiseau',em:'🐦'},
+   {es:'El loro',fr:'Le perroquet',em:'🦜'},
    {es:'El pez',fr:'Le poisson (vivant)',em:'🐟'},
    {es:'El caballo',fr:'Le cheval',em:'🐴'},
    {es:'La vaca',fr:'La vache',em:'🐮'},
@@ -748,7 +774,7 @@ var LEVEL1_THEMES_ES=[
    {es:'La mariposa',fr:'Le papillon',em:'🦋'},
    {es:'La rana',fr:'La grenouille',em:'🐸'},
    {es:'La serpiente',fr:'Le serpent',em:'🐍'},
-   {es:'El lagarto / La lagartija',fr:'Le lézard',em:'🦎'},
+   {es:'El lagarto',fr:'Le lézard',em:'🦎'},
    {es:'La araña',fr:'L\'araignée',em:'🕷️'},
    {es:'El mosquito',fr:'Le moustique',em:'🦟',
     variants:{MX:'El zancudo',VE:'El zancudo',AR:'El mosquito',EC:'El zancudo',PE:'El zancudo',CO:'El zancudo'}},
@@ -784,11 +810,15 @@ var LEVEL1_THEMES_ES=[
     },
     
     // Travaux agricoles & Acteurs
-    {es: 'Cultivar / Sembrar', fr: 'Cultiver / Semer', em: '🌱'},
-    {es: 'Cosechar / La cosecha', fr: 'Récolter / La récolte', em: '🌾'},
+    {es: 'Cultivar', fr: 'Cultiver', em: '🌱'},
+    {es: 'Sembrar', fr: 'Semer', em: '🌾'},
+    {es: 'Cosechar', fr: 'Récolter', em: '🧺'},
+    {es: 'La cosecha', fr: 'La récolte', em: '🌾'},
     {es: 'Regar', fr: 'Arroser', em: '💧'},
-    {es: 'El tractor / El machete', fr: 'Le tracteur / La machette', em: '🚜'},
-    {es: 'Los agricultores / los campesinos', fr: 'Les agriculteurs / les paysans', em: '👨‍🌾'},
+    {es: 'El tractor', fr: 'Le tracteur', em: '🚜'},
+    {es: 'El machete', fr: 'La machette', em: '🔪'},
+    {es: 'Los agricultores', fr: 'Les agriculteurs', em: '👨‍🌾'},
+    {es: 'Los campesinos', fr: 'Les paysans', em: '🧑‍🌾'},
     
     // Monde de l'Élevage (Ganadería)
     {es: 'La ganadería', fr: 'L\'élevage', em: '🐄'},
@@ -824,7 +854,7 @@ var LEVEL1_THEMES_ES=[
    (ex : "¿Cómo se dice X en francés ?")
 ═══════════════════════════════════════════════════════════ */
 
-var LEVEL2_THEMES_ES = [
+const LEVEL2_THEMES_ES = [
 {id:'salut2',level:2,emoji:'👋',name:'Saludar a Alguien',sub:'Saluer Quelqu\'un',type:'dialog',situations:[{label:'Sit. 1',title:'Dans la rue',img:'🏘️',dialogue:[{s:'Lucas',es:'¡Hola! ¿Qué tal?',fr:'Salut ! Ça va ?',side:'left'},{s:'Ana',es:'¡Bien, gracias! ¿Y tú?',fr:'Bien, merci ! Et toi ?',side:'right'},{s:'Lucas',es:'Más o menos. Estoy cansado.',fr:'Comme ci comme ça. Je suis fatigué.',side:'left'},{s:'Ana',es:'¡Vaya, qué pena! Lo siento.',fr:'Oh ! Je suis désolée.',side:'right'},{s:'Lucas',es:'Gracias. ¡Hasta luego!',fr:'Merci. À plus !',side:'left'},{s:'Ana',es:'¡Hasta pronto!',fr:'À bientôt !',side:'right'}]},{label:'Sit. 2',title:'Au bureau le matin',img:'💼',dialogue:[{s:'Pedro',es:'¡Buenos días! ¿Cómo estás?',fr:'Bonjour ! Comment tu vas ?',side:'left'},{s:'María',es:'Bien, gracias. ¿Y tú?',fr:'Bien, merci. Et toi ?',side:'right'},{s:'Pedro',es:'Un poco cansado. ¿Quieres un café?',fr:'Un peu fatigué. Tu veux un café ?',side:'left'},{s:'María',es:'Sí, por favor. ¡Gracias!',fr:'Oui, s\'il te plaît. Merci !',side:'right'},{s:'Pedro',es:'De nada. ¡Aquí tienes!',fr:'De rien. Voilà !',side:'left'}]},{label:'Sit. 3',title:'Retrouver un ami au café',img:'☀️',dialogue:[{s:'Carlos',es:'¡Hola! ¿Qué tal estás?',fr:'Salut ! Comment tu vas ?',side:'left'},{s:'Sofía',es:'¡Muy bien! ¿Y tú?',fr:'Très bien ! Et toi ?',side:'right'},{s:'Carlos',es:'Bien. ¿Qué hay de nuevo?',fr:'Bien. Quoi de neuf ?',side:'left'},{s:'Sofía',es:'Nada en especial. ¿Tomamos algo?',fr:'Rien de spécial. On prend quelque chose ?',side:'right'},{s:'Carlos',es:'¡Buena idea! Tengo sed.',fr:'Bonne idée ! J\'ai soif.',side:'left'},{s:'Sofía',es:'¡Yo también!',fr:'Moi aussi !',side:'right'}]}],vocab:['Ça va ? = ¿Qué tal?','Bien, merci = Bien, gracias','Comme ci comme ça = Más o menos','Je suis fatigué = Estoy cansado','Je suis désolé(e) = ¡Qué pena! / Lo siento','À plus ! = ¡Hasta luego!','Quoi de neuf ? = ¿Qué hay de nuevo?'],quiz:[{q:'¿Cómo se dice "¿Qué tal?" en francés?',opts:['Comme ci comme ça','Ça va ?','Je suis désolé','Je suis fatigué'],ans:1},{q:'¿Cómo se dice "¿Qué hay de nuevo?" en francés?',opts:['Je suis désolé','Comme ci comme ça','Quoi de neuf ?','Ça va ?'],ans:2},{q:'¿Cómo se dice "¡Hasta luego!" en francés?',opts:['Comme ci comme ça','Je suis désolé','À plus !','Je suis fatigué'],ans:2}]},
 {id:'pres2',level:2,emoji:'🙋',name:'Presentarse',sub:'Se Présenter',type:'dialog',situations:[{label:'Sit. 1',title:'Dans un cours d\'espagnol',img:'📚',dialogue:[{s:'Profesora',es:'¡Hola! ¿Cómo te llamas?',fr:'Bonjour ! Tu t\'appelles comment ?',side:'right'},{s:'Marc',es:'Me llamo Marc. ¿Y usted?',fr:'Je m\'appelle Marc. Et vous ?',side:'left'},{s:'Profesora',es:'Yo soy Laura. ¿De dónde eres, Marc?',fr:'Je suis Laura. Tu es d\'où, Marc ?',side:'right'},{s:'Marc',es:'Soy de Francia, de París. ¿Y usted?',fr:'Je suis de France, de Paris. Et vous ?',side:'left'},{s:'Profesora',es:'Soy de Madrid. ¡Bienvenido!',fr:'Je suis de Madrid. Bienvenue !',side:'right'},{s:'Marc',es:'¡Gracias!',fr:'Merci !',side:'left'}]},{label:'Sit. 2',title:'Rencontre dans le quartier',img:'🏙️',dialogue:[{s:'Vecino',es:'¡Hola! ¿Eres nuevo por aquí?',fr:'Bonjour ! Tu es nouveau ici ?',side:'right'},{s:'Julie',es:'Sí. Me llamo Julie. Soy francesa.',fr:'Oui. Je m\'appelle Julie. Je suis française.',side:'left'},{s:'Vecino',es:'Yo soy Antonio. ¿Hablas español?',fr:'Moi je suis Antonio. Tu parles espagnol ?',side:'right'},{s:'Julie',es:'Un poco. Estoy aprendiendo.',fr:'Un peu. Je suis en train d\'apprendre.',side:'left'},{s:'Vecino',es:'¡Qué guay! Tu español es bueno.',fr:'Génial ! Ton espagnol est bon.',side:'right'},{s:'Julie',es:'¡Gracias! Eres muy amable.',fr:'Merci ! Tu es très gentil.',side:'left'}]},{label:'Sit. 3',title:'À une fête',img:'🎉',dialogue:[{s:'Chica',es:'¡Hola! ¿Cómo te llamas?',fr:'Salut ! Tu t\'appelles comment ?',side:'right'},{s:'Thomas',es:'Thomas. ¿Y tú?',fr:'Thomas. Et toi ?',side:'left'},{s:'Chica',es:'Yo soy Lucía. ¿Eres francés?',fr:'Moi je suis Lucía. Tu es français ?',side:'right'},{s:'Thomas',es:'Sí, soy de Lyon. ¿Y tú eres de Madrid?',fr:'Oui, je suis de Lyon. Et toi tu es de Madrid ?',side:'left'},{s:'Chica',es:'No, soy de Barcelona. ¡Encantada!',fr:'Non, je suis de Barcelona. Enchantée !',side:'right'},{s:'Thomas',es:'¡Encantado!',fr:'Enchanté !',side:'left'}]}],vocab:['Je m\'appelle = Me llamo','Tu es d\'où ? = ¿De dónde eres?','Je suis de = Soy de','Je suis français(e) = Soy francés / francesa','Je suis en train d\'apprendre = Estoy aprendiendo','Bienvenue ! = ¡Bienvenido!','Enchanté(e) ! = ¡Encantado(a)!'],quiz:[{q:'¿Cómo se dice "¡Encantado!" en francés?',opts:['Enchanté !','Tu es d\'où ?','Je suis en train d\'apprendre','Je suis français'],ans:0},{q:'¿Cómo se dice "¿De dónde eres?" en francés?',opts:['Je suis français','Bienvenue !','Tu es d\'où ?','Enchanté !'],ans:2},{q:'¿Cómo se dice "Me llamo" en francés?',opts:['Je suis de','Je suis en train d\'apprendre','Enchanté !','Je m\'appelle'],ans:3}]},
 {id:'chemin2',level:2,emoji:'🗺️',name:'Pedir Indicaciones',sub:'Demander son Chemin',type:'dialog',situations:[{label:'Sit. 1',title:'Trouver la gare routière',img:'🚌',dialogue:[{s:'Turista',es:'Perdona, ¿dónde está la estación de autobuses?',fr:'Pardon, où est la gare routière ?',side:'left'},{s:'Señora',es:'Siga todo recto y gire a la izquierda.',fr:'Continue tout droit et tourne à gauche.',side:'right'},{s:'Turista',es:'¿Está lejos?',fr:'C\'est loin ?',side:'left'},{s:'Señora',es:'No, está cerca. Son cinco minutos.',fr:'Non, c\'est près. C\'est cinq minutes.',side:'right'},{s:'Turista',es:'Muchas gracias.',fr:'Merci beaucoup.',side:'left'},{s:'Señora',es:'¡De nada!',fr:'De rien !',side:'right'}]},{label:'Sit. 2',title:'Trouver une pharmacie',img:'💊',dialogue:[{s:'Marc',es:'Perdona, ¿hay una farmacia cerca de aquí?',fr:'Pardon, il y a une pharmacie près d\'ici ?',side:'left'},{s:'Chico',es:'Sí. Baje esta calle y gire a la derecha.',fr:'Oui. Descends cette rue et tourne à droite.',side:'right'},{s:'Marc',es:'¿Después del banco?',fr:'Après la banque ?',side:'left'},{s:'Chico',es:'Sí, exacto. Es la puerta verde.',fr:'Oui, exactement. C\'est la porte verte.',side:'right'},{s:'Marc',es:'¿Está abierta ahora?',fr:'Elle est ouverte maintenant ?',side:'left'},{s:'Chico',es:'Sí, creo que sí.',fr:'Oui, je crois que oui.',side:'right'}]},{label:'Sit. 3',title:'Trouver un supermarché',img:'🛒',dialogue:[{s:'Julie',es:'Perdone, ¿hay un supermercado por aquí?',fr:'Pardon, il y a un supermarché ici ?',side:'left'},{s:'Señor',es:'Sí, está enfrente, al lado de la tienda.',fr:'Oui, il est en face, à côté de la boutique.',side:'right'},{s:'Julie',es:'¿A la derecha o a la izquierda?',fr:'À droite ou à gauche ?',side:'left'},{s:'Señor',es:'A la derecha. Es muy grande.',fr:'À droite. Il est très grand.',side:'right'},{s:'Julie',es:'¡Perfecto! Gracias.',fr:'Parfait ! Merci.',side:'left'},{s:'Señor',es:'¡De nada, buen día!',fr:'De rien, bonne journée !',side:'right'}]}],vocab:['Pardon / Excusez-moi = Perdona / Perdone','Où est... ? = ¿Dónde está...?','Tout droit = Todo recto','À gauche = A la izquierda','À droite = A la derecha','Près = Cerca','Loin = Lejos'],quiz:[{q:'¿Cómo se dice "Lejos" en francés?',opts:['Où est... ?','Pardon','Loin','À droite'],ans:2},{q:'¿Cómo se dice "Cerca" en francés?',opts:['Près','Tout droit','À droite','Où est... ?'],ans:0},{q:'¿Cómo se dice "A la izquierda" en francés?',opts:['À gauche','Tout droit','Près','Où est... ?'],ans:0}]},
@@ -848,4 +878,4 @@ var LEVEL2_THEMES_ES = [
    Concaténation de LEVEL1 + LEVEL2 dans l'ordre d'affichage.
    Consommé par initApp('learn_spain') via ALL_THEMES = ALL_THEMES_ES.
 ───────────────────────────────────────────────────────── */
-var ALL_THEMES_ES = LEVEL1_THEMES_ES.concat(LEVEL2_THEMES_ES);
+const ALL_THEMES_ES = LEVEL1_THEMES_ES.concat(LEVEL2_THEMES_ES);
