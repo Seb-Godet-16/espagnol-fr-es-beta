@@ -4171,13 +4171,13 @@ footer .footer-antispam-btn           { color: #aaa; }
 .progress-label-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 6px;
   padding: 0 4px;
 }
 .progress-label-row .progress-label {
   margin-top: 0;
-  flex: 1;
+  flex: 0 1 auto;
 }
 .reset-inline-btn {
   background: transparent;

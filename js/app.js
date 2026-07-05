@@ -594,7 +594,7 @@ function initApp(mode) {
       homeTitle      : 'Apprendre le Français',
       homeStartBtn   : '▶ Commencer<br><span class="translation-sub">Empezar</span>',
       sectionsTitle  : '📚 Modules',
-      sectionsFlag   : '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1eb-1f1f7.svg" style="width:1.5em;vertical-align:middle;" alt="fr">',
+      sectionsFlag   : '🇫🇷',
       lessonBackBtn  : '← Modules<br><span class="translation-sub">Módulos</span>',
       level1Badge    : '1',
       level1Label    : '<span>Niveau 1 — Vocabulaire<br><span class="level-tab-sub">Nivel 1 — Vocabulario</span></span>',
@@ -4195,24 +4195,36 @@ function _buildHomeGuide() {
 
 /**
  * navBackToHome() — Bouton 🏠 du bouton retour à deux icônes (écran Modules).
- * Retourne à l'écran #home tel quel (en haut : progression + bouton Commencer),
- * sans forcer le défilement vers les explications du guide plus bas.
+ * Retourne à l'écran #home tel quel (en haut : progression + bouton Commencer).
+ * Corrige le titre de la topbar sticky pour bien afficher "Accueil / Inicio"
+ * au lieu du titre "Guide explicatif" laissé par le dernier appel à
+ * _buildHomeGuide() (le titre ne se remettait jamais à jour ici).
  */
 function navBackToHome() {
   showScreen('home');
+  const homeEl = document.getElementById('home');
+  if (homeEl) homeEl.scrollTop = 0;
+  const topbarTitle = document.getElementById('homeTopbarTitle');
+  if (topbarTitle) topbarTitle.textContent = L('Inicio', 'Accueil');
 }
 
 /**
  * navBackToGuide() — Bouton ❓ du bouton retour à deux icônes (écran Modules).
- * Va sur #home (comme showGuide()) PUIS fait défiler jusqu'au corps du guide
- * (accordéons d'explication), pour amener directement l'apprenant à l'aide
- * plutôt qu'au haut de l'écran. C'est ce qui différencie ce bouton du 🏠.
+ * Va sur #home (comme showGuide(), qui remet bien le titre "Guide explicatif")
+ * PUIS fait défiler jusqu'au corps du guide (accordéons d'explication).
+ * Calcule le décalage réel des deux barres sticky (.home-topbar +
+ * .home-start-sticky) pour que le haut du guide ne soit pas caché dessous.
  */
 function navBackToGuide() {
   showGuide();
   setTimeout(() => {
+    const homeEl    = document.getElementById('home');
     const guideBody = document.getElementById('homeGuideBody');
-    if (guideBody) guideBody.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!homeEl || !guideBody) return;
+    const topbar       = homeEl.querySelector('.home-topbar');
+    const startSticky  = homeEl.querySelector('.home-start-sticky');
+    const stickyOffset = (topbar ? topbar.offsetHeight : 0) + (startSticky ? startSticky.offsetHeight : 0);
+    homeEl.scrollTo({ top: Math.max(guideBody.offsetTop - stickyOffset, 0), behavior: 'smooth' });
   }, 320); // après la transition d'écran (300ms, cf. showScreen())
 }
 
