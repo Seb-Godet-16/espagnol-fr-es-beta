@@ -1798,26 +1798,32 @@ body {
 .tts-speed-bar {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   flex-wrap: wrap;
   row-gap: 6px;
 }
 .speed-bar-label {
-  font-size: .75rem;
+  font-size: .8rem;
   color: #666;
   margin-right: 2px;
-  font-weight: 600;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.speed-bar-pills {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
 }
 .speed-btn {
   background: #f0f0f0;
   border: 1.5px solid #ccc;
-  border-radius: 8px;
-  padding: 4px 8px;
-  font-size: .8rem;
+  border-radius: 999px;
+  padding: 6px 13px;
+  font-size: .78rem;
   font-weight: 700;
   cursor: pointer;
   min-height: 34px;
-  min-width: 34px;
   transition: background .15s, border-color .15s, color .15s;
   color: #444;
 }
@@ -1826,6 +1832,14 @@ body {
   background: var(--c-primary);
   border-color: var(--c-primary);
   color: #fff;
+}
+/* Icône lièvre décorative en fin d'échelle (symétrique de la tortue 🐢
+   du label, pour évoquer visuellement lent → rapide) — non cliquable. */
+.speed-bar-hare {
+  font-size: 1.15rem;
+  margin-left: 3px;
+  line-height: 1;
+  user-select: none;
 }
 
 /* ── Bouton de répétition TTS (drill de prononciation) ── */

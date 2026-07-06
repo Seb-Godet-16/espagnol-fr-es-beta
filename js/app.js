@@ -766,11 +766,11 @@ let _spanishVoiceLabel   = '';
 // Valeurs : 0.55 (très lent) | 0.70 (lent) | 0.85 (normal) | 1.00 (rapide) | 1.20 (très rapide)
 // Persisté en sessionStorage pour la session courante
 const SPEED_LEVELS = [
-  { id:'xslow',  rate: 0.55, label:'🐢', title: function() { return L('Muy lento',  'Très lent');   } },
-  { id:'slow',   rate: 0.70, label:'🚶', title: function() { return L('Lento',      'Lent');        } },
-  { id:'normal', rate: 0.85, label:'▶',  title: function() { return L('Normal',     'Normal');      } },
-  { id:'fast',   rate: 1.00, label:'🏃', title: function() { return L('Rápido',     'Rapide');      } },
-  { id:'xfast',  rate: 1.20, label:'🚀', title: function() { return L('Muy rápido', 'Très rapide'); } }
+  { id:'xslow',  rate: 0.55, label:'0.55×', title: function() { return L('Muy lento',  'Très lent');   } },
+  { id:'slow',   rate: 0.70, label:'0.70×', title: function() { return L('Lento',      'Lent');        } },
+  { id:'normal', rate: 0.85, label:'0.85×', title: function() { return L('Normal',     'Normal');      } },
+  { id:'fast',   rate: 1.00, label:'1×',    title: function() { return L('Rápido',     'Rapide');      } },
+  { id:'xfast',  rate: 1.20, label:'1.20×', title: function() { return L('Muy rápido', 'Très rapide'); } }
 ];
 function _getTtsSpeed() {
   const saved = sessionStorage.getItem('vachebo_tts_speed');
@@ -1007,9 +1007,12 @@ function _buildSpeakableHTML(text, uid) {
    interaction tactile de la page), un indicateur "🔇 Audio indisponible"
    discret est affiché via _showAudioUnavailable(). */
 function speak(txt, triggerBtn, opts) {
-  if (!txt) return;
+  opts = opts || {};
+  const onDone = typeof opts.onDone === 'function' ? opts.onDone : null;
+  if (!txt) { if (onDone) onDone(); return; }
   if (!window.speechSynthesis) {
     _showAudioUnavailable();
+    if (onDone) onDone();
     return;
   }
   const rate = _getTtsRate();
@@ -1085,11 +1088,13 @@ function _waitForVoicesReady(callback) {
    (cf. Bug 5.2) pour éviter une fausse alerte au premier chargement. */
 let _ttsGen = 0;
 function _doSpeak(txt, voiceObj, rate, triggerBtn, opts) {
+  opts = opts || {};
+  const onDone = typeof opts.onDone === 'function' ? opts.onDone : null;
   if (!window.speechSynthesis) {
     _showAudioUnavailable();
+    if (onDone) onDone();
     return;
   }
-  opts = opts || {};
   const partGap   = opts.partGap   != null ? opts.partGap   : 800;
   const repeatGap = opts.repeatGap != null ? opts.repeatGap : 500;
   const uid       = opts.highlightUid || null;
@@ -1105,6 +1110,9 @@ function _doSpeak(txt, voiceObj, rate, triggerBtn, opts) {
     function finishAll() {
       if (triggerBtn) triggerBtn.classList.remove('is-speaking');
       _clearWordHighlight(uid);
+      // N'appelle onDone que si cet appel est toujours le plus récent
+      // (évite qu'un onDone périmé ne déclenche le micro en double).
+      if (onDone && myGen === _ttsGen) onDone();
     }
 
     function speakPart(rep, i) {
@@ -1246,8 +1254,10 @@ function _buildSpeedBar() {
     + ' title="' + L('Repetir', 'Répéter') + ' ×' + repeatN + '"'
     + ' onclick="_cycleTtsRepeat()">🔁 ×' + repeatN + '</button>';
   return '<div id="tts-speed-bar" class="tts-speed-bar">'
-    + '<span class="speed-bar-label">' + L('Velocidad:', 'Vitesse :') + '</span>'
-    + btns
+    + '<span class="speed-bar-label">🐢 ' + L('Velocidad', 'Vitesse') + '</span>'
+    + '<span class="speed-bar-pills">' + btns
+    +   '<span class="speed-bar-hare" aria-hidden="true">🐇</span>'
+    + '</span>'
     + repeatBtn
     + '<div id="meta-pdf-slot"></div>'
     + '</div>';
@@ -2835,8 +2845,9 @@ let _rpIdx       = 0;    // Index du mot courant
 let _rpScore     = 0;    // Nombre de réussites
 let _rpWords     = [];   // Liste des mots (filtrés fr+es)
 let _rpAnswered  = false; // Empêche le double-déclenchement
-let _rpAutoTimer = null; // Timer pour l'avancement automatique
-let _rpMicTimer  = null; // Timer pour le délai avant micro
+let _rpAutoTimer   = null; // Timer pour l'avancement automatique
+let _rpMicTimer    = null; // Timer pour le délai avant micro
+let _rpMicWatchdog = null; // Sécurité : évite un blocage indéfini si le micro ne répond jamais (voir _rpStartMic)
 
 /* _rpGetWord(idx) — Retourne le mot courant avec sa forme cible résolue. */
 function _rpGetWord(idx) {
@@ -2853,30 +2864,34 @@ function _rpGetWord(idx) {
   return { card: card, word: targetWord, emoji: displayEmoji };
 }
 
-/* _rpMicDelay(word) — Calcule le délai (ms) avant déclenchement du micro,
-   en fonction de la longueur du mot à prononcer. Certains mots contiennent
-   un "/" car ils proposent deux formulations (ex : "Adiós / Hasta luego"
-   ou "Buenos días / Buen día") : il faut laisser à l'apprenant le temps
-   d'entendre ET de prononcer les deux, donc on augmente le délai de base
-   et on ajoute un supplément par "/" et par mot supplémentaire. */
+/* _rpMicDelay(word) — Calcule le court délai (ms) laissé après la FIN RÉELLE
+   de la synthèse vocale (callback onDone de speak()) avant de démarrer le
+   micro. Ce n'est plus une estimation de la durée totale de la parole (le
+   micro démarre désormais après la fin effective de l'audio, cf. bug iOS
+   ci-dessous) : juste un court temps de battement, plus un supplément pour
+   les mots à double formulation ("Adiós / Hasta luego") afin de laisser à
+   l'apprenant le temps de réfléchir aux deux versions.
+   BUG iOS (corrigé le 07/07/2026) : Safari iOS partage une seule session
+   audio entre lecture (TTS) et enregistrement (micro). Démarrer la
+   reconnaissance vocale AVANT la fin réelle de l'audio (l'ancien code se
+   basait sur un délai fixe estimé, souvent trop court) pouvait mettre la
+   session audio dans un état incohérent : le micro semblait actif (voyant
+   d'enregistrement du système allumé) mais ne renvoyait plus jamais de
+   résultat ni d'erreur, bloquant l'apprenant sur "Écoute en cours…". */
 function _rpMicDelay(word) {
-  const BASE       = 1800;  // délai standard pour un mot simple
-  const PER_SLASH  = 1400;  // supplément par "/" (mot composé de 2 formulations)
-  const PER_WORD   = 90;    // supplément par mot au-delà du premier (longueur de phrase)
+  const BASE      = 450;  // battement court après la fin réelle de l'audio
+  const PER_SLASH = 500;  // réflexion supplémentaire par formulation alternative
 
   if (!word) return BASE;
-
   const slashCount = (word.match(/\//g) || []).length;
-  const wordCount  = word.split(/\s+/).filter(Boolean).length;
-
-  const extra = slashCount * PER_SLASH + Math.max(0, wordCount - 1) * PER_WORD;
-  return BASE + extra;
+  return BASE + slashCount * PER_SLASH;
 }
 
 /* _rpClearTimers() — Annule les timers en cours (changement manuel). */
 function _rpClearTimers() {
-  if (_rpAutoTimer) { clearTimeout(_rpAutoTimer); _rpAutoTimer = null; }
-  if (_rpMicTimer)  { clearTimeout(_rpMicTimer);  _rpMicTimer  = null; }
+  if (_rpAutoTimer)    { clearTimeout(_rpAutoTimer);    _rpAutoTimer    = null; }
+  if (_rpMicTimer)     { clearTimeout(_rpMicTimer);     _rpMicTimer     = null; }
+  if (_rpMicWatchdog)  { clearTimeout(_rpMicWatchdog);  _rpMicWatchdog  = null; }
   _stopMicReco();
 }
 
@@ -2938,19 +2953,21 @@ function _rpShowWord() {
     + '</div>'
     + '</div>';
 
-  // 1. Prononce le mot automatiquement
-  speak(info.word);
-
-  // 2. Lance la reconnaissance vocale après un délai adapté à la longueur
-  //    du mot (plus long si le mot contient "/" : deux formulations à dire)
-  _rpMicTimer = setTimeout(() => {
-    const fbEl = document.getElementById('rpFeedback');
-    if (fbEl) {
-      fbEl.className   = 'rp-feedback mic-feedback mic-feedback--listening';
-      fbEl.textContent = L('🎙️ Escuchando…', '🎙️ Écoute en cours…');
+  // 1. Prononce le mot automatiquement, PUIS (onDone) lance le micro une
+  //    fois la synthèse vocale réellement terminée — voir _rpMicDelay()
+  //    pour l'explication du bug iOS que ceci corrige.
+  speak(info.word, null, {
+    onDone: () => {
+      _rpMicTimer = setTimeout(() => {
+        const fbEl = document.getElementById('rpFeedback');
+        if (fbEl) {
+          fbEl.className   = 'rp-feedback mic-feedback mic-feedback--listening';
+          fbEl.textContent = L('🎙️ Escuchando…', '🎙️ Écoute en cours…');
+        }
+        _rpStartMic(info.word, micLang);
+      }, _rpMicDelay(info.word));
     }
-    _rpStartMic(info.word, micLang);
-  }, _rpMicDelay(info.word));
+  });
 }
 
 /* _rpStartMic(word, lang) — Lance la reconnaissance vocale dans le contexte Répète. */
@@ -2978,6 +2995,7 @@ function _rpStartMic(word, lang) {
   reco.onresult = function(e) {
     if (_rpAnswered) return;
     _rpAnswered = true;
+    if (_rpMicWatchdog) { clearTimeout(_rpMicWatchdog); _rpMicWatchdog = null; }
     const transcript = e.results[0][0].transcript;
     const expected   = _normalizeSpeech(word);
     const spoken     = _normalizeSpeech(transcript);
@@ -2991,6 +3009,7 @@ function _rpStartMic(word, lang) {
   reco.onerror = function(e) {
     if (_rpAnswered) return;
     _rpAnswered = true;
+    if (_rpMicWatchdog) { clearTimeout(_rpMicWatchdog); _rpMicWatchdog = null; }
     const fbEl = document.getElementById('rpFeedback');
 
     if (_isMicBlockedError(e.error)) {
@@ -3017,8 +3036,43 @@ function _rpStartMic(word, lang) {
     _rpAutoTimer = setTimeout(() => { _rpIdx++; _rpShowWord(); }, 2000);
   };
 
-  reco.onend = function() { _micReco = null; };
+  /* BUG CORRIGÉ (07/07/2026) : sur iOS Safari, une session de reconnaissance
+     peut se terminer (déclenchement de 'onend') SANS jamais avoir déclenché
+     ni 'onresult' ni 'onerror' — notamment en cas de silence. Comme _rpAnswered
+     restait alors à false et qu'aucun code ici ne réagissait à ce cas, l'écran
+     restait bloqué indéfiniment sur "Écoute en cours…" (symptôme exact remonté
+     par les tests iPhone). On traite donc maintenant ce cas comme un silence :
+     on efface le message et on passe au mot suivant après un court délai. */
+  reco.onend = function() {
+    _micReco = null;
+    if (_rpMicWatchdog) { clearTimeout(_rpMicWatchdog); _rpMicWatchdog = null; }
+    if (_rpAnswered) return; // déjà traité par onresult/onerror ci-dessus
+    _rpAnswered = true;
+    const fbEl = document.getElementById('rpFeedback');
+    if (fbEl) { fbEl.className = 'rp-feedback'; fbEl.textContent = ''; }
+    _rpAutoTimer = setTimeout(() => { _rpIdx++; _rpShowWord(); }, 1200);
+  };
+
   reco.start();
+
+  /* Filet de sécurité supplémentaire : sur iOS, il est arrivé (retours de
+     tests) que la reconnaissance reste "en écoute" plusieurs minutes sans
+     qu'aucun événement (result/error/end) ne se déclenche du tout. Après
+     10 s sans aucune réponse, on arrête nous-mêmes la session et on propose
+     un bouton "Réessayer" plutôt que de laisser l'apprenant bloqué sans
+     retour ni recours. */
+  _rpMicWatchdog = setTimeout(() => {
+    if (_rpAnswered) return;
+    _rpAnswered = true;
+    _stopMicReco();
+    const fbEl = document.getElementById('rpFeedback');
+    if (fbEl) {
+      fbEl.className = 'rp-feedback mic-feedback mic-feedback--blocked';
+      fbEl.innerHTML = L('⏱️ Sin respuesta del micrófono · ', '⏱️ Pas de réponse du micro · ')
+        + '<button class="mic-btn rp-retry-btn" style="margin-top:8px" '
+        + 'onclick="_rpRehear()">' + L('🔁 Reintentar', '🔁 Réessayer') + '</button>';
+    }
+  }, 10000);
 }
 
 /* _rpShowFeedback(ok, transcript, word, lang) — Affiche le feedback et programme l'avancement. */
@@ -3050,15 +3104,18 @@ function _rpRehear() {
   const fbEl = document.getElementById('rpFeedback');
   if (fbEl) { fbEl.className = 'rp-feedback'; fbEl.textContent = ''; }
 
-  speak(info.word);
-  _rpMicTimer = setTimeout(() => {
-    const fbEl2 = document.getElementById('rpFeedback');
-    if (fbEl2) {
-      fbEl2.className   = 'rp-feedback mic-feedback mic-feedback--listening';
-      fbEl2.textContent = L('🎙️ Escuchando…', '🎙️ Écoute en cours…');
+  speak(info.word, null, {
+    onDone: () => {
+      _rpMicTimer = setTimeout(() => {
+        const fbEl2 = document.getElementById('rpFeedback');
+        if (fbEl2) {
+          fbEl2.className   = 'rp-feedback mic-feedback mic-feedback--listening';
+          fbEl2.textContent = L('🎙️ Escuchando…', '🎙️ Écoute en cours…');
+        }
+        _rpStartMic(info.word, micLang);
+      }, _rpMicDelay(info.word));
     }
-    _rpStartMic(info.word, micLang);
-  }, _rpMicDelay(info.word));
+  });
 }
 
 /* _rpSkip() — Passe au mot suivant sans réponse (ne compte pas comme réussite). */
