@@ -52,7 +52,7 @@ espagnol-fr-es-beta/
 ├── css/
 │   └── style.css       # Thèmes couleur, composants, animations (239 variables CSS)
 ├── js/
-│   ├── app.js          # Moteur applicatif complet (149 fonctions nommées, 4 656 lignes)
+│   ├── app.js          # Moteur applicatif complet (149 fonctions nommées, 4 761 lignes)
 │   ├── data-fr.js      # Contenu mode "Apprendre le Français" — chargé à la demande
 │   └── data-es.js      # Contenu mode "Apprendre l'Espagnol" — chargé à la demande
 ├── img/
@@ -70,7 +70,7 @@ espagnol-fr-es-beta/
 - **Zéro dépendance** — Vanilla JS, pas de framework, pas de bundler, pas de transpileur
 - **Cible ES2020** — plafond de compatibilité volontaire : tout le JS (déclarations `let`/`const`, optional chaining `?.`, arrow functions pour les callbacks) reste nativement supporté depuis Safari 13.4, ce qui couvre la cible minimale du projet (iOS Safari 14.5+) sans avoir besoin d'un bundler. Les fonctions nommées de premier niveau gardent volontairement la syntaxe `function` (hoisting requis par les attributs `onclick=""` générés dynamiquement et par certains callbacks qui dépendent de `this`). Base de code harmonisée en ce sens le 05/07/2026.
 - **Chargement fractionné** — `data-fr.js` et `data-es.js` injectés dynamiquement au choix de langue (−50 % de JS parsé au démarrage)
-- **CSS custom properties** — 239 variables pour les thèmes (`theme-french` / `theme-spain`) et les 7 variantes régionales (`region-ES`, `region-MX`, etc.)
+- **CSS custom properties** — 44 variables uniques (161 déclarations au total, redéfinies par thème/variante) pour les thèmes (`theme-french` / `theme-spain`) et les 7 variantes régionales (`region-ES`, `region-MX`, etc.)
 - **Service Worker hybride** — Cache-First pour les ressources locales, Network-First pour les CDN externes (Twemoji), avec fallbacks SVG inline pour le mode hors-ligne
 
 ---
@@ -134,6 +134,19 @@ python3 -m http.server 8080
 - **Clipboard API** — copie anti-spam de l'adresse e-mail
 - **GitHub Actions** — CI/CD automatisé
 - **GitHub Pages** — hébergement statique gratuit
+
+---
+
+## 🕓 Historique
+
+| Date | Étape |
+|---|---|
+| 07/06/2026 → 29/06/2026 | Version bêta créée avec IA Claude Sonnet 4.6 et Gemini 3.5 Flash |
+| 30/06/2026 | Retours de tests fournis par Fédérico Calo (recettage ami développeur) |
+| 03/07/2026 | Recettage desktop Chrome (Gemini 3.5 Flash), suite aux retours de Fédérico Calo du 30/06 : aucune erreur JS, moteur "core" sain — fonctionnalités mobiles non testables en local ; puis recettage Brave Android (Samsung Galaxy A55 5G, Gemini 3.5 Flash Extended) → liste de correctifs |
+| 04/07/2026 | Correctifs (Claude Sonnet 5) |
+| 05/07/2026 | Correctifs (Claude Sonnet 5) — poursuite : navigation 🏠/❓ de l'écran Modules, nettoyage de commentaires obsolètes dans `app.js` |
+| 06/07/2026 | Correctifs (Claude Sonnet 5) — fin |
 
 ---
 

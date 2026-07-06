@@ -11,51 +11,96 @@
    de premier niveau restent en `function` (hoisting + compatibilité
    avec les attributs onclick="" générés dynamiquement).
    ============================================================
+   HISTORIQUE DE L'APPLICATION :
+     07/06/2026 → 29/06/2026  Version bêta créée avec IA Claude Sonnet 4.6
+                               et Gemini 3.5 Flash.
+     30/06/2026                Retours de tests (recettage) fournis par
+                               Fédérico Calo, pote développeur.
+     03/07/2026                Recettage par Sébastien Godet avec Gemini 3.5
+                               Flash sur les fichiers retours de tests desktop
+                               Chrome, suite aux fichiers de Fédérico du 30/06 :
+                                 « C'est un super retour de test ! Ton ami a
+                                 fait un recettage très propre et structuré
+                                 (en local, sous Chrome desktop). L'excellente
+                                 nouvelle, c'est qu'il n'y a aucune erreur
+                                 JavaScript dans la console sur les deux
+                                 applications. Le moteur global (le "core" du
+                                 code) a l'air très sain. Cependant, comme le
+                                 test a été fait en local et sur ordinateur,
+                                 une bonne partie des fonctionnalités liées au
+                                 mobile (PWA, micro, hors-ligne) n'a pas pu
+                                 être testée (notée N/A), et plusieurs actions
+                                 ont été passées. »
+                               Puis recettage par Sébastien Godet avec Gemini
+                               3.5 Flash Extended sur Brave Android (Samsung
+                               Galaxy A55 5G) pour l'appli espagnole → liste
+                               de correctifs avec des prompts à faire.
+     04/07/2026                Correctifs par Sébastien Godet avec Claude
+                               Sonnet 5 sur l'appli espagnole.
+     05/07/2026                Correctifs par Sébastien Godet avec Claude
+                               Sonnet 5 sur l'appli espagnole (poursuite) :
+                               modernisation ES2020, fix navBackToHome()/
+                               navBackToGuide() (icônes 🏠/❓ du bouton retour
+                               à deux icônes de l'écran Modules), suppression
+                               d'un bloc de commentaires obsolète (§17, ancien
+                               guide en modale), correction du plan de fichier.
+     06/07/2026                Correctifs par Sébastien Godet avec Claude
+                               Sonnet 5 sur l'appli espagnole (fin).
+   ============================================================
    ARCHITECTURE (5 fichiers) :
      ├─ index.html  → Structure HTML + launcher (4 écrans, 2 modales)
-     ├─ style.css   → Thèmes couleur, composants visuels (239 variables CSS)
+     ├─ style.css   → Thèmes couleur, composants visuels (44 variables CSS
+     │                uniques, 161 déclarations car redéfinies par thème/variante)
      ├─ data-fr.js  → ALL_THEMES_FR (32 thèmes + 16 dialogues) — chargé à la demande
      ├─ data-es.js  → ALL_THEMES_ES (32 thèmes + 16 dialogues) — chargé à la demande
-     └─ app.js      → Ce fichier : logique applicative complète (4 644 lignes)
+     └─ app.js      → Ce fichier : logique applicative complète (4 761 lignes)
 
-   PLAN DU FICHIER (numéros de ligne réels, vérifiés le 05/07/2026) :
-     §0    L.   61  Chargement conditionnel des données — loadDataForMode()
-     §0b   L.   87  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
-     §1    L.  246  Variables d'état globales
-     §1b   L.  294  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
-     §3    L.  377  Point d'entrée — showLauncherVariant(), initApp(), showLauncher()
-     §3b   L.  702  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
-     §3a-bis L. 887 Surlignage mot par mot pendant la lecture (TTS, best-effort)
-     §3c   L. 1237  Interruption TTS à la mise en arrière-plan (visibilitychange)
-     §3d   L. 1244  Keepalive watchdog Chrome/Android (pause/resume toutes les 8 s)
-     §3e   L. 1274  Audio indisponible + toast _showToast() + _vibrateFeedback()
-     §4    L. 1358  Persistance — loadDone(), markDone(), étoiles, quiz sessionStorage
-     §5    L. 1521  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
-     §5b   L. 1630  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
-     §6    L. 1825  Écran Home — renderHome(), _renderHomeRegionWidget()
-     §7    L. 1957  Écran Sections — renderSections(), _buildThemeCard()
-     §8    L. 2093  Ouverture d'un thème — openTheme(), switchTab(), lessonNav()
-     §9    L. 2296  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail()
-     §9b   L. 2458  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
-     §9c   L. 2720  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic()
-     §10   L. 3010  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
-     §11   L. 3287  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
-     §12   L. 3408  Vocabulaire — renderVocab() (chips cliquables)
-     §13   L. 3466  Quiz Dialogue — renderDialogQuiz(), checkDQ()
-     §14   L. 3559  Utilitaires — _quizResultStrings(), esc(), _escAttr()
-     §15   L. 3614  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
-     §15b  L. 3913  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
-     §16   L. 3988  Remerciements — showCredits()
-     §17   L. 4003  Guide utilisateur — _buildHomeGuide(), showGuide(), _refreshGuideRegion(),
-                     _guideSeenKey()/_hasSeenGuide()/_markGuideSeen() (flag par langue, §17)
-     §18   L. 4265  E-mail antispam — openAndCopyEmail()
-     §19   L. 4298  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
+   PLAN DU FICHIER (numéros de ligne réels, revérifiés un par un le 05/07/2026
+   après correction de navBackToHome()/navBackToGuide() et suppression du
+   bloc de commentaires obsolète de §17 — plusieurs entrées à partir de §16
+   étaient déjà fausses avant ces deux modifications, indépendamment d'elles) :
+     §0    L.  105  Chargement conditionnel des données — loadDataForMode()
+     §0b   L.  131  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
+     §1    L.  290  Variables d'état globales
+     §1b   L.  338  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
+     §3    L.  421  Point d'entrée — showLauncherVariant(), initApp(), showLauncher()
+     §3b   L.  742  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
+     §3a-bis L. 927 Surlignage mot par mot pendant la lecture (TTS, best-effort)
+     §3c   L. 1277  Interruption TTS à la mise en arrière-plan (visibilitychange)
+     §3d   L. 1284  Keepalive watchdog Chrome/Android (pause/resume toutes les 8 s)
+     §3e   L. 1314  Audio indisponible + toast _showToast() + _vibrateFeedback()
+     §4    L. 1398  Persistance — loadDone(), markDone(), étoiles, quiz sessionStorage
+     §5    L. 1561  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
+     §5b   L. 1670  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
+     §6    L. 1865  Écran Home — renderHome(), _renderHomeRegionWidget()
+     §7    L. 2054  Écran Sections — renderSections(), _buildThemeCard()
+     §8    L. 2190  Ouverture d'un thème — openTheme(), switchTab(), lessonNav()
+     §9    L. 2393  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail()
+     §9b   L. 2555  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
+     §9c   L. 2817  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic()
+     §10   L. 3107  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
+     §11   L. 3384  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
+     §12   L. 3505  Vocabulaire — renderVocab() (chips cliquables)
+     §13   L. 3563  Quiz Dialogue — renderDialogQuiz(), checkDQ()
+     §14   L. 3656  Utilitaires — _quizResultStrings(), esc(), _escAttr()
+     §15   L. 3711  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
+     §15b  L. 4010  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
+                     (aucune bannière numérotée dans le code à cet endroit, juste
+                      un commentaire au-dessus de toggleAcc() — contrairement aux
+                      autres sous-sections 5b/9b/9c qui en ont une)
+     §16   L. 4085  Remerciements — showCredits()
+     §17   L. 4100  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
+                     navBackToGuide(), _refreshGuideRegion(), _guideSeenKey()/
+                     _hasSeenGuide()/_markGuideSeen() (flag par langue)
+     §18   L. 4348  E-mail antispam — openAndCopyEmail()
+     §19   L. 4381  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
                      (étiqueté "§21" dans le code même — incohérence de numérotation
                       préexistante, non corrigée ici pour ne pas renuméroter tout le fichier)
-     §20   L. 4599  Accessibilité clavier (keydown → role="button")
-     §21   L. 4614  Initialisation Launcher — addEventListener sur les cartes de langue
-     §21b  L. 4640  Viewport height fix Android — --app-h via window.innerHeight
+     §20   L. 4682  Accessibilité clavier (keydown → role="button")
+     §21   L. 4697  Initialisation Launcher — addEventListener sur les cartes de langue
+     §21b  L. 4723  Viewport height fix Android — --app-h via window.innerHeight
    ============================================================ */
+
 
 /* ═══════════════════════════════════════════════════════════
    0. CHARGEMENT CONDITIONNEL DES DONNÉES
@@ -4051,47 +4096,6 @@ function showCredits() {
   if (btnCredits) btnCredits.classList.add('active');
 }
 
-
-/* ═══════════════════════════════════════════════════════════
-   17. GUIDE UTILISATEUR — Écran d'aide intégré (FR/ES)
-   ─────────────────────────────────────────────────────────
-   Reprend le contenu des 3 anciennes pages HTML séparées
-   (language-app-user-guide.html / -fr.html / -es.html),
-   désormais fusionné directement dans index.html sous forme
-   d'une modale plein écran #guide-modal, contenant deux blocs
-   de contenu (#guideContentFR / #guideContentES).
-
-   Comportement :
-     - Première visite : le guide s'affiche automatiquement,
-       juste après le clic sur une carte de langue (donc une
-       fois currentMode connu), dans la langue D'INTERFACE
-       opposée à la langue choisie — exactement comme le reste
-       de l'application bilingue (cf. _setUI dans initApp) :
-         • mode 'learn_french' (apprendre le français)
-           → utilisateur hispanophone → guide en ESPAGNOL
-         • mode 'learn_spain' (apprendre l'espagnol)
-           → utilisateur francophone  → guide en FRANÇAIS
-     - Le flag "déjà vu" est GLOBAL (un seul affichage auto,
-       tous modes confondus) : une fois fermé une première fois,
-       quel que soit le mode, le guide ne se relance plus tout seul.
-     - Accès permanent ensuite via le lien "Guide / Guía" présent
-       dans les pieds de page (home, sections, lesson), sur le
-       modèle du lien "Remerciements" déjà existant.
-
-   Fonctions :
-     showGuide()            — affiche la modale, choisit le bloc
-                               de langue à montrer, rafraîchit la
-                               variante régionale, marque le flag vu
-     closeGuide()            — masque la modale (ne touche pas au flag,
-                               déjà posé par showGuide())
-     _maybeAutoShowGuide()    — appelée en fin d'initApp() ; déclenche
-                               showGuide() uniquement si jamais vu
-     _refreshGuideRegion()    — adapte le bloc ES à currentRegion
-                               (drapeau, bandeau d'info, exemple de
-                               vocabulaire régional, carte active),
-                               reprise du <script> de l'ancienne page
-                               language-app-user-guide-es.html
-═══════════════════════════════════════════════════════════ */
 
 /* ═══════════════════════════════════════════════════════════
    17. GUIDE UTILISATEUR — Écran #home intégré (style Oromo)
