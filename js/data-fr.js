@@ -12,7 +12,7 @@
  * ║  (Séparé de data-es.js pour alléger le chargement initial.)    ║
  * ╠══════════════════════════════════════════════════════════════════╣
  * ║  VARIABLES EXPORTÉES (globales)                                 ║
- * ║   • LEVEL1_THEMES_FR  → 28 thèmes de vocabulaire               ║
+ * ║   • LEVEL1_THEMES_FR  → 32 thèmes de vocabulaire               ║
  * ║   • LEVEL2_THEMES_FR  → 16 dialogues situationnels             ║
  * ║   • ALL_THEMES_FR     → concaténation des deux (utilisée par   ║
  * ║                          initApp via ALL_THEMES = ALL_THEMES_FR)║

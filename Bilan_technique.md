@@ -1,6 +1,6 @@
 # 📊 BILAN TECHNIQUE — VACHÉBO
 *Application bilingue Français ↔ Espagnol — Juin 2026*
-*Métriques revérifiées le 06/07/2026 (voir § 8 Historique)*
+*Métriques revérifiées le 08/07/2026 (voir § 8 Historique)*
 
 ---
 
@@ -11,8 +11,8 @@
 | Architecture | SPA (Single Page App) — Vanilla JS ES2020, zéro dépendance |
 | Hébergement | GitHub Pages (statique, HTTPS, gratuit) |
 | CI/CD | GitHub Actions — déploiement automatique sur push `main` |
-| Poids total source | ~661 Ko (13 200 lignes de code, hors manifest/deploy) |
-| Chargement initial | ~423 Ko (app.js + style.css + index.html), les données chargées à la demande |
+| Poids total source | ~666 Ko (13 367 lignes de code, hors manifest/deploy) |
+| Chargement initial | ~431 Ko (app.js + style.css + index.html), les données chargées à la demande |
 
 ---
 
@@ -20,8 +20,8 @@
 
 | Fichier | Lignes | Taille | Rôle |
 |---|---|---|---|
-| `app.js` | 4 761 | 215 Ko | Moteur applicatif — 149 fonctions, 21 sections |
-| `style.css` | 4 409 | 145 Ko | Thèmes, composants, animations — 44 variables CSS uniques (161 déclarations, redéfinies par thème/variante) |
+| `app.js` | 4 864 | 221 Ko | Moteur applicatif — 153 fonctions, 21 sections |
+| `style.css` | 4 462 | 147 Ko | Thèmes, composants, animations — 44 variables CSS uniques (161 déclarations, redéfinies par thème/variante) |
 | `data-fr.js` | 1 530 | 107 Ko | Données mode Français (32 thèmes + 16 dialogues) |
 | `data-es.js` | 880 | 97 Ko | Données mode Espagnol (32 thèmes + 16 dialogues) |
 | `index.html` | 1 049 | 63 Ko | Structure HTML (4 écrans + 2 modales) |
@@ -130,15 +130,5 @@
 | Date | Contenu |
 |---|---|
 | 07/06/2026 → 29/06/2026 | Version bêta créée avec IA Claude Sonnet 4.6 et Gemini 3.5 Flash |
-| 30/06/2026 | Retours de tests (recettage) fournis par Fédérico Calo, pote développeur |
-| 03/07/2026 | Recettage par Sébastien Godet avec Gemini 3.5 Flash sur les fichiers retours de tests desktop Chrome, suite aux fichiers de Fédérico du 30/06 : « C'est un super retour de test ! Ton ami a fait un recettage très propre et structuré (en local, sous Chrome desktop). L'excellente nouvelle, c'est qu'il n'y a aucune erreur JavaScript dans la console sur les deux applications. Le moteur global (le "core" du code) a l'air très sain. Cependant, comme le test a été fait en local et sur ordinateur, une bonne partie des fonctionnalités liées au mobile (PWA, micro, hors-ligne) n'a pas pu être testée (notée N/A), et plusieurs actions ont été passées. » Puis recettage par Sébastien Godet avec Gemini 3.5 Flash Extended sur Brave Android (Samsung Galaxy A55 5G) pour l'appli espagnole → liste de correctifs avec des prompts à faire |
-| 04/07/2026 | Correctifs par Sébastien Godet avec Claude Sonnet 5 sur l'appli espagnole |
-| 05/07/2026 | Correctifs par Sébastien Godet avec Claude Sonnet 5 sur l'appli espagnole (poursuite) |
-| 06/07/2026 | Correctifs par Sébastien Godet avec Claude Sonnet 5 sur l'appli espagnole (fin) |
-
-### Correctifs du 05/07/2026 (détail)
-
-- **Bug navigation 🏠** : le bouton retour "maison" (écran Modules) affichait l'écran `#home` avec un titre retouché en "Accueil", au lieu de renvoyer au véritable écran d'accueil `#app-launcher` (choix de la langue). `navBackToHome()` appelle désormais `showLauncher()`.
-- **Bug navigation ❓** : le bouton retour "guide" (écran Modules) faisait défiler l'écran vers les accordéons au lieu de rester en haut, à cause d'un scroll interne (`#home.scrollTop`) jamais réinitialisé entre deux visites. `navBackToGuide()` remet désormais le scroll à 0.
-- **Nettoyage documentation** : suppression d'un bloc de commentaires obsolète dans `app.js` (§17) qui décrivait encore l'ancienne implémentation du guide en modale (`#guide-modal`), remplacée depuis par l'écran `#home` intégré — ce bloc ne correspondait plus au comportement réel du code et pouvait induire en erreur lors d'une future intervention.
-- **Correction du plan de fichier** (table des matières en tête d'`app.js`) : les numéros de ligne à partir de §16 étaient déjà faux avant les correctifs ci-dessus (dérive indépendante, non causée par ces changements) ; l'ensemble du plan a été revérifié ligne par ligne.
+| 29/06/2026 → 08/07/2026 | Tests : desktop (auto) et iPhone (manuel) par Fédérico ; Android (manuel) par Sébastien Godet, aidé par Gemini 3.5 Flash Extended. Correctifs par Sébastien Godet, aidé par Claude Sonnet 5 |
+| 08/07/2026 | Vérification technique (Claude Sonnet 5) : les correctifs ci-dessus avaient ajouté ~103 lignes à `app.js` et ~5 lignes à `style.css` sans que les tables des matières internes (« PLAN DU FICHIER ») ni les métriques de ce document ne soient mises à jour. Recalcul de tous les numéros de ligne dans les en-têtes de `app.js` et `style.css` ; correction de deux erreurs de contenu (en-têtes `data-fr.js`/`data-es.js` indiquant 28 thèmes au lieu de 32) ; ajout d'une entrée manquante dans le plan de `style.css` (mise en page 2 colonnes desktop de l'écran Leçon, ajoutée pendant les correctifs) ; mise à jour des comptes de lignes/poids/fonctions ci-dessus et dans le README |

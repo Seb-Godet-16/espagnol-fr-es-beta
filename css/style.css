@@ -23,38 +23,43 @@
  * ║  Tous les composants utilisent var(--c-*) ; il suffit de       ║
  * ║  changer la classe sur <html> pour basculer le rendu visuel.   ║
  * ╠══════════════════════════════════════════════════════════════════╣
- * ║  PLAN DU FICHIER                                                ║
- * ║   §1   Reset & base                            ligne   62       ║
- * ║   §1b  Transitions de navigation               ligne  167       ║
- * ║   §2   Variables de thème (:root / fallback)   ligne  418       ║
- * ║   §3   Thème Français (html.theme-french)      ligne 2890       ║
- * ║   §4   Thème Espagnol (html.theme-spain)       ligne 2908       ║
- * ║   §5   Écran 0 — Lanceur  #app-launcher        ligne  249       ║
- * ║   §6   Écran 1 — Accueil  #home (style Oromo)  ligne  456       ║
- * ║         Widget variante régionale               ligne  941       ║
- * ║   §7   Écran 2 — Sections  #sections           ligne 1083       ║
- * ║         §27 Onglets Niveau 1 / 2               ligne 1239       ║
- * ║         §LAUNCHER-REGION-GRID                  ligne 1319       ║
- * ║         §28 Écrans sections level : layout     ligne 1406       ║
- * ║   §8   Écran 3 — Leçon  #lesson               ligne 1429       ║
- * ║         Onglets (tabs)                         ligne 1524       ║
- * ║         Barre meta (badge voix + vitesse)      ligne 1658       ║
- * ║   §9   Composants : Flashcards                 ligne 1561       ║
- * ║   §10  Composants : Alphabet                   ligne 1831       ║
- * ║   §11  Composants : Quiz                       ligne 1893       ║
- * ║   §12  Composants : Dialogues / Situations     ligne 1973       ║
- * ║   §13  Composants : Vocabulaire                ligne 2042       ║
- * ║   §14  Onglet Répète                           ligne 3015       ║
- * ║   §15  Variantes régionales hispaniques        ligne 2940       ║
- * ║   §16  Modales (Guide + Remerciements)         ligne 2164       ║
- * ║   §17  Footer commun                           ligne 2132       ║
- * ║   §24b Mode sombre @media dark                 ligne 3379       ║
- * ║   §26  Barre de navigation basse               ligne 3662       ║
- * ║         Focus clavier (role="button")          ligne 3138       ║
- * ║         Toast — notification discrète          ligne 3151       ║
- * ║   §PDF  Boutons export PDF                     ligne 3863       ║
- * ║   §SPK  Feedback visuel TTS (.is-speaking)     ligne 3908       ║
- * ║         Ajouts Juin 2026                       ligne 3956       ║
+ * ║  PLAN DU FICHIER (numéros recalculés le 08/07/2026 après la phase de   ║
+ * ║  correctifs 29/06→08/07 — décalage non uniforme selon les zones,      ║
+ * ║  de +0 en tête de fichier jusqu'à +200 lignes environ en fin de fichier)║
+ * ║   §1   Reset & base                            ligne 67       ║
+ * ║   §1b  Transitions de navigation               ligne 183       ║
+ * ║   §2   Variables de thème (:root / fallback)   ligne 434       ║
+ * ║   §3   Thème Français (html.theme-french)      ligne 3083       ║
+ * ║   §4   Thème Espagnol (html.theme-spain)       ligne 3101       ║
+ * ║   §5   Écran 0 — Lanceur  #app-launcher        ligne 265       ║
+ * ║   §6   Écran 1 — Accueil  #home (style Oromo)  ligne 480       ║
+ * ║         Widget variante régionale               ligne 1035       ║
+ * ║   §7   Écran 2 — Sections  #sections           ligne 1134       ║
+ * ║         §27 Onglets Niveau 1 / 2               ligne 1308       ║
+ * ║         §LAUNCHER-REGION-GRID                  ligne 1388       ║
+ * ║         §28 Écrans sections level : layout     ligne 1475       ║
+ * ║   §8   Écran 3 — Leçon  #lesson               ligne 1500       ║
+ * ║         Onglets (tabs)                         ligne 1628       ║
+ * ║         Barre meta (badge voix + vitesse)      ligne 1761       ║
+ * ║   §9   Composants : Flashcards                 ligne 1665       ║
+ * ║   §10  Composants : Alphabet                   ligne 2024       ║
+ * ║   §11  Composants : Quiz                       ligne 2086       ║
+ * ║   §12  Composants : Dialogues / Situations     ligne 2166       ║
+ * ║   §13  Composants : Vocabulaire                ligne 2235       ║
+ * ║   §14  Onglet Répète                           ligne 3208       ║
+ * ║   §15  Variantes régionales hispaniques        ligne 3133       ║
+ * ║   §16  Modales (Guide + Remerciements)         ligne 2357       ║
+ * ║   §17  Footer commun                           ligne 2325       ║
+ * ║   §24b Mode sombre @media dark                 ligne 3579       ║
+ * ║   §26  Barre de navigation basse               ligne 3869       ║
+ * ║         Focus clavier (role="button")          ligne 3330       ║
+ * ║         Toast — notification discrète          ligne 3344       ║
+ * ║   §PDF  Boutons export PDF                     ligne 4083       ║
+ * ║   §SPK  Feedback visuel TTS (.is-speaking)     ligne 4128       ║
+ * ║         Ajouts Juin 2026                       ligne 4176       ║
+ * ║   §27-bis (ajout 08/07) Leçon 2 colonnes desktop ligne 4372     ║
+ * ║         (numéro "27" déjà pris par "Onglets Niveau 1/2" plus     ║
+ * ║          haut ; collision préexistante, non renumérotée ici)    ║
  * ╚══════════════════════════════════════════════════════════════════╝
  */
 
@@ -1733,26 +1738,25 @@ body {
 
 /* ════════════════════════════════════════
    GROUPE DE BOUTONS AUDIO
-   Bouton principal + bouton lent côte à côte
+   Corrigé le 07/07/2026 : "🐢 Lent" retiré (redondant avec la barre de
+   vitesse 0.55×–1.20× déjà disponible juste au-dessus) et remplacé par le
+   bouton "🎤 Prononcer" (auparavant affiché seul, en dessous, dans son
+   propre bloc .mic-zone) — Écouter d'un côté, Prononcer de l'autre, sur
+   la même ligne : gain de place et action symétrique écoute/parole.
 ════════════════════════════════════════ */
 .audio-btn-group {
   display: flex;
   gap: 8px;
   margin-top: 10px;
 }
-.audio-btn-group .audio-btn-big {
+.audio-btn-group .audio-btn-big,
+.audio-btn-group .mic-btn {
   margin-top: 0;
+  flex: 1;
 }
 .audio-btn-main {
-  flex: 3;
+  flex: 1;
 }
-.audio-btn-slow {
-  flex: 1.2;
-  background: var(--c-primary-dark, #0050cc);
-  opacity: 0.88;
-  font-size: .85rem;
-}
-.audio-btn-slow:active { opacity: 1; }
 
 /* ════════════════════════════════════════
    BARRE META LEÇON (badge voix + vitesse)
@@ -1794,36 +1798,54 @@ body {
 .vqb-default  { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
 .vqb-pending  { background: #e2e3e5; color: #495057; border: 1px solid #d6d8db; }
 
-/* ── Barre de vitesse TTS ── */
+/* ── Barre de vitesse TTS ──
+   Corrigée le 07/07/2026 : scindée en 2 rangées propres.
+   - .speed-bar-row : label + tortue + paliers + lièvre GARANTIS sur une
+     seule ligne (nowrap + scroll horizontal discret si l'écran est trop
+     étroit, plutôt que de retomber sur 2 lignes comme avant).
+   - .repeat-bar-row : 3 boutons ×1/×2/×3 distincts (plus clairs qu'un
+     bouton unique cyclique) + slot PDF aligné à droite. */
 .tts-speed-bar {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  row-gap: 6px;
+  flex-direction: column;
+  gap: 6px;
 }
+.speed-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.speed-bar-row::-webkit-scrollbar { display: none; }
 .speed-bar-label {
   font-size: .8rem;
   color: #666;
   margin-right: 2px;
   font-weight: 700;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 .speed-bar-pills {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  flex-wrap: wrap;
+  gap: 4px;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
 }
 .speed-btn {
   background: #f0f0f0;
   border: 1.5px solid #ccc;
   border-radius: 999px;
-  padding: 6px 13px;
-  font-size: .78rem;
+  padding: 5px 10px;
+  font-size: .72rem;
   font-weight: 700;
   cursor: pointer;
-  min-height: 34px;
+  min-height: 30px;
+  white-space: nowrap;
+  flex-shrink: 0;
   transition: background .15s, border-color .15s, color .15s;
   color: #444;
 }
@@ -1836,28 +1858,46 @@ body {
 /* Icône lièvre décorative en fin d'échelle (symétrique de la tortue 🐢
    du label, pour évoquer visuellement lent → rapide) — non cliquable. */
 .speed-bar-hare {
-  font-size: 1.15rem;
-  margin-left: 3px;
+  font-size: 1.05rem;
+  margin-left: 2px;
   line-height: 1;
   user-select: none;
+  flex-shrink: 0;
 }
 
-/* ── Bouton de répétition TTS (drill de prononciation) ── */
-.repeat-btn {
+/* ── Rangée de répétition TTS (drill de prononciation) ── */
+.repeat-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.repeat-bar-label {
+  font-size: .8rem;
+  color: #666;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.repeat-bar-pills {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.repeat-choice-btn {
   background: #f0f0f0;
   border: 1.5px solid #ccc;
   border-radius: 8px;
-  padding: 4px 9px;
+  padding: 4px 11px;
   font-size: .78rem;
   font-weight: 700;
   cursor: pointer;
-  min-height: 34px;
+  min-height: 30px;
   color: #444;
-  margin-left: 4px;
   transition: background .15s, border-color .15s, color .15s;
 }
-.repeat-btn:hover { background: #e0e0e0; }
-.repeat-btn.repeat-active {
+.repeat-choice-btn:hover { background: #e0e0e0; }
+.repeat-choice-btn.repeat-active {
   background: #ff8f00;
   border-color: #ff8f00;
   color: #fff;
@@ -1881,32 +1921,33 @@ body {
 
 
 /* ════════════════════════════════════════
-   RECONNAISSANCE VOCALE — Bloc micro
-   Affiché sous le bouton audio dans les
-   flashcards. Indépendant du thème CSS.
+   RECONNAISSANCE VOCALE — Zone de feedback
+   Corrigé le 07/07/2026 : le bouton "🎤 Prononcer" est sorti de ce bloc
+   (il est désormais dans .audio-btn-group, à côté de "Écouter") ; ce bloc
+   n'affiche plus que le retour de la reconnaissance (feedback) et l'astuce
+   d'usage — d'où un habillage plus léger, sans gros cadre permanent.
+   Affiché sous les boutons audio dans les flashcards.
 ════════════════════════════════════════ */
 
 .mic-zone {
-  margin-top: 10px;
-  border: 2px solid var(--c-primary);
-  border-radius: 13px;
-  padding: 14px 16px;
-  background: #fff;
+  margin-top: 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
 }
 
 .mic-zone--unsupported {
-  border-color: #ddd;
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  padding: 8px 12px;
   background: #fafafa;
   font-size: .78rem;
   color: #999;
   text-align: center;
 }
 
-/* Bouton micro principal */
+/* Bouton micro principal — désormais dans .audio-btn-group (cf. plus haut) */
 .mic-btn {
   width: 100%;
   padding: 12px;
@@ -3447,7 +3488,7 @@ html.theme-spain.region-VE {
   .vocab-title   { color: #8890b8; }
 
   /* ── Blocs micro ── */
-  .mic-zone { background: #1e2236; border-color: var(--c-primary); }
+  .mic-zone--unsupported { background: #1e2236; border-color: #444; color: #999; }
   .mic-btn  { background: #1e2236; color: var(--c-primary); border-color: var(--c-primary); }
 
   /* ── Alphabet ── */
@@ -3698,8 +3739,8 @@ html.theme-spain.region-VE {
   /* ──────────────────────────────────────
      MICRO — zone et bouton
   ────────────────────────────────────── */
-  html.theme-french .mic-zone,
-  html.theme-spain  .mic-zone {
+  html.theme-french .mic-zone--unsupported,
+  html.theme-spain  .mic-zone--unsupported {
     background: var(--c-card);
   }
   html.theme-french .mic-btn,
@@ -3813,16 +3854,14 @@ html.theme-spain.region-VE {
   .speed-bar-label    { color: #999; }
 
   /* Bouton répétition — dark mode */
-  .repeat-btn         { background: #2a2a3a; border-color: #444; color: #ccc; }
-  .repeat-btn:hover   { background: #333348; }
-  .repeat-btn.repeat-active { background: #ff8f00; border-color: #ff8f00; color: #fff; }
+  .repeat-choice-btn         { background: #2a2a3a; border-color: #444; color: #ccc; }
+  .repeat-choice-btn:hover   { background: #333348; }
+  .repeat-choice-btn.repeat-active { background: #ff8f00; border-color: #ff8f00; color: #fff; }
+  .repeat-bar-label   { color: #999; }
 
   /* Surlignage mot par mot — dark mode */
   .tts-word-active    { background: #c9a600; color: #111; }
   .tts-sep            { color: #666; }
-
-  /* Bouton lent — dark mode */
-  .audio-btn-slow { background: #1a3a6b; }
 
 } /* fin @media (prefers-color-scheme: dark) §24b */
 

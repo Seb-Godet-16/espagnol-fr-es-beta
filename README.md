@@ -50,9 +50,9 @@ Aucune inscription, aucun téléchargement. Fonctionne dans le navigateur et s'i
 espagnol-fr-es-beta/
 ├── index.html          # Structure HTML unique (SPA — Single Page App)
 ├── css/
-│   └── style.css       # Thèmes couleur, composants, animations (239 variables CSS)
+│   └── style.css       # Thèmes couleur, composants, animations (44 variables CSS, 161 déclarations)
 ├── js/
-│   ├── app.js          # Moteur applicatif complet (149 fonctions nommées, 4 761 lignes)
+│   ├── app.js          # Moteur applicatif complet (153 fonctions nommées, 4 864 lignes)
 │   ├── data-fr.js      # Contenu mode "Apprendre le Français" — chargé à la demande
 │   └── data-es.js      # Contenu mode "Apprendre l'Espagnol" — chargé à la demande
 ├── img/
@@ -142,11 +142,7 @@ python3 -m http.server 8080
 | Date | Étape |
 |---|---|
 | 07/06/2026 → 29/06/2026 | Version bêta créée avec IA Claude Sonnet 4.6 et Gemini 3.5 Flash |
-| 30/06/2026 | Retours de tests fournis par Fédérico Calo (recettage ami développeur) |
-| 03/07/2026 | Recettage desktop Chrome (Gemini 3.5 Flash), suite aux retours de Fédérico Calo du 30/06 : aucune erreur JS, moteur "core" sain — fonctionnalités mobiles non testables en local ; puis recettage Brave Android (Samsung Galaxy A55 5G, Gemini 3.5 Flash Extended) → liste de correctifs |
-| 04/07/2026 | Correctifs (Claude Sonnet 5) |
-| 05/07/2026 | Correctifs (Claude Sonnet 5) — poursuite : navigation 🏠/❓ de l'écran Modules, nettoyage de commentaires obsolètes dans `app.js` |
-| 06/07/2026 | Correctifs (Claude Sonnet 5) — fin |
+| 29/06/2026 → 08/07/2026 | Tests : desktop (auto) et iPhone (manuel) par Fédérico ; Android (manuel) par Sébastien Godet, aidé par Gemini 3.5 Flash Extended. Correctifs par Sébastien Godet, aidé par Claude Sonnet 5 |
 
 ---
 

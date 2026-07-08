@@ -14,38 +14,13 @@
    HISTORIQUE DE L'APPLICATION :
      07/06/2026 → 29/06/2026  Version bêta créée avec IA Claude Sonnet 4.6
                                et Gemini 3.5 Flash.
-     30/06/2026                Retours de tests (recettage) fournis par
-                               Fédérico Calo, pote développeur.
-     03/07/2026                Recettage par Sébastien Godet avec Gemini 3.5
-                               Flash sur les fichiers retours de tests desktop
-                               Chrome, suite aux fichiers de Fédérico du 30/06 :
-                                 « C'est un super retour de test ! Ton ami a
-                                 fait un recettage très propre et structuré
-                                 (en local, sous Chrome desktop). L'excellente
-                                 nouvelle, c'est qu'il n'y a aucune erreur
-                                 JavaScript dans la console sur les deux
-                                 applications. Le moteur global (le "core" du
-                                 code) a l'air très sain. Cependant, comme le
-                                 test a été fait en local et sur ordinateur,
-                                 une bonne partie des fonctionnalités liées au
-                                 mobile (PWA, micro, hors-ligne) n'a pas pu
-                                 être testée (notée N/A), et plusieurs actions
-                                 ont été passées. »
-                               Puis recettage par Sébastien Godet avec Gemini
-                               3.5 Flash Extended sur Brave Android (Samsung
-                               Galaxy A55 5G) pour l'appli espagnole → liste
-                               de correctifs avec des prompts à faire.
-     04/07/2026                Correctifs par Sébastien Godet avec Claude
-                               Sonnet 5 sur l'appli espagnole.
-     05/07/2026                Correctifs par Sébastien Godet avec Claude
-                               Sonnet 5 sur l'appli espagnole (poursuite) :
-                               modernisation ES2020, fix navBackToHome()/
-                               navBackToGuide() (icônes 🏠/❓ du bouton retour
-                               à deux icônes de l'écran Modules), suppression
-                               d'un bloc de commentaires obsolète (§17, ancien
-                               guide en modale), correction du plan de fichier.
-     06/07/2026                Correctifs par Sébastien Godet avec Claude
-                               Sonnet 5 sur l'appli espagnole (fin).
+     29/06/2026 → 08/07/2026  Tests :
+                                 - Desktop (auto) et iPhone (manuel) par
+                                   Fédérico
+                                 - Android (manuel) par Sébastien Godet
+                                   (aidé par Gemini 3.5 Flash Extended)
+                               Correctifs par Sébastien Godet (aidé par
+                               Claude Sonnet 5).
    ============================================================
    ARCHITECTURE (5 fichiers) :
      ├─ index.html  → Structure HTML + launcher (4 écrans, 2 modales)
@@ -53,52 +28,52 @@
      │                uniques, 161 déclarations car redéfinies par thème/variante)
      ├─ data-fr.js  → ALL_THEMES_FR (32 thèmes + 16 dialogues) — chargé à la demande
      ├─ data-es.js  → ALL_THEMES_ES (32 thèmes + 16 dialogues) — chargé à la demande
-     └─ app.js      → Ce fichier : logique applicative complète (4 761 lignes)
+     └─ app.js      → Ce fichier : logique applicative complète (4 864 lignes)
 
-   PLAN DU FICHIER (numéros de ligne réels, revérifiés un par un le 05/07/2026
-   après correction de navBackToHome()/navBackToGuide() et suppression du
-   bloc de commentaires obsolète de §17 — plusieurs entrées à partir de §16
-   étaient déjà fausses avant ces deux modifications, indépendamment d'elles) :
-     §0    L.  105  Chargement conditionnel des données — loadDataForMode()
-     §0b   L.  131  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
-     §1    L.  290  Variables d'état globales
-     §1b   L.  338  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
-     §3    L.  421  Point d'entrée — showLauncherVariant(), initApp(), showLauncher()
-     §3b   L.  742  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
-     §3a-bis L. 927 Surlignage mot par mot pendant la lecture (TTS, best-effort)
-     §3c   L. 1277  Interruption TTS à la mise en arrière-plan (visibilitychange)
-     §3d   L. 1284  Keepalive watchdog Chrome/Android (pause/resume toutes les 8 s)
-     §3e   L. 1314  Audio indisponible + toast _showToast() + _vibrateFeedback()
-     §4    L. 1398  Persistance — loadDone(), markDone(), étoiles, quiz sessionStorage
-     §5    L. 1561  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
-     §5b   L. 1670  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
-     §6    L. 1865  Écran Home — renderHome(), _renderHomeRegionWidget()
-     §7    L. 2054  Écran Sections — renderSections(), _buildThemeCard()
-     §8    L. 2190  Ouverture d'un thème — openTheme(), switchTab(), lessonNav()
-     §9    L. 2393  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail()
-     §9b   L. 2555  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
-     §9c   L. 2817  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic()
-     §10   L. 3107  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
-     §11   L. 3384  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
-     §12   L. 3505  Vocabulaire — renderVocab() (chips cliquables)
-     §13   L. 3563  Quiz Dialogue — renderDialogQuiz(), checkDQ()
-     §14   L. 3656  Utilitaires — _quizResultStrings(), esc(), _escAttr()
-     §15   L. 3711  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
-     §15b  L. 4010  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
+   PLAN DU FICHIER (numéros de ligne réels, recalculés le 08/07/2026 après la
+   phase de correctifs 29/06→08/07/2026, qui a ajouté ~103 lignes au fichier
+   — d'où le décalage progressif des numéros par rapport à la vérification
+   précédente du 05/07/2026, non uniforme selon les zones du fichier) :
+     §0    L.   81  Chargement conditionnel des données — loadDataForMode()
+     §0b   L.  110  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
+     §1    L.  266  Variables d'état globales
+     §1b   L.  330  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
+     §3    L.  397  Point d'entrée — showLauncherVariant(), initApp(), showLauncher()
+     §3b   L.  786  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
+     §3a-bis L. 916 Surlignage mot par mot pendant la lecture (TTS, best-effort)
+     §3c   L. 1294  Interruption TTS à la mise en arrière-plan (visibilitychange)
+     §3d   L. 1315  Keepalive watchdog Chrome/Android (pause/resume toutes les 8 s)
+     §3e   L. 1345  Audio indisponible + toast _showToast() + _vibrateFeedback()
+     §4    L. 1429  Persistance — loadDone(), markDone(), étoiles, quiz sessionStorage
+     §5    L. 1592  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
+     §5b   L. 1725  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
+     §6    L. 1905  Écran Home — renderHome(), _renderHomeRegionWidget()
+     §7    L. 2094  Écran Sections — renderSections(), _buildThemeCard()
+     §8    L. 2230  Ouverture d'un thème — openTheme(), switchTab(), lessonNav()
+     §9    L. 2433  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail()
+     §9b   L. 2617  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
+     §9c   L. 2945  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic()
+     §10   L. 3211  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
+     §11   L. 3488  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
+     §12   L. 3609  Vocabulaire — renderVocab() (chips cliquables)
+     §13   L. 3667  Quiz Dialogue — renderDialogQuiz(), checkDQ()
+     §14   L. 3760  Utilitaires — _quizResultStrings(), esc(), _escAttr()
+     §15   L. 3815  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
+     §15b  L. 4124  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
                      (aucune bannière numérotée dans le code à cet endroit, juste
                       un commentaire au-dessus de toggleAcc() — contrairement aux
                       autres sous-sections 5b/9b/9c qui en ont une)
-     §16   L. 4085  Remerciements — showCredits()
-     §17   L. 4100  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
+     §16   L. 4189  Remerciements — showCredits()
+     §17   L. 4204  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
                      navBackToGuide(), _refreshGuideRegion(), _guideSeenKey()/
                      _hasSeenGuide()/_markGuideSeen() (flag par langue)
-     §18   L. 4348  E-mail antispam — openAndCopyEmail()
-     §19   L. 4381  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
+     §18   L. 4466  E-mail antispam — openAndCopyEmail()
+     §19   L. 4485  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
                      (étiqueté "§21" dans le code même — incohérence de numérotation
                       préexistante, non corrigée ici pour ne pas renuméroter tout le fichier)
-     §20   L. 4682  Accessibilité clavier (keydown → role="button")
-     §21   L. 4697  Initialisation Launcher — addEventListener sur les cartes de langue
-     §21b  L. 4723  Viewport height fix Android — --app-h via window.innerHeight
+     §20   L. 4786  Accessibilité clavier (keydown → role="button")
+     §21   L. 4801  Initialisation Launcher — addEventListener sur les cartes de langue
+     §21b  L. 4827  Viewport height fix Android — --app-h via window.innerHeight
    ============================================================ */
 
 
@@ -787,7 +762,11 @@ function _getTtsRate() {
 }
 
 // ─── Contrôle de répétition TTS (drill de prononciation) ───
-// Cycle 1× → 2× → 3× → 1×, persisté en sessionStorage pour la session courante.
+// 3 paliers ×1 / ×2 / ×3, persistés en sessionStorage pour la session
+// courante. Corrigé le 07/07/2026 : ×1 est la valeur par défaut (pas de
+// répétition) — inutile d'afficher un bouton pour ce cas. Seuls ×2 et ×3
+// sont affichés, en bascule : un clic active le palier, un second clic
+// (sur le même bouton) revient à ×1. Voir _toggleTtsRepeat().
 const REPEAT_MAX = 3;
 function _getTtsRepeat() {
   const saved = parseInt(sessionStorage.getItem('vachebo_tts_repeat'), 10);
@@ -797,10 +776,8 @@ function _setTtsRepeat(n) {
   sessionStorage.setItem('vachebo_tts_repeat', String(n));
   _updateSpeedBar();
 }
-function _cycleTtsRepeat() {
-  let next = _getTtsRepeat() + 1;
-  if (next > REPEAT_MAX) next = 1;
-  _setTtsRepeat(next);
+function _toggleTtsRepeat(n) {
+  _setTtsRepeat(_getTtsRepeat() === n ? 1 : n);
 }
 
 /* Résout de façon asynchrone la meilleure voix espagnole disponible sur l'appareil.
@@ -853,11 +830,22 @@ function _resolveSpanishVoice(callback) {
         return v.lang.toLowerCase().indexOf('es') === 0;
       });
       if (foundVoice) {
-        /* Résoudre le nom lisible de la voix de secours */
-        const fallbackCode = foundVoice.lang.toUpperCase().split('-')[1] || 'ES';
-        const fallbackName = regionLabels[fallbackCode] || foundVoice.lang;
-        foundLabel   = regionName + ' ' + L('(secours: ', '(secours : ') + fallbackName + ')';
-        foundQuality = 'fallback';
+        if (currentRegion === 'ES') {
+          // Corrigé le 07/07/2026 : pour le Castillan, toute voix espagnole
+          // disponible convient — c'est la variante de référence, il n'y a
+          // pas de vrai "secours" régional à signaler ici (contrairement à
+          // l'Argentine, au Venezuela, etc. dont l'accent diffère vraiment
+          // d'une voix es-ES générique). On affiche donc directement en vert,
+          // comme pour une correspondance exacte, sans "(secours : ...)".
+          foundLabel   = regionName;
+          foundQuality = 'exact';
+        } else {
+          /* Résoudre le nom lisible de la voix de secours */
+          const fallbackCode = foundVoice.lang.toUpperCase().split('-')[1] || 'ES';
+          const fallbackName = regionLabels[fallbackCode] || foundVoice.lang;
+          foundLabel   = regionName + ' ' + L('(secours: ', '(secours : ') + fallbackName + ')';
+          foundQuality = 'fallback';
+        }
       } else {
         foundLabel   = L('Voz por defecto', 'Voix par défaut');
         foundQuality = 'default';
@@ -1156,10 +1144,14 @@ function _doSpeak(txt, voiceObj, rate, triggerBtn, opts) {
 
 /* speakSlow(txt, triggerBtn, opts) — Prononce toujours au palier le plus lent
    (SPEED_LEVELS[0]), indépendamment du réglage de vitesse choisi par
-   l'utilisateur. Utilisé par le bouton "Répéter lentement" sur les flashcards.
-   Respecte comme speak() la répétition (_getTtsRepeat()) et le surlignage
-   mot par mot (opts.highlightUid). Conserve une pause de 1000ms entre les
-   parties (au lieu de 800ms pour speak()) — lecture plus posée à vitesse lente. */
+   l'utilisateur. Respecte comme speak() la répétition (_getTtsRepeat()) et
+   le surlignage mot par mot (opts.highlightUid). Conserve une pause de
+   1000ms entre les parties (au lieu de 800ms pour speak()) — lecture plus
+   posée à vitesse lente.
+   Note (07/07/2026) : n'est plus appelée depuis l'UI des flashcards — le
+   bouton "🐢 Lent" a été retiré (redondant avec la barre de vitesse
+   0.55×–1.20× déjà disponible juste au-dessus). Fonction conservée telle
+   quelle en cas de réutilisation future. */
 function speakSlow(txt, triggerBtn, opts) {
   if (!txt || !window.speechSynthesis) return;
   const slowRate   = SPEED_LEVELS[0].rate;
@@ -1219,8 +1211,8 @@ function _updateVoiceBadge() {
   badge.title     = qualityTitle + ' — ' + _spanishVoiceLabel;
 }
 
-/* _updateSpeedBar() — Met à jour les boutons de vitesse + le bouton de répétition
-   dans la barre persistante. */
+/* _updateSpeedBar() — Met à jour les boutons de vitesse + les boutons de
+   répétition dans la barre persistante. */
 function _updateSpeedBar() {
   const bar = document.getElementById('tts-speed-bar');
   if (!bar) return;
@@ -1231,35 +1223,50 @@ function _updateSpeedBar() {
     btn.classList.toggle('speed-active', s.id === current);
     btn.title = s.title();
   });
-  const repeatBtn = document.getElementById('tts-repeat-btn');
-  if (repeatBtn) {
-    const n = _getTtsRepeat();
-    repeatBtn.textContent = '🔁 ×' + n;
-    repeatBtn.classList.toggle('repeat-active', n > 1);
-    repeatBtn.title = L('Repetir', 'Répéter') + ' ×' + n;
+  const repeatN = _getTtsRepeat();
+  for (let n = 2; n <= REPEAT_MAX; n++) {
+    const btn = bar.querySelector('[data-repeat="' + n + '"]');
+    if (!btn) continue;
+    btn.classList.toggle('repeat-active', n === repeatN);
   }
 }
 
-/* _buildSpeedBar() — Génère le HTML de la barre vitesse + bouton répétition + slot PDF. */
+/* _buildSpeedBar() — Génère le HTML de la barre vitesse + boutons répétition + slot PDF.
+   Corrigé le 07/07/2026 :
+     - Ligne "Vitesse" (label + tortue + paliers + lièvre) désormais garantie
+       sur une seule ligne (voir .speed-bar-row en CSS, scrollable au besoin
+       plutôt que de retomber sur 2 lignes comme avant).
+     - Répétition : ×1 est la valeur par défaut (pas de répétition), donc pas
+       de bouton pour ce cas. Seuls ×2 et ×3 sont affichés, en bascule
+       (_toggleTtsRepeat) : cliquer sur un bouton déjà actif revient à ×1. */
 function _buildSpeedBar() {
-  const btns = SPEED_LEVELS.map((s) => {
+  const speedBtns = SPEED_LEVELS.map((s) => {
     const active = _getTtsSpeed() === s.id ? ' speed-active' : '';
     return '<button class="speed-btn' + active + '" data-speed="' + s.id + '"'
       + ' title="' + s.title() + '"'
       + ' onclick="_setTtsSpeed(\'' + s.id + '\')">'
       + s.label + '</button>';
   }).join('');
+
   const repeatN = _getTtsRepeat();
-  const repeatBtn = '<button id="tts-repeat-btn" class="repeat-btn' + (repeatN > 1 ? ' repeat-active' : '') + '"'
-    + ' title="' + L('Repetir', 'Répéter') + ' ×' + repeatN + '"'
-    + ' onclick="_cycleTtsRepeat()">🔁 ×' + repeatN + '</button>';
+  const repeatBtns = [2, 3].map((n) => {
+    const active = repeatN === n ? ' repeat-active' : '';
+    return '<button class="repeat-choice-btn' + active + '" data-repeat="' + n + '"'
+      + ' title="' + L('Repetir', 'Répéter') + ' ×' + n + '"'
+      + ' onclick="_toggleTtsRepeat(' + n + ')">×' + n + '</button>';
+  }).join('');
+
   return '<div id="tts-speed-bar" class="tts-speed-bar">'
-    + '<span class="speed-bar-label">🐢 ' + L('Velocidad', 'Vitesse') + '</span>'
-    + '<span class="speed-bar-pills">' + btns
+    + '<div class="speed-bar-row">'
+    +   '<span class="speed-bar-label">🐢 ' + L('Velocidad', 'Vitesse') + '</span>'
+    +   '<span class="speed-bar-pills">' + speedBtns + '</span>'
     +   '<span class="speed-bar-hare" aria-hidden="true">🐇</span>'
-    + '</span>'
-    + repeatBtn
-    + '<div id="meta-pdf-slot"></div>'
+    + '</div>'
+    + '<div class="repeat-bar-row">'
+    +   '<span class="repeat-bar-label">🔁 ' + L('Repetir', 'Répéter') + '</span>'
+    +   '<span class="repeat-bar-pills">' + repeatBtns + '</span>'
+    +   '<div id="meta-pdf-slot"></div>'
+    + '</div>'
     + '</div>';
 }
 
@@ -1284,10 +1291,23 @@ function _updateMetaPdfBtn(tab) {
     : '';
 }
 
-// §3c — Interruption TTS à la mise en arrière-plan
+// §3c — Interruption TTS + micro à la mise en arrière-plan
+// Corrigé le 07/07/2026 : le TTS était bien coupé (speechSynthesis.cancel()),
+// mais pas la reconnaissance vocale (SpeechRecognition). Sur iOS, quitter
+// l'app (changer d'app, verrouiller l'écran…) pendant une écoute laissait la
+// session micro active côté système : le badge micro (barre d'état iOS)
+// restait affiché même dans d'autres applications. On arrête donc aussi
+// _micReco (via _rpClearTimers, qui coupe le micro ET les timers de
+// l'onglet Répète) dès que document.hidden passe à true.
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden && window.speechSynthesis) {
+  if (!document.hidden) return;
+  if (window.speechSynthesis) {
     speechSynthesis.cancel();
+  }
+  if (typeof _rpClearTimers === 'function') {
+    _rpClearTimers();
+  } else if (typeof _stopMicReco === 'function') {
+    _stopMicReco();
   }
 });
 
@@ -1799,6 +1819,15 @@ function showScreen(id, dir) {
   // Détermine l'écran actuellement actif (avant de le masquer)
   const currentEl = document.querySelector('.screen.active');
   const currentId = currentEl ? currentEl.id : null;
+
+  // Corrigé le 07/07/2026 : quitter un écran (ex : retour arrière depuis la
+  // leçon) pendant une session micro active (onglet 🎤 Répète) laissait la
+  // reconnaissance vocale tourner en arrière-plan. On la coupe systématiquement
+  // dès qu'on change réellement d'écran, en plus du filet de sécurité posé sur
+  // 'visibilitychange' pour le cas où l'app entière passe en arrière-plan.
+  if (currentId && currentId !== id && typeof _rpClearTimers === 'function') {
+    _rpClearTimers();
+  }
 
   // Quitter le guide (#home) pour un autre écran = onboarding "vu" POUR CE
   // MODE : il ne se relancera plus tout seul au prochain lancement dans cette
@@ -2486,9 +2515,9 @@ function renderFlash() {
       + '</div>'
       + '<div class="audio-btn-group">'
       + '<button class="audio-btn-big audio-btn-main" onclick="speak(\'' + esc(card.fr) + '\', this, {highlightUid:\'fcword\'})" aria-label="' + _escAttr(L("Escuchar : ", "Écouter : ") + card.fr) + '">🔊 ' + L('Escuchar audio', 'Écouter') + '</button>'
-      + '<button class="audio-btn-big audio-btn-slow" onclick="speakSlow(\'' + esc(card.fr) + '\', this, {highlightUid:\'fcword\'})" aria-label="' + L('Repetir lento', 'Répéter lentement') + '">🐢 ' + L('Lento', 'Lent') + '</button>'
+      + _buildMicButton(card.fr, 'fr-FR')
       + '</div>'
-      + _buildMicZone(card.fr, 'fr-FR');
+      + _buildMicFeedbackZone();
 
   /* — MODE Espagnol : Recto = ES (variante), Verso = FR — */
   } else {
@@ -2522,9 +2551,9 @@ function renderFlash() {
       + '</div>'
       + '<div class="audio-btn-group">'
       + '<button class="audio-btn-big audio-btn-main" onclick="speak(\'' + esc(finalEsWord) + '\', this, {highlightUid:\'fcword\'})" aria-label="' + _escAttr("Écouter : " + finalEsWord) + '">' + activeFlag + ' 🔊 ' + L('Escuchar', 'Écouter') + '</button>'
-      + '<button class="audio-btn-big audio-btn-slow" onclick="speakSlow(\'' + esc(finalEsWord) + '\', this, {highlightUid:\'fcword\'})" aria-label="Répéter lentement">🐢 ' + L('Lento', 'Lent') + '</button>'
+      + _buildMicButton(finalEsWord, voiceLang)
       + '</div>'
-      + _buildMicZone(finalEsWord, voiceLang);
+      + _buildMicFeedbackZone();
   }
 }
 
@@ -2569,12 +2598,14 @@ function flipCard() {
    Disponible sur Chrome Android, partielle sur Safari iOS.
 
    Fonctions :
-     _buildMicZone(word, lang) — génère le HTML du bloc micro
-     startMicReco(word, lang)  — lance la reconnaissance
-     _stopMicReco()            — arrête proprement la session
-     _normalizeSpeech(s)       — nettoie la transcription pour
-                                  comparaison souple (accents,
-                                  ponctuation, casse)
+     _buildMicButton(word, lang)     — génère le bouton "Prononcer" (à
+                                        côté du bouton "Écouter")
+     _buildMicFeedbackZone()         — génère la zone de feedback + hint
+     startMicReco(word, lang)        — lance la reconnaissance
+     _stopMicReco()                  — arrête proprement la session
+     _normalizeSpeech(s)             — nettoie la transcription pour
+                                        comparaison souple (accents,
+                                        ponctuation, casse)
 ═══════════════════════════════════════════════════════════ */
 
 // Instance SpeechRecognition active (null si aucune)
@@ -2668,11 +2699,30 @@ function _isMicBlockedError(err) {
   return err === 'not-allowed' || err === 'service-not-allowed';
 }
 
-/* _buildMicZone(word, lang) — Génère le HTML complet du bloc micro
-   (bouton, feedback, hint). word = mot attendu, lang = code BCP-47. */
-function _buildMicZone(word, lang) {
-  const btnLbl      = L('🎤 Pronunciar', '🎤 Prononcer');
-  const hint        = L(
+/* _buildMicButton(word, lang) — Génère uniquement le bouton "Prononcer".
+   Corrigé le 07/07/2026 : séparé de _buildMicZone pour pouvoir l'afficher
+   à côté du bouton "Écouter" (même ligne, cf. .audio-btn-group dans
+   renderFlash), à la place de l'ancien bouton "🐢 Lent" retiré (redondant
+   avec la barre de vitesse déjà disponible juste au-dessus).
+   word = mot attendu, lang = code BCP-47. Retourne '' si la reconnaissance
+   vocale n'est pas disponible sur ce navigateur (le message correspondant
+   est affiché par _buildMicFeedbackZone à la place). */
+function _buildMicButton(word, lang) {
+  if (!('SpeechRecognition' in window) && !('webkitSpeechRecognition' in window)) {
+    return '';
+  }
+  const btnLbl = L('🎤 Pronunciar', '🎤 Prononcer');
+  return '<button class="audio-btn-big mic-btn" id="micBtn" '
+    +   'onclick="startMicReco(\'' + esc(word) + '\',\'' + lang + '\')">'
+    +   btnLbl
+    + '</button>';
+}
+
+/* _buildMicFeedbackZone() — Génère la zone de feedback/hint sous les boutons
+   Écouter/Prononcer (résultat de la reconnaissance, ou message "non
+   disponible" si le navigateur ne supporte pas SpeechRecognition). */
+function _buildMicFeedbackZone() {
+  const hint = L(
     'Pulsa el micrófono, luego pronúncialo en voz alta',
     'Appuie sur le micro, puis prononce le mot à voix haute'
   );
@@ -2686,10 +2736,6 @@ function _buildMicZone(word, lang) {
   }
 
   return '<div class="mic-zone" id="micZone">'
-    + '<button class="mic-btn" id="micBtn" '
-    +   'onclick="startMicReco(\'' + esc(word) + '\',\'' + lang + '\')">'
-    +   btnLbl
-    + '</button>'
     + '<div class="mic-feedback" id="micFeedback"></div>'
     + '<div class="mic-hint">' + hint + '</div>'
     + '</div>';
