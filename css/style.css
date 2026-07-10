@@ -23,43 +23,43 @@
  * ║  Tous les composants utilisent var(--c-*) ; il suffit de       ║
  * ║  changer la classe sur <html> pour basculer le rendu visuel.   ║
  * ╠══════════════════════════════════════════════════════════════════╣
- * ║  PLAN DU FICHIER (numéros recalculés le 08/07/2026 après la phase de   ║
- * ║  correctifs 29/06→08/07 — décalage non uniforme selon les zones,      ║
- * ║  de +0 en tête de fichier jusqu'à +200 lignes environ en fin de fichier)║
- * ║   §1   Reset & base                            ligne 67       ║
- * ║   §1b  Transitions de navigation               ligne 183       ║
- * ║   §2   Variables de thème (:root / fallback)   ligne 434       ║
- * ║   §3   Thème Français (html.theme-french)      ligne 3083       ║
- * ║   §4   Thème Espagnol (html.theme-spain)       ligne 3101       ║
- * ║   §5   Écran 0 — Lanceur  #app-launcher        ligne 265       ║
- * ║   §6   Écran 1 — Accueil  #home (style Oromo)  ligne 480       ║
- * ║         Widget variante régionale               ligne 1035       ║
- * ║   §7   Écran 2 — Sections  #sections           ligne 1134       ║
- * ║         §27 Onglets Niveau 1 / 2               ligne 1308       ║
- * ║         §LAUNCHER-REGION-GRID                  ligne 1388       ║
- * ║         §28 Écrans sections level : layout     ligne 1475       ║
- * ║   §8   Écran 3 — Leçon  #lesson               ligne 1500       ║
- * ║         Onglets (tabs)                         ligne 1628       ║
- * ║         Barre meta (badge voix + vitesse)      ligne 1761       ║
- * ║   §9   Composants : Flashcards                 ligne 1665       ║
- * ║   §10  Composants : Alphabet                   ligne 2024       ║
- * ║   §11  Composants : Quiz                       ligne 2086       ║
- * ║   §12  Composants : Dialogues / Situations     ligne 2166       ║
- * ║   §13  Composants : Vocabulaire                ligne 2235       ║
- * ║   §14  Onglet Répète                           ligne 3208       ║
- * ║   §15  Variantes régionales hispaniques        ligne 3133       ║
- * ║   §16  Modales (Guide + Remerciements)         ligne 2357       ║
- * ║   §17  Footer commun                           ligne 2325       ║
- * ║   §24b Mode sombre @media dark                 ligne 3579       ║
- * ║   §26  Barre de navigation basse               ligne 3869       ║
- * ║         Focus clavier (role="button")          ligne 3330       ║
- * ║         Toast — notification discrète          ligne 3344       ║
- * ║   §PDF  Boutons export PDF                     ligne 4083       ║
- * ║   §SPK  Feedback visuel TTS (.is-speaking)     ligne 4128       ║
- * ║         Ajouts Juin 2026                       ligne 4176       ║
- * ║   §27-bis (ajout 08/07) Leçon 2 colonnes desktop ligne 4372     ║
- * ║         (numéro "27" déjà pris par "Onglets Niveau 1/2" plus     ║
- * ║          haut ; collision préexistante, non renumérotée ici)    ║
+ * ║  PLAN DU FICHIER (numéros recalculés le 10/07/2026, mesure directe —  ║
+ * ║  le recalcul du 08/07/2026 était déjà inexact avant même l'ajout de   ║
+ * ║  la bannière hors-ligne du jour. Liste dans l'ordre réel du fichier.) ║
+ * ║   §1   Reset & base                              ligne 68            ║
+ * ║   §1b  Transitions de navigation                 ligne 184           ║
+ * ║   §2   Variables de thème (:root / fallback)     ligne 435           ║
+ * ║   §5   Écran 0 — Lanceur  #app-launcher          ligne 266           ║
+ * ║   §6   Écran 1 — Accueil  #home (style Oromo)    ligne 481           ║
+ * ║         Widget variante régionale                 ligne 1036          ║
+ * ║   §7   Écran 2 — Sections  #sections             ligne 1135          ║
+ * ║         §27 Onglets Niveau 1 / 2                 ligne 1309          ║
+ * ║         §LAUNCHER-REGION-GRID                    ligne 1389          ║
+ * ║         §28 Écrans sections level : layout       ligne 1476          ║
+ * ║   §8   Écran 3 — Leçon  #lesson                  ligne 1501          ║
+ * ║         Onglets (tabs)                           ligne 1629          ║
+ * ║   §9   Composants : Flashcards                   ligne 1666          ║
+ * ║         Bannière hors-ligne (ajout 10/07/2026)   ligne 1762          ║
+ * ║         Barre meta (badge voix + vitesse)        ligne 1795          ║
+ * ║   §10  Composants : Alphabet                     ligne 2058          ║
+ * ║   §11  Composants : Quiz                         ligne 2120          ║
+ * ║   §12  Composants : Dialogues / Situations       ligne 2200          ║
+ * ║   §13  Composants : Vocabulaire                  ligne 2269          ║
+ * ║   §17  Footer commun                             ligne 2359          ║
+ * ║   §16  Modales (Guide utilisateur + Remerciements) ligne 2391        ║
+ * ║   §3   Thème Français (html.theme-french)        ligne 3117          ║
+ * ║   §4   Thème Espagnol (html.theme-spain)         ligne 3135          ║
+ * ║   §15  Variantes régionales hispaniques          ligne 3167          ║
+ * ║   §14  Onglet Répète                             ligne 3242          ║
+ * ║         Focus clavier (role="button")            ligne 3364          ║
+ * ║         Toast — notification discrète            ligne 3378          ║
+ * ║   §24b Mode sombre @media dark                   ligne 3613          ║
+ * ║   §26  Barre de navigation basse                 ligne 3906          ║
+ * ║   §PDF  Boutons export PDF                       ligne 4120          ║
+ * ║   §SPK  Feedback visuel TTS (.is-speaking)       ligne 4165          ║
+ * ║         Ajouts Juin 2026                         ligne 4213          ║
+ * ║   §27-bis (ajout 08/07) Leçon 2 colonnes desktop ligne 4409          ║
+ * ║         (numéro "27" déjà pris plus haut ; collision préexistante)   ║
  * ╚══════════════════════════════════════════════════════════════════╝
  */
 
@@ -1757,6 +1757,39 @@ body {
 .audio-btn-main {
   flex: 1;
 }
+
+/* ════════════════════════════════════════
+   BANNIÈRE HORS-LIGNE (Prononcer / Écouter)
+   Ajoutée le 10/07/2026 — indicateur proactif et persistant (contrairement
+   aux messages .mic-feedback--blocked / .mic-zone--unsupported, qui ne
+   s'affichent qu'après un clic). Injectée en tête de .lesson-meta-bar par
+   _updateOfflineAudioBanner() dans app.js dès que l'appareil passe hors
+   ligne, et retirée dès le retour en ligne (évènements online/offline).
+   Palette alignée sur .mic-feedback--blocked (rouge/orange, alerte douce,
+   pas critique) plutôt que .vqb-default (rouge) — l'app reste utilisable,
+   ce n'est pas une erreur bloquante.
+════════════════════════════════════════ */
+.offline-audio-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  background: #fff3cd;
+  color: #856404;
+  border: 1.5px solid #ffeeba;
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  font-size: .78rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+.offline-banner-icon {
+  flex-shrink: 0;
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+.offline-banner-text { flex: 1; }
 
 /* ════════════════════════════════════════
    BARRE META LEÇON (badge voix + vitesse)
@@ -3846,6 +3879,9 @@ html.theme-spain.region-VE {
   .vqb-fallback { background: #3a2e00; color: #f5c842; border-color: #6b5300; }
   .vqb-default  { background: #3a1a1a; color: #f08080; border-color: #6b2222; }
   .vqb-pending  { background: #2a2a2a; color: #aaa;    border-color: #444;    }
+
+  /* Bannière hors-ligne (Prononcer/Écouter) — dark mode, ajoutée 10/07/2026 */
+  .offline-audio-banner { background: #3a2e00; color: #f5c842; border-color: #6b5300; }
 
   /* Barre de vitesse — dark mode */
   .speed-btn          { background: #2a2a3a; border-color: #444; color: #ccc; }

@@ -24,56 +24,56 @@
    ============================================================
    ARCHITECTURE (5 fichiers) :
      ├─ index.html  → Structure HTML + launcher (4 écrans, 2 modales)
-     ├─ style.css   → Thèmes couleur, composants visuels (44 variables CSS
-     │                uniques, 161 déclarations car redéfinies par thème/variante)
+     ├─ style.css   → Thèmes couleur, composants visuels (44 variables CSS, 161 décl.)
      ├─ data-fr.js  → ALL_THEMES_FR (32 thèmes + 16 dialogues) — chargé à la demande
      ├─ data-es.js  → ALL_THEMES_ES (32 thèmes + 16 dialogues) — chargé à la demande
-     └─ app.js      → Ce fichier : logique applicative complète (4 864 lignes)
+     └─ app.js      → Ce fichier : logique applicative complète (5 130 lignes)
 
-   PLAN DU FICHIER (numéros de ligne réels, recalculés le 08/07/2026 après la
-   phase de correctifs 29/06→08/07/2026, qui a ajouté ~103 lignes au fichier
-   — d'où le décalage progressif des numéros par rapport à la vérification
-   précédente du 05/07/2026, non uniforme selon les zones du fichier) :
+   PLAN DU FICHIER (numéros recalculés le 10/07/2026 — la bannière hors-ligne
+   §3e, ~97 lignes, avait décalé tous les numéros au-delà de la ligne ~1300
+   depuis le recalcul du 08/07/2026) :
      §0    L.   81  Chargement conditionnel des données — loadDataForMode()
      §0b   L.  110  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
      §1    L.  266  Variables d'état globales
-     §1b   L.  330  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
+     §1b   L.  314  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
      §3    L.  397  Point d'entrée — showLauncherVariant(), initApp(), showLauncher()
-     §3b   L.  786  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
-     §3a-bis L. 916 Surlignage mot par mot pendant la lecture (TTS, best-effort)
-     §3c   L. 1294  Interruption TTS à la mise en arrière-plan (visibilitychange)
-     §3d   L. 1315  Keepalive watchdog Chrome/Android (pause/resume toutes les 8 s)
-     §3e   L. 1345  Audio indisponible + toast _showToast() + _vibrateFeedback()
-     §4    L. 1429  Persistance — loadDone(), markDone(), étoiles, quiz sessionStorage
-     §5    L. 1592  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
-     §5b   L. 1725  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
-     §6    L. 1905  Écran Home — renderHome(), _renderHomeRegionWidget()
-     §7    L. 2094  Écran Sections — renderSections(), _buildThemeCard()
-     §8    L. 2230  Ouverture d'un thème — openTheme(), switchTab(), lessonNav()
-     §9    L. 2433  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail()
-     §9b   L. 2617  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
-     §9c   L. 2945  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic()
-     §10   L. 3211  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
-     §11   L. 3488  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
-     §12   L. 3609  Vocabulaire — renderVocab() (chips cliquables)
-     §13   L. 3667  Quiz Dialogue — renderDialogQuiz(), checkDQ()
-     §14   L. 3760  Utilitaires — _quizResultStrings(), esc(), _escAttr()
-     §15   L. 3815  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
-     §15b  L. 4124  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
+     §3b   L.  718  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
+     §3a-bis L. 935 Surlignage mot par mot pendant la lecture (TTS, best-effort)
+     §3c   L. 1313  Interruption TTS à la mise en arrière-plan (visibilitychange)
+     §3d   L. 1334  Keepalive watchdog Chrome/Android (pause/resume toutes les 8 s)
+     §3e   L. 1364  Audio indisponible + toast _showToast() + _vibrateFeedback()
+     §4    L. 1448  Persistance — loadDone(), markDone(), étoiles, quiz sessionStorage
+     §5    L. 1611  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
+     §5b   L. 1739  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
+     §6    L. 1953  Écran Home — renderHome(), _renderHomeRegionWidget()
+     §7    L. 2142  Écran Sections — renderSections(), _buildThemeCard()
+     §8    L. 2278  Ouverture d'un thème — openTheme(), switchTab(), lessonNav()
+     §9    L. 2488  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail()
+     §9b   L. 2650  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
+     §9c   L. 3063  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic()
+     §10   L. 3417  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
+     §11   L. 3694  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
+     §12   L. 3815  Vocabulaire — renderVocab() (chips cliquables)
+     §13   L. 3873  Quiz Dialogue — renderDialogQuiz(), checkDQ()
+     §14   L. 3966  Utilitaires — _quizResultStrings(), esc(), _escAttr()
+     §15   L. 4021  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
+     §15b  L. 4330  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
                      (aucune bannière numérotée dans le code à cet endroit, juste
                       un commentaire au-dessus de toggleAcc() — contrairement aux
                       autres sous-sections 5b/9b/9c qui en ont une)
-     §16   L. 4189  Remerciements — showCredits()
-     §17   L. 4204  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
+     §16   L. 4395  Remerciements — showCredits()
+     §17   L. 4410  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
                      navBackToGuide(), _refreshGuideRegion(), _guideSeenKey()/
                      _hasSeenGuide()/_markGuideSeen() (flag par langue)
-     §18   L. 4466  E-mail antispam — openAndCopyEmail()
-     §19   L. 4485  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
+     §18   L. 4672  E-mail antispam — openAndCopyEmail()
+     §19   L. 4691  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
                      (étiqueté "§21" dans le code même — incohérence de numérotation
                       préexistante, non corrigée ici pour ne pas renuméroter tout le fichier)
-     §20   L. 4786  Accessibilité clavier (keydown → role="button")
-     §21   L. 4801  Initialisation Launcher — addEventListener sur les cartes de langue
-     §21b  L. 4827  Viewport height fix Android — --app-h via window.innerHeight
+     §20   L. 4992  Accessibilité clavier (keydown → role="button")
+     §21   L. 5007  Initialisation Launcher — addEventListener sur les cartes de langue
+     §21b  L. 5033  Viewport height fix Android — --app-h via window.innerHeight
+     §21c  L. 5074  Bouton d'installation PWA native — _initInstallButtons(),
+                     _installPwa() (ajouté le 09/07/2026, absent du plan depuis)
    ============================================================ */
 
 
@@ -738,14 +738,19 @@ let _spanishVoiceQuality = null;
 let _spanishVoiceLabel   = '';
 
 // ─── Contrôle de vitesse TTS ───
-// Valeurs : 0.55 (très lent) | 0.70 (lent) | 0.85 (normal) | 1.00 (rapide) | 1.20 (très rapide)
+// Valeurs : 0.55 (très lent) | 0.70 (lent) | 0.85 (confort apprenant) | 1.00 (débit natif du moteur) | 1.20 (très rapide)
+// Corrigé le 09/07/2026 : le palier 0.85 était étiqueté "Normal", ce qui laissait
+// croire à tort qu'il s'agissait du débit natif d'un locuteur. En réalité rate=1.00
+// est le débit "natif" au sens de la Web Speech API ; 0.85 est un ralentissement
+// volontaire pour le confort d'un apprenant. Retour testeur bêta (Firefox/Android)
+// du 09/07/2026. Renommé en "Confort" pour lever l'ambiguïté.
 // Persisté en sessionStorage pour la session courante
 const SPEED_LEVELS = [
-  { id:'xslow',  rate: 0.55, label:'0.55×', title: function() { return L('Muy lento',  'Très lent');   } },
-  { id:'slow',   rate: 0.70, label:'0.70×', title: function() { return L('Lento',      'Lent');        } },
-  { id:'normal', rate: 0.85, label:'0.85×', title: function() { return L('Normal',     'Normal');      } },
-  { id:'fast',   rate: 1.00, label:'1×',    title: function() { return L('Rápido',     'Rapide');      } },
-  { id:'xfast',  rate: 1.20, label:'1.20×', title: function() { return L('Muy rápido', 'Très rapide'); } }
+  { id:'xslow',  rate: 0.55, label:'0.55×', title: function() { return L('Muy lento',   'Très lent');    } },
+  { id:'slow',   rate: 0.70, label:'0.70×', title: function() { return L('Lento',       'Lent');         } },
+  { id:'normal', rate: 0.85, label:'0.85×', title: function() { return L('Cómodo',      'Confort');      } },
+  { id:'fast',   rate: 1.00, label:'1×',    title: function() { return L('Nativo',      'Débit natif');  } },
+  { id:'xfast',  rate: 1.20, label:'1.20×', title: function() { return L('Muy rápido',  'Très rapide');  } }
 ];
 function _getTtsSpeed() {
   const saved = sessionStorage.getItem('vachebo_tts_speed');
@@ -882,10 +887,23 @@ function _resolveSpanishVoice(callback) {
   if (!search()) {
     let _voicesTimeout = null;
 
+    /* Corrigé le 09/07/2026 (retour testeur bêta Firefox/Android) :
+       BUG — les deux repères ci-dessous prenaient auparavant
+       speechSynthesis.getVoices()[0] à l'aveugle, sans filtrer par langue.
+       Si la première voix système n'était pas espagnole (ex : voix française
+       ou voix d'une autre langue installée sur le téléphone), l'app lisait
+       l'espagnol avec une voix qui ne l'était pas du tout — badge "❓ Voix
+       par défaut" et prononciation incohérente, y compris pour le "secours".
+       Correctif : on relance search() (cascade exact → es-* générique →
+       premier recours) maintenant que la liste de voix est chargée, au lieu
+       de dupliquer une logique de sélection sans filtre. search() gère déjà
+       elle-même le callback, le badge et le toast quand elle réussit — on ne
+       retombe sur `getVoices()[0]` que si la liste est réellement vide. */
     function _onVoicesChanged() {
       speechSynthesis.removeEventListener('voiceschanged', _onVoicesChanged);
       clearTimeout(_voicesTimeout);
       if (_spanishVoice === undefined) {
+        if (search()) return; // search() a déjà appelé callback()
         _spanishVoice = speechSynthesis.getVoices()[0] || null;
       }
       callback(_spanishVoice);
@@ -893,10 +911,11 @@ function _resolveSpanishVoice(callback) {
 
     speechSynthesis.addEventListener('voiceschanged', _onVoicesChanged);
 
-    /* Timeout de sécurité : 2 s max — évite un callback silencieux sur iOS */
+    /* Timeout de sécurité : 1,2 s max — évite un callback silencieux sur iOS */
     _voicesTimeout = setTimeout(() => {
       speechSynthesis.removeEventListener('voiceschanged', _onVoicesChanged);
       if (_spanishVoice === undefined) {
+        if (search()) return; // search() a déjà appelé callback() + badge + toast
         const fallback = speechSynthesis.getVoices();
         _spanishVoice = fallback.length > 0 ? fallback[0] : null;
         _spanishVoiceQuality = 'default';
@@ -1695,6 +1714,25 @@ function _updateBottomNav(screenId) {
       langFlag.textContent = flagEmojis[currentRegion] || '🇪🇸';
     }
   }
+
+  /* (5) Ajouté le 09/07/2026 (retour testeur bêta Firefox/Android, point 1) :
+     état visuel "verrouillé" du bouton Modules tant qu'aucune langue n'est
+     choisie (currentMode vide). Avant ce correctif, le bouton avait l'air
+     parfaitement cliquable mais navGoModules() ne faisait rien — d'où
+     l'impression d'un bouton bloqué/cassé pour un nouvel utilisateur.
+     Appliqué en style inline : style.css n'était pas disponible au moment
+     du correctif pour y ajouter une classe .nav-btn--locked dédiée. À migrer
+     proprement vers une classe CSS si cette règle inline pose problème. */
+  const btnModulesEl = document.getElementById('navBtnModules');
+  if (btnModulesEl) {
+    const locked = !currentMode;
+    btnModulesEl.classList.toggle('nav-btn--locked', locked);
+    btnModulesEl.style.opacity = locked ? '0.4' : '';
+    /* Le clic reste actif (pas de pointer-events:none) : navGoModules()
+       gère déjà le cas verrouillé avec un toast + redirection, ce qui est
+       plus explicite pour l'utilisateur qu'un bouton totalement inerte. */
+    btnModulesEl.setAttribute('aria-disabled', locked ? 'true' : 'false');
+  }
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -1759,8 +1797,18 @@ function lessonGoBack() {
  * va sur l'écran du niveau mémorisé (ou niveau 1 par défaut).
  */
 function navGoModules() {
-  /* Si ALL_THEMES n'est pas encore chargé (pas de mode actif), on ne fait rien */
-  if (!ALL_THEMES || !ALL_THEMES.length) return;
+  /* Corrigé le 09/07/2026 (retour testeur bêta Firefox/Android) :
+     BUG — si ALL_THEMES n'était pas encore chargé (aucune langue choisie),
+     cette fonction sortait silencieusement sans aucun retour visuel. Pour
+     un nouvel utilisateur qui clique sur "Modules" avant tout autre choix,
+     le bouton donnait l'impression d'être bloqué/cassé. On affiche
+     désormais un toast explicite et on renvoie vers l'écran de choix
+     de langue plutôt que de ne rien faire. */
+  if (!ALL_THEMES || !ALL_THEMES.length) {
+    _showToast(L('🌍 Elige primero tu idioma', '🌍 Choisis d\'abord ta langue'));
+    showLauncher();
+    return;
+  }
 
   const target = (_currentThemeLevel === 2) ? 'sections-level2' : 'sections-level1';
 
@@ -2346,6 +2394,13 @@ function openTheme(id) {
   _updateVoiceBadge();
   _updateSpeedBar();
 
+  // Bannière hors-ligne proactive (Prononcer/Écouter) — ajoutée le
+  // 10/07/2026. Doit être appelée APRÈS avoir (re)posé lessonMeta.innerHTML
+  // ci-dessus, qui écrase le contenu de la barre à chaque ouverture de
+  // leçon (sinon la bannière d'un précédent thème resterait affichée un
+  // instant avant d'être effacée par l'assignation ci-dessus).
+  _updateOfflineAudioBanner();
+
   // Si mode espagnol, déclencher la résolution de voix en tâche de fond pour le badge
   if (currentMode === 'learn_spain' && _spanishVoice === undefined) {
     _resolveSpanishVoice(() => { _updateVoiceBadge(); });
@@ -2699,6 +2754,122 @@ function _isMicBlockedError(err) {
   return err === 'not-allowed' || err === 'service-not-allowed';
 }
 
+/* ─────────────────────────────────────────────────────────
+   Ajouté le 09/07/2026 (retour testeur bêta) : la reconnaissance vocale
+   (SpeechRecognition) envoie l'audio à un service cloud pour le transcrire
+   — c'est vrai sur Chrome/Edge/Safari, qui reposent sur les serveurs de
+   Google/Apple, et c'est une limitation de facto de l'API elle-même, pas
+   de cette app. Contrairement à la synthèse vocale (speechSynthesis), qui
+   PEUT fonctionner hors-ligne si une voix locale est déjà installée sur
+   l'appareil, la reconnaissance ne fonctionne quasiment jamais sans réseau.
+   On détecte donc l'état hors-ligne en amont pour afficher un message clair
+   au lieu de laisser échouer la tentative avec une erreur technique brute
+   ('network'). Ce n'est pas contournable proprement sans un moteur de
+   reconnaissance embarqué (modèle ML téléchargé, ex. Vosk/whisper.cpp en
+   WASM) — option écartée ici car elle contredit le principe "zéro
+   dépendance" du projet et pèserait plusieurs dizaines de Mo par langue,
+   pour un gain limité (voir échange du 09/07/2026 pour le détail). */
+function _isOffline() {
+  return typeof navigator !== 'undefined' && 'onLine' in navigator && !navigator.onLine;
+}
+function _micOfflineHtml() {
+  // Corrigé le 10/07/2026 : le message affirmait auparavant sans nuance que
+  // "Écouter reste disponible hors ligne". C'est vrai que speechSynthesis
+  // PEUT fonctionner sans réseau (contrairement à SpeechRecognition), mais
+  // seulement si une voix locale existe déjà sur l'appareil pour la langue
+  // voulue — sinon _resolveSpanishVoice() retombe sur voices[0] (voir plus
+  // haut), qui peut être une voix dans une tout autre langue que celle
+  // apprise. D'où la nuance ajoutée ici. Voir aussi _updateOfflineAudioBanner()
+  // pour l'indicateur proactif équivalent, affiché sans attendre un clic.
+  const msg = L(
+    '🎤📡 El reconocimiento de voz necesita conexión a Internet — no disponible sin conexión. 🔊 Escuchar puede funcionar sin conexión (voz local), pero no siempre en el idioma correcto.',
+    '🎤📡 La reconnaissance vocale nécessite une connexion Internet — indisponible hors ligne. 🔊 Écouter peut fonctionner hors ligne (voix locale), mais pas forcément dans la bonne langue.'
+  );
+  return '<span class="mic-blocked-icon">🎤📡</span> ' + msg;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Ajouté le 10/07/2026 (retour utilisateur) : les deux messages ci-dessus
+   (_micOfflineHtml, _micBlockedHtml) ne s'affichent qu'APRÈS un clic sur
+   "Prononcer" ou "Écouter" — un apprenant hors ligne pouvait donc essuyer
+   un échec avant de comprendre la limitation. Cette bannière est proactive
+   et persistante : injectée dans la barre meta de la leçon (#lesson-meta-bar,
+   visible sur tous les onglets — Cartes/Quiz/Répète/Dialogue/Vocabulaire)
+   dès que l'appareil est détecté hors ligne, sans attendre une interaction.
+   Couvre les deux limitations réelles :
+     • 🎤 Prononcer (SpeechRecognition) : ne fonctionne JAMAIS hors ligne
+       (service cloud, cf. _isOffline() plus haut) — non affiché si la
+       leçon n'a pas de fonction Prononcer (thèmes alphabet/dialogue).
+     • 🔊 Écouter (speechSynthesis) : PEUT fonctionner hors ligne, mais
+       utilisera la langue par défaut du système à la place de la langue
+       apprise si aucune voix locale correspondante n'est installée sur
+       l'appareil (cf. _resolveSpanishVoice(), repli sur voices[0]).
+   Se met à jour en direct via les évènements 'online'/'offline' — pas
+   besoin de rouvrir la leçon pour que la bannière apparaisse/disparaisse. */
+
+/* _lessonHasMicFeature() — true si la leçon actuellement ouverte propose
+   le bouton "Prononcer" (thèmes vocabulaire normaux, onglets Cartes et
+   Répète). Absent des thèmes alphabet (buildAlphaDetail() n'a pas de
+   micro) et des dialogues (onglets Dialogue/Vocabulaire/Quiz, pas de
+   micro non plus) — voir _buildMicButton()/_rpStartMic() pour le détail
+   des onglets concernés. */
+function _lessonHasMicFeature() {
+  return !!(CT && CT.type !== 'alpha' && CT.type !== 'dialog');
+}
+
+/* _buildOfflineAudioBannerHtml(hasMic) — Construit le texte bilingue de
+   la bannière hors-ligne, adapté selon que la leçon ouverte propose ou
+   non la fonction Prononcer (cf. _lessonHasMicFeature()). */
+function _buildOfflineAudioBannerHtml(hasMic) {
+  const micPart = hasMic
+    ? L(
+        '🎤 Pronunciar no disponible sin conexión. ',
+        '🎤 Prononcer indisponible hors ligne. '
+      )
+    : '';
+  // Le nom de la langue prononcée dépend du mode : learn_french → voix
+  // française attendue (interface espagnole) ; learn_spain → voix
+  // espagnole attendue (interface française). Cf. convention L(fr, es)
+  // documentée en §1b (fr = texte espagnol affiché en mode learn_french,
+  // es = texte français affiché en mode learn_spain).
+  const listenPart = L(
+    '🔊 Escuchar puede funcionar sin conexión, pero usará el idioma por defecto del aparato si la voz francesa no está instalada.',
+    '🔊 Écouter peut fonctionner hors ligne, mais utilisera la langue par défaut de l\'appareil si la voix espagnole n\'est pas installée.'
+  );
+  return '<span class="offline-banner-icon" aria-hidden="true">📡</span>'
+    + '<span class="offline-banner-text">' + micPart + listenPart + '</span>';
+}
+
+/* _updateOfflineAudioBanner() — Affiche/masque/actualise la bannière
+   #offline-audio-banner dans #lesson-meta-bar selon l'état de connexion
+   (_isOffline()) et le type de leçon ouverte (_lessonHasMicFeature()).
+   Sans effet si aucune leçon n'est ouverte (pas de #lesson-meta-bar dans
+   le DOM) — la fonction ne fait alors rien plutôt que de planter. */
+function _updateOfflineAudioBanner() {
+  const lessonMeta = document.getElementById('lesson-meta-bar');
+  if (!lessonMeta) return;
+
+  let banner = document.getElementById('offline-audio-banner');
+  if (_isOffline()) {
+    if (!banner) {
+      banner = document.createElement('div');
+      banner.id = 'offline-audio-banner';
+      banner.className = 'offline-audio-banner';
+      banner.setAttribute('role', 'status');
+      lessonMeta.insertBefore(banner, lessonMeta.firstChild);
+    }
+    banner.innerHTML = _buildOfflineAudioBannerHtml(_lessonHasMicFeature());
+  } else if (banner) {
+    banner.remove();
+  }
+}
+
+// Mise à jour en direct au changement de connectivité (sans attendre un
+// clic ni une réouverture de leçon). Sans effet si aucune leçon n'est
+// ouverte au moment du changement (cf. garde en tête de fonction).
+window.addEventListener('online',  _updateOfflineAudioBanner);
+window.addEventListener('offline', _updateOfflineAudioBanner);
+
 /* _buildMicButton(word, lang) — Génère uniquement le bouton "Prononcer".
    Corrigé le 07/07/2026 : séparé de _buildMicZone pour pouvoir l'afficher
    à côté du bouton "Écouter" (même ligne, cf. .audio-btn-group dans
@@ -2747,6 +2918,19 @@ function _buildMicFeedbackZone() {
 function startMicReco(word, lang) {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) return;
+
+  // Corrigé le 09/07/2026 : reconnaissance vocale = service cloud, ne
+  // fonctionne pas hors ligne (contrairement à l'écoute). On le détecte
+  // avant de lancer la session plutôt que de laisser échouer avec une
+  // erreur technique brute 'network'.
+  if (_isOffline()) {
+    const fb = document.getElementById('micFeedback');
+    if (fb) {
+      fb.className  = 'mic-feedback mic-feedback--blocked';
+      fb.innerHTML  = _micOfflineHtml();
+    }
+    return;
+  }
 
   // Arrête une session précédente éventuelle
   _stopMicReco();
@@ -2801,6 +2985,11 @@ function startMicReco(word, lang) {
       if (_isMicBlockedError(e.error)) {
         fbEl.className  = 'mic-feedback mic-feedback--blocked';
         fbEl.innerHTML  = _micBlockedHtml();
+      } else if (e.error === 'network') {
+        // Corrigé le 09/07/2026 : message clair au lieu de "Erreur : network"
+        // (ex. connexion perdue en cours d'écoute).
+        fbEl.className  = 'mic-feedback mic-feedback--blocked';
+        fbEl.innerHTML  = _micOfflineHtml();
       } else if (e.error !== 'no-speech') {
         // 'no-speech' = silence, pas vraiment une erreur à afficher
         fbEl.className  = 'mic-feedback mic-feedback--ko';
@@ -3030,6 +3219,16 @@ function _rpStartMic(word, lang) {
     }
     return;
   }
+  // Corrigé le 09/07/2026 : même détection hors-ligne que startMicReco()
+  // (Cartes) — voir _isOffline()/_micOfflineHtml() pour le détail.
+  if (_isOffline()) {
+    const fbEl = document.getElementById('rpFeedback');
+    if (fbEl) {
+      fbEl.className = 'rp-feedback mic-feedback mic-feedback--blocked';
+      fbEl.innerHTML = _micOfflineHtml();
+    }
+    return;
+  }
   _stopMicReco();
 
   const reco = new SR();
@@ -3069,6 +3268,13 @@ function _rpStartMic(word, lang) {
           + 'onclick="_rpRehear()">' + L('🔁 Reintentar', '🔁 Réessayer') + '</button>';
       }
       return; // pas de _rpAutoTimer : on attend l'action de l'apprenant
+    }
+
+    if (fbEl && e.error === 'network') {
+      // Corrigé le 09/07/2026 : message clair au lieu de "Erreur : network".
+      fbEl.className = 'rp-feedback mic-feedback mic-feedback--blocked';
+      fbEl.innerHTML = _micOfflineHtml();
+      return; // pas de _rpAutoTimer : cf. branche 'blocked' ci-dessus
     }
 
     if (fbEl && e.error !== 'no-speech') {
@@ -4863,3 +5069,63 @@ if (cardES) cardES.addEventListener('click', () => {
     setTimeout(_updateAppHeight, 300);
   });
 })();
+
+/* ════════════════════════════════════════
+   §21c — BOUTON D'INSTALLATION PWA NATIVE
+   Ajouté le 09/07/2026 (retour testeur bêta Firefox/Android, point 2 :
+   installation hors-ligne jugée difficile à trouver/réaliser).
+
+   L'événement 'beforeinstallprompt' est capturé le plus tôt possible par
+   un script inline dans index.html (avant même le chargement de ce fichier)
+   et stocké sur window._deferredInstallPrompt — voir index.html pour le
+   détail. Cette section se contente d'afficher/masquer les boutons
+   ".pwa-install-btn" (un par bloc de langue FR/ES dans le Guide, § Hors
+   ligne / Sin conexión) et de déclencher l'invite native au clic.
+
+   IMPORTANT — limites connues, non corrigibles côté app :
+     • Firefox (desktop ET Android) ne supporte PAS 'beforeinstallprompt'.
+       Aucun événement n'arrivera jamais : le(s) bouton(s) restent masqués
+       et l'utilisateur suit la méthode manuelle déjà documentée juste
+       en dessous (menu ⋮ → "Ajouter à l'écran d'accueil" sur Firefox
+       Android, quand disponible).
+     • iOS Safari ne supporte pas non plus cette API — méthode manuelle
+       uniquement (🔗 → "Sur l'écran d'accueil"), déjà documentée.
+     • Sur Chrome/Edge/Samsung Internet, le bouton n'apparaît que si le
+       navigateur juge l'app "installable" (manifest + Service Worker
+       valides, ce qui est déjà le cas ici) ET que l'app n'est pas déjà
+       installée.
+════════════════════════════════════════ */
+function _initInstallButtons() {
+  function refresh() {
+    const show = !!window._deferredInstallPrompt;
+    document.querySelectorAll('.pwa-install-btn').forEach((btn) => {
+      btn.style.display = show ? '' : 'none';
+    });
+  }
+  window.addEventListener('vachebo:install-available', refresh);
+  window.addEventListener('vachebo:install-done', refresh);
+  refresh(); // état initial (l'événement a pu se déclencher avant ce point)
+}
+
+/**
+ * _installPwa() — Déclenche l'invite d'installation native stockée par
+ * index.html. Appelée par les boutons ".pwa-install-btn" du Guide.
+ */
+function _installPwa() {
+  const promptEvent = window._deferredInstallPrompt;
+  if (!promptEvent) return; // bouton normalement masqué dans ce cas
+  promptEvent.prompt();
+  promptEvent.userChoice
+    .then((choice) => {
+      window._deferredInstallPrompt = null;
+      document.querySelectorAll('.pwa-install-btn').forEach((btn) => {
+        btn.style.display = 'none';
+      });
+      if (choice && choice.outcome === 'accepted') {
+        _showToast(L('✅ App instalada', '✅ Application installée'));
+      }
+    })
+    .catch(() => { /* invite annulée/fermée — pas d'action nécessaire */ });
+}
+
+_initInstallButtons();

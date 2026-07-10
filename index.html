@@ -55,6 +55,34 @@
   <title>VACHÉBO — Apprendre Français &amp; Espagnol</title>
 
   <!--
+    ── INSTALLATION PWA (bouton natif) ──────────────────────────────────────
+    Ajouté le 09/07/2026 (retour testeur bêta : installation hors-ligne jugée
+    difficile à trouver). Capture l'événement 'beforeinstallprompt' le plus
+    tôt possible (avant même le chargement de js/app.js), car Chrome/Edge/
+    Samsung Internet peuvent le déclencher très tôt dans le cycle de vie de
+    la page — un script placé seulement en bas de <body> risquerait de le
+    manquer. L'événement est stocké sur window._deferredInstallPrompt ;
+    app.js (fonction _initInstallButton(), §21c) l'utilise pour afficher un
+    vrai bouton "📲 Installer" en un tap.
+    NOTE IMPORTANTE : cette API n'existe pas sur Firefox (desktop ou Android)
+    ni sur iOS Safari — sur ces navigateurs, aucun événement n'arrivera
+    jamais et l'app retombe sur le guide manuel existant (§ Hors ligne).
+    C'est une limitation du navigateur, pas de l'app.
+    ─────────────────────────────────────────────────────────────────────── -->
+  <script>
+    window._deferredInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault(); // empêche le mini-bandeau natif automatique du navigateur
+      window._deferredInstallPrompt = e;
+      window.dispatchEvent(new CustomEvent('vachebo:install-available'));
+    });
+    window.addEventListener('appinstalled', () => {
+      window._deferredInstallPrompt = null;
+      window.dispatchEvent(new CustomEvent('vachebo:install-done'));
+    });
+  </script>
+
+  <!--
     PWA — Progressive Web App
     Ces balises permettent l'installation sur écran d'accueil
     et définissent l'apparence de l'app en mode standalone.
@@ -328,6 +356,35 @@
             <h4 style="margin:0 0 .4em;font-size:.95em">🔊 Configurer son audio</h4>
             <p>L'appli utilise la <strong>synthèse vocale du navigateur</strong> (Web Speech API). L'audio français et espagnol est disponible sur la plupart des appareils — si ce n'est pas le cas, suis les instructions ci-dessous.</p>
 
+            <h4 style="margin:.8em 0 .3em;font-size:.95em">🌐 Quel navigateur choisir ?</h4>
+            <div class="ob-compare">
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🤖 Android</div>
+                <ul>
+                  <li>✅ <strong>Chrome</strong>, <strong>Samsung Internet</strong>, <strong>Edge</strong>, <strong>Opera</strong>, <strong>Brave</strong>, <strong>Vivaldi</strong> : audio 🔊, Quiz et 🎤 Répète fonctionnent, installation en un tap</li>
+                  <li>⚠️ <strong>Firefox</strong> : audio OK, mais 🎤 Répète indisponible et pas d'installation en un tap (raccourci manuel à la place)</li>
+                  <li>⚠️ <strong>UC Browser</strong> : basé sur Chromium, mais son « Mode rapide » (compression via un serveur proxy) peut perturber l'audio et 🎤 Répète — désactive-le dans les réglages si besoin, ou préfère Chrome</li>
+                  <li>❓ <strong>DuckDuckGo</strong> : audio OK, mais son blocage de trackers peut perturber 🎤 Répète (qui envoie l'enregistrement à un service en ligne) ; installation limitée à un simple raccourci</li>
+                </ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🍎 iPhone / iPad</div>
+                <ul>
+                  <li>✅ <strong>Safari</strong> (iOS 14.5 ou plus récent) : seul navigateur testé et recommandé sur iOS</li>
+                  <li>⚠️ Chrome, Firefox, Opera, Brave, Vivaldi, DuckDuckGo pour iOS utilisent tous le même moteur imposé par Apple (WebKit) et devraient se comporter comme Safari, mais l'appli n'est validée que sur Safari — bascule vers Safari en cas de souci</li>
+                </ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">💻 Ordinateur</div>
+                <ul>
+                  <li>✅ <strong>Chrome</strong>, <strong>Edge</strong>, <strong>Opera</strong>, <strong>Brave</strong>, <strong>Vivaldi</strong> : audio 🔊, Quiz et 🎤 Répète fonctionnent</li>
+                  <li>⚠️ <strong>Firefox</strong> : audio et quiz OK, mais 🎤 Répète peut être instable ou indisponible selon la version</li>
+                  <li>❓ <strong>DuckDuckGo</strong> (version ordinateur) : mêmes réserves que sur mobile pour 🎤 Répète</li>
+                </ul>
+              </div>
+            </div>
+            <div class="ob-tip">💡 En résumé : les navigateurs basés sur <strong>Chromium</strong> (Chrome, Edge, Samsung Internet, Opera, Brave, Vivaldi) offrent le meilleur support. <strong>Firefox</strong>, <strong>UC Browser</strong> et <strong>DuckDuckGo</strong> peuvent limiter ou perturber la reconnaissance vocale (onglet 🎤 Répète) — les autres fonctions (cartes, quiz, dialogues, audio 🔊) restent utilisables normalement partout.</div>
+
             <div class="ob-audio-block">
               <div class="ob-audio-head">🤖 Android</div>
               <ol>
@@ -408,6 +465,14 @@
           </summary>
           <div class="hg-detail">
             <h4 style="margin:0 0 .4em;font-size:.95em">📲 Installer l'app en hors ligne</h4>
+            <!-- Bouton natif d'installation — ajouté le 09/07/2026 (retour testeur
+                 bêta : l'installation manuelle était difficile à trouver/réaliser).
+                 Masqué par défaut ; affiché uniquement par app.js
+                 (_initInstallButtons(), §21c) quand le navigateur propose
+                 réellement l'installation en un tap (event beforeinstallprompt —
+                 Chrome/Edge/Samsung Internet ; indisponible sur Firefox et iOS
+                 Safari, qui restent sur la méthode manuelle ci-dessous). -->
+            <button type="button" class="btn-primary pwa-install-btn" style="display:none;margin:.3em 0 .8em" onclick="_installPwa()">📲 Installer maintenant</button>
             <ul>
               <li><strong>Android / Chrome</strong> : menu ⋮ → <em>"Ajouter à l'écran d'accueil"</em></li>
               <li><strong>iOS / Safari</strong> : 🔗 → <em>"Sur l'écran d'accueil"</em></li>
@@ -434,7 +499,8 @@
               </div>
             </div>
             <div class="ob-tip">💡 Pour un hors-ligne fiable, choisis toujours <strong>Installer</strong>. Le raccourci reste pratique pour un accès rapide, mais ne garantit pas que l'app fonctionne sans connexion.</div>
-            <p>Une fois <strong>installée</strong> (et non simplement en raccourci), l'app fonctionne <strong>entièrement hors ligne</strong>.</p>
+            <p>Une fois <strong>installée</strong> (et non simplement en raccourci), l'app fonctionne <strong>entièrement hors ligne</strong> — cartes, quiz, dialogues, écoute 🔊 et export PDF compris.</p>
+            <div class="ob-tip">⚠️ Seul l'onglet <strong>🎤 Répète</strong> (reconnaissance vocale) a besoin d'une connexion Internet : le navigateur envoie l'enregistrement à un service en ligne pour le comprendre. C'est une limite du navigateur lui-même (identique sur tous les sites qui utilisent le micro), pas de cette app.</div>
             <div class="ob-tip">💡 L'app se met à jour automatiquement à chaque nouvelle version — il suffit de la rouvrir dans le navigateur.</div>
 
             <h4 style="margin:.8em 0 .3em;font-size:.95em;border-top:1px solid var(--color-border);padding-top:.6em">📄 Téléchargement en PDF</h4>
@@ -612,6 +678,35 @@
             <h4 style="margin:0 0 .4em;font-size:.95em">🔊 Configurar el audio</h4>
             <p>La app usa la <strong>síntesis de voz del navegador</strong> (Web Speech API). El audio en español y francés está disponible en la mayoría de dispositivos — si no es así, sigue estas instrucciones.</p>
 
+            <h4 style="margin:.8em 0 .3em;font-size:.95em">🌐 ¿Qué navegador elegir?</h4>
+            <div class="ob-compare">
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🤖 Android</div>
+                <ul>
+                  <li>✅ <strong>Chrome</strong>, <strong>Samsung Internet</strong>, <strong>Edge</strong>, <strong>Opera</strong>, <strong>Brave</strong>, <strong>Vivaldi</strong>: audio 🔊, Quiz y 🎤 Repite funcionan, instalación en un toque</li>
+                  <li>⚠️ <strong>Firefox</strong>: el audio funciona, pero 🎤 Repite no está disponible y no hay instalación en un toque (usa el acceso directo manual)</li>
+                  <li>⚠️ <strong>UC Browser</strong>: basado en Chromium, pero su "Modo rápido" (compresión mediante un servidor proxy) puede afectar al audio y a 🎤 Repite — desactívalo en los ajustes si hace falta, o usa Chrome</li>
+                  <li>❓ <strong>DuckDuckGo</strong>: el audio funciona, pero su bloqueo de rastreadores puede afectar a 🎤 Repite (que envía la grabación a un servicio en línea); la instalación se limita a un simple acceso directo</li>
+                </ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🍎 iPhone / iPad</div>
+                <ul>
+                  <li>✅ <strong>Safari</strong> (iOS 14.5 o más reciente): el único navegador probado y recomendado en iOS</li>
+                  <li>⚠️ Chrome, Firefox, Opera, Brave, Vivaldi, DuckDuckGo para iOS usan todos el mismo motor impuesto por Apple (WebKit) y deberían comportarse como Safari, pero la app solo está validada en Safari — cambia a Safari si aparece algún problema</li>
+                </ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">💻 Ordenador</div>
+                <ul>
+                  <li>✅ <strong>Chrome</strong>, <strong>Edge</strong>, <strong>Opera</strong>, <strong>Brave</strong>, <strong>Vivaldi</strong>: audio 🔊, Quiz y 🎤 Repite funcionan</li>
+                  <li>⚠️ <strong>Firefox</strong>: audio y quiz bien, pero 🎤 Repite puede ser inestable o no estar disponible según la versión</li>
+                  <li>❓ <strong>DuckDuckGo</strong> (versión ordenador): las mismas reservas que en móvil para 🎤 Repite</li>
+                </ul>
+              </div>
+            </div>
+            <div class="ob-tip">💡 En resumen: los navegadores basados en <strong>Chromium</strong> (Chrome, Edge, Samsung Internet, Opera, Brave, Vivaldi) ofrecen el mejor soporte. <strong>Firefox</strong>, <strong>UC Browser</strong> y <strong>DuckDuckGo</strong> pueden limitar o afectar al reconocimiento de voz (pestaña 🎤 Repite) — el resto de funciones (tarjetas, quiz, diálogos, audio 🔊) siguen funcionando con normalidad en todos.</div>
+
             <div class="ob-audio-block">
               <div class="ob-audio-head">🤖 Android</div>
               <ol>
@@ -692,6 +787,9 @@
           </summary>
           <div class="hg-detail">
             <h4 style="margin:0 0 .4em;font-size:.95em">📲 Instalar la app sin conexión</h4>
+            <!-- Botón nativo de instalación — ver equivalente FR pour le détail
+                 du commentaire (§21c dans app.js). -->
+            <button type="button" class="btn-primary pwa-install-btn" style="display:none;margin:.3em 0 .8em" onclick="_installPwa()">📲 Instalar ahora</button>
             <ul>
               <li><strong>Android / Chrome</strong> : menú ⋮ → <em>"Añadir a pantalla de inicio"</em></li>
               <li><strong>iOS / Safari</strong> : 🔗 → <em>"En la pantalla de inicio"</em></li>
@@ -718,7 +816,8 @@
               </div>
             </div>
             <div class="ob-tip">💡 Para un uso sin conexión fiable, elige siempre <strong>Instalar</strong>. El acceso directo sigue siendo práctico para acceder rápido, pero no garantiza que la app funcione sin conexión.</div>
-            <p>Una vez <strong>instalada</strong> (y no solo como acceso directo), la app funciona <strong>completamente sin conexión</strong>.</p>
+            <p>Una vez <strong>instalada</strong> (y no solo como acceso directo), la app funciona <strong>completamente sin conexión</strong> — tarjetas, quiz, diálogos, escuchar 🔊 y exportación PDF incluidos.</p>
+            <div class="ob-tip">⚠️ Solo la pestaña <strong>🎤 Repite</strong> (reconocimiento de voz) necesita conexión a Internet: el navegador envía la grabación a un servicio en línea para entenderla. Es una limitación del propio navegador (igual en todos los sitios que usan el micrófono), no de esta app.</div>
             <div class="ob-tip">💡 La app se actualiza automáticamente en cada nueva versión — basta con volver a abrirla en el navegador.</div>
 
             <h4 style="margin:.8em 0 .3em;font-size:.95em;border-top:1px solid var(--color-border);padding-top:.6em">📄 Descarga en PDF</h4>

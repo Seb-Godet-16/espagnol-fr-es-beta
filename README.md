@@ -52,7 +52,7 @@ espagnol-fr-es-beta/
 ├── css/
 │   └── style.css       # Thèmes couleur, composants, animations (44 variables CSS, 161 déclarations)
 ├── js/
-│   ├── app.js          # Moteur applicatif complet (153 fonctions nommées, 4 864 lignes)
+│   ├── app.js          # Moteur applicatif complet (161 fonctions nommées, 5 130 lignes)
 │   ├── data-fr.js      # Contenu mode "Apprendre le Français" — chargé à la demande
 │   └── data-es.js      # Contenu mode "Apprendre l'Espagnol" — chargé à la demande
 ├── img/
@@ -143,6 +143,7 @@ python3 -m http.server 8080
 |---|---|
 | 07/06/2026 → 29/06/2026 | Version bêta créée avec IA Claude Sonnet 4.6 et Gemini 3.5 Flash |
 | 29/06/2026 → 08/07/2026 | Tests : desktop (auto) et iPhone (manuel) par Fédérico ; Android (manuel) par Sébastien Godet, aidé par Gemini 3.5 Flash Extended. Correctifs par Sébastien Godet, aidé par Claude Sonnet 5 |
+| 09/07/2026 → 10/07/2026 | Ajouts (Claude Sonnet 5, demandes utilisateur) : bouton d'installation PWA native dans le Guide, bannière hors-ligne proactive pour l'audio, et encadré comparatif des navigateurs dans le Guide utilisateur. Détail complet dans `Bilan_technique.md` (§ Historique) |
 
 ---
 
