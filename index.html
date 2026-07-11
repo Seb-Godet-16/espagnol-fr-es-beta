@@ -262,6 +262,30 @@
       <div class="home-other-progress" id="homeOtherProgress" style="display:none"></div>
     </div><!-- /.home-guide-header -->
 
+    <!-- Carte "En bref" — résumé express avant les rubriques en accordéon.
+         Basculée FR/ES par le même mécanisme que #guideContentFR/ES
+         (.home-lang-block[data-lang] + _buildHomeGuide() dans app.js). -->
+    <div class="home-lang-block home-lang-hidden hg-tldr" data-lang="fr">
+      <p class="hg-tldr-title">🚀 L'essentiel en 30 secondes</p>
+      <ul class="hg-tldr-list">
+        <li>📚 <strong>2 niveaux</strong> : Vocabulaire (32 thèmes) puis Dialogues (16) — Cartes, Quiz, Répète</li>
+        <li>🔊 Audio inclus dans les <strong>7 variantes d'espagnol</strong> ; si la voix exacte de ta région n'est pas installée, l'appli utilise automatiquement une autre voix espagnole disponible — normal, pas un bug</li>
+        <li>📴 Installable et utilisable <strong>hors-ligne</strong> — sauf 🎤 Répète, qui a toujours besoin d'internet, même une fois installée</li>
+        <li>🌐 <strong>Android</strong> : Chrome, Samsung Internet, Edge, Opera, Brave et Vivaldi conviennent tous ; Firefox ne permet jamais 🎤 Répète. <strong>iPhone/iPad</strong> : utilise Safari pour une expérience garantie à 100 %</li>
+      </ul>
+      <p class="hg-tldr-more">Détails complets ci-dessous, ou plus tard via le bouton ❓ en bas.</p>
+    </div>
+    <div class="home-lang-block home-lang-hidden hg-tldr" data-lang="es">
+      <p class="hg-tldr-title">🚀 Lo esencial en 30 segundos</p>
+      <ul class="hg-tldr-list">
+        <li>📚 <strong>2 niveles</strong> : Vocabulario (32 temas) y luego Diálogos (16) — Tarjetas, Quiz, Repite</li>
+        <li>🔊 Audio incluido ; si tu dispositivo no tiene instalada una voz en francés, la app usa la <strong>voz por defecto del sistema</strong> — normal, no es un fallo (instálala en 🔊 El audio)</li>
+        <li>📴 Instalable y utilizable <strong>sin conexión</strong> — salvo 🎤 Repite, que siempre necesita internet, incluso ya instalada</li>
+        <li>🌐 <strong>Android</strong> : Chrome, Samsung Internet, Edge, Opera, Brave y Vivaldi funcionan bien ; Firefox nunca permite 🎤 Repite. <strong>iPhone/iPad</strong> : usa Safari para una experiencia garantizada al 100 %</li>
+      </ul>
+      <p class="hg-tldr-more">Detalles completos más abajo, o más tarde desde el botón ❓ en la parte inferior.</p>
+    </div>
+
     <!-- Barre sticky : Commencer + PDF côte à côte -->
     <div class="home-start-sticky">
       <div class="home-start-row">
@@ -323,29 +347,7 @@
           </div>
         </details>
 
-        <!-- 2. Points forts -->
-        <details class="hg-section">
-          <summary class="hg-summary">
-            <span class="hg-icon">✨</span>
-            <span class="hg-label">Points forts de cette appli</span>
-            <span class="hg-chevron">▼</span>
-          </summary>
-          <div class="hg-detail">
-            <ul>
-              <li>💸 <strong>100% gratuit</strong> — aucun abonnement, aucune publicité</li>
-              <li>🚫 <strong>Sans inscription</strong> — ouvre l'app et commence immédiatement</li>
-              <li>🗂️ <strong>Vocabulaire structuré</strong> — thèmes du plus simple au plus complexe</li>
-              <li>🌎 <strong>7 variantes d'espagnol</strong> — Espagne, Mexique, Colombie, Pérou, Venezuela, Argentine, Équateur</li>
-              <li>🔊 <strong>Audio intégré</strong> — écoute chaque mot prononcé d'un simple tap</li>
-              <li>🎤 <strong>Répétition orale</strong> — l'onglet <em>Répète</em> analyse ta prononciation en temps réel</li>
-              <li>📴 <strong>Hors-ligne</strong> — installe l'app sur ton écran d'accueil et apprends sans connexion</li>
-              <li>⭐ <strong>Progression sauvegardée</strong> — tes étoiles ne diminuent jamais, ton meilleur score est conservé</li>
-            </ul>
-            <div class="ob-tip">💡 Cette appli n'est pas un outil unique — combine-la avec Duolingo, un cours ou des amis natifs pour progresser plus vite !</div>
-          </div>
-        </details>
-
-        <!-- 3. L'audio -->
+        <!-- 2. L'audio -->
         <details class="hg-section">
           <summary class="hg-summary">
             <span class="hg-icon">🔊</span>
@@ -439,24 +441,7 @@
           </div>
         </details>
 
-        <!-- 4. Réinitialiser un module -->
-        <details class="hg-section">
-          <summary class="hg-summary">
-            <span class="hg-icon">🔄</span>
-            <span class="hg-label">Réinitialiser un module</span>
-            <span class="hg-chevron">▼</span>
-          </summary>
-          <div class="hg-detail">
-            <p>Envie de recommencer un module à zéro ? Tu peux <strong>effacer tes étoiles</strong> et repartir de la base.</p>
-            <ul>
-              <li>Depuis l'écran <strong>Modules</strong>, repère le thème déjà complété — le bouton <strong>🔄 Recommencer</strong> apparaît directement sur sa carte.</li>
-              <li>Appuie sur ce bouton — une confirmation te sera demandée.</li>
-              <li>Tes étoiles sont supprimées — rejoue le Quiz pour en regagner.</li>
-            </ul>
-          </div>
-        </details>
-
-        <!-- 5. Hors ligne -->
+        <!-- 3. Hors ligne -->
         <details class="hg-section">
           <summary class="hg-summary">
             <span class="hg-icon">📲</span>
@@ -499,8 +484,9 @@
               </div>
             </div>
             <div class="ob-tip">💡 Pour un hors-ligne fiable, choisis toujours <strong>Installer</strong>. Le raccourci reste pratique pour un accès rapide, mais ne garantit pas que l'app fonctionne sans connexion.</div>
-            <p>Une fois <strong>installée</strong> (et non simplement en raccourci), l'app fonctionne <strong>entièrement hors ligne</strong> — cartes, quiz, dialogues, écoute 🔊 et export PDF compris.</p>
+            <p>Une fois <strong>installée</strong> (et non simplement en raccourci), l'app fonctionne <strong>hors ligne</strong> — cartes, quiz, dialogues, écoute 🔊 et export PDF compris.</p>
             <div class="ob-tip">⚠️ Seul l'onglet <strong>🎤 Répète</strong> (reconnaissance vocale) a besoin d'une connexion Internet : le navigateur envoie l'enregistrement à un service en ligne pour le comprendre. C'est une limite du navigateur lui-même (identique sur tous les sites qui utilisent le micro), pas de cette app.</div>
+            <div class="ob-tip">⚠️ Limite côté <strong>🔊 Écouter</strong> : la synthèse vocale peut fonctionner hors ligne, mais seulement si une voix locale est déjà installée sur l'appareil pour la langue voulue — sinon elle bascule sur la langue par défaut du système (cf. rubrique <strong>🔊 L'audio</strong> ci-dessus pour l'installer). Une bannière apparaît automatiquement dans la leçon pour te le rappeler dès que tu passes hors ligne.</div>
             <div class="ob-tip">💡 L'app se met à jour automatiquement à chaque nouvelle version — il suffit de la rouvrir dans le navigateur.</div>
 
             <h4 style="margin:.8em 0 .3em;font-size:.95em;border-top:1px solid var(--color-border);padding-top:.6em">📄 Téléchargement en PDF</h4>
@@ -510,6 +496,45 @@
               <li><strong>📚 Un module thématique</strong> — bouton <em>📄 PDF</em> depuis la page du module.</li>
               <li><strong>💬 Une situation de dialogue</strong> — bouton <em>📄 PDF</em> depuis la page du dialogue.</li>
             </ul>
+          </div>
+        </details>
+
+        <!-- 4. Réinitialiser un module -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">🔄</span>
+            <span class="hg-label">Réinitialiser un module</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <p>Envie de recommencer un module à zéro ? Tu peux <strong>effacer tes étoiles</strong> et repartir de la base.</p>
+            <ul>
+              <li>Depuis l'écran <strong>Modules</strong>, repère le thème déjà complété — le bouton <strong>🔄 Recommencer</strong> apparaît directement sur sa carte.</li>
+              <li>Appuie sur ce bouton — une confirmation te sera demandée.</li>
+              <li>Tes étoiles sont supprimées — rejoue le Quiz pour en regagner.</li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- 5. Points forts -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">✨</span>
+            <span class="hg-label">Points forts de cette appli</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <ul>
+              <li>💸 <strong>100% gratuit</strong> — aucun abonnement, aucune publicité</li>
+              <li>🚫 <strong>Sans inscription</strong> — ouvre l'app et commence immédiatement</li>
+              <li>🗂️ <strong>Vocabulaire structuré</strong> — thèmes du plus simple au plus complexe</li>
+              <li>🌎 <strong>7 variantes d'espagnol</strong> — Espagne, Mexique, Colombie, Pérou, Venezuela, Argentine, Équateur</li>
+              <li>🔊 <strong>Audio intégré</strong> — écoute chaque mot prononcé d'un simple tap</li>
+              <li>🎤 <strong>Répétition orale</strong> — l'onglet <em>Répète</em> analyse ta prononciation en temps réel</li>
+              <li>📴 <strong>Hors-ligne</strong> — installe l'app sur ton écran d'accueil et apprends sans connexion</li>
+              <li>⭐ <strong>Progression sauvegardée</strong> — tes étoiles ne diminuent jamais, ton meilleur score est conservé</li>
+            </ul>
+            <div class="ob-tip">💡 Cette appli n'est pas un outil unique — combine-la avec Duolingo, un cours ou des amis natifs pour progresser plus vite !</div>
           </div>
         </details>
 
@@ -645,29 +670,7 @@
           </div>
         </details>
 
-        <!-- 2. Puntos fuertes -->
-        <details class="hg-section">
-          <summary class="hg-summary">
-            <span class="hg-icon">✨</span>
-            <span class="hg-label">Puntos fuertes de esta app</span>
-            <span class="hg-chevron">▼</span>
-          </summary>
-          <div class="hg-detail">
-            <ul>
-              <li>💸 <strong>100% gratis</strong> — sin suscripción, sin publicidad</li>
-              <li>🚫 <strong>Sin registro</strong> — abre la app y empieza inmediatamente</li>
-              <li>🗂️ <strong>Vocabulario estructurado</strong> — temas del más simple al más complejo</li>
-              <li>🌎 <strong>7 variantes de español</strong> — España, México, Colombia, Perú, Venezuela, Argentina, Ecuador</li>
-              <li>🔊 <strong>Audio integrado</strong> — escucha cada palabra con un simple toque</li>
-              <li>🎤 <strong>Repetición oral</strong> — la pestaña <em>Repite</em> analiza tu pronunciación en tiempo real</li>
-              <li>📴 <strong>Sin conexión</strong> — instala la app en tu pantalla de inicio y aprende sin internet</li>
-              <li>⭐ <strong>Progreso guardado</strong> — tus estrellas nunca disminuyen, tu mejor puntuación siempre se conserva</li>
-            </ul>
-            <div class="ob-tip">💡 ¡Esta app no es una herramienta única — combínala con Duolingo, un curso o amigos nativos para progresar más rápido!</div>
-          </div>
-        </details>
-
-        <!-- 3. El audio -->
+        <!-- 2. El audio -->
         <details class="hg-section">
           <summary class="hg-summary">
             <span class="hg-icon">🔊</span>
@@ -761,24 +764,7 @@
           </div>
         </details>
 
-        <!-- 4. Reiniciar un módulo -->
-        <details class="hg-section">
-          <summary class="hg-summary">
-            <span class="hg-icon">🔄</span>
-            <span class="hg-label">Reiniciar un módulo</span>
-            <span class="hg-chevron">▼</span>
-          </summary>
-          <div class="hg-detail">
-            <p>¿Quieres empezar un módulo desde cero? Puedes <strong>borrar tus estrellas</strong> y volver al principio.</p>
-            <ul>
-              <li>Desde la pantalla <strong>Módulos</strong>, localiza el tema ya completado — el botón <strong>🔄 Reiniciar</strong> aparece directamente en su tarjeta.</li>
-              <li>Pulsa ese botón — se te pedirá una confirmación.</li>
-              <li>Tus estrellas se borran — vuelve a jugar el Quiz para recuperarlas.</li>
-            </ul>
-          </div>
-        </details>
-
-        <!-- 5. Sin conexión -->
+        <!-- 3. Sin conexión -->
         <details class="hg-section">
           <summary class="hg-summary">
             <span class="hg-icon">📲</span>
@@ -816,8 +802,9 @@
               </div>
             </div>
             <div class="ob-tip">💡 Para un uso sin conexión fiable, elige siempre <strong>Instalar</strong>. El acceso directo sigue siendo práctico para acceder rápido, pero no garantiza que la app funcione sin conexión.</div>
-            <p>Una vez <strong>instalada</strong> (y no solo como acceso directo), la app funciona <strong>completamente sin conexión</strong> — tarjetas, quiz, diálogos, escuchar 🔊 y exportación PDF incluidos.</p>
+            <p>Una vez <strong>instalada</strong> (y no solo como acceso directo), la app funciona <strong>sin conexión</strong> — tarjetas, quiz, diálogos, escuchar 🔊 y exportación PDF incluidos.</p>
             <div class="ob-tip">⚠️ Solo la pestaña <strong>🎤 Repite</strong> (reconocimiento de voz) necesita conexión a Internet: el navegador envía la grabación a un servicio en línea para entenderla. Es una limitación del propio navegador (igual en todos los sitios que usan el micrófono), no de esta app.</div>
+            <div class="ob-tip">⚠️ Límite en <strong>🔊 Escuchar</strong>: la síntesis de voz puede funcionar sin conexión, pero solo si ya hay una voz local instalada en el aparato para el idioma deseado — si no, cambia al idioma por defecto del sistema (consulta la rúbrica <strong>🔊 El audio</strong> más arriba para instalarla). Aparece un aviso automático en la lección para recordártelo en cuanto te quedes sin conexión.</div>
             <div class="ob-tip">💡 La app se actualiza automáticamente en cada nueva versión — basta con volver a abrirla en el navegador.</div>
 
             <h4 style="margin:.8em 0 .3em;font-size:.95em;border-top:1px solid var(--color-border);padding-top:.6em">📄 Descarga en PDF</h4>
@@ -827,6 +814,45 @@
               <li><strong>📚 Un módulo temático</strong> — botón <em>📄 PDF</em> desde la página del módulo.</li>
               <li><strong>💬 Una situación de diálogo</strong> — botón <em>📄 PDF</em> desde la página del diálogo.</li>
             </ul>
+          </div>
+        </details>
+
+        <!-- 4. Reiniciar un módulo -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">🔄</span>
+            <span class="hg-label">Reiniciar un módulo</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <p>¿Quieres empezar un módulo desde cero? Puedes <strong>borrar tus estrellas</strong> y volver al principio.</p>
+            <ul>
+              <li>Desde la pantalla <strong>Módulos</strong>, localiza el tema ya completado — el botón <strong>🔄 Reiniciar</strong> aparece directamente en su tarjeta.</li>
+              <li>Pulsa ese botón — se te pedirá una confirmación.</li>
+              <li>Tus estrellas se borran — vuelve a jugar el Quiz para recuperarlas.</li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- 5. Puntos fuertes -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">✨</span>
+            <span class="hg-label">Puntos fuertes de esta app</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <ul>
+              <li>💸 <strong>100% gratis</strong> — sin suscripción, sin publicidad</li>
+              <li>🚫 <strong>Sin registro</strong> — abre la app y empieza inmediatamente</li>
+              <li>🗂️ <strong>Vocabulario estructurado</strong> — temas del más simple al más complejo</li>
+              <li>🌎 <strong>7 variantes de español</strong> — España, México, Colombia, Perú, Venezuela, Argentina, Ecuador</li>
+              <li>🔊 <strong>Audio integrado</strong> — escucha cada palabra con un simple toque</li>
+              <li>🎤 <strong>Repetición oral</strong> — la pestaña <em>Repite</em> analiza tu pronunciación en tiempo real</li>
+              <li>📴 <strong>Sin conexión</strong> — instala la app en tu pantalla de inicio y aprende sin internet</li>
+              <li>⭐ <strong>Progreso guardado</strong> — tus estrellas nunca disminuyen, tu mejor puntuación siempre se conserva</li>
+            </ul>
+            <div class="ob-tip">💡 ¡Esta app no es una herramienta única — combínala con Duolingo, un curso o amigos nativos para progresar más rápido!</div>
           </div>
         </details>
 

@@ -27,11 +27,11 @@
      ├─ style.css   → Thèmes couleur, composants visuels (44 variables CSS, 161 décl.)
      ├─ data-fr.js  → ALL_THEMES_FR (32 thèmes + 16 dialogues) — chargé à la demande
      ├─ data-es.js  → ALL_THEMES_ES (32 thèmes + 16 dialogues) — chargé à la demande
-     └─ app.js      → Ce fichier : logique applicative complète (5 130 lignes)
+     └─ app.js      → Ce fichier : logique applicative complète (5 176 lignes)
 
-   PLAN DU FICHIER (numéros recalculés le 10/07/2026 — la bannière hors-ligne
-   §3e, ~97 lignes, avait décalé tous les numéros au-delà de la ligne ~1300
-   depuis le recalcul du 08/07/2026) :
+   PLAN DU FICHIER (numéros recalculés le 11/07/2026 — l'ajout de
+   _isBrandNewUser() et de la condition d'affichage de la barre de nav
+   §15c, ~41 lignes, a décalé tous les numéros à partir de §16) :
      §0    L.   81  Chargement conditionnel des données — loadDataForMode()
      §0b   L.  110  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
      §1    L.  266  Variables d'état globales
@@ -61,18 +61,23 @@
                      (aucune bannière numérotée dans le code à cet endroit, juste
                       un commentaire au-dessus de toggleAcc() — contrairement aux
                       autres sous-sections 5b/9b/9c qui en ont une)
-     §16   L. 4395  Remerciements — showCredits()
-     §17   L. 4410  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
+     §15c  L. 4384  Nouvel utilisateur & barre de nav — _isBrandNewUser(), condition
+                     dans le listener DOMContentLoaded (ajouté le 11/07/2026, demande
+                     utilisateur : pas de barre de nav basse au tout premier lancement
+                     sans aucun parcours ; réapparaît dès la première interaction via
+                     showLauncherVariant())
+     §16   L. 4436  Remerciements — showCredits()
+     §17   L. 4451  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
                      navBackToGuide(), _refreshGuideRegion(), _guideSeenKey()/
                      _hasSeenGuide()/_markGuideSeen() (flag par langue)
-     §18   L. 4672  E-mail antispam — openAndCopyEmail()
-     §19   L. 4691  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
+     §18   L. 4713  E-mail antispam — openAndCopyEmail()
+     §19   L. 4732  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
                      (étiqueté "§21" dans le code même — incohérence de numérotation
                       préexistante, non corrigée ici pour ne pas renuméroter tout le fichier)
-     §20   L. 4992  Accessibilité clavier (keydown → role="button")
-     §21   L. 5007  Initialisation Launcher — addEventListener sur les cartes de langue
-     §21b  L. 5033  Viewport height fix Android — --app-h via window.innerHeight
-     §21c  L. 5074  Bouton d'installation PWA native — _initInstallButtons(),
+     §20   L. 5033  Accessibilité clavier (keydown → role="button")
+     §21   L. 5048  Initialisation Launcher — addEventListener sur les cartes de langue
+     §21b  L. 5074  Viewport height fix Android — --app-h via window.innerHeight
+     §21c  L. 5115  Bouton d'installation PWA native — _initInstallButtons(),
                      _installPwa() (ajouté le 09/07/2026, absent du plan depuis)
    ============================================================ */
 
@@ -4381,14 +4386,55 @@ function _resizeOpenAccordions() {
 }
 window.addEventListener('resize', _resizeOpenAccordions);
 
+/* _isBrandNewUser() — Ajouté le 11/07/2026 (demande utilisateur) : détecte
+   le tout premier lancement de l'app, c'est-à-dire un utilisateur n'ayant
+   encore fait AUCUN parcours dans AUCUN des deux modes (pas de progression
+   sauvegardée, pas de guide déjà consulté). Sert uniquement à décider si la
+   barre de navigation basse doit apparaître dès le chargement (voir plus
+   bas) — elle n'a pas grand sens tant que rien n'a commencé (Guide non
+   visité, Modules verrouillés).
+   Les clés testées sont volontairement écrites en dur plutôt que déduites
+   de STORAGE_KEY/_guideSeenKey() : ces deux helpers dépendent de currentMode,
+   qui vaut '' sur l'écran 0 — il faut ici vérifier les DEUX modes à la fois,
+   quel que soit celui éventuellement déjà choisi.
+     • 'pe_es_fr_done_v1' / 'pe_fr_es_done_v1' → progression (cf. §4, L.609/630)
+     • 'vachebo_guide_vu_fr' / 'vachebo_guide_vu_es' → guide vu par mode (§17)
+     • 'vachebo_guide_vu' → ancien flag global pré-05/07/2026 (migration)
+   Enveloppé en try/catch comme le reste des accès localStorage de l'app
+   (navigation privée stricte, stockage désactivé) : en cas d'erreur, on
+   considère prudemment que ce n'est PAS un nouvel utilisateur, pour ne pas
+   risquer de cacher la barre à quelqu'un qui l'utilisait déjà. */
+function _isBrandNewUser() {
+  try {
+    if (localStorage.getItem('pe_es_fr_done_v1')) return false;
+    if (localStorage.getItem('pe_fr_es_done_v1')) return false;
+    if (localStorage.getItem('vachebo_guide_vu_fr') === 'true') return false;
+    if (localStorage.getItem('vachebo_guide_vu_es') === 'true') return false;
+    if (localStorage.getItem('vachebo_guide_vu') === 'true') return false;
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 /* Au chargement du DOM, fixe la max-height réelle de toute section
    accordéon déjà ouverte par défaut dans le HTML (ex : « Comment ça
    marche », ouverte au premier affichage), pour éviter tout effet de
    troncature avant la première interaction utilisateur. */
 document.addEventListener('DOMContentLoaded', () => {
   _resizeOpenAccordions();
-  /* Affiche la barre de nav dès le chargement, avec Langue actif (écran 0) */
-  _updateBottomNav('app-launcher');
+  /* Ajouté le 11/07/2026 (demande utilisateur) : sur le tout premier
+     lancement de l'app (_isBrandNewUser() → aucun parcours, aucun mode
+     jamais choisi), on n'affiche PAS encore la barre de navigation basse
+     sur l'écran d'accueil — elle réapparaît dès la première interaction,
+     via l'appel à _updateBottomNav() déjà présent dans
+     showLauncherVariant() (clic sur une carte de langue). Sur tous les
+     lancements suivants (ou si l'utilisateur a déjà fait quoi que ce soit
+     par le passé), le comportement d'origine est conservé : barre visible
+     dès le chargement, avec Langue actif (écran 0). */
+  if (!_isBrandNewUser()) {
+    _updateBottomNav('app-launcher');
+  }
 });
 
 /* ═══════════════════════════════════════════════════════════

@@ -23,42 +23,43 @@
  * ║  Tous les composants utilisent var(--c-*) ; il suffit de       ║
  * ║  changer la classe sur <html> pour basculer le rendu visuel.   ║
  * ╠══════════════════════════════════════════════════════════════════╣
- * ║  PLAN DU FICHIER (numéros recalculés le 10/07/2026, mesure directe —  ║
- * ║  le recalcul du 08/07/2026 était déjà inexact avant même l'ajout de   ║
- * ║  la bannière hors-ligne du jour. Liste dans l'ordre réel du fichier.) ║
+ * ║  PLAN DU FICHIER (numéros recalculés le 11/07/2026, mesure directe —  ║
+ * ║  chaque ancre vérifiée une à une par grep après l'ajout de la carte   ║
+ * ║  "En bref" en tête du Guide. Liste dans l'ordre réel du fichier.)     ║
  * ║   §1   Reset & base                              ligne 68            ║
  * ║   §1b  Transitions de navigation                 ligne 184           ║
  * ║   §2   Variables de thème (:root / fallback)     ligne 435           ║
  * ║   §5   Écran 0 — Lanceur  #app-launcher          ligne 266           ║
  * ║   §6   Écran 1 — Accueil  #home (style Oromo)    ligne 481           ║
- * ║         Widget variante régionale                 ligne 1036          ║
- * ║   §7   Écran 2 — Sections  #sections             ligne 1135          ║
- * ║         §27 Onglets Niveau 1 / 2                 ligne 1309          ║
- * ║         §LAUNCHER-REGION-GRID                    ligne 1389          ║
- * ║         §28 Écrans sections level : layout       ligne 1476          ║
- * ║   §8   Écran 3 — Leçon  #lesson                  ligne 1501          ║
- * ║         Onglets (tabs)                           ligne 1629          ║
- * ║   §9   Composants : Flashcards                   ligne 1666          ║
- * ║         Bannière hors-ligne (ajout 10/07/2026)   ligne 1762          ║
- * ║         Barre meta (badge voix + vitesse)        ligne 1795          ║
- * ║   §10  Composants : Alphabet                     ligne 2058          ║
- * ║   §11  Composants : Quiz                         ligne 2120          ║
- * ║   §12  Composants : Dialogues / Situations       ligne 2200          ║
- * ║   §13  Composants : Vocabulaire                  ligne 2269          ║
- * ║   §17  Footer commun                             ligne 2359          ║
- * ║   §16  Modales (Guide utilisateur + Remerciements) ligne 2391        ║
- * ║   §3   Thème Français (html.theme-french)        ligne 3117          ║
- * ║   §4   Thème Espagnol (html.theme-spain)         ligne 3135          ║
- * ║   §15  Variantes régionales hispaniques          ligne 3167          ║
- * ║   §14  Onglet Répète                             ligne 3242          ║
- * ║         Focus clavier (role="button")            ligne 3364          ║
- * ║         Toast — notification discrète            ligne 3378          ║
- * ║   §24b Mode sombre @media dark                   ligne 3613          ║
- * ║   §26  Barre de navigation basse                 ligne 3906          ║
- * ║   §PDF  Boutons export PDF                       ligne 4120          ║
- * ║   §SPK  Feedback visuel TTS (.is-speaking)       ligne 4165          ║
- * ║         Ajouts Juin 2026                         ligne 4213          ║
- * ║   §27-bis (ajout 08/07) Leçon 2 colonnes desktop ligne 4409          ║
+ * ║         Carte "En bref" (.hg-tldr, ajout 11/07)    ligne 812          ║
+ * ║         Widget variante régionale                 ligne 1093          ║
+ * ║   §7   Écran 2 — Sections  #sections             ligne 1192          ║
+ * ║         §27 Onglets Niveau 1 / 2                 ligne 1366          ║
+ * ║         §LAUNCHER-REGION-GRID                    ligne 1446          ║
+ * ║         §28 Écrans sections level : layout       ligne 1533          ║
+ * ║   §8   Écran 3 — Leçon  #lesson                  ligne 1558          ║
+ * ║         Onglets (tabs)                           ligne 1686          ║
+ * ║   §9   Composants : Flashcards                   ligne 1723          ║
+ * ║         Bannière hors-ligne (ajout 10/07/2026)   ligne 1819          ║
+ * ║         Barre meta (badge voix + vitesse)        ligne 1852          ║
+ * ║   §10  Composants : Alphabet                     ligne 2115          ║
+ * ║   §11  Composants : Quiz                         ligne 2177          ║
+ * ║   §12  Composants : Dialogues / Situations       ligne 2257          ║
+ * ║   §13  Composants : Vocabulaire                  ligne 2326          ║
+ * ║   §17  Footer commun                             ligne 2416          ║
+ * ║   §16  Modales (Guide utilisateur + Remerciements) ligne 2448        ║
+ * ║   §3   Thème Français (html.theme-french)        ligne 3174          ║
+ * ║   §4   Thème Espagnol (html.theme-spain)         ligne 3192          ║
+ * ║   §15  Variantes régionales hispaniques          ligne 3224          ║
+ * ║   §14  Onglet Répète                             ligne 3299          ║
+ * ║         Focus clavier (role="button")            ligne 3421          ║
+ * ║         Toast — notification discrète            ligne 3435          ║
+ * ║   §24b Mode sombre @media dark                   ligne 3670          ║
+ * ║   §26  Barre de navigation basse                 ligne 3963          ║
+ * ║   §PDF  Boutons export PDF                       ligne 4177          ║
+ * ║   §SPK  Feedback visuel TTS (.is-speaking)       ligne 4222          ║
+ * ║         Ajouts Juin 2026                         ligne 4270          ║
+ * ║   §27-bis (ajout 08/07) Leçon 2 colonnes desktop ligne 4466          ║
  * ║         (numéro "27" déjà pris plus haut ; collision préexistante)   ║
  * ╚══════════════════════════════════════════════════════════════════╝
  */
@@ -799,6 +800,62 @@ body {
 .btn-pdf-pill:active { transform: scale(.97); }
 .btn-pdf-pill.is-hidden { display: none !important; }
 
+/* ── Carte "En bref" — résumé express en tête du Guide ──
+   Ajoutée le 11/07/2026 (demande utilisateur, inspirée de l'app Oromo) :
+   donne le fonctionnement + les pièges à connaître (audio, hors-ligne,
+   navigateur) en un coup d'œil, sans déplier un seul accordéon.
+   Placée entre .home-guide-header et .home-start-sticky : elle scrolle
+   avec l'en-tête, puis la barre "Commencer + PDF" reste sticky en dessous
+   — comportement du bouton Commencer inchangé (§ demande utilisateur).
+   Basculée FR/ES par le même mécanisme générique que les rubriques
+   (.home-lang-block[data-lang] + _buildHomeGuide() dans app.js) : aucun
+   JS supplémentaire nécessaire. */
+.hg-tldr {
+  margin: 0 14px 14px;
+  padding: 16px 18px;
+  background: #eafaf0;
+  border: 2px solid #2e7d32;
+  border-radius: 16px;
+  position: relative;
+  z-index: 1;
+}
+.hg-tldr-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1b5e20;
+  text-align: center;
+  margin: 0 0 10px;
+}
+.hg-tldr-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.hg-tldr-list li {
+  position: relative;
+  padding-left: 20px;
+  font-size: .82rem;
+  line-height: 1.55;
+  color: #33402f;
+  margin-bottom: 8px;
+}
+.hg-tldr-list li:last-child { margin-bottom: 0; }
+.hg-tldr-list li::before {
+  content: "•";
+  position: absolute;
+  left: 4px;
+  color: #2e7d32;
+  font-weight: 900;
+}
+.hg-tldr-list strong { color: #1b3a1b; }
+.hg-tldr-more {
+  margin: 10px 0 0;
+  text-align: center;
+  font-size: .78rem;
+  font-weight: 600;
+  color: #2e7d32;
+}
+
 /* ── Corps des accordéons ── */
 .home-guide-body {
   margin: 12px 14px 80px;
@@ -1027,6 +1084,7 @@ body {
 /* Responsive desktop */
 @media (min-width: 640px) {
   .home-guide-body { margin: 12px 24px 80px; }
+  .hg-tldr { margin: 0 24px 14px; }
   .home-guide-flags { font-size: 2.6rem; }
   .home-guide-title { font-size: 2rem; }
 }
