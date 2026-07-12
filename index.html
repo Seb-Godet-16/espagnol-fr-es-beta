@@ -248,7 +248,7 @@
            (event beforeinstallprompt — Chrome/Edge/Samsung Internet ; indisponible
            sur Firefox et iOS Safari, qui gardent le bouton équivalent de la
            rubrique "Hors ligne" avec la méthode manuelle juste en dessous). -->
-      <button type="button" class="home-install-btn pwa-install-btn" id="homeInstallBtn" style="display:none" onclick="_installPwa()">📲 Installer l'app</button>
+      <button type="button" class="home-install-btn pwa-install-btn" id="homeInstallBtn" style="display:none" onclick="_installPwa()">📲 Installer en mode hors-ligne</button>
 
       <!-- Cercle SVG de progression (visible une fois des modules complétés) -->
       <div class="home-progress-circle-wrap" id="homeProgressCircleWrap" style="display:none">
@@ -523,14 +523,10 @@
           </summary>
           <div class="hg-detail">
             <h4 style="margin:0 0 .4em;font-size:.95em">📲 Installer l'app en hors ligne</h4>
-            <!-- Bouton natif d'installation — ajouté le 09/07/2026 (retour testeur
-                 bêta : l'installation manuelle était difficile à trouver/réaliser).
-                 Masqué par défaut ; affiché uniquement par app.js
-                 (_initInstallButtons(), §21c) quand le navigateur propose
-                 réellement l'installation en un tap (event beforeinstallprompt —
-                 Chrome/Edge/Samsung Internet ; indisponible sur Firefox et iOS
-                 Safari, qui restent sur la méthode manuelle ci-dessous). -->
-            <button type="button" class="btn-primary pwa-install-btn" style="display:none;margin:.3em 0 .8em" onclick="_installPwa()">📲 Installer maintenant</button>
+            <!-- Bouton natif d'installation retiré le 12/07/2026 (demande utilisateur) :
+                 redondant avec le bouton équivalent désormais affiché en tête de cet
+                 écran (#homeInstallBtn, "📲 Installer en mode hors-ligne"). Les
+                 instructions manuelles et le comparatif ci-dessous restent inchangés. -->
             <ul>
               <li><strong>Android / Chrome</strong> : menu ⋮ → <em>"Ajouter à l'écran d'accueil"</em></li>
               <li><strong>iOS / Safari</strong> : 🔗 → <em>"Sur l'écran d'accueil"</em></li>
@@ -857,9 +853,11 @@
           </summary>
           <div class="hg-detail">
             <h4 style="margin:0 0 .4em;font-size:.95em">📲 Instalar la app sin conexión</h4>
-            <!-- Botón nativo de instalación — ver equivalente FR pour le détail
-                 du commentaire (§21c dans app.js). -->
-            <button type="button" class="btn-primary pwa-install-btn" style="display:none;margin:.3em 0 .8em" onclick="_installPwa()">📲 Instalar ahora</button>
+            <!-- Botón nativo de instalación retirado el 12/07/2026 (petición del
+                 usuario): redundante con el botón equivalente mostrado ahora en la
+                 cabecera de esta pantalla (#homeInstallBtn, "📲 Instalar en modo
+                 sin conexión"). Las instrucciones manuales y la comparativa de
+                 abajo no cambian. -->
             <ul>
               <li><strong>Android / Chrome</strong> : menú ⋮ → <em>"Añadir a pantalla de inicio"</em></li>
               <li><strong>iOS / Safari</strong> : 🔗 → <em>"En la pantalla de inicio"</em></li>
@@ -1131,8 +1129,9 @@
             style="color:#007bff;text-decoration:none;font-weight:bold;">
           Architecte Développeur Web</a>)
         pour son aide technique précieuse.<br><br>
-        Merci beaucoup également à mes parents pour leur travail de relecture,
-        leurs corrections sur les traductions et leurs conseils sur l'ergonomie de l'application.
+        Merci beaucoup également à <strong>mes parents</strong> pour leur travail de relecture,
+        leurs corrections sur les traductions et leurs conseils sur l'ergonomie de l'application.<br><br>
+        Merci à <strong>Christophe Elin</strong> pour ses retours précis et multiples d'expérience utilisateur.
       </p>
       <button onclick="document.getElementById('credits-modal').style.display='none'; const b=document.getElementById('navBtnCredits'); if(b)b.classList.remove('active'); const cur=document.querySelector('.screen.active'); _updateBottomNav(cur?cur.id:'app-launcher');"
               style="margin-top:15px;padding:10px 25px;border-radius:8px;border:none;

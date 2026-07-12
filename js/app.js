@@ -4621,19 +4621,23 @@ function _buildHomeGuide() {
   const badgesEl = document.getElementById('homeGuideBadges');
   if (badgesEl) {
     const badges = showFrench
-      ? ['✅ Gratuit', '🚧 Sans inscription', '📱 Mobile & ordinateur', '🔊 Audio inclus', '🎤 Répétition orale', '🌎 7 variantes d\'espagnol', '📲 Installable hors-ligne']
-      : ['✅ Gratis', '🚧 Sin registro', '📱 Móvil y ordenador', '🔊 Audio incluido', '🎤 Repetición oral', '🌎 7 variantes de español', '📲 Instalable sin conexión'];
+      ? ['✅ Gratuit', '🚧 Sans inscription', '📱 Mobile & ordinateur', '🔊 Audio inclus', '🎤 Répétition orale', '🌎 7 variantes d\'espagnol']
+      : ['✅ Gratis', '🚧 Sin registro', '📱 Móvil y ordenador', '🔊 Audio incluido', '🎤 Repetición oral', '🌎 7 variantes de español'];
     badgesEl.innerHTML = badges.map((b) => { return '<span class="hg-badge">' + b + '</span>'; }).join('');
   }
 
-  /* ── 4b. Bouton "Installer l'app" (en-tête) ──
+  /* ── 4b. Bouton "Installer en mode hors-ligne" (en-tête) ──
      Le texte suit la langue active ; l'affichage/masquage réel du bouton
      (selon la disponibilité de l'invite native beforeinstallprompt) reste
      géré par _initInstallButtons()/refresh() (§21c), qui cible toutes les
-     ".pwa-install-btn" — celui-ci y compris. */
+     ".pwa-install-btn" — celui-ci y compris.
+     Renommé le 12/07/2026 (demande utilisateur) ; le badge "📲 Installable
+     hors-ligne"/"Instalable sin conexión" a été retiré de la liste ci-dessus
+     à la même occasion pour éviter la redondance avec ce bouton, qui occupe
+     désormais visuellement sa place juste sous la rangée de badges. */
   const homeInstallBtn = document.getElementById('homeInstallBtn');
   if (homeInstallBtn) {
-    homeInstallBtn.textContent = showFrench ? '📲 Installer l\'app' : '📲 Instalar la app';
+    homeInstallBtn.textContent = showFrench ? '📲 Installer en mode hors-ligne' : '📲 Instalar en modo sin conexión';
   }
 
   /* ── 5. Bouton Commencer ── */
@@ -5227,9 +5231,15 @@ if (cardES) cardES.addEventListener('click', () => {
    L'événement 'beforeinstallprompt' est capturé le plus tôt possible par
    un script inline dans index.html (avant même le chargement de ce fichier)
    et stocké sur window._deferredInstallPrompt — voir index.html pour le
-   détail. Cette section se contente d'afficher/masquer les boutons
-   ".pwa-install-btn" (un par bloc de langue FR/ES dans le Guide, § Hors
-   ligne / Sin conexión) et de déclencher l'invite native au clic.
+   détail. Cette section se contente d'afficher/masquer le(s) bouton(s)
+   ".pwa-install-btn" et de déclencher l'invite native au clic.
+
+   Mis à jour le 12/07/2026 (demande utilisateur) : les deux boutons qui
+   existaient dans le Guide (§ Hors ligne / Sin conexión) ont été retirés,
+   jugés redondants avec celui désormais affiché en tête de l'écran #home
+   (#homeInstallBtn). Un seul ".pwa-install-btn" subsiste donc dans
+   index.html ; le sélecteur `querySelectorAll` ci-dessous continue de
+   fonctionner tel quel (il s'adapte au nombre d'éléments présents).
 
    IMPORTANT — limites connues, non corrigibles côté app :
      • Firefox (desktop ET Android) ne supporte PAS 'beforeinstallprompt'.
