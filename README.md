@@ -50,9 +50,9 @@ Aucune inscription, aucun téléchargement. Fonctionne dans le navigateur et s'i
 espagnol-fr-es-beta/
 ├── index.html          # Structure HTML unique (SPA — Single Page App)
 ├── css/
-│   └── style.css       # Thèmes couleur, composants, animations (48 variables CSS, 171 déclarations, 4 638 lignes)
+│   └── style.css       # Thèmes couleur, composants, animations (48 variables CSS, 171 déclarations, 4 671 lignes)
 ├── js/
-│   ├── app.js          # Moteur applicatif complet (167 fonctions nommées, 5 266 lignes)
+│   ├── app.js          # Moteur applicatif complet (167 fonctions nommées, 5 295 lignes)
 │   ├── data-fr.js      # Contenu mode "Apprendre le Français" — chargé à la demande
 │   └── data-es.js      # Contenu mode "Apprendre l'Espagnol" — chargé à la demande
 ├── img/
@@ -147,6 +147,8 @@ python3 -m http.server 8080
 | 11/07/2026 | Ajouts (Claude Sonnet 5, demandes utilisateur) : barre de navigation basse masquée au tout premier lancement sans aucun parcours, rubriques du Guide utilisateur réordonnées (pratique/dépannage avant mise en avant/clôture), et nuance sur les limites de l'écoute hors ligne ajoutée dans la rubrique Hors ligne du Guide. Détail complet dans `Bilan_technique.md` (§ Historique) |
 | 11/07/2026 (suite) | Ajout (Claude Sonnet 5, demande utilisateur) d'une carte résumé « 🚀 L'essentiel en 30 secondes » en tête de l'écran Guide, visible sans rien déplier, au-dessus des 8 rubriques en accordéon. Détail complet dans `Bilan_technique.md` (§ Historique) |
 | 12/07/2026 | Ajout (Claude Sonnet 5, demande utilisateur, inspiré d'une capture d'écran de l'app Oromo du même auteur) de 4 améliorations visuelles sur les cartes de module : fond teinté selon l'état (neuf / en cours / terminé à 3 étoiles), badge « 🆕 Nouveau » sur les modules jamais ouverts (nouveau suivi persistant distinct des étoiles), étoiles pleines/vides mieux contrastées, et pastille « ✅ X / 48 terminés » à côté du compteur d'étoiles. Détail complet dans `Bilan_technique.md` (§ Historique) |
+| 12/07/2026 (suite) | Ajouts (Claude Sonnet 5, demande utilisateur) : bouton natif d'installation PWA déplacé en tête de l'écran Guide (visible dès l'arrivée, retiré de la rubrique « Hors ligne » où il faisait doublon), et vérification proactive des mises à jour du Service Worker (au retour au premier plan et toutes les 60 min) pour ne plus dépendre du seul chargement de page. Détail complet dans `Bilan_technique.md` (§ Historique) |
+| 13/07/2026 | Relecture complète (Claude Sonnet 5, demande utilisateur) des commentaires internes et des numéros de ligne de `app.js` et `style.css`, décalés par les ajouts du 12/07 non encore répercutés dans les « PLAN DU FICHIER ». Corrections de dates erronées (11/07 → 12/07) sur plusieurs commentaires liés aux états de carte / badge « Nouveau ». Aucune ligne de code fonctionnel modifiée — uniquement commentaires et documentation |
 
 ---
 

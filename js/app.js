@@ -27,61 +27,67 @@
    ============================================================
    ARCHITECTURE (5 fichiers) :
      ├─ index.html  → Structure HTML + launcher (4 écrans, 2 modales)
-     ├─ style.css   → Thèmes couleur, composants visuels (44 variables CSS, 161 décl.)
+     ├─ style.css   → Thèmes couleur, composants visuels (48 variables CSS, 171 décl.)
      ├─ data-fr.js  → ALL_THEMES_FR (32 thèmes + 16 dialogues) — chargé à la demande
      ├─ data-es.js  → ALL_THEMES_ES (32 thèmes + 16 dialogues) — chargé à la demande
-     └─ app.js      → Ce fichier : logique applicative complète (5 176 lignes)
+     └─ app.js      → Ce fichier : logique applicative complète (5 295 lignes)
 
-   PLAN DU FICHIER (numéros recalculés le 11/07/2026, suite — ajout du
-   suivi des modules ouverts (badge "🆕 Nouveau"), des états de carte
-   et du compteur de modules terminés ; chaque ancre revérifiée par grep) :
-     §0    L.  237  Chargement conditionnel des données — loadDataForMode()
-     §0b   L.  115  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
-     §1    L.  273  Variables d'état globales
-     §1b   L.  331  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
-     §3    L.  433  Point d'entrée — showLauncherVariant(), initApp(), showLauncher()
-     §3b   L.  811  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
-     §3a-bis L. 955 Surlignage mot par mot pendant la lecture (TTS, best-effort)
-     §3c   L. 1341  Interruption TTS à la mise en arrière-plan (visibilitychange)
-     §3d   L. 1354  Keepalive watchdog Chrome/Android (pause/resume toutes les 8 s)
-     §3e   L. 1433  Audio indisponible + toast _showToast() + _vibrateFeedback()
-     §4    L. 1468  Persistance — loadDone(), suivi modules ouverts (11/07), étoiles, quiz
-     §5    L. 1940  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
-     §5b   L. 1837  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
-     §6    L. 2053  Écran Home — renderHome(), _renderHomeRegionWidget()
-     §7    L. 2223  Écran Sections — renderSections(), _buildThemeCard() (états + badge, 11/07)
-     §8    L. 2382  Ouverture d'un thème — openTheme() (marque module ouvert), switchTab()
-     §9    L. 2593  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail()
-     §9b   L. 2767  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
-     §9c   L. 3229  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic()
-     §10   L. 3557  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
-     §11   L. 3832  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
-     §12   L. 3920  Vocabulaire — renderVocab() (chips cliquables)
-     §13   L. 3975  Quiz Dialogue — renderDialogQuiz(), checkDQ()
-     §14   L. 4071  Utilitaires — _quizResultStrings(), esc(), _escAttr()
-     §15   L. 4191  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
-     §15b  L. 4425  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
+   PLAN DU FICHIER (numéros recalculés le 13/07/2026 — ajout, non encore
+   suivi au précédent recalcul, du câblage du bouton "Installer l'app"
+   déplacé en tête de l'écran Guide et de la vérification proactive des
+   mises à jour du Service Worker (toutes deux du 12/07/2026) ; chaque
+   ancre revérifiée une à une par grep) :
+     §0    L.  246  Chargement conditionnel des données — loadDataForMode()
+     §0b   L.  124  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
+     §1    L.  282  Variables d'état globales
+     §1b   L.  340  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
+     §3    L.  442  Point d'entrée — showLauncherVariant(), initApp(), showLauncher()
+     §3b   L.  820  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
+     §3a-bis L. 964 Surlignage mot par mot pendant la lecture (TTS, best-effort)
+     §3c   L. 1342  Interruption TTS à la mise en arrière-plan (visibilitychange)
+     §3d   L. 1363  Keepalive watchdog Chrome/Android (pause/resume toutes les 8 s)
+     §3e   L. 1393  Audio indisponible + toast _showToast() + _vibrateFeedback()
+     §4    L. 1477  Persistance — loadDone(), suivi modules ouverts (12/07), étoiles, quiz
+     §5    L. 1949  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
+     §5b   L. 1846  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
+     §6    L. 2062  Écran Home — renderHome(), _renderHomeRegionWidget()
+     §7    L. 2232  Écran Sections — renderSections(), _buildThemeCard() (états + badge, 12/07)
+     §8    L. 2391  Ouverture d'un thème — openTheme() (marque module ouvert), switchTab()
+     §9    L. 2602  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail()
+     §9b   L. 2776  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
+     §9c   L. 3238  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic()
+     §10   L. 3566  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
+     §11   L. 3841  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
+     §12   L. 3929  Vocabulaire — renderVocab() (chips cliquables)
+     §13   L. 3984  Quiz Dialogue — renderDialogQuiz(), checkDQ()
+     §14   L. 4080  Utilitaires — _quizResultStrings(), esc(), _escAttr()
+     §15   L. 4125  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
+     §15b  L. 4434  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
                      (aucune bannière numérotée dans le code à cet endroit, juste
                       un commentaire au-dessus de toggleAcc() — contrairement aux
                       autres sous-sections 5b/9b/9c qui en ont une)
-     §15c  L. 4479  Nouvel utilisateur & barre de nav — _isBrandNewUser(), condition
+     §15c  L. 4488  Nouvel utilisateur & barre de nav — _isBrandNewUser(), condition
                      dans le listener DOMContentLoaded (ajouté le 11/07/2026, demande
                      utilisateur : pas de barre de nav basse au tout premier lancement
                      sans aucun parcours ; réapparaît dès la première interaction via
                      showLauncherVariant())
-     §16   L. 4537  Remerciements — showCredits()
-     §17   L. 4575  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
+     §16   L. 4546  Remerciements — showCredits()
+     §17   L. 4584  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
                      navBackToGuide(), _refreshGuideRegion(), _guideSeenKey()/
-                     _hasSeenGuide()/_markGuideSeen() (flag par langue)
-     §18   L. 4808  E-mail antispam — openAndCopyEmail()
-     §19   L. 4841  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
+                     _hasSeenGuide()/_markGuideSeen() (flag par langue). Câble aussi,
+                     depuis le 12/07/2026, le libellé bilingue du bouton #homeInstallBtn
+                     (déplacé en tête d'écran — cf. §21c)
+     §18   L. 4831  E-mail antispam — openAndCopyEmail()
+     §19   L. 4850  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
                      (étiqueté "§21" dans le code même — incohérence de numérotation
                       préexistante, non corrigée ici pour ne pas renuméroter tout le fichier)
-     §20   L. 5134  Accessibilité clavier (keydown → role="button")
-     §21   L. 5143  Initialisation Launcher — addEventListener sur les cartes de langue
-     §21b  L. 5169  Viewport height fix Android — --app-h via window.innerHeight
-     §21c  L. 5210  Bouton d'installation PWA native — _initInstallButtons(),
-                     _installPwa() (ajouté le 09/07/2026, absent du plan depuis)
+     §20   L. 5151  Accessibilité clavier (keydown → role="button")
+     §21   L. 5166  Initialisation Launcher — addEventListener sur les cartes de langue
+     §21b  L. 5192  Viewport height fix Android — --app-h via window.innerHeight
+     §21c  L. 5233  Bouton d'installation PWA native — _initInstallButtons(),
+                     _installPwa() ; bouton #homeInstallBtn (tête de l'écran Guide,
+                     libellé mis à jour dans §17) ajouté le 12/07/2026, remplace celui
+                     auparavant caché dans la rubrique "Hors ligne" du guide
    ============================================================ */
 
 
@@ -298,7 +304,7 @@ let ALL_THEMES = [];
 let STORAGE_KEY = '';
 
 // Clé localStorage distincte par mode, pour suivre les modules déjà ouverts au
-// moins une fois (badge "🆕 Nouveau" — Amélioration visuelle 11/07/2026, cf §4)
+// moins une fois (badge "🆕 Nouveau" — Amélioration visuelle 12/07/2026, cf §4)
 let OPENED_STORAGE_KEY = '';
 
 // ─── Variables de session (réinitialisées à chaque ouverture de thème) ───
@@ -1551,7 +1557,7 @@ function getThemeStars(id) {
 /* ─────────────────────────────────────────────────────────
    SUIVI DES MODULES OUVERTS — badge "🆕 Nouveau"
    ─────────────────────────────────────────────────────────
-   Amélioration visuelle du 11/07/2026 (demande utilisateur).
+   Amélioration visuelle du 12/07/2026 (demande utilisateur).
    Distinct du système d'étoiles : un module à 0 étoile peut
    soit n'avoir jamais été ouvert, soit avoir été tenté sans
    réussir (< 50 %, donc aucune étoile sauvegardée). Le badge
@@ -2327,7 +2333,7 @@ function _buildThemeCard(t) {
 
   // Génération de l'affichage des étoiles — pleines en couleur (.star-filled),
   // vides bien estompées (.star-empty, opacité réduite) pour plus de contraste
-  // qu'un simple ☆ non stylé (Amélioration visuelle 11/07/2026)
+  // qu'un simple ☆ non stylé (Amélioration visuelle 12/07/2026)
   const currentStars = getThemeStars(t.id);
   const starsStr = Array.from({ length: 3 }, (_, i) => {
     return i < currentStars
