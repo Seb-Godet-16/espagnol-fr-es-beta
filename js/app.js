@@ -21,6 +21,9 @@
                                    (aidé par Gemini 3.5 Flash Extended)
                                Correctifs par Sébastien Godet (aidé par
                                Claude Sonnet 5).
+     08/07/2026 → 12/07/2026  Expériences utilisateurs (Christophe
+                               Elin, Maman, Moi) et correctifs avec
+                               Claude Sonnet 5.
    ============================================================
    ARCHITECTURE (5 fichiers) :
      ├─ index.html  → Structure HTML + launcher (4 écrans, 2 modales)
@@ -29,55 +32,55 @@
      ├─ data-es.js  → ALL_THEMES_ES (32 thèmes + 16 dialogues) — chargé à la demande
      └─ app.js      → Ce fichier : logique applicative complète (5 176 lignes)
 
-   PLAN DU FICHIER (numéros recalculés le 11/07/2026 — l'ajout de
-   _isBrandNewUser() et de la condition d'affichage de la barre de nav
-   §15c, ~41 lignes, a décalé tous les numéros à partir de §16) :
-     §0    L.   81  Chargement conditionnel des données — loadDataForMode()
-     §0b   L.  110  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
-     §1    L.  266  Variables d'état globales
-     §1b   L.  314  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
-     §3    L.  397  Point d'entrée — showLauncherVariant(), initApp(), showLauncher()
-     §3b   L.  718  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
-     §3a-bis L. 935 Surlignage mot par mot pendant la lecture (TTS, best-effort)
-     §3c   L. 1313  Interruption TTS à la mise en arrière-plan (visibilitychange)
-     §3d   L. 1334  Keepalive watchdog Chrome/Android (pause/resume toutes les 8 s)
-     §3e   L. 1364  Audio indisponible + toast _showToast() + _vibrateFeedback()
-     §4    L. 1448  Persistance — loadDone(), markDone(), étoiles, quiz sessionStorage
-     §5    L. 1611  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
-     §5b   L. 1739  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
-     §6    L. 1953  Écran Home — renderHome(), _renderHomeRegionWidget()
-     §7    L. 2142  Écran Sections — renderSections(), _buildThemeCard()
-     §8    L. 2278  Ouverture d'un thème — openTheme(), switchTab(), lessonNav()
-     §9    L. 2488  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail()
-     §9b   L. 2650  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
-     §9c   L. 3063  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic()
-     §10   L. 3417  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
-     §11   L. 3694  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
-     §12   L. 3815  Vocabulaire — renderVocab() (chips cliquables)
-     §13   L. 3873  Quiz Dialogue — renderDialogQuiz(), checkDQ()
-     §14   L. 3966  Utilitaires — _quizResultStrings(), esc(), _escAttr()
-     §15   L. 4021  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
-     §15b  L. 4330  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
+   PLAN DU FICHIER (numéros recalculés le 11/07/2026, suite — ajout du
+   suivi des modules ouverts (badge "🆕 Nouveau"), des états de carte
+   et du compteur de modules terminés ; chaque ancre revérifiée par grep) :
+     §0    L.  237  Chargement conditionnel des données — loadDataForMode()
+     §0b   L.  115  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
+     §1    L.  273  Variables d'état globales
+     §1b   L.  331  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
+     §3    L.  433  Point d'entrée — showLauncherVariant(), initApp(), showLauncher()
+     §3b   L.  811  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
+     §3a-bis L. 955 Surlignage mot par mot pendant la lecture (TTS, best-effort)
+     §3c   L. 1341  Interruption TTS à la mise en arrière-plan (visibilitychange)
+     §3d   L. 1354  Keepalive watchdog Chrome/Android (pause/resume toutes les 8 s)
+     §3e   L. 1433  Audio indisponible + toast _showToast() + _vibrateFeedback()
+     §4    L. 1468  Persistance — loadDone(), suivi modules ouverts (11/07), étoiles, quiz
+     §5    L. 1940  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
+     §5b   L. 1837  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
+     §6    L. 2053  Écran Home — renderHome(), _renderHomeRegionWidget()
+     §7    L. 2223  Écran Sections — renderSections(), _buildThemeCard() (états + badge, 11/07)
+     §8    L. 2382  Ouverture d'un thème — openTheme() (marque module ouvert), switchTab()
+     §9    L. 2593  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail()
+     §9b   L. 2767  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
+     §9c   L. 3229  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic()
+     §10   L. 3557  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
+     §11   L. 3832  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
+     §12   L. 3920  Vocabulaire — renderVocab() (chips cliquables)
+     §13   L. 3975  Quiz Dialogue — renderDialogQuiz(), checkDQ()
+     §14   L. 4071  Utilitaires — _quizResultStrings(), esc(), _escAttr()
+     §15   L. 4191  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
+     §15b  L. 4425  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
                      (aucune bannière numérotée dans le code à cet endroit, juste
                       un commentaire au-dessus de toggleAcc() — contrairement aux
                       autres sous-sections 5b/9b/9c qui en ont une)
-     §15c  L. 4384  Nouvel utilisateur & barre de nav — _isBrandNewUser(), condition
+     §15c  L. 4479  Nouvel utilisateur & barre de nav — _isBrandNewUser(), condition
                      dans le listener DOMContentLoaded (ajouté le 11/07/2026, demande
                      utilisateur : pas de barre de nav basse au tout premier lancement
                      sans aucun parcours ; réapparaît dès la première interaction via
                      showLauncherVariant())
-     §16   L. 4436  Remerciements — showCredits()
-     §17   L. 4451  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
+     §16   L. 4537  Remerciements — showCredits()
+     §17   L. 4575  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
                      navBackToGuide(), _refreshGuideRegion(), _guideSeenKey()/
                      _hasSeenGuide()/_markGuideSeen() (flag par langue)
-     §18   L. 4713  E-mail antispam — openAndCopyEmail()
-     §19   L. 4732  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
+     §18   L. 4808  E-mail antispam — openAndCopyEmail()
+     §19   L. 4841  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
                      (étiqueté "§21" dans le code même — incohérence de numérotation
                       préexistante, non corrigée ici pour ne pas renuméroter tout le fichier)
-     §20   L. 5033  Accessibilité clavier (keydown → role="button")
-     §21   L. 5048  Initialisation Launcher — addEventListener sur les cartes de langue
-     §21b  L. 5074  Viewport height fix Android — --app-h via window.innerHeight
-     §21c  L. 5115  Bouton d'installation PWA native — _initInstallButtons(),
+     §20   L. 5134  Accessibilité clavier (keydown → role="button")
+     §21   L. 5143  Initialisation Launcher — addEventListener sur les cartes de langue
+     §21b  L. 5169  Viewport height fix Android — --app-h via window.innerHeight
+     §21c  L. 5210  Bouton d'installation PWA native — _initInstallButtons(),
                      _installPwa() (ajouté le 09/07/2026, absent du plan depuis)
    ============================================================ */
 
@@ -119,7 +122,9 @@ function showResetConfirm() {
 }
 function confirmReset() {
   done = [];
+  openedThemes = [];
   try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  try { localStorage.removeItem(OPENED_STORAGE_KEY); } catch(e) {}
   document.getElementById('confirm-modal').style.display = 'none';
   renderSections(_currentThemeLevel || 1);
   _showToast(L('✅ Progresión borrada.', '✅ Progression effacée.'));
@@ -292,6 +297,10 @@ let ALL_THEMES = [];
 // Clé localStorage distincte par mode, pour conserver deux progressions indépendantes
 let STORAGE_KEY = '';
 
+// Clé localStorage distincte par mode, pour suivre les modules déjà ouverts au
+// moins une fois (badge "🆕 Nouveau" — Amélioration visuelle 11/07/2026, cf §4)
+let OPENED_STORAGE_KEY = '';
+
 // ─── Variables de session (réinitialisées à chaque ouverture de thème) ───
 let CT          = null;   // Thème courant (Current Theme)
 let fcIdx       = 0;       // Index de la carte flash active
@@ -313,6 +322,12 @@ const QUIZ_SESSION_KEY = 'quiz_session';
 
 // Progression persistante : tableau d'objets { id: string, stars: 1|2|3 }
 let done = [];
+
+// Modules déjà ouverts au moins une fois (tableau d'ids), persistant par mode.
+// Sert uniquement à distinguer "jamais essayé" (badge Nouveau) de "essayé mais
+// pas encore réussi" — les étoiles seules ne suffisent pas à faire cette
+// distinction, puisqu'un module à 0 étoile peut avoir été ouvert et raté.
+let openedThemes = [];
 
 
 /* ═══════════════════════════════════════════════════════════
@@ -612,6 +627,7 @@ function initApp(mode) {
     voiceLang  = 'fr-FR';
     ALL_THEMES = ALL_THEMES_FR;
     STORAGE_KEY = 'pe_es_fr_done_v1';
+    OPENED_STORAGE_KEY = 'pe_es_fr_opened_v1';
 
     _setUI({
       homeFlagRow    : '🇫🇷',
@@ -633,6 +649,7 @@ function initApp(mode) {
     voiceLang  = 'es-ES';
     ALL_THEMES = ALL_THEMES_ES;
     STORAGE_KEY = 'pe_fr_es_done_v1';
+    OPENED_STORAGE_KEY = 'pe_fr_es_opened_v1';
 
     _setUI({
       homeFlagRow    : activeFlag,           // Drapeau dynamique selon la région mémorisée
@@ -661,6 +678,7 @@ function initApp(mode) {
 
   /* — Chargement de la progression sauvegardée pour ce mode — */
   loadDone();
+  loadOpened();
 
   /* — Construction du guide intégré dans l'écran #home (style Oromo) —
        _buildHomeGuide() active le bon bloc de langue et injecte les
@@ -1531,6 +1549,60 @@ function getThemeStars(id) {
 
 
 /* ─────────────────────────────────────────────────────────
+   SUIVI DES MODULES OUVERTS — badge "🆕 Nouveau"
+   ─────────────────────────────────────────────────────────
+   Amélioration visuelle du 11/07/2026 (demande utilisateur).
+   Distinct du système d'étoiles : un module à 0 étoile peut
+   soit n'avoir jamais été ouvert, soit avoir été tenté sans
+   réussir (< 50 %, donc aucune étoile sauvegardée). Le badge
+   "Nouveau" ne doit s'afficher que dans le premier cas — d'où
+   ce suivi séparé, posé au tout premier openTheme() du module.
+───────────────────────────────────────────────────────── */
+
+/* Charge la liste des modules déjà ouverts depuis localStorage.
+   En cas de données corrompues, repart d'un tableau vide. */
+function loadOpened() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(OPENED_STORAGE_KEY) || '[]');
+    openedThemes = Array.isArray(parsed) ? parsed.filter(id => typeof id === 'string') : [];
+  } catch (e) { openedThemes = []; }
+}
+
+/* Sauvegarde silencieusement la liste des modules ouverts. */
+function saveOpened() {
+  try { localStorage.setItem(OPENED_STORAGE_KEY, JSON.stringify(openedThemes)); }
+  catch (e) {}
+}
+
+/* Marque un module comme ouvert au moins une fois. Appelée depuis openTheme().
+   N'écrit dans localStorage que si le module n'était pas déjà connu. */
+function markThemeOpened(id) {
+  if (!openedThemes.includes(id)) {
+    openedThemes.push(id);
+    saveOpened();
+  }
+}
+
+/* Retourne true si le module a déjà été ouvert au moins une fois.
+   Couvre aussi, sans migration explicite, le cas d'un module déjà étoilé
+   avant l'introduction de ce suivi : avoir des étoiles implique forcément
+   d'avoir déjà ouvert le module, même si l'entrée manque encore ici. */
+function isThemeOpened(id) {
+  return openedThemes.includes(id) || getThemeStars(id) > 0;
+}
+
+/* Retourne l'état visuel d'une carte de module : 'new' | 'progress' | 'complete'.
+     'complete' → 3 étoiles (100 %)
+     'progress' → déjà ouvert (ou étoilé), mais pas encore à 100 %
+     'new'      → jamais ouvert */
+function getModuleState(id) {
+  if (getThemeStars(id) === 3) return 'complete';
+  if (isThemeOpened(id)) return 'progress';
+  return 'new';
+}
+
+
+/* ─────────────────────────────────────────────────────────
    REPRISE DE QUIZ — sessionStorage
    ─────────────────────────────────────────────────────────
    Si l'utilisateur quitte une leçon en plein quiz (q10 ou dq)
@@ -2160,6 +2232,9 @@ function renderSections(activeLevel) {
   const pct   = Math.round(n / total * 100);
   const totalStarsEarned = done.reduce((acc, d) => acc + d.stars, 0);
   const maxStarsPossible = total * 3;
+  // Modules réellement terminés à 100 % (3 étoiles) — distinct de `n` ci-dessus,
+  // qui compte tout module ne serait-ce qu'entamé (≥ 50 %, donc ≥ 1 étoile)
+  const completedCount = done.filter(d => d.stars === 3).length;
 
   /* ── Helper : remplir les éléments d'un header de sections ── */
   function _fillHeader(suffix) {
@@ -2177,12 +2252,13 @@ function renderSections(activeLevel) {
       );
     }
 
-    // Étoiles totales
+    // Étoiles totales + modules terminés (2 pastilles côte à côte)
     const se = document.getElementById('sectionsStars' + s);
     if (se) {
       se.innerHTML =
-        '<span style="font-size:1rem;font-weight:bold;color:rgba(255,255,255,0.95);">⭐ '
-        + totalStarsEarned + ' / ' + maxStarsPossible + '</span>';
+        '<span class="stars-pill">⭐ ' + totalStarsEarned + ' / ' + maxStarsPossible + '</span>'
+        + '<span class="completed-pill">✅ ' + completedCount + ' / ' + total + ' '
+        + L('terminados', 'terminés') + '</span>';
     }
 
     // Sous-titre bilingue
@@ -2249,27 +2325,41 @@ function _buildThemeCard(t) {
       + '</button>'
     : '';
 
-  // Génération de l'affichage des étoiles
+  // Génération de l'affichage des étoiles — pleines en couleur (.star-filled),
+  // vides bien estompées (.star-empty, opacité réduite) pour plus de contraste
+  // qu'un simple ☆ non stylé (Amélioration visuelle 11/07/2026)
   const currentStars = getThemeStars(t.id);
   const starsStr = Array.from({ length: 3 }, (_, i) => {
-    return i < currentStars ? '⭐' : '☆';
+    return i < currentStars
+      ? '<span class="star-filled">⭐</span>'
+      : '<span class="star-empty">☆</span>';
   }).join('');
 
-  // Libellé accessible : titre principal + statut étoiles
+  // État visuel de la carte : 'new' (jamais ouvert) | 'progress' (ouvert,
+  // pas encore 100 %) | 'complete' (3 étoiles) — cf getModuleState()
+  const state = getModuleState(t.id);
+
+  // Badge "🆕 Nouveau", uniquement pour les modules jamais ouverts
+  const newBadge = (state === 'new')
+    ? '<span class="badge-new" aria-hidden="true">' + L('🆕 Nuevo', '🆕 Nouveau') + '</span>'
+    : '';
+
+  // Libellés accessibles : titre principal + statut étoiles/état
   const starsLabel = currentStars > 0
     ? ' — ' + currentStars + L(' étoile(s)', ' estrella(s)')
     : '';
-  const doneLabel  = isDone(t.id)
+  const doneLabel = (state === 'complete')
     ? L(' (completado)', ' (complété)')
-    : '';
+    : (state === 'new' ? L(' (nuevo)', ' (nouveau)') : '');
 
   // Rendu de la carte HTML
   // role="button" + tabindex="0" : rend la div navigable au clavier
   // (le keydown global dans app.js déclenche .click() sur Entrée/Espace)
-  return '<div class="theme-card' + (isDone(t.id) ? ' done' : '')
+  return '<div class="theme-card state-' + state
     + '" role="button" tabindex="0"'
     + ' aria-label="' + _escAttr(mainTitle + starsLabel + doneLabel) + '"'
     + ' onclick="openTheme(\'' + t.id + '\')">'
+    + newBadge
     + '<div class="t-emoji" aria-hidden="true">' + t.emoji   + '</div>'
     + '<div class="t-name">'    + mainTitle + '</div>'
     + '<div class="t-sub">'     + subLine   + '</div>'
@@ -2293,6 +2383,9 @@ function _buildThemeCard(t) {
 ═══════════════════════════════════════════════════════════ */
 
 function openTheme(id) {
+  // Suivi "module déjà ouvert" (badge 🆕 Nouveau — indépendant des étoiles)
+  markThemeOpened(id);
+
   // Chargement du thème et réinitialisation de toutes les variables de session
   CT        = ALL_THEMES.find(t => t.id === id);
   fcIdx     = 0;
@@ -4531,6 +4624,16 @@ function _buildHomeGuide() {
       ? ['✅ Gratuit', '🚧 Sans inscription', '📱 Mobile & ordinateur', '🔊 Audio inclus', '🎤 Répétition orale', '🌎 7 variantes d\'espagnol', '📲 Installable hors-ligne']
       : ['✅ Gratis', '🚧 Sin registro', '📱 Móvil y ordenador', '🔊 Audio incluido', '🎤 Repetición oral', '🌎 7 variantes de español', '📲 Instalable sin conexión'];
     badgesEl.innerHTML = badges.map((b) => { return '<span class="hg-badge">' + b + '</span>'; }).join('');
+  }
+
+  /* ── 4b. Bouton "Installer l'app" (en-tête) ──
+     Le texte suit la langue active ; l'affichage/masquage réel du bouton
+     (selon la disponibilité de l'invite native beforeinstallprompt) reste
+     géré par _initInstallButtons()/refresh() (§21c), qui cible toutes les
+     ".pwa-install-btn" — celui-ci y compris. */
+  const homeInstallBtn = document.getElementById('homeInstallBtn');
+  if (homeInstallBtn) {
+    homeInstallBtn.textContent = showFrench ? '📲 Installer l\'app' : '📲 Instalar la app';
   }
 
   /* ── 5. Bouton Commencer ── */

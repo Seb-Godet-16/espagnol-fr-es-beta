@@ -50,9 +50,9 @@ Aucune inscription, aucun téléchargement. Fonctionne dans le navigateur et s'i
 espagnol-fr-es-beta/
 ├── index.html          # Structure HTML unique (SPA — Single Page App)
 ├── css/
-│   └── style.css       # Thèmes couleur, composants, animations (44 variables CSS, 161 déclarations, 4 556 lignes)
+│   └── style.css       # Thèmes couleur, composants, animations (48 variables CSS, 171 déclarations, 4 638 lignes)
 ├── js/
-│   ├── app.js          # Moteur applicatif complet (162 fonctions nommées, 5 176 lignes)
+│   ├── app.js          # Moteur applicatif complet (167 fonctions nommées, 5 266 lignes)
 │   ├── data-fr.js      # Contenu mode "Apprendre le Français" — chargé à la demande
 │   └── data-es.js      # Contenu mode "Apprendre l'Espagnol" — chargé à la demande
 ├── img/
@@ -70,7 +70,7 @@ espagnol-fr-es-beta/
 - **Zéro dépendance** — Vanilla JS, pas de framework, pas de bundler, pas de transpileur
 - **Cible ES2020** — plafond de compatibilité volontaire : tout le JS (déclarations `let`/`const`, optional chaining `?.`, arrow functions pour les callbacks) reste nativement supporté depuis Safari 13.4, ce qui couvre la cible minimale du projet (iOS Safari 14.5+) sans avoir besoin d'un bundler. Les fonctions nommées de premier niveau gardent volontairement la syntaxe `function` (hoisting requis par les attributs `onclick=""` générés dynamiquement et par certains callbacks qui dépendent de `this`). Base de code harmonisée en ce sens le 05/07/2026.
 - **Chargement fractionné** — `data-fr.js` et `data-es.js` injectés dynamiquement au choix de langue (−50 % de JS parsé au démarrage)
-- **CSS custom properties** — 44 variables uniques (161 déclarations au total, redéfinies par thème/variante) pour les thèmes (`theme-french` / `theme-spain`) et les 7 variantes régionales (`region-ES`, `region-MX`, etc.)
+- **CSS custom properties** — 48 variables uniques (171 déclarations au total, redéfinies par thème/variante) pour les thèmes (`theme-french` / `theme-spain`) et les 7 variantes régionales (`region-ES`, `region-MX`, etc.)
 - **Service Worker hybride** — Cache-First pour les ressources locales, Network-First pour les CDN externes (Twemoji), avec fallbacks SVG inline pour le mode hors-ligne
 
 ---
@@ -146,6 +146,7 @@ python3 -m http.server 8080
 | 09/07/2026 → 10/07/2026 | Ajouts (Claude Sonnet 5, demandes utilisateur) : bouton d'installation PWA native dans le Guide, bannière hors-ligne proactive pour l'audio, et encadré comparatif des navigateurs dans le Guide utilisateur. Détail complet dans `Bilan_technique.md` (§ Historique) |
 | 11/07/2026 | Ajouts (Claude Sonnet 5, demandes utilisateur) : barre de navigation basse masquée au tout premier lancement sans aucun parcours, rubriques du Guide utilisateur réordonnées (pratique/dépannage avant mise en avant/clôture), et nuance sur les limites de l'écoute hors ligne ajoutée dans la rubrique Hors ligne du Guide. Détail complet dans `Bilan_technique.md` (§ Historique) |
 | 11/07/2026 (suite) | Ajout (Claude Sonnet 5, demande utilisateur) d'une carte résumé « 🚀 L'essentiel en 30 secondes » en tête de l'écran Guide, visible sans rien déplier, au-dessus des 8 rubriques en accordéon. Détail complet dans `Bilan_technique.md` (§ Historique) |
+| 12/07/2026 | Ajout (Claude Sonnet 5, demande utilisateur, inspiré d'une capture d'écran de l'app Oromo du même auteur) de 4 améliorations visuelles sur les cartes de module : fond teinté selon l'état (neuf / en cours / terminé à 3 étoiles), badge « 🆕 Nouveau » sur les modules jamais ouverts (nouveau suivi persistant distinct des étoiles), étoiles pleines/vides mieux contrastées, et pastille « ✅ X / 48 terminés » à côté du compteur d'étoiles. Détail complet dans `Bilan_technique.md` (§ Historique) |
 
 ---
 

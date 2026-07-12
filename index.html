@@ -240,6 +240,16 @@
       <p class="home-guide-subtitle" id="homeGuideSubtitle">App gratuite — idéale pour les grands débutants.</p>
       <div class="home-guide-badges" id="homeGuideBadges"></div>
 
+      <!-- Bouton natif d'installation — ajouté le 12/07/2026 (demande utilisateur,
+           inspiré de l'app Oromo du même auteur), pour le rendre visible dès l'arrivée
+           sur l'écran plutôt que caché dans la rubrique "Hors ligne" du Guide.
+           Masqué par défaut ; affiché uniquement par app.js (_initInstallButtons(),
+           §21c) quand le navigateur propose réellement l'installation en un tap
+           (event beforeinstallprompt — Chrome/Edge/Samsung Internet ; indisponible
+           sur Firefox et iOS Safari, qui gardent le bouton équivalent de la
+           rubrique "Hors ligne" avec la méthode manuelle juste en dessous). -->
+      <button type="button" class="home-install-btn pwa-install-btn" id="homeInstallBtn" style="display:none" onclick="_installPwa()">📲 Installer l'app</button>
+
       <!-- Cercle SVG de progression (visible une fois des modules complétés) -->
       <div class="home-progress-circle-wrap" id="homeProgressCircleWrap" style="display:none">
         <svg class="home-progress-circle" viewBox="0 0 120 120"
@@ -347,18 +357,68 @@
           </div>
         </details>
 
-        <!-- 2. L'audio -->
+        <!-- 2. Points forts -->
         <details class="hg-section">
           <summary class="hg-summary">
-            <span class="hg-icon">🔊</span>
-            <span class="hg-label">L'audio</span>
+            <span class="hg-icon">✨</span>
+            <span class="hg-label">Points forts de cette appli</span>
             <span class="hg-chevron">▼</span>
           </summary>
           <div class="hg-detail">
-            <h4 style="margin:0 0 .4em;font-size:.95em">🔊 Configurer son audio</h4>
-            <p>L'appli utilise la <strong>synthèse vocale du navigateur</strong> (Web Speech API). L'audio français et espagnol est disponible sur la plupart des appareils — si ce n'est pas le cas, suis les instructions ci-dessous.</p>
+            <ul>
+              <li>💸 <strong>100% gratuit</strong> — aucun abonnement, aucune publicité</li>
+              <li>🚫 <strong>Sans inscription</strong> — ouvre l'app et commence immédiatement</li>
+              <li>🗂️ <strong>Vocabulaire structuré</strong> — thèmes du plus simple au plus complexe</li>
+              <li>🌎 <strong>7 variantes d'espagnol</strong> — Espagne, Mexique, Colombie, Pérou, Venezuela, Argentine, Équateur</li>
+              <li>🔊 <strong>Audio intégré</strong> — écoute chaque mot prononcé d'un simple tap</li>
+              <li>🎤 <strong>Répétition orale</strong> — l'onglet <em>Répète</em> analyse ta prononciation en temps réel</li>
+              <li>📴 <strong>Hors-ligne</strong> — installe l'app sur ton écran d'accueil et apprends sans connexion</li>
+              <li>⭐ <strong>Progression sauvegardée</strong> — tes étoiles ne diminuent jamais, ton meilleur score est conservé</li>
+            </ul>
+            <div class="ob-tip">💡 Cette appli n'est pas un outil unique — combine-la avec Duolingo, un cours ou des amis natifs pour progresser plus vite !</div>
+          </div>
+        </details>
 
-            <h4 style="margin:.8em 0 .3em;font-size:.95em">🌐 Quel navigateur choisir ?</h4>
+        <!-- 3. Comparaison -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">⚖️</span>
+            <span class="hg-label">Comparaison — cette appli vs. les autres</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <p>Pas de meilleure méthode unique — chacune a ses forces. <strong>L'idéal, c'est de les combiner !</strong></p>
+            <div class="ob-compare">
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">📱 Cette appli</div>
+                <ul><li>💸 100% gratuit</li><li>🚫 Sans inscription</li><li>🌎 7 variantes d'espagnol</li><li>🔊 Audio intégré</li><li>🎤 Répétition orale</li><li>📴 Hors-ligne</li></ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🦉 Duolingo / Babbel</div>
+                <ul><li>🎮 Gamification motivante</li><li>🌐 Large catalogue</li><li>🎯 Parcours adaptatif</li><li>👥 Communauté</li><li>📐 Grammaire progressive</li></ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🏫 École de langue</div>
+                <ul><li>🧑‍🏫 Enseignant humain</li><li>📋 Structure pédagogique</li><li>🗣️ Pratique en groupe</li><li>🎓 Certification reconnue</li><li>📐 Grammaire approfondie</li></ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🗣️ Immersion / Amis natifs</div>
+                <ul><li>🌍 Langue authentique</li><li>🎙️ Accent naturel</li><li>🛒 Vocabulaire du quotidien</li><li>💪 Confiance en soi</li><li>🤝 Échanges culturels</li></ul>
+              </div>
+            </div>
+            <div class="ob-tip">💡 Notre conseil : utilise cette appli pour construire ta base de vocabulaire dès le premier jour — puis appuie-toi sur Duolingo ou une école pour la grammaire, et pratique avec des natifs pour la fluidité. Chaque outil renforce les autres !</div>
+          </div>
+        </details>
+
+        <!-- 4. Quel navigateur choisir ? -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">🌐</span>
+            <span class="hg-label">Quel navigateur choisir ?</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <p>Certains navigateurs offrent une meilleure compatibilité que d'autres, notamment pour l'onglet <strong>🎤 Répète</strong>.</p>
             <div class="ob-compare">
               <div class="ob-compare-col">
                 <div class="ob-compare-head">🤖 Android</div>
@@ -386,6 +446,19 @@
               </div>
             </div>
             <div class="ob-tip">💡 En résumé : les navigateurs basés sur <strong>Chromium</strong> (Chrome, Edge, Samsung Internet, Opera, Brave, Vivaldi) offrent le meilleur support. <strong>Firefox</strong>, <strong>UC Browser</strong> et <strong>DuckDuckGo</strong> peuvent limiter ou perturber la reconnaissance vocale (onglet 🎤 Répète) — les autres fonctions (cartes, quiz, dialogues, audio 🔊) restent utilisables normalement partout.</div>
+          </div>
+        </details>
+
+        <!-- 5. L'audio -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">🔊</span>
+            <span class="hg-label">L'audio</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <h4 style="margin:0 0 .4em;font-size:.95em">🔊 Configurer son audio</h4>
+            <p>L'appli utilise la <strong>synthèse vocale du navigateur</strong> (Web Speech API). L'audio français et espagnol est disponible sur la plupart des appareils — si ce n'est pas le cas, suis les instructions ci-dessous.</p>
 
             <div class="ob-audio-block">
               <div class="ob-audio-head">🤖 Android</div>
@@ -441,7 +514,7 @@
           </div>
         </details>
 
-        <!-- 3. Hors ligne -->
+        <!-- 6. Hors ligne -->
         <details class="hg-section">
           <summary class="hg-summary">
             <span class="hg-icon">📲</span>
@@ -499,7 +572,7 @@
           </div>
         </details>
 
-        <!-- 4. Réinitialiser un module -->
+        <!-- 7. Réinitialiser un module -->
         <details class="hg-section">
           <summary class="hg-summary">
             <span class="hg-icon">🔄</span>
@@ -516,60 +589,7 @@
           </div>
         </details>
 
-        <!-- 5. Points forts -->
-        <details class="hg-section">
-          <summary class="hg-summary">
-            <span class="hg-icon">✨</span>
-            <span class="hg-label">Points forts de cette appli</span>
-            <span class="hg-chevron">▼</span>
-          </summary>
-          <div class="hg-detail">
-            <ul>
-              <li>💸 <strong>100% gratuit</strong> — aucun abonnement, aucune publicité</li>
-              <li>🚫 <strong>Sans inscription</strong> — ouvre l'app et commence immédiatement</li>
-              <li>🗂️ <strong>Vocabulaire structuré</strong> — thèmes du plus simple au plus complexe</li>
-              <li>🌎 <strong>7 variantes d'espagnol</strong> — Espagne, Mexique, Colombie, Pérou, Venezuela, Argentine, Équateur</li>
-              <li>🔊 <strong>Audio intégré</strong> — écoute chaque mot prononcé d'un simple tap</li>
-              <li>🎤 <strong>Répétition orale</strong> — l'onglet <em>Répète</em> analyse ta prononciation en temps réel</li>
-              <li>📴 <strong>Hors-ligne</strong> — installe l'app sur ton écran d'accueil et apprends sans connexion</li>
-              <li>⭐ <strong>Progression sauvegardée</strong> — tes étoiles ne diminuent jamais, ton meilleur score est conservé</li>
-            </ul>
-            <div class="ob-tip">💡 Cette appli n'est pas un outil unique — combine-la avec Duolingo, un cours ou des amis natifs pour progresser plus vite !</div>
-          </div>
-        </details>
-
-        <!-- 6. Comparaison -->
-        <details class="hg-section">
-          <summary class="hg-summary">
-            <span class="hg-icon">⚖️</span>
-            <span class="hg-label">Comparaison — cette appli vs. les autres</span>
-            <span class="hg-chevron">▼</span>
-          </summary>
-          <div class="hg-detail">
-            <p>Pas de meilleure méthode unique — chacune a ses forces. <strong>L'idéal, c'est de les combiner !</strong></p>
-            <div class="ob-compare">
-              <div class="ob-compare-col">
-                <div class="ob-compare-head">📱 Cette appli</div>
-                <ul><li>💸 100% gratuit</li><li>🚫 Sans inscription</li><li>🌎 7 variantes d'espagnol</li><li>🔊 Audio intégré</li><li>🎤 Répétition orale</li><li>📴 Hors-ligne</li></ul>
-              </div>
-              <div class="ob-compare-col">
-                <div class="ob-compare-head">🦉 Duolingo / Babbel</div>
-                <ul><li>🎮 Gamification motivante</li><li>🌐 Large catalogue</li><li>🎯 Parcours adaptatif</li><li>👥 Communauté</li><li>📐 Grammaire progressive</li></ul>
-              </div>
-              <div class="ob-compare-col">
-                <div class="ob-compare-head">🏫 École de langue</div>
-                <ul><li>🧑‍🏫 Enseignant humain</li><li>📋 Structure pédagogique</li><li>🗣️ Pratique en groupe</li><li>🎓 Certification reconnue</li><li>📐 Grammaire approfondie</li></ul>
-              </div>
-              <div class="ob-compare-col">
-                <div class="ob-compare-head">🗣️ Immersion / Amis natifs</div>
-                <ul><li>🌍 Langue authentique</li><li>🎙️ Accent naturel</li><li>🛒 Vocabulaire du quotidien</li><li>💪 Confiance en soi</li><li>🤝 Échanges culturels</li></ul>
-              </div>
-            </div>
-            <div class="ob-tip">💡 Notre conseil : utilise cette appli pour construire ta base de vocabulaire dès le premier jour — puis appuie-toi sur Duolingo ou une école pour la grammaire, et pratique avec des natifs pour la fluidité. Chaque outil renforce les autres !</div>
-          </div>
-        </details>
-
-        <!-- 7. Remerciements -->
+        <!-- 8. Remerciements -->
         <details class="hg-section">
           <summary class="hg-summary">
             <span class="hg-icon">🙏</span>
@@ -584,7 +604,7 @@
           </div>
         </details>
 
-        <!-- 8. À propos -->
+        <!-- 9. À propos -->
         <details class="hg-section">
           <summary class="hg-summary">
             <span class="hg-icon">🙋</span>
@@ -613,6 +633,7 @@
             </div>
           </div>
         </details>
+
 
       </div><!-- /.home-lang-block[data-lang="fr"] / #guideContentFR -->
 
@@ -670,18 +691,68 @@
           </div>
         </details>
 
-        <!-- 2. El audio -->
+        <!-- 2. Puntos fuertes -->
         <details class="hg-section">
           <summary class="hg-summary">
-            <span class="hg-icon">🔊</span>
-            <span class="hg-label">El audio</span>
+            <span class="hg-icon">✨</span>
+            <span class="hg-label">Puntos fuertes de esta app</span>
             <span class="hg-chevron">▼</span>
           </summary>
           <div class="hg-detail">
-            <h4 style="margin:0 0 .4em;font-size:.95em">🔊 Configurar el audio</h4>
-            <p>La app usa la <strong>síntesis de voz del navegador</strong> (Web Speech API). El audio en español y francés está disponible en la mayoría de dispositivos — si no es así, sigue estas instrucciones.</p>
+            <ul>
+              <li>💸 <strong>100% gratis</strong> — sin suscripción, sin publicidad</li>
+              <li>🚫 <strong>Sin registro</strong> — abre la app y empieza inmediatamente</li>
+              <li>🗂️ <strong>Vocabulario estructurado</strong> — temas del más simple al más complejo</li>
+              <li>🌎 <strong>7 variantes de español</strong> — España, México, Colombia, Perú, Venezuela, Argentina, Ecuador</li>
+              <li>🔊 <strong>Audio integrado</strong> — escucha cada palabra con un simple toque</li>
+              <li>🎤 <strong>Repetición oral</strong> — la pestaña <em>Repite</em> analiza tu pronunciación en tiempo real</li>
+              <li>📴 <strong>Sin conexión</strong> — instala la app en tu pantalla de inicio y aprende sin internet</li>
+              <li>⭐ <strong>Progreso guardado</strong> — tus estrellas nunca disminuyen, tu mejor puntuación siempre se conserva</li>
+            </ul>
+            <div class="ob-tip">💡 ¡Esta app no es una herramienta única — combínala con Duolingo, un curso o amigos nativos para progresar más rápido!</div>
+          </div>
+        </details>
 
-            <h4 style="margin:.8em 0 .3em;font-size:.95em">🌐 ¿Qué navegador elegir?</h4>
+        <!-- 3. Comparación -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">⚖️</span>
+            <span class="hg-label">Comparación — esta app vs. las otras</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <p>No hay un único método perfecto — cada uno tiene sus puntos fuertes. <strong>¡Lo ideal es combinarlos!</strong></p>
+            <div class="ob-compare">
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">📱 Esta app</div>
+                <ul><li>💸 100% gratis</li><li>🚫 Sin registro</li><li>🌎 7 variantes de español</li><li>🔊 Audio integrado</li><li>🎤 Repetición oral</li><li>📴 Sin conexión</li></ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🦉 Duolingo / Babbel</div>
+                <ul><li>🎮 Gamification motivante</li><li>🌐 Gran catálogo</li><li>🎯 Recorrido adaptativo</li><li>👥 Comunidad</li><li>📐 Gramática progresiva</li></ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🏫 Escuela de idiomas</div>
+                <ul><li>🧑‍🏫 Profesor humano</li><li>📋 Estructura pedagógica</li><li>🗣️ Práctica en grupo</li><li>🎓 Certificación reconocida</li><li>📐 Gramática profunda</li></ul>
+              </div>
+              <div class="ob-compare-col">
+                <div class="ob-compare-head">🗣️ Inmersión / Amigos nativos</div>
+                <ul><li>🌍 Lengua auténtica</li><li>🎙️ Acento natural</li><li>🛒 Vocabulario cotidiano</li><li>💪 Confianza en uno mismo</li><li>🤝 Intercambios culturales</li></ul>
+              </div>
+            </div>
+            <div class="ob-tip">💡 Nuestro consejo: usa esta app para construir tu base de vocabulario desde el primer día — luego apóyate en Duolingo o una escuela para la gramática, y practica con nativos para la fluidez. ¡Cada herramienta refuerza las demás!</div>
+          </div>
+        </details>
+
+        <!-- 4. ¿Qué navegador elegir? -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">🌐</span>
+            <span class="hg-label">¿Qué navegador elegir?</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <p>Algunos navegadores ofrecen mejor compatibilidad que otros, sobre todo para la pestaña <strong>🎤 Repite</strong>.</p>
             <div class="ob-compare">
               <div class="ob-compare-col">
                 <div class="ob-compare-head">🤖 Android</div>
@@ -709,6 +780,19 @@
               </div>
             </div>
             <div class="ob-tip">💡 En resumen: los navegadores basados en <strong>Chromium</strong> (Chrome, Edge, Samsung Internet, Opera, Brave, Vivaldi) ofrecen el mejor soporte. <strong>Firefox</strong>, <strong>UC Browser</strong> y <strong>DuckDuckGo</strong> pueden limitar o afectar al reconocimiento de voz (pestaña 🎤 Repite) — el resto de funciones (tarjetas, quiz, diálogos, audio 🔊) siguen funcionando con normalidad en todos.</div>
+          </div>
+        </details>
+
+        <!-- 5. El audio -->
+        <details class="hg-section">
+          <summary class="hg-summary">
+            <span class="hg-icon">🔊</span>
+            <span class="hg-label">El audio</span>
+            <span class="hg-chevron">▼</span>
+          </summary>
+          <div class="hg-detail">
+            <h4 style="margin:0 0 .4em;font-size:.95em">🔊 Configurar el audio</h4>
+            <p>La app usa la <strong>síntesis de voz del navegador</strong> (Web Speech API). El audio en español y francés está disponible en la mayoría de dispositivos — si no es así, sigue estas instrucciones.</p>
 
             <div class="ob-audio-block">
               <div class="ob-audio-head">🤖 Android</div>
@@ -764,7 +848,7 @@
           </div>
         </details>
 
-        <!-- 3. Sin conexión -->
+        <!-- 6. Sin conexión -->
         <details class="hg-section">
           <summary class="hg-summary">
             <span class="hg-icon">📲</span>
@@ -817,7 +901,7 @@
           </div>
         </details>
 
-        <!-- 4. Reiniciar un módulo -->
+        <!-- 7. Reiniciar un módulo -->
         <details class="hg-section">
           <summary class="hg-summary">
             <span class="hg-icon">🔄</span>
@@ -834,60 +918,7 @@
           </div>
         </details>
 
-        <!-- 5. Puntos fuertes -->
-        <details class="hg-section">
-          <summary class="hg-summary">
-            <span class="hg-icon">✨</span>
-            <span class="hg-label">Puntos fuertes de esta app</span>
-            <span class="hg-chevron">▼</span>
-          </summary>
-          <div class="hg-detail">
-            <ul>
-              <li>💸 <strong>100% gratis</strong> — sin suscripción, sin publicidad</li>
-              <li>🚫 <strong>Sin registro</strong> — abre la app y empieza inmediatamente</li>
-              <li>🗂️ <strong>Vocabulario estructurado</strong> — temas del más simple al más complejo</li>
-              <li>🌎 <strong>7 variantes de español</strong> — España, México, Colombia, Perú, Venezuela, Argentina, Ecuador</li>
-              <li>🔊 <strong>Audio integrado</strong> — escucha cada palabra con un simple toque</li>
-              <li>🎤 <strong>Repetición oral</strong> — la pestaña <em>Repite</em> analiza tu pronunciación en tiempo real</li>
-              <li>📴 <strong>Sin conexión</strong> — instala la app en tu pantalla de inicio y aprende sin internet</li>
-              <li>⭐ <strong>Progreso guardado</strong> — tus estrellas nunca disminuyen, tu mejor puntuación siempre se conserva</li>
-            </ul>
-            <div class="ob-tip">💡 ¡Esta app no es una herramienta única — combínala con Duolingo, un curso o amigos nativos para progresar más rápido!</div>
-          </div>
-        </details>
-
-        <!-- 6. Comparación -->
-        <details class="hg-section">
-          <summary class="hg-summary">
-            <span class="hg-icon">⚖️</span>
-            <span class="hg-label">Comparación — esta app vs. las otras</span>
-            <span class="hg-chevron">▼</span>
-          </summary>
-          <div class="hg-detail">
-            <p>No hay un único método perfecto — cada uno tiene sus puntos fuertes. <strong>¡Lo ideal es combinarlos!</strong></p>
-            <div class="ob-compare">
-              <div class="ob-compare-col">
-                <div class="ob-compare-head">📱 Esta app</div>
-                <ul><li>💸 100% gratis</li><li>🚫 Sin registro</li><li>🌎 7 variantes de español</li><li>🔊 Audio integrado</li><li>🎤 Repetición oral</li><li>📴 Sin conexión</li></ul>
-              </div>
-              <div class="ob-compare-col">
-                <div class="ob-compare-head">🦉 Duolingo / Babbel</div>
-                <ul><li>🎮 Gamification motivante</li><li>🌐 Gran catálogo</li><li>🎯 Recorrido adaptativo</li><li>👥 Comunidad</li><li>📐 Gramática progresiva</li></ul>
-              </div>
-              <div class="ob-compare-col">
-                <div class="ob-compare-head">🏫 Escuela de idiomas</div>
-                <ul><li>🧑‍🏫 Profesor humano</li><li>📋 Estructura pedagógica</li><li>🗣️ Práctica en grupo</li><li>🎓 Certificación reconocida</li><li>📐 Gramática profunda</li></ul>
-              </div>
-              <div class="ob-compare-col">
-                <div class="ob-compare-head">🗣️ Inmersión / Amigos nativos</div>
-                <ul><li>🌍 Lengua auténtica</li><li>🎙️ Acento natural</li><li>🛒 Vocabulario cotidiano</li><li>💪 Confianza en uno mismo</li><li>🤝 Intercambios culturales</li></ul>
-              </div>
-            </div>
-            <div class="ob-tip">💡 Nuestro consejo: usa esta app para construir tu base de vocabulario desde el primer día — luego apóyate en Duolingo o una escuela para la gramática, y practica con nativos para la fluidez. ¡Cada herramienta refuerza las demás!</div>
-          </div>
-        </details>
-
-        <!-- 7. Agradecimientos -->
+        <!-- 8. Agradecimientos -->
         <details class="hg-section">
           <summary class="hg-summary">
             <span class="hg-icon">🙏</span>
@@ -902,7 +933,7 @@
           </div>
         </details>
 
-        <!-- 8. Sobre mí -->
+        <!-- 9. Sobre mí -->
         <details class="hg-section">
           <summary class="hg-summary">
             <span class="hg-icon">🙋</span>
@@ -931,6 +962,7 @@
             </div>
           </div>
         </details>
+
 
       </div><!-- /.home-lang-block[data-lang="es"] / #guideContentES -->
 
@@ -1156,7 +1188,7 @@
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js', { scope: './' })
-        .then(() => {
+        .then((reg) => {
           let _reloading = false;
           navigator.serviceWorker.addEventListener('controllerchange', () => {
             if (!_reloading) {
@@ -1164,6 +1196,30 @@
               window.location.reload();
             }
           });
+
+          /* ── Vérification proactive des mises à jour — ajouté le 12/07/2026
+             (demande utilisateur). register() ci-dessus ne déclenche la
+             vérification qu'une fois, au chargement de la page : si l'app
+             installée reste ouverte plusieurs jours sans être refermée/
+             rouverte, aucune nouvelle vérification ne se relance toute
+             seule. reg.update() force le navigateur à revérifier sw.js
+             immédiatement (au lieu d'attendre son cycle interne, jusqu'à
+             24h). Deux déclencheurs complémentaires, non redondants :
+               1) à chaque retour au premier plan (visibilitychange) — le
+                  cas le plus fréquent en usage réel (app mobile ravivée
+                  après mise en veille) ;
+               2) toutes les 60 min tant que l'app reste au premier plan
+                  en continu (ex. onglet desktop jamais mis en arrière-plan).
+             Sans effet hors-ligne : l'appel échoue silencieusement et sera
+             retenté à la prochaine occasion. ────────────────────────── */
+          const _UPDATE_CHECK_INTERVAL_MS = 60 * 60 * 1000; // 60 minutes
+          const _checkForUpdate = () => {
+            reg.update().catch(() => { /* hors-ligne : on retentera plus tard */ });
+          };
+          document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') _checkForUpdate();
+          });
+          setInterval(_checkForUpdate, _UPDATE_CHECK_INTERVAL_MS);
         })
         .catch((err) => {
           console.warn('[SW] Enregistrement échoué :', err);

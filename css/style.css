@@ -24,42 +24,48 @@
  * ║  changer la classe sur <html> pour basculer le rendu visuel.   ║
  * ╠══════════════════════════════════════════════════════════════════╣
  * ║  PLAN DU FICHIER (numéros recalculés le 11/07/2026, mesure directe —  ║
- * ║  chaque ancre vérifiée une à une par grep après l'ajout de la carte   ║
- * ║  "En bref" en tête du Guide. Liste dans l'ordre réel du fichier.)     ║
- * ║   §1   Reset & base                              ligne 68            ║
- * ║   §1b  Transitions de navigation                 ligne 184           ║
- * ║   §2   Variables de thème (:root / fallback)     ligne 435           ║
- * ║   §5   Écran 0 — Lanceur  #app-launcher          ligne 266           ║
- * ║   §6   Écran 1 — Accueil  #home (style Oromo)    ligne 481           ║
- * ║         Carte "En bref" (.hg-tldr, ajout 11/07)    ligne 812          ║
- * ║         Widget variante régionale                 ligne 1093          ║
- * ║   §7   Écran 2 — Sections  #sections             ligne 1192          ║
- * ║         §27 Onglets Niveau 1 / 2                 ligne 1366          ║
- * ║         §LAUNCHER-REGION-GRID                    ligne 1446          ║
- * ║         §28 Écrans sections level : layout       ligne 1533          ║
- * ║   §8   Écran 3 — Leçon  #lesson                  ligne 1558          ║
- * ║         Onglets (tabs)                           ligne 1686          ║
- * ║   §9   Composants : Flashcards                   ligne 1723          ║
- * ║         Bannière hors-ligne (ajout 10/07/2026)   ligne 1819          ║
- * ║         Barre meta (badge voix + vitesse)        ligne 1852          ║
- * ║   §10  Composants : Alphabet                     ligne 2115          ║
- * ║   §11  Composants : Quiz                         ligne 2177          ║
- * ║   §12  Composants : Dialogues / Situations       ligne 2257          ║
- * ║   §13  Composants : Vocabulaire                  ligne 2326          ║
- * ║   §17  Footer commun                             ligne 2416          ║
- * ║   §16  Modales (Guide utilisateur + Remerciements) ligne 2448        ║
- * ║   §3   Thème Français (html.theme-french)        ligne 3174          ║
- * ║   §4   Thème Espagnol (html.theme-spain)         ligne 3192          ║
- * ║   §15  Variantes régionales hispaniques          ligne 3224          ║
- * ║   §14  Onglet Répète                             ligne 3299          ║
- * ║         Focus clavier (role="button")            ligne 3421          ║
- * ║         Toast — notification discrète            ligne 3435          ║
- * ║   §24b Mode sombre @media dark                   ligne 3670          ║
- * ║   §26  Barre de navigation basse                 ligne 3963          ║
- * ║   §PDF  Boutons export PDF                       ligne 4177          ║
- * ║   §SPK  Feedback visuel TTS (.is-speaking)       ligne 4222          ║
- * ║         Ajouts Juin 2026                         ligne 4270          ║
- * ║   §27-bis (ajout 08/07) Leçon 2 colonnes desktop ligne 4466          ║
+ * ║  chaque ancre revérifiée une à une par grep après l'ajout des états    ║
+ * ║  visuels de carte (state-new/progress/complete), du badge "🆕 Nouveau" ║
+ * ║  et de la pastille "✅ terminés". Liste dans l'ordre réel du fichier.) ║
+ * ║   §1   Reset & base                              ligne 74            ║
+ * ║   §1b  Transitions de navigation                 ligne 190           ║
+ * ║   §5   Écran 0 — Lanceur  #app-launcher          ligne 272           ║
+ * ║         Pastille "✅ terminés" du header (ajout   ligne 425           ║
+ * ║           11/07, suite) — .stars-pill/.completed-pill                ║
+ * ║   §2   Variables de thème (:root / fallback)     ligne 457           ║
+ * ║   §6   Écran 1 — Accueil  #home (style Oromo)    ligne 517           ║
+ * ║         Carte "En bref" (.hg-tldr, ajout 11/07)    ligne 848          ║
+ * ║         Widget variante régionale                 ligne 1129          ║
+ * ║   §7   Écran 2 — Sections  #sections             ligne 1228           ║
+ * ║         États de carte + badge Nouveau (ajout     ligne 1384          ║
+ * ║           11/07, suite) — .state-progress/-complete, .badge-new,     ║
+ * ║           .star-filled/-empty                                        ║
+ * ║         §27 Onglets Niveau 1 / 2                 ligne 1434           ║
+ * ║         §LAUNCHER-REGION-GRID                    ligne 1514           ║
+ * ║         §28 Écrans sections level : layout       ligne 1601           ║
+ * ║   §8   Écran 3 — Leçon  #lesson                  ligne 1626           ║
+ * ║         Onglets (tabs)                           ligne 1754           ║
+ * ║   §9   Composants : Flashcards                   ligne 1791           ║
+ * ║         Bannière hors-ligne (ajout 10/07/2026)   ligne 1887           ║
+ * ║         Barre meta (badge voix + vitesse)        ligne 1920           ║
+ * ║   §10  Composants : Alphabet                     ligne 2183           ║
+ * ║   §11  Composants : Quiz                         ligne 2245           ║
+ * ║   §12  Composants : Dialogues / Situations       ligne 2325           ║
+ * ║   §13  Composants : Vocabulaire                  ligne 2394           ║
+ * ║   §17  Footer commun                             ligne 2484           ║
+ * ║   §16  Modales (Guide utilisateur + Remerciements) ligne 2516        ║
+ * ║   §3   Thème Français (html.theme-french)        ligne 3242           ║
+ * ║   §4   Thème Espagnol (html.theme-spain)         ligne 3260           ║
+ * ║   §15  Variantes régionales hispaniques          ligne 3293           ║
+ * ║   §14  Onglet Répète                             ligne 3368           ║
+ * ║         Focus clavier (role="button")            ligne 3490           ║
+ * ║         Toast — notification discrète            ligne 3504           ║
+ * ║   §24b Mode sombre @media dark                   ligne 3752           ║
+ * ║   §26  Barre de navigation basse                 ligne 4045           ║
+ * ║   §PDF  Boutons export PDF                       ligne 4259           ║
+ * ║   §SPK  Feedback visuel TTS (.is-speaking)       ligne 4304           ║
+ * ║         Ajouts Juin 2026                         ligne 4352           ║
+ * ║   §27-bis (ajout 08/07) Leçon 2 colonnes desktop ligne 4548           ║
  * ║         (numéro "27" déjà pris plus haut ; collision préexistante)   ║
  * ╚══════════════════════════════════════════════════════════════════╝
  */
@@ -416,11 +422,27 @@ body {
   text-align: center;
 }
 
-/* Étoiles dans le header Sections */
+/* Étoiles + modules terminés dans le header Sections — 2 pastilles côte à
+   côte (Amélioration visuelle 11/07/2026 : ajout de .completed-pill,
+   distinct du % global qui compte lui tout module ≥ 50 %) */
 .sections-stars {
   margin-top: 4px;
-  font-size: .9rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.stars-pill,
+.completed-pill {
+  display: inline-block;
+  font-size: .78rem;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: 50px;
+  padding: 2px 10px;
   opacity: .95;
+  white-space: nowrap;
 }
 
 /* Sous-titre bilingue sous le titre Sections (Modules / Módulos) */
@@ -450,6 +472,20 @@ body {
   --c-bg:               #f0f4ff;
   --c-done:             #4CAF50;
   --c-progress-bg:      rgba(0,56,147,.2);
+
+  /* Amélioration visuelle 11/07/2026 : fond teinté des cartes de module selon
+     leur état de progression + badge "Nouveau". --c-state-progress-* et
+     --c-badge-new-bg sont volontairement theme-agnostic (ambre / vert fixes,
+     non redéfinis par theme-spain ni les variantes régionales) pour rester
+     immédiatement reconnaissables quel que soit le mode — même logique que
+     --c-text-sub/--c-border ci-dessous (Amélioration 12.3). --c-state-complete-bg
+     est en revanche dérivé de --c-done (donc bien redéfini par theme-spain),
+     pour rester cohérent avec la bordure + coche ✓ déjà existantes. */
+  --c-state-progress-bg:     rgba(255,193,7,.16);
+  --c-state-progress-border: rgba(245,158,11,.55);
+  --c-state-complete-bg:     rgba(76,175,80,.10);
+  --c-badge-new-bg:          #1f8b3b;
+
   --c-footer-bg:        #e8ecf8;
   --c-footer-border:    #d0d8ee;
   --c-vocab-chip-bg:    #eef0ff;
@@ -604,6 +640,35 @@ body {
   color: var(--c-home-title);
   white-space: nowrap;
 }
+
+/* Bouton "Installer l'app" — en-tête du Guide, entre les badges et le
+   cercle de progression (ajouté le 12/07/2026, demande utilisateur,
+   inspiré de l'app Oromo du même auteur). Réutilise la classe
+   .pwa-install-btn déjà gérée par _initInstallButtons()/_installPwa()
+   dans app.js (§21c) : masqué/affiché automatiquement selon que le
+   navigateur propose ou non l'installation en un tap. */
+.home-install-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 11px 28px;
+  font-size: .92rem;
+  font-weight: 800;
+  color: var(--c-primary);
+  cursor: pointer;
+  white-space: nowrap;
+  min-height: 44px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.18);
+  letter-spacing: .01em;
+  margin: 6px auto 2px;
+  transition: opacity .15s, transform .1s, box-shadow .15s;
+}
+.home-install-btn:hover  { opacity: .9; box-shadow: 0 6px 20px rgba(0,0,0,.24); transform: translateY(-1px); }
+.home-install-btn:active { transform: scale(.97); box-shadow: 0 2px 8px rgba(0,0,0,.16); }
 
 /* Cercle de progression (conservé, maintenant dans le hero) */
 .home-progress-circle-wrap {
@@ -1344,10 +1409,21 @@ body {
 }
 .theme-card:hover         { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.12); border-color: var(--c-primary); }
 .theme-card:active        { transform: scale(.96); }
-.theme-card.done          { border-color: var(--c-done); }
 
-/* Coche verte pour les modules terminés */
-.theme-card.done::after {
+/* ── États visuels de progression (Amélioration visuelle 11/07/2026) ──
+   .state-new n'a besoin d'aucune règle propre : elle conserve le fond neutre
+   et la bordure transparente déjà définis sur .theme-card ci-dessus. */
+.theme-card.state-progress {
+  background: var(--c-state-progress-bg);
+  border-color: var(--c-state-progress-border);
+}
+.theme-card.state-complete {
+  background: var(--c-state-complete-bg);
+  border-color: var(--c-done);
+}
+
+/* Coche verte (ou rouge selon le thème) pour les modules terminés à 100 % */
+.theme-card.state-complete::after {
   content: "✓";
   position: absolute;
   top: 6px;
@@ -1357,10 +1433,31 @@ body {
   font-size: .9rem;
 }
 
+/* Badge "🆕 Nouveau" — modules jamais ouverts (state-new uniquement) */
+.badge-new {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: var(--c-badge-new-bg);
+  color: #fff;
+  font-size: .58rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 50px;
+  line-height: 1.4;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+}
+
 .t-emoji { font-size: 1.9rem; }
 .t-name  { font-size: .8rem; font-weight: 700; color: #333; margin-top: 4px; line-height: 1.2; }
 .t-sub   { font-size: .65rem; color: #aaa; margin-top: 2px; }
 .t-stars { font-size: .8rem; margin-top: 3px; }
+
+/* Étoiles plus contrastées : pleines en couleur, vides bien estompées
+   (remplace le simple contour ☆ non stylé) */
+.t-stars .star-filled { opacity: 1; }
+.t-stars .star-empty  { opacity: .35; }
 
 
 /* ════════════════════════════════════════
@@ -3204,6 +3301,7 @@ html.theme-spain {
   --c-bg:                #FFFDF9;
   --c-done:              #C60B1E;
   --c-progress-bg:       rgba(198,11,30,.15);
+  --c-state-complete-bg: rgba(198,11,30,.08);   /* dérivé de --c-done ci-dessus */
   --c-footer-bg:         #FDF6E2;
   --c-footer-border:     #F3E2B3;
   --c-vocab-chip-bg:     #FFF9E6;
@@ -3484,6 +3582,14 @@ html.theme-spain.region-VE {
     --c-bg:               #1a1d2e;   /* fond écrans sections/leçon */
     --c-done:             #4caf50;
     --c-progress-bg:      rgba(91,132,232,.22);
+
+    /* Amélioration visuelle 11/07/2026 : légèrement plus opaques qu'en clair
+       pour rester lisibles sur les fonds sombres des cartes (#1e2236). */
+    --c-state-progress-bg:     rgba(255,193,7,.20);
+    --c-state-progress-border: rgba(255,183,7,.6);
+    --c-state-complete-bg:     rgba(76,175,80,.18);
+    --c-badge-new-bg:          #2fa84f;
+
     --c-footer-bg:        #14172a;
     --c-footer-border:    #2a2e46;
     --c-vocab-chip-bg:    #1f2540;
@@ -3535,7 +3641,7 @@ html.theme-spain.region-VE {
     background: #1e2236;
     box-shadow: 0 2px 8px rgba(0,0,0,.35);
   }
-  .theme-card.done { border-color: #4caf50; }
+  .theme-card.state-complete { border-color: #4caf50; }
   .t-name  { color: #e0e4f8; }
   .t-sub   { color: var(--c-text-sub); }
 
@@ -3649,6 +3755,11 @@ html.theme-spain.region-VE {
     --c-primary:           #e85060;
     --c-primary-dark:      #c0192b;
     --c-accent:            #e8a800;
+    --c-state-complete-bg: rgba(198,11,30,.14);   /* --c-done n'est pas redéfini dans ce bloc
+                                                      (reste #C60B1E même en dark) — teinte
+                                                      dérivée de cette valeur réelle, pas de
+                                                      --c-primary (#e85060) qui ne s'applique
+                                                      qu'aux autres composants de ce bloc */
     --c-bg:                #1e1610;
     --c-footer-bg:         #171008;
     --c-footer-border:     #2e2010;
