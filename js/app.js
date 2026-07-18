@@ -32,11 +32,10 @@
      ├─ data-es.js  → ALL_THEMES_ES (32 thèmes + 16 dialogues) — chargé à la demande
      └─ app.js      → Ce fichier : logique applicative complète (5 295 lignes)
 
-   PLAN DU FICHIER (numéros recalculés le 13/07/2026 — ajout, non encore
-   suivi au précédent recalcul, du câblage du bouton "Installer l'app"
-   déplacé en tête de l'écran Guide et de la vérification proactive des
-   mises à jour du Service Worker (toutes deux du 12/07/2026) ; chaque
-   ancre revérifiée une à une par grep) :
+   PLAN DU FICHIER (numéros recalculés le 18/07/2026 — ajout de l'entrée
+   §15d [cartes de langue fusionnées avec l'explicatif] et décalage de +1
+   ligne des ancres suivantes qui en résulte ; chaque ancre revérifiée une
+   à une par grep) :
      §0    L.  246  Chargement conditionnel des données — loadDataForMode()
      §0b   L.  124  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
      §1    L.  282  Variables d'état globales
@@ -71,20 +70,28 @@
                      utilisateur : pas de barre de nav basse au tout premier lancement
                      sans aucun parcours ; réapparaît dès la première interaction via
                      showLauncherVariant())
-     §16   L. 4546  Remerciements — showCredits()
-     §17   L. 4584  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
+     §15d  L. 4525  Cartes de langue fusionnées avec l'explicatif — _langBoxInitialOpen(),
+                     _setLangBoxOpen(), _initLangBoxes(), toggleLangBox() ; ajouté le
+                     18/07/2026 (demande utilisateur), fusionné le même jour avec les
+                     anciennes cartes .lang-card (auparavant un encadré séparé à 2
+                     colonnes, .launcher-info, sous les cartes) — chaque carte a
+                     désormais sa propre liste à puces dépliable et son propre état
+                     déplié/replié, mémorisés séparément par langue
+                     (aucune bannière numérotée à cet endroit, comme pour §15c)
+     §16   L. 4624  Remerciements — showCredits()
+     §17   L. 4639  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
                      navBackToGuide(), _refreshGuideRegion(), _guideSeenKey()/
                      _hasSeenGuide()/_markGuideSeen() (flag par langue). Câble aussi,
                      depuis le 12/07/2026, le libellé bilingue du bouton #homeInstallBtn
                      (déplacé en tête d'écran — cf. §21c)
-     §18   L. 4831  E-mail antispam — openAndCopyEmail()
-     §19   L. 4850  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
+     §18   L. 4901  E-mail antispam — openAndCopyEmail()
+     §19   L. 4934  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
                      (étiqueté "§21" dans le code même — incohérence de numérotation
                       préexistante, non corrigée ici pour ne pas renuméroter tout le fichier)
-     §20   L. 5151  Accessibilité clavier (keydown → role="button")
-     §21   L. 5166  Initialisation Launcher — addEventListener sur les cartes de langue
-     §21b  L. 5192  Viewport height fix Android — --app-h via window.innerHeight
-     §21c  L. 5233  Bouton d'installation PWA native — _initInstallButtons(),
+     §20   L. 5235  Accessibilité clavier (keydown → role="button")
+     §21   L. 5250  Initialisation Launcher — addEventListener sur les cartes de langue
+     §21b  L. 5276  Viewport height fix Android — --app-h via window.innerHeight
+     §21c  L. 5317  Bouton d'installation PWA native — _initInstallButtons(),
                      _installPwa() ; bouton #homeInstallBtn (tête de l'écran Guide,
                      libellé mis à jour dans §17) ajouté le 12/07/2026, remplace celui
                      auparavant caché dans la rubrique "Hors ligne" du guide
@@ -4516,74 +4523,74 @@ function _isBrandNewUser() {
   }
 }
 
-/* §15d — ENCADRÉ EXPLICATIF "À QUOI SERT L'APP" (écran 0, Vue A)
-   Ajouté le 18/07/2026 (retour utilisateur) : un encadré à 2 colonnes
-   (FR/ES, voir index.html juste après .launcher-cards) résume ce que
-   propose chaque mode, directement sur l'écran de choix de langue.
+/* §15d — CARTES DE LANGUE FUSIONNÉES AVEC L'EXPLICATIF (écran 0, Vue A)
+   Ajouté le 18/07/2026 (retour utilisateur), fusionné le même jour (second
+   retour utilisateur) : chaque carte de langue (voir index.html,
+   .lang-card--fr / .lang-card--es) contient désormais sa propre liste à
+   puces dépliable, plutôt qu'un encadré séparé à 2 colonnes sous les
+   cartes. Chaque carte a son propre bouton "i" et son propre état
+   déplié/replié, indépendant de l'autre carte :
      • Tout nouvel utilisateur (_isBrandNewUser() → true, ci-dessus) :
-       encadré DÉPLIÉ par défaut, pour qu'il soit vu au moins une fois.
-     • Sinon : REPLIÉ par défaut, avec un petit bouton "i" (coin bas
-       droit de l'encadré, .launcher-info-toggle) pour le déplier/
-       replier à la demande.
-   Le choix explicite de l'utilisateur (une fois qu'il a touché le
-   bouton) est mémorisé pour TOUTE l'app via une clé UNIQUE — pas de
-   distinction FR/ES, puisque c'est le même encadré unique affiché sur
-   l'écran 0, quel que soit le mode choisi ensuite. */
-var LAUNCHER_INFO_KEY = 'vachebo_launcher_info_open_v1';
+       les DEUX cartes DÉPLIÉES par défaut, pour être vues au moins une
+       fois.
+     • Sinon : REPLIÉES par défaut, avec mémorisation individuelle du
+       choix de chaque carte (l'utilisateur peut ne garder ouverte que
+       celle qui l'intéresse). */
+var LANG_BOX_KEYS = { fr: 'vachebo_langbox_fr_open_v1', es: 'vachebo_langbox_es_open_v1' };
 
-/* Détermine si l'encadré doit être ouvert au chargement :
-     - nouvel utilisateur → toujours ouvert (aucune préférence à lire)
-     - sinon → préférence mémorisée si l'utilisateur a déjà touché le
-       bouton par le passé ; replié par défaut si aucune préférence
-       n'est encore enregistrée. */
-function _launcherInfoInitialOpen() {
+/* Détermine si la carte `lang` ('fr' ou 'es') doit être ouverte au
+   chargement : nouvel utilisateur → toujours ouverte ; sinon, préférence
+   mémorisée pour CETTE carte si déjà touchée par le passé, repliée par
+   défaut sinon. */
+function _langBoxInitialOpen(lang) {
   if (_isBrandNewUser()) return true;
   try {
-    var pref = localStorage.getItem(LAUNCHER_INFO_KEY);
+    var pref = localStorage.getItem(LANG_BOX_KEYS[lang]);
     if (pref === '1') return true;
     if (pref === '0') return false;
   } catch (e) {
     /* Stockage indisponible (navigation privée stricte) : on retombe
        sur le comportement par défaut ci-dessous. */
   }
-  return false; /* défaut : replié dès que ce n'est plus un nouvel utilisateur */
+  return false; /* défaut : repliée dès que ce n'est plus un nouvel utilisateur */
 }
 
-/* Applique visuellement l'état ouvert/fermé sur l'encadré (classe CSS
-   .collapsed, attributs aria, icône du bouton). Ne touche PAS au
-   localStorage — voir toggleLauncherInfo() pour la mémorisation. */
-function _setLauncherInfoOpen(open) {
-  var box  = document.getElementById('launcherInfo');
-  var btn  = document.getElementById('launcherInfoToggle');
-  var icon = document.getElementById('launcherInfoToggleIcon');
+/* Applique visuellement l'état ouvert/fermé sur la carte `lang` (classe
+   CSS .collapsed, attributs aria, icône du bouton). Ne touche PAS au
+   localStorage — voir toggleLangBox() pour la mémorisation. */
+function _setLangBoxOpen(lang, open) {
+  var box  = document.getElementById('langBox-' + lang);
+  var btn  = document.getElementById('langBoxToggle-' + lang);
+  var icon = document.getElementById('langBoxToggleIcon-' + lang);
   if (!box || !btn) return;
   box.classList.toggle('collapsed', !open);
   btn.setAttribute('aria-expanded', open ? 'true' : 'false');
   btn.setAttribute(
     'aria-label',
     open
-      ? "Replier les explications sur l'application / Contraer las explicaciones sobre la aplicación"
-      : "Afficher les explications sur l'application / Mostrar las explicaciones sobre la aplicación"
+      ? "Replier les explications / Contraer las explicaciones"
+      : "Afficher les explications / Mostrar las explicaciones"
   );
   if (icon) icon.textContent = open ? '✕' : 'ℹ';
 }
 
-/* Initialise l'encadré au chargement de l'écran 0 (appelé depuis le
+/* Initialise les deux cartes au chargement de l'écran 0 (appelé depuis le
    DOMContentLoaded existant, cf. plus bas). */
-function _initLauncherInfo() {
-  _setLauncherInfoOpen(_launcherInfoInitialOpen());
+function _initLangBoxes() {
+  _setLangBoxOpen('fr', _langBoxInitialOpen('fr'));
+  _setLangBoxOpen('es', _langBoxInitialOpen('es'));
 }
 
-/* Bouton "i" (.launcher-info-toggle, onclick dans index.html) — bascule
-   l'état déplié/replié et mémorise le choix pour toute l'app (une seule
-   clé, pas de distinction FR/ES : cf. commentaire §15d ci-dessus). */
-function toggleLauncherInfo() {
-  var box = document.getElementById('launcherInfo');
+/* Bouton "i" de chaque carte (.lang-card-toggle, onclick dans index.html)
+   — bascule l'état déplié/replié de CETTE carte uniquement et mémorise le
+   choix séparément par langue (cf. commentaire §15d ci-dessus). */
+function toggleLangBox(lang) {
+  var box = document.getElementById('langBox-' + lang);
   if (!box) return;
-  var nextOpen = box.classList.contains('collapsed'); /* était replié → on déplie */
-  _setLauncherInfoOpen(nextOpen);
+  var nextOpen = box.classList.contains('collapsed'); /* était repliée → on déplie */
+  _setLangBoxOpen(lang, nextOpen);
   try {
-    localStorage.setItem(LAUNCHER_INFO_KEY, nextOpen ? '1' : '0');
+    localStorage.setItem(LANG_BOX_KEYS[lang], nextOpen ? '1' : '0');
   } catch (e) {
     /* Navigation privée stricte / stockage désactivé : l'affichage reste
        correct pour la session en cours, seule la mémorisation échoue. */
@@ -4596,10 +4603,11 @@ function toggleLauncherInfo() {
    troncature avant la première interaction utilisateur. */
 document.addEventListener('DOMContentLoaded', () => {
   _resizeOpenAccordions();
-  /* Ajouté le 18/07/2026 (demande utilisateur) : pose l'état initial
-     (déplié/replié) de l'encadré explicatif de l'écran 0 — voir §15d
-     juste au-dessus pour le détail de la logique. */
-  _initLauncherInfo();
+  /* Ajouté le 18/07/2026 (demande utilisateur), fusionné le même jour
+     (second retour utilisateur) : pose l'état initial (déplié/replié) des
+     deux cartes de langue de l'écran 0 — voir §15d juste au-dessus pour
+     le détail de la logique. */
+  _initLangBoxes();
   /* Ajouté le 11/07/2026 (demande utilisateur) : sur le tout premier
      lancement de l'app (_isBrandNewUser() → aucun parcours, aucun mode
      jamais choisi), on n'affiche PAS encore la barre de navigation basse

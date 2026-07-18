@@ -152,59 +152,47 @@
 
       <p class="launcher-subtitle">Choisis ta langue · Elige tu idioma</p>
 
+      <!-- Cartes de langue fusionnées avec l'encadré explicatif — Fusion
+           réalisée le 18/07/2026 (demande utilisateur) : auparavant deux
+           blocs séparés (le bouton .lang-card cliquable, puis un encadré
+           .launcher-info à 2 colonnes juste en dessous). Désormais un seul
+           bloc par langue, ce qui économise la hauteur de l'ancien encadré
+           partagé et de sa propre barre de bouton "i".
+           Contenu de l'explication INVERSÉ par rapport à la version du
+           18/07 (même jour, retour utilisateur) : la carte "Apprendre le
+           Français" s'adresse à un hispanophone qui veut apprendre le
+           français — son explication est donc en ESPAGNOL (celle qui,
+           avant l'inversion, se trouvait sous "Aprender Español"). De même,
+           la carte "Aprender Español" s'adresse à un francophone — son
+           explication est en FRANÇAIS (celle qui se trouvait avant sous
+           "Apprendre le Français"). Seul le texte des puces est inversé ;
+           le nom de la carte et son sous-titre bilingue restent inchangés.
+           Cliquer sur l'en-tête (.lang-card-main) ouvre le sélecteur de
+           variante (comportement inchangé, cf. cardFR/cardES dans app.js) ;
+           le petit bouton rond "i" (.lang-card-toggle) déplie/replie
+           séparément la liste à puces (.lang-card-details), sans naviguer.
+           Repliée par défaut = sous-titre bilingue ET puces masqués, ne
+           laissant que le nom principal ("Apprendre le Français" /
+           "Aprender Español") — cf. toggleLangBox() / _initLangBoxes()
+           dans app.js, §15d. Déplié par défaut pour un tout nouvel
+           utilisateur (_isBrandNewUser(), §15c) ; replié ensuite. La classe
+           "collapsed" ci-dessous n'est qu'un filet de sécurité si JS tarde
+           à s'exécuter, elle est de toute façon réévaluée immédiatement
+           après par _initLangBoxes(). -->
       <div class="launcher-cards">
-        <!-- Carte Français : affiche le sélecteur de variante -->
-        <button class="lang-card lang-card--fr" id="card-learn-french"
-                aria-label="Apprendre le Français — Aprender Francés">
-          <div class="lang-card-flag" aria-hidden="true">🇫🇷</div>
-          <div class="lang-card-body">
-            <span class="lang-card-name">Apprendre le Français</span>
-            <span class="lang-card-sub">Aprender Francés</span>
-          </div>
-          <div class="lang-card-arrow" aria-hidden="true">›</div>
-        </button>
 
-        <!-- Carte Espagnol : affiche le sélecteur de variante -->
-        <button class="lang-card lang-card--es" id="card-learn-spain"
-                aria-label="Aprender Español — Apprendre l'Espagnol">
-          <div class="lang-card-flag" aria-hidden="true">🇪🇸</div>
-          <div class="lang-card-body">
-            <span class="lang-card-name">Aprender Español</span>
-            <span class="lang-card-sub">Apprendre l'Espagnol</span>
-          </div>
-          <div class="lang-card-arrow" aria-hidden="true">›</div>
-        </button>
-      </div>
-
-      <!-- Encadré explicatif "à quoi sert l'app" — ajouté le 18/07/2026 (retour
-           utilisateur) : 2 colonnes FR/ES résumant chaque mode, visible SANS avoir
-           à cliquer sur une carte. Uniquement sur cette Vue A de l'écran 0.
-           Déplié par défaut pour un tout nouvel utilisateur (_isBrandNewUser()
-           dans app.js, §15c) ; replié ensuite, avec le petit bouton "i" en bas à
-           droite de l'encadré pour le rouvrir à la demande. État initial posé par
-           _initLauncherInfo() (§15d dans app.js) au chargement du DOM — la classe
-           "collapsed" ci-dessous n'est qu'un filet de sécurité si JS tarde à
-           s'exécuter, elle est de toute façon réévaluée immédiatement après. -->
-      <div class="launcher-info collapsed" id="launcherInfo">
-        <div class="launcher-info-body" id="launcherInfoBody">
-          <div class="launcher-info-col launcher-info-col--fr">
-            <div class="launcher-info-col-head">
-              <span class="launcher-info-flag" aria-hidden="true">🇫🇷</span>
-              <span class="launcher-info-title">Apprendre le Français<small>Aprender Francés</small></span>
+        <!-- Carte Français : bouton → sélecteur de variante ; explication en ESPAGNOL -->
+        <div class="lang-card lang-card--fr collapsed" id="langBox-fr">
+          <button class="lang-card-main" id="card-learn-french"
+                  aria-label="Apprendre le Français — Aprender Francés">
+            <div class="lang-card-flag" aria-hidden="true">🇫🇷</div>
+            <div class="lang-card-body">
+              <span class="lang-card-name">Apprendre le Français</span>
+              <span class="lang-card-sub">Aprender Francés</span>
             </div>
-            <ul>
-              <li>🎯 VACHÉBO t'apprend les mots qui comptent et comment les utiliser</li>
-              <li>📖 Vocabulaire, quiz et dialogues de la vraie vie (commander un café, demander son chemin, une consultation chez le médecin...)</li>
-              <li>📥 Téléchargeables en PDF pour réviser sans écran</li>
-              <li>🌎 7 variantes d'espagnol selon le pays et 🔊 audio pour la prononciation</li>
-              <li>🎁 Gratuit, sans compte, et 📴 utilisable hors ligne une fois installée (sauf 🎙️ la répétition orale, qui nécessite toujours internet)</li>
-            </ul>
-          </div>
-          <div class="launcher-info-col launcher-info-col--es">
-            <div class="launcher-info-col-head">
-              <span class="launcher-info-flag" aria-hidden="true">🇪🇸</span>
-              <span class="launcher-info-title">Aprender Español<small>Apprendre l'Espagnol</small></span>
-            </div>
+            <div class="lang-card-arrow" aria-hidden="true">›</div>
+          </button>
+          <div class="lang-card-details" id="langBoxBody-fr">
             <ul>
               <li>🎯 VACHÉBO te enseña las palabras que importan y cómo usarlas</li>
               <li>📖 Vocabulario, quiz y diálogos de la vida real (pedir un café, preguntar por una dirección, una consulta médica...)</li>
@@ -213,16 +201,46 @@
               <li>🎁 Gratis, sin cuenta, y 📴 utilizable sin conexión una vez instalada (salvo 🎙️ la repetición oral, que siempre necesita internet)</li>
             </ul>
           </div>
+          <div class="lang-card-toggle-bar">
+            <button type="button" class="lang-card-toggle" id="langBoxToggle-fr"
+                    onclick="toggleLangBox('fr')" aria-expanded="false" aria-controls="langBoxBody-fr"
+                    aria-label="Afficher les explications / Mostrar las explicaciones">
+              <span id="langBoxToggleIcon-fr" aria-hidden="true">ℹ</span>
+            </button>
+          </div>
         </div>
-        <div class="launcher-info-bar">
-          <button type="button" class="launcher-info-toggle" id="launcherInfoToggle"
-                  onclick="toggleLauncherInfo()" aria-expanded="false" aria-controls="launcherInfoBody"
-                  aria-label="Afficher les explications sur l'application / Mostrar las explicaciones sobre la aplicación">
-            <span id="launcherInfoToggleIcon" aria-hidden="true">ℹ</span>
+
+        <!-- Carte Espagnol : bouton → sélecteur de variante ; explication en FRANÇAIS -->
+        <div class="lang-card lang-card--es collapsed" id="langBox-es">
+          <button class="lang-card-main" id="card-learn-spain"
+                  aria-label="Aprender Español — Apprendre l'Espagnol">
+            <div class="lang-card-flag" aria-hidden="true">🇪🇸</div>
+            <div class="lang-card-body">
+              <span class="lang-card-name">Aprender Español</span>
+              <span class="lang-card-sub">Apprendre l'Espagnol</span>
+            </div>
+            <div class="lang-card-arrow" aria-hidden="true">›</div>
           </button>
+          <div class="lang-card-details" id="langBoxBody-es">
+            <ul>
+              <li>🎯 VACHÉBO t'apprend les mots qui comptent et comment les utiliser</li>
+              <li>📖 Vocabulaire, quiz et dialogues de la vraie vie (commander un café, demander son chemin, une consultation chez le médecin...)</li>
+              <li>📥 Téléchargeables en PDF pour réviser sans écran</li>
+              <li>🌎 7 variantes d'espagnol selon le pays et 🔊 audio pour la prononciation</li>
+              <li>🎁 Gratuit, sans compte, et 📴 utilisable hors ligne une fois installée (sauf 🎙️ la répétition orale, qui nécessite toujours internet)</li>
+            </ul>
+          </div>
+          <div class="lang-card-toggle-bar">
+            <button type="button" class="lang-card-toggle" id="langBoxToggle-es"
+                    onclick="toggleLangBox('es')" aria-expanded="false" aria-controls="langBoxBody-es"
+                    aria-label="Afficher les explications / Mostrar las explicaciones">
+              <span id="langBoxToggleIcon-es" aria-hidden="true">ℹ</span>
+            </button>
+          </div>
         </div>
+
       </div>
-      <!-- /launcher-info -->
+      <!-- /launcher-cards -->
     </div>
 
     <!-- ─── VUE B : Sélecteur de variante (après clic sur une carte) ─── -->
