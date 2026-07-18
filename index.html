@@ -175,6 +175,54 @@
           <div class="lang-card-arrow" aria-hidden="true">›</div>
         </button>
       </div>
+
+      <!-- Encadré explicatif "à quoi sert l'app" — ajouté le 18/07/2026 (retour
+           utilisateur) : 2 colonnes FR/ES résumant chaque mode, visible SANS avoir
+           à cliquer sur une carte. Uniquement sur cette Vue A de l'écran 0.
+           Déplié par défaut pour un tout nouvel utilisateur (_isBrandNewUser()
+           dans app.js, §15c) ; replié ensuite, avec le petit bouton "i" en bas à
+           droite de l'encadré pour le rouvrir à la demande. État initial posé par
+           _initLauncherInfo() (§15d dans app.js) au chargement du DOM — la classe
+           "collapsed" ci-dessous n'est qu'un filet de sécurité si JS tarde à
+           s'exécuter, elle est de toute façon réévaluée immédiatement après. -->
+      <div class="launcher-info collapsed" id="launcherInfo">
+        <div class="launcher-info-body" id="launcherInfoBody">
+          <div class="launcher-info-col launcher-info-col--fr">
+            <div class="launcher-info-col-head">
+              <span class="launcher-info-flag" aria-hidden="true">🇫🇷</span>
+              <span class="launcher-info-title">Apprendre le Français<small>Aprender Francés</small></span>
+            </div>
+            <ul>
+              <li>🎯 VACHÉBO t'apprend les mots qui comptent et comment les utiliser</li>
+              <li>📖 Vocabulaire, quiz et dialogues de la vraie vie (commander un café, demander son chemin, une consultation chez le médecin...)</li>
+              <li>📥 Téléchargeables en PDF pour réviser sans écran</li>
+              <li>🌎 7 variantes d'espagnol selon le pays et 🔊 audio pour la prononciation</li>
+              <li>🎁 Gratuit, sans compte, et 📴 utilisable hors ligne une fois installée (sauf 🎙️ la répétition orale, qui nécessite toujours internet)</li>
+            </ul>
+          </div>
+          <div class="launcher-info-col launcher-info-col--es">
+            <div class="launcher-info-col-head">
+              <span class="launcher-info-flag" aria-hidden="true">🇪🇸</span>
+              <span class="launcher-info-title">Aprender Español<small>Apprendre l'Espagnol</small></span>
+            </div>
+            <ul>
+              <li>🎯 VACHÉBO te enseña las palabras que importan y cómo usarlas</li>
+              <li>📖 Vocabulario, quiz y diálogos de la vida real (pedir un café, preguntar por una dirección, una consulta médica...)</li>
+              <li>📥 Descargables en PDF para repasar en pantalla</li>
+              <li>🌎 7 variantes de español según el país y 🔊 audio para la pronunciación</li>
+              <li>🎁 Gratis, sin cuenta, y 📴 utilizable sin conexión una vez instalada (salvo 🎙️ la repetición oral, que siempre necesita internet)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="launcher-info-bar">
+          <button type="button" class="launcher-info-toggle" id="launcherInfoToggle"
+                  onclick="toggleLauncherInfo()" aria-expanded="false" aria-controls="launcherInfoBody"
+                  aria-label="Afficher les explications sur l'application / Mostrar las explicaciones sobre la aplicación">
+            <span id="launcherInfoToggleIcon" aria-hidden="true">ℹ</span>
+          </button>
+        </div>
+      </div>
+      <!-- /launcher-info -->
     </div>
 
     <!-- ─── VUE B : Sélecteur de variante (après clic sur une carte) ─── -->

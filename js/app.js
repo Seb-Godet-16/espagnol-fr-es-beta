@@ -4516,12 +4516,90 @@ function _isBrandNewUser() {
   }
 }
 
+/* §15d — ENCADRÉ EXPLICATIF "À QUOI SERT L'APP" (écran 0, Vue A)
+   Ajouté le 18/07/2026 (retour utilisateur) : un encadré à 2 colonnes
+   (FR/ES, voir index.html juste après .launcher-cards) résume ce que
+   propose chaque mode, directement sur l'écran de choix de langue.
+     • Tout nouvel utilisateur (_isBrandNewUser() → true, ci-dessus) :
+       encadré DÉPLIÉ par défaut, pour qu'il soit vu au moins une fois.
+     • Sinon : REPLIÉ par défaut, avec un petit bouton "i" (coin bas
+       droit de l'encadré, .launcher-info-toggle) pour le déplier/
+       replier à la demande.
+   Le choix explicite de l'utilisateur (une fois qu'il a touché le
+   bouton) est mémorisé pour TOUTE l'app via une clé UNIQUE — pas de
+   distinction FR/ES, puisque c'est le même encadré unique affiché sur
+   l'écran 0, quel que soit le mode choisi ensuite. */
+var LAUNCHER_INFO_KEY = 'vachebo_launcher_info_open_v1';
+
+/* Détermine si l'encadré doit être ouvert au chargement :
+     - nouvel utilisateur → toujours ouvert (aucune préférence à lire)
+     - sinon → préférence mémorisée si l'utilisateur a déjà touché le
+       bouton par le passé ; replié par défaut si aucune préférence
+       n'est encore enregistrée. */
+function _launcherInfoInitialOpen() {
+  if (_isBrandNewUser()) return true;
+  try {
+    var pref = localStorage.getItem(LAUNCHER_INFO_KEY);
+    if (pref === '1') return true;
+    if (pref === '0') return false;
+  } catch (e) {
+    /* Stockage indisponible (navigation privée stricte) : on retombe
+       sur le comportement par défaut ci-dessous. */
+  }
+  return false; /* défaut : replié dès que ce n'est plus un nouvel utilisateur */
+}
+
+/* Applique visuellement l'état ouvert/fermé sur l'encadré (classe CSS
+   .collapsed, attributs aria, icône du bouton). Ne touche PAS au
+   localStorage — voir toggleLauncherInfo() pour la mémorisation. */
+function _setLauncherInfoOpen(open) {
+  var box  = document.getElementById('launcherInfo');
+  var btn  = document.getElementById('launcherInfoToggle');
+  var icon = document.getElementById('launcherInfoToggleIcon');
+  if (!box || !btn) return;
+  box.classList.toggle('collapsed', !open);
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  btn.setAttribute(
+    'aria-label',
+    open
+      ? "Replier les explications sur l'application / Contraer las explicaciones sobre la aplicación"
+      : "Afficher les explications sur l'application / Mostrar las explicaciones sobre la aplicación"
+  );
+  if (icon) icon.textContent = open ? '✕' : 'ℹ';
+}
+
+/* Initialise l'encadré au chargement de l'écran 0 (appelé depuis le
+   DOMContentLoaded existant, cf. plus bas). */
+function _initLauncherInfo() {
+  _setLauncherInfoOpen(_launcherInfoInitialOpen());
+}
+
+/* Bouton "i" (.launcher-info-toggle, onclick dans index.html) — bascule
+   l'état déplié/replié et mémorise le choix pour toute l'app (une seule
+   clé, pas de distinction FR/ES : cf. commentaire §15d ci-dessus). */
+function toggleLauncherInfo() {
+  var box = document.getElementById('launcherInfo');
+  if (!box) return;
+  var nextOpen = box.classList.contains('collapsed'); /* était replié → on déplie */
+  _setLauncherInfoOpen(nextOpen);
+  try {
+    localStorage.setItem(LAUNCHER_INFO_KEY, nextOpen ? '1' : '0');
+  } catch (e) {
+    /* Navigation privée stricte / stockage désactivé : l'affichage reste
+       correct pour la session en cours, seule la mémorisation échoue. */
+  }
+}
+
 /* Au chargement du DOM, fixe la max-height réelle de toute section
    accordéon déjà ouverte par défaut dans le HTML (ex : « Comment ça
    marche », ouverte au premier affichage), pour éviter tout effet de
    troncature avant la première interaction utilisateur. */
 document.addEventListener('DOMContentLoaded', () => {
   _resizeOpenAccordions();
+  /* Ajouté le 18/07/2026 (demande utilisateur) : pose l'état initial
+     (déplié/replié) de l'encadré explicatif de l'écran 0 — voir §15d
+     juste au-dessus pour le détail de la logique. */
+  _initLauncherInfo();
   /* Ajouté le 11/07/2026 (demande utilisateur) : sur le tout premier
      lancement de l'app (_isBrandNewUser() → aucun parcours, aucun mode
      jamais choisi), on n'affiche PAS encore la barre de navigation basse
