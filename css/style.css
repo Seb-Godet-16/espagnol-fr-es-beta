@@ -347,10 +347,24 @@ body {
    (.lang-card-details) et son propre bouton toggle (.lang-card-toggle,
    dans .lang-card-toggle-bar). Repliée par défaut : sous-titre bilingue
    (.lang-card-sub) ET puces masqués, ne laissant que le nom principal —
-   cf. toggleLangBox() / _initLangBoxes() dans app.js, §15d. */
-.launcher-cards     { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+   cf. toggleLangBox() / _initLangBoxes() dans app.js, §15d.
+
+   Passage en 2 colonnes + pastille CTA — ajout du 18/07/2026 (nouvelle
+   demande utilisateur, même jour) : les 2 cartes passent d'un empilement
+   vertical à une disposition côte à côte (.launcher-cards en row), et
+   chaque en-tête adopte une mise en page interne verticale et centrée
+   (drapeau → nom → sous-titre → pastille CTA) plutôt que la ligne
+   horizontale d'origine, pour rester lisible dans une colonne étroite.
+   La pastille .lang-card-cta (texte bilingue + chevron animé, cf.
+   @keyframes langCardCtaBounce plus bas) montre explicitement à
+   l'apprenant que la carte se touche pour passer à l'écran suivant —
+   purement visuelle (aria-hidden="true" côté HTML), l'aria-label du
+   bouton porte déjà l'information utile aux lecteurs d'écran. */
+.launcher-cards     { display: flex; flex-direction: row; align-items: flex-start; gap: 12px; width: 100%; }
 
 .lang-card {
+  flex: 1 1 0;
+  min-width: 0;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 6px 24px rgba(0,0,0,.1);
@@ -364,17 +378,19 @@ body {
 /* Thème Espagnol (rouge → or) */
 .lang-card--es { background: linear-gradient(135deg, #A00818 0%, #C60B1E 45%, #FFC400 100%); color: #fff; }
 
-/* En-tête cliquable — seule partie qui navigue vers le sélecteur de variante */
+/* En-tête cliquable — seule partie qui navigue vers le sélecteur de
+   variante. Mise en page verticale et centrée pour rester lisible dans
+   une colonne étroite (2 colonnes côte à côte). */
 .lang-card-main {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 16px;
   width: 100%;
-  padding: 20px 22px;
+  padding: 22px 12px 16px;
   border: none;
   background: transparent;
   cursor: pointer;
-  text-align: left;
+  text-align: center;
   color: inherit;
   position: relative;
   overflow: hidden;
@@ -389,14 +405,57 @@ body {
   opacity: 0;
   transition: opacity .15s;
 }
-.lang-card-main:active            { transform: scale(.99); }
+.lang-card-main:active            { transform: scale(.98); }
 .lang-card-main:active::before    { opacity: 1; }
 
-.lang-card-flag   { font-size: 2.8rem; flex-shrink: 0; filter: drop-shadow(0 2px 6px rgba(0,0,0,.25)); line-height: 1; }
-.lang-card-body   { flex: 1; display: flex; flex-direction: column; gap: 4px; }
-.lang-card-name   { font-size: 1.05rem; font-weight: 800; line-height: 1.2; color: #fff; }
-.lang-card-sub    { font-size: .72rem; color: rgba(255,255,255,.75); font-weight: 500; font-style: italic; line-height: 1.3; transition: opacity .15s ease; }
-.lang-card-arrow  { font-size: 2rem; font-weight: 300; color: rgba(255,255,255,.6); flex-shrink: 0; line-height: 1; margin-left: 4px; }
+.lang-card-flag   { font-size: 2.4rem; flex-shrink: 0; filter: drop-shadow(0 2px 6px rgba(0,0,0,.25)); line-height: 1; margin-bottom: 6px; }
+.lang-card-body   { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.lang-card-name   { font-size: .92rem; font-weight: 800; line-height: 1.2; color: #fff; }
+.lang-card-sub    { font-size: .68rem; color: rgba(255,255,255,.75); font-weight: 500; font-style: italic; line-height: 1.3; transition: opacity .15s ease; }
+
+/* Pastille d'appel à l'action — met en évidence que la carte se touche
+   pour passer à l'écran suivant (sélecteur de variante régionale). Le
+   chevron anime un léger va-et-vient horizontal pour attirer l'œil ; la
+   pastille reste discrète (fond translucide) pour ne pas rivaliser
+   visuellement avec le drapeau/nom, qui restent les éléments dominants. */
+.lang-card-cta {
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.22);
+  border: 1px solid rgba(255,255,255,.4);
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  max-width: 100%;
+}
+.lang-card-cta-text  { font-size: .62rem; font-weight: 700; line-height: 1.25; color: #fff; }
+.lang-card-cta-text small {
+  display: block;
+  font-weight: 500;
+  font-style: italic;
+  font-size: .56rem;
+  opacity: .85;
+  margin-top: 1px;
+}
+.lang-card-cta-arrow {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  flex-shrink: 0;
+  animation: langCardCtaBounce 1.3s ease-in-out infinite;
+}
+@keyframes langCardCtaBounce {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(4px); }
+}
+/* Accessibilité : reduced-motion — cf. autres animations du fichier
+   (ex. .slide-in-right L.264, .is-speaking L.4441) */
+@media (prefers-reduced-motion: reduce) {
+  .lang-card-cta-arrow { animation: none; }
+}
 
 /* Liste à puces dépliable — repliée par défaut (cf. .collapsed plus bas) */
 .lang-card-details {
@@ -436,7 +495,8 @@ body {
 .lang-card-toggle:active { transform: scale(.92); }
 
 /* État replié : masque le sous-titre bilingue et les puces, ne laisse que
-   le nom principal + la barre de bouton "i" (transparente, discrète). */
+   le nom principal + la pastille CTA + la barre de bouton "i" (transparente,
+   discrète). */
 .lang-card.collapsed .lang-card-sub        { display: none; }
 .lang-card.collapsed .lang-card-details    { max-height: 0; padding-top: 0; padding-bottom: 0; }
 .lang-card.collapsed .lang-card-toggle-bar { background: transparent; padding: 4px 14px; }
@@ -4608,17 +4668,19 @@ footer .footer-antispam-btn           { color: #aaa; }
   .launcher-logo { margin-bottom: 4px; }
   .launcher-logo-img { max-width: 200px; }
   .launcher-subtitle { margin-bottom: 8px; font-size: .74rem; }
-  .launcher-cards { flex-direction: row; gap: 10px; }
+  .launcher-cards { gap: 8px; } /* déjà côte à côte par défaut désormais (18/07/2026) — ne fait plus que resserrer l'écart entre les 2 cartes */
 
-  /* Cartes de langue fusionnées (ajout 18/07/2026) : resserrées pour rester
-     lisibles/compactes sur les petites hauteurs paysage. Puces dépliables
-     resserrées de la même façon que l'étaient les colonnes de l'ancien
-     encadré séparé. */
-  .lang-card-main { padding: 10px 12px; gap: 10px; }
-  .lang-card-flag { font-size: 1.7rem; }
-  .lang-card-name { font-size: .82rem; }
+  /* Cartes de langue fusionnées (ajout 18/07/2026, resserrement 2 colonnes
+     du même jour) : resserrées pour rester lisibles/compactes sur les
+     petites hauteurs paysage. La pastille CTA perd son texte (ne garde
+     que le chevron) pour ne pas déborder en hauteur réduite. */
+  .lang-card-main { padding: 8px 8px 6px; }
+  .lang-card-flag { font-size: 1.6rem; margin-bottom: 2px; }
+  .lang-card-name { font-size: .78rem; }
   .lang-card-sub { display: none; } /* sous-titre traduit : redondant avec le nom principal, coupé pour gagner de la hauteur de carte */
-  .lang-card-arrow { font-size: 1.4rem; }
+  .lang-card-cta { margin-top: 4px; padding: 3px 8px; gap: 3px; }
+  .lang-card-cta-text { display: none; }
+  .lang-card-cta-arrow { font-size: .95rem; }
   .lang-card-details { padding: 0 12px 8px; }
   .lang-card-details ul { gap: 4px; }
   .lang-card-details li { font-size: .6rem; line-height: 1.3; }

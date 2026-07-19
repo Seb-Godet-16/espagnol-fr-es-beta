@@ -178,7 +178,16 @@
            utilisateur (_isBrandNewUser(), §15c) ; replié ensuite. La classe
            "collapsed" ci-dessous n'est qu'un filet de sécurité si JS tarde
            à s'exécuter, elle est de toute façon réévaluée immédiatement
-           après par _initLangBoxes(). -->
+           après par _initLangBoxes().
+           Passage en 2 colonnes + pastille CTA — ajout du 18/07/2026
+           (nouvelle demande utilisateur, même jour) : les 2 cartes sont
+           désormais côte à côte (auparavant empilées, sauf déjà en
+           paysage téléphone) et chaque en-tête affiche une pastille
+           ".lang-card-cta" (texte bilingue + chevron animé) pour bien
+           montrer à l'apprenant qu'on touche la carte pour passer à
+           l'écran suivant (sélecteur de variante régionale). Purement
+           visuelle (aria-hidden="true") : l'aria-label du bouton porte
+           déjà l'information utile aux lecteurs d'écran. -->
       <div class="launcher-cards">
 
         <!-- Carte Français : bouton → sélecteur de variante ; explication en ESPAGNOL -->
@@ -190,7 +199,10 @@
               <span class="lang-card-name">Apprendre le Français</span>
               <span class="lang-card-sub">Aprender Francés</span>
             </div>
-            <div class="lang-card-arrow" aria-hidden="true">›</div>
+            <div class="lang-card-cta" aria-hidden="true">
+              <span class="lang-card-cta-text">Touche pour commencer<small>Toca para empezar</small></span>
+              <span class="lang-card-cta-arrow">›</span>
+            </div>
           </button>
           <div class="lang-card-details" id="langBoxBody-fr">
             <ul>
@@ -219,7 +231,10 @@
               <span class="lang-card-name">Aprender Español</span>
               <span class="lang-card-sub">Apprendre l'Espagnol</span>
             </div>
-            <div class="lang-card-arrow" aria-hidden="true">›</div>
+            <div class="lang-card-cta" aria-hidden="true">
+              <span class="lang-card-cta-text">Toca para empezar<small>Touche pour commencer</small></span>
+              <span class="lang-card-cta-arrow">›</span>
+            </div>
           </button>
           <div class="lang-card-details" id="langBoxBody-es">
             <ul>
@@ -242,6 +257,7 @@
       </div>
       <!-- /launcher-cards -->
     </div>
+
 
     <!-- ─── VUE B : Sélecteur de variante (après clic sur une carte) ─── -->
     <div id="launcher-view-variant" class="launcher-inner" style="display:none;">
