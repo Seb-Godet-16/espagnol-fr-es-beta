@@ -366,6 +366,20 @@
       <div class="home-other-progress" id="homeOtherProgress" style="display:none"></div>
     </div><!-- /.home-guide-header -->
 
+    <!-- Barre sticky : Commencer + PDF côte à côte — remontée ici le 19/07/2026
+         (demande utilisateur) : elle doit apparaître dès la fin de l'en-tête,
+         AVANT la carte "En bref", pour que les apprenants n'aient pas à
+         scroller au-delà du résumé pour voir le bouton Commencer. Comme elle
+         est en position:sticky (top:56px, juste sous la topbar), la placer ici
+         ne change rien à son comportement d'accroche : elle devient sticky dès
+         que l'en-tête défile, et la carte "En bref" défile désormais SOUS elle. -->
+    <div class="home-start-sticky">
+      <div class="home-start-row">
+        <button class="btn-start-main" id="homeStartBtn" onclick="showScreen('sections-level1')">▶ Commencer</button>
+        <button class="btn-pdf-pill" id="homeExportBtn" onclick="_exportGuide()" aria-label="Télécharger le guide PDF">📄 PDF</button>
+      </div>
+    </div>
+
     <!-- Carte "En bref" — résumé express avant les rubriques en accordéon.
          Basculée FR/ES par le même mécanisme que #guideContentFR/ES
          (.home-lang-block[data-lang] + _buildHomeGuide() dans app.js). -->
@@ -388,14 +402,6 @@
         <li>🌐 <strong>Android</strong> : Chrome, Samsung Internet, Edge, Opera, Brave y Vivaldi funcionan bien ; Firefox nunca permite 🎤 Repite. <strong>iPhone/iPad</strong> : usa Safari para una experiencia garantizada al 100 %</li>
       </ul>
       <p class="hg-tldr-more">Detalles completos más abajo, o más tarde desde el botón ❓ en la parte inferior.</p>
-    </div>
-
-    <!-- Barre sticky : Commencer + PDF côte à côte -->
-    <div class="home-start-sticky">
-      <div class="home-start-row">
-        <button class="btn-start-main" id="homeStartBtn" onclick="showScreen('sections-level1')">▶ Commencer</button>
-        <button class="btn-pdf-pill" id="homeExportBtn" onclick="_exportGuide()" aria-label="Télécharger le guide PDF">📄 PDF</button>
-      </div>
     </div>
 
     <!-- CORPS DU GUIDE — deux blocs statiques (un par langue) -->

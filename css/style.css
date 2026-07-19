@@ -1048,9 +1048,12 @@ body {
    Ajoutée le 11/07/2026 (demande utilisateur, inspirée de l'app Oromo) :
    donne le fonctionnement + les pièges à connaître (audio, hors-ligne,
    navigateur) en un coup d'œil, sans déplier un seul accordéon.
-   Placée entre .home-guide-header et .home-start-sticky : elle scrolle
-   avec l'en-tête, puis la barre "Commencer + PDF" reste sticky en dessous
-   — comportement du bouton Commencer inchangé (§ demande utilisateur).
+   Depuis le 19/07/2026 (demande utilisateur), placée APRÈS
+   .home-start-sticky dans le HTML : la barre "Commencer + PDF" a été
+   remontée juste après .home-guide-header pour ne plus obliger les
+   apprenants à scroller au-delà de cette carte pour la voir. Comportement
+   sticky inchangé (top:56px, juste sous la topbar) — seule sa position
+   dans le flux avant la carte "En bref" a changé.
    Basculée FR/ES par le même mécanisme générique que les rubriques
    (.home-lang-block[data-lang] + _buildHomeGuide() dans app.js) : aucun
    JS supplémentaire nécessaire. */
