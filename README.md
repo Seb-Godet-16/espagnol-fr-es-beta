@@ -50,9 +50,9 @@ Aucune inscription, aucun téléchargement. Fonctionne dans le navigateur et s'i
 espagnol-fr-es-beta/
 ├── index.html          # Structure HTML unique (SPA — Single Page App)
 ├── css/
-│   └── style.css       # Thèmes couleur, composants, animations (48 variables CSS, 171 déclarations, 4 671 lignes)
+│   └── style.css       # Thèmes couleur, composants, animations (51 variables CSS, 179 déclarations, 5 106 lignes)
 ├── js/
-│   ├── app.js          # Moteur applicatif complet (167 fonctions nommées, 5 295 lignes)
+│   ├── app.js          # Moteur applicatif complet (178 fonctions nommées, 5 546 lignes)
 │   ├── data-fr.js      # Contenu mode "Apprendre le Français" — chargé à la demande
 │   └── data-es.js      # Contenu mode "Apprendre l'Espagnol" — chargé à la demande
 ├── img/
@@ -70,7 +70,7 @@ espagnol-fr-es-beta/
 - **Zéro dépendance** — Vanilla JS, pas de framework, pas de bundler, pas de transpileur
 - **Cible ES2020** — plafond de compatibilité volontaire : tout le JS (déclarations `let`/`const`, optional chaining `?.`, arrow functions pour les callbacks) reste nativement supporté depuis Safari 13.4, ce qui couvre la cible minimale du projet (iOS Safari 14.5+) sans avoir besoin d'un bundler. Les fonctions nommées de premier niveau gardent volontairement la syntaxe `function` (hoisting requis par les attributs `onclick=""` générés dynamiquement et par certains callbacks qui dépendent de `this`). Base de code harmonisée en ce sens le 05/07/2026.
 - **Chargement fractionné** — `data-fr.js` et `data-es.js` injectés dynamiquement au choix de langue (−50 % de JS parsé au démarrage)
-- **CSS custom properties** — 48 variables uniques (171 déclarations au total, redéfinies par thème/variante) pour les thèmes (`theme-french` / `theme-spain`) et les 7 variantes régionales (`region-ES`, `region-MX`, etc.)
+- **CSS custom properties** — 51 variables uniques (179 déclarations au total, redéfinies par thème/variante) pour les thèmes (`theme-french` / `theme-spain`) et les 7 variantes régionales (`region-ES`, `region-MX`, etc.), plus une paire crème/brun partagée inspirée du logo (`--c-vache-cream` / `--c-vache-brown`) mixée dans chaque variante depuis le 19/07/2026
 - **Service Worker hybride** — Cache-First pour les ressources locales, Network-First pour les CDN externes (Twemoji), avec fallbacks SVG inline pour le mode hors-ligne
 
 ---
@@ -149,6 +149,8 @@ python3 -m http.server 8080
 | 12/07/2026 | Ajout (Claude Sonnet 5, demande utilisateur, inspiré d'une capture d'écran de l'app Oromo du même auteur) de 4 améliorations visuelles sur les cartes de module : fond teinté selon l'état (neuf / en cours / terminé à 3 étoiles), badge « 🆕 Nouveau » sur les modules jamais ouverts (nouveau suivi persistant distinct des étoiles), étoiles pleines/vides mieux contrastées, et pastille « ✅ X / 48 terminés » à côté du compteur d'étoiles. Détail complet dans `Bilan_technique.md` (§ Historique) |
 | 12/07/2026 (suite) | Ajouts (Claude Sonnet 5, demande utilisateur) : bouton natif d'installation PWA déplacé en tête de l'écran Guide (visible dès l'arrivée, retiré de la rubrique « Hors ligne » où il faisait doublon), et vérification proactive des mises à jour du Service Worker (au retour au premier plan et toutes les 60 min) pour ne plus dépendre du seul chargement de page. Détail complet dans `Bilan_technique.md` (§ Historique) |
 | 13/07/2026 | Relecture complète (Claude Sonnet 5, demande utilisateur) des commentaires internes et des numéros de ligne de `app.js` et `style.css`, décalés par les ajouts du 12/07 non encore répercutés dans les « PLAN DU FICHIER ». Corrections de dates erronées (11/07 → 12/07) sur plusieurs commentaires liés aux états de carte / badge « Nouveau ». Aucune ligne de code fonctionnel modifiée — uniquement commentaires et documentation |
+| 19/07/2026 | Mascotte régionale `REGION_MASCOTS` (symbole + exclamation par variante, ex. 🐂 ¡Mola! en Espagne) intégrée aux chips de l'écran d'accueil, à la grille du Lanceur et au bandeau du Guide. ⚠️ Non documenté au moment des faits — écart mesuré et signalé rétroactivement dans `Bilan_technique.md` (§ Historique, entrée du 19/07/2026) |
+| 19/07/2026 (suite) | Extension (Claude Sonnet 5, demande utilisateur) : couleurs crème/brun du logo mixées dans le dégradé d'accueil de chaque variante et thème (nouvelles variables `--c-vache-cream`/`--c-vache-brown`, drapeaux inchangés) ; clin d'œil mascotte sur un sans-faute (3⭐) aux deux écrans de résultat de quiz ; signature mascotte ajoutée aux deux pieds de page. Détail complet dans `Bilan_technique.md` (§ Historique) |
 
 ---
 

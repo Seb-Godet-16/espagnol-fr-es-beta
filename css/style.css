@@ -603,6 +603,18 @@ body {
 .launcher-footer a          { color: #888; text-decoration: none; font-weight: 600; }
 .launcher-footer a:hover    { text-decoration: underline; }
 
+/* Signature mascotte VACHÉBO dans les pieds de page — voir
+   _refreshFooterMascot() dans app.js. Discrète, une ligne, au-dessus
+   du copyright. Ajouté le 19/07/2026 (suite, demande utilisateur). */
+.footer-mascot {
+  display: block;
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--c-vache-brown);
+  margin-bottom: 4px;
+}
+.footer-mascot em { font-style: italic; font-weight: 700; }
+
 /* ── Vue B : sélecteur de variante dans le Launcher ── */
 #launcher-view-variant {
   width: 100%;
@@ -706,8 +718,21 @@ body {
   --c-vocab-chip-border:#8090c0;
   --c-fc-nav-hover:     #e8eeff;
 
+  /* Teinte "vache" du logo VACHÉBO — crème du fond + brun du pelage.
+     Mixée en fine touche dans les dégradés (--c-grad-home notamment) et
+     dans le halo décoratif de #home, pour que chaque variante régionale
+     garde ses couleurs de drapeau tout en restant visuellement reliée au
+     logo. Volontairement discrète (theme-agnostic, jamais un point d'ancrage
+     principal) et non redéfinie par theme-spain/région : la même touche de
+     crème/brun doit se retrouver à l'identique dans les 7 variantes + FR.
+     Ajouté le 19/07/2026 (suite, demande utilisateur : "mixer avec les
+     couleurs des drapeaux, un peu d'humour comme le logo, partout"). */
+  --c-vache-cream: #FCFFEE;               /* fond crème du logo (= manifest.json) */
+  --c-vache-brown: #6B4226;               /* brun du pelage de la vache */
+  --c-vache-brown-soft: rgba(107,66,38,.14);
+
   /* Dégradés (utilisés sur les headers, flashcards, boutons alphabet…) */
-  --c-grad-home:       linear-gradient(135deg, #002395 0%, #ffffff 50%, #ED2939 100%);
+  --c-grad-home:       linear-gradient(135deg, #002395 0%, var(--c-vache-cream) 50%, #ED2939 100%);
   --c-grad-sections:   linear-gradient(135deg, #002395, #ED2939);
   --c-grad-lesson:     linear-gradient(135deg, #002395, #ED2939);
   --c-grad-fc-back:    linear-gradient(135deg, #002395, #ED2939);
@@ -741,7 +766,8 @@ body {
 #home {
   background: var(--c-grad-home),
     radial-gradient(circle at 20% 20%, rgba(255,255,255,0.4) 0%, transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(237,41,57,0.25) 0%, transparent 60%);
+    radial-gradient(circle at 80% 80%, rgba(237,41,57,0.25) 0%, transparent 60%),
+    radial-gradient(circle at 50% 100%, var(--c-vache-brown-soft) 0%, transparent 55%);
   background-blend-mode: overlay;
   align-items: flex-start;
   justify-content: flex-start;
@@ -2684,6 +2710,17 @@ body {
 .result-box      { text-align: center; background: #fff; border-radius: 18px; padding: 22px; box-shadow: 0 2px 12px #0001; }
 .result-box h3   { color: var(--c-primary); font-size: 1.2rem; margin-bottom: 8px; }
 .score-num       { font-size: 2.8rem; font-weight: 900; color: var(--c-primary); }
+
+/* Clin d'œil mascotte VACHÉBO sur un sans-faute (3 étoiles) — voir
+   _quizResultStrings() dans app.js. Discret, italique, sous le titre.
+   Ajouté le 19/07/2026 (suite, demande utilisateur). */
+.quiz-mascot-line {
+  font-size: .85rem;
+  font-style: italic;
+  font-weight: 700;
+  color: var(--c-vache-brown);
+  margin-top: 2px;
+}
 .retry-btn {
   margin-top: 14px;
   background: var(--c-primary);
@@ -3664,7 +3701,7 @@ html.theme-spain {
   --c-vocab-chip-bg:     #FFF9E6;
   --c-vocab-chip-border: #FFE082;
   --c-fc-nav-hover:      #FFF3CD;
-  --c-grad-home:         linear-gradient(135deg, #C60B1E 0%, #FFFFFF 50%, #FFC400 100%);
+  --c-grad-home:         linear-gradient(135deg, #C60B1E 0%, var(--c-vache-cream) 50%, #FFC400 100%);
   --c-grad-sections:     linear-gradient(135deg, #C60B1E, #FFC400, #C60B1E);
   --c-grad-lesson:       linear-gradient(135deg, #C60B1E, #FFC400);
   --c-grad-fc-back:      linear-gradient(135deg, #B38200, #C60B1E);
@@ -3688,7 +3725,7 @@ html.theme-spain body { background: #f4f9f4; }
 html.theme-spain.region-MX {
   --c-primary:        #004a32;
   --c-accent:         #9a0d1c;
-  --c-grad-home:      linear-gradient(135deg, #004a32 0%, #fdfbf7 50%, #9a0d1c 100%);
+  --c-grad-home:      linear-gradient(135deg, #004a32 0%, var(--c-vache-cream) 50%, #9a0d1c 100%);
   --c-grad-sections:  linear-gradient(135deg, #004a32, #7a0a16, #004a32);
   --c-grad-lesson:    linear-gradient(135deg, #004a32, #9a0d1c);
   --c-grad-fc-back:   linear-gradient(135deg, #9a0d1c, #004a32);
@@ -3699,7 +3736,7 @@ html.theme-spain.region-MX {
 html.theme-spain.region-PE {
   --c-primary:        #9d0a14;
   --c-accent:         #70060c;
-  --c-grad-home:      linear-gradient(135deg, #9d0a14 0%, #fcfaf6 50%, #9d0a14 100%);
+  --c-grad-home:      linear-gradient(135deg, #9d0a14 0%, var(--c-vache-cream) 50%, #9d0a14 100%);
   --c-grad-sections:  linear-gradient(135deg, #70060c, #9d0a14, #70060c);
   --c-grad-lesson:    linear-gradient(135deg, #9d0a14, #4a0307);
   --c-grad-fc-back:   linear-gradient(135deg, #70060c, #9d0a14);
@@ -3710,7 +3747,7 @@ html.theme-spain.region-PE {
 html.theme-spain.region-AR {
   --c-primary:        #75AADB;
   --c-accent:         #F6B426;
-  --c-grad-home:      linear-gradient(135deg, #75AADB 0%, #FFFFFF 50%, #75AADB 100%);
+  --c-grad-home:      linear-gradient(135deg, #75AADB 0%, var(--c-vache-cream) 50%, #75AADB 100%);
   --c-grad-sections:  linear-gradient(135deg, #75AADB, #F6B426, #75AADB);
   --c-grad-lesson:    linear-gradient(135deg, #75AADB, #FFFFFF);
   --c-grad-fc-back:   linear-gradient(135deg, #4a7ab0, #75AADB);
@@ -3721,7 +3758,7 @@ html.theme-spain.region-AR {
 html.theme-spain.region-EC {
   --c-primary:        #dca600;
   --c-accent:         #0f4080;
-  --c-grad-home:      linear-gradient(135deg, #dca600 0%, #0f4080 50%, #b31919 100%);
+  --c-grad-home:      linear-gradient(135deg, #dca600 0%, #0f4080 50%, var(--c-vache-brown) 75%, #b31919 100%);
   --c-grad-sections:  linear-gradient(135deg, #dca600, #0f4080, #b31919);
   --c-grad-lesson:    linear-gradient(135deg, #dca600, #0f4080);
   --c-grad-fc-back:   linear-gradient(135deg, #0f4080, #b31919);
@@ -3732,7 +3769,7 @@ html.theme-spain.region-EC {
 html.theme-spain.region-CO {
   --c-primary:        #FCD116;
   --c-accent:         #003893;
-  --c-grad-home:      linear-gradient(135deg, #FCD116 35%, #003893 70%, #CE1126 100%);
+  --c-grad-home:      linear-gradient(135deg, #FCD116 35%, #003893 70%, var(--c-vache-brown) 85%, #CE1126 100%);
   --c-grad-sections:  linear-gradient(90deg, #FCD116, #003893, #CE1126);
   --c-grad-lesson:    linear-gradient(135deg, #FCD116, #003893);
   --c-grad-fc-back:   linear-gradient(135deg, #003893, #CE1126);
@@ -3743,7 +3780,7 @@ html.theme-spain.region-CO {
 html.theme-spain.region-VE {
   --c-primary:        #00247D;
   --c-accent:         #FFCC00;
-  --c-grad-home:      linear-gradient(180deg, #FFCC00 0%, #00247D 50%, #CF142B 100%);
+  --c-grad-home:      linear-gradient(180deg, #FFCC00 0%, #00247D 50%, var(--c-vache-brown) 75%, #CF142B 100%);
   --c-grad-sections:  linear-gradient(135deg, #00247D, #CF142B, #FFCC00);
   --c-grad-lesson:    linear-gradient(135deg, #00247D, #FFCC00);
   --c-grad-fc-back:   linear-gradient(135deg, #CF142B, #00247D);
@@ -4072,6 +4109,9 @@ html.theme-spain.region-VE {
   .lesson-footer a { color: var(--c-primary); }
   .launcher-footer { color: var(--c-text-sub); } /* Amélioration 12.3 : était #555a7a (2.66:1, échec WCAG) */
   .launcher-footer a { color: #a8b0e0; }
+  /* --c-vache-brown (#6B4226) est trop sombre sur fond #14172a — éclairci
+     pour rester lisible (≥4.5:1) sans changer la teinte "vache". */
+  .footer-mascot { color: #D9A066; }
 
   /* ── Guide (variables propres --g-*) ── */
   :root {

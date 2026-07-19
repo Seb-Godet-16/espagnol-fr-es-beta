@@ -723,6 +723,10 @@ function initApp(mode) {
        d'écrans pendant la transition d'animation (300 ms). */
   document.getElementById('app-launcher').classList.remove('active');
   _maybeAutoShowGuide();
+
+  /* Signature mascotte des pieds de page dès le tout premier affichage
+     (pickRegion() n'est pas systématiquement rappelé à ce stade) */
+  _refreshFooterMascot();
 }
 
 
@@ -3679,6 +3683,7 @@ function renderQuiz10() {
       + '<div style="font-size:2rem;margin-bottom:5px;">'
       + (earnedStars === 3 ? '⭐⭐⭐' : endStars) + '</div>'
       + '<h3>' + r.title + '</h3>'
+      + (r.mascotLine ? '<div class="quiz-mascot-line">' + r.mascotLine + '</div>' : '')
       + '<div class="score-num">' + q10Score + '/' + total + '</div>'
       + '<div style="font-size:1rem;margin:6px 0;color:'
       + (isSuccess ? '#009A44' : '#EF2B2D') + '">' + r.sub + '</div>'
@@ -4027,6 +4032,7 @@ function renderDialogQuiz() {
       + '<div style="font-size:2rem;margin-bottom:5px;">'
       + (earnedStars === 3 ? '🎉🎉🎉' : endStars) + '</div>'
       + '<h3>' + r.title + '</h3>'
+      + (r.mascotLine ? '<div class="quiz-mascot-line">' + r.mascotLine + '</div>' : '')
       + '<div class="score-num">' + dqScore + '/' + total + '</div>'
       + '<div style="font-size:.9rem;margin-top:6px;color:'
       + (isSuccess ? '#009A44' : '#EF2B2D') + '">' + r.sub + '</div>'
@@ -4110,8 +4116,21 @@ function _quizResultStrings(pct) {
   else if (stars === 2) title = L('¡Muy bien! ⭐⭐',    'Très bien ! ⭐⭐');
   else if (stars === 1) title = L('¡Bien! ⭐',           'Bien ! ⭐');
 
+  /* Clin d'œil mascotte VACHÉBO sur un sans-faute (3 étoiles) : la vache du
+     logo sort son exclamation régionale en mode Espagnol (REGION_MASCOTS,
+     cohérente avec les chips du Lanceur/Home), et un jeu de mots français
+     ("vachement") en mode Français, où il n'y a pas de région à distinguer.
+     Ajouté le 19/07/2026 (suite, demande utilisateur). */
+  let mascotLine = '';
+  if (stars === 3) {
+    mascotLine = (currentMode === 'learn_french')
+      ? '🐄 ' + L('¡Vaya crack!', "T'es vachement fort·e !")
+      : '🐄' + REGION_MASCOTS[currentRegion].symbol + ' ' + REGION_MASCOTS[currentRegion].phrase;
+  }
+
   return {
-    title : title,
+    title      : title,
+    mascotLine : mascotLine,
     sub   : isSuccess
       ? L('¡Módulo superado! Puedes pasar al siguiente o volver a intentarlo para conseguir más estrellas.',
           'Module validé ! Vous pouvez passer au suivant ou réessayer pour plus d\'étoiles.')
@@ -4182,6 +4201,23 @@ const REGION_MASCOTS = {
   VE: { symbol: '🌺', phrase: '¡Chévere, pana!' },
   EC: { symbol: '🦅', phrase: '¡Chévere nomás!' }
 };
+
+/* _refreshFooterMascot() — Signe les deux pieds de page (#footerMascotLauncher,
+   #footerMascotLesson) d'un clin d'œil à la mascotte du logo VACHÉBO :
+   symbole + exclamation régionale (REGION_MASCOTS) en mode Espagnol, jeu de
+   mots générique en mode Français (pas de région à distinguer côté FR).
+   Appelée par pickRegion() à chaque changement de variante, et une première
+   fois au chargement (voir DOMContentLoaded / initApp).
+   Ajouté le 19/07/2026 (suite, demande utilisateur). */
+function _refreshFooterMascot() {
+  const line = (currentMode === 'learn_french')
+    ? '🐄 ' + L('¡Oh la vache, qué chévère!', 'Oh la vache, on progresse !')
+    : '🐄' + REGION_MASCOTS[currentRegion].symbol + ' <em>' + REGION_MASCOTS[currentRegion].phrase + '</em>';
+  ['footerMascotLauncher', 'footerMascotLesson'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = line;
+  });
+}
 
 /* changeRegion(region) — Alias de pickRegion() conservé pour rétro-compatibilité.
    Tout appel à changeRegion() délègue désormais entièrement à pickRegion()
@@ -4460,6 +4496,9 @@ function pickRegion(regionId) {
   if (langFlag && currentMode !== 'learn_french') {
     langFlag.textContent = flagEmojis[currentRegion] || '🇪🇸';
   }
+
+  /* Signature mascotte des pieds de page (voir _refreshFooterMascot ci-dessus) */
+  _refreshFooterMascot();
 }
 
 
