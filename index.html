@@ -122,6 +122,15 @@
     <!-- Fond décoratif (défini en CSS, pas interactif) -->
     <div class="launcher-bg"></div>
 
+    <!-- Bouton Quitter — ajouté le 19/07/2026 (demande utilisateur).
+         Positionné en absolu directement sur #app-launcher (pas dans
+         .launcher-inner) pour rester visible identiquement sur les
+         deux vues (cartes de langue ET sélecteur de variante). -->
+    <button class="launcher-quit-btn quit-btn" onclick="showQuitConfirm()"
+            aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
+      <span aria-hidden="true">🚪</span>
+    </button>
+
     <!-- ─── VUE A : Sélection de la langue ─── -->
     <div id="launcher-view-cards" class="launcher-inner">
       <!-- Logo VACHÉBO — PNG servi depuis GitHub, fallback SVG si pas de connexion -->
@@ -313,9 +322,23 @@
        ────────────────────────────────────────── -->
   <div id="home" class="screen">
 
-    <!-- Topbar sticky sombre — titre "Guide explicatif" / "Guía" -->
+    <!-- Topbar sticky sombre — titre "Guide explicatif" / "Guía"
+         Boutons ajoutés le 19/07/2026 (demande utilisateur) : cet écran
+         n'avait auparavant AUCUN accès rapide en haut (ni retour, ni
+         quitter), contrairement aux écrans Modules/Leçon. 🏠 renvoie au
+         lanceur (même destination que navBackToHome() sur l'écran
+         Modules) ; 🚪 ouvre la modale "Quitter l'application", commune
+         aux 5 écrans de l'app. -->
     <div class="home-topbar">
+      <button class="topbar-icon-btn" onclick="navBackToHome()"
+              aria-label="Retour à l'accueil / Volver al inicio" title="Accueil / Inicio">
+        <span aria-hidden="true">🏠</span>
+      </button>
       <span class="home-topbar-title" id="homeTopbarTitle">Guide explicatif</span>
+      <button class="topbar-icon-btn quit-btn" onclick="showQuitConfirm()"
+              aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
+        <span aria-hidden="true">🚪</span>
+      </button>
     </div>
 
     <!-- En-tête coloré — IDs mis à jour par showGuide() -->
@@ -1090,7 +1113,16 @@
           <h2 id="sectionsTitle"></h2>
           <div class="sections-subtitle" id="sectionsSubtitle"></div>
         </div>
-        <div class="sections-flag" id="sectionsFlag"></div>
+        <!-- Colonne droite : bouton Quitter (ajouté le 19/07/2026, demande
+             utilisateur) au-dessus du drapeau, pour une sortie facile
+             depuis cet écran sans devoir repasser par le lanceur. -->
+        <div class="sections-top-right">
+          <button class="back-icon-btn quit-btn" onclick="showQuitConfirm()"
+                  aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
+            <span aria-hidden="true">🚪</span>
+          </button>
+          <div class="sections-flag" id="sectionsFlag"></div>
+        </div>
       </div>
 
       <div class="progress-bar-wrap">
@@ -1142,7 +1174,15 @@
           <h2 id="sectionsTitle2"></h2>
           <div class="sections-subtitle" id="sectionsSubtitle2"></div>
         </div>
-        <div class="sections-flag" id="sectionsFlag2"></div>
+        <!-- Colonne droite : bouton Quitter (ajouté le 19/07/2026, demande
+             utilisateur) — cf. même bloc sur #sections-level1. -->
+        <div class="sections-top-right">
+          <button class="back-icon-btn quit-btn" onclick="showQuitConfirm()"
+                  aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
+            <span aria-hidden="true">🚪</span>
+          </button>
+          <div class="sections-flag" id="sectionsFlag2"></div>
+        </div>
       </div>
 
       <div class="progress-bar-wrap">
@@ -1182,8 +1222,12 @@
       <button class="back-btn" onclick="lessonGoBack()" id="lessonBackBtn"
               aria-label="Retour aux modules / Volver a los módulos">←</button>
 
-      <button class="back-btn lesson-home-btn" onclick="lessonGoBack()" id="lessonHomeBtn"
-              title="Modules" aria-label="Accueil des modules / Inicio de módulos">🏠</button>
+      <!-- Ex-bouton 🏠 "Accueil" — corrigé le 19/07/2026 (demande utilisateur) :
+           ce bouton appelait déjà lessonGoBack(), exactement comme ← à sa
+           gauche : un doublon pur qui n'apportait rien. Remplacé par le
+           bouton Quitter, commun aux 5 écrans de l'app (cf. #quit-modal). -->
+      <button class="back-btn lesson-quit-btn quit-btn" onclick="showQuitConfirm()" id="lessonQuitBtn"
+              title="Quitter / Salir" aria-label="Quitter l'application / Salir de la aplicación">🚪</button>
 
       <span id="lessonEmoji" style="font-size:1.4rem;margin-right:4px"></span>
       <h3 id="lessonTitle"></h3>
@@ -1301,6 +1345,30 @@
       <div style="display:flex; gap:12px; justify-content:center;">
         <button onclick="cancelReset()" style="padding:10px 20px; border-radius:8px; border:2px solid #ccc; background:#fff; cursor:pointer; font-weight:bold;">Annuler / Cancelar</button>
         <button onclick="confirmReset()" style="padding:10px 20px; border-radius:8px; border:none; background:#c0392b; color:#fff; cursor:pointer; font-weight:bold;">🗑️ Confirmer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       MODALE — QUITTER L'APPLICATION
+       Ajoutée le 19/07/2026 (demande utilisateur) : bouton 🚪
+       accessible sur les 5 écrans (lanceur, guide, sections niveau
+       1/2, leçon). Propose 2 issues distinctes :
+         • "Fermer l'appli"    → quitCloseApp() tente window.close()
+           (ne fonctionne en pratique que si le navigateur l'autorise
+           — repli en toast sinon, cf. app.js).
+         • "Revenir au départ" → quitGoHome() ramène à l'écran de
+           choix de langue, qui sert de sortie logique dans l'app.
+       Même gabarit inline que #confirm-modal, pour cohérence visuelle.
+       ────────────────────────────────────────── -->
+  <div id="quit-modal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center;">
+    <div class="modal-content" style="background:#fff; margin:0 20px; padding:25px; border-radius:15px; text-align:center; max-width:340px;">
+      <p style="font-size:1.05rem; font-weight:800; color:#333; margin:0 0 6px;">🚪 Quitter l'application ? / ¿Salir de la aplicación?</p>
+      <p style="font-size:0.8rem; color:#888; margin:0 0 20px;">Choisis une option / Elige una opción</p>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <button onclick="quitCloseApp()" style="padding:12px 18px; border-radius:8px; border:none; background:#c0392b; color:#fff; cursor:pointer; font-weight:bold;">🚪 Fermer l'appli / Cerrar la app</button>
+        <button onclick="quitGoHome()" style="padding:12px 18px; border-radius:8px; border:2px solid #007bff; background:#fff; color:#007bff; cursor:pointer; font-weight:bold;">🏠 Revenir au départ / Volver al inicio</button>
+        <button onclick="cancelQuit()" style="padding:8px 18px; border:none; background:none; color:#888; cursor:pointer; font-weight:600; text-decoration:underline;">Annuler / Cancelar</button>
       </div>
     </div>
   </div>

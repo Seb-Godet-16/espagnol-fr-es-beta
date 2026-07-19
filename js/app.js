@@ -4829,6 +4829,59 @@ function navBackToGuide() {
   if (homeEl) homeEl.scrollTop = 0;
 }
 
+/* ─────────────────────────────────────────────────────────
+   MODALE "QUITTER L'APPLICATION" — ajoutée le 19/07/2026
+   (demande utilisateur : un bouton 🚪 facile d'accès sur
+   CHAQUE écran — lanceur, guide, sections niveau 1/2, leçon —
+   plutôt qu'une seule sortie possible via le lanceur).
+   Le clic ouvre #quit-modal (cf. index.html), qui propose deux
+   issues distinctes :
+     • quitCloseApp() — tentative réelle de fermeture de l'onglet/
+       fenêtre.
+     • quitGoHome()   — simple retour à l'écran de départ (choix
+       de langue), qui sert de "sortie" logique dans l'app.
+───────────────────────────────────────────────────────── */
+
+/** Ouvre la modale de confirmation (bouton 🚪 des 5 écrans). */
+function showQuitConfirm() {
+  document.getElementById('quit-modal').style.display = 'flex';
+}
+
+/** Ferme la modale sans action (bouton "Annuler / Cancelar"). */
+function cancelQuit() {
+  document.getElementById('quit-modal').style.display = 'none';
+}
+
+/** Bouton "Revenir au départ" : retour au lanceur (choix de langue). */
+function quitGoHome() {
+  document.getElementById('quit-modal').style.display = 'none';
+  showLauncher();
+}
+
+/**
+ * Bouton "Fermer l'application" : tente une fermeture réelle de
+ * l'onglet/fenêtre via window.close(). Par sécurité navigateur,
+ * window.close() ne fonctionne en pratique que sur un onglet/une
+ * fenêtre ouvert(e) par du script — un onglet ouvert normalement
+ * par l'utilisateur (cas quasi systématique ici) ne se fermera
+ * PAS, et c'est le comportement standard de tous les navigateurs,
+ * pas un bug de l'app. Impossible de détecter la fermeture elle-
+ * même (le script s'arrête net si ça marche) : on programme donc
+ * un message de repli à +400ms, qui ne s'affichera QUE si la page
+ * est toujours là (donc que window.close() n'a rien fait), pour
+ * indiquer à l'apprenant comment fermer lui-même.
+ */
+function quitCloseApp() {
+  document.getElementById('quit-modal').style.display = 'none';
+  try { window.close(); } catch (e) { /* ignoré : le repli ci-dessous s'en charge */ }
+  setTimeout(() => {
+    _showToast(L(
+      '👉 Tu navegador no permite cerrar la pestaña sola. Ciérrala tú mismo o pulsa "atrás".',
+      '👉 Ton navigateur ne permet pas de fermer l\'onglet automatiquement. Ferme-le toi-même ou appuie sur « retour ».'
+    ), 5000);
+  }, 400);
+}
+
 /**
  * showGuide() — Affiche le guide (écran #home) et met à jour les
  * éléments dynamiques. Alias de showOnboardingGuide() pour la

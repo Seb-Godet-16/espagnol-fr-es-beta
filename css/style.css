@@ -293,6 +293,38 @@ body {
 /* Fond uni — même crème que le logo, sans halo */
 .launcher-bg { display: none; }
 
+/* Bouton Quitter du lanceur — ajouté le 19/07/2026 (demande utilisateur).
+   Positionné en absolu directement sur #app-launcher (position:relative
+   hérité de .screen.active) : reste au même endroit sur les 2 vues
+   (cartes de langue / sélecteur de variante). Fond clair + icône sombre
+   car ici (contrairement aux autres écrans) l'arrière-plan est clair. */
+.launcher-quit-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 5;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.06);
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background .15s;
+}
+.launcher-quit-btn:hover        { background: rgba(0,0,0,.12); }
+.launcher-quit-btn:focus-visible { outline: 3px solid rgba(0,0,0,.35); outline-offset: 2px; }
+
+/* Accent visuel commun à tous les boutons "Quitter" (5 écrans) : léger
+   surlignage rougeâtre au survol/tap, pour les distinguer subtilement
+   des boutons de navigation "neutres" (🏠, ❓, ←…) sans être agressif. */
+.quit-btn:hover, .quit-btn:focus-visible {
+  background: rgba(192,57,43,.22) !important;
+}
+
 /* Vue B : fond dégradé aux couleurs du pays sélectionné */
 #app-launcher.variant-active {
   background: var(--c-grad-home);
@@ -738,7 +770,14 @@ body {
   z-index: 0;
 }
 
-/* ── Topbar sticky sombre ── */
+/* ── Topbar sticky sombre ──
+   Passée de "justify-content:center" (titre seul) à une rangée à
+   3 zones le 19/07/2026 (demande utilisateur) : cet écran n'offrait
+   auparavant aucun accès rapide en haut (ni retour, ni quitter),
+   contrairement aux écrans Modules/Leçon. .topbar-icon-btn (🏠 et 🚪)
+   flanquent désormais le titre ; largeur fixe identique des deux
+   côtés (cf. .topbar-icon-btn) pour que le titre reste visuellement
+   centré. */
 .home-topbar {
   position: sticky;
   top: 0;
@@ -746,8 +785,9 @@ body {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0 14px;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 0 8px;
   background: rgba(20,20,32,.88);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -758,12 +798,38 @@ body {
 }
 
 .home-topbar-title {
+  flex: 1 1 auto;
+  min-width: 0;
   font-size: 1.1rem;
   font-weight: 700;
   color: rgba(255,255,255,.95);
   letter-spacing: .01em;
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
+/* Boutons icône du topbar du Guide (🏠 retour, 🚪 quitter) — largeur
+   fixe identique des deux côtés pour garder le titre centré. */
+.topbar-icon-btn {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+  transition: background .15s;
+}
+.topbar-icon-btn:hover        { background: rgba(255,255,255,.18); }
+.topbar-icon-btn:focus-visible { outline: 3px solid rgba(255,255,255,.7); outline-offset: 2px; }
 
 /* ── En-tête coloré du guide ── */
 .home-guide-header {
@@ -1497,6 +1563,17 @@ body {
   flex-shrink: 0;
 }
 
+/* Colonne droite du header Sections : bouton Quitter au-dessus du
+   drapeau — ajoutée le 19/07/2026 (demande utilisateur) pour une
+   sortie facile depuis cet écran. */
+.sections-top-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
 /* Barre de progression en blanc translucide */
 .progress-bar-wrap  { background: rgba(255,255,255,.3); border-radius: 20px; height: 8px; margin: 8px 0 4px; }
 .progress-bar       { background: #fff; height: 8px; border-radius: 20px; transition: width .4s; }
@@ -1882,7 +1959,7 @@ body {
 /* Bug 9.6 — Éléments à taille fixe du header de leçon : ne doivent jamais
    être écrasés ni passer à la ligne, quelle que soit la longueur du titre. */
 #lessonBackBtn,
-.lesson-home-btn,
+.lesson-quit-btn,
 #lessonEmoji,
 .lesson-nav-arrows {
   flex-shrink: 0;
@@ -1893,13 +1970,16 @@ body {
   gap: 2px;
 }
 
-/* Bouton "Accueil" dans l'écran leçon — retour direct sans passer par sections */
-.lesson-home-btn {
+/* Bouton "Quitter" dans l'écran leçon — remplace le 19/07/2026 (demande
+   utilisateur) l'ancien bouton 🏠 "Accueil" qui faisait doublon avec ←
+   à sa gauche (les deux appelaient lessonGoBack()). Classe renommée
+   .lesson-home-btn → .lesson-quit-btn, gabarit visuel conservé. */
+.lesson-quit-btn {
   font-size: 1.1rem !important;
   padding: 4px 6px !important;
   opacity: 0.9;
 }
-.lesson-home-btn:active { opacity: 0.6; }
+.lesson-quit-btn:active { opacity: 0.6; }
 
 .lesson-nav-btn { background:none; border:none; font-size:1.8rem; color:var(--c-primary); cursor:pointer; padding:0 8px; line-height:1; opacity:0.7; flex-shrink:0; }
 .lesson-nav-btn:hover { opacity:1; }
@@ -4785,13 +4865,18 @@ footer .footer-antispam-btn           { color: #aaa; }
   #home::before { height: 120px; }
   .home-topbar { min-height: 42px; }
   .home-topbar-title { font-size: 1rem; }
+  .topbar-icon-btn { width: 30px; height: 30px; font-size: 1.05rem; } /* ajouté 19/07/2026 avec les boutons du topbar */
   .home-guide-header { padding: 12px 20px 8px; }
   .home-guide-flags { font-size: 1.6rem; margin-bottom: 3px; }
+
+  /* ── Lanceur : bouton Quitter resserré (ajouté 19/07/2026) ── */
+  .launcher-quit-btn { width: 34px; height: 34px; top: 8px; right: 8px; font-size: 1.05rem; }
 
   /* ── En-tête écran Sections ── */
   .sections-header { padding: 8px 14px 10px; }
   .sections-header h2 { font-size: .88rem !important; }
   .sections-subtitle { font-size: .68rem; }
+  .sections-top-right { gap: 2px; } /* ajouté 19/07/2026 avec le bouton Quitter */
 
   /* ── En-tête + pied de page écran Leçon ── */
   .lesson-header { padding: 8px 14px; }
