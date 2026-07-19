@@ -1572,6 +1572,12 @@ body {
   line-height: 1;
 }
 
+/* Mascotte régionale (vache + symbole du pays) — ajouté le 19/07/2026 */
+.hrw-chip-mascot {
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
 /* Nom du pays */
 .hrw-chip-name {
   font-size: 0.65rem;
@@ -1931,6 +1937,11 @@ body {
 }
 .launcher-region-flag {
   font-size: 1.6rem;
+  line-height: 1;
+  display: block;
+}
+.launcher-region-mascot {
+  font-size: .95rem;
   line-height: 1;
   display: block;
 }

@@ -2226,8 +2226,9 @@ function _renderHomeRegionWidget() {
       + ' class="hrw-chip' + (isActive ? ' hrw-chip--active' : '') + '"'
       + ' onclick="pickRegion(\'' + r.id + '\');_renderHomeRegionWidget();"'
       + ' aria-pressed="' + isActive + '"'
-      + ' title="' + r.name + '">'
+      + ' title="' + r.name + ' ' + REGION_MASCOTS[r.id].phrase + '">'
       + '<span class="hrw-chip-flag">' + r.flag + '</span>'
+      + '<span class="hrw-chip-mascot" aria-hidden="true">🐄' + REGION_MASCOTS[r.id].symbol + '</span>'
       + '<span class="hrw-chip-name">' + r.name + '</span>'
       + '</button>';
   });
@@ -4164,6 +4165,24 @@ function _escAttr(s) {
      - Rafraîchit le contenu de l'onglet actif si une leçon est ouverte
 ═══════════════════════════════════════════════════════════ */
 
+/* REGION_MASCOTS — Symbole culturel + exclamation locale associés à chaque
+   variante régionale, dans l'esprit du logo VACHÉBO (vache + élément visuel
+   du pays). Le logo lui-même n'est pas modifié : ces symboles ne servent
+   qu'aux éléments d'interface ci-dessous (chips, grille du Lanceur, bandeau
+   du Guide) et s'ajoutent au drapeau selon l'emplacement.
+   Les couleurs de région (variables CSS --c-primary/--c-accent par
+   html.theme-spain.region-XX) restent, elles, entièrement inchangées.
+   Ajouté le 19/07/2026 (demande utilisateur). */
+const REGION_MASCOTS = {
+  ES: { symbol: '🐂', phrase: '¡Mola!'          },
+  MX: { symbol: '🌵', phrase: '¡Chido!'         },
+  CO: { symbol: '☕', phrase: '¡Qué chévere!'   },
+  PE: { symbol: '🦙', phrase: '¡Qué bacán!'     },
+  AR: { symbol: '🧉', phrase: '¡Qué copado!'    },
+  VE: { symbol: '🌺', phrase: '¡Chévere, pana!' },
+  EC: { symbol: '🦅', phrase: '¡Chévere nomás!' }
+};
+
 /* changeRegion(region) — Alias de pickRegion() conservé pour rétro-compatibilité.
    Tout appel à changeRegion() délègue désormais entièrement à pickRegion()
    qui gère la voix, les couleurs, les drapeaux et le rafraîchissement de contenu. */
@@ -4257,8 +4276,9 @@ function renderRegionGrid(mode) {
       + ' class="launcher-region-btn' + (isActive ? ' launcher-region-btn--active' : '') + '"'
       + ' onclick="pickRegion(\'' + r.id + '\');renderRegionGrid(currentMode);"'
       + ' aria-pressed="' + isActive + '"'
-      + ' title="' + countryName + '">'
+      + ' title="' + countryName + ' ' + REGION_MASCOTS[r.id].phrase + '">'
       + '<span class="launcher-region-flag">' + r.flag + '</span>'
+      + '<span class="launcher-region-mascot" aria-hidden="true">🐄' + REGION_MASCOTS[r.id].symbol + '</span>'
       + '<span class="launcher-region-name">' + countryName + '</span>'
       + '</button>';
   });
@@ -4987,7 +5007,8 @@ function _refreshGuideRegion() {
 
   /* Bandeau variante dans le bloc ES */
   const badge = document.getElementById('guideRegionBadgeES');
-  if (badge) badge.innerHTML = 'Tu app está configurada en <strong>' + r.flag + ' ' + r.name + '</strong>';
+  if (badge) badge.innerHTML = 'Tu app está configurada en <strong>' + r.flag + ' ' + r.name + '</strong> 🐄'
+    + REGION_MASCOTS[region].symbol + ' <em>' + REGION_MASCOTS[region].phrase + '</em>';
 }
 
 /**
