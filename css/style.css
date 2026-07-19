@@ -360,7 +360,7 @@ body {
    l'apprenant que la carte se touche pour passer à l'écran suivant —
    purement visuelle (aria-hidden="true" côté HTML), l'aria-label du
    bouton porte déjà l'information utile aux lecteurs d'écran. */
-.launcher-cards     { display: flex; flex-direction: row; align-items: flex-start; gap: 8px; width: 100%; }
+.launcher-cards     { display: flex; flex-direction: row; align-items: stretch; gap: 8px; width: 100%; }
 
 .lang-card {
   flex: 1 1 0;
@@ -544,10 +544,13 @@ body {
 .lang-card--es .lang-card-toggle-icon { color: #A00818; }
 .lang-card-toggle:active .lang-card-toggle-icon { transform: scale(.92); }
 
-/* État replié : masque le sous-titre bilingue et les puces, ne laisse que
-   le nom principal + la pastille CTA + la barre de bouton "i" (transparente,
-   discrète). */
-.lang-card.collapsed .lang-card-sub        { display: none; }
+/* État replié : ne masque QUE les puces détaillées, plus le sous-titre —
+   retour utilisateur du 18/07/2026 (3e retour) : le sous-titre bilingue
+   (traduction du nom principal, ex. "Aprender Francés" sous "Apprendre le
+   Français") doit rester visible même repliée, pour qu'un apprenant qui ne
+   lit pas encore la langue du nom principal comprenne quand même de quoi
+   il s'agit sans avoir à déplier la carte. Seule la barre de bouton "i"
+   redevient transparente/discrète repliée. */
 .lang-card.collapsed .lang-card-details    { max-height: 0; padding-top: 0; padding-bottom: 0; }
 .lang-card.collapsed .lang-card-toggle-bar { background: transparent; padding: 4px 14px; }
 

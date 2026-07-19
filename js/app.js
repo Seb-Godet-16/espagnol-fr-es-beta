@@ -32,10 +32,12 @@
      ├─ data-es.js  → ALL_THEMES_ES (32 thèmes + 16 dialogues) — chargé à la demande
      └─ app.js      → Ce fichier : logique applicative complète (5 295 lignes)
 
-   PLAN DU FICHIER (numéros recalculés le 18/07/2026 — ajout de l'entrée
-   §15d [cartes de langue fusionnées avec l'explicatif] et décalage de +1
-   ligne des ancres suivantes qui en résulte ; chaque ancre revérifiée une
-   à une par grep) :
+   PLAN DU FICHIER (numéros recalculés le 18/07/2026 — §15d enrichie du
+   suivi "a visité les modules" (_markModulesVisited()/_hasVisitedModules(),
+   posé depuis renderSections() §7) qui remplace _isBrandNewUser() comme
+   heuristique d'ouverture par défaut des cartes de langue ; décalage des
+   ancres suivantes qui en résulte ; chaque ancre revérifiée une à une par
+   grep) :
      §0    L.  246  Chargement conditionnel des données — loadDataForMode()
      §0b   L.  124  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
      §1    L.  282  Variables d'état globales
@@ -50,7 +52,8 @@
      §5    L. 1949  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
      §5b   L. 1846  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
      §6    L. 2062  Écran Home — renderHome(), _renderHomeRegionWidget()
-     §7    L. 2232  Écran Sections — renderSections(), _buildThemeCard() (états + badge, 12/07)
+     §7    L. 2232  Écran Sections — renderSections(), _buildThemeCard() (états + badge, 12/07).
+                     Appelle aussi _markModulesVisited() (§15d) depuis le 18/07/2026
      §8    L. 2391  Ouverture d'un thème — openTheme() (marque module ouvert), switchTab()
      §9    L. 2602  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail()
      §9b   L. 2776  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
@@ -70,28 +73,34 @@
                      utilisateur : pas de barre de nav basse au tout premier lancement
                      sans aucun parcours ; réapparaît dès la première interaction via
                      showLauncherVariant())
-     §15d  L. 4525  Cartes de langue fusionnées avec l'explicatif — _langBoxInitialOpen(),
+     §15d  L. 4533  Cartes de langue fusionnées avec l'explicatif — _langBoxInitialOpen(),
                      _setLangBoxOpen(), _initLangBoxes(), toggleLangBox() ; ajouté le
                      18/07/2026 (demande utilisateur), fusionné le même jour avec les
                      anciennes cartes .lang-card (auparavant un encadré séparé à 2
                      colonnes, .launcher-info, sous les cartes) — chaque carte a
                      désormais sa propre liste à puces dépliable et son propre état
-                     déplié/replié, mémorisés séparément par langue
+                     déplié/replié, mémorisés séparément par langue.
+                     Contient aussi (ajout du même jour, 3e retour utilisateur)
+                     _markModulesVisited()/_hasVisitedModules() : la préférence
+                     explicite de l'apprenant prime toujours, puis les cartes se
+                     replient dès la première visite des Modules (posé depuis
+                     renderSections(), §7, L.2239) — remplace l'ancienne dépendance
+                     à _isBrandNewUser() (§15c), trop grossière pour ce cas précis
                      (aucune bannière numérotée à cet endroit, comme pour §15c)
-     §16   L. 4624  Remerciements — showCredits()
-     §17   L. 4639  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
+     §16   L. 4668  Remerciements — showCredits()
+     §17   L. 4683  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
                      navBackToGuide(), _refreshGuideRegion(), _guideSeenKey()/
                      _hasSeenGuide()/_markGuideSeen() (flag par langue). Câble aussi,
                      depuis le 12/07/2026, le libellé bilingue du bouton #homeInstallBtn
                      (déplacé en tête d'écran — cf. §21c)
-     §18   L. 4901  E-mail antispam — openAndCopyEmail()
-     §19   L. 4934  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
+     §18   L. 4946  E-mail antispam — openAndCopyEmail()
+     §19   L. 4978  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
                      (étiqueté "§21" dans le code même — incohérence de numérotation
                       préexistante, non corrigée ici pour ne pas renuméroter tout le fichier)
-     §20   L. 5235  Accessibilité clavier (keydown → role="button")
-     §21   L. 5250  Initialisation Launcher — addEventListener sur les cartes de langue
-     §21b  L. 5276  Viewport height fix Android — --app-h via window.innerHeight
-     §21c  L. 5317  Bouton d'installation PWA native — _initInstallButtons(),
+     §20   L. 5279  Accessibilité clavier (keydown → role="button")
+     §21   L. 5294  Initialisation Launcher — addEventListener sur les cartes de langue
+     §21b  L. 5320  Viewport height fix Android — --app-h via window.innerHeight
+     §21c  L. 5361  Bouton d'installation PWA native — _initInstallButtons(),
                      _installPwa() ; bouton #homeInstallBtn (tête de l'écran Guide,
                      libellé mis à jour dans §17) ajouté le 12/07/2026, remplace celui
                      auparavant caché dans la rubrique "Hors ligne" du guide
@@ -2239,6 +2248,13 @@ function _renderHomeRegionWidget() {
 function renderSections(activeLevel) {
   if (!ALL_THEMES.length) return;
   if (!activeLevel) activeLevel = 1;
+
+  /* Ajouté le 18/07/2026 (3e retour utilisateur) : dès que l'écran Modules
+     est effectivement rendu (donc réellement vu par l'apprenant, quel que
+     soit le chemin d'entrée), on pose le flag lu par _hasVisitedModules()
+     (§15d) — les cartes de langue du Lanceur ne se redéploieront plus
+     automatiquement au prochain retour sur l'écran 0. */
+  _markModulesVisited();
 
   const total = ALL_THEMES.length;
   const n     = done.length;
@@ -4529,30 +4545,66 @@ function _isBrandNewUser() {
    .lang-card--fr / .lang-card--es) contient désormais sa propre liste à
    puces dépliable, plutôt qu'un encadré séparé à 2 colonnes sous les
    cartes. Chaque carte a son propre bouton "i" et son propre état
-   déplié/replié, indépendant de l'autre carte :
-     • Tout nouvel utilisateur (_isBrandNewUser() → true, ci-dessus) :
-       les DEUX cartes DÉPLIÉES par défaut, pour être vues au moins une
-       fois.
-     • Sinon : REPLIÉES par défaut, avec mémorisation individuelle du
-       choix de chaque carte (l'utilisateur peut ne garder ouverte que
-       celle qui l'intéresse). */
+   déplié/replié, indépendant de l'autre carte.
+
+   Règle d'ouverture par défaut — revue le 18/07/2026 (3e retour
+   utilisateur, après test réel) :
+     1. La préférence EXPLICITE de l'apprenant (il a déjà touché le bouton
+        "i" au moins une fois pour CETTE carte, cf. toggleLangBox() plus
+        bas) prime toujours sur tout le reste, y compris s'il avait replié
+        la carte dès le tout premier lancement, ou rouvert une carte après
+        être allé aux modules.
+     2. À défaut de préférence explicite : DÉPLIÉE tant que l'apprenant n'est
+        jamais allé sur l'écran Modules (_hasVisitedModules() ci-dessous,
+        posé depuis renderSections() §7) — comportement observé "très bien"
+        par l'utilisateur lors du test du 18/07. REPLIÉE dès qu'il y est
+        allé au moins une fois, pour ne plus s'imposer une fois que
+        l'apprenant sait déjà à quoi sert l'appli.
+   Remplace l'ancienne logique qui se basait sur _isBrandNewUser() (repère
+   plus grossier, pensé pour la barre de nav basse — cf. §15c — et qui ne
+   se déclenchait qu'après un module TERMINÉ ou le Guide consulté, pas
+   simplement après une visite des Modules ; il ignorait aussi toute
+   préférence explicite de l'apprenant tant que ces conditions n'étaient
+   pas remplies). */
+
+/* Flag "l'apprenant est déjà allé au moins une fois sur l'écran Modules"
+   (peu importe le mode FR/ES : l'écran 0, lui, est commun aux deux) — posé
+   par _markModulesVisited(), appelée depuis renderSections() (§7, L.2239)
+   à chaque rendu de la grille de modules, quel que soit le chemin
+   d'entrée (bouton nav, bouton "Commencer" du Guide, retour de leçon...). */
+var MODULES_VISITED_KEY = 'vachebo_modules_visited_v1';
+
+function _markModulesVisited() {
+  try {
+    if (localStorage.getItem(MODULES_VISITED_KEY) !== '1') {
+      localStorage.setItem(MODULES_VISITED_KEY, '1');
+    }
+  } catch (e) {
+    /* Stockage indisponible : tant pis, _hasVisitedModules() retombera sur
+       false et les cartes resteront dépliées par défaut — comportement de
+       repli sûr, jamais gênant (juste un peu plus verbeux qu'idéal). */
+  }
+}
+
+function _hasVisitedModules() {
+  try { return localStorage.getItem(MODULES_VISITED_KEY) === '1'; }
+  catch (e) { return false; }
+}
+
 var LANG_BOX_KEYS = { fr: 'vachebo_langbox_fr_open_v1', es: 'vachebo_langbox_es_open_v1' };
 
 /* Détermine si la carte `lang` ('fr' ou 'es') doit être ouverte au
-   chargement : nouvel utilisateur → toujours ouverte ; sinon, préférence
-   mémorisée pour CETTE carte si déjà touchée par le passé, repliée par
-   défaut sinon. */
+   chargement — cf. commentaire §15d ci-dessus pour l'ordre de priorité. */
 function _langBoxInitialOpen(lang) {
-  if (_isBrandNewUser()) return true;
   try {
     var pref = localStorage.getItem(LANG_BOX_KEYS[lang]);
     if (pref === '1') return true;
     if (pref === '0') return false;
   } catch (e) {
     /* Stockage indisponible (navigation privée stricte) : on retombe
-       sur le comportement par défaut ci-dessous. */
+       sur l'heuristique ci-dessous. */
   }
-  return false; /* défaut : repliée dès que ce n'est plus un nouvel utilisateur */
+  return !_hasVisitedModules(); /* pas encore de préférence explicite */
 }
 
 /* Applique visuellement l'état ouvert/fermé sur la carte `lang` (classe
