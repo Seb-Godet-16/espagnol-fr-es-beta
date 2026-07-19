@@ -187,7 +187,17 @@
            montrer à l'apprenant qu'on touche la carte pour passer à
            l'écran suivant (sélecteur de variante régionale). Purement
            visuelle (aria-hidden="true") : l'aria-label du bouton porte
-           déjà l'information utile aux lecteurs d'écran. -->
+           déjà l'information utile aux lecteurs d'écran.
+
+           Libellé à gauche de l'icône "i" — ajout du 18/07/2026 (nouvelle
+           demande utilisateur, même jour) : ".lang-card-toggle-label" aide
+           l'apprenant à comprendre ce qu'il y a sous l'icône avant de
+           cliquer dessus. Langue du libellé alignée sur celle des puces de
+           CETTE carte (donc l'inverse de la langue du nom de la carte) —
+           "Sobre VACHÉBO" (espagnol) sous "Apprendre le Français", "Infos
+           VACHÉBO" (français) sous "Aprender Español". Libellé et icône
+           font désormais partie du MÊME bouton (agrandit la zone
+           cliquable), plutôt que l'icône seule comme précédemment. -->
       <div class="launcher-cards">
 
         <!-- Carte Français : bouton → sélecteur de variante ; explication en ESPAGNOL -->
@@ -217,7 +227,8 @@
             <button type="button" class="lang-card-toggle" id="langBoxToggle-fr"
                     onclick="toggleLangBox('fr')" aria-expanded="false" aria-controls="langBoxBody-fr"
                     aria-label="Afficher les explications / Mostrar las explicaciones">
-              <span id="langBoxToggleIcon-fr" aria-hidden="true">ℹ</span>
+              <span class="lang-card-toggle-label" aria-hidden="true">Sobre VACHÉBO</span>
+              <span class="lang-card-toggle-icon" id="langBoxToggleIcon-fr" aria-hidden="true">ℹ</span>
             </button>
           </div>
         </div>
@@ -249,7 +260,8 @@
             <button type="button" class="lang-card-toggle" id="langBoxToggle-es"
                     onclick="toggleLangBox('es')" aria-expanded="false" aria-controls="langBoxBody-es"
                     aria-label="Afficher les explications / Mostrar las explicaciones">
-              <span id="langBoxToggleIcon-es" aria-hidden="true">ℹ</span>
+              <span class="lang-card-toggle-label" aria-hidden="true">Infos VACHÉBO</span>
+              <span class="lang-card-toggle-icon" id="langBoxToggleIcon-es" aria-hidden="true">ℹ</span>
             </button>
           </div>
         </div>
