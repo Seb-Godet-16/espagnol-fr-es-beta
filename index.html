@@ -1219,22 +1219,48 @@
               background:rgba(0,0,0,0.6);z-index:9999;
               align-items:center;justify-content:center;">
     <div class="modal-content"
-         style="background:#fff;margin:0 20px;padding:25px;border-radius:15px;
-                text-align:center;position:relative;
+         style="background:#fff;margin:0 20px;padding:20px 0 25px;border-radius:15px;
+                text-align:center;position:relative;max-width:420px;
+                max-height:80vh;overflow-y:auto;box-sizing:border-box;
                 box-shadow:0 4px 15px rgba(0,0,0,0.2);">
-      <h3 style="margin-top:0;color:#333;">Remerciements</h3>
-      <p style="font-size:0.95rem;color:#555;line-height:1.6;">
-        Un grand merci à <strong>Fédérico Calo</strong>
-        (<a href="https://www.linkedin.com/in/federicocalo/" target="_blank" rel="noopener noreferrer"
-            style="color:#007bff;text-decoration:none;font-weight:bold;">
-          Architecte Développeur Web</a>)
-        pour son aide technique précieuse.<br><br>
-        Merci beaucoup également à <strong>mes parents</strong> pour leur travail de relecture,
-        leurs corrections sur les traductions et leurs conseils sur l'ergonomie de l'application.<br><br>
-        Merci à <strong>Christophe Elin</strong> pour ses retours précis et multiples d'expérience utilisateur.
-      </p>
+      <h3 style="margin:0 25px 4px;color:#333;">ℹ️ Infos</h3>
+
+      <!-- Rubrique 1 : Qui suis-je -->
+      <details class="hg-section" open style="text-align:left;">
+        <summary class="hg-summary">
+          <span class="hg-icon">👤</span>
+          <span class="hg-label">Qui suis-je ?</span>
+          <span class="hg-chevron">▼</span>
+        </summary>
+        <div class="hg-detail">
+          <p>🗺️ <strong>Sébastien Godet</strong>, 38 ans. Derrière ce nom, il y a un géographe de formation, un entraîneur d'athlétisme et surtout un passionné par l'art de tisser des liens. Originaire de l'ouest de la France, c'est à Paris, dans les années 2010, que mon histoire avec le monde hispanophone a commencé : j'y ai fait la rencontre d'amis formidables parmi mes voisins et au sein de mon club d'athlétisme.</p>
+          <p>✈️ Leur contact, combiné à ma curiosité de géographe pour la nature grandiose et variée de leurs pays d'origine, m'a poussé à sauter le pas en 2022 : un voyage de 7 mois à travers l'Équateur, l'Argentine et l'Uruguay.</p>
+          <p>💡 Sur place, les rencontres et les amitiés se sont multipliées, créant une envie profonde de garder ce lien bilingue une fois rentré. Mais c'est en juin 2026, avec la découverte de Claude Artifacts, que le véritable déclic a eu lieu : cette opportunité de développer mes compétences en développement web grâce à l'IA m'a donné les clés pour donner vie à mon projet.</p>
+          <p>🐄 C'est ainsi qu'est né <strong>VACHÉBO</strong>. Ce projet fait coup double : il concrétise mon apprentissage technique tout en créant l'outil qui manquait cruellement sur le marché — un site pensé pour les grands débutants, respectant les vraies variantes régionales de l'espagnol.</p>
+          <p>
+            💼 <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer" style="color:#007bff;text-decoration:none;font-weight:bold;">LinkedIn</a>
+            &nbsp;·&nbsp;
+            ✉️ <button onclick="openAndCopyEmail()" style="background:none;border:none;padding:0;color:#007bff;font-weight:bold;font-size:inherit;font-family:inherit;cursor:pointer;text-decoration:none;">Email</button>
+          </p>
+        </div>
+      </details>
+
+      <!-- Rubrique 2 : Remerciements -->
+      <details class="hg-section" style="text-align:left;">
+        <summary class="hg-summary">
+          <span class="hg-icon">🙏</span>
+          <span class="hg-label">Remerciements</span>
+          <span class="hg-chevron">▼</span>
+        </summary>
+        <div class="hg-detail">
+          <p>🧑‍💻 <strong>Fédérico Calo</strong> (<a href="https://www.linkedin.com/in/federicocalo/" target="_blank" rel="noopener noreferrer" style="color:#007bff;text-decoration:none;font-weight:bold;">Architecte Développeur Web</a>) — aide technique précieuse tout au long du projet</p>
+          <p>👨‍👩‍👧 <strong>Mes parents</strong> — relecture, corrections des traductions et conseils ergonomiques</p>
+          <p>🗣️ <strong>Christophe Elin</strong> — retours précis et multiples d'expérience utilisateur</p>
+        </div>
+      </details>
+
       <button onclick="document.getElementById('credits-modal').style.display='none'; const b=document.getElementById('navBtnCredits'); if(b)b.classList.remove('active'); const cur=document.querySelector('.screen.active'); _updateBottomNav(cur?cur.id:'app-launcher');"
-              style="margin-top:15px;padding:10px 25px;border-radius:8px;border:none;
+              style="margin:18px 25px 0;padding:10px 25px;border-radius:8px;border:none;
                      background:#007bff;color:white;font-weight:bold;cursor:pointer;">
         Fermer
       </button>
