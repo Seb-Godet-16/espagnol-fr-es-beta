@@ -30,15 +30,16 @@
      ├─ style.css   → Thèmes couleur, composants visuels (48 variables CSS, 171 décl.)
      ├─ data-fr.js  → ALL_THEMES_FR (32 thèmes + 16 dialogues) — chargé à la demande
      ├─ data-es.js  → ALL_THEMES_ES (32 thèmes + 16 dialogues) — chargé à la demande
-     └─ app.js      → Ce fichier : logique applicative complète (5 604 lignes)
+     └─ app.js      → Ce fichier : logique applicative complète (5 627 lignes)
 
-   PLAN DU FICHIER (numéros recalculés le 20/07/2026 — ajout du symbole
-   mascotte régional sur les cartes flash (.fc-region-mascot, §9), de la
-   fonction partagée _mascotSansFauteLine() (§14, factorisée depuis
-   _quizResultStrings() et désormais aussi utilisée par _rpShowEnd(), §9c)
-   et de la pastille "tout terminé" .sections-mascot-all (§7) ; décalage des
-   ancres suivantes qui en résulte ; chaque ancre revérifiée une à une par
-   grep) :
+   PLAN DU FICHIER (numéros recalculés le 20/07/2026 — ajout de l'entrée
+   France (🗼) à REGION_MASCOTS et de la fonction partagée
+   _mascotKeyForMode() (§15), pour que la ligne mascotte du mode Français
+   (pastille .sections-mascot-all §7, _mascotSansFauteLine() §14,
+   _refreshFooterMascot() §15) reprenne elle aussi un symbole pays au lieu
+   d'un jeu de mots seul — symétrie avec le logo, qui a un élément visuel
+   par pays (Tour Eiffel incluse) ; décalage des ancres suivantes qui en
+   résulte ; chaque ancre revérifiée une à une par grep) :
      §0    L.  111  Chargement conditionnel des données — loadDataForMode()
      §0b   L.  140  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
      §1    L.  298  Variables d'état globales
@@ -57,38 +58,50 @@
                      Appelle aussi _markModulesVisited() (§15d, appel L.2262)
                      depuis le 18/07/2026. Pastille .sections-mascot-all
                      ajoutée le 20/07/2026 (demande utilisateur) : clin d'œil
-                     mascotte quand tous les modules sont à 3 étoiles.
-     §8    L. 2416  Ouverture d'un thème — openTheme() (marque module ouvert), switchTab()
-     §9    L. 2629  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail().
+                     mascotte quand tous les modules sont à 3 étoiles, via
+                     REGION_MASCOTS/_mascotKeyForMode() (§15) — couvre aussi
+                     le mode Français (🗼 France) depuis le 20/07/2026 (suite).
+     §8    L. 2417  Ouverture d'un thème — openTheme() (marque module ouvert), switchTab()
+     §9    L. 2630  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail().
                      Symbole mascotte régional .fc-region-mascot (recto FR/verso
                      ES et recto ES/verso FR) ajouté le 20/07/2026 (demande
                      utilisateur), cohérent avec .hrw-chip-mascot (§6/§15) et
                      .launcher-region-mascot (§15).
-     §9b   L. 2801  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
-     §9c   L. 3214  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic(), _rpShowEnd().
+     §9b   L. 2802  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
+     §9c   L. 3215  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic(), _rpShowEnd().
                      Clin d'œil mascotte sur sans-faute ajouté à _rpShowEnd() le
                      20/07/2026 (demande utilisateur), via _mascotSansFauteLine() (§14).
-     §10   L. 3575  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
-     §11   L. 3853  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
-     §12   L. 3974  Vocabulaire — renderVocab() (chips cliquables)
-     §13   L. 4032  Quiz Dialogue — renderDialogQuiz(), checkDQ()
-     §14   L. 4126  Utilitaires — _quizResultStrings(), _mascotSansFauteLine(),
-                     esc(), _escAttr(). _mascotSansFauteLine() (L.4179) ajoutée le
+     §10   L. 3576  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
+     §11   L. 3854  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
+     §12   L. 3975  Vocabulaire — renderVocab() (chips cliquables)
+     §13   L. 4033  Quiz Dialogue — renderDialogQuiz(), checkDQ()
+     §14   L. 4127  Utilitaires — _quizResultStrings(), _mascotSansFauteLine(),
+                     esc(), _escAttr(). _mascotSansFauteLine() (L.4198) ajoutée le
                      20/07/2026 (demande utilisateur) : factorise le clin d'œil
                      mascotte sur sans-faute auparavant écrit en dur dans
                      _quizResultStrings() (19/07/2026), désormais partagé avec
-                     _rpShowEnd() (§9c).
-     §15   L. 4210  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
-     §15b  L. 4558  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
+                     _rpShowEnd() (§9c). Depuis le 20/07/2026 (suite), délègue le
+                     choix de clé mascotte à _mascotKeyForMode() (§15) pour
+                     couvrir aussi le mode Français (🗼 France).
+     §15   L. 4212  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion().
+                     REGION_MASCOTS complété le 20/07/2026 (demande utilisateur)
+                     d'une entrée France (🗼, symétrie avec le logo — Tour
+                     Eiffel), et nouvelle fonction _mascotKeyForMode() qui
+                     résout la clé à utiliser ('FR' en mode Français, variante
+                     hispanique active — currentRegion — en mode Espagnol) ;
+                     utilisée par §7, §14 et _refreshFooterMascot() (juste en
+                     dessous, même section), qui n'affichent donc plus un jeu
+                     de mots sans symbole en mode Français.
+     §15b  L. 4581  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
                      (aucune bannière numérotée dans le code à cet endroit, juste
                       un commentaire au-dessus de toggleAcc() — contrairement aux
                       autres sous-sections 5b/9b/9c qui en ont une)
-     §15c  L. 4630  Nouvel utilisateur & barre de nav — _isBrandNewUser(), condition
+     §15c  L. 4653  Nouvel utilisateur & barre de nav — _isBrandNewUser(), condition
                      dans le listener DOMContentLoaded (ajouté le 11/07/2026, demande
                      utilisateur : pas de barre de nav basse au tout premier lancement
                      sans aucun parcours ; réapparaît dès la première interaction via
                      showLauncherVariant())
-     §15d  L. 4699  Cartes de langue fusionnées avec l'explicatif — _langBoxInitialOpen(),
+     §15d  L. 4722  Cartes de langue fusionnées avec l'explicatif — _langBoxInitialOpen(),
                      _setLangBoxOpen(), _initLangBoxes(), toggleLangBox() ; ajouté le
                      18/07/2026 (demande utilisateur), fusionné le même jour avec les
                      anciennes cartes .lang-card (auparavant un encadré séparé à 2
@@ -96,27 +109,27 @@
                      désormais sa propre liste à puces dépliable et son propre état
                      déplié/replié, mémorisés séparément par langue.
                      Contient aussi (ajout du même jour, 3e retour utilisateur)
-                     _markModulesVisited()/_hasVisitedModules() (L.4678) : la
+                     _markModulesVisited()/_hasVisitedModules() (L.4701) : la
                      préférence explicite de l'apprenant prime toujours, puis les
                      cartes se replient dès la première visite des Modules (posé
                      depuis renderSections(), §7, L.2262) — remplace l'ancienne
                      dépendance à _isBrandNewUser() (§15c), trop grossière pour ce
                      cas précis (aucune bannière numérotée à cet endroit, comme
                      pour §15c)
-     §16   L. 4779  Remerciements — showCredits()
-     §17   L. 4794  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
+     §16   L. 4802  Remerciements — showCredits()
+     §17   L. 4817  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
                      navBackToGuide(), _refreshGuideRegion(), _guideSeenKey()/
                      _hasSeenGuide()/_markGuideSeen() (flag par langue). Câble aussi,
                      depuis le 12/07/2026, le libellé bilingue du bouton #homeInstallBtn
                      (déplacé en tête d'écran — cf. §21c)
-     §18   L. 5124  E-mail antispam — openAndCopyEmail()
-     §19   L. 5143  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
+     §18   L. 5147  E-mail antispam — openAndCopyEmail()
+     §19   L. 5166  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
                      (étiqueté "§21" dans le code même — incohérence de numérotation
                       préexistante, non corrigée ici pour ne pas renuméroter tout le fichier)
-     §20   L. 5450  Accessibilité clavier (keydown → role="button")
-     §21   L. 5294  Initialisation Launcher — addEventListener sur les cartes de langue
-     §21b  L. 5320  Viewport height fix Android — --app-h via window.innerHeight
-     §21c  L. 5361  Bouton d'installation PWA native — _initInstallButtons(),
+     §20   L. 5473  Accessibilité clavier (keydown → role="button")
+     §21   L. 5317  Initialisation Launcher — addEventListener sur les cartes de langue
+     §21b  L. 5343  Viewport height fix Android — --app-h via window.innerHeight
+     §21c  L. 5384  Bouton d'installation PWA native — _initInstallButtons(),
                      _installPwa() ; bouton #homeInstallBtn (tête de l'écran Guide,
                      libellé mis à jour dans §17) ajouté le 12/07/2026, remplace celui
                      auparavant caché dans la rubrique "Hors ligne" du guide
@@ -2304,15 +2317,16 @@ function renderSections(activeLevel) {
 
     // Étoiles totales + modules terminés (2 pastilles côte à côte), plus une
     // 3e pastille mascotte VACHÉBO (.sections-mascot-all) quand la totalité
-    // des modules est à 3 étoiles — clin d'œil régional en mode Espagnol
-    // (REGION_MASCOTS), jeu de mots français sinon, comme les autres clins
-    // d'œil mascotte de l'app. Ajouté le 20/07/2026 (demande utilisateur).
+    // des modules est à 3 étoiles — clin d'œil via REGION_MASCOTS (§15b),
+    // régional en mode Espagnol, France (🗼) en mode Français depuis le
+    // 20/07/2026 (demande utilisateur — auparavant un jeu de mots sans
+    // symbole), comme les autres clins d'œil mascotte de l'app. Clé résolue
+    // par _mascotKeyForMode(). Ajouté le 20/07/2026 (demande utilisateur).
     const se = document.getElementById('sectionsStars' + s);
     if (se) {
       const allDone = total > 0 && completedCount === total;
-      const mascotAllLine = (currentMode === 'learn_french')
-        ? '🐄 ' + L('¡Sos una máquina!', 'Vachement complet !')
-        : '🐄' + REGION_MASCOTS[currentRegion].symbol + ' ' + REGION_MASCOTS[currentRegion].phrase;
+      const mAll = REGION_MASCOTS[_mascotKeyForMode()];
+      const mascotAllLine = '🐄' + mAll.symbol + ' ' + mAll.phrase;
       se.innerHTML =
         '<span class="stars-pill">⭐ ' + totalStarsEarned + ' / ' + maxStarsPossible + '</span>'
         + '<span class="completed-pill">✅ ' + completedCount + ' / ' + total + ' '
@@ -4183,10 +4197,12 @@ function _quizResultStrings(pct) {
 
 /* _mascotSansFauteLine(starsEarned) — Retourne le clin d'œil mascotte VACHÉBO
    à afficher sur un sans-faute (3 étoiles), ou une chaîne vide sinon : la
-   vache du logo sort son exclamation régionale en mode Espagnol
-   (REGION_MASCOTS, cohérente avec les chips du Lanceur/Home), et un jeu de
-   mots français ("vachement") en mode Français, où il n'y a pas de région
-   à distinguer. Utilisée avec la classe CSS partagée .quiz-mascot-line.
+   vache du logo sort son exclamation via REGION_MASCOTS — régionale en mode
+   Espagnol (cohérente avec les chips du Lanceur/Home), France (🗼) en mode
+   Français depuis le 20/07/2026 (demande utilisateur — auparavant un jeu de
+   mots sans symbole ; une seule entrée FR suffit, pas de région à
+   distinguer côté FR). Clé résolue par _mascotKeyForMode() (voir
+   REGION_MASCOTS). Utilisée avec la classe CSS partagée .quiz-mascot-line.
    Factorisée le 20/07/2026 (demande utilisateur) à partir de la logique
    auparavant écrite en dur dans _quizResultStrings() (19/07/2026) —
    désormais partagée par les quiz (§10 Quiz 10 questions, §13 Quiz
@@ -4194,9 +4210,8 @@ function _quizResultStrings(pct) {
    Répète (§9c, via _rpShowEnd()), au lieu d'être dupliquée. */
 function _mascotSansFauteLine(starsEarned) {
   if (starsEarned !== 3) return '';
-  return (currentMode === 'learn_french')
-    ? '🐄 ' + L('¡Vaya crack!', "T'es vachement fort·e !")
-    : '🐄' + REGION_MASCOTS[currentRegion].symbol + ' ' + REGION_MASCOTS[currentRegion].phrase;
+  const m = REGION_MASCOTS[_mascotKeyForMode()];
+  return '🐄' + m.symbol + ' ' + m.phrase;
 }
 
 /* esc(s) — Échappe les caractères spéciaux pour injection dans les onclick="" HTML.
@@ -4249,8 +4264,17 @@ function _escAttr(s) {
    du Guide) et s'ajoutent au drapeau selon l'emplacement.
    Les couleurs de région (variables CSS --c-primary/--c-accent par
    html.theme-spain.region-XX) restent, elles, entièrement inchangées.
-   Ajouté le 19/07/2026 (demande utilisateur). */
+   Ajouté le 19/07/2026 (demande utilisateur).
+   Entrée FR ajoutée le 20/07/2026 (demande utilisateur) : le logo a un
+   élément visuel par pays, Tour Eiffel incluse pour la France, mais ce clin
+   d'œil manquait côté mode Français dans les 3 emplacements qui affichent
+   la ligne mascotte (pied de page, pastille « tout terminé » de l'écran
+   Sections, ligne sans-faute des quiz/Répète) — ceux-ci retombaient sur un
+   simple jeu de mots sans symbole. Clé 'FR' utilisée uniquement pour ces 3
+   emplacements (jamais comme valeur de currentRegion, qui reste toujours
+   une variante hispanique même en mode Français — cf. renderRegionGrid). */
 const REGION_MASCOTS = {
+  FR: { symbol: '🗼', phrase: 'Oh la vache, qué chévère !' },
   ES: { symbol: '🐂', phrase: '¡Mola!'          },
   MX: { symbol: '🌵', phrase: '¡Chido!'         },
   CO: { symbol: '☕', phrase: '¡Qué chévere!'   },
@@ -4260,17 +4284,29 @@ const REGION_MASCOTS = {
   EC: { symbol: '🦅', phrase: '¡Chévere nomás!' }
 };
 
+/* _mascotKeyForMode() — Retourne la clé REGION_MASCOTS à utiliser pour la
+   ligne mascotte du mode courant : 'FR' en mode Français (une seule entrée,
+   pas de variante à distinguer côté FR), ou la variante hispanique active
+   (currentRegion) en mode Espagnol. Factorisée le 20/07/2026 (demande
+   utilisateur) pour éviter de dupliquer ce choix dans les 3 emplacements
+   qui affichent la ligne mascotte (voir ci-dessus). */
+function _mascotKeyForMode() {
+  return (currentMode === 'learn_french') ? 'FR' : currentRegion;
+}
+
 /* _refreshFooterMascot() — Signe les deux pieds de page (#footerMascotLauncher,
    #footerMascotLesson) d'un clin d'œil à la mascotte du logo VACHÉBO :
-   symbole + exclamation régionale (REGION_MASCOTS) en mode Espagnol, jeu de
-   mots générique en mode Français (pas de région à distinguer côté FR).
+   symbole + exclamation via REGION_MASCOTS, régionale en mode Espagnol,
+   France (🗼) en mode Français depuis le 20/07/2026 (demande utilisateur —
+   auparavant un jeu de mots générique sans symbole, seul mode à ne pas
+   reprendre l'élément visuel pays du logo). Clé résolue par
+   _mascotKeyForMode() (voir REGION_MASCOTS ci-dessus).
    Appelée par pickRegion() à chaque changement de variante, et une première
    fois au chargement (voir DOMContentLoaded / initApp).
    Ajouté le 19/07/2026 (suite, demande utilisateur). */
 function _refreshFooterMascot() {
-  const line = (currentMode === 'learn_french')
-    ? '🐄 ' + L('¡Oh la vache, qué chévère!', 'Oh la vache, on progresse !')
-    : '🐄' + REGION_MASCOTS[currentRegion].symbol + ' <em>' + REGION_MASCOTS[currentRegion].phrase + '</em>';
+  const m = REGION_MASCOTS[_mascotKeyForMode()];
+  const line = '🐄' + m.symbol + ' <em>' + m.phrase + '</em>';
   ['footerMascotLauncher', 'footerMascotLesson'].forEach((id) => {
     const el = document.getElementById(id);
     if (el) el.innerHTML = line;
