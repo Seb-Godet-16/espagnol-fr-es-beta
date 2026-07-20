@@ -131,6 +131,19 @@
       <span aria-hidden="true">🚪</span>
     </button>
 
+    <!-- Raccourci Guide explicatif — ajouté le 20/07/2026 (demande utilisateur).
+         Masqué par défaut (affiché uniquement à partir du 2e lancement de
+         l'app, cf. _updateCardsGuideShortcut()/_isBrandNewUser() dans
+         app.js) : au tout premier lancement, aucun guide n'a encore été
+         consulté pour aucun mode, ce raccourci n'aurait donc aucune
+         destination pertinente. Ne s'affiche que sur la Vue A (cartes de
+         langue) — cf. navCardsToGuide(), qui déduit le mode à rouvrir. -->
+    <button class="launcher-guide-shortcut-btn" id="launcherCardsGuideBtn" style="display:none;"
+            onclick="navCardsToGuide()"
+            aria-label="Guide explicatif / Guía explicativa" title="Guide / Guía">
+      <span aria-hidden="true">❓</span>
+    </button>
+
     <!-- ─── VUE A : Sélection de la langue ─── -->
     <div id="launcher-view-cards" class="launcher-inner">
       <!-- Logo VACHÉBO — PNG servi depuis GitHub, fallback SVG si pas de connexion -->
@@ -283,9 +296,36 @@
     <!-- ─── VUE B : Sélecteur de variante (après clic sur une carte) ─── -->
     <div id="launcher-view-variant" class="launcher-inner" style="display:none;">
 
-      <!-- Bouton retour → revient aux cartes de langue -->
-      <button class="back-btn launcher-back-btn" id="launcherBackBtn"
-              aria-label="Retour au choix de langue / Volver a la selección de idioma">← <span id="launcherBackLabel">Volver</span></button>
+      <!-- Groupe d'icônes de navigation — remplace l'ancien bouton unique
+           "← Retour/Volver" le 20/07/2026 (demande utilisateur). 🏠 revient
+           toujours aux cartes de langue (comportement de l'ancien bouton
+           retour). ❓ Guide et 📚 Modules sont masqués par défaut et
+           n'apparaissent qu'à partir du 2e lancement de l'app (une fois
+           qu'un guide/des modules existent réellement à rouvrir) — cf.
+           showLauncherVariant() dans app.js. -->
+      <div class="sections-back-group launcher-variant-nav-group" id="launcherVariantNavGroup" role="group" aria-label="Navigation">
+        <button class="back-btn back-icon-btn" id="launcherBackBtn"
+                aria-label="Retour au choix de langue / Volver a la selección de idioma" title="Accueil / Inicio">
+          <span aria-hidden="true">🏠</span>
+        </button>
+        <button class="back-btn back-icon-btn" id="launcherGuideBtn" style="display:none;"
+                onclick="navVariantToGuide()"
+                aria-label="Guide explicatif / Guía explicativa" title="Guide / Guía">
+          <span aria-hidden="true">❓</span>
+        </button>
+        <button class="back-btn back-icon-btn" id="launcherModulesBtn" style="display:none;"
+                onclick="navVariantToModules()"
+                aria-label="Modules / Módulos" title="Modules / Módulos">
+          <span aria-hidden="true">📚</span>
+        </button>
+      </div>
+
+      <!-- Logo VACHÉBO — ajouté le 20/07/2026 (demande utilisateur), même
+           image que la Vue A, en plus petit. -->
+      <div class="launcher-variant-logo-wrap">
+        <img src="img/Logo-appli-es-fr.png" alt="VACHÉBO" class="launcher-variant-logo-img"
+             onerror="this.style.display='none';">
+      </div>
 
       <!-- Drapeau + titre injectés par showLauncherVariant() -->
       <div class="flag-row" id="launcherFlagRow" style="font-size:3rem;margin:10px 0;"></div>
@@ -295,14 +335,21 @@
       <div id="region-selector-wrap" style="width:100%;max-width:400px;margin:0 auto 10px;">
         <!-- La grille est injectée par renderRegionGrid() dans app.js -->
         <div id="region-grid-container"></div>
-        <!-- Bandeau d'info sur la variante active -->
-        <div id="region-message-box"></div>
         <!-- Compatibilité ancienne : le select caché est conservé pour pickRegion() -->
         <div id="region-select-container" style="display:none;"></div>
       </div>
 
-      <!-- Bouton Continuer → lance initApp() et affiche le Guide -->
-      <button class="btn-primary" id="launcherContinueBtn" style="margin-top:8px;"></button>
+      <!-- Bouton Continuer → lance initApp() et affiche le Guide.
+           Remonté AU-DESSUS du bandeau d'explication le 20/07/2026 (demande
+           utilisateur) pour rester visible sans avoir à scroller au-delà du
+           texte explicatif. -->
+      <button class="btn-primary" id="launcherContinueBtn" style="margin-top:2px;"></button>
+
+      <!-- Bandeau d'info sur la variante active — l'exemple générique a été
+           retiré le 20/07/2026 (demande utilisateur, gain de place) : seul
+           le message concret de pickRegion() (variante + note audio)
+           s'affiche désormais ici. -->
+      <div id="region-message-box" style="width:100%;max-width:400px;"></div>
 
     </div><!-- /launcher-view-variant -->
 
@@ -331,10 +378,19 @@
          Modules) ; 🚪 ouvre la modale "Quitter l'application", commune
          aux 5 écrans de l'app. -->
     <div class="home-topbar">
-      <button class="topbar-icon-btn" onclick="navBackToHome()"
-              aria-label="Retour à l'accueil / Volver al inicio" title="Accueil / Inicio">
-        <span aria-hidden="true">🏠</span>
-      </button>
+      <div class="home-topbar-left-group">
+        <button class="topbar-icon-btn" onclick="navBackToHome()"
+                aria-label="Retour à l'accueil / Volver al inicio" title="Accueil / Inicio">
+          <span aria-hidden="true">🏠</span>
+        </button>
+        <!-- Raccourci vers le sélecteur de variante — ajouté le 20/07/2026
+             (demande utilisateur) pour pouvoir changer de variante à tout
+             moment sans repasser par un module en cours. -->
+        <button class="topbar-icon-btn" onclick="navToVariantSelector()"
+                aria-label="Choix de la variante / Elegir variante" title="Variantes">
+          <span aria-hidden="true">🌎</span>
+        </button>
+      </div>
       <span class="home-topbar-title" id="homeTopbarTitle">Guide explicatif</span>
       <button class="topbar-icon-btn quit-btn" onclick="showQuitConfirm()"
               aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
@@ -834,6 +890,8 @@
               (<a href="https://www.linkedin.com/in/federicocalo/" target="_blank" rel="noopener noreferrer">Architecte Développeur Web</a>)
               pour son aide technique précieuse tout au long du projet.</p>
             <p>Merci également à mes <strong>parents</strong> pour leur travail de relecture, leurs corrections sur les traductions et leurs conseils sur l'ergonomie de l'application.</p>
+            <p>Merci à <strong>Christophe Elin</strong> pour ses retours précis et multiples d'expérience utilisateur.</p>
+            <p>Merci à <strong>Sandrine Le Goff</strong> pour son retour utilisateur important, avec des idées d'amélioration sur le plan visuel, apporté avec son œil d'experte du digital.</p>
           </div>
         </details>
 
@@ -1278,6 +1336,8 @@
               (<a href="https://www.linkedin.com/in/federicocalo/" target="_blank" rel="noopener noreferrer">Arquitecto Desarrollador Web</a>)
               por su valiosa ayuda técnica a lo largo del proyecto.</p>
             <p>Gracias también a mis <strong>padres</strong> por su trabajo de corrección, sus ajustes en las traducciones y sus consejos sobre la ergonomía de la aplicación.</p>
+            <p>Gracias a <strong>Christophe Elin</strong> por sus comentarios precisos y numerosos sobre la experiencia de usuario.</p>
+            <p>Gracias a <strong>Sandrine Le Goff</strong> por su importante retorno como usuaria, con ideas de mejora a nivel visual aportadas con su mirada experta del ámbito digital.</p>
           </div>
         </details>
 
@@ -1325,6 +1385,10 @@
   <div id="sections-level1" class="screen">
 
     <div class="sections-header">
+      <!-- Logo VACHÉBO — ajouté le 20/07/2026 (demande utilisateur) -->
+      <div class="sections-logo-strip">
+        <img src="img/Logo-appli-es-fr.png" alt="VACHÉBO" class="sections-logo-img" onerror="this.style.display='none';">
+      </div>
       <div class="sections-top-row">
         <div class="sections-top-left">
           <div class="sections-back-group" role="group" aria-label="Retour">
@@ -1335,6 +1399,11 @@
             <button class="back-btn back-icon-btn" id="sectionsBackGuideBtn" onclick="navBackToGuide()"
                     aria-label="Retour au guide explicatif / Volver a la guía" title="Guide / Guía">
               <span aria-hidden="true">❓</span>
+            </button>
+            <!-- Raccourci variante — ajouté le 20/07/2026 (demande utilisateur) -->
+            <button class="back-btn back-icon-btn" onclick="navToVariantSelector()"
+                    aria-label="Choix de la variante / Elegir variante" title="Variantes">
+              <span aria-hidden="true">🌎</span>
             </button>
           </div>
           <h2 id="sectionsTitle"></h2>
@@ -1386,6 +1455,10 @@
   <div id="sections-level2" class="screen">
 
     <div class="sections-header">
+      <!-- Logo VACHÉBO — ajouté le 20/07/2026 (demande utilisateur) -->
+      <div class="sections-logo-strip">
+        <img src="img/Logo-appli-es-fr.png" alt="VACHÉBO" class="sections-logo-img" onerror="this.style.display='none';">
+      </div>
       <div class="sections-top-row">
         <div class="sections-top-left">
           <div class="sections-back-group" role="group" aria-label="Retour">
@@ -1396,6 +1469,11 @@
             <button class="back-btn back-icon-btn" id="sectionsBackGuideBtn2" onclick="navBackToGuide()"
                     aria-label="Retour au guide explicatif / Volver a la guía" title="Guide / Guía">
               <span aria-hidden="true">❓</span>
+            </button>
+            <!-- Raccourci variante — ajouté le 20/07/2026 (demande utilisateur) -->
+            <button class="back-btn back-icon-btn" onclick="navToVariantSelector()"
+                    aria-label="Choix de la variante / Elegir variante" title="Variantes">
+              <span aria-hidden="true">🌎</span>
             </button>
           </div>
           <h2 id="sectionsTitle2"></h2>
@@ -1528,6 +1606,7 @@
           <p>🧑‍💻 <strong>Fédérico Calo</strong> (<a href="https://www.linkedin.com/in/federicocalo/" target="_blank" rel="noopener noreferrer" style="color:#007bff;text-decoration:none;font-weight:bold;">Architecte Développeur Web</a>) — aide technique précieuse tout au long du projet</p>
           <p>👨‍👩‍👧 <strong>Mes parents</strong> — relecture, corrections des traductions et conseils ergonomiques</p>
           <p>🗣️ <strong>Christophe Elin</strong> — retours précis et multiples d'expérience utilisateur</p>
+          <p>🎨 <strong>Sandrine Le Goff</strong> — retour utilisateur important, avec des idées d'amélioration sur le plan visuel apportées avec son œil d'experte du digital</p>
         </div>
       </details>
 

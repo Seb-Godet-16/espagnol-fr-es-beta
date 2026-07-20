@@ -622,7 +622,9 @@ body {
   padding-top: 16px;
 }
 
-/* Bouton retour dans la Vue B */
+/* Bouton retour dans la Vue B — remplacé le 20/07/2026 (demande
+   utilisateur) par le groupe d'icônes .launcher-variant-nav-group
+   ci-dessous ; règle conservée pour compatibilité si jamais réutilisée. */
 .launcher-back-btn {
   align-self: flex-start;
   background: rgba(255,255,255,0.85);
@@ -637,6 +639,64 @@ body {
   box-shadow: 0 2px 8px rgba(0,0,0,.1);
 }
 .launcher-back-btn:active { transform: scale(.96); }
+
+/* Groupe d'icônes de navigation (🏠 Accueil / ❓ Guide / 📚 Modules) de la
+   Vue B — ajouté le 20/07/2026 (demande utilisateur), remplace l'ancien
+   bouton unique "← Retour/Volver". Réutilise .sections-back-group/
+   .back-icon-btn (mêmes icônes que l'écran Modules) avec un fond clair
+   circulaire par icône (fond sombre absent sur ce fond dégradé clair,
+   contrairement au topbar sombre du Guide). */
+.launcher-variant-nav-group {
+  align-self: flex-start;
+  margin-bottom: 6px;
+}
+.launcher-variant-nav-group .back-icon-btn {
+  background: rgba(0,0,0,.06) !important;
+  border-radius: 50%;
+  color: #222;
+}
+.launcher-variant-nav-group .back-icon-btn:hover {
+  background: rgba(0,0,0,.12) !important;
+}
+
+/* Logo VACHÉBO de la Vue B — ajouté le 20/07/2026 (demande utilisateur) */
+.launcher-variant-logo-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 4px;
+}
+.launcher-variant-logo-img {
+  max-width: 130px;
+  width: 42%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Raccourci ❓ Guide sur la Vue A (cartes de langue) — ajouté le
+   20/07/2026 (demande utilisateur), masqué par défaut au tout premier
+   lancement (cf. _updateCardsGuideShortcut() dans app.js). Même gabarit
+   que .launcher-quit-btn, mais positionné en haut à gauche (le bouton
+   Quitter reste seul à droite). */
+.launcher-guide-shortcut-btn {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 5;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.06);
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background .15s;
+}
+.launcher-guide-shortcut-btn:hover        { background: rgba(0,0,0,.12); }
+.launcher-guide-shortcut-btn:focus-visible { outline: 3px solid rgba(0,0,0,.35); outline-offset: 2px; }
 
 /* Titre de la Vue B */
 .launcher-variant-title {
@@ -878,6 +938,15 @@ body {
 }
 .topbar-icon-btn:hover        { background: rgba(255,255,255,.18); }
 .topbar-icon-btn:focus-visible { outline: 3px solid rgba(255,255,255,.7); outline-offset: 2px; }
+
+/* Regroupe 🏠 et 🌎 à gauche de la topbar du Guide — ajouté le 20/07/2026
+   (demande utilisateur) pour accueillir le nouveau raccourci Variantes
+   à côté du bouton Accueil existant. */
+.home-topbar-left-group {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
 
 /* ── En-tête coloré du guide ── */
 .home-guide-header {
@@ -1678,6 +1747,22 @@ body {
   gap: 6px;
   margin-bottom: 2px;
 }
+
+/* Logo VACHÉBO en tête de l'écran Modules — ajouté le 20/07/2026 (demande
+   utilisateur), au même gabarit que celui du Guide (.home-guide-logo-img). */
+.sections-logo-strip {
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+}
+.sections-logo-img {
+  max-width: 110px;
+  width: 34%;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.95;
+  border-radius: 6px;
+}
 .back-icon-btn {
   font-size: 1.3rem !important;
   min-width: 40px;
@@ -1686,6 +1771,12 @@ body {
   align-items: center;
   justify-content: center;
   padding: 2px !important;
+  /* Reset explicite ajouté le 20/07/2026 (demande utilisateur) : ce bouton
+     est parfois utilisé SANS la classe .back-btn (ex. bouton 🚪 Quitter des
+     écrans Modules), qui gardait alors le fond/bordure par défaut du
+     navigateur (visible en boîte claire derrière l'émoji). */
+  background: none !important;
+  border: none !important;
 }
 .sections-flag {
   font-size: 2.4rem;
@@ -4890,22 +4981,23 @@ footer .footer-antispam-btn           { color: #aaa; }
   flex: 0 1 auto;
 }
 .reset-inline-btn {
+  /* Bordure/pilule retirée le 20/07/2026 (demande utilisateur) : l'icône
+     🔄 (2 flèches) se suffit à elle-même, sans cadre autour. */
   background: transparent;
-  border: 1.5px solid rgba(255,255,255,0.55);
+  border: none;
   color: rgba(255,255,255,0.85);
   border-radius: 50px;
-  padding: 2px 8px;
-  font-size: 0.72rem;
+  padding: 2px 6px;
+  font-size: 0.85rem;
   cursor: pointer;
   font-weight: 700;
   white-space: nowrap;
   line-height: 1.6;
-  transition: background .2s, border-color .2s;
+  transition: background .2s;
   flex-shrink: 0;
 }
 .reset-inline-btn:hover {
   background: rgba(255,255,255,0.18);
-  border-color: rgba(255,255,255,0.85);
 }
 
 /* ── 4a : Bouton PDF compact dans la barre meta (même ligne que Vitesse) ── */
@@ -5031,6 +5123,7 @@ footer .footer-antispam-btn           { color: #aaa; }
 
   /* ── Lanceur : bouton Quitter resserré (ajouté 19/07/2026) ── */
   .launcher-quit-btn { width: 34px; height: 34px; top: 8px; right: 8px; font-size: 1.05rem; }
+  .launcher-guide-shortcut-btn { width: 34px; height: 34px; top: 8px; left: 8px; font-size: 1.05rem; }
 
   /* ── En-tête écran Sections ── */
   .sections-header { padding: 8px 14px 10px; }

@@ -502,6 +502,12 @@ function showLauncherVariant(mode) {
   document.getElementById('launcher-view-variant').style.alignItems = 'center';
   document.getElementById('app-launcher').classList.add('variant-active');
 
+  /* — Le raccourci ❓ de la Vue A est propre à cette vue (son équivalent
+       existe dans le groupe d'icônes de la Vue B) — on le masque ici pour
+       éviter un doublon pendant que la Vue B est affichée. */
+  const cardsGuideBtn = document.getElementById('launcherCardsGuideBtn');
+  if (cardsGuideBtn) cardsGuideBtn.style.display = 'none';
+
   /* — Drapeau et titre selon le mode — */
   const flagEmojis = { ES:'🇪🇸', MX:'🇲🇽', CO:'🇨🇴', PE:'🇵🇪', VE:'🇻🇪', AR:'🇦🇷', EC:'🇪🇨' };
   const flagRow   = document.getElementById('launcherFlagRow');
@@ -522,11 +528,18 @@ function showLauncherVariant(mode) {
     pickRegion(currentRegion);
   }
 
-  /* — Libellé du bouton retour selon le mode — */
-  const backLabel = document.getElementById('launcherBackLabel');
-  if (backLabel) {
-    backLabel.textContent = (mode === 'learn_french') ? 'Volver' : 'Retour';
-  }
+  /* — Affichage conditionnel des icônes ❓ Guide / 📚 Modules —
+       Ajouté le 20/07/2026 (demande utilisateur) : elles n'apparaissent
+       qu'à partir du 2e lancement de l'app (!_isBrandNewUser()), une fois
+       qu'un guide a déjà été consulté ou un module déjà terminé — au tout
+       premier lancement, initApp() n'a encore jamais tourné et ces deux
+       écrans n'ont donc rien de pertinent à montrer. 🏠 Accueil reste lui
+       toujours visible (comportement de l'ancien bouton "← Retour"). */
+  const showShortcuts = !_isBrandNewUser();
+  const guideBtn   = document.getElementById('launcherGuideBtn');
+  const modulesBtn = document.getElementById('launcherModulesBtn');
+  if (guideBtn)   guideBtn.style.display   = showShortcuts ? 'inline-flex' : 'none';
+  if (modulesBtn) modulesBtn.style.display = showShortcuts ? 'inline-flex' : 'none';
 
   /* — Texte et handler du bouton Continuer selon le mode —
      On attache un handler nommé pour pouvoir le retirer proprement
@@ -579,6 +592,8 @@ function showLauncherVariant(mode) {
       _setLauncherFooterLang(null);
       /* Retour à Vue A → Langue reste actif, currentMode réinitialisé */
       _updateBottomNav('app-launcher');
+      /* Réaffiche le raccourci ❓ propre à la Vue A, masqué pendant la Vue B */
+      _updateCardsGuideShortcut();
     };
     backBtn.addEventListener('click', backBtn._launcherHandler);
   }
@@ -642,6 +657,8 @@ function showLauncher() {
   _setLauncherFooterLang(null);
   /* La barre de nav reste visible sur le launcher, avec Langue actif */
   _updateBottomNav('app-launcher');
+  /* Raccourci ❓ Guide de la Vue A — visible dès le 2e lancement (demande utilisateur du 20/07/2026) */
+  _updateCardsGuideShortcut();
   window.scrollTo(0, 0);
   document.documentElement.lang = 'fr';
 }
@@ -4416,25 +4433,17 @@ function renderRegionGrid(mode) {
   html += '</div></div>';
   container.innerHTML = html;
 
-  /* Bandeau d'info contextuel selon le parcours */
-  if (msgBox) {
-    let mainMsg, noteMsg;
-
-    if (activeMode === 'learn_french') {
-      /* Parcours Français — apprenant hispanophone */
-      mainMsg = '🌍 Elige tu variante de español de origen — el vocabulario y las expresiones se adaptarán a tu variante.';
-      noteMsg = 'Ej.: si eres argentino, elige 🇦🇷 Argentina. El contenido usará tu vocabulario regional.';
-    } else {
-      /* Parcours Espagnol — apprenant francophone */
-      mainMsg = '🌍 Choisissez la variante d\'espagnol que vous souhaitez apprendre — le vocabulaire et les expressions seront adaptés.';
-      noteMsg = 'Ex. : si vous partez au Mexique, choisissez 🇲🇽 México. L\'accent audio dépend des voix installées sur votre appareil.';
-    }
-
-    msgBox.innerHTML = '<div class="launcher-region-info">'
-      + mainMsg
-      + '<div class="launcher-region-info-note">' + noteMsg + '</div>'
-      + '</div>';
-  }
+  /* Le bandeau d'info (#region-message-box) n'est plus initialisé ici
+     depuis le 20/07/2026 (demande utilisateur, gain de place) : il ne
+     contenait qu'un texte générique avec un exemple ("Ex. : si tu es
+     argentino…"), immédiatement écrasé par pickRegion() lors de l'appel
+     initial (showLauncherVariant() enchaîne toujours renderRegionGrid()
+     puis pickRegion()) — mais PAS lors d'un nouveau clic sur un drapeau
+     (onclick="pickRegion(...);renderRegionGrid(...)"), où l'ordre inverse
+     laissait réapparaître l'exemple générique à la place du message
+     concret. pickRegion() est désormais la seule source de ce bandeau,
+     dans les deux cas. */
+  void msgBox; /* variable conservée pour lisibilité, plus utilisée ici */
 }
 
 /* pickRegion(regionId) — Applique complètement une nouvelle variante régionale.
@@ -4825,6 +4834,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!_isBrandNewUser()) {
     _updateBottomNav('app-launcher');
   }
+  /* Raccourci ❓ Guide de la Vue A — visible dès le 2e lancement (demande utilisateur du 20/07/2026) */
+  _updateCardsGuideShortcut();
 });
 
 /* ═══════════════════════════════════════════════════════════
@@ -4953,6 +4964,116 @@ function _buildHomeGuide() {
 
   /* ── 7. Bandeau variante régionale (bloc ES) ── */
   _refreshGuideRegion();
+}
+
+/* ─────────────────────────────────────────────────────────
+   RACCOURCIS DE NAVIGATION AJOUTÉS LE 20/07/2026 (demande utilisateur)
+   ─────────────────────────────────────────────────────────
+   Objectif : permettre d'aller à tout moment de n'importe quel écran
+   (cartes de langue, Variantes, Guide, Modules) vers n'importe quel
+   autre, sans devoir tout réinitialiser :
+     • navToVariantSelector() — ouvre l'écran Variantes (Vue B du
+       Launcher) pour le mode en cours, depuis le Guide ou les Modules
+       (icône 🌎 ajoutée dans leurs en-têtes).
+     • navVariantToGuide() / navVariantToModules() — depuis l'écran
+       Variantes, vont directement au Guide ou aux Modules du mode en
+       cours (icônes ❓/📚 ajoutées à côté de 🏠 dans le groupe de
+       navigation de cet écran).
+     • navCardsToGuide() — depuis les cartes de langue (Vue A), rouvre
+       le Guide du dernier mode déjà utilisé (icône ❓ en haut à gauche).
+     • _updateCardsGuideShortcut() — affiche/masque cette dernière icône
+       (masquée tant qu'aucun mode n'a jamais été ouvert).
+   Ces raccourcis rechargent les données du mode si besoin (comme le
+   bouton "Continuer") avant de naviguer, puisqu'on peut y arriver sans
+   être jamais passé par initApp() dans cette session. ───────────────────────────────────────────────────────── */
+
+/**
+ * navToVariantSelector() — Ouvre l'écran Variantes (sélecteur de région)
+ * pour le mode actuellement actif, depuis le Guide ou les Modules.
+ * Si aucun mode n'est actif (cas improbable ici), se rabat sur le
+ * Launcher classique (Vue A).
+ */
+function navToVariantSelector() {
+  if (!currentMode) { showLauncher(); return; }
+  document.querySelectorAll('.screen').forEach((s) => { s.classList.remove('active'); });
+  document.getElementById('app-launcher').classList.add('active');
+  showLauncherVariant(currentMode);
+  window.scrollTo(0, 0);
+}
+
+/**
+ * navVariantToGuide() — Icône ❓ de l'écran Variantes : recharge les
+ * données du mode si besoin puis affiche directement le Guide (même si
+ * l'apprenant l'avait déjà fermé pour ce mode — navigation explicite).
+ */
+function navVariantToGuide() {
+  if (!currentMode) return;
+  const mode = currentMode;
+  loadDataForMode(mode, () => {
+    initApp(mode);
+    showGuide();
+  });
+}
+
+/**
+ * navVariantToModules() — Icône 📚 de l'écran Variantes : recharge les
+ * données du mode si besoin puis affiche directement les Modules.
+ */
+function navVariantToModules() {
+  if (!currentMode) return;
+  const mode = currentMode;
+  loadDataForMode(mode, () => {
+    initApp(mode);
+    showScreen('sections-level1');
+  });
+}
+
+/**
+ * _lastUsedMode() — Déduit le dernier mode réellement utilisé, à partir
+ * des flags localStorage existants (progression terminée ou guide déjà
+ * vu). Sert uniquement à choisir la destination de navCardsToGuide()
+ * quand aucun mode n'est actif (écran des cartes de langue). Limite
+ * connue : si les DEUX modes ont déjà été utilisés, aucun horodatage
+ * n'existe pour départager — on retient alors 'learn_spain' par défaut
+ * (mode le plus fréquent pour ce public).
+ */
+function _lastUsedMode() {
+  try {
+    const frUsed = localStorage.getItem('vachebo_guide_vu_fr') === 'true' || !!localStorage.getItem('pe_es_fr_done_v1');
+    const esUsed = localStorage.getItem('vachebo_guide_vu_es') === 'true' || !!localStorage.getItem('pe_fr_es_done_v1');
+    if (esUsed) return 'learn_spain';
+    if (frUsed) return 'learn_french';
+  } catch (e) { /* localStorage indisponible : repli ci-dessous */ }
+  return 'learn_spain';
+}
+
+/**
+ * navCardsToGuide() — Icône ❓ de la Vue A (cartes de langue) : rouvre le
+ * Guide du dernier mode utilisé (cf. _lastUsedMode()), en restaurant au
+ * passage la région préférée mémorisée, puis recharge les données si
+ * besoin avant d'afficher le Guide.
+ */
+function navCardsToGuide() {
+  const mode = _lastUsedMode();
+  const _VALID_REGIONS = ['ES', 'MX', 'CO', 'PE', 'VE', 'AR', 'EC'];
+  const savedRegion = localStorage.getItem('user_preferred_region');
+  currentRegion = _VALID_REGIONS.includes(savedRegion) ? savedRegion : 'ES';
+  loadDataForMode(mode, () => {
+    initApp(mode);
+    showGuide();
+  });
+}
+
+/**
+ * _updateCardsGuideShortcut() — Affiche l'icône ❓ de la Vue A (cartes de
+ * langue) uniquement à partir du 2e lancement de l'app (!_isBrandNewUser()).
+ * Appelée au chargement initial (DOMContentLoaded) et à chaque retour à
+ * la Vue A (showLauncher()).
+ */
+function _updateCardsGuideShortcut() {
+  const btn = document.getElementById('launcherCardsGuideBtn');
+  if (!btn) return;
+  btn.style.display = _isBrandNewUser() ? 'none' : 'inline-flex';
 }
 
 /**
