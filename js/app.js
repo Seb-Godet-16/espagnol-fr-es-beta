@@ -30,50 +30,65 @@
      ├─ style.css   → Thèmes couleur, composants visuels (48 variables CSS, 171 décl.)
      ├─ data-fr.js  → ALL_THEMES_FR (32 thèmes + 16 dialogues) — chargé à la demande
      ├─ data-es.js  → ALL_THEMES_ES (32 thèmes + 16 dialogues) — chargé à la demande
-     └─ app.js      → Ce fichier : logique applicative complète (5 295 lignes)
+     └─ app.js      → Ce fichier : logique applicative complète (5 604 lignes)
 
-   PLAN DU FICHIER (numéros recalculés le 18/07/2026 — §15d enrichie du
-   suivi "a visité les modules" (_markModulesVisited()/_hasVisitedModules(),
-   posé depuis renderSections() §7) qui remplace _isBrandNewUser() comme
-   heuristique d'ouverture par défaut des cartes de langue ; décalage des
+   PLAN DU FICHIER (numéros recalculés le 20/07/2026 — ajout du symbole
+   mascotte régional sur les cartes flash (.fc-region-mascot, §9), de la
+   fonction partagée _mascotSansFauteLine() (§14, factorisée depuis
+   _quizResultStrings() et désormais aussi utilisée par _rpShowEnd(), §9c)
+   et de la pastille "tout terminé" .sections-mascot-all (§7) ; décalage des
    ancres suivantes qui en résulte ; chaque ancre revérifiée une à une par
    grep) :
-     §0    L.  246  Chargement conditionnel des données — loadDataForMode()
-     §0b   L.  124  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
-     §1    L.  282  Variables d'état globales
-     §1b   L.  340  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
-     §3    L.  442  Point d'entrée — showLauncherVariant(), initApp(), showLauncher()
-     §3b   L.  820  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
-     §3a-bis L. 964 Surlignage mot par mot pendant la lecture (TTS, best-effort)
-     §3c   L. 1342  Interruption TTS à la mise en arrière-plan (visibilitychange)
-     §3d   L. 1363  Keepalive watchdog Chrome/Android (pause/resume toutes les 8 s)
-     §3e   L. 1393  Audio indisponible + toast _showToast() + _vibrateFeedback()
-     §4    L. 1477  Persistance — loadDone(), suivi modules ouverts (12/07), étoiles, quiz
-     §5    L. 1949  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
-     §5b   L. 1846  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
-     §6    L. 2062  Écran Home — renderHome(), _renderHomeRegionWidget()
-     §7    L. 2232  Écran Sections — renderSections(), _buildThemeCard() (états + badge, 12/07).
-                     Appelle aussi _markModulesVisited() (§15d) depuis le 18/07/2026
-     §8    L. 2391  Ouverture d'un thème — openTheme() (marque module ouvert), switchTab()
-     §9    L. 2602  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail()
-     §9b   L. 2776  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
-     §9c   L. 3238  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic()
-     §10   L. 3566  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
-     §11   L. 3841  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
-     §12   L. 3929  Vocabulaire — renderVocab() (chips cliquables)
-     §13   L. 3984  Quiz Dialogue — renderDialogQuiz(), checkDQ()
-     §14   L. 4080  Utilitaires — _quizResultStrings(), esc(), _escAttr()
-     §15   L. 4125  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
-     §15b  L. 4434  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
+     §0    L.  111  Chargement conditionnel des données — loadDataForMode()
+     §0b   L.  140  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
+     §1    L.  298  Variables d'état globales
+     §1b   L.  356  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
+     §3    L.  439  Point d'entrée — showLauncherVariant(), initApp(), showLauncher()
+     §3b   L.  767  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
+     §3a-bis L. 984 Surlignage mot par mot pendant la lecture (TTS, best-effort)
+     §3c   L. 1362  Interruption TTS à la mise en arrière-plan (visibilitychange)
+     §3d   L. 1383  Keepalive watchdog Chrome/Android (pause/resume toutes les 8 s)
+     §3e   L. 1424  Audio indisponible + toast _showToast() + _vibrateFeedback()
+     §4    L. 1497  Persistance — loadDone(), suivi modules ouverts (12/07), étoiles, quiz
+     §5    L. 1714  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
+     §5b   L. 1842  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
+     §6    L. 2056  Écran Home — renderHome(), _renderHomeRegionWidget()
+     §7    L. 2246  Écran Sections — renderSections(), _buildThemeCard() (états + badge, 12/07).
+                     Appelle aussi _markModulesVisited() (§15d, appel L.2262)
+                     depuis le 18/07/2026. Pastille .sections-mascot-all
+                     ajoutée le 20/07/2026 (demande utilisateur) : clin d'œil
+                     mascotte quand tous les modules sont à 3 étoiles.
+     §8    L. 2416  Ouverture d'un thème — openTheme() (marque module ouvert), switchTab()
+     §9    L. 2629  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail().
+                     Symbole mascotte régional .fc-region-mascot (recto FR/verso
+                     ES et recto ES/verso FR) ajouté le 20/07/2026 (demande
+                     utilisateur), cohérent avec .hrw-chip-mascot (§6/§15) et
+                     .launcher-region-mascot (§15).
+     §9b   L. 2801  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
+     §9c   L. 3214  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic(), _rpShowEnd().
+                     Clin d'œil mascotte sur sans-faute ajouté à _rpShowEnd() le
+                     20/07/2026 (demande utilisateur), via _mascotSansFauteLine() (§14).
+     §10   L. 3575  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
+     §11   L. 3853  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
+     §12   L. 3974  Vocabulaire — renderVocab() (chips cliquables)
+     §13   L. 4032  Quiz Dialogue — renderDialogQuiz(), checkDQ()
+     §14   L. 4126  Utilitaires — _quizResultStrings(), _mascotSansFauteLine(),
+                     esc(), _escAttr(). _mascotSansFauteLine() (L.4179) ajoutée le
+                     20/07/2026 (demande utilisateur) : factorise le clin d'œil
+                     mascotte sur sans-faute auparavant écrit en dur dans
+                     _quizResultStrings() (19/07/2026), désormais partagé avec
+                     _rpShowEnd() (§9c).
+     §15   L. 4210  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion()
+     §15b  L. 4558  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
                      (aucune bannière numérotée dans le code à cet endroit, juste
                       un commentaire au-dessus de toggleAcc() — contrairement aux
                       autres sous-sections 5b/9b/9c qui en ont une)
-     §15c  L. 4488  Nouvel utilisateur & barre de nav — _isBrandNewUser(), condition
+     §15c  L. 4630  Nouvel utilisateur & barre de nav — _isBrandNewUser(), condition
                      dans le listener DOMContentLoaded (ajouté le 11/07/2026, demande
                      utilisateur : pas de barre de nav basse au tout premier lancement
                      sans aucun parcours ; réapparaît dès la première interaction via
                      showLauncherVariant())
-     §15d  L. 4533  Cartes de langue fusionnées avec l'explicatif — _langBoxInitialOpen(),
+     §15d  L. 4699  Cartes de langue fusionnées avec l'explicatif — _langBoxInitialOpen(),
                      _setLangBoxOpen(), _initLangBoxes(), toggleLangBox() ; ajouté le
                      18/07/2026 (demande utilisateur), fusionné le même jour avec les
                      anciennes cartes .lang-card (auparavant un encadré séparé à 2
@@ -81,23 +96,24 @@
                      désormais sa propre liste à puces dépliable et son propre état
                      déplié/replié, mémorisés séparément par langue.
                      Contient aussi (ajout du même jour, 3e retour utilisateur)
-                     _markModulesVisited()/_hasVisitedModules() : la préférence
-                     explicite de l'apprenant prime toujours, puis les cartes se
-                     replient dès la première visite des Modules (posé depuis
-                     renderSections(), §7, L.2239) — remplace l'ancienne dépendance
-                     à _isBrandNewUser() (§15c), trop grossière pour ce cas précis
-                     (aucune bannière numérotée à cet endroit, comme pour §15c)
-     §16   L. 4668  Remerciements — showCredits()
-     §17   L. 4683  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
+                     _markModulesVisited()/_hasVisitedModules() (L.4678) : la
+                     préférence explicite de l'apprenant prime toujours, puis les
+                     cartes se replient dès la première visite des Modules (posé
+                     depuis renderSections(), §7, L.2262) — remplace l'ancienne
+                     dépendance à _isBrandNewUser() (§15c), trop grossière pour ce
+                     cas précis (aucune bannière numérotée à cet endroit, comme
+                     pour §15c)
+     §16   L. 4779  Remerciements — showCredits()
+     §17   L. 4794  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
                      navBackToGuide(), _refreshGuideRegion(), _guideSeenKey()/
                      _hasSeenGuide()/_markGuideSeen() (flag par langue). Câble aussi,
                      depuis le 12/07/2026, le libellé bilingue du bouton #homeInstallBtn
                      (déplacé en tête d'écran — cf. §21c)
-     §18   L. 4946  E-mail antispam — openAndCopyEmail()
-     §19   L. 4978  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
+     §18   L. 5124  E-mail antispam — openAndCopyEmail()
+     §19   L. 5143  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
                      (étiqueté "§21" dans le code même — incohérence de numérotation
                       préexistante, non corrigée ici pour ne pas renuméroter tout le fichier)
-     §20   L. 5279  Accessibilité clavier (keydown → role="button")
+     §20   L. 5450  Accessibilité clavier (keydown → role="button")
      §21   L. 5294  Initialisation Launcher — addEventListener sur les cartes de langue
      §21b  L. 5320  Viewport height fix Android — --app-h via window.innerHeight
      §21c  L. 5361  Bouton d'installation PWA native — _initInstallButtons(),
@@ -2286,13 +2302,22 @@ function renderSections(activeLevel) {
       );
     }
 
-    // Étoiles totales + modules terminés (2 pastilles côte à côte)
+    // Étoiles totales + modules terminés (2 pastilles côte à côte), plus une
+    // 3e pastille mascotte VACHÉBO (.sections-mascot-all) quand la totalité
+    // des modules est à 3 étoiles — clin d'œil régional en mode Espagnol
+    // (REGION_MASCOTS), jeu de mots français sinon, comme les autres clins
+    // d'œil mascotte de l'app. Ajouté le 20/07/2026 (demande utilisateur).
     const se = document.getElementById('sectionsStars' + s);
     if (se) {
+      const allDone = total > 0 && completedCount === total;
+      const mascotAllLine = (currentMode === 'learn_french')
+        ? '🐄 ' + L('¡Sos una máquina!', 'Vachement complet !')
+        : '🐄' + REGION_MASCOTS[currentRegion].symbol + ' ' + REGION_MASCOTS[currentRegion].phrase;
       se.innerHTML =
         '<span class="stars-pill">⭐ ' + totalStarsEarned + ' / ' + maxStarsPossible + '</span>'
         + '<span class="completed-pill">✅ ' + completedCount + ' / ' + total + ' '
-        + L('terminados', 'terminés') + '</span>';
+        + L('terminados', 'terminés') + '</span>'
+        + (allDone ? '<span class="sections-mascot-all">' + mascotAllLine + '</span>' : '');
     }
 
     // Sous-titre bilingue
@@ -2625,6 +2650,12 @@ function switchTab(tab) {
 
    Les mots espagnols utilisent en priorité la variante régionale
    (card.variants[currentRegion]) avant le castillan par défaut (card.es).
+
+   Symbole mascotte régional (.fc-region-mascot, REGION_MASCOTS §15) affiché
+   à côté du nom de la variante dans le bandeau de section, dans les deux
+   sens de carte (recto FR/verso ES et recto ES/verso FR) — cohérent avec
+   .hrw-chip-mascot / .launcher-region-mascot. Ajouté le 20/07/2026
+   (demande utilisateur).
 ═══════════════════════════════════════════════════════════ */
 
 function renderFlash() {
@@ -2690,7 +2721,9 @@ function renderFlash() {
     const regionFullLabel = regionLabelsFR[currentRegion] || ('🇪🇸 España (Castellano)');
     document.getElementById('tabContent').innerHTML =
       '<div class="section-label">Anverso : Francés 🇫🇷 — Reverso : Español '
-      + '<span id="current-lang-flag">' + regionFullLabel + '</span> · Haz clic para volver !</div>'
+      + '<span id="current-lang-flag">' + regionFullLabel + '</span>'
+      + '<span class="fc-region-mascot" aria-hidden="true"> 🐄' + REGION_MASCOTS[currentRegion].symbol + '</span>'
+      + ' · Haz clic para volver !</div>'
       + '<div class="fc-wrap"><div class="fc" id="fc" onclick="flipCard()">'
       + '<div class="fc-front">' + frontContent + '</div>'
       + '<div class="fc-back">'  + backContent  + '</div>'
@@ -2726,7 +2759,9 @@ function renderFlash() {
     const regionFullLabelES = regionLabelsES[currentRegion] || ('🇪🇸 Espagne (Castillan)');
     document.getElementById('tabContent').innerHTML =
       '<div class="section-label">Recto : Espagnol <span id="current-lang-flag">'
-      + regionFullLabelES + '</span> — Verso : Français 🇫🇷 · Cliquez pour retourner !</div>'
+      + regionFullLabelES + '</span>'
+      + '<span class="fc-region-mascot" aria-hidden="true"> 🐄' + REGION_MASCOTS[currentRegion].symbol + '</span>'
+      + ' — Verso : Français 🇫🇷 · Cliquez pour retourner !</div>'
       + '<div class="fc-wrap"><div class="fc" id="fc" onclick="flipCard()">'
       + '<div class="fc-front">' + frontContent + '</div>'
       + '<div class="fc-back">'  + backContent  + '</div>'
@@ -3533,10 +3568,17 @@ function _rpShowEnd() {
     return i < starsEarned ? '⭐' : '☆';
   }).join('');
 
+  /* Clin d'œil mascotte VACHÉBO sur un sans-faute (3 étoiles), au même
+     titre que les écrans de résultat des quiz — voir _mascotSansFauteLine()
+     (§14), factorisée le 20/07/2026 (demande utilisateur) pour être
+     partagée entre les quiz et l'onglet Répète. */
+  const mascotLine = _mascotSansFauteLine(starsEarned);
+
   document.getElementById('tabContent').innerHTML =
     '<div class="result-box">'
     + '<div style="font-size:2rem;margin-bottom:5px;">' + starsHtml + '</div>'
     + '<h3>' + titleOk + '</h3>'
+    + (mascotLine ? '<div class="quiz-mascot-line">' + mascotLine + '</div>' : '')
     + '<div class="score-num">' + _rpScore + ' / ' + total + '</div>'
     + '<div style="font-size:.9rem;color:#666;margin:6px 0">' + scoreLbl + ' : ' + pct + '%</div>'
     + '<button class="retry-btn" style="margin-top:14px;background:#888" onclick="renderRepeat()">'
@@ -4102,6 +4144,10 @@ function checkDQ(chosen, correct) {
    _quizResultStrings(pct, type) — Génère les textes de l'écran
      de résultat (titre, sous-titre, boutons) dans la bonne langue.
 
+   _mascotSansFauteLine(starsEarned) — Clin d'œil mascotte VACHÉBO sur un
+     sans-faute (3 étoiles), partagé par les quiz et l'onglet Répète.
+     Ajouté le 20/07/2026.
+
    esc(s) — Échappe les guillemets simples et doubles pour
      insertion sécurisée dans les attributs HTML onclick.
 ═══════════════════════════════════════════════════════════ */
@@ -4116,17 +4162,11 @@ function _quizResultStrings(pct) {
   else if (stars === 2) title = L('¡Muy bien! ⭐⭐',    'Très bien ! ⭐⭐');
   else if (stars === 1) title = L('¡Bien! ⭐',           'Bien ! ⭐');
 
-  /* Clin d'œil mascotte VACHÉBO sur un sans-faute (3 étoiles) : la vache du
-     logo sort son exclamation régionale en mode Espagnol (REGION_MASCOTS,
-     cohérente avec les chips du Lanceur/Home), et un jeu de mots français
-     ("vachement") en mode Français, où il n'y a pas de région à distinguer.
-     Ajouté le 19/07/2026 (suite, demande utilisateur). */
-  let mascotLine = '';
-  if (stars === 3) {
-    mascotLine = (currentMode === 'learn_french')
-      ? '🐄 ' + L('¡Vaya crack!', "T'es vachement fort·e !")
-      : '🐄' + REGION_MASCOTS[currentRegion].symbol + ' ' + REGION_MASCOTS[currentRegion].phrase;
-  }
+  /* Clin d'œil mascotte VACHÉBO sur un sans-faute (3 étoiles) — logique
+     factorisée dans _mascotSansFauteLine() (voir plus bas dans cette
+     section §14), partagée avec _rpShowEnd() (onglet Répète, §9c) depuis
+     le 20/07/2026. */
+  const mascotLine = _mascotSansFauteLine(stars);
 
   return {
     title      : title,
@@ -4139,6 +4179,24 @@ function _quizResultStrings(pct) {
     retry : L('🔄 Inténtalo de nuevo', '🔄 Réessayer'),
     finish: L('✓ Finalizar',           '✓ Terminer')
   };
+}
+
+/* _mascotSansFauteLine(starsEarned) — Retourne le clin d'œil mascotte VACHÉBO
+   à afficher sur un sans-faute (3 étoiles), ou une chaîne vide sinon : la
+   vache du logo sort son exclamation régionale en mode Espagnol
+   (REGION_MASCOTS, cohérente avec les chips du Lanceur/Home), et un jeu de
+   mots français ("vachement") en mode Français, où il n'y a pas de région
+   à distinguer. Utilisée avec la classe CSS partagée .quiz-mascot-line.
+   Factorisée le 20/07/2026 (demande utilisateur) à partir de la logique
+   auparavant écrite en dur dans _quizResultStrings() (19/07/2026) —
+   désormais partagée par les quiz (§10 Quiz 10 questions, §13 Quiz
+   Dialogue, tous deux via _quizResultStrings() ci-dessus) et l'onglet
+   Répète (§9c, via _rpShowEnd()), au lieu d'être dupliquée. */
+function _mascotSansFauteLine(starsEarned) {
+  if (starsEarned !== 3) return '';
+  return (currentMode === 'learn_french')
+    ? '🐄 ' + L('¡Vaya crack!', "T'es vachement fort·e !")
+    : '🐄' + REGION_MASCOTS[currentRegion].symbol + ' ' + REGION_MASCOTS[currentRegion].phrase;
 }
 
 /* esc(s) — Échappe les caractères spéciaux pour injection dans les onclick="" HTML.
