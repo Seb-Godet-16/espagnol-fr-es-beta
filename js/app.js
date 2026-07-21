@@ -4784,7 +4784,11 @@ function _initLangBoxes() {
 
 /* Bouton "i" de chaque carte (.lang-card-toggle, onclick dans index.html)
    — bascule l'état déplié/replié de CETTE carte uniquement et mémorise le
-   choix séparément par langue (cf. commentaire §15d ci-dessus). */
+   choix séparément par langue (cf. commentaire §15d ci-dessus). Chaque
+   carte reste indépendante de l'autre (retour utilisateur du 21/07/2026 :
+   pas d'exclusivité mutuelle) — le vide visuel qui apparaissait quand
+   l'une était repliée pendant que l'autre restait dépliée venait d'un
+   autre problème, purement CSS (cf. .launcher-cards, align-items). */
 function toggleLangBox(lang) {
   var box = document.getElementById('langBox-' + lang);
   if (!box) return;
@@ -5282,8 +5286,18 @@ function _maybeAutoShowGuide() {
 }
 
 /**
- * _refreshGuideRegion() — Adapte le bandeau variante régionale
- * du bloc espagnol (#guideContentES) à currentRegion.
+ * _refreshGuideRegion() — Adapte les bandeaux variante régionale des 2
+ * blocs du Guide (#guideRegionBadgeES et #guideRegionBadgeFR) à
+ * currentRegion.
+ * Symbole mascotte corrigé le 21/07/2026 (demande utilisateur) : chaque
+ * bandeau doit refléter ce qui est APPRIS, pas la variante d'origine —
+ * même logique que _mascotKeyForMode() déjà utilisée ailleurs (pied de
+ * page, pastille "tout terminé", ligne sans-faute des quiz), mais fixée
+ * ici par bloc plutôt que par mode courant : le bloc ES n'est visible
+ * QUE en mode learn_french (apprentissage du FRANÇAIS) → Tour Eiffel ;
+ * le bloc FR n'est visible QUE en mode learn_spain (apprentissage de
+ * l'ESPAGNOL) → symbole de la variante régionale active. Bandeau FR
+ * ajouté le même jour : il n'existait pas du tout auparavant.
  */
 function _refreshGuideRegion() {
   const REGIONS = {
@@ -5298,9 +5312,16 @@ function _refreshGuideRegion() {
   const region = REGIONS[currentRegion] ? currentRegion : 'ES';
   const r = REGIONS[region];
 
-  /* Bandeau variante dans le bloc ES */
-  const badge = document.getElementById('guideRegionBadgeES');
-  if (badge) badge.innerHTML = 'Tu app está configurada en <strong>' + r.flag + ' ' + r.name + '</strong> 🐄'
+  /* Bandeau du bloc ES (guide en espagnol → mode learn_french, apprentissage
+     du français) : mascotte Tour Eiffel, fixe, quel que soit currentRegion. */
+  const badgeES = document.getElementById('guideRegionBadgeES');
+  if (badgeES) badgeES.innerHTML = 'Tu app está configurada en <strong>' + r.flag + ' ' + r.name + '</strong> 🐄'
+    + REGION_MASCOTS.FR.symbol + ' <em>' + REGION_MASCOTS.FR.phrase + '</em>';
+
+  /* Bandeau du bloc FR (guide en français → mode learn_spain, apprentissage
+     de l'espagnol) : mascotte régionale, selon la variante active. */
+  const badgeFR = document.getElementById('guideRegionBadgeFR');
+  if (badgeFR) badgeFR.innerHTML = 'Ton application est configurée sur <strong>' + r.flag + ' ' + r.name + '</strong> 🐄'
     + REGION_MASCOTS[region].symbol + ' <em>' + REGION_MASCOTS[region].phrase + '</em>';
 }
 
