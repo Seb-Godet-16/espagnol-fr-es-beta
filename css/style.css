@@ -622,15 +622,22 @@ body {
   padding-top: 16px;
 }
 
-/* Ligne d'icônes de navigation en haut de la Vue B — restructurée le
-   21/07/2026 (demande utilisateur) : pleine largeur, 🏠+❓ à gauche et
-   📚+🚪 à droite (réutilise .sections-top-row / .sections-back-group,
-   déjà utilisés à l'identique sur l'écran Modules), avec un fond clair
-   circulaire par icône (fond sombre absent sur ce fond dégradé clair de
-   la Vue B, contrairement au topbar sombre du Guide). */
+/* Ligne fusionnée icônes + logo de la Vue B — restructurée le 21/07/2026
+   (2e demande utilisateur) : logo VACHÉBO centré (via .launcher-variant-
+   logo-wrap en flex:1, qui reste donc centré même quand les groupes
+   d'icônes de part et d'autre sont masqués), 🏠+❓ à gauche et 📚+🚪 à
+   droite (réutilise .sections-back-group, déjà utilisé à l'identique sur
+   l'écran Modules), avec un fond clair circulaire par icône (fond sombre
+   absent sur ce fond dégradé clair de la Vue B, contrairement au topbar
+   sombre du Guide). */
 .launcher-variant-top-row {
+  display: flex;
+  align-items: center;
   width: 100%;
   margin-bottom: 10px;
+}
+.launcher-variant-top-row .sections-back-group {
+  flex-shrink: 0;
 }
 .launcher-variant-top-row .back-icon-btn {
   background: rgba(0,0,0,.06) !important;
@@ -641,13 +648,13 @@ body {
   background: rgba(0,0,0,.12) !important;
 }
 
-/* Logo VACHÉBO de la Vue B — agrandi le 21/07/2026 (demande utilisateur)
-   grâce à l'espace libéré par le regroupement titre + drapeau sur une
-   même ligne juste en dessous (cf. .launcher-variant-title-row). */
+/* Logo VACHÉBO de la Vue B — flex:1 pour rester centré sur la ligne même
+   quand les groupes d'icônes voisins sont masqués (1er lancement) ;
+   agrandi le 21/07/2026 (demande utilisateur). */
 .launcher-variant-logo-wrap {
+  flex: 1 1 auto;
   display: flex;
   justify-content: center;
-  margin: 0 auto 10px;
 }
 .launcher-variant-logo-img {
   max-width: 220px;
@@ -702,13 +709,14 @@ body {
 }
 
 
-/* Titre de la Vue B + drapeau réunis sur une même ligne — restructuré le
-   21/07/2026 (demande utilisateur) : titre à gauche, drapeau à droite,
-   pour libérer de la hauteur au profit du logo agrandi ci-dessus. */
+/* Titre de la Vue B + drapeau réunis, proches l'un de l'autre et centrés
+   ensemble — restructuré une 2e fois le 21/07/2026 (demande utilisateur) :
+   étaient auparavant étalés sur toute la largeur (titre à gauche, drapeau
+   à droite), désormais regroupés au centre avec un espacement resserré. */
 .launcher-variant-title-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 10px;
   width: 100%;
   margin-bottom: 14px;
@@ -719,7 +727,7 @@ body {
   color: #1a1a2e;
   margin: 0;
   letter-spacing: -.02em;
-  text-align: left;
+  text-align: right;
 }
 .launcher-variant-title-row .flag-row {
   font-size: 2.4rem;
@@ -1769,6 +1777,20 @@ body {
   padding: 4px 0;
 }
 
+/* Ligne fusionnée icônes + logo en tête de l'écran Modules — restructurée
+   le 21/07/2026 (2e demande utilisateur) : logo centré au milieu (via
+   .sections-logo-strip en flex:1), groupes d'icônes de part et d'autre
+   (flex-shrink:0, ne rétrécissent jamais). */
+.sections-top-icons-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.sections-top-icons-row .sections-back-group {
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+
 /* Groupe des 2 icônes de retour (🏠 Accueil / ❓ Guide) remplaçant
    l'ancienne flèche unique "← Retour" — chacune navigue vers une
    destination différente, au choix de l'apprenant. */
@@ -1779,14 +1801,13 @@ body {
 }
 
 /* Logo VACHÉBO en tête de l'écran Modules — ajouté le 20/07/2026 (demande
-   utilisateur), agrandi le 21/07/2026 (demande utilisateur, "meilleure
-   harmonisation de l'écran") : padding-top réduit pour compenser la
-   place supplémentaire prise par le logo, cet écran étant plus dense
-   (barre de progression, étoiles, onglets, cartes) que le Guide/Variantes. */
+   utilisateur), agrandi le 21/07/2026 puis recentré entre les 2 groupes
+   d'icônes le même jour (2e demande utilisateur, "le logo doit être
+   centré et sur les côtés il peut y avoir les icônes"). */
 .sections-logo-strip {
+  flex: 1 1 auto;
   display: flex;
   justify-content: center;
-  padding-top: 2px;
 }
 .sections-logo-img {
   max-width: 150px;

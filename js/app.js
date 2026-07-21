@@ -522,14 +522,18 @@ function showLauncherVariant(mode) {
     pickRegion(currentRegion);
   }
 
-  /* — Affichage conditionnel de toute la ligne d'icônes 🏠/❓/📚/🚪 —
-       Modifié le 21/07/2026 (demande utilisateur) : les 4 icônes
-       apparaissent désormais ensemble, uniquement à partir du 2e passage
-       par l'app (!_isBrandNewUser()), y compris 🏠 Accueil et 🚪 Sortie —
+  /* — Affichage conditionnel des groupes d'icônes 🏠/❓ (gauche) et 📚/🚪
+       (droite) — Modifié le 21/07/2026 (2e demande utilisateur) : le logo
+       central reste toujours visible et centré (cf. .launcher-variant-
+       logo-wrap en flex:1) ; seules les icônes de navigation apparaissent
+       uniquement à partir du 2e passage par l'app (!_isBrandNewUser()) —
        au tout premier passage (avant d'avoir jamais atteint le Guide),
        cet écran reste volontairement sans navigation annexe. */
-  const topRow = document.getElementById('launcherVariantTopRow');
-  if (topRow) topRow.style.display = _isBrandNewUser() ? 'none' : 'flex';
+  const showVariantIcons = !_isBrandNewUser();
+  const iconsLeft  = document.getElementById('launcherVariantIconsLeft');
+  const iconsRight = document.getElementById('launcherVariantIconsRight');
+  if (iconsLeft)  iconsLeft.style.display  = showVariantIcons ? 'flex' : 'none';
+  if (iconsRight) iconsRight.style.display = showVariantIcons ? 'flex' : 'none';
 
   /* — Texte et handler du bouton Continuer selon le mode —
      On attache un handler nommé pour pouvoir le retirer proprement
@@ -610,22 +614,19 @@ function _setLauncherFooterLang(mode) {
       '© Junio 2026 – Sébastien Godet<br>' +
       'Asistido por IA Claude Sonnet 4.6 y Gemini 3.5 Flash<br>' +
       '<button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> · ' +
-      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> · ' +
-      '<a href="#" onclick="showCredits()">Agradecimientos</a>';
+      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a>';
   } else if (mode === 'learn_spain') {
     footer.innerHTML =
       '© Juin 2026 – Sébastien Godet<br>' +
       'Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>' +
       '<button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> · ' +
-      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> · ' +
-      '<a href="#" onclick="showCredits()">Remerciements</a>';
+      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a>';
   } else {
     footer.innerHTML =
       '© Juin 2026 – Sébastien Godet<br>' +
       'Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>' +
       '<button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> · ' +
-      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> · ' +
-      '<a href="#" onclick="showCredits()">Remerciements / Agradecimientos</a>';
+      '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a>';
   }
 }
 
@@ -2359,15 +2360,13 @@ function renderSections(activeLevel) {
           '© Junio 2026 – Desarrollado por Sébastien Godet<br>'
           + 'Asistido por IA Claude Sonnet 4.6 y Gemini 3.5 Flash<br>'
           + '<button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> · '
-          + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> · '
-          + '<a href="#" onclick="showCredits()">Agradecimientos</a>';
+          + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a>';
       } else {
         footer.innerHTML =
           '© Juin 2026 – Développé par Sébastien Godet<br>'
           + 'Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>'
           + '<button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> · '
-          + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> · '
-          + '<a href="#" onclick="showCredits()">Remerciements</a>';
+          + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a>';
       }
     }
   }
@@ -2505,15 +2504,13 @@ function openTheme(id) {
         '© Junio 2026 – Sébastien Godet<br>'
         + 'Asistido por IA Claude Sonnet 4.6 y Gemini 3.5 Flash · '
         + '<button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> · '
-        + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> · '
-        + '<a href="#" onclick="showCredits()">Agradecimientos</a>';
+        + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a>';
     } else {
       lf.innerHTML =
         '© Juin 2026 – Sébastien Godet<br>'
         + 'Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash · '
         + '<button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> · '
-        + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> · '
-        + '<a href="#" onclick="showCredits()">Remerciements</a>';
+        + '<a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a>';
     }
   }
 
@@ -5202,7 +5199,7 @@ function showGuide() {
   showScreen('home');
   /* Ligne d'icônes 🏠/🌎/📚/🚪 du Guide — restructurée le 21/07/2026
      (demande utilisateur) : masquée tant que l'app n'a pas été parcourue
-     une 1ère fois, même principe que #launcherVariantTopRow sur l'écran
+     une 1ère fois, même principe que #launcherVariantIconsLeft/Right sur l'écran
      Variantes (cf. showLauncherVariant()). */
   const topbarNav = document.getElementById('homeTopbarNav');
   if (topbarNav) topbarNav.style.display = _isBrandNewUser() ? 'none' : 'flex';

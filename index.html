@@ -306,14 +306,16 @@
     <!-- ─── VUE B : Sélecteur de variante (après clic sur une carte) ─── -->
     <div id="launcher-view-variant" class="launcher-inner" style="display:none;">
 
-      <!-- Ligne d'icônes de navigation en haut, pleine largeur — restructuré
-           le 21/07/2026 (demande utilisateur) : 🏠 Accueil et ❓ Guide à
-           gauche, 📚 Modules et 🚪 Sortie à droite. Masquée par défaut,
-           affichée uniquement à partir du 2e lancement de l'app (une fois
-           qu'un guide/des modules existent réellement à rouvrir) — cf.
-           showLauncherVariant() dans app.js. -->
-      <div class="sections-top-row launcher-variant-top-row" id="launcherVariantTopRow" style="display:none;">
-        <div class="sections-back-group">
+      <!-- Ligne fusionnée icônes + logo — restructuré le 21/07/2026 (2e
+           demande utilisateur) : logo VACHÉBO centré, icônes de
+           navigation de part et d'autre (🏠 Accueil + ❓ Guide à gauche,
+           📚 Modules + 🚪 Sortie à droite). Les icônes sont masquées par
+           défaut (affichées uniquement à partir du 2e lancement de l'app,
+           cf. showLauncherVariant() dans app.js) ; le logo, lui, reste
+           toujours visible et reste centré même quand les icônes sont
+           masquées (grâce à .launcher-variant-logo-wrap en flex:1). -->
+      <div class="launcher-variant-top-row">
+        <div class="sections-back-group" id="launcherVariantIconsLeft" style="display:none;">
           <button class="back-btn back-icon-btn" id="launcherBackBtn"
                   aria-label="Retour au choix de langue / Volver a la selección de idioma" title="Accueil / Inicio">
             <span aria-hidden="true">🏠</span>
@@ -324,7 +326,14 @@
             <span aria-hidden="true">❓</span>
           </button>
         </div>
-        <div class="sections-back-group">
+
+        <!-- Logo VACHÉBO — toujours centré, quel que soit l'état des icônes. -->
+        <div class="launcher-variant-logo-wrap">
+          <img src="img/Logo-appli-es-fr.png" alt="VACHÉBO" class="launcher-variant-logo-img"
+               onerror="this.style.display='none';">
+        </div>
+
+        <div class="sections-back-group" id="launcherVariantIconsRight" style="display:none;">
           <button class="back-btn back-icon-btn" id="launcherModulesBtn"
                   onclick="navVariantToModules()"
                   aria-label="Modules / Módulos" title="Modules / Módulos">
@@ -337,17 +346,10 @@
         </div>
       </div>
 
-      <!-- Logo VACHÉBO agrandi le 21/07/2026 (demande utilisateur), grâce à
-           l'espace libéré par le titre et le drapeau réunis sur une même
-           ligne juste en dessous. -->
-      <div class="launcher-variant-logo-wrap">
-        <img src="img/Logo-appli-es-fr.png" alt="VACHÉBO" class="launcher-variant-logo-img"
-             onerror="this.style.display='none';">
-      </div>
-
-      <!-- Titre à gauche + drapeau à droite, sur la même ligne — restructuré
-           le 21/07/2026 (demande utilisateur) pour gagner la place utilisée
-           par le logo agrandi ci-dessus. -->
+      <!-- Titre + drapeau rapprochés et centrés ensemble — restructuré le
+           21/07/2026 (2e demande utilisateur) : auparavant étalés sur
+           toute la largeur (titre à gauche, drapeau à droite), désormais
+           regroupés au centre. -->
       <div class="launcher-variant-title-row">
         <h1 class="launcher-variant-title" id="launcherVariantTitle"></h1>
         <div class="flag-row" id="launcherFlagRow"></div>
@@ -1414,40 +1416,43 @@
   <div id="sections-level1" class="screen">
 
     <div class="sections-header">
-      <!-- Logo VACHÉBO — ajouté le 20/07/2026 (demande utilisateur) -->
-      <div class="sections-logo-strip">
-        <img src="img/Logo-appli-es-fr.png" alt="VACHÉBO" class="sections-logo-img" onerror="this.style.display='none';">
+      <!-- Ligne fusionnée icônes + logo — restructurée le 21/07/2026 (2e
+           demande utilisateur) : logo VACHÉBO centré (via .sections-
+           logo-strip en flex:1), 🏠 Accueil + 🌎 Variantes à gauche,
+           ❓ Guide + 🚪 Sortie à droite. -->
+      <div class="sections-top-icons-row">
+        <div class="sections-back-group" role="group" aria-label="Retour">
+          <button class="back-btn back-icon-btn" id="sectionsBackHomeBtn" onclick="navBackToHome()"
+                  aria-label="Retour à l'accueil / Volver al inicio" title="Accueil / Inicio">
+            <span aria-hidden="true">🏠</span>
+          </button>
+          <!-- Raccourci variante — ajouté le 20/07/2026 (demande utilisateur) -->
+          <button class="back-btn back-icon-btn" onclick="navToVariantSelector()"
+                  aria-label="Choix de la variante / Elegir variante" title="Variantes">
+            <span aria-hidden="true">🌎</span>
+          </button>
+        </div>
+        <div class="sections-logo-strip">
+          <img src="img/Logo-appli-es-fr.png" alt="VACHÉBO" class="sections-logo-img" onerror="this.style.display='none';">
+        </div>
+        <div class="sections-back-group" role="group" aria-label="Navigation">
+          <button class="back-btn back-icon-btn" id="sectionsBackGuideBtn" onclick="navBackToGuide()"
+                  aria-label="Retour au guide explicatif / Volver a la guía" title="Guide / Guía">
+            <span aria-hidden="true">❓</span>
+          </button>
+          <button class="back-btn back-icon-btn quit-btn" onclick="showQuitConfirm()"
+                  aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
+            <span aria-hidden="true">🚪</span>
+          </button>
+        </div>
       </div>
+
       <div class="sections-top-row">
         <div class="sections-top-left">
-          <div class="sections-back-group" role="group" aria-label="Retour">
-            <button class="back-btn back-icon-btn" id="sectionsBackHomeBtn" onclick="navBackToHome()"
-                    aria-label="Retour à l'accueil / Volver al inicio" title="Accueil / Inicio">
-              <span aria-hidden="true">🏠</span>
-            </button>
-            <!-- Raccourci variante — ajouté le 20/07/2026 (demande utilisateur) -->
-            <button class="back-btn back-icon-btn" onclick="navToVariantSelector()"
-                    aria-label="Choix de la variante / Elegir variante" title="Variantes">
-              <span aria-hidden="true">🌎</span>
-            </button>
-          </div>
           <h2 id="sectionsTitle"></h2>
           <div class="sections-subtitle" id="sectionsSubtitle"></div>
         </div>
-        <!-- Colonne droite : ❓ Guide + 🚪 Quitter réunis (restructuré le
-             21/07/2026, demande utilisateur — symétrique à gauche : 2
-             icônes de chaque côté), au-dessus du drapeau. -->
         <div class="sections-top-right">
-          <div class="sections-back-group" role="group" aria-label="Navigation">
-            <button class="back-btn back-icon-btn" id="sectionsBackGuideBtn" onclick="navBackToGuide()"
-                    aria-label="Retour au guide explicatif / Volver a la guía" title="Guide / Guía">
-              <span aria-hidden="true">❓</span>
-            </button>
-            <button class="back-btn back-icon-btn quit-btn" onclick="showQuitConfirm()"
-                    aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
-              <span aria-hidden="true">🚪</span>
-            </button>
-          </div>
           <div class="sections-flag" id="sectionsFlag"></div>
         </div>
       </div>
@@ -1486,40 +1491,41 @@
   <div id="sections-level2" class="screen">
 
     <div class="sections-header">
-      <!-- Logo VACHÉBO — ajouté le 20/07/2026 (demande utilisateur) -->
-      <div class="sections-logo-strip">
-        <img src="img/Logo-appli-es-fr.png" alt="VACHÉBO" class="sections-logo-img" onerror="this.style.display='none';">
+      <!-- Ligne fusionnée icônes + logo — restructurée le 21/07/2026 (2e
+           demande utilisateur) — cf. même bloc sur #sections-level1. -->
+      <div class="sections-top-icons-row">
+        <div class="sections-back-group" role="group" aria-label="Retour">
+          <button class="back-btn back-icon-btn" id="sectionsBackHomeBtn2" onclick="navBackToHome()"
+                  aria-label="Retour à l'accueil / Volver al inicio" title="Accueil / Inicio">
+            <span aria-hidden="true">🏠</span>
+          </button>
+          <!-- Raccourci variante — ajouté le 20/07/2026 (demande utilisateur) -->
+          <button class="back-btn back-icon-btn" onclick="navToVariantSelector()"
+                  aria-label="Choix de la variante / Elegir variante" title="Variantes">
+            <span aria-hidden="true">🌎</span>
+          </button>
+        </div>
+        <div class="sections-logo-strip">
+          <img src="img/Logo-appli-es-fr.png" alt="VACHÉBO" class="sections-logo-img" onerror="this.style.display='none';">
+        </div>
+        <div class="sections-back-group" role="group" aria-label="Navigation">
+          <button class="back-btn back-icon-btn" id="sectionsBackGuideBtn2" onclick="navBackToGuide()"
+                  aria-label="Retour au guide explicatif / Volver a la guía" title="Guide / Guía">
+            <span aria-hidden="true">❓</span>
+          </button>
+          <button class="back-btn back-icon-btn quit-btn" onclick="showQuitConfirm()"
+                  aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
+            <span aria-hidden="true">🚪</span>
+          </button>
+        </div>
       </div>
+
       <div class="sections-top-row">
         <div class="sections-top-left">
-          <div class="sections-back-group" role="group" aria-label="Retour">
-            <button class="back-btn back-icon-btn" id="sectionsBackHomeBtn2" onclick="navBackToHome()"
-                    aria-label="Retour à l'accueil / Volver al inicio" title="Accueil / Inicio">
-              <span aria-hidden="true">🏠</span>
-            </button>
-            <!-- Raccourci variante — ajouté le 20/07/2026 (demande utilisateur) -->
-            <button class="back-btn back-icon-btn" onclick="navToVariantSelector()"
-                    aria-label="Choix de la variante / Elegir variante" title="Variantes">
-              <span aria-hidden="true">🌎</span>
-            </button>
-          </div>
           <h2 id="sectionsTitle2"></h2>
           <div class="sections-subtitle" id="sectionsSubtitle2"></div>
         </div>
-        <!-- Colonne droite : ❓ Guide + 🚪 Quitter réunis (restructuré le
-             21/07/2026, demande utilisateur) — cf. même bloc sur
-             #sections-level1. -->
         <div class="sections-top-right">
-          <div class="sections-back-group" role="group" aria-label="Navigation">
-            <button class="back-btn back-icon-btn" id="sectionsBackGuideBtn2" onclick="navBackToGuide()"
-                    aria-label="Retour au guide explicatif / Volver a la guía" title="Guide / Guía">
-              <span aria-hidden="true">❓</span>
-            </button>
-            <button class="back-btn back-icon-btn quit-btn" onclick="showQuitConfirm()"
-                    aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
-              <span aria-hidden="true">🚪</span>
-            </button>
-          </div>
           <div class="sections-flag" id="sectionsFlag2"></div>
         </div>
       </div>
