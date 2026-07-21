@@ -1609,20 +1609,36 @@ body {
    visibles). Le drapeau et la mascotte sont désormais isolés sur leur
    propre ligne (.ghrb-icons, cf. juste en dessous), nettement agrandis et
    centrés, au-dessus du texte descriptif (.ghrb-text) — cf. innerHTML
-   généré par _refreshGuideRegion() dans app.js. */
+   généré par _refreshGuideRegion() dans app.js.
+   Recoloré le 21/07/2026 (3e passe, demande utilisateur : "texte en
+   arrière-plan" quasi invisible + grand espace vide avant "Cómo funciona").
+   Cause : ce bandeau vit dans .home-guide-body, un corps BLANC
+   (rgba(255,255,255,.92)) — l'ancien couple fond translucide blanc / texte
+   blanc à 95 % (pensé pour un fond dégradé coloré, cf. commentaire du
+   21/07 ci-dessus) y devenait quasi illisible (blanc sur blanc), ce qui
+   ressemblait à du texte fantôme et à un vide au-dessus de l'accordéon.
+   Remplacé par les variables de thème déjà utilisées ailleurs dans ce
+   bloc (--g-fr/--g-fr-lt pour #guideContentFR, --g-es/--g-es-lt pour
+   #guideContentES — cf. règles `#guideContentES .guide-stat-num` etc. plus
+   bas dans ce fichier), sur fond clair teinté et texte foncé bien
+   contrasté ; marges resserrées (14px→10px) pour supprimer l'espace vide
+   ressenti entre les icônes et la rubrique "Cómo funciona / Comment ça
+   marche" juste en dessous. */
 .guide-hero-region-badge {
   display: block;
   width: fit-content;
   max-width: 92%;
-  font-size: .95rem;
-  background: rgba(255,255,255,.22);
-  border: 1px solid rgba(255,255,255,.4);
-  border-radius: 22px;
-  padding: 12px 22px 10px;
-  margin: 8px auto 14px;
-  color: rgba(255,255,255,.95);
+  border-radius: 18px;
+  padding: 14px 22px 12px;
+  margin: 0 auto 10px;
   font-weight: 600;
   text-align: center;
+  background: var(--g-fr-lt);
+  border: 1px solid rgba(0,35,149,.15);
+}
+#guideContentES .guide-hero-region-badge {
+  background: var(--g-es-lt);
+  border-color: rgba(198,11,30,.15);
 }
 /* Icônes drapeau + élément culturel (mascotte) — agrandies et centrées
    sur leur propre ligne, au-dessus du texte descriptif, pour mieux les
@@ -1634,7 +1650,10 @@ body {
 }
 .ghrb-text {
   font-size: .85rem;
+  color: var(--g-fr);
 }
+#guideContentES .ghrb-text { color: var(--g-es); }
+.ghrb-text em { font-style: normal; opacity: .8; }
 
 /* Grille modes FR/ES dans les accordéons */
 .guide-grid-2 {
@@ -1822,6 +1841,7 @@ body {
 .sections-top-icons-row .sections-back-group {
   flex-shrink: 0;
   margin-bottom: 0;
+  gap: 3px;
 }
 
 /* Groupe des 2 icônes de retour (🏠 Accueil / ❓ Guide) remplaçant
@@ -1843,8 +1863,8 @@ body {
   justify-content: center;
 }
 .sections-logo-img {
-  max-width: 240px;
-  width: 68%;
+  max-width: 260px;
+  width: 88%;
   height: auto;
   object-fit: contain;
   opacity: 0.95;
@@ -1864,6 +1884,15 @@ body {
      navigateur (visible en boîte claire derrière l'émoji). */
   background: none !important;
   border: none !important;
+}
+/* Icônes légèrement réduites SEULEMENT dans la ligne fusionnée icônes+logo
+   des écrans Modules (ajouté le 21/07/2026, 3e passe, demande utilisateur) :
+   libère de la place pour un logo plus grand, sans toucher à .back-icon-btn
+   utilisé ailleurs (Lanceur, autres écrans) où la taille d'origine reste. */
+.sections-top-icons-row .back-icon-btn {
+  font-size: 1.15rem !important;
+  min-width: 34px;
+  min-height: 34px;
 }
 .sections-flag {
   font-size: 2.4rem;
