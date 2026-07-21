@@ -1286,11 +1286,16 @@ body {
    Basculée FR/ES par le même mécanisme générique que les rubriques
    (.home-lang-block[data-lang] + _buildHomeGuide() dans app.js) : aucun
    JS supplémentaire nécessaire. */
+/* Couleurs passées aux teintes crème/brun du logo VACHÉBO (--c-vache-cream /
+   --c-vache-brown, déjà utilisées ailleurs — pied de page, halo décoratif de
+   #home) le 21/07/2026 (demande utilisateur), à la place du vert générique
+   d'origine, pour relier davantage cette carte à l'identité visuelle de
+   l'app. */
 .hg-tldr {
   margin: 0 14px 14px;
   padding: 16px 18px;
-  background: #eafaf0;
-  border: 2px solid #2e7d32;
+  background: var(--c-vache-cream);
+  border: 2px solid var(--c-vache-brown);
   border-radius: 16px;
   position: relative;
   z-index: 1;
@@ -1298,7 +1303,7 @@ body {
 .hg-tldr-title {
   font-size: 1rem;
   font-weight: 800;
-  color: #1b5e20;
+  color: var(--c-vache-brown);
   text-align: center;
   margin: 0 0 10px;
 }
@@ -1312,7 +1317,7 @@ body {
   padding-left: 20px;
   font-size: .82rem;
   line-height: 1.55;
-  color: #33402f;
+  color: #4a3324;
   margin-bottom: 8px;
 }
 .hg-tldr-list li:last-child { margin-bottom: 0; }
@@ -1320,16 +1325,16 @@ body {
   content: "•";
   position: absolute;
   left: 4px;
-  color: #2e7d32;
+  color: var(--c-vache-brown);
   font-weight: 900;
 }
-.hg-tldr-list strong { color: #1b3a1b; }
+.hg-tldr-list strong { color: var(--c-vache-brown); }
 .hg-tldr-more {
   margin: 10px 0 0;
   text-align: center;
   font-size: .78rem;
   font-weight: 600;
-  color: #2e7d32;
+  color: var(--c-vache-brown);
 }
 
 /* ── Corps des accordéons ── */
@@ -1638,14 +1643,22 @@ body {
    - Taille : padding et icônes réduits (l'encadré paraissait disproportionné
      par rapport aux rubriques en accordéon juste en dessous, ~1.2rem
      d'icône — cf. .hg-icon). Fond crème neutre (--c-vache-cream) conservé
-     pour rester lisible quelle que soit la couleur de bordure. */
+     pour rester lisible quelle que soit la couleur de bordure.
+   - Largeur (21/07/2026, 5e passe, demande utilisateur) : l'encadré était en
+     width:fit-content + margin:auto, donc nettement plus étroit que sa
+     max-width de 92 % dès que le texte tenait sur une ligne — de grands
+     vides blancs apparaissaient de chaque côté, visuellement bizarres par
+     rapport aux rubriques en accordéon juste en dessous (edge-to-edge dans
+     .home-guide-body) et à la carte "En bref" au-dessus (.hg-tldr, marge
+     14px de chaque côté). L'encadré adopte désormais la même marge que
+     .hg-tldr (14px), en pleine largeur, pour venir toucher les mêmes
+     bordures blanches que les autres blocs du Guide. */
 .guide-hero-region-badge {
   display: block;
-  width: fit-content;
-  max-width: 92%;
+  width: auto;
   border-radius: 14px;
   padding: 9px 16px 8px;
-  margin: 0 auto 10px;
+  margin: 0 14px 10px;
   font-weight: 600;
   text-align: center;
   background: var(--c-vache-cream);
