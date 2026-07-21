@@ -5298,6 +5298,10 @@ function _maybeAutoShowGuide() {
  * le bloc FR n'est visible QUE en mode learn_spain (apprentissage de
  * l'ESPAGNOL) → symbole de la variante régionale active. Bandeau FR
  * ajouté le même jour : il n'existait pas du tout auparavant.
+ * Markup scindé en 2 lignes le 21/07/2026 (2e passe, demande utilisateur) :
+ * `.ghrb-icons` (drapeau + 🐄 + symbole mascotte, agrandis) au-dessus de
+ * `.ghrb-text` (phrase descriptive, taille normale) — cf. règles CSS dans
+ * style.css, juste avant `.guide-grid-2`.
  */
 function _refreshGuideRegion() {
   const REGIONS = {
@@ -5315,14 +5319,16 @@ function _refreshGuideRegion() {
   /* Bandeau du bloc ES (guide en espagnol → mode learn_french, apprentissage
      du français) : mascotte Tour Eiffel, fixe, quel que soit currentRegion. */
   const badgeES = document.getElementById('guideRegionBadgeES');
-  if (badgeES) badgeES.innerHTML = 'Tu app está configurada en <strong>' + r.flag + ' ' + r.name + '</strong> 🐄'
-    + REGION_MASCOTS.FR.symbol + ' <em>' + REGION_MASCOTS.FR.phrase + '</em>';
+  if (badgeES) badgeES.innerHTML =
+      '<div class="ghrb-icons" aria-hidden="true">' + r.flag + ' 🐄' + REGION_MASCOTS.FR.symbol + '</div>'
+    + '<div class="ghrb-text">Tu app está configurada en <strong>' + r.name + '</strong> — <em>' + REGION_MASCOTS.FR.phrase + '</em></div>';
 
   /* Bandeau du bloc FR (guide en français → mode learn_spain, apprentissage
      de l'espagnol) : mascotte régionale, selon la variante active. */
   const badgeFR = document.getElementById('guideRegionBadgeFR');
-  if (badgeFR) badgeFR.innerHTML = 'Ton application est configurée sur <strong>' + r.flag + ' ' + r.name + '</strong> 🐄'
-    + REGION_MASCOTS[region].symbol + ' <em>' + REGION_MASCOTS[region].phrase + '</em>';
+  if (badgeFR) badgeFR.innerHTML =
+      '<div class="ghrb-icons" aria-hidden="true">' + r.flag + ' 🐄' + REGION_MASCOTS[region].symbol + '</div>'
+    + '<div class="ghrb-text">Ton application est configurée sur <strong>' + r.name + '</strong> — <em>' + REGION_MASCOTS[region].phrase + '</em></div>';
 }
 
 /**

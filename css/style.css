@@ -1602,19 +1602,38 @@ body {
    21/07/2026 (demande utilisateur) : auparavant en display:inline-block
    sans centrage explicite (aligné à gauche par défaut) et assez petit ;
    la 2e règle .guide-hero-region-badge qui gagnait la cascade CSS a été
-   retirée (cf. commentaire plus bas dans le fichier). */
+   retirée (cf. commentaire plus bas dans le fichier).
+   Complété le 21/07/2026 (2e passe, demande utilisateur : le centrage du
+   bandeau dans son ensemble ne suffisait pas — le drapeau et l'élément
+   culturel/mascotte restaient à la même taille que le texte, donc peu
+   visibles). Le drapeau et la mascotte sont désormais isolés sur leur
+   propre ligne (.ghrb-icons, cf. juste en dessous), nettement agrandis et
+   centrés, au-dessus du texte descriptif (.ghrb-text) — cf. innerHTML
+   généré par _refreshGuideRegion() dans app.js. */
 .guide-hero-region-badge {
   display: block;
   width: fit-content;
+  max-width: 92%;
   font-size: .95rem;
   background: rgba(255,255,255,.22);
   border: 1px solid rgba(255,255,255,.4);
-  border-radius: 50px;
-  padding: 7px 20px;
+  border-radius: 22px;
+  padding: 12px 22px 10px;
   margin: 8px auto 14px;
   color: rgba(255,255,255,.95);
   font-weight: 600;
   text-align: center;
+}
+/* Icônes drapeau + élément culturel (mascotte) — agrandies et centrées
+   sur leur propre ligne, au-dessus du texte descriptif, pour mieux les
+   mettre en valeur avant la rubrique "Cómo funciona / Comment ça marche". */
+.ghrb-icons {
+  font-size: 2.4rem;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.ghrb-text {
+  font-size: .85rem;
 }
 
 /* Grille modes FR/ES dans les accordéons */
@@ -1824,8 +1843,8 @@ body {
   justify-content: center;
 }
 .sections-logo-img {
-  max-width: 190px;
-  width: 52%;
+  max-width: 240px;
+  width: 68%;
   height: auto;
   object-fit: contain;
   opacity: 0.95;
