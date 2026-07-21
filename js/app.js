@@ -5153,8 +5153,29 @@ function navBackToGuide() {
        de langue), qui sert de "sortie" logique dans l'app.
 ───────────────────────────────────────────────────────── */
 
-/** Ouvre la modale de confirmation (bouton 🚪 des 5 écrans). */
+/**
+ * Ouvre la modale de confirmation (bouton 🚪 des 5 écrans).
+ * Textes basculés le 21/07/2026 (demande utilisateur) : la modale
+ * affichait un mélange bilingue FR/ES sur chaque ligne ("Quitter
+ * l'application ? / ¿Salir de la aplicación?", etc.), quel que soit le
+ * parcours en cours. Elle affiche désormais une seule langue à la fois,
+ * celle de l'apprenant selon le parcours actif — même logique que le
+ * reste de l'interface (cf. L(), déjà utilisé pour le toast de repli de
+ * quitCloseApp() juste en dessous). Si aucun mode n'est encore choisi
+ * (lanceur), L() retombe sur sa valeur par défaut (français), cohérente
+ * avec le reste de l'app dans ce cas (cf. showFrench dans _buildHomeGuide()).
+ */
 function showQuitConfirm() {
+  document.getElementById('quitModalTitle').textContent =
+    L('🚪 ¿Salir de la aplicación?', '🚪 Quitter l\'application ?');
+  document.getElementById('quitModalSubtitle').textContent =
+    L('Elige una opción', 'Choisis une option');
+  document.getElementById('quitModalCloseBtn').textContent =
+    L('🚪 Cerrar la app', '🚪 Fermer l\'appli');
+  document.getElementById('quitModalHomeBtn').textContent =
+    L('🏠 Volver al inicio', '🏠 Revenir au départ');
+  document.getElementById('quitModalCancelBtn').textContent =
+    L('Cancelar', 'Annuler');
   document.getElementById('quit-modal').style.display = 'flex';
 }
 
@@ -5302,6 +5323,20 @@ function _maybeAutoShowGuide() {
  * `.ghrb-icons` (drapeau + 🐄 + symbole mascotte, agrandis) au-dessus de
  * `.ghrb-text` (phrase descriptive, taille normale) — cf. règles CSS dans
  * style.css, juste avant `.guide-grid-2`.
+ * Ajustements du 21/07/2026 (4e passe, demande utilisateur) :
+ *  - Bandeau ES (bloc learn_french) : phrase raccourcie à "Oh la vache !"
+ *    (au lieu de REGION_MASCOTS.FR.phrase complet "Oh la vache, qué
+ *    chévère !"), pour un encadré de taille cohérente avec les rubriques
+ *    en accordéon juste en dessous. Volontairement local à ce bandeau —
+ *    REGION_MASCOTS.FR.phrase reste inchangée pour le pied de page, la
+ *    pastille "tout terminé" et la ligne sans-faute des quiz.
+ *  - Couleurs de l'encadré (bordure) : passées de teintes fixes
+ *    (var(--g-fr-lt)/var(--g-es-lt), cf. ancienne règle CSS) à
+ *    var(--c-primary), qui reflète déjà nativement le thème actif —
+ *    bleu/rouge France en mode learn_french, couleurs de la variante
+ *    hispanique choisie en mode learn_spain (cf. html.theme-french /
+ *    html.theme-spain.region-XX dans style.css). Texte de la phrase
+ *    laissé en noir (#333) dans les deux blocs, plutôt que teinté.
  */
 function _refreshGuideRegion() {
   const REGIONS = {
@@ -5321,7 +5356,7 @@ function _refreshGuideRegion() {
   const badgeES = document.getElementById('guideRegionBadgeES');
   if (badgeES) badgeES.innerHTML =
       '<div class="ghrb-icons" aria-hidden="true">' + r.flag + ' 🐄' + REGION_MASCOTS.FR.symbol + '</div>'
-    + '<div class="ghrb-text">Tu app está configurada en <strong>' + r.name + '</strong> — <em>' + REGION_MASCOTS.FR.phrase + '</em></div>';
+    + '<div class="ghrb-text">Tu app está configurada en <strong>' + r.name + '</strong> — <em>Oh la vache !</em></div>';
 
   /* Bandeau du bloc FR (guide en français → mode learn_spain, apprentissage
      de l'espagnol) : mascotte régionale, selon la variante active. */

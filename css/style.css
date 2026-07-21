@@ -1624,35 +1624,48 @@ body {
    contrasté ; marges resserrées (14px→10px) pour supprimer l'espace vide
    ressenti entre les icônes et la rubrique "Cómo funciona / Comment ça
    marche" juste en dessous. */
+/* Couleurs et taille revues le 21/07/2026 (4e passe, demande utilisateur) :
+   - Couleurs : la bordure suit désormais var(--c-primary), qui reflète déjà
+     nativement le thème actif (bleu/rouge France en mode learn_french via
+     html.theme-french, couleurs de la variante hispanique choisie en mode
+     learn_spain via html.theme-spain.region-XX — cf. §3/§4 plus bas dans ce
+     fichier). Fini donc le rouge Espagne générique fixe côté bloc ES et le
+     bleu France fixe côté bloc FR : chaque bandeau prend maintenant la
+     couleur réellement associée à la langue APPRISE dans ce mode, comme le
+     reste de l'interface (cf. _mascotKeyForMode() dans app.js). L'ancienne
+     règle #guideContentES .guide-hero-region-badge (rouge Espagne fixe) est
+     donc supprimée : elle est désormais inutile, --c-primary s'en charge.
+   - Taille : padding et icônes réduits (l'encadré paraissait disproportionné
+     par rapport aux rubriques en accordéon juste en dessous, ~1.2rem
+     d'icône — cf. .hg-icon). Fond crème neutre (--c-vache-cream) conservé
+     pour rester lisible quelle que soit la couleur de bordure. */
 .guide-hero-region-badge {
   display: block;
   width: fit-content;
   max-width: 92%;
-  border-radius: 18px;
-  padding: 14px 22px 12px;
+  border-radius: 14px;
+  padding: 9px 16px 8px;
   margin: 0 auto 10px;
   font-weight: 600;
   text-align: center;
-  background: var(--g-fr-lt);
-  border: 1px solid rgba(0,35,149,.15);
+  background: var(--c-vache-cream);
+  border: 1.5px solid var(--c-primary);
 }
-#guideContentES .guide-hero-region-badge {
-  background: var(--g-es-lt);
-  border-color: rgba(198,11,30,.15);
-}
-/* Icônes drapeau + élément culturel (mascotte) — agrandies et centrées
-   sur leur propre ligne, au-dessus du texte descriptif, pour mieux les
-   mettre en valeur avant la rubrique "Cómo funciona / Comment ça marche". */
+/* Icônes drapeau + élément culturel (mascotte) — sur leur propre ligne,
+   au-dessus du texte descriptif, mais désormais proches de la taille des
+   icônes des rubriques en accordéon (.hg-icon, 1.2rem) plutôt que le double. */
 .ghrb-icons {
-  font-size: 2.4rem;
+  font-size: 1.6rem;
   line-height: 1;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
+/* Texte descriptif volontairement en noir/gris foncé (comme le reste des
+   textes de l'app, cf. .hg-summary) plutôt que teinté — seule la bordure
+   de l'encadré porte la couleur du thème/de la variante. */
 .ghrb-text {
-  font-size: .85rem;
-  color: var(--g-fr);
+  font-size: .8rem;
+  color: #333;
 }
-#guideContentES .ghrb-text { color: var(--g-es); }
 .ghrb-text em { font-style: normal; opacity: .8; }
 
 /* Grille modes FR/ES dans les accordéons */

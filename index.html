@@ -1711,15 +1711,20 @@
          • "Revenir au départ" → quitGoHome() ramène à l'écran de
            choix de langue, qui sert de sortie logique dans l'app.
        Même gabarit inline que #confirm-modal, pour cohérence visuelle.
+       Textes laissés vides ici à dessein : remplis dynamiquement par
+       showQuitConfirm() (app.js) dans la seule langue de l'apprenant
+       selon le parcours actif (L()), au lieu du mélange bilingue FR/ES
+       affiché auparavant sur chaque ligne. Modifié le 21/07/2026
+       (demande utilisateur).
        ────────────────────────────────────────── -->
   <div id="quit-modal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center;">
     <div class="modal-content" style="background:#fff; margin:0 20px; padding:25px; border-radius:15px; text-align:center; max-width:340px;">
-      <p style="font-size:1.05rem; font-weight:800; color:#333; margin:0 0 6px;">🚪 Quitter l'application ? / ¿Salir de la aplicación?</p>
-      <p style="font-size:0.8rem; color:#888; margin:0 0 20px;">Choisis une option / Elige una opción</p>
+      <p id="quitModalTitle" style="font-size:1.05rem; font-weight:800; color:#333; margin:0 0 6px;"></p>
+      <p id="quitModalSubtitle" style="font-size:0.8rem; color:#888; margin:0 0 20px;"></p>
       <div style="display:flex; flex-direction:column; gap:10px;">
-        <button onclick="quitCloseApp()" style="padding:12px 18px; border-radius:8px; border:none; background:#c0392b; color:#fff; cursor:pointer; font-weight:bold;">🚪 Fermer l'appli / Cerrar la app</button>
-        <button onclick="quitGoHome()" style="padding:12px 18px; border-radius:8px; border:2px solid #007bff; background:#fff; color:#007bff; cursor:pointer; font-weight:bold;">🏠 Revenir au départ / Volver al inicio</button>
-        <button onclick="cancelQuit()" style="padding:8px 18px; border:none; background:none; color:#888; cursor:pointer; font-weight:600; text-decoration:underline;">Annuler / Cancelar</button>
+        <button id="quitModalCloseBtn" onclick="quitCloseApp()" style="padding:12px 18px; border-radius:8px; border:none; background:#c0392b; color:#fff; cursor:pointer; font-weight:bold;"></button>
+        <button id="quitModalHomeBtn" onclick="quitGoHome()" style="padding:12px 18px; border-radius:8px; border:2px solid #007bff; background:#fff; color:#007bff; cursor:pointer; font-weight:bold;"></button>
+        <button id="quitModalCancelBtn" onclick="cancelQuit()" style="padding:8px 18px; border:none; background:none; color:#888; cursor:pointer; font-weight:600; text-decoration:underline;"></button>
       </div>
     </div>
   </div>
