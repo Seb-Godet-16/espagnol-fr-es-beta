@@ -122,28 +122,6 @@
     <!-- Fond décoratif (défini en CSS, pas interactif) -->
     <div class="launcher-bg"></div>
 
-    <!-- Bouton Quitter — ajouté le 19/07/2026 (demande utilisateur).
-         Positionné en absolu directement sur #app-launcher (pas dans
-         .launcher-inner) pour rester visible identiquement sur les
-         deux vues (cartes de langue ET sélecteur de variante). -->
-    <button class="launcher-quit-btn quit-btn" onclick="showQuitConfirm()"
-            aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
-      <span aria-hidden="true">🚪</span>
-    </button>
-
-    <!-- Raccourci Guide explicatif — ajouté le 20/07/2026 (demande utilisateur).
-         Masqué par défaut (affiché uniquement à partir du 2e lancement de
-         l'app, cf. _updateCardsGuideShortcut()/_isBrandNewUser() dans
-         app.js) : au tout premier lancement, aucun guide n'a encore été
-         consulté pour aucun mode, ce raccourci n'aurait donc aucune
-         destination pertinente. Ne s'affiche que sur la Vue A (cartes de
-         langue) — cf. navCardsToGuide(), qui déduit le mode à rouvrir. -->
-    <button class="launcher-guide-shortcut-btn" id="launcherCardsGuideBtn" style="display:none;"
-            onclick="navCardsToGuide()"
-            aria-label="Guide explicatif / Guía explicativa" title="Guide / Guía">
-      <span aria-hidden="true">❓</span>
-    </button>
-
     <!-- ─── VUE A : Sélection de la langue ─── -->
     <div id="launcher-view-cards" class="launcher-inner">
       <!-- Logo VACHÉBO — PNG servi depuis GitHub, fallback SVG si pas de connexion -->
@@ -172,7 +150,39 @@
         </div>
       </div>
 
-      <p class="launcher-subtitle">Choisis ta langue · Elige tu idioma</p>
+      <!-- Ligne du sous-titre + icônes de navigation — restructuré le
+           21/07/2026 (demande utilisateur) : 🌎 Variantes et ❓ Guide à
+           gauche, 📚 Modules et 🚪 Sortie à droite, sur la même ligne que
+           le sous-titre. Masquées par défaut, affichées uniquement à
+           partir du 2e lancement de l'app (cf. _updateCardsNavIcons() /
+           _isBrandNewUser() dans app.js) — au tout premier lancement,
+           aucune de ces destinations n'a encore de contenu pertinent à
+           montrer (même logique déjà appliquée à la barre de nav basse). -->
+      <div class="launcher-subtitle-row" id="launcherSubtitleRow">
+        <div class="launcher-subtitle-icons launcher-subtitle-icons-left" id="launcherCardsIconsLeft" style="display:none;">
+          <button class="launcher-guide-shortcut-btn" onclick="navCardsToVariantSelector()"
+                  aria-label="Choix de la variante / Elegir variante" title="Variantes">
+            <span aria-hidden="true">🌎</span>
+          </button>
+          <button class="launcher-guide-shortcut-btn" id="launcherCardsGuideBtn"
+                  onclick="navCardsToGuide()"
+                  aria-label="Guide explicatif / Guía explicativa" title="Guide / Guía">
+            <span aria-hidden="true">❓</span>
+          </button>
+        </div>
+        <p class="launcher-subtitle">Choisis ta langue · Elige tu idioma</p>
+        <div class="launcher-subtitle-icons launcher-subtitle-icons-right" id="launcherCardsIconsRight" style="display:none;">
+          <button class="launcher-guide-shortcut-btn" onclick="navCardsToModules()"
+                  aria-label="Modules / Módulos" title="Modules / Módulos">
+            <span aria-hidden="true">📚</span>
+          </button>
+          <button class="launcher-guide-shortcut-btn quit-btn" onclick="showQuitConfirm()"
+                  aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
+            <span aria-hidden="true">🚪</span>
+          </button>
+        </div>
+      </div>
+
 
       <!-- Cartes de langue fusionnées avec l'encadré explicatif — Fusion
            réalisée le 18/07/2026 (demande utilisateur) : auparavant deux
@@ -296,40 +306,52 @@
     <!-- ─── VUE B : Sélecteur de variante (après clic sur une carte) ─── -->
     <div id="launcher-view-variant" class="launcher-inner" style="display:none;">
 
-      <!-- Groupe d'icônes de navigation — remplace l'ancien bouton unique
-           "← Retour/Volver" le 20/07/2026 (demande utilisateur). 🏠 revient
-           toujours aux cartes de langue (comportement de l'ancien bouton
-           retour). ❓ Guide et 📚 Modules sont masqués par défaut et
-           n'apparaissent qu'à partir du 2e lancement de l'app (une fois
+      <!-- Ligne d'icônes de navigation en haut, pleine largeur — restructuré
+           le 21/07/2026 (demande utilisateur) : 🏠 Accueil et ❓ Guide à
+           gauche, 📚 Modules et 🚪 Sortie à droite. Masquée par défaut,
+           affichée uniquement à partir du 2e lancement de l'app (une fois
            qu'un guide/des modules existent réellement à rouvrir) — cf.
            showLauncherVariant() dans app.js. -->
-      <div class="sections-back-group launcher-variant-nav-group" id="launcherVariantNavGroup" role="group" aria-label="Navigation">
-        <button class="back-btn back-icon-btn" id="launcherBackBtn"
-                aria-label="Retour au choix de langue / Volver a la selección de idioma" title="Accueil / Inicio">
-          <span aria-hidden="true">🏠</span>
-        </button>
-        <button class="back-btn back-icon-btn" id="launcherGuideBtn" style="display:none;"
-                onclick="navVariantToGuide()"
-                aria-label="Guide explicatif / Guía explicativa" title="Guide / Guía">
-          <span aria-hidden="true">❓</span>
-        </button>
-        <button class="back-btn back-icon-btn" id="launcherModulesBtn" style="display:none;"
-                onclick="navVariantToModules()"
-                aria-label="Modules / Módulos" title="Modules / Módulos">
-          <span aria-hidden="true">📚</span>
-        </button>
+      <div class="sections-top-row launcher-variant-top-row" id="launcherVariantTopRow" style="display:none;">
+        <div class="sections-back-group">
+          <button class="back-btn back-icon-btn" id="launcherBackBtn"
+                  aria-label="Retour au choix de langue / Volver a la selección de idioma" title="Accueil / Inicio">
+            <span aria-hidden="true">🏠</span>
+          </button>
+          <button class="back-btn back-icon-btn" id="launcherGuideBtn"
+                  onclick="navVariantToGuide()"
+                  aria-label="Guide explicatif / Guía explicativa" title="Guide / Guía">
+            <span aria-hidden="true">❓</span>
+          </button>
+        </div>
+        <div class="sections-back-group">
+          <button class="back-btn back-icon-btn" id="launcherModulesBtn"
+                  onclick="navVariantToModules()"
+                  aria-label="Modules / Módulos" title="Modules / Módulos">
+            <span aria-hidden="true">📚</span>
+          </button>
+          <button class="back-btn back-icon-btn quit-btn" onclick="showQuitConfirm()"
+                  aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
+            <span aria-hidden="true">🚪</span>
+          </button>
+        </div>
       </div>
 
-      <!-- Logo VACHÉBO — ajouté le 20/07/2026 (demande utilisateur), même
-           image que la Vue A, en plus petit. -->
+      <!-- Logo VACHÉBO agrandi le 21/07/2026 (demande utilisateur), grâce à
+           l'espace libéré par le titre et le drapeau réunis sur une même
+           ligne juste en dessous. -->
       <div class="launcher-variant-logo-wrap">
         <img src="img/Logo-appli-es-fr.png" alt="VACHÉBO" class="launcher-variant-logo-img"
              onerror="this.style.display='none';">
       </div>
 
-      <!-- Drapeau + titre injectés par showLauncherVariant() -->
-      <div class="flag-row" id="launcherFlagRow" style="font-size:3rem;margin:10px 0;"></div>
-      <h1 class="launcher-variant-title" id="launcherVariantTitle"></h1>
+      <!-- Titre à gauche + drapeau à droite, sur la même ligne — restructuré
+           le 21/07/2026 (demande utilisateur) pour gagner la place utilisée
+           par le logo agrandi ci-dessus. -->
+      <div class="launcher-variant-title-row">
+        <h1 class="launcher-variant-title" id="launcherVariantTitle"></h1>
+        <div class="flag-row" id="launcherFlagRow"></div>
+      </div>
 
       <!-- Grille visuelle de drapeaux (remplace le <select>) -->
       <div id="region-selector-wrap" style="width:100%;max-width:400px;margin:0 auto 10px;">
@@ -359,8 +381,7 @@
       © Juin 2026 – Développé par Sébastien Godet<br>
       Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash<br>
       <button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> ·
-      <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> ·
-      <a href="#" onclick="showCredits()">Remerciements / Agradecimientos</a>
+      <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     </footer>
   </div><!-- /app-launcher -->
 
@@ -377,7 +398,7 @@
          lanceur (même destination que navBackToHome() sur l'écran
          Modules) ; 🚪 ouvre la modale "Quitter l'application", commune
          aux 5 écrans de l'app. -->
-    <div class="home-topbar">
+    <div class="home-topbar" id="homeTopbarNav" style="display:none;">
       <div class="home-topbar-left-group">
         <button class="topbar-icon-btn" onclick="navBackToHome()"
                 aria-label="Retour à l'accueil / Volver al inicio" title="Accueil / Inicio">
@@ -392,10 +413,18 @@
         </button>
       </div>
       <span class="home-topbar-title" id="homeTopbarTitle">Guide explicatif</span>
-      <button class="topbar-icon-btn quit-btn" onclick="showQuitConfirm()"
-              aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
-        <span aria-hidden="true">🚪</span>
-      </button>
+      <div class="home-topbar-right-group">
+        <!-- Raccourci vers les Modules — ajouté le 21/07/2026 (demande
+             utilisateur), symétrique au raccourci 🌎 Variantes ci-dessus. -->
+        <button class="topbar-icon-btn" onclick="navVariantToModules()"
+                aria-label="Modules / Módulos" title="Modules / Módulos">
+          <span aria-hidden="true">📚</span>
+        </button>
+        <button class="topbar-icon-btn quit-btn" onclick="showQuitConfirm()"
+                aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
+          <span aria-hidden="true">🚪</span>
+        </button>
+      </div>
     </div>
 
     <!-- En-tête coloré — IDs mis à jour par showGuide() -->
@@ -1396,10 +1425,6 @@
                     aria-label="Retour à l'accueil / Volver al inicio" title="Accueil / Inicio">
               <span aria-hidden="true">🏠</span>
             </button>
-            <button class="back-btn back-icon-btn" id="sectionsBackGuideBtn" onclick="navBackToGuide()"
-                    aria-label="Retour au guide explicatif / Volver a la guía" title="Guide / Guía">
-              <span aria-hidden="true">❓</span>
-            </button>
             <!-- Raccourci variante — ajouté le 20/07/2026 (demande utilisateur) -->
             <button class="back-btn back-icon-btn" onclick="navToVariantSelector()"
                     aria-label="Choix de la variante / Elegir variante" title="Variantes">
@@ -1409,14 +1434,20 @@
           <h2 id="sectionsTitle"></h2>
           <div class="sections-subtitle" id="sectionsSubtitle"></div>
         </div>
-        <!-- Colonne droite : bouton Quitter (ajouté le 19/07/2026, demande
-             utilisateur) au-dessus du drapeau, pour une sortie facile
-             depuis cet écran sans devoir repasser par le lanceur. -->
+        <!-- Colonne droite : ❓ Guide + 🚪 Quitter réunis (restructuré le
+             21/07/2026, demande utilisateur — symétrique à gauche : 2
+             icônes de chaque côté), au-dessus du drapeau. -->
         <div class="sections-top-right">
-          <button class="back-icon-btn quit-btn" onclick="showQuitConfirm()"
-                  aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
-            <span aria-hidden="true">🚪</span>
-          </button>
+          <div class="sections-back-group" role="group" aria-label="Navigation">
+            <button class="back-btn back-icon-btn" id="sectionsBackGuideBtn" onclick="navBackToGuide()"
+                    aria-label="Retour au guide explicatif / Volver a la guía" title="Guide / Guía">
+              <span aria-hidden="true">❓</span>
+            </button>
+            <button class="back-btn back-icon-btn quit-btn" onclick="showQuitConfirm()"
+                    aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
+              <span aria-hidden="true">🚪</span>
+            </button>
+          </div>
           <div class="sections-flag" id="sectionsFlag"></div>
         </div>
       </div>
@@ -1466,10 +1497,6 @@
                     aria-label="Retour à l'accueil / Volver al inicio" title="Accueil / Inicio">
               <span aria-hidden="true">🏠</span>
             </button>
-            <button class="back-btn back-icon-btn" id="sectionsBackGuideBtn2" onclick="navBackToGuide()"
-                    aria-label="Retour au guide explicatif / Volver a la guía" title="Guide / Guía">
-              <span aria-hidden="true">❓</span>
-            </button>
             <!-- Raccourci variante — ajouté le 20/07/2026 (demande utilisateur) -->
             <button class="back-btn back-icon-btn" onclick="navToVariantSelector()"
                     aria-label="Choix de la variante / Elegir variante" title="Variantes">
@@ -1479,13 +1506,20 @@
           <h2 id="sectionsTitle2"></h2>
           <div class="sections-subtitle" id="sectionsSubtitle2"></div>
         </div>
-        <!-- Colonne droite : bouton Quitter (ajouté le 19/07/2026, demande
-             utilisateur) — cf. même bloc sur #sections-level1. -->
+        <!-- Colonne droite : ❓ Guide + 🚪 Quitter réunis (restructuré le
+             21/07/2026, demande utilisateur) — cf. même bloc sur
+             #sections-level1. -->
         <div class="sections-top-right">
-          <button class="back-icon-btn quit-btn" onclick="showQuitConfirm()"
-                  aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
-            <span aria-hidden="true">🚪</span>
-          </button>
+          <div class="sections-back-group" role="group" aria-label="Navigation">
+            <button class="back-btn back-icon-btn" id="sectionsBackGuideBtn2" onclick="navBackToGuide()"
+                    aria-label="Retour au guide explicatif / Volver a la guía" title="Guide / Guía">
+              <span aria-hidden="true">❓</span>
+            </button>
+            <button class="back-btn back-icon-btn quit-btn" onclick="showQuitConfirm()"
+                    aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
+              <span aria-hidden="true">🚪</span>
+            </button>
+          </div>
           <div class="sections-flag" id="sectionsFlag2"></div>
         </div>
       </div>
@@ -1553,8 +1587,7 @@
       © Juin 2026 – Développé par Sébastien Godet<br>
       Assisté par IA Claude Sonnet 4.6 et Gemini 3.5 Flash ·
       <button class="footer-antispam-btn" onclick="openAndCopyEmail()">✉️ <span class="antispam-email">moc.liamg@61tedog.neitsabes</span></button> ·
-      <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a> ·
-      <a href="#" onclick="showCredits()">Remerciements / Agradecimientos</a>
+      <a href="https://www.linkedin.com/in/s%C3%A9bastien-godet-142ba6145" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     </footer>
 
   </div><!-- /lesson -->
@@ -1606,7 +1639,7 @@
           <p>🧑‍💻 <strong>Fédérico Calo</strong> (<a href="https://www.linkedin.com/in/federicocalo/" target="_blank" rel="noopener noreferrer" style="color:#007bff;text-decoration:none;font-weight:bold;">Architecte Développeur Web</a>) — aide technique précieuse tout au long du projet</p>
           <p>👨‍👩‍👧 <strong>Mes parents</strong> — relecture, corrections des traductions et conseils ergonomiques</p>
           <p>🗣️ <strong>Christophe Elin</strong> — retours précis et multiples d'expérience utilisateur</p>
-          <p>🎨 <strong>Sandrine Le Goff</strong> — retour utilisateur important, avec des idées d'amélioration sur le plan visuel apportées avec son œil d'experte du digital</p>
+          <p>🎨 <strong>Sandrine Le Goff</strong> — retours visuels avisés, forte de son expérience du digital</p>
         </div>
       </details>
 

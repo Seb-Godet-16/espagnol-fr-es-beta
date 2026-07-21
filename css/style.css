@@ -622,90 +622,108 @@ body {
   padding-top: 16px;
 }
 
-/* Bouton retour dans la Vue B — remplacé le 20/07/2026 (demande
-   utilisateur) par le groupe d'icônes .launcher-variant-nav-group
-   ci-dessous ; règle conservée pour compatibilité si jamais réutilisée. */
-.launcher-back-btn {
-  align-self: flex-start;
-  background: rgba(255,255,255,0.85);
-  border: none;
-  border-radius: 50px;
-  padding: 8px 18px;
-  font-size: .95rem;
-  font-weight: 700;
-  color: #333;
-  cursor: pointer;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+/* Ligne d'icônes de navigation en haut de la Vue B — restructurée le
+   21/07/2026 (demande utilisateur) : pleine largeur, 🏠+❓ à gauche et
+   📚+🚪 à droite (réutilise .sections-top-row / .sections-back-group,
+   déjà utilisés à l'identique sur l'écran Modules), avec un fond clair
+   circulaire par icône (fond sombre absent sur ce fond dégradé clair de
+   la Vue B, contrairement au topbar sombre du Guide). */
+.launcher-variant-top-row {
+  width: 100%;
+  margin-bottom: 10px;
 }
-.launcher-back-btn:active { transform: scale(.96); }
-
-/* Groupe d'icônes de navigation (🏠 Accueil / ❓ Guide / 📚 Modules) de la
-   Vue B — ajouté le 20/07/2026 (demande utilisateur), remplace l'ancien
-   bouton unique "← Retour/Volver". Réutilise .sections-back-group/
-   .back-icon-btn (mêmes icônes que l'écran Modules) avec un fond clair
-   circulaire par icône (fond sombre absent sur ce fond dégradé clair,
-   contrairement au topbar sombre du Guide). */
-.launcher-variant-nav-group {
-  align-self: flex-start;
-  margin-bottom: 6px;
-}
-.launcher-variant-nav-group .back-icon-btn {
+.launcher-variant-top-row .back-icon-btn {
   background: rgba(0,0,0,.06) !important;
   border-radius: 50%;
   color: #222;
 }
-.launcher-variant-nav-group .back-icon-btn:hover {
+.launcher-variant-top-row .back-icon-btn:hover {
   background: rgba(0,0,0,.12) !important;
 }
 
-/* Logo VACHÉBO de la Vue B — ajouté le 20/07/2026 (demande utilisateur) */
+/* Logo VACHÉBO de la Vue B — agrandi le 21/07/2026 (demande utilisateur)
+   grâce à l'espace libéré par le regroupement titre + drapeau sur une
+   même ligne juste en dessous (cf. .launcher-variant-title-row). */
 .launcher-variant-logo-wrap {
   display: flex;
   justify-content: center;
-  margin: 0 auto 4px;
+  margin: 0 auto 10px;
 }
 .launcher-variant-logo-img {
-  max-width: 130px;
-  width: 42%;
+  max-width: 220px;
+  width: 62%;
   height: auto;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
-/* Raccourci ❓ Guide sur la Vue A (cartes de langue) — ajouté le
-   20/07/2026 (demande utilisateur), masqué par défaut au tout premier
-   lancement (cf. _updateCardsGuideShortcut() dans app.js). Même gabarit
-   que .launcher-quit-btn, mais positionné en haut à gauche (le bouton
-   Quitter reste seul à droite). */
+/* Icônes de navigation réutilisables (🌎 ❓ 📚 🚪) — restructuré le
+   21/07/2026 (demande utilisateur) : anciennement un unique bouton ❓
+   positionné en absolu, devenu un bouton icône générique inline,
+   réutilisé pour les 4 icônes de la ligne sous-titre de la Vue A. */
 .launcher-guide-shortcut-btn {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  z-index: 5;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: rgba(0,0,0,.06);
   border: none;
   border-radius: 50%;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   cursor: pointer;
   transition: background .15s;
 }
 .launcher-guide-shortcut-btn:hover        { background: rgba(0,0,0,.12); }
 .launcher-guide-shortcut-btn:focus-visible { outline: 3px solid rgba(0,0,0,.35); outline-offset: 2px; }
 
-/* Titre de la Vue B */
+/* Ligne sous-titre "Choisis ta langue · Elige tu idioma" + icônes —
+   ajoutée le 21/07/2026 (demande utilisateur). Icônes à gauche et à
+   droite, sous-titre centré entre les deux, sur une seule ligne. */
+.launcher-subtitle-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.launcher-subtitle-row .launcher-subtitle {
+  margin: 0;
+  flex: 1 1 auto;
+  text-align: center;
+}
+.launcher-subtitle-icons {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+
+/* Titre de la Vue B + drapeau réunis sur une même ligne — restructuré le
+   21/07/2026 (demande utilisateur) : titre à gauche, drapeau à droite,
+   pour libérer de la hauteur au profit du logo agrandi ci-dessus. */
+.launcher-variant-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 14px;
+}
 .launcher-variant-title {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 900;
   color: #1a1a2e;
-  margin-bottom: 14px;
+  margin: 0;
   letter-spacing: -.02em;
-  text-align: center;
+  text-align: left;
+}
+.launcher-variant-title-row .flag-row {
+  font-size: 2.4rem;
+  flex-shrink: 0;
 }
 
 /* Étoiles + modules terminés dans le header Sections — 2 pastilles côte à
@@ -948,9 +966,21 @@ body {
   flex-shrink: 0;
 }
 
-/* ── En-tête coloré du guide ── */
+/* Regroupe 📚 et 🚪 à droite de la topbar du Guide — ajouté le 21/07/2026
+   (demande utilisateur), symétrique à .home-topbar-left-group. */
+.home-topbar-right-group {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+/* ── En-tête coloré du guide ──
+   padding-top réduit le 21/07/2026 (demande utilisateur) : 28px → 10px,
+   pour remonter le logo dans l'espace resté vide sous la topbar, et
+   profiter de la place gagnée pour l'agrandir (cf. .home-guide-logo-img
+   ci-dessous). */
 .home-guide-header {
-  padding: 28px 20px 20px;
+  padding: 10px 20px 20px;
   background: transparent;
   text-align: center;
   position: relative;
@@ -1749,15 +1779,18 @@ body {
 }
 
 /* Logo VACHÉBO en tête de l'écran Modules — ajouté le 20/07/2026 (demande
-   utilisateur), au même gabarit que celui du Guide (.home-guide-logo-img). */
+   utilisateur), agrandi le 21/07/2026 (demande utilisateur, "meilleure
+   harmonisation de l'écran") : padding-top réduit pour compenser la
+   place supplémentaire prise par le logo, cet écran étant plus dense
+   (barre de progression, étoiles, onglets, cartes) que le Guide/Variantes. */
 .sections-logo-strip {
   display: flex;
   justify-content: center;
-  padding-top: 6px;
+  padding-top: 2px;
 }
 .sections-logo-img {
-  max-width: 110px;
-  width: 34%;
+  max-width: 150px;
+  width: 42%;
   height: auto;
   object-fit: contain;
   opacity: 0.95;
@@ -4952,16 +4985,18 @@ footer .footer-antispam-btn           { color: #aaa; }
   display: inline;
 }
 
-/* ── 2 : Logo dans le guide ── */
+/* ── 2 : Logo dans le guide ──
+   Agrandi le 21/07/2026 (demande utilisateur), grâce à l'espace libéré
+   par la réduction du padding-top de .home-guide-header ci-dessus. */
 .home-guide-logo-wrap {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 6px auto 4px;
+  margin: 0 auto 6px;
 }
 .home-guide-logo-img {
-  max-width: 160px;
-  width: 50%;
+  max-width: 210px;
+  width: 62%;
   height: auto;
   object-fit: contain;
   opacity: 0.92;
@@ -5108,7 +5143,9 @@ footer .footer-antispam-btn           { color: #aaa; }
   /* ── Lanceur — Vue B : sélecteur de variante régionale ── */
   #launcher-view-variant { padding-top: 6px; max-width: 600px; }
   .launcher-back-btn { padding: 5px 14px; font-size: .8rem; margin-bottom: 6px; }
-  .launcher-variant-title { font-size: 1.25rem; margin-bottom: 6px; }
+  .launcher-variant-title { font-size: 1.15rem; }
+  .launcher-variant-title-row .flag-row { font-size: 1.9rem; }
+  .launcher-variant-logo-img { max-width: 170px; }
   #launcherFlagRow { font-size: 1.8rem !important; margin: 4px 0 !important; }
 
   /* ── Écran Guide/Accueil (#home) : bandeau décoratif réduit ──
@@ -5123,7 +5160,7 @@ footer .footer-antispam-btn           { color: #aaa; }
 
   /* ── Lanceur : bouton Quitter resserré (ajouté 19/07/2026) ── */
   .launcher-quit-btn { width: 34px; height: 34px; top: 8px; right: 8px; font-size: 1.05rem; }
-  .launcher-guide-shortcut-btn { width: 34px; height: 34px; top: 8px; left: 8px; font-size: 1.05rem; }
+  .launcher-guide-shortcut-btn { width: 32px; height: 32px; font-size: 1rem; }
 
   /* ── En-tête écran Sections ── */
   .sections-header { padding: 8px 14px 10px; }
