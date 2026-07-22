@@ -2352,6 +2352,22 @@ function renderSections(activeLevel) {
       }
     }
 
+    /* aria-label du bouton 🔄 de réinitialisation globale — dynamique selon
+       la LANGUE DE L'APPRENANT (ajouté le 22/07/2026, demande utilisateur) :
+       contrairement aux icônes 🏠/🌎/❓/🚪 du même en-tête (aria-label
+       bilingue concaténé, volontairement figé), celui-ci suit la langue que
+       l'apprenant lit réellement — l'espagnol en mode learn_french
+       (hispanophone apprenant le français), le français en mode learn_spain
+       (francophone apprenant l'espagnol). Valeur HTML statique
+       ("Réinitialiser la progression") conservée comme repli avant ce
+       premier rendu JS. */
+    const resetBtn = document.getElementById('resetInlineBtn' + s);
+    if (resetBtn) {
+      resetBtn.setAttribute('aria-label', isFrench()
+        ? 'Reiniciar la progresión'
+        : 'Réinitialiser la progression');
+    }
+
     // Footer dynamique selon le mode
     const footer = document.getElementById('sectionsFooter' + s);
     if (footer) {

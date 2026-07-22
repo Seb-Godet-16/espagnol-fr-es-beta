@@ -754,7 +754,12 @@ body {
   gap: 8px;
   width: 100%;
   max-width: 420px;
-  margin: 0 auto;
+  margin: 0 auto 14px;
+  /* margin-bottom ajouté le 22/07/2026 (demande utilisateur) : cette ligne
+     n'avait aucun espace avec .launcher-cards juste en dessous (seul
+     margin:0 auto pour le centrage horizontal), ce qui donnait un rendu
+     collé entre "Choisis ta langue · Elige tu idioma" (+ icônes) et les
+     encadrés "Apprendre le Français" / "Aprender Español". */
 }
 .launcher-subtitle-row .launcher-subtitle {
   margin: 0;
@@ -1355,13 +1360,17 @@ body {
    d'origine, pour relier davantage cette carte à l'identité visuelle de
    l'app. */
 .hg-tldr {
-  margin: 0 14px 14px;
+  margin: 14px 14px 14px;
   padding: 16px 18px;
   background: var(--c-vache-cream);
   border: 2px solid var(--c-vache-brown);
   border-radius: 16px;
   position: relative;
   z-index: 1;
+  /* margin-top passé de 0 à 14px le 22/07/2026 (demande utilisateur) :
+     sans marge haute, la carte touchait directement le bord bas de
+     .home-start-sticky (barre "Commencer + PDF"), donnant un rendu collé
+     entre les deux blocs. */
 }
 .hg-tldr-title {
   font-size: 1rem;
@@ -1741,7 +1750,7 @@ body {
 /* Responsive desktop */
 @media (min-width: 640px) {
   .home-guide-body { margin: 12px 24px 80px; }
-  .hg-tldr { margin: 0 24px 14px; }
+  .hg-tldr { margin: 14px 24px 14px; }
   .home-guide-flags { font-size: 2.6rem; }
   .home-guide-title { font-size: 2rem; }
 }
