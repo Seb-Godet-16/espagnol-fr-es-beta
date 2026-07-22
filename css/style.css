@@ -430,6 +430,17 @@ body {
   box-shadow: 0 6px 24px rgba(0,0,0,.1);
   position: relative;
   transition: box-shadow .15s ease;
+  /* Ajouté le 22/07/2026 (demande utilisateur, bug carte non alignée) :
+     sans layout flex interne, étirer la carte via align-items:stretch
+     (cf. .launcher-cards plus haut) agrandit bien la BOÎTE mais laisse le
+     contenu (main + details + toggle-bar) caler sur sa hauteur naturelle,
+     avec le vide ajouté en bas de la carte plutôt qu'au-dessus de la barre
+     "Sobre/Infos VACHÉBO" — d'où les 2 barres à des hauteurs différentes
+     quand les textes FR/ES ne font pas la même longueur. flex-column ici
+     permet à .lang-card-toggle-bar (margin-top:auto, cf. plus bas) d'aller
+     absorber cet espace et de rester ancrée tout en bas des 2 cartes. */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Thème tricolore Français (bleu → blanc → rouge) */
@@ -569,6 +580,11 @@ body {
   padding: 5px 14px;
   background: rgba(0,0,0,.15);
   transition: background .25s ease, padding .25s ease;
+  /* Ajouté le 22/07/2026 (demande utilisateur) : ancre la barre tout en bas
+     de la carte (désormais flex-column, cf. .lang-card) quelle que soit la
+     hauteur du contenu au-dessus — corrige "Sobre VACHÉBO" / "Infos
+     VACHÉBO" qui n'étaient plus à la même hauteur entre les 2 cartes. */
+  margin-top: auto;
 }
 .lang-card-toggle {
   display: flex;
@@ -1673,7 +1689,12 @@ body {
   width: auto;
   border-radius: 14px;
   padding: 9px 16px 8px;
-  margin: 0 0 10px;
+  /* margin-bottom retiré le 22/07/2026 (demande utilisateur) : cumulé au
+     padding-top de .hg-summary (12px) juste en dessous, les 10px d'origine
+     créaient un espace vide ressenti entre le bandeau et le premier
+     accordéon "Comment ça marche" / "Cómo funciona". Le padding de
+     .hg-summary suffit seul à séparer visuellement les deux blocs. */
+  margin: 0;
   font-weight: 600;
   text-align: center;
   background: var(--c-vache-cream);

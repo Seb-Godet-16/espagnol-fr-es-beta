@@ -1421,6 +1421,21 @@
   <div id="sections-level1" class="screen">
 
     <div class="sections-header">
+      <!-- Ordre réorganisé le 22/07/2026 (demande utilisateur, bug
+           positionnement) : Módulos + drapeau (.sections-top-row) affiché
+           EN PREMIER, puis la ligne icônes + logo (.sections-top-icons-row)
+           juste en dessous — auparavant l'inverse. Contenu de chaque bloc
+           inchangé, seul l'ordre des 2 blocs est inversé. -->
+      <div class="sections-top-row">
+        <div class="sections-top-left">
+          <h2 id="sectionsTitle"></h2>
+          <div class="sections-subtitle" id="sectionsSubtitle"></div>
+        </div>
+        <div class="sections-top-right">
+          <div class="sections-flag" id="sectionsFlag"></div>
+        </div>
+      </div>
+
       <!-- Ligne fusionnée icônes + logo — restructurée le 21/07/2026 (2e
            demande utilisateur) : logo VACHÉBO centré (via .sections-
            logo-strip en flex:1), 🏠 Accueil + 🌎 Variantes à gauche,
@@ -1449,16 +1464,6 @@
                   aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
             <span aria-hidden="true">🚪</span>
           </button>
-        </div>
-      </div>
-
-      <div class="sections-top-row">
-        <div class="sections-top-left">
-          <h2 id="sectionsTitle"></h2>
-          <div class="sections-subtitle" id="sectionsSubtitle"></div>
-        </div>
-        <div class="sections-top-right">
-          <div class="sections-flag" id="sectionsFlag"></div>
         </div>
       </div>
 
@@ -1496,6 +1501,18 @@
   <div id="sections-level2" class="screen">
 
     <div class="sections-header">
+      <!-- Ordre réorganisé le 22/07/2026 (demande utilisateur, bug
+           positionnement) — cf. même changement sur #sections-level1. -->
+      <div class="sections-top-row">
+        <div class="sections-top-left">
+          <h2 id="sectionsTitle2"></h2>
+          <div class="sections-subtitle" id="sectionsSubtitle2"></div>
+        </div>
+        <div class="sections-top-right">
+          <div class="sections-flag" id="sectionsFlag2"></div>
+        </div>
+      </div>
+
       <!-- Ligne fusionnée icônes + logo — restructurée le 21/07/2026 (2e
            demande utilisateur) — cf. même bloc sur #sections-level1. -->
       <div class="sections-top-icons-row">
@@ -1522,16 +1539,6 @@
                   aria-label="Quitter l'application / Salir de la aplicación" title="Quitter / Salir">
             <span aria-hidden="true">🚪</span>
           </button>
-        </div>
-      </div>
-
-      <div class="sections-top-row">
-        <div class="sections-top-left">
-          <h2 id="sectionsTitle2"></h2>
-          <div class="sections-subtitle" id="sectionsSubtitle2"></div>
-        </div>
-        <div class="sections-top-right">
-          <div class="sections-flag" id="sectionsFlag2"></div>
         </div>
       </div>
 
