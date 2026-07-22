@@ -360,13 +360,21 @@ body {
   align-items: center;
   padding: 12px 0 6px;
 }
+/* Passé sur une seule ligne le 22/07/2026 (demande utilisateur, bug 2) :
+   à 0.85rem fixe, le texte bilingue complet ("Choisis ta langue · Elige
+   tu idioma") dépassait la largeur d'un écran de téléphone en portrait et
+   retombait sur 2 lignes. white-space:nowrap l'empêche désormais de
+   revenir à la ligne, et un clamp() réduit la taille de police au besoin
+   selon la largeur réelle de l'écran (plutôt qu'une valeur fixe qui aurait
+   pu déborder sur les téléphones les plus étroits). */
 .launcher-subtitle  {
-  font-size: 0.85rem;
+  font-size: clamp(0.6rem, 3.1vw, 0.85rem);
   font-weight: 500;
   color: rgba(0,0,0,0.45);
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   margin-bottom: 18px;
   text-align: center;
+  white-space: nowrap;
 }
 .launcher-sub       { font-size: .9rem; color: #888; font-weight: 500; margin-bottom: 32px; }
 
@@ -395,15 +403,24 @@ body {
    l'apprenant que la carte se touche pour passer à l'écran suivant —
    purement visuelle (aria-hidden="true" côté HTML), l'aria-label du
    bouton porte déjà l'information utile aux lecteurs d'écran. */
-/* align-items passé de "stretch" (valeur par défaut d'un flex row, donc
-   inutile de la préciser telle quelle) à "flex-start" le 21/07/2026
-   (demande utilisateur) : avec "stretch", les 2 cartes étaient forcées à
-   la même hauteur, celle de la plus grande — quand l'une était repliée
-   pendant que l'autre restait dépliée, la carte repliée gardait quand
-   même toute la hauteur de sa voisine, avec un grand espace vide en bas
-   (juste sa couleur de fond, sans contenu). "flex-start" laisse chaque
-   carte prendre sa propre hauteur, indépendamment de l'autre. */
-.launcher-cards     { display: flex; flex-direction: row; align-items: flex-start; gap: 8px; width: 100%; }
+/* align-items — historique :
+   passé de "stretch" (valeur par défaut) à "flex-start" le 21/07/2026,
+   car avec "stretch" les 2 cartes étaient forcées à la même hauteur (celle
+   de la plus grande) même quand l'une était repliée et l'autre dépliée,
+   laissant un grand aplat de couleur vide sous la carte repliée.
+   Revu le 22/07/2026 (demande utilisateur, bug 2) : "flex-start" réglait
+   ce cas précis, mais créait un nouveau souci le reste du temps — quand
+   les 2 cartes sont dans le MÊME état (le cas le plus courant : toutes
+   deux dépliées par défaut, cf. _langBoxInitialOpen() dans app.js), leurs
+   hauteurs naturelles diffèrent légèrement selon la langue (le texte
+   espagnol/français ne fait pas la même longueur), et les 2 cartes
+   n'étaient donc plus alignées en bas — visuellement bizarre.
+   Solution : revenir à "stretch" par défaut (les 2 cartes s'alignent sur
+   la plus haute), et faire sortir UNIQUEMENT la carte repliée de ce
+   comportement via align-self (cf. .lang-card.collapsed juste en dessous)
+   — elle garde alors sa propre hauteur naturelle, sans aplat vide, tandis
+   que les 2 cartes dépliées (cas courant) restent bien de la même hauteur. */
+.launcher-cards     { display: flex; flex-direction: row; align-items: stretch; gap: 8px; width: 100%; }
 
 .lang-card {
   flex: 1 1 0;
@@ -596,19 +613,37 @@ body {
    redevient transparente/discrète repliée. */
 .lang-card.collapsed .lang-card-details    { max-height: 0; padding-top: 0; padding-bottom: 0; }
 .lang-card.collapsed .lang-card-toggle-bar { background: transparent; padding: 4px 14px; }
+/* Sort du "stretch" de .launcher-cards (cf. commentaire du 22/07/2026
+   plus haut) : une carte repliée garde sa propre hauteur naturelle plutôt
+   que de s'étirer jusqu'à celle de sa voisine dépliée. */
+.lang-card.collapsed { align-self: flex-start; }
 
-/* Pied de page absolu du lanceur */
+/* Pied de page absolu du lanceur.
+   Recoloré le 22/07/2026 (demande utilisateur, bug 1) : texte #aaa/#888
+   quasi invisible sur le fond crème clair (vue A) et plus encore sur les
+   dégradés de variante clairs (vue B, var(--c-grad-home) — cf. capture
+   d'écran Pérou). Le fond derrière le texte varie selon la variante/le
+   thème actif, donc plutôt que de recolorer le texte au cas par cas, un
+   bandeau clair semi-opaque est ajouté derrière (lisible quel que soit le
+   dégradé en dessous).
+   Recoloré le 22/07/2026 (nouvelle demande utilisateur) : le bandeau et
+   le texte reprennent maintenant précisément les teintes du logo VACHÉBO
+   (--c-vache-cream / --c-vache-brown, cf. .hg-tldr et .guide-hero-region-
+   badge dans le Guide) plutôt qu'un blanc/gris neutre — même rappel visuel
+   que le reste de l'app, tout en gardant un excellent contraste quel que
+   soit le dégradé de variante en dessous. */
 .launcher-footer {
   position: relative; /* flux normal — la nav basse fixe prend la place en bas */
   text-align: center;
   padding: 10px 12px 6px;
   font-size: .68rem;
-  color: #aaa;
-  background: transparent;
+  color: var(--c-vache-brown);
+  background: var(--c-vache-cream);
+  border-radius: 14px 14px 0 0;
   line-height: 1.7;
   width: 100%;
 }
-.launcher-footer a          { color: #888; text-decoration: none; font-weight: 600; }
+.launcher-footer a          { color: var(--c-vache-brown); text-decoration: none; font-weight: 700; }
 .launcher-footer a:hover    { text-decoration: underline; }
 
 /* Signature mascotte VACHÉBO dans les pieds de page — voir
@@ -744,12 +779,24 @@ body {
 
 /* Étoiles + modules terminés dans le header Sections — 2 pastilles côte à
    côte (Amélioration visuelle 12/07/2026 : ajout de .completed-pill,
-   distinct du % global qui compte lui tout module ≥ 50 %) */
+   distinct du % global qui compte lui tout module ≥ 50 %).
+   Repositionné le 22/07/2026 (demande utilisateur, harmonisation de
+   l'encadré Modules) : cette rangée restait plaquée à gauche (flex-start
+   implicite), laissant tout le reste de la largeur vide — contrairement
+   à la rangée titre/drapeau et à la barre de progression juste au-dessus,
+   qui occupent déjà toute la largeur avec un repère gauche/droite clair.
+   justify-content:space-between reprend ce même repère (1re pastille à
+   gauche, dernière à droite — la pastille mascotte "tout terminé", quand
+   elle apparaît, se répartit alors naturellement entre les deux). Padding
+   horizontal aligné sur .progress-label-row juste en dessous pour que les
+   3 rangées démarrent au même point à gauche. */
 .sections-stars {
   margin-top: 4px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   gap: 6px;
+  padding: 0 4px;
 }
 .stars-pill,
 .completed-pill {
@@ -3137,18 +3184,23 @@ h1 .translation-sub {
 /* ════════════════════════════════════════
    PIED DE PAGE COMMUN
    Affiché en bas de chaque écran principal.
-   Fond teinté avec bordure supérieure.
+   Recoloré le 22/07/2026 (demande utilisateur) aux teintes crème/brun du
+   logo VACHÉBO (--c-vache-cream / --c-vache-brown, déjà utilisées pour le
+   bandeau variante et la carte "En bref" du Guide) plutôt que le fond
+   bleuté/gris théorique d'origine (--c-footer-bg/--c-footer-border) — pour
+   que CHAQUE pied de page de l'app fasse un rappel visuel discret au logo,
+   peu importe le thème ou la variante active.
 ════════════════════════════════════════ */
 footer {
   text-align: center;
   padding: 16px 12px 20px;
   font-size: .72rem;
-  color: #888;
-  background: var(--c-footer-bg);
-  border-top: 1px solid var(--c-footer-border);
+  color: var(--c-vache-brown);
+  background: var(--c-vache-cream);
+  border-top: 1px solid var(--c-vache-brown-soft);
   line-height: 1.7;
 }
-footer a       { color: var(--c-primary); text-decoration: none; font-weight: 600; }
+footer a       { color: var(--c-vache-brown); text-decoration: none; font-weight: 700; }
 footer a:hover { text-decoration: underline; }
 
 /* Footer compact spécifique à l'écran leçon (#lesson) : ce dernier n'a pas
@@ -3158,11 +3210,11 @@ footer a:hover { text-decoration: underline; }
   text-align: center;
   padding: 10px 12px 16px;
   font-size: .68rem;
-  color: #888;
-  background: var(--c-footer-bg);
-  border-top: 1px solid var(--c-footer-border);
+  color: var(--c-vache-brown);
+  background: var(--c-vache-cream);
+  border-top: 1px solid var(--c-vache-brown-soft);
 }
-.lesson-footer a       { color: var(--c-primary); text-decoration: none; font-weight: 600; }
+.lesson-footer a       { color: var(--c-vache-brown); text-decoration: none; font-weight: 700; }
 .lesson-footer a:hover { text-decoration: underline; }
 
 
@@ -4342,15 +4394,23 @@ html.theme-spain.region-VE {
   /* ── Section label ── */
   .section-label { color: var(--c-text-sub); }
 
-  /* ── Footer ── */
-  footer { background: #14172a; border-top-color: var(--c-border); color: var(--c-text-sub); }
-  footer a { color: var(--c-primary); }
-  .lesson-footer { background: #14172a; border-top-color: var(--c-border); color: var(--c-text-sub); }
-  .lesson-footer a { color: var(--c-primary); }
-  .launcher-footer { color: var(--c-text-sub); } /* Amélioration 12.3 : était #555a7a (2.66:1, échec WCAG) */
-  .launcher-footer a { color: #a8b0e0; }
-  /* --c-vache-brown (#6B4226) est trop sombre sur fond #14172a — éclairci
-     pour rester lisible (≥4.5:1) sans changer la teinte "vache". */
+  /* ── Footer ──
+     Recoloré le 22/07/2026 (même demande utilisateur que le mode clair) :
+     fond brun foncé plutôt que le bleu-nuit générique d'origine, pour
+     garder le même rappel visuel crème/brun du logo VACHÉBO même en mode
+     sombre. --c-vache-brown (#6B4226) reste trop sombre sur un fond déjà
+     sombre — éclairci en #D9A066 (même teinte que .footer-mascot,
+     inchangée) pour rester lisible (≥4.5:1) sans changer l'identité
+     "vache". */
+  footer { background: #241a12; border-top-color: rgba(217,160,102,.25); color: #D9A066; }
+  footer a { color: #D9A066; }
+  footer .footer-antispam-btn { color: #D9A066; }
+  .lesson-footer { background: #241a12; border-top-color: rgba(217,160,102,.25); color: #D9A066; }
+  .lesson-footer a { color: #D9A066; }
+  .lesson-footer .footer-antispam-btn { color: #D9A066; }
+  .launcher-footer { color: #D9A066; background: rgba(36,26,18,.55); }
+  .launcher-footer a { color: #D9A066; }
+  .launcher-footer .footer-antispam-btn { color: #D9A066; }
   .footer-mascot { color: #D9A066; }
 
   /* ── Guide (variables propres --g-*) ── */
@@ -4696,9 +4756,15 @@ html.theme-spain.region-VE {
   html.theme-spain  footer,
   html.theme-french .lesson-footer,
   html.theme-spain  .lesson-footer {
-    background: var(--c-card);
-    border-top-color: var(--c-border);
-    color: var(--c-text-sub);
+    background: #241a12;
+    border-top-color: rgba(217,160,102,.25);
+    color: #D9A066;
+  }
+  html.theme-french footer a,
+  html.theme-spain  footer a,
+  html.theme-french .lesson-footer a,
+  html.theme-spain  .lesson-footer a {
+    color: #D9A066;
   }
   html.theme-french .section-label,
   html.theme-spain  .section-label {
@@ -5058,9 +5124,9 @@ html.theme-spain  .export-pdf-btn:hover { background: #002395; }
   font-family: inherit;
 }
 .footer-antispam-btn:hover { text-decoration: underline; }
-.launcher-footer .footer-antispam-btn { color: #888; }
-.lesson-footer .footer-antispam-btn   { color: #aaa; }
-footer .footer-antispam-btn           { color: #aaa; }
+.launcher-footer .footer-antispam-btn { color: var(--c-vache-brown); }
+.lesson-footer .footer-antispam-btn   { color: var(--c-vache-brown); }
+footer .footer-antispam-btn           { color: var(--c-vache-brown); }
 
 /* ── Adresse email anti-spam : inversée dans le HTML (anti-robots),
    réaffichée lisiblement via RTL. Le code source reste illisible
@@ -5089,11 +5155,16 @@ footer .footer-antispam-btn           { color: #aaa; }
   border-radius: 8px;
 }
 
-/* ── 3 : Ligne label progression + bouton reset ── */
+/* ── 3 : Ligne label progression + bouton reset ──
+   justify-content passé de flex-start à space-between le 22/07/2026
+   (demande utilisateur, harmonisation de l'encadré Modules) : le bouton
+   🔄 flottait juste après le texte, avec tout le reste de la largeur
+   inutilisé à droite. En le plaquant au bord droit, il reprend le même
+   repère gauche/droite que la rangée titre/drapeau juste au-dessus. */
 .progress-label-row {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 6px;
   padding: 0 4px;
 }

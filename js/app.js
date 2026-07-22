@@ -4788,7 +4788,9 @@ function _initLangBoxes() {
    carte reste indépendante de l'autre (retour utilisateur du 21/07/2026 :
    pas d'exclusivité mutuelle) — le vide visuel qui apparaissait quand
    l'une était repliée pendant que l'autre restait dépliée venait d'un
-   autre problème, purement CSS (cf. .launcher-cards, align-items). */
+   autre problème, purement CSS (cf. .launcher-cards / .lang-card.collapsed,
+   revu le 22/07/2026 pour aussi égaliser la hauteur des 2 cartes quand
+   elles sont dans le même état). */
 function toggleLangBox(lang) {
   var box = document.getElementById('langBox-' + lang);
   if (!box) return;
@@ -5464,6 +5466,18 @@ function _pdfBaseStyles(th) {
     + '.bubble-trans{font-size:.78rem;color:#555;margin-top:2px}'
     + '.pdf-footer{margin-top:28px;padding-top:10px;border-top:1px solid #ddd;font-size:.72rem;color:#888;text-align:center}'
     + 'details summary{cursor:pointer;font-weight:700;padding:4px 0}'
+    /* Ajouté le 22/07/2026 (demande utilisateur) : la règle qui affiche
+       l'adresse email dans le bon sens (cf. .antispam-email dans
+       style.css) ne vit que dans la feuille de style principale de
+       l'app — absente de cette page d'export autonome, elle laissait
+       s'afficher tel quel le texte inversé "anti-robots" présent dans
+       le HTML (ex. "moc.liamg@61tedog.neitsabes" au lieu de
+       "sebastien.godet16@gmail.com"). Ajoutée ici à l'identique : même
+       mécanisme (le texte source reste inversé, seul l'AFFICHAGE est
+       remis dans le bon sens via RTL), sans transformer l'adresse en
+       lien cliquable. */
+    + '.antispam-email{unicode-bidi:bidi-override;direction:rtl;display:inline}'
+    + '.footer-antispam-btn,.antispam-btn{background:none;border:none;padding:0;font:inherit;color:inherit;cursor:default}'
     + '@media print{'
     + '  body{padding:0 12px}'
     + '  .pdf-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}'
