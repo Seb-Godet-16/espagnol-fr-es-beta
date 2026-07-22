@@ -1603,78 +1603,45 @@ body {
 }
 .ob-bio-btn:hover { opacity: .85; }
 
-/* Bandeau variante régionale (blocs ES et FR) — centré et agrandi le
-   21/07/2026 (demande utilisateur) : auparavant en display:inline-block
-   sans centrage explicite (aligné à gauche par défaut) et assez petit ;
-   la 2e règle .guide-hero-region-badge qui gagnait la cascade CSS a été
-   retirée (cf. commentaire plus bas dans le fichier).
-   Complété le 21/07/2026 (2e passe, demande utilisateur : le centrage du
-   bandeau dans son ensemble ne suffisait pas — le drapeau et l'élément
-   culturel/mascotte restaient à la même taille que le texte, donc peu
-   visibles). Le drapeau et la mascotte sont désormais isolés sur leur
-   propre ligne (.ghrb-icons, cf. juste en dessous), nettement agrandis et
-   centrés, au-dessus du texte descriptif (.ghrb-text) — cf. innerHTML
-   généré par _refreshGuideRegion() dans app.js.
-   Recoloré le 21/07/2026 (3e passe, demande utilisateur : "texte en
-   arrière-plan" quasi invisible + grand espace vide avant "Cómo funciona").
-   Cause : ce bandeau vit dans .home-guide-body, un corps BLANC
-   (rgba(255,255,255,.92)) — l'ancien couple fond translucide blanc / texte
-   blanc à 95 % (pensé pour un fond dégradé coloré, cf. commentaire du
-   21/07 ci-dessus) y devenait quasi illisible (blanc sur blanc), ce qui
-   ressemblait à du texte fantôme et à un vide au-dessus de l'accordéon.
-   Remplacé par les variables de thème déjà utilisées ailleurs dans ce
-   bloc (--g-fr/--g-fr-lt pour #guideContentFR, --g-es/--g-es-lt pour
-   #guideContentES — cf. règles `#guideContentES .guide-stat-num` etc. plus
-   bas dans ce fichier), sur fond clair teinté et texte foncé bien
-   contrasté ; marges resserrées (14px→10px) pour supprimer l'espace vide
-   ressenti entre les icônes et la rubrique "Cómo funciona / Comment ça
-   marche" juste en dessous. */
-/* Couleurs et taille revues le 21/07/2026 (4e passe, demande utilisateur) :
-   - Couleurs : la bordure suit désormais var(--c-primary), qui reflète déjà
-     nativement le thème actif (bleu/rouge France en mode learn_french via
-     html.theme-french, couleurs de la variante hispanique choisie en mode
-     learn_spain via html.theme-spain.region-XX — cf. §3/§4 plus bas dans ce
-     fichier). Fini donc le rouge Espagne générique fixe côté bloc ES et le
-     bleu France fixe côté bloc FR : chaque bandeau prend maintenant la
-     couleur réellement associée à la langue APPRISE dans ce mode, comme le
-     reste de l'interface (cf. _mascotKeyForMode() dans app.js). L'ancienne
-     règle #guideContentES .guide-hero-region-badge (rouge Espagne fixe) est
-     donc supprimée : elle est désormais inutile, --c-primary s'en charge.
-   - Taille : padding et icônes réduits (l'encadré paraissait disproportionné
-     par rapport aux rubriques en accordéon juste en dessous, ~1.2rem
-     d'icône — cf. .hg-icon). Fond crème neutre (--c-vache-cream) conservé
-     pour rester lisible quelle que soit la couleur de bordure.
-   - Largeur (21/07/2026, 5e passe, demande utilisateur) : l'encadré était en
-     width:fit-content + margin:auto, donc nettement plus étroit que sa
-     max-width de 92 % dès que le texte tenait sur une ligne — de grands
-     vides blancs apparaissaient de chaque côté, visuellement bizarres par
-     rapport aux rubriques en accordéon juste en dessous (edge-to-edge dans
-     .home-guide-body) et à la carte "En bref" au-dessus (.hg-tldr, marge
-     14px de chaque côté). L'encadré adopte désormais la même marge que
-     .hg-tldr (14px), en pleine largeur, pour venir toucher les mêmes
-     bordures blanches que les autres blocs du Guide. */
+/* Bandeau variante régionale (blocs ES et FR) — historique des passes
+   successives (centrage, agrandissement icônes, recoloration lisibilité,
+   couleurs de thème dynamiques) conservé dans l'historique Git ; état final
+   ci-dessous, 6e passe du 21/07/2026 (demande utilisateur) :
+   - Couleurs : passées des couleurs de thème dynamiques (var(--c-primary),
+     bleu France / couleur de variante) aux couleurs FIXES du logo VACHÉBO
+     (--c-vache-cream / --c-vache-brown, déjà utilisées par .hg-tldr
+     juste au-dessus), pour que les deux encadrés du haut du Guide
+     partagent la même identité visuelle plutôt que de changer de couleur
+     à chaque variante.
+   - Largeur : ce bandeau vit à l'intérieur de #guideContentFR/ES, eux-mêmes
+     enfants de .home-guide-body (qui porte déjà sa propre marge de 14px
+     par rapport à #home). La carte .hg-tldr, elle, est un enfant DIRECT de
+     #home et porte sa propre marge de 14px. À marge égale (14px) sur les
+     deux, le bandeau se retrouvait donc décalé de 14px de trop de chaque
+     côté par rapport à .hg-tldr (double marge cumulée). Corrigé en
+     retirant la marge horizontale du bandeau (0) : il touche désormais les
+     bords de .home-guide-body, ce qui l'aligne exactement sur .hg-tldr. */
 .guide-hero-region-badge {
   display: block;
   width: auto;
   border-radius: 14px;
   padding: 9px 16px 8px;
-  margin: 0 14px 10px;
+  margin: 0 0 10px;
   font-weight: 600;
   text-align: center;
   background: var(--c-vache-cream);
-  border: 1.5px solid var(--c-primary);
+  border: 2px solid var(--c-vache-brown);
 }
 /* Icônes drapeau + élément culturel (mascotte) — sur leur propre ligne,
-   au-dessus du texte descriptif, mais désormais proches de la taille des
-   icônes des rubriques en accordéon (.hg-icon, 1.2rem) plutôt que le double. */
+   au-dessus du texte descriptif, proches de la taille des icônes des
+   rubriques en accordéon (.hg-icon, 1.2rem) plutôt que le double. */
 .ghrb-icons {
   font-size: 1.6rem;
   line-height: 1;
   margin-bottom: 4px;
 }
 /* Texte descriptif volontairement en noir/gris foncé (comme le reste des
-   textes de l'app, cf. .hg-summary) plutôt que teinté — seule la bordure
-   de l'encadré porte la couleur du thème/de la variante. */
+   textes de l'app, cf. .hg-summary) plutôt que teinté. */
 .ghrb-text {
   font-size: .8rem;
   color: #333;
@@ -3347,13 +3314,21 @@ footer a:hover { text-decoration: underline; }
 @media (max-width: 680px) { .guide-grid-2, .guide-grid-3 { grid-template-columns: 1fr; } }
 @media (max-width: 780px) and (min-width:681px) { .guide-grid-3 { grid-template-columns: 1fr 1fr; } }
 
-/* ── Cartes "mode" (Français / Espagnol) ── */
-.guide-mode-card { border-radius: 16px; padding: 18px 16px; color: #fff; position: relative; overflow: hidden; }
-.guide-mode-card.fr { background: linear-gradient(135deg, #002395, #1a3aa0 60%, #3050c0); }
-.guide-mode-card.es { background: linear-gradient(135deg, #A00818, #C60B1E 55%, #d44030); }
-.guide-mode-flag  { font-size: 2rem; margin-bottom: 6px; }
-.guide-mode-title { font-size: 1rem; font-weight: 900; margin-bottom: 2px; }
-.guide-mode-sub   { font-size: .74rem; opacity: .85; }
+/* ── Cartes "mode" (Français / Espagnol) ──
+   Déclarations retirées ici le 21/07/2026 (demande utilisateur : texte
+   "Aprender Francés / Aprender Español" illisible dans Cómo funciona /
+   Comment ça marche). Cause : ce bloc appartenait à une maquette "guide-hero"
+   abandonnée et non utilisée dans le HTML actuel (cf. .guide-wrap ci-dessus,
+   absent de index.html), mais réutilisait par coïncidence les MÊMES noms de
+   classes (.guide-mode-card, .guide-mode-flag/-title/-sub) que les cartes
+   réellement affichées dans les accordéons du Guide (cf. véritable
+   définition, avec fond clair et texte #333/#777 lisible, juste avant
+   .ghrb-icons plus haut dans ce fichier). Cette redéfinition plus bas dans
+   le fichier gagnait partiellement la cascade (fond dégradé bleu/rouge
+   FONCÉ appliqué par-dessus le fond clair d'origine) sans redéfinir la
+   couleur du texte des enfants (restée #333/#777, foncée) → texte foncé sur
+   fond foncé, quasi invisible. Supprimé plutôt que corrigé sur place : ces
+   règles ne servaient à rien d'autre dans l'app actuelle. */
 
 /* ── Étapes numérotées (1-2-3-4) ── */
 .guide-steps { display: flex; flex-direction: column; gap: 10px; }
