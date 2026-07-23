@@ -24,66 +24,73 @@
      08/07/2026 → 12/07/2026  Expériences utilisateurs (Christophe
                                Elin, Maman, Moi) et correctifs avec
                                Claude Sonnet 5.
+     18/07/2026 → 23/07/2026  Expériences utilisatrice (Sandrine,
+                               Moi) et correctifs avec Claude Sonnet 5.
    ============================================================
    ARCHITECTURE (5 fichiers) :
-     ├─ index.html  → Structure HTML + launcher (4 écrans, 2 modales)
-     ├─ style.css   → Thèmes couleur, composants visuels (48 variables CSS, 171 décl.)
+     ├─ index.html  → Structure HTML + launcher (5 écrans, 3 modales)
+     ├─ style.css   → Thèmes couleur, composants visuels (51 variables CSS, 179 décl.)
      ├─ data-fr.js  → ALL_THEMES_FR (32 thèmes + 16 dialogues) — chargé à la demande
      ├─ data-es.js  → ALL_THEMES_ES (32 thèmes + 16 dialogues) — chargé à la demande
-     └─ app.js      → Ce fichier : logique applicative complète (5 627 lignes)
+     └─ app.js      → Ce fichier : logique applicative complète (5 899 lignes)
 
-   PLAN DU FICHIER (numéros recalculés le 20/07/2026 — ajout de l'entrée
-   France (🗼) à REGION_MASCOTS et de la fonction partagée
-   _mascotKeyForMode() (§15), pour que la ligne mascotte du mode Français
-   (pastille .sections-mascot-all §7, _mascotSansFauteLine() §14,
-   _refreshFooterMascot() §15) reprenne elle aussi un symbole pays au lieu
-   d'un jeu de mots seul — symétrie avec le logo, qui a un élément visuel
-   par pays (Tour Eiffel incluse) ; décalage des ancres suivantes qui en
-   résulte ; chaque ancre revérifiée une à une par grep) :
-     §0    L.  111  Chargement conditionnel des données — loadDataForMode()
-     §0b   L.  140  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
-     §1    L.  298  Variables d'état globales
-     §1b   L.  356  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
-     §3    L.  439  Point d'entrée — showLauncherVariant(), initApp(), showLauncher()
-     §3b   L.  767  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
-     §3a-bis L. 984 Surlignage mot par mot pendant la lecture (TTS, best-effort)
-     §3c   L. 1362  Interruption TTS à la mise en arrière-plan (visibilitychange)
-     §3d   L. 1383  Keepalive watchdog Chrome/Android (pause/resume toutes les 8 s)
-     §3e   L. 1424  Audio indisponible + toast _showToast() + _vibrateFeedback()
-     §4    L. 1497  Persistance — loadDone(), suivi modules ouverts (12/07), étoiles, quiz
-     §5    L. 1714  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
-     §5b   L. 1842  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
-     §6    L. 2056  Écran Home — renderHome(), _renderHomeRegionWidget()
-     §7    L. 2246  Écran Sections — renderSections(), _buildThemeCard() (états + badge, 12/07).
-                     Appelle aussi _markModulesVisited() (§15d, appel L.2262)
+   PLAN DU FICHIER (numéros recalculés le 23/07/2026 — ajout de l'entrée
+   HISTORIQUE du 18/07→23/07/2026 (retours d'expérience Sandrine + Moi),
+   et rattrapage d'un décalage cumulé depuis le dernier recalcul du
+   20/07/2026 : correctifs du 22/07/2026 (aria-label dynamique du bouton
+   🔄 dans §7/_fillHeader) plus un écart antérieur déjà signalé dans
+   Bilan_technique.md (§ Historique, entrée du 22/07/2026) mais jamais
+   répercuté ici faute de recalcul depuis le 20/07. Compteurs ARCHITECTURE
+   ci-dessus recomptés au passage (5 écrans/3 modales, 51 variables CSS/
+   179 décl., ligne totale d'app.js) ; chaque ancre revérifiée une à une
+   par grep, comme lors des recalculs précédents :
+     §0    L.  147  Chargement conditionnel des données — loadDataForMode()
+     §0b   L.  172  Helpers globaux — showResetConfirm(), _launchConfetti(), spinner
+     §1    L.  334  Variables d'état globales
+     §1b   L.  392  Utilitaires bilingues — L(), isFrench(), langKeys(), _themeTitle()
+     §3    L.  475  Point d'entrée — showLauncherVariant(), initApp(), showLauncher()
+     §3b   L.  811  Synthèse vocale — _resolveSpanishVoice(), speak(), speakSlow()
+     §3a-bis L. 1028  Surlignage mot par mot pendant la lecture (TTS, best-effort)
+     §3c   L. 1406  Interruption TTS à la mise en arrière-plan (visibilitychange)
+     §3d   L. 1427  Keepalive watchdog Chrome/Android (pause/resume toutes les 8 s)
+     §3e   L. 1457  Audio indisponible + toast _showToast() + _vibrateFeedback()
+     §4    L. 1541  Persistance — loadDone(), suivi modules ouverts (12/07), étoiles, quiz
+     §5    L. 1758  Navigation — showScreen(), _showScreenNoRender(), _updateBottomNav()
+     §5b   L. 1886  Helpers niveaux — _updateLevelTabs(), lessonGoBack(), navGoModules()
+     §6    L. 2100  Écran Home — renderHome(), _renderHomeRegionWidget()
+     §7    L. 2290  Écran Sections — renderSections(), _buildThemeCard() (états + badge, 12/07).
+                     Appelle aussi _markModulesVisited() (§15d, appel L.2306)
                      depuis le 18/07/2026. Pastille .sections-mascot-all
                      ajoutée le 20/07/2026 (demande utilisateur) : clin d'œil
                      mascotte quand tous les modules sont à 3 étoiles, via
                      REGION_MASCOTS/_mascotKeyForMode() (§15) — couvre aussi
                      le mode Français (🗼 France) depuis le 20/07/2026 (suite).
-     §8    L. 2417  Ouverture d'un thème — openTheme() (marque module ouvert), switchTab()
-     §9    L. 2630  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail().
+                     aria-label du bouton 🔄 global (_fillHeader(), appelée
+                     par cette fonction) rendu dynamique selon la langue de
+                     l'apprenant le 22/07/2026 (demande utilisateur).
+     §8    L. 2475  Ouverture d'un thème — openTheme() (marque module ouvert), switchTab()
+     §9    L. 2686  Cartes Flash — renderFlash(), pickAlpha(), buildAlphaDetail().
                      Symbole mascotte régional .fc-region-mascot (recto FR/verso
                      ES et recto ES/verso FR) ajouté le 20/07/2026 (demande
                      utilisateur), cohérent avec .hrw-chip-mascot (§6/§15) et
                      .launcher-region-mascot (§15).
-     §9b   L. 2802  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
-     §9c   L. 3215  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic(), _rpShowEnd().
+     §9b   L. 2858  Reconnaissance vocale — _normalizeSpeech(), _levenshtein(), _speechMatch()
+     §9c   L. 3271  Onglet Répète — renderRepeat(), _rpShowWord(), _rpStartMic(), _rpShowEnd().
                      Clin d'œil mascotte sur sans-faute ajouté à _rpShowEnd() le
                      20/07/2026 (demande utilisateur), via _mascotSansFauteLine() (§14).
-     §10   L. 3576  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
-     §11   L. 3854  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
-     §12   L. 3975  Vocabulaire — renderVocab() (chips cliquables)
-     §13   L. 4033  Quiz Dialogue — renderDialogQuiz(), checkDQ()
-     §14   L. 4127  Utilitaires — _quizResultStrings(), _mascotSansFauteLine(),
-                     esc(), _escAttr(). _mascotSansFauteLine() (L.4198) ajoutée le
+     §10   L. 3632  Quiz 10 questions — _generateLevel1Quiz(), renderQuiz10(), checkQ10()
+     §11   L. 3910  Dialogue — _adaptDialogueLine(), renderDialog(), pickSit()
+     §12   L. 4031  Vocabulaire — renderVocab() (chips cliquables)
+     §13   L. 4089  Quiz Dialogue — renderDialogQuiz(), checkDQ()
+     §14   L. 4183  Utilitaires — _quizResultStrings(), _mascotSansFauteLine(),
+                     esc(), _escAttr(). _mascotSansFauteLine() (L.4238) ajoutée le
                      20/07/2026 (demande utilisateur) : factorise le clin d'œil
                      mascotte sur sans-faute auparavant écrit en dur dans
                      _quizResultStrings() (19/07/2026), désormais partagé avec
                      _rpShowEnd() (§9c). Depuis le 20/07/2026 (suite), délègue le
                      choix de clé mascotte à _mascotKeyForMode() (§15) pour
                      couvrir aussi le mode Français (🗼 France).
-     §15   L. 4212  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion().
+     §15   L. 4268  Variantes régionales — renderRegionGrid(), pickRegion(), changeRegion().
                      REGION_MASCOTS complété le 20/07/2026 (demande utilisateur)
                      d'une entrée France (🗼, symétrie avec le logo — Tour
                      Eiffel), et nouvelle fonction _mascotKeyForMode() qui
@@ -92,16 +99,16 @@
                      utilisée par §7, §14 et _refreshFooterMascot() (juste en
                      dessous, même section), qui n'affichent donc plus un jeu
                      de mots sans symbole en mode Français.
-     §15b  L. 4581  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
+     §15b  L. 4629  Accordéons — toggleAcc(), toggleLevelAcc(), _resizeOpenAccordions()
                      (aucune bannière numérotée dans le code à cet endroit, juste
                       un commentaire au-dessus de toggleAcc() — contrairement aux
                       autres sous-sections 5b/9b/9c qui en ont une)
-     §15c  L. 4653  Nouvel utilisateur & barre de nav — _isBrandNewUser(), condition
+     §15c  L. 4701  Nouvel utilisateur & barre de nav — _isBrandNewUser(), condition
                      dans le listener DOMContentLoaded (ajouté le 11/07/2026, demande
                      utilisateur : pas de barre de nav basse au tout premier lancement
                      sans aucun parcours ; réapparaît dès la première interaction via
                      showLauncherVariant())
-     §15d  L. 4722  Cartes de langue fusionnées avec l'explicatif — _langBoxInitialOpen(),
+     §15d  L. 4714  Cartes de langue fusionnées avec l'explicatif — _langBoxInitialOpen(),
                      _setLangBoxOpen(), _initLangBoxes(), toggleLangBox() ; ajouté le
                      18/07/2026 (demande utilisateur), fusionné le même jour avec les
                      anciennes cartes .lang-card (auparavant un encadré séparé à 2
@@ -109,27 +116,27 @@
                      désormais sa propre liste à puces dépliable et son propre état
                      déplié/replié, mémorisés séparément par langue.
                      Contient aussi (ajout du même jour, 3e retour utilisateur)
-                     _markModulesVisited()/_hasVisitedModules() (L.4701) : la
+                     _markModulesVisited()/_hasVisitedModules() (L.4749) : la
                      préférence explicite de l'apprenant prime toujours, puis les
                      cartes se replient dès la première visite des Modules (posé
-                     depuis renderSections(), §7, L.2262) — remplace l'ancienne
+                     depuis renderSections(), §7, L.2306) — remplace l'ancienne
                      dépendance à _isBrandNewUser() (§15c), trop grossière pour ce
                      cas précis (aucune bannière numérotée à cet endroit, comme
                      pour §15c)
-     §16   L. 4802  Remerciements — showCredits()
-     §17   L. 4817  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
+     §16   L. 4858  Remerciements — showCredits()
+     §17   L. 4873  Guide utilisateur — _buildHomeGuide(), showGuide(), navBackToHome(),
                      navBackToGuide(), _refreshGuideRegion(), _guideSeenKey()/
                      _hasSeenGuide()/_markGuideSeen() (flag par langue). Câble aussi,
                      depuis le 12/07/2026, le libellé bilingue du bouton #homeInstallBtn
                      (déplacé en tête d'écran — cf. §21c)
-     §18   L. 5147  E-mail antispam — openAndCopyEmail()
-     §19   L. 5166  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
+     §18   L. 5409  E-mail antispam — openAndCopyEmail()
+     §19   L. 5442  Exports PDF — _pdfTheme(), _exportGuide(), _exportVocab(), _exportSituation()
                      (étiqueté "§21" dans le code même — incohérence de numérotation
                       préexistante, non corrigée ici pour ne pas renuméroter tout le fichier)
-     §20   L. 5473  Accessibilité clavier (keydown → role="button")
-     §21   L. 5317  Initialisation Launcher — addEventListener sur les cartes de langue
-     §21b  L. 5343  Viewport height fix Android — --app-h via window.innerHeight
-     §21c  L. 5384  Bouton d'installation PWA native — _initInstallButtons(),
+     §20   L. 5755  Accessibilité clavier (keydown → role="button")
+     §21   L. 5770  Initialisation Launcher — addEventListener sur les cartes de langue
+     §21b  L. 5796  Viewport height fix Android — --app-h via window.innerHeight
+     §21c  L. 5837  Bouton d'installation PWA native — _initInstallButtons(),
                      _installPwa() ; bouton #homeInstallBtn (tête de l'écran Guide,
                      libellé mis à jour dans §17) ajouté le 12/07/2026, remplace celui
                      auparavant caché dans la rubrique "Hors ligne" du guide
